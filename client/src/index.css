@@ -1,0 +1,200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ASTRONOMY DARK THEME — Deep navy/indigo palette */
+:root {
+  --button-outline: rgba(255,255,255, .10);
+  --badge-outline: rgba(255,255,255, .05);
+  --opaque-button-border-intensity: 9;
+  --elevate-1: rgba(255,255,255, .04);
+  --elevate-2: rgba(255,255,255, .09);
+  --background: 225 30% 6%;
+  --foreground: 210 20% 92%;
+  --border: 225 15% 18%;
+  --card: 225 25% 9%;
+  --card-foreground: 210 20% 92%;
+  --card-border: 225 15% 14%;
+  --sidebar: 225 25% 8%;
+  --sidebar-foreground: 210 20% 92%;
+  --sidebar-border: 225 15% 15%;
+  --sidebar-primary: 200 85% 50%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 225 15% 16%;
+  --sidebar-accent-foreground: 210 20% 92%;
+  --sidebar-ring: 200 85% 50%;
+  --popover: 225 25% 10%;
+  --popover-foreground: 210 20% 92%;
+  --popover-border: 225 15% 17%;
+  --primary: 200 85% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 225 15% 16%;
+  --secondary-foreground: 210 20% 88%;
+  --muted: 225 12% 18%;
+  --muted-foreground: 210 10% 55%;
+  --accent: 270 45% 55%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 72% 50%;
+  --destructive-foreground: 0 0% 98%;
+  --input: 225 15% 22%;
+  --ring: 200 85% 50%;
+  --chart-1: 200 85% 55%;
+  --chart-2: 270 55% 60%;
+  --chart-3: 38 90% 55%;
+  --chart-4: 140 50% 50%;
+  --chart-5: 340 60% 55%;
+  --font-sans: 'Inter', 'Helvetica Neue', sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --radius: .5rem;
+  --shadow-2xs: 0px 2px 4px hsl(225 30% 3% / 0.4);
+  --shadow-xs: 0px 2px 4px hsl(225 30% 3% / 0.4);
+  --shadow-sm: 0px 1px 3px hsl(225 30% 3% / 0.5);
+  --shadow: 0px 2px 6px hsl(225 30% 3% / 0.5);
+  --shadow-md: 0px 4px 12px hsl(225 30% 3% / 0.6);
+  --shadow-lg: 0px 8px 24px hsl(225 30% 3% / 0.7);
+  --shadow-xl: 0px 16px 48px hsl(225 30% 3% / 0.8);
+  --shadow-2xl: 0px 24px 64px hsl(225 30% 3% / 0.9);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+
+  /* Star colors for the sky chart */
+  --star-bright: #f0f0ff;
+  --star-medium: #a8b4d0;
+  --star-dim: #5a6580;
+  --route-color: #38bdf8;
+  --fov-color: rgba(56, 189, 248, 0.3);
+  --target-color: #f59e0b;
+  --constellation-line: rgba(100, 120, 160, 0.25);
+
+  --sidebar-primary-border: hsl(var(--sidebar-primary));
+  --sidebar-accent-border: hsl(var(--sidebar-accent));
+  --primary-border: hsl(var(--primary));
+  --secondary-border: hsl(var(--secondary));
+  --muted-border: hsl(var(--muted));
+  --accent-border: hsl(var(--accent));
+  --destructive-border: hsl(var(--destructive));
+}
+
+.dark {
+  /* Already dark by default — this is an astronomy app */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(225 25% 8%);
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(225 15% 25%);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(225 15% 35%);
+}
+
+/* Glow effect for active elements */
+.glow-primary {
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
+.glow-target {
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+}
+
+/* Animation for star pulse */
+@keyframes star-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.animate-star-pulse {
+  animation: star-pulse 2s ease-in-out infinite;
+}
+
+/* FOV animation */
+@keyframes fov-glow {
+  0%, 100% { stroke-opacity: 0.4; }
+  50% { stroke-opacity: 0.8; }
+}
+
+@layer utilities {
+  input[type="search"]::-webkit-search-cancel-button {
+    @apply hidden;
+  }
+
+  [contenteditable][data-placeholder]:empty::before {
+    content: attr(data-placeholder);
+    color: hsl(var(--muted-foreground));
+    pointer-events: none;
+  }
+
+  .no-default-hover-elevate {}
+  .no-default-active-elevate {}
+
+  .toggle-elevate::before,
+  .toggle-elevate-2::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0px;
+    border-radius: inherit;
+    z-index: -1;
+  }
+
+  .toggle-elevate.toggle-elevated::before {
+    background-color: var(--elevate-2);
+  }
+
+  .border.toggle-elevate::before {
+    inset: -1px;
+  }
+
+  .hover-elevate:not(.no-default-hover-elevate),
+  .active-elevate:not(.no-default-active-elevate),
+  .hover-elevate-2:not(.no-default-hover-elevate),
+  .active-elevate-2:not(.no-default-active-elevate) {
+    position: relative;
+    z-index: 0;
+  }
+
+  .hover-elevate:not(.no-default-hover-elevate)::after,
+  .active-elevate:not(.no-default-active-elevate)::after,
+  .hover-elevate-2:not(.no-default-hover-elevate)::after,
+  .active-elevate-2:not(.no-default-active-elevate)::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0px;
+    border-radius: inherit;
+    z-index: 999;
+  }
+
+  .hover-elevate:hover:not(.no-default-hover-elevate)::after,
+  .active-elevate:active:not(.no-default-active-elevate)::after {
+    background-color: var(--elevate-1);
+  }
+
+  .hover-elevate-2:hover:not(.no-default-hover-elevate)::after,
+  .active-elevate-2:active:not(.no-default-active-elevate)::after {
+    background-color: var(--elevate-2);
+  }
+
+  .border.hover-elevate:not(.no-hover-interaction-elevate)::after,
+  .border.active-elevate:not(.no-active-interaction-elevate)::after,
+  .border.hover-elevate-2:not(.no-hover-interaction-elevate)::after,
+  .border.active-elevate-2:not(.no-active-interaction-elevate)::after {
+    inset: -1px;
+  }
+}
