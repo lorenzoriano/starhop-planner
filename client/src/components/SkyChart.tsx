@@ -50,6 +50,7 @@ export function SkyChart({
   const [starBrightness, setStarBrightness] = useState(7); // 1-10; /5 → multiplier (default 1.4×)
   const [navStarSize, setNavStarSize] = useState(5); // 1-10; /5 → multiplier (default 1.0×)
   const [showLegend, setShowLegend] = useState(true);
+  const [showGhostCircles, setShowGhostCircles] = useState(true);
 
   // Zoom and pan state
   const [zoom, setZoom] = useState(1);
@@ -692,6 +693,41 @@ export function SkyChart({
           </g>
         ))}
 
+        {showGhostCircles && route && route.hops
+          .map((hop, index) => ({ hop, index }))
+          .filter(({ index }) => index > animStep)
+          .map(({ hop, index }) => {
+            const pt = project(hop.center.ra, hop.center.dec);
+            if (!pt) return null;
+            return (
+              <g key={`ghost-fov-${index}`}>
+                {fovShape === 'circle' ? (
+                  <circle
+                    cx={pt.x}
+                    cy={pt.y}
+                    r={(fovWidth / 2) * scale}
+                    fill="rgba(245, 158, 11, 0.05)"
+                    stroke="rgba(245, 158, 11, 0.30)"
+                    strokeWidth="1"
+                    strokeDasharray="4 4"
+                  />
+                ) : (
+                  <rect
+                    x={pt.x - (fovWidth / 2) * scale}
+                    y={pt.y - (fovHeight / 2) * scale}
+                    width={fovWidth * scale}
+                    height={fovHeight * scale}
+                    fill="rgba(245, 158, 11, 0.05)"
+                    stroke="rgba(245, 158, 11, 0.30)"
+                    strokeWidth="1"
+                    strokeDasharray="4 4"
+                    rx="3"
+                  />
+                )}
+              </g>
+            );
+          })}
+
         {route?.hops.map((hop, index) => {
           const point = project(hop.center.ra, hop.center.dec);
           if (!point) return null;
@@ -877,6 +913,42 @@ export function SkyChart({
               />
             </div>
             <span className="text-[9px] select-none leading-none" style={{ color: '#4d6280' }}>◎</span>
+          </div>
+          {/* Ghost FOV circles toggle */}
+          <div
+            className="flex flex-col items-center gap-0.5"
+            title={showGhostCircles ? 'Hide upcoming FOV circles' : 'Show upcoming FOV circles'}
+          >
+            <button
+              onClick={() => setShowGhostCircles(v => !v)}
+              style={{
+                width: 18,
+                height: 60,
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle
+                  cx="7" cy="7" r="5.5"
+                  stroke={showGhostCircles ? 'rgba(245,158,11,0.75)' : 'rgba(77,98,128,0.6)'}
+                  strokeWidth="1.2"
+                  strokeDasharray="3 2"
+                  fill={showGhostCircles ? 'rgba(245,158,11,0.12)' : 'none'}
+                />
+              </svg>
+            </button>
+            <span
+              className="text-[9px] select-none leading-none"
+              style={{ color: showGhostCircles ? 'rgba(245,158,11,0.6)' : '#4d6280' }}
+            >
+              ◌
+            </span>
           </div>
         </div>
 
