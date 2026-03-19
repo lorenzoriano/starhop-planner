@@ -154,10 +154,14 @@ function parseDec(decStr: string): number {
 
 // ─── Catalog Loading ─────────────────────────────────────────
 
+// Dense star catalog type: [ra_deg, dec_deg, mag, bv_color_index]
+export type DenseStar = [number, number, number, number];
+
 let _stars: Star[] | null = null;
 let _messier: MessierObject[] | null = null;
 let _constellations: ConstellationLine[] | null = null;
 let _binocularTargets: BinocularTarget[] | null = null;
+let _denseStars: DenseStar[] | null = null;
 
 export async function loadStars(): Promise<Star[]> {
   if (_stars) return _stars;
@@ -207,6 +211,13 @@ export async function loadConstellations(): Promise<ConstellationLine[]> {
     ),
   }));
   return _constellations!;
+}
+
+export async function loadDenseStars(): Promise<DenseStar[]> {
+  if (_denseStars) return _denseStars;
+  const resp = await fetch('./data/stars-dense.json');
+  _denseStars = await resp.json();
+  return _denseStars!;
 }
 
 export async function loadBinocularTargets(): Promise<BinocularTarget[]> {

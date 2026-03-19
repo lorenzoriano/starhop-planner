@@ -17,11 +17,11 @@ import {
   Info, Sparkles, Image as ImageIcon, WifiOff, Wifi
 } from 'lucide-react';
 import {
-  planRoutes, loadMessier, loadConstellations, loadBinocularTargets,
+  planRoutes, loadMessier, loadConstellations, loadBinocularTargets, loadDenseStars,
   buildUnifiedTargets,
   PRESETS, BINOCULAR_CATEGORY_LABELS,
   type Route, type SkyNode, type ObservingParams, type MessierObject, type ConstellationLine, type ObservingMode,
-  type BinocularTarget, type UnifiedTarget, type BinocularCategory,
+  type BinocularTarget, type UnifiedTarget, type BinocularCategory, type DenseStar,
 } from '@/lib/astronomy';
 import { SkyChart } from '@/components/SkyChart';
 import { ImageFallback } from '@/components/ImageFallback';
@@ -63,17 +63,19 @@ export default function PlannerPage() {
   const [binocularTargets, setBinocularTargets] = useState<BinocularTarget[]>([]);
   const [constellations, setConstellations] = useState<ConstellationLine[]>([]);
   const [unifiedTargets, setUnifiedTargets] = useState<UnifiedTarget[]>([]);
+  const [denseStars, setDenseStars] = useState<DenseStar[]>([]);
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
 
   // Tab
   const [activeTab, setActiveTab] = useState('planner');
 
   useEffect(() => {
-    Promise.all([loadMessier(), loadBinocularTargets(), loadConstellations()]).then(
-      ([m, b, c]) => {
+    Promise.all([loadMessier(), loadBinocularTargets(), loadConstellations(), loadDenseStars()]).then(
+      ([m, b, c, d]) => {
         setMessierList(m);
         setBinocularTargets(b);
         setConstellations(c);
+        setDenseStars(d);
         setUnifiedTargets(buildUnifiedTargets(m, b));
       }
     );
@@ -499,6 +501,8 @@ export default function PlannerPage() {
               lat={lat}
               lon={lon}
               date={observingDate}
+              limitingMag={limitingMag}
+              denseStars={denseStars}
             />
           </Card>
 
