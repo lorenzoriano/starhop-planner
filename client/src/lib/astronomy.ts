@@ -693,6 +693,7 @@ function observingProfile(params: ObservingParams) {
       namedBonus: 0.82,
       lowAltPenalty: 1.2,
       patternWeight: 0.12,
+      confusionPenalty: 0.18,
       pairPenalty: 5,
       sparsePenalty: 9,
     };
@@ -710,6 +711,7 @@ function observingProfile(params: ObservingParams) {
     namedBonus: 0.7,
     lowAltPenalty: 1.5,
     patternWeight: 0.08,
+    confusionPenalty: 0.12,
     pairPenalty: 3,
     sparsePenalty: 6,
   };
@@ -785,6 +787,23 @@ function buildGraph(
       ).slice(0, 10);
       const pattern = inferPattern(midpoint, [navNodes[i], navNodes[j], ...localGuides]);
       cost *= Math.max(0.55, 1 - ((pattern.score - 35) / 100) * (profile.patternWeight * 2.4));
+
+      // Confusion penalty — penalize hops where endpoints sit in crowded similar-brightness fields.
+      // Stars of similar magnitude (±0.5 mag) within the FOV radius make it hard to identify the target.
+      const confusionRadius = params.fovWidth / 2;
+      let confusionCount = 0;
+      for (let k = 0; k < navNodes.length; k++) {
+        if (k === i || k === j) continue;
+        if (Math.abs(navNodes[k].mag - navNodes[j].mag) <= 0.5 &&
+            angularDistance(navNodes[k].ra, navNodes[k].dec, navNodes[j].ra, navNodes[j].dec) <= confusionRadius) {
+          confusionCount++;
+        }
+        if (Math.abs(navNodes[k].mag - navNodes[i].mag) <= 0.5 &&
+            angularDistance(navNodes[k].ra, navNodes[k].dec, navNodes[i].ra, navNodes[i].dec) <= confusionRadius) {
+          confusionCount++;
+        }
+      }
+      cost *= 1 + confusionCount * profile.confusionPenalty;
 
       const minAlt = Math.min(navNodes[i].alt, navNodes[j].alt);
       if (minAlt < 15) cost *= profile.lowAltPenalty;
