@@ -5,6 +5,7 @@ import {
   type Route,
   type SkyNode,
   type ConstellationLine,
+  type DenseStar,
 } from '@/lib/astronomy';
 
 interface SkyChartProps {
@@ -19,6 +20,8 @@ interface SkyChartProps {
   lat: number;
   lon: number;
   date: Date;
+  limitingMag: number;
+  denseStars: DenseStar[];
 }
 
 const CHART_SIZE = 600;
@@ -35,10 +38,16 @@ export function SkyChart({
   fovWidth,
   fovHeight,
   fovShape,
+  limitingMag,
+  denseStars,
 }: SkyChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredStar, setHoveredStar] = useState<SkyNode | null>(null);
+
+  // Chart display controls (internal — shown as sliders in the overlay)
+  const [labelSize, setLabelSize] = useState(7);    // 0 = no labels, 1-8 px
+  const [starBrightness, setStarBrightness] = useState(7); // 1-10; /5 → multiplier (default 1.4×)
 
   // Zoom and pan state
   const [zoom, setZoom] = useState(1);
@@ -56,6 +65,7 @@ export function SkyChart({
   const pinchStartZoom = useRef(1);
 
   const currentHop = route?.hops[animStep] ?? null;
+  const brightMul = starBrightness / 5; // 0.2 … 2.0, default 1.4
 
   const center = useMemo(() => {
     if (currentHop) {
@@ -254,13 +264,13 @@ export function SkyChart({
   };
 
   const starSize = (mag: number) => {
-    if (mag < 0.5) return 4.6;
-    if (mag < 1.5) return 3.8;
-    if (mag < 2.5) return 2.8;
-    if (mag < 3.5) return 2.1;
-    if (mag < 4.5) return 1.6;
-    if (mag < 5.5) return 1.2;
-    return 0.9;
+    if (mag < 0.5) return 4.5;
+    if (mag < 1.5) return 3.5;
+    if (mag < 2.5) return 2.6;
+    if (mag < 3.5) return 1.9;
+    if (mag < 4.5) return 1.4;
+    if (mag < 5.5) return 1.05;
+    return 0.8;
   };
 
   const starColor = (mag: number) => {
@@ -269,6 +279,38 @@ export function SkyChart({
     if (mag < 4.5) return '#9ba9cf';
     if (mag < 5.5) return '#5a6a90';
     return '#4a5870';
+  };
+
+  // Realistic star color from B-V color index (spectral type)
+  const bvColor = (bv: number) => {
+    if (bv <= -0.3) return '#a0b5ff'; // O-type: blue
+    if (bv <= 0.0)  return '#c4d4ff'; // B-type: blue-white
+    if (bv <= 0.3)  return '#e8eeff'; // A/F-type: white
+    if (bv <= 0.6)  return '#fff8f0'; // F/G-type: yellow-white
+    if (bv <= 1.0)  return '#ffddb0'; // G/K-type: yellow-orange
+    if (bv <= 1.5)  return '#ffaa80'; // K-type: orange
+    return '#ff9070';                 // M-type: red-orange
+  };
+
+  const bgStarSize = (mag: number) => {
+    if (mag < 1) return 3.5;
+    if (mag < 2) return 2.6;
+    if (mag < 3) return 1.9;
+    if (mag < 4) return 1.4;
+    if (mag < 5) return 1.05;
+    if (mag < 6) return 0.8;
+    if (mag < 7) return 0.62;
+    return 0.5;
+  };
+
+  const bgStarOpacity = (mag: number) => {
+    if (mag < 2) return 0.95;
+    if (mag < 3) return 0.88;
+    if (mag < 4) return 0.75;
+    if (mag < 5) return 0.60;
+    if (mag < 6) return 0.45;
+    if (mag < 7) return 0.32;
+    return 0.22;
   };
 
   const highlightedIds = useMemo(() => {
@@ -320,37 +362,28 @@ export function SkyChart({
       if (node.type === 'planet') return true;
       if (node.type === 'binocular') return node.mag <= 6.5;
 
-      // Distance from the active focus point (current hop center or target)
-      const distFromFocus = focusPoint
-        ? angularDistance(node.ra, node.dec, focusPoint.ra, focusPoint.dec)
-        : Infinity;
-
-      // Proximity-based magnitude limit:
-      // - Inner zone (< localRadius * 0.5): mag 6.2 — rich local context
-      // - Mid zone   (< localRadius):       mag 5.5 — moderate fill
-      // - Outer zone  (rest of view):        mag 4.8 (with route) / 4.2 (no route)
-      // Stars matching the active constellation also get a boost
-      const inActiveConstellation = node.constellation && activeConstellationIds.has(node.constellation);
-      const constellationBoost = inActiveConstellation ? 0.6 : 0;
-
-      let magLimit: number;
-      if (route) {
-        if (distFromFocus < localRadius * 0.5) {
-          magLimit = 6.2 + constellationBoost;
-        } else if (distFromFocus < localRadius) {
-          // Smooth falloff between inner and outer
-          const t = (distFromFocus - localRadius * 0.5) / (localRadius * 0.5);
-          magLimit = 6.2 - t * 1.4 + constellationBoost; // 6.2 → 4.8
-        } else {
-          magLimit = 4.8 + constellationBoost * 0.4;
-        }
-      } else {
-        magLimit = 4.2 + constellationBoost;
-      }
-
-      return node.mag <= magLimit;
+      // Show all stars up to the user's limiting magnitude
+      return node.mag <= limitingMag;
     });
-  }, [nodes, center.ra, center.dec, viewRadius, highlightedIds, route, focusPoint, localRadius, activeConstellationIds]);
+  }, [nodes, center.ra, center.dec, viewRadius, highlightedIds, limitingMag]);
+
+  // Background star layer from dense Hipparcos catalog — pure rendering, no routing
+  const backgroundStarLayer = useMemo(() => {
+    const result: { x: number; y: number; mag: number; bv: number }[] = [];
+    for (const star of denseStars) {
+      const [ra, dec, mag, bv] = star;
+      if (mag > limitingMag) continue;
+      const dist = angularDistance(ra, dec, center.ra, center.dec);
+      if (dist > viewRadius * 1.05) continue;
+      const p = stereographicProject(ra, dec, center.ra, center.dec, scale);
+      if (!p) continue;
+      const x = cx + p.x;
+      const y = cy + p.y;
+      if (x < -8 || x > CHART_SIZE + 8 || y < -8 || y > CHART_SIZE + 8) continue;
+      result.push({ x, y, mag, bv });
+    }
+    return result;
+  }, [denseStars, limitingMag, center.ra, center.dec, viewRadius, scale]);
 
   const constellationPaths = useMemo(() => {
     const paths: { d: string; id: string; nearFocus: boolean }[] = [];
@@ -435,6 +468,7 @@ export function SkyChart({
   }, [visibleStars, route, targetNode, currentHop, center.ra, center.dec, scale]);
 
   const labels = useMemo(() => {
+    if (labelSize === 0) return [];
     const candidates = plottedStars
       .filter(({ star, isAnchor, isTarget, isPatternAnchor, isGuide }) => {
         if (isTarget || isAnchor || isPatternAnchor) return true;
@@ -482,19 +516,20 @@ export function SkyChart({
       const text = candidate.star.name || candidate.star.id;
       // Deduplicate by display name — skip if we already labelled a star with this name
       if (usedNames.has(text)) continue;
-      const width = Math.max(36, text.length * 5.7);
+      const charWidth = labelSize * 0.63;
+      const width = Math.max(labelSize * 4, text.length * charWidth);
       for (const placement of placements) {
         const x = candidate.point.x + placement.dx;
         const y = candidate.point.y + placement.dy;
         const left = placement.anchor === 'start' ? x - 3 : x - width - 3;
         const right = placement.anchor === 'start' ? x + width + 3 : x + 3;
-        const top = y - 11;
-        const bottom = y + 4;
+        const top = y - labelSize - 2;
+        const bottom = y + 3;
         const overlaps = accepted.some((label) => {
           const existingLeft = label.anchor === 'start' ? label.x - 3 : label.x - label.width - 3;
           const existingRight = label.anchor === 'start' ? label.x + label.width + 3 : label.x + 3;
-          const existingTop = label.y - 11;
-          const existingBottom = label.y + 4;
+          const existingTop = label.y - labelSize - 2;
+          const existingBottom = label.y + 3;
           return !(right < existingLeft || left > existingRight || bottom < existingTop || top > existingBottom);
         });
         const outOfBounds = left < 6 || right > CHART_SIZE - 6 || top < 6 || bottom > CHART_SIZE - 6;
@@ -513,11 +548,11 @@ export function SkyChart({
           break;
         }
       }
-      if (accepted.length >= 14) break;
+      if (accepted.length >= 22) break;
     }
 
     return accepted;
-  }, [plottedStars, activeConstellationIds, focusPoint, localRadius]);
+  }, [plottedStars, activeConstellationIds, focusPoint, localRadius, labelSize]);
 
   const fovCenter = currentHop ? project(currentHop.center.ra, currentHop.center.dec) : null;
 
@@ -590,6 +625,18 @@ export function SkyChart({
           />
         ))}
 
+        {/* Dense background star field from Hipparcos catalog */}
+        {backgroundStarLayer.map((star, i) => (
+          <circle
+            key={i}
+            cx={star.x}
+            cy={star.y}
+            r={bgStarSize(star.mag) * brightMul}
+            fill={bvColor(star.bv)}
+            opacity={Math.min(0.97, bgStarOpacity(star.mag) * brightMul)}
+          />
+        ))}
+
         {routePath && <path d={routePath} stroke="#315e86" strokeWidth="1.2" fill="none" opacity="0.26" strokeDasharray="5 4" />}
         {routeProgressPath && <path d={routeProgressPath} stroke="#4fc3ff" strokeWidth="1.8" fill="none" opacity="0.88" />}
 
@@ -605,7 +652,7 @@ export function SkyChart({
             <circle
               cx={point.x}
               cy={point.y}
-              r={isTarget ? Math.max(radius + 1.5, 4.2) : isAnchor || isPatternAnchor ? Math.max(radius + 0.8, 2.8) : radius}
+              r={isTarget ? Math.max(radius + 1.5, 4.2) : isAnchor || isPatternAnchor ? Math.max(radius + 0.8, 2.8) : isGuide ? radius : radius * Math.min(1.8, brightMul)}
               fill={
                 isTarget
                   ? '#f59e0b'
@@ -620,17 +667,10 @@ export function SkyChart({
               opacity={
                 isTarget || isAnchor || isPatternAnchor || isGuide
                   ? 0.98
-                  : star.mag < 2
-                    ? 0.92
-                    : star.mag < 3
-                      ? 0.78
-                      : star.mag < 4.2
-                        ? 0.48
-                        : star.mag < 5.0
-                          ? 0.30
-                          : star.mag < 5.8
-                            ? 0.20
-                            : 0.13
+                  : Math.min(0.95,
+                      (star.mag < 2 ? 0.95 : star.mag < 3 ? 0.85 : star.mag < 4.2 ? 0.60 : star.mag < 5.0 ? 0.40 : star.mag < 5.8 ? 0.28 : 0.18)
+                      * brightMul
+                    )
               }
               filter={isTarget ? 'url(#glow-strong)' : star.mag < 1.2 || isAnchor || isPatternAnchor ? 'url(#glow-soft)' : undefined}
             />
@@ -711,7 +751,7 @@ export function SkyChart({
                 y={label.y}
                 textAnchor={label.anchor}
                 fill={label.isTarget ? '#ffd089' : label.isAnchor ? '#7dd3fc' : label.isPatternAnchor ? '#ddb8ff' : '#d6deef'}
-                fontSize="9"
+                fontSize={labelSize}
                 fontWeight={label.isTarget || label.isAnchor ? '700' : '500'}
                 fontFamily="var(--font-sans)"
               >
@@ -761,51 +801,102 @@ export function SkyChart({
         </text>
       </svg>
 
-      {/* Zoom controls overlay */}
-      <div className="absolute top-2 right-2 flex flex-col gap-1" data-testid="zoom-controls">
-        <button
-          onClick={() => {
-            setZoom((z) => {
-              const next = Math.min(MAX_ZOOM, z * 1.3);
-              setPanX((px) => clampPan(px, 0, next).x);
-              setPanY((py) => clampPan(0, py, next).y);
-              return next;
-            });
-          }}
-          className="w-7 h-7 rounded bg-[#121726]/90 border border-[#28314a] text-[#93a3c7] hover:text-white hover:border-[#4fc3ff]/50 flex items-center justify-center text-sm font-bold transition-colors"
-          title="Zoom in"
-          data-testid="button-zoom-in"
-        >
-          +
-        </button>
-        <button
-          onClick={() => {
-            setZoom((z) => {
-              const next = Math.max(MIN_ZOOM, z / 1.3);
-              setPanX((px) => clampPan(px, 0, next).x);
-              setPanY((py) => clampPan(0, py, next).y);
-              return next;
-            });
-          }}
-          className="w-7 h-7 rounded bg-[#121726]/90 border border-[#28314a] text-[#93a3c7] hover:text-white hover:border-[#4fc3ff]/50 flex items-center justify-center text-sm font-bold transition-colors"
-          title="Zoom out"
-          data-testid="button-zoom-out"
-        >
-          −
-        </button>
-        {!isDefaultView && (
-          <button
-            onClick={handleResetView}
-            className="w-7 h-7 rounded bg-[#121726]/90 border border-[#28314a] text-[#93a3c7] hover:text-white hover:border-[#4fc3ff]/50 flex items-center justify-center transition-colors"
-            title="Reset view"
-            data-testid="button-zoom-reset"
+      {/* Chart controls overlay: sliders + zoom buttons */}
+      <div className="absolute top-2 right-2 flex flex-row items-start gap-1.5">
+        {/* Vertical sliders panel */}
+        <div className="flex flex-row gap-2 bg-[#0d1220]/90 border border-[#1d2740] rounded-lg px-2 pt-1.5 pb-1">
+          {/* Label size slider (0 = off) */}
+          <div
+            className="flex flex-col items-center gap-0.5"
+            title={labelSize === 0 ? 'Labels: off' : `Labels: ${labelSize}px`}
           >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M1 1v4h4" />
-              <path d="M3.5 9a5 5 0 1 0 1-5.2L1 5" />
-            </svg>
+            <div style={{ width: 18, height: 60, position: 'relative', overflow: 'visible' }}>
+              <input
+                type="range"
+                min={0} max={8} step={1}
+                value={labelSize}
+                onChange={e => setLabelSize(Number(e.target.value))}
+                style={{
+                  position: 'absolute', top: '50%', left: '50%',
+                  width: 60, height: 18, margin: 0,
+                  transform: 'translate(-50%, -50%) rotate(-90deg)',
+                  cursor: 'pointer',
+                  accentColor: '#4fc3ff',
+                }}
+              />
+            </div>
+            <span className="text-[9px] font-bold select-none leading-none" style={{ color: '#4d6280' }}>A</span>
+          </div>
+          {/* Star brightness slider */}
+          <div
+            className="flex flex-col items-center gap-0.5"
+            title={`Stars: ${Math.round(brightMul * 100)}%`}
+          >
+            <div style={{ width: 18, height: 60, position: 'relative', overflow: 'visible' }}>
+              <input
+                type="range"
+                min={1} max={10} step={1}
+                value={starBrightness}
+                onChange={e => setStarBrightness(Number(e.target.value))}
+                style={{
+                  position: 'absolute', top: '50%', left: '50%',
+                  width: 60, height: 18, margin: 0,
+                  transform: 'translate(-50%, -50%) rotate(-90deg)',
+                  cursor: 'pointer',
+                  accentColor: '#4fc3ff',
+                }}
+              />
+            </div>
+            <span className="text-[9px] select-none leading-none" style={{ color: '#4d6280' }}>★</span>
+          </div>
+        </div>
+
+        {/* Zoom buttons */}
+        <div className="flex flex-col gap-1" data-testid="zoom-controls">
+          <button
+            onClick={() => {
+              setZoom((z) => {
+                const next = Math.min(MAX_ZOOM, z * 1.3);
+                setPanX((px) => clampPan(px, 0, next).x);
+                setPanY((py) => clampPan(0, py, next).y);
+                return next;
+              });
+            }}
+            className="w-7 h-7 rounded bg-[#121726]/90 border border-[#28314a] text-[#93a3c7] hover:text-white hover:border-[#4fc3ff]/50 flex items-center justify-center text-sm font-bold transition-colors"
+            title="Zoom in"
+            data-testid="button-zoom-in"
+          >
+            +
           </button>
-        )}
+          <button
+            onClick={() => {
+              setZoom((z) => {
+                const next = Math.max(MIN_ZOOM, z / 1.3);
+                setPanX((px) => clampPan(px, 0, next).x);
+                setPanY((py) => clampPan(0, py, next).y);
+                return next;
+              });
+            }}
+            className="w-7 h-7 rounded bg-[#121726]/90 border border-[#28314a] text-[#93a3c7] hover:text-white hover:border-[#4fc3ff]/50 flex items-center justify-center text-sm font-bold transition-colors"
+            title="Zoom out"
+            data-testid="button-zoom-out"
+          >
+            −
+          </button>
+          {!isDefaultView && (
+            <button
+              onClick={handleResetView}
+              className="w-7 h-7 rounded bg-[#121726]/90 border border-[#28314a] text-[#93a3c7] hover:text-white hover:border-[#4fc3ff]/50 flex items-center justify-center transition-colors"
+              title="Reset view"
+              data-testid="button-zoom-reset"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M1 1v4h4" />
+                <path d="M3.5 9a5 5 0 1 0 1-5.2L1 5" />
+              </svg>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Zoom level indicator */}

@@ -2,22 +2,25 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
-import { createServer as createNetServer } from "net";
+import type { AddressInfo } from "net";
 
-function findFreePort(preferred: number): Promise<number> {
-  return new Promise((resolve) => {
-    const srv = createNetServer();
-    srv.listen(preferred, "127.0.0.1", () => {
-      const { port } = srv.address() as { port: number };
-      srv.close(() => resolve(port));
-    });
-    srv.on("error", () => {
-      // preferred port is taken — let OS pick a free one
-      const fallback = createNetServer();
-      fallback.listen(0, "127.0.0.1", () => {
-        const { port } = fallback.address() as { port: number };
-        fallback.close(() => resolve(port));
-      });
+function listenOnFreePort(server: import("http").Server, preferred: number): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const onError = (err: NodeJS.ErrnoException) => {
+      if (err.code === "EADDRINUSE") {
+        // preferred port taken — ask OS for any free port
+        server.removeListener("error", onError);
+        server.listen(0, "0.0.0.0", () => {
+          resolve((server.address() as AddressInfo).port);
+        });
+      } else {
+        reject(err);
+      }
+    };
+    server.once("error", onError);
+    server.listen(preferred, "0.0.0.0", () => {
+      server.removeListener("error", onError);
+      resolve((server.address() as AddressInfo).port);
     });
   });
 }
@@ -105,8 +108,6 @@ app.use((req, res, next) => {
   }
 
   const preferredPort = parseInt(process.env.PORT || "5000", 10);
-  const port = await findFreePort(preferredPort);
-  httpServer.listen(port, "0.0.0.0", () => {
-    log(`serving on http://localhost:${port}`);
-  });
+  const port = await listenOnFreePort(httpServer, preferredPort);
+  log(`serving on http://localhost:${port}`);
 })();
