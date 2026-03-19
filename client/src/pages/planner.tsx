@@ -21,7 +21,7 @@ import {
   buildUnifiedTargets,
   PRESETS, BINOCULAR_CATEGORY_LABELS,
   type Route, type SkyNode, type ObservingParams, type MessierObject, type ConstellationLine, type ObservingMode,
-  type BinocularTarget, type UnifiedTarget, type BinocularCategory, type DenseStar,
+  type BinocularTarget, type UnifiedTarget, type BinocularCategory, type DenseStar, type DifficultyLevel,
 } from '@/lib/astronomy';
 import { SkyChart } from '@/components/SkyChart';
 import { ImageFallback } from '@/components/ImageFallback';
@@ -40,6 +40,7 @@ export default function PlannerPage() {
   const [limitingMag, setLimitingMag] = useState(6.0);
   const [numRoutes, setNumRoutes] = useState(3);
   const [observingMode, setObservingMode] = useState<ObservingMode>('telescope');
+  const [difficulty, setDifficulty] = useState<DifficultyLevel>('intermediate');
   const [targetId, setTargetId] = useState('M31');
   const [targetSearch, setTargetSearch] = useState('');
 
@@ -135,6 +136,7 @@ export default function PlannerPage() {
         fovWidth, fovHeight, fovShape,
         limitingMag, numRoutes, targetId,
         observingMode,
+        difficulty,
       };
       const result = await planRoutes(params);
       setRoutes(result.routes);
@@ -158,7 +160,7 @@ export default function PlannerPage() {
       toast({ title: 'Error', description: 'Failed to compute routes. Check parameters.', variant: 'destructive' });
     }
     setIsComputing(false);
-  }, [lat, lon, observingDate, fovWidth, fovHeight, fovShape, limitingMag, numRoutes, targetId, observingMode, toast]);
+  }, [lat, lon, observingDate, fovWidth, fovHeight, fovShape, limitingMag, numRoutes, targetId, observingMode, difficulty, toast]);
 
   const selectedRoute = routes[selectedRouteIdx] || null;
 
@@ -430,6 +432,44 @@ export default function PlannerPage() {
             </p>
           </Card>
 
+          {/* Difficulty Level */}
+          <Card className="p-4 bg-card border-card-border">
+            <div className="flex items-center gap-2 mb-3">
+              <Sparkles className="w-4 h-4 text-primary" />
+              <h2 className="text-sm font-medium">Difficulty</h2>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              <Button
+                variant={difficulty === 'beginner' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setDifficulty('beginner')}
+              >
+                Beginner
+              </Button>
+              <Button
+                variant={difficulty === 'intermediate' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setDifficulty('intermediate')}
+              >
+                Normal
+              </Button>
+              <Button
+                variant={difficulty === 'expert' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setDifficulty('expert')}
+              >
+                Expert
+              </Button>
+            </div>
+            <p className="mt-2 text-[11px] text-muted-foreground">
+              {difficulty === 'beginner'
+                ? 'More waypoints with bright landmarks. Easier to follow but more steps.'
+                : difficulty === 'expert'
+                ? 'Minimal stops with longer sweeps. Fastest but requires experience.'
+                : 'Balanced route with moderate stops at key landmarks.'}
+            </p>
+          </Card>
+
           {/* FOV Settings */}
           <Card className="p-4 bg-card border-card-border">
             <div className="flex items-center gap-2 mb-3">
@@ -638,8 +678,9 @@ export default function PlannerPage() {
                             {hop.direction && (
                               <Badge variant="outline" className="text-xs">{hop.direction}</Badge>
                             )}
-                            <Badge variant="outline" className="text-xs capitalize">{hop.patternType}</Badge>
-                            <Badge variant="outline" className="text-xs">Pattern {hop.patternScore}</Badge>
+                            <Badge variant="outline" className="text-xs capitalize">
+                              {hop.patternType} · {hop.patternScore >= 90 ? 'Excellent' : hop.patternScore >= 75 ? 'Strong' : hop.patternScore >= 55 ? 'Good' : hop.patternScore >= 35 ? 'Fair' : 'Weak'}
+                            </Badge>
                             <span className="text-xs text-muted-foreground">{hop.pattern}</span>
                           </div>
                         </div>

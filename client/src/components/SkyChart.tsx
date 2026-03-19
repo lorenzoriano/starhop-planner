@@ -48,6 +48,8 @@ export function SkyChart({
   // Chart display controls (internal — shown as sliders in the overlay)
   const [labelSize, setLabelSize] = useState(7);    // 0 = no labels, 1-8 px
   const [starBrightness, setStarBrightness] = useState(7); // 1-10; /5 → multiplier (default 1.4×)
+  const [navStarSize, setNavStarSize] = useState(5); // 1-10; /5 → multiplier (default 1.0×)
+  const [showLegend, setShowLegend] = useState(true);
 
   // Zoom and pan state
   const [zoom, setZoom] = useState(1);
@@ -66,6 +68,7 @@ export function SkyChart({
 
   const currentHop = route?.hops[animStep] ?? null;
   const brightMul = starBrightness / 5; // 0.2 … 2.0, default 1.4
+  const navMul = navStarSize / 5; // 0.2 … 2.0, default 1.0
 
   const center = useMemo(() => {
     if (currentHop) {
@@ -467,6 +470,17 @@ export function SkyChart({
     }>;
   }, [visibleStars, route, targetNode, currentHop, center.ra, center.dec, scale]);
 
+  // Compact chart labels: constellation abbreviation to save space
+  const chartLabel = (star: SkyNode): string => {
+    if (star.name && star.name.length > 2 && !star.name.startsWith('HR') && star.name !== star.bayer) {
+      return star.name;
+    }
+    if (star.bayer && star.constellation) return `${star.bayer} ${star.constellation}`;
+    if (star.flamsteed && star.constellation) return `${star.flamsteed} ${star.constellation}`;
+    if (star.name && !star.name.startsWith('HR')) return star.name;
+    return '';  // skip labels for HR-only stars
+  };
+
   const labels = useMemo(() => {
     if (labelSize === 0) return [];
     const candidates = plottedStars
@@ -513,23 +527,24 @@ export function SkyChart({
 
     const usedNames = new Set<string>();
     for (const candidate of candidates) {
-      const text = candidate.star.name || candidate.star.id;
-      // Deduplicate by display name — skip if we already labelled a star with this name
-      if (usedNames.has(text)) continue;
+      const text = chartLabel(candidate.star);
+      // Skip empty labels (HR-only stars) and deduplicate
+      if (!text || usedNames.has(text)) continue;
       const charWidth = labelSize * 0.63;
-      const width = Math.max(labelSize * 4, text.length * charWidth);
+      const lPad = Math.max(1, Math.round(labelSize * 0.4));
+      const width = Math.max(labelSize * 2, text.length * charWidth);
       for (const placement of placements) {
         const x = candidate.point.x + placement.dx;
         const y = candidate.point.y + placement.dy;
-        const left = placement.anchor === 'start' ? x - 3 : x - width - 3;
-        const right = placement.anchor === 'start' ? x + width + 3 : x + 3;
-        const top = y - labelSize - 2;
-        const bottom = y + 3;
+        const left = placement.anchor === 'start' ? x - lPad : x - width - lPad;
+        const right = placement.anchor === 'start' ? x + width + lPad : x + lPad;
+        const top = y - labelSize - lPad;
+        const bottom = y + lPad;
         const overlaps = accepted.some((label) => {
-          const existingLeft = label.anchor === 'start' ? label.x - 3 : label.x - label.width - 3;
-          const existingRight = label.anchor === 'start' ? label.x + label.width + 3 : label.x + 3;
-          const existingTop = label.y - labelSize - 2;
-          const existingBottom = label.y + 3;
+          const existingLeft = label.anchor === 'start' ? label.x - lPad : label.x - label.width - lPad;
+          const existingRight = label.anchor === 'start' ? label.x + label.width + lPad : label.x + lPad;
+          const existingTop = label.y - labelSize - lPad;
+          const existingBottom = label.y + lPad;
           return !(right < existingLeft || left > existingRight || bottom < existingTop || top > existingBottom);
         });
         const outOfBounds = left < 6 || right > CHART_SIZE - 6 || top < 6 || bottom > CHART_SIZE - 6;
@@ -647,12 +662,12 @@ export function SkyChart({
             onMouseLeave={() => setHoveredStar(null)}
           >
             {(isTarget || isAnchor || isPatternAnchor) && (
-              <circle cx={point.x} cy={point.y} r={radius * 3.5} fill="white" opacity="0.05" />
+              <circle cx={point.x} cy={point.y} r={radius * 3.5 * navMul} fill="white" opacity="0.05" />
             )}
             <circle
               cx={point.x}
               cy={point.y}
-              r={isTarget ? Math.max(radius + 1.5, 4.2) : isAnchor || isPatternAnchor ? Math.max(radius + 0.8, 2.8) : isGuide ? radius : radius * Math.min(1.8, brightMul)}
+              r={isTarget ? Math.max(radius + 1.5 * navMul, 4.2 * navMul) : isAnchor || isPatternAnchor ? Math.max(radius + 0.8 * navMul, 2.8 * navMul) : isGuide ? radius * navMul : radius * Math.min(1.8, brightMul)}
               fill={
                 isTarget
                   ? '#f59e0b'
@@ -686,7 +701,7 @@ export function SkyChart({
               <circle
                 cx={point.x}
                 cy={point.y}
-                r={active ? 4.3 : 2.6}
+                r={(active ? 4.3 : 2.6) * navMul}
                 fill={index === 0 ? '#38bdf8' : index === route.hops.length - 1 ? '#f59e0b' : '#6366f1'}
                 opacity={active ? 1 : 0.7}
                 filter={active ? 'url(#glow-soft)' : undefined}
@@ -735,15 +750,17 @@ export function SkyChart({
         )}
 
         {labels.map((label) => {
-          const text = label.star.name || label.star.id;
+          const text = chartLabel(label.star);
+          if (!text) return null;
+          const pad = Math.max(1, Math.round(labelSize * 0.4));
           return (
             <g key={`${label.star.id}-label`} pointerEvents="none">
               <rect
-                x={label.anchor === 'start' ? label.x - 3 : label.x - label.width - 3}
-                y={label.y - 11}
-                width={label.width + 6}
-                height="14"
-                rx="4"
+                x={label.anchor === 'start' ? label.x - pad : label.x - label.width - pad}
+                y={label.y - labelSize - Math.round(pad * 0.5)}
+                width={label.width + pad * 2}
+                height={labelSize + pad * 2}
+                rx={Math.min(4, labelSize * 0.5)}
                 fill="rgba(8, 10, 18, 0.78)"
               />
               <text
@@ -777,17 +794,7 @@ export function SkyChart({
           );
         })()}
 
-        <g transform="translate(12, 12)">
-          <rect width="136" height="70" rx="6" fill="#0d1220" stroke="#1d2740" opacity="0.94" />
-          <circle cx="12" cy="16" r="3" fill="#d6def6" />
-          <text x="20" y="19" fill="#93a3c7" fontSize="8" fontFamily="var(--font-sans)">Reference stars</text>
-          <circle cx="12" cy="32" r="3" fill="#c084fc" />
-          <text x="20" y="35" fill="#93a3c7" fontSize="8" fontFamily="var(--font-sans)">Pattern anchors</text>
-          <circle cx="12" cy="48" r="3" fill="#38bdf8" />
-          <text x="20" y="51" fill="#93a3c7" fontSize="8" fontFamily="var(--font-sans)">Route anchor</text>
-          <circle cx="12" cy="64" r="3" fill="#f59e0b" />
-          <text x="20" y="67" fill="#93a3c7" fontSize="8" fontFamily="var(--font-sans)">Target</text>
-        </g>
+        {/* Legend moved to HTML overlay */}
 
         <g transform={`translate(${CHART_SIZE - 120}, ${CHART_SIZE - 20})`}>
           <line x1="0" y1="0" x2={10 * scale} y2="0" stroke="#5d6a87" strokeWidth="1" />
@@ -849,6 +856,28 @@ export function SkyChart({
             </div>
             <span className="text-[9px] select-none leading-none" style={{ color: '#4d6280' }}>★</span>
           </div>
+          {/* Navigation star size slider */}
+          <div
+            className="flex flex-col items-center gap-0.5"
+            title={`Nav stars: ${Math.round(navMul * 100)}%`}
+          >
+            <div style={{ width: 18, height: 60, position: 'relative', overflow: 'visible' }}>
+              <input
+                type="range"
+                min={1} max={10} step={1}
+                value={navStarSize}
+                onChange={e => setNavStarSize(Number(e.target.value))}
+                style={{
+                  position: 'absolute', top: '50%', left: '50%',
+                  width: 60, height: 18, margin: 0,
+                  transform: 'translate(-50%, -50%) rotate(-90deg)',
+                  cursor: 'pointer',
+                  accentColor: '#4fc3ff',
+                }}
+              />
+            </div>
+            <span className="text-[9px] select-none leading-none" style={{ color: '#4d6280' }}>◎</span>
+          </div>
         </div>
 
         {/* Zoom buttons */}
@@ -898,6 +927,49 @@ export function SkyChart({
           )}
         </div>
       </div>
+
+      {/* Legend overlay */}
+      {showLegend ? (
+        <div className="absolute top-2 left-2 bg-[#0d1220]/90 border border-[#1d2740] rounded-lg px-2 py-1.5 flex flex-col gap-1">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-1.5">
+              <span className="inline-block w-[5px] h-[5px] rounded-full bg-[#d6def6]" />
+              <span className="text-[8px] text-[#7382a1] leading-none">Stars</span>
+            </div>
+            <button
+              onClick={() => setShowLegend(false)}
+              className="text-[#4d6280] hover:text-[#93a3c7] text-[9px] leading-none transition-colors"
+              title="Hide legend"
+            >
+              ×
+            </button>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="inline-block w-[5px] h-[5px] rounded-full bg-[#c084fc]" />
+            <span className="text-[8px] text-[#7382a1] leading-none">Pattern</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="inline-block w-[5px] h-[5px] rounded-full bg-[#38bdf8]" />
+            <span className="text-[8px] text-[#7382a1] leading-none">Anchor</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="inline-block w-[5px] h-[5px] rounded-full bg-[#f59e0b]" />
+            <span className="text-[8px] text-[#7382a1] leading-none">Target</span>
+          </div>
+        </div>
+      ) : (
+        <button
+          onClick={() => setShowLegend(true)}
+          className="absolute top-2 left-2 w-6 h-6 rounded bg-[#0d1220]/90 border border-[#1d2740] text-[#4d6280] hover:text-[#93a3c7] flex items-center justify-center text-[10px] transition-colors"
+          title="Show legend"
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            <circle cx="6" cy="6" r="4.5" />
+            <line x1="6" y1="4.5" x2="6" y2="7.5" />
+            <circle cx="6" cy="3.2" r="0.4" fill="currentColor" stroke="none" />
+          </svg>
+        </button>
+      )}
 
       {/* Zoom level indicator */}
       {zoom !== 1 && (

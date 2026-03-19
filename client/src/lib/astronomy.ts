@@ -4,6 +4,7 @@
  * sky graph construction, and route planning.
  */
 import * as Astro from 'astronomy-engine';
+import { planRoute as planVariableReachRoute, type DifficultyLevel } from './route-planner';
 
 // ─── Types ───────────────────────────────────────────────────
 
@@ -89,6 +90,7 @@ export interface SkyNode {
   type: 'star' | 'planet' | 'messier' | 'binocular';
   constellation?: string;
   bayer?: string;
+  flamsteed?: number;
   binocularCategory?: BinocularCategory;
 }
 
@@ -116,6 +118,8 @@ export interface Route {
   hops: HopStep[];
 }
 
+export type { DifficultyLevel };
+
 export interface ObservingParams {
   lat: number;
   lon: number;
@@ -127,6 +131,7 @@ export interface ObservingParams {
   numRoutes: number;
   targetId: string;
   observingMode?: ObservingMode;
+  difficulty?: DifficultyLevel;
 }
 
 // ─── Parsing Utilities ────────────────────────────────────────
@@ -491,6 +496,7 @@ function buildSkyNodes(
       type: 'star',
       constellation: star.constellation,
       bayer: star.bayer,
+      flamsteed: star.flamsteed,
     });
   }
 
@@ -522,6 +528,9 @@ function buildSkyNodes(
       const { alt, az } = eqToHorizontal(t.ra, t.dec, lat, lon, date);
       if (alt < 5) continue;
       addedIds.add(t.id);
+      // Extract Bayer designation from altId if it starts with a Greek letter
+      const altFirst = t.altId ? t.altId.split(/\s+/)[0] : undefined;
+      const bayerFromAlt = altFirst && altFirst.charCodeAt(0) > 0x0370 ? altFirst : undefined;
       nodes.push({
         id: t.id,
         ra: t.ra,
@@ -531,6 +540,7 @@ function buildSkyNodes(
         name: t.name,
         type: 'binocular',
         constellation: t.con,
+        bayer: bayerFromAlt,
         binocularCategory: t.cat,
       });
     }
@@ -575,6 +585,18 @@ function angleBetweenVectors(a: { x: number; y: number }, b: { x: number; y: num
   return Math.acos(Math.max(-1, Math.min(1, cosTheta))) * 180 / Math.PI;
 }
 
+// Compact label for pattern descriptions (no access to full constellation name map here)
+function patternLabel(n: SkyNode): string {
+  const hasProperName = n.name && n.name.length > 2 && !n.name.startsWith('HR')
+    && n.name !== n.bayer;
+  if (hasProperName) return n.name;
+  if (n.bayer && n.constellation) return `${n.bayer} ${n.constellation}`;
+  if (n.flamsteed && n.constellation) return `${n.flamsteed} ${n.constellation}`;
+  if (n.constellation) return `a mag-${n.mag.toFixed(1)} star`;
+  if (n.name && !n.name.startsWith('HR')) return n.name;
+  return `a mag-${n.mag.toFixed(1)} star`;
+}
+
 function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalysis {
   if (visible.length === 0) {
     return {
@@ -593,8 +615,8 @@ function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalysis {
   let best: PatternAnalysis = {
     type: top.length >= 2 ? 'pair' : 'field',
     description: top.length >= 2
-      ? `${primary.name || primary.id} and ${top[1].name || top[1].id} frame the hop`
-      : `${primary.name || primary.id} is the main guide star in the field`,
+      ? `${patternLabel(primary)} and ${patternLabel(top[1])} frame the hop`
+      : `${patternLabel(primary)} is the main guide star in the field`,
     score: top.length >= 2 ? 48 : 32,
     confidence: top.length >= 2 ? 0.55 : 0.45,
     anchors: top.slice(0, Math.min(2, top.length)),
@@ -624,7 +646,7 @@ function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalysis {
           if (angles[0] > 28 && triangleScore > best.score) {
             best = {
               type: 'triangle',
-              description: `${stars[0].name || stars[0].id}, ${stars[1].name || stars[1].id}, and ${stars[2].name || stars[2].id} form a triangle around the hop`,
+              description: `${patternLabel(stars[0])}, ${patternLabel(stars[1])}, and ${patternLabel(stars[2])} form a triangle around the hop`,
               score: triangleScore,
               confidence: Math.min(0.98, 0.55 + triangleBalance * 0.25 + triangleSeparation * 0.15),
               anchors: stars,
@@ -644,7 +666,7 @@ function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalysis {
             });
             best = {
               type: 'chain',
-              description: `${ordered.map((star) => star.name || star.id).join(' → ')} make a chain pointing through the field`,
+              description: `${ordered.map((star) => patternLabel(star)).join(' → ')} make a chain pointing through the field`,
               score: chainScore,
               confidence: Math.min(0.96, 0.5 + Math.max(0, (chainAngle - 150) / 40) + (1 - chainTightness) * 0.18),
               anchors: ordered,
@@ -670,7 +692,7 @@ function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalysis {
         if (opening >= 75 && sideBalance > 0.45 && sep > 1.2 && bracketScore > best.score) {
           best = {
             type: 'bracket',
-            description: `${a.name || a.id} and ${b.name || b.id} bracket the next move`,
+            description: `${patternLabel(a)} and ${patternLabel(b)} bracket the next move`,
             score: bracketScore,
             confidence: Math.min(0.95, 0.54 + sideBalance * 0.25 + Math.max(0, (opening - 75) / 90) * 0.18),
             anchors: [a, b],
@@ -954,6 +976,19 @@ function generateHopSteps(
       fitsInFov(node.ra, node.dec, n.ra, n.dec, params.fovWidth, params.fovHeight, params.fovShape)
     ).sort((a, b) => a.mag - b.mag).slice(0, 6);
 
+    // Dedup stars at same position (e.g., binocular target + BSC component)
+    const deduped: SkyNode[] = [];
+    for (const v of visible) {
+      const tooClose = deduped.find(d => angularDistance(d.ra, d.dec, v.ra, v.dec) < 0.5);
+      if (tooClose) {
+        if (v.mag < tooClose.mag) {
+          deduped[deduped.indexOf(tooClose)] = v;
+        }
+      } else {
+        deduped.push(v);
+      }
+    }
+
     const dist = prevNode ? angularDistance(prevNode.ra, prevNode.dec, node.ra, node.dec) : 0;
     const dir = prevNode ? directionBetween(prevNode.ra, prevNode.dec, node.ra, node.dec) : '';
     const fovRatio = dist > 0 ? dist / params.fovWidth : 0;
@@ -965,17 +1000,26 @@ function generateHopSteps(
         : `${dist.toFixed(1)}° (~${fovRatio.toFixed(1)} FOV${fovRatio !== 1 ? 's' : ''})`)
       : '0';
 
-    const namedStars = visible.filter(v => v.name && v.name !== v.id);
-    const patternAnalysis = inferPattern(node, visible);
+    const namedStars = deduped.filter(v => v.name && v.name !== v.id);
+    const patternAnalysis = inferPattern(node, deduped);
     const pattern = patternAnalysis.description;
 
     // Instruction text
     // Better display name
     const displayName = (n: SkyNode) => {
-      if (n.name && n.name.length > 2 && !n.name.startsWith('HR')) return n.name;
+      const hasProperName = n.name && n.name.length > 2 && !n.name.startsWith('HR')
+        && n.name !== n.bayer;
+      if (hasProperName) {
+        if (n.type === 'binocular' && n.bayer && n.constellation) {
+          return `${n.name} (${n.bayer} ${n.constellation})`;
+        }
+        return n.name;
+      }
       if (n.bayer && n.constellation) return `${n.bayer} ${getConstellationName(n.constellation)}`;
-      if (n.constellation) return `star in ${getConstellationName(n.constellation)}`;
-      return n.name || n.id;
+      if (n.flamsteed && n.constellation) return `${n.flamsteed} ${getConstellationName(n.constellation)}`;
+      if (n.constellation) return `a mag-${n.mag.toFixed(1)} star in ${getConstellationName(n.constellation)}`;
+      if (n.name && !n.name.startsWith('HR')) return n.name;
+      return `a mag-${n.mag.toFixed(1)} star`;
     };
 
     let instruction = '';
@@ -1004,7 +1048,9 @@ function generateHopSteps(
         instruction = `Move ${dir} (${hopDistLabel}) to ${dn}.`;
       }
       if (namedStars.length > 0) {
-        instruction += ` Keep ${displayName(namedStars[0])} in view as a guide.`;
+        const guide = namedStars[0];
+        const guideDir = directionBetween(node.ra, node.dec, guide.ra, guide.dec);
+        instruction += ` Keep ${displayName(guide)} in view as a guide, to the ${guideDir}.`;
       }
       if (patternAnalysis.type !== 'field') {
         instruction += ` Look for the ${patternAnalysis.type} pattern formed by ${patternAnalysis.anchors.map(displayName).join(patternAnalysis.anchors.length > 2 ? ', ' : ' and ')}.`;
@@ -1013,7 +1059,7 @@ function generateHopSteps(
 
     hops.push({
       center: { ra: node.ra, dec: node.dec, alt: node.alt, az: node.az },
-      visibleGuideStars: visible,
+      visibleGuideStars: deduped,
       pattern,
       patternType: patternAnalysis.type,
       patternConfidence: patternAnalysis.confidence,
@@ -1150,7 +1196,43 @@ export async function planRoutes(params: ObservingParams): Promise<{
     return { routes: [], nodes: allNodes, targetNode: null, belowHorizon: false };
   }
 
-  // Build graph
+  // ─── New Variable-Reach A* algorithm (when difficulty is set) ───
+  if (params.difficulty) {
+    const starNodes = allNodes.filter(n => n.type === 'star' || n.type === 'planet');
+    const anchors = findAnchors(allNodes, targetNode, params.numRoutes, params);
+
+    const routes: Route[] = [];
+    const usedAnchors = new Set<string>();
+
+    for (const anchor of anchors) {
+      if (routes.length >= params.numRoutes) break;
+      if (usedAnchors.has(anchor.id)) continue;
+
+      const result = planVariableReachRoute(anchor, targetNode, starNodes, params.fovWidth, params.difficulty);
+      if (!result) continue;
+
+      usedAnchors.add(anchor.id);
+
+      // Convert compressed waypoints to HopStep format for UI compatibility
+      const waypointIds = result.path.map(n => n.id);
+      const nodeMap = new Map(allNodes.map(n => [n.id, n]));
+      const hops = generateHopSteps(waypointIds, nodeMap, allNodes, params);
+      const score = scoreRoute(hops, params);
+
+      routes.push({
+        id: `route-${routes.length + 1}`,
+        score,
+        startAnchor: anchor,
+        target: targetNode,
+        hops,
+      });
+    }
+
+    routes.sort((a, b) => b.score - a.score);
+    return { routes, nodes: allNodes, targetNode, belowHorizon: false };
+  }
+
+  // ─── Legacy Dijkstra algorithm (no difficulty set) ───
   const { nodeMap, edges } = buildGraph(allNodes, params);
 
   // Find anchor candidates
