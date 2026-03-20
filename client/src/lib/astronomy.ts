@@ -425,23 +425,23 @@ export function findBestObservingTime(
 
     // Find the longest contiguous run (consecutive pairs exactly 30 min apart).
     // Require ≥ 3 samples (1.5 h) to avoid suggesting a barely-visible window.
-    let best: Array<{ time: Date; alt: number }> = [];
-    let current: Array<{ time: Date; alt: number }> = [qualifying[0]];
+    let longestRun: Array<{ time: Date; alt: number }> = [];
+    let currentRun: Array<{ time: Date; alt: number }> = [qualifying[0]];
 
     for (let i = 1; i < qualifying.length; i++) {
       const gapMs = qualifying[i].time.getTime() - qualifying[i - 1].time.getTime();
       if (gapMs === 30 * 60 * 1000) {
-        current.push(qualifying[i]);
+        currentRun.push(qualifying[i]);
       } else {
-        if (current.length > best.length) best = current;
-        current = [qualifying[i]];
+        if (currentRun.length > longestRun.length) longestRun = currentRun;
+        currentRun = [qualifying[i]];
       }
     }
-    if (current.length > best.length) best = current;
+    if (currentRun.length > longestRun.length) longestRun = currentRun;
 
-    if (best.length < 3) continue;
+    if (longestRun.length < 3) continue;
 
-    const midpoint = best[Math.floor(best.length / 2)];
+    const midpoint = longestRun[Math.floor(longestRun.length / 2)];
     return { date: midpoint.time, alt: midpoint.alt };
   }
 
