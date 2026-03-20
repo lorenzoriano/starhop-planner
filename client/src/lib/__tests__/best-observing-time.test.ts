@@ -12,6 +12,7 @@ describe('findBestObservingTime', () => {
     expect(result).not.toBeNull();
     expect(result!.alt).toBeGreaterThanOrEqual(30);
     expect(result!.date.getTime()).toBeGreaterThan(startDate.getTime());
+    expect(result!.date.getTime()).toBeLessThan(startDate.getTime() + 365 * 24 * 60 * 60 * 1000);
   });
 
   it('returns null when the object is geometrically unreachable from the observer latitude', () => {
