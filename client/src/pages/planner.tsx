@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo, useRef, useEffect, useSyncExternalStore } from 'react';
 import tzLookup from 'tz-lookup';
-import { fromZonedTime } from 'date-fns-tz';
+import { fromZonedTime, formatInTimeZone } from 'date-fns-tz';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,7 +17,7 @@ import {
   Info, Sparkles, Image as ImageIcon, WifiOff, Wifi
 } from 'lucide-react';
 import {
-  planRoutes, loadMessier, loadConstellations, loadBinocularTargets, loadDenseStars,
+  planRoutes, findBestObservingTime, loadMessier, loadConstellations, loadBinocularTargets, loadDenseStars,
   buildUnifiedTargets,
   PRESETS, BINOCULAR_CATEGORY_LABELS,
   type Route, type SkyNode, type ObservingParams, type MessierObject, type ConstellationLine, type ObservingMode,
@@ -51,6 +51,7 @@ export default function PlannerPage() {
   const [selectedRouteIdx, setSelectedRouteIdx] = useState(0);
   const [isComputing, setIsComputing] = useState(false);
   const [belowHorizon, setBelowHorizon] = useState(false);
+  const [isFindingBestTime, setIsFindingBestTime] = useState(false);
   const [hasComputed, setHasComputed] = useState(false);
 
   // Animation
@@ -125,6 +126,56 @@ export default function PlannerPage() {
     const localIso = `${dateStr}T${timeStr}:00`;
     return fromZonedTime(localIso, observingTimeZone);
   }, [dateStr, timeStr, observingTimeZone]);
+
+  const handleFindBestTime = useCallback(async () => {
+    setIsFindingBestTime(true);
+    // Yield to the event loop so React paints the spinner before the
+    // synchronous scan (~88–440 ms) blocks the JS thread.
+    await new Promise(resolve => setTimeout(resolve, 0));
+    try {
+      const [messier, binoTargets] = await Promise.all([
+        loadMessier(),
+        loadBinocularTargets(),
+      ]);
+      const mTarget = messier.find(m => m.id === targetId);
+      const bTarget = binoTargets.find(t => t.id === targetId);
+      const target = mTarget ?? bTarget;
+
+      if (!target) {
+        toast({ title: 'Target not found', description: `Could not find catalog data for ${targetId}.`, variant: 'destructive' });
+        return;
+      }
+
+      const result = findBestObservingTime(
+        target.ra,
+        target.dec,
+        lat,
+        lon,
+        observingDate,
+      );
+
+      if (!result) {
+        toast({
+          title: 'No visible window',
+          description: `${targetId} doesn't reach 30° above the horizon at this location within the next year.`,
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      setDateStr(formatInTimeZone(result.date, observingTimeZone, 'yyyy-MM-dd'));
+      setTimeStr(formatInTimeZone(result.date, observingTimeZone, 'HH:mm'));
+      toast({
+        title: 'Time updated',
+        description: `Switched to ${formatInTimeZone(result.date, observingTimeZone, 'MMM d')} — ${targetId} will be at ${Math.round(result.alt)}°. Click 'Plan Star-Hop Routes' to compute.`,
+      });
+    } catch (err) {
+      console.error(err);
+      toast({ title: 'Error', description: 'Could not search for an observing window.', variant: 'destructive' });
+    } finally {
+      setIsFindingBestTime(false);
+    }
+  }, [targetId, lat, lon, observingDate, observingTimeZone, toast]);
 
   const handleCompute = useCallback(async () => {
     setIsComputing(true);
@@ -549,9 +600,24 @@ export default function PlannerPage() {
           {/* Below Horizon Warning */}
           {belowHorizon && (
             <Card className="p-4 bg-destructive/10 border-destructive/30">
-              <div className="flex items-center gap-2 text-destructive">
-                <AlertTriangle className="w-4 h-4" />
-                <span className="text-sm font-medium">{targetId} is below the horizon at this time and location.</span>
+              <div className="flex items-center justify-between gap-2 text-destructive">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 shrink-0" />
+                  <span className="text-sm font-medium">{targetId} is below the horizon at this time and location.</span>
+                </div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={handleFindBestTime}
+                  disabled={isFindingBestTime || isComputing}
+                  className="shrink-0 border-destructive/50 text-destructive hover:bg-destructive/10"
+                >
+                  {isFindingBestTime ? (
+                    <><Loader2 className="w-3 h-3 mr-1 animate-spin" />Searching…</>
+                  ) : (
+                    'Plan for best time'
+                  )}
+                </Button>
               </div>
             </Card>
           )}

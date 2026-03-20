@@ -95,7 +95,10 @@ export interface SkyNode {
 }
 
 export type ObservingMode = 'telescope' | 'binocular';
-export type PatternType = 'triangle' | 'chain' | 'bracket' | 'pair' | 'field';
+export type PatternType =
+  | 'triangle' | 'diamond' | 'trapezoid' | 'kite'
+  | 'cross' | 'arrow' | 'arc' | 'zigzag'
+  | 'chain' | 'bracket' | 'pair' | 'field';
 
 export interface HopStep {
   center: { ra: number; dec: number; alt: number; az: number };
@@ -368,6 +371,83 @@ export function eqToHorizontal(
   return { alt, az };
 }
 
+/**
+ * Find the next future date/time (within maxDays) when a target is ≥ 30°
+ * above the horizon during astronomical darkness (sun altitude < −18°).
+ *
+ * Scans each calendar day (UTC noon-to-next-noon) in 30-minute steps.
+ * Returns the midpoint of the longest qualifying contiguous window (≥ 1.5 h),
+ * or null if no such window exists within maxDays.
+ */
+export function findBestObservingTime(
+  ra: number,
+  dec: number,
+  lat: number,
+  lon: number,
+  startDate: Date,
+  maxDays = 365,
+): { date: Date; alt: number } | null {
+  const observer = new Astro.Observer(lat, lon, 0);
+
+  for (let dayOffset = 0; dayOffset < maxDays; dayOffset++) {
+    // Sample a full 24-hour window starting at UTC noon — spans the complete
+    // astronomical night at any longitude. Sun-altitude filter removes daytime.
+    const windowStartMs = Date.UTC(
+      startDate.getUTCFullYear(),
+      startDate.getUTCMonth(),
+      startDate.getUTCDate() + dayOffset,
+      12, 0, 0, 0,
+    );
+
+    const qualifying: Array<{ time: Date; alt: number }> = [];
+
+    for (let step = 0; step < 48; step++) {
+      const sampleTime = new Date(windowStartMs + step * 30 * 60 * 1000);
+
+      // On day 0, skip samples that predate startDate
+      if (dayOffset === 0 && sampleTime < startDate) continue;
+
+      // Target altitude — must be ≥ 30°
+      const { alt: targetAlt } = eqToHorizontal(ra, dec, lat, lon, sampleTime);
+      if (targetAlt < 30) continue;
+
+      // Sun altitude — must be < −18° (astronomical darkness)
+      // Astro.Equator returns ra in sidereal hours; Astro.Horizon accepts hours directly.
+      const astroTime = Astro.MakeTime(sampleTime);
+      const sunEq = Astro.Equator(Astro.Body.Sun, astroTime, observer, true, true);
+      const sunHor = Astro.Horizon(astroTime, observer, sunEq.ra, sunEq.dec, 'normal');
+      if (sunHor.altitude >= -18) continue;
+
+      qualifying.push({ time: sampleTime, alt: targetAlt });
+    }
+
+    if (qualifying.length === 0) continue;
+
+    // Find the longest contiguous run (consecutive pairs exactly 30 min apart).
+    // Require ≥ 3 samples (1.5 h) to avoid suggesting a barely-visible window.
+    let longestRun: Array<{ time: Date; alt: number }> = [];
+    let currentRun: Array<{ time: Date; alt: number }> = [qualifying[0]];
+
+    for (let i = 1; i < qualifying.length; i++) {
+      const gapMs = qualifying[i].time.getTime() - qualifying[i - 1].time.getTime();
+      if (gapMs === 30 * 60 * 1000) {
+        currentRun.push(qualifying[i]);
+      } else {
+        if (currentRun.length > longestRun.length) longestRun = currentRun;
+        currentRun = [qualifying[i]];
+      }
+    }
+    if (currentRun.length > longestRun.length) longestRun = currentRun;
+
+    if (longestRun.length < 3) continue;
+
+    const midpoint = longestRun[Math.floor(longestRun.length / 2)];
+    return { date: midpoint.time, alt: midpoint.alt };
+  }
+
+  return null;
+}
+
 export function getPlanetPositions(lat: number, lon: number, date: Date): SkyNode[] {
   const time = Astro.MakeTime(date);
   const observer = new Astro.Observer(lat, lon, 0);
@@ -556,7 +636,7 @@ interface GraphEdge {
   dist: number;
 }
 
-interface PatternAnalysis {
+export interface PatternAnalysis {
   type: PatternType;
   description: string;
   score: number;
@@ -585,6 +665,62 @@ function angleBetweenVectors(a: { x: number; y: number }, b: { x: number; y: num
   return Math.acos(Math.max(-1, Math.min(1, cosTheta))) * 180 / Math.PI;
 }
 
+// Order 4 stars by angle from centroid for correct polygon winding
+function convexHullOrder4(stars: SkyNode[], center: SkyNode): SkyNode[] {
+  const withAngle = stars.map(s => {
+    const off = localOffset(center, s);
+    return { star: s, angle: Math.atan2(off.y, off.x) };
+  });
+  withAngle.sort((a, b) => a.angle - b.angle);
+  return withAngle.map(w => w.star);
+}
+
+// Sign of cross product (b-a) x (c-a) — positive = left turn, negative = right turn
+function crossProduct2D(
+  a: { x: number; y: number },
+  b: { x: number; y: number },
+  c: { x: number; y: number },
+): number {
+  return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+}
+
+// Check if segment p1-p2 is roughly parallel to segment p3-p4
+function linesApproximatelyParallel(
+  p1: { x: number; y: number },
+  p2: { x: number; y: number },
+  p3: { x: number; y: number },
+  p4: { x: number; y: number },
+  toleranceDeg: number,
+): boolean {
+  const angle1 = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+  const angle2 = Math.atan2(p4.y - p3.y, p4.x - p3.x) * 180 / Math.PI;
+  let diff = Math.abs(angle1 - angle2) % 180;
+  if (diff > 90) diff = 180 - diff;
+  return diff < toleranceDeg;
+}
+
+// Fit a circular arc through 3+ points; returns radius and curvature consistency
+function fitCircularArc(
+  points: { x: number; y: number }[],
+): { radius: number; consistency: number } | null {
+  if (points.length < 3) return null;
+  const radii: number[] = [];
+  for (let i = 0; i < points.length - 2; i++) {
+    const [a, b, c] = [points[i], points[i + 1], points[i + 2]];
+    const dAB = Math.hypot(b.x - a.x, b.y - a.y);
+    const dBC = Math.hypot(c.x - b.x, c.y - b.y);
+    const dAC = Math.hypot(c.x - a.x, c.y - a.y);
+    const s = (dAB + dBC + dAC) / 2;
+    const area = Math.sqrt(Math.max(0, s * (s - dAB) * (s - dBC) * (s - dAC)));
+    if (area < 1e-6) return null; // degenerate (collinear)
+    radii.push((dAB * dBC * dAC) / (4 * area));
+  }
+  const avgRadius = radii.reduce((s, r) => s + r, 0) / radii.length;
+  const variance = radii.reduce((s, r) => s + (r - avgRadius) ** 2, 0) / radii.length;
+  const consistency = 1 - Math.min(1, Math.sqrt(variance) / Math.max(avgRadius, 0.001));
+  return { radius: avgRadius, consistency };
+}
+
 // Compact label for pattern descriptions (no access to full constellation name map here)
 function patternLabel(n: SkyNode): string {
   const hasProperName = n.name && n.name.length > 2 && !n.name.startsWith('HR')
@@ -597,7 +733,7 @@ function patternLabel(n: SkyNode): string {
   return `a mag-${n.mag.toFixed(1)} star`;
 }
 
-function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalysis {
+export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalysis {
   if (visible.length === 0) {
     return {
       type: 'field',
@@ -672,7 +808,257 @@ function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalysis {
               anchors: ordered,
             };
           }
+
+          // Arc detection: curved path (not straight like chain, not wide like triangle)
+          if (chainAngle >= 100 && chainAngle <= 155) {
+            const arcPoints = stars.map(s => localOffset(center, s));
+            const arcFit = fitCircularArc(arcPoints);
+            if (arcFit && arcFit.consistency > 0.6) {
+              // Check middle star deviates from chord
+              const chordLen = Math.hypot(arcPoints[2].x - arcPoints[0].x, arcPoints[2].y - arcPoints[0].y);
+              const midChordX = (arcPoints[0].x + arcPoints[2].x) / 2;
+              const midChordY = (arcPoints[0].y + arcPoints[2].y) / 2;
+              const deviation = Math.hypot(arcPoints[1].x - midChordX, arcPoints[1].y - midChordY);
+              if (chordLen > 0.5 && deviation / chordLen > 0.08) {
+                const arcScore = 48 + arcFit.consistency * 22 + brightness * 1.4 + Math.min(1, deviation / chordLen) * 8;
+                if (arcScore > best.score) {
+                  const ordered = [...stars].sort((a, b) => {
+                    const ao = localOffset(center, a);
+                    const bo = localOffset(center, b);
+                    return ao.x + ao.y - (bo.x + bo.y);
+                  });
+                  best = {
+                    type: 'arc',
+                    description: `${ordered.map(s => patternLabel(s)).join(' → ')} trace a curved arc`,
+                    score: arcScore,
+                    confidence: Math.min(0.90, 0.52 + arcFit.consistency * 0.25 + Math.min(1, deviation / chordLen) * 0.12),
+                    anchors: ordered,
+                  };
+                }
+              }
+            }
+          }
+
+          // Arrow detection: V-shape with a "tip" star
+          for (let tipIdx = 0; tipIdx < 3; tipIdx++) {
+            const tip = stars[tipIdx];
+            const wings = stars.filter((_, idx) => idx !== tipIdx);
+            const tipOff = localOffset(center, tip);
+            const w0Off = localOffset(center, wings[0]);
+            const w1Off = localOffset(center, wings[1]);
+            const v0 = { x: w0Off.x - tipOff.x, y: w0Off.y - tipOff.y };
+            const v1 = { x: w1Off.x - tipOff.x, y: w1Off.y - tipOff.y };
+            const tipAngle = angleBetweenVectors(v0, v1);
+            const d0 = Math.hypot(v0.x, v0.y);
+            const d1 = Math.hypot(v1.x, v1.y);
+            const wingBalance = Math.min(d0, d1) / Math.max(d0, d1, 0.001);
+            if (tipAngle >= 25 && tipAngle <= 85 && wingBalance > 0.55) {
+              const symmetry = 1 - Math.abs(d0 - d1) / Math.max(d0, d1, 0.001);
+              const arrowScore = 56 + symmetry * 18 + wingBalance * 10 + brightness * 1.3;
+              if (arrowScore > best.score) {
+                best = {
+                  type: 'arrow',
+                  description: `${patternLabel(wings[0])} and ${patternLabel(wings[1])} point toward ${patternLabel(tip)}`,
+                  score: arrowScore,
+                  confidence: Math.min(0.88, 0.52 + symmetry * 0.2 + wingBalance * 0.15),
+                  anchors: [wings[0], wings[1], tip], // [wing1, wing2, tip] for SVG rendering
+                };
+              }
+            }
+          }
         }
+      }
+    }
+  }
+
+  // ── 4-star pattern detection (diamond, trapezoid, kite, cross) ──
+  if (top.length >= 4) {
+    for (let a = 0; a < top.length - 3; a++) {
+      for (let b = a + 1; b < top.length - 2; b++) {
+        for (let c = b + 1; c < top.length - 1; c++) {
+          for (let d = c + 1; d < top.length; d++) {
+            const quad = [top[a], top[b], top[c], top[d]];
+            const ordered = convexHullOrder4(quad, center);
+            const offs = ordered.map(s => localOffset(center, s));
+            const brightness4 = quad.reduce((sum, s) => sum + Math.max(0, 6 - s.mag), 0) / 4;
+
+            // Side lengths (consecutive in ordered quad)
+            const sides = [0, 1, 2, 3].map(i => {
+              const ni = (i + 1) % 4;
+              return angularDistance(ordered[i].ra, ordered[i].dec, ordered[ni].ra, ordered[ni].dec);
+            });
+            // Diagonals
+            const diag1 = angularDistance(ordered[0].ra, ordered[0].dec, ordered[2].ra, ordered[2].dec);
+            const diag2 = angularDistance(ordered[1].ra, ordered[1].dec, ordered[3].ra, ordered[3].dec);
+
+            const sortedSides = [...sides].sort((x, y) => x - y);
+            const sideRatio = sortedSides[0] / Math.max(sortedSides[3], 0.001);
+            const diagRatio = Math.min(diag1, diag2) / Math.max(diag1, diag2, 0.001);
+
+            // Interior angles at each vertex
+            const interiorAngles = [0, 1, 2, 3].map(i => {
+              const prev = (i + 3) % 4;
+              const next = (i + 1) % 4;
+              const vPrev = { x: offs[prev].x - offs[i].x, y: offs[prev].y - offs[i].y };
+              const vNext = { x: offs[next].x - offs[i].x, y: offs[next].y - offs[i].y };
+              return angleBetweenVectors(vPrev, vNext);
+            });
+            const minAngle = Math.min(...interiorAngles);
+
+            // Diamond: all 4 sides roughly equal (4-star patterns get higher base for using more stars)
+            if (sideRatio > 0.6 && diagRatio >= 0.4 && diagRatio <= 2.5 && minAngle > 40) {
+              const diamondScore = 62 + sideRatio * 22 + brightness4 * 1.5 + Math.min(1, (minAngle - 40) / 50) * 8;
+              if (diamondScore > best.score) {
+                best = {
+                  type: 'diamond',
+                  description: `${ordered.map(s => patternLabel(s)).join(', ')} form a diamond`,
+                  score: diamondScore,
+                  confidence: Math.min(0.96, 0.58 + sideRatio * 0.22 + Math.min(1, (minAngle - 40) / 60) * 0.14),
+                  anchors: ordered,
+                };
+              }
+            }
+
+            // Trapezoid: one pair of opposite sides roughly parallel
+            for (const [pair1, pair2] of [
+              [[0, 1], [2, 3]], [[1, 2], [3, 0]], [[0, 3], [1, 2]],
+            ] as [number[], number[]][]) {
+              const p1 = offs[pair1[0]], p2 = offs[pair1[1]];
+              const p3 = offs[pair2[0]], p4 = offs[pair2[1]];
+              if (linesApproximatelyParallel(p1, p2, p3, p4, 20) &&
+                  !linesApproximatelyParallel(offs[pair1[0]], offs[pair2[0]], offs[pair1[1]], offs[pair2[1]], 30)) {
+                // Compute parallelism quality (how close to 0 the angle diff is)
+                const ang1 = Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI;
+                const ang2 = Math.atan2(p4.y - p3.y, p4.x - p3.x) * 180 / Math.PI;
+                let parallelism = Math.abs(ang1 - ang2) % 180;
+                if (parallelism > 90) parallelism = 180 - parallelism;
+                parallelism = 1 - parallelism / 20; // 1.0 = perfect parallel, 0.0 = 20° off
+
+                const trapScore = 60 + parallelism * 22 + brightness4 * 1.5 + Math.min(1, (minAngle - 30) / 50) * 8;
+                if (minAngle > 30 && trapScore > best.score) {
+                  best = {
+                    type: 'trapezoid',
+                    description: `${ordered.map(s => patternLabel(s)).join(', ')} form a trapezoid`,
+                    score: trapScore,
+                    confidence: Math.min(0.94, 0.56 + parallelism * 0.24 + Math.min(1, (minAngle - 30) / 60) * 0.12),
+                    anchors: ordered,
+                  };
+                }
+                break; // only need one parallel pair
+              }
+            }
+
+            // Kite: two pairs of adjacent sides equal
+            for (let start = 0; start < 4; start++) {
+              const s0 = sides[start];
+              const s1 = sides[(start + 1) % 4];
+              const s2 = sides[(start + 2) % 4];
+              const s3 = sides[(start + 3) % 4];
+              const adj1Ratio = Math.min(s0, s3) / Math.max(s0, s3, 0.001);
+              const adj2Ratio = Math.min(s1, s2) / Math.max(s1, s2, 0.001);
+              if (adj1Ratio > 0.8 && adj2Ratio > 0.8 && Math.abs(s0 - s1) / Math.max(s0, s1, 0.001) > 0.15) {
+                const symmetry = (adj1Ratio + adj2Ratio) / 2;
+                const kiteScore = 62 + symmetry * 20 + brightness4 * 1.4 + Math.min(1, (minAngle - 25) / 50) * 8;
+                if (minAngle > 25 && kiteScore > best.score) {
+                  best = {
+                    type: 'kite',
+                    description: `${ordered.map(s => patternLabel(s)).join(', ')} form a kite shape`,
+                    score: kiteScore,
+                    confidence: Math.min(0.92, 0.55 + symmetry * 0.22 + Math.min(1, (minAngle - 25) / 60) * 0.12),
+                    anchors: ordered,
+                  };
+                }
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Cross detection: find two perpendicular line segments among top stars
+    for (let i = 0; i < top.length - 1; i++) {
+      for (let j = i + 1; j < top.length; j++) {
+        for (let k = j + 1; k < top.length - 1; k++) {
+          for (let l = k + 1; l < top.length; l++) {
+            // Try (i,j) vs (k,l) as two arms
+            const oi = localOffset(center, top[i]);
+            const oj = localOffset(center, top[j]);
+            const ok = localOffset(center, top[k]);
+            const ol = localOffset(center, top[l]);
+            const dir1 = { x: oj.x - oi.x, y: oj.y - oi.y };
+            const dir2 = { x: ol.x - ok.x, y: ol.y - ok.y };
+            const angle = angleBetweenVectors(dir1, dir2);
+            const perpDeviation = Math.abs(angle - 90);
+            if (perpDeviation < 20) {
+              // Check midpoints are close
+              const mid1 = { x: (oi.x + oj.x) / 2, y: (oi.y + oj.y) / 2 };
+              const mid2 = { x: (ok.x + ol.x) / 2, y: (ok.y + ol.y) / 2 };
+              const midDist = Math.hypot(mid1.x - mid2.x, mid1.y - mid2.y);
+              if (midDist < 1.5) {
+                const perpQuality = 1 - perpDeviation / 20;
+                const intersectQuality = Math.max(0, 1 - midDist / 1.5);
+                const crossBrightness = [top[i], top[j], top[k], top[l]].reduce((sum, s) => sum + Math.max(0, 6 - s.mag), 0) / 4;
+                const crossScore = 62 + perpQuality * 20 + intersectQuality * 10 + crossBrightness * 1.5;
+                if (crossScore > best.score) {
+                  best = {
+                    type: 'cross',
+                    description: `${patternLabel(top[i])}–${patternLabel(top[j])} and ${patternLabel(top[k])}–${patternLabel(top[l])} form a cross`,
+                    score: crossScore,
+                    confidence: Math.min(0.95, 0.58 + perpQuality * 0.22 + intersectQuality * 0.14),
+                    anchors: [top[i], top[j], top[k], top[l]], // [arm1-start, arm1-end, arm2-start, arm2-end]
+                  };
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ── Zigzag detection (4-5 stars with alternating turns) ──
+  if (top.length >= 4) {
+    // Sort stars along principal axis
+    const allOffs = top.map(s => ({ star: s, off: localOffset(center, s) }));
+    // PCA-lite: sort by the dominant axis
+    const xRange = Math.max(...allOffs.map(o => o.off.x)) - Math.min(...allOffs.map(o => o.off.x));
+    const yRange = Math.max(...allOffs.map(o => o.off.y)) - Math.min(...allOffs.map(o => o.off.y));
+    allOffs.sort((a, b) => xRange >= yRange
+      ? a.off.x - b.off.x
+      : a.off.y - b.off.y);
+
+    for (let count = Math.min(5, allOffs.length); count >= 4; count--) {
+      const subset = allOffs.slice(0, count);
+      let alternating = true;
+      let prevSign = 0;
+      let minTurnAngle = 180;
+      for (let i = 0; i < subset.length - 2; i++) {
+        const cp = crossProduct2D(subset[i].off, subset[i + 1].off, subset[i + 2].off);
+        const sign = cp > 0 ? 1 : cp < 0 ? -1 : 0;
+        if (sign === 0) { alternating = false; break; }
+        if (prevSign !== 0 && sign === prevSign) { alternating = false; break; }
+        prevSign = sign;
+        // Compute turn angle
+        const v1 = { x: subset[i + 1].off.x - subset[i].off.x, y: subset[i + 1].off.y - subset[i].off.y };
+        const v2 = { x: subset[i + 2].off.x - subset[i + 1].off.x, y: subset[i + 2].off.y - subset[i + 1].off.y };
+        const turnAngle = 180 - angleBetweenVectors(v1, v2);
+        minTurnAngle = Math.min(minTurnAngle, turnAngle);
+      }
+      if (alternating && minTurnAngle > 25) {
+        const brightness = subset.reduce((sum, o) => sum + Math.max(0, 6 - o.star.mag), 0) / subset.length;
+        const turnConsistency = Math.min(1, minTurnAngle / 60);
+        const zigzagScore = 58 + turnConsistency * 20 + brightness * 1.3 + (count - 4) * 12;
+        if (zigzagScore > best.score) {
+          best = {
+            type: 'zigzag',
+            description: `${subset.map(o => patternLabel(o.star)).join(' ↔ ')} trace a zigzag`,
+            score: zigzagScore,
+            confidence: Math.min(0.88, 0.50 + turnConsistency * 0.22 + Math.min(1, minTurnAngle / 80) * 0.15),
+            anchors: subset.map(o => o.star),
+          };
+        }
+        break; // prefer longer zigzag, so try 5 first then 4
       }
     }
   }
@@ -688,8 +1074,9 @@ function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalysis {
         const midpointDist = Math.sqrt(((oa.x + ob.x) / 2) ** 2 + ((oa.y + ob.y) / 2) ** 2);
         const sideBalance = 1 - Math.min(1, Math.abs(oa.dist - ob.dist) / Math.max(Math.max(oa.dist, ob.dist), 0.001));
         const opening = angleBetweenVectors(oa, ob);
-        const bracketScore = 50 + sideBalance * 24 + Math.max(0, (opening - 70) / 40) * 10 + Math.max(0, 2 - midpointDist) * 6;
-        if (opening >= 75 && sideBalance > 0.45 && sep > 1.2 && bracketScore > best.score) {
+        // Bracket is a 2-star flanking pattern — should lose to 3+ star patterns
+        const bracketScore = 50 + sideBalance * 16 + Math.max(0, Math.min(opening, 140) - 70) / 40 * 8 + Math.max(0, 2 - midpointDist) * 4;
+        if (opening >= 75 && opening <= 160 && sideBalance > 0.45 && sep > 1.2 && bracketScore > best.score) {
           best = {
             type: 'bracket',
             description: `${patternLabel(a)} and ${patternLabel(b)} bracket the next move`,
@@ -1145,11 +1532,18 @@ function scoreRoute(hops: HopStep[], params: ObservingParams): number {
 
     if (hop.visibleGuideStars.length < 2) score -= 4;
     if (hop.visibleGuideStars.length >= 3) score += 1;
-    if (hop.patternType === 'triangle') score += profile.mode === 'binocular' ? 4 : 3;
-    else if (hop.patternType === 'bracket') score += profile.mode === 'binocular' ? 3 : 2;
-    else if (hop.patternType === 'chain') score += profile.mode === 'binocular' ? 2 : 1;
-    else if (hop.patternType === 'pair') score -= profile.pairPenalty;
-    else score -= profile.sparsePenalty;
+    // Pattern scoring tiers
+    if (hop.patternType === 'triangle' || hop.patternType === 'diamond' || hop.patternType === 'cross' || hop.patternType === 'trapezoid') {
+      score += profile.mode === 'binocular' ? 4 : 3; // Tier 1: highly distinctive
+    } else if (hop.patternType === 'kite' || hop.patternType === 'arrow' || hop.patternType === 'arc' || hop.patternType === 'bracket') {
+      score += profile.mode === 'binocular' ? 3 : 2; // Tier 2: recognizable
+    } else if (hop.patternType === 'zigzag' || hop.patternType === 'chain') {
+      score += profile.mode === 'binocular' ? 2 : 1; // Tier 3: linear/directional
+    } else if (hop.patternType === 'pair') {
+      score -= profile.pairPenalty;
+    } else {
+      score -= profile.sparsePenalty;
+    }
 
     score += Math.round((hop.patternScore - 50) / 12);
     score += Math.round((hop.patternConfidence - 0.55) * 6);
