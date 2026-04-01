@@ -6,6 +6,7 @@ import {
   type SkyNode,
   type ConstellationLine,
   type DenseStar,
+  type PatternType,
 } from '@/lib/astronomy';
 
 interface SkyChartProps {
@@ -123,7 +124,7 @@ export function SkyChart({
   const handleWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const delta = e.deltaY > 0 ? -0.15 : 0.15;
+    const delta = e.deltaY > 0 ? -0.07 : 0.07;
     setZoom((prev) => {
       const next = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, prev * (1 + delta)));
       // Adjust pan to stay clamped
@@ -572,6 +573,91 @@ export function SkyChart({
 
   const fovCenter = currentHop ? project(currentHop.center.ra, currentHop.center.dec) : null;
 
+  // SVG shapes for pattern visualization
+  const renderPatternShape = useCallback((
+    patternType: PatternType,
+    anchors: SkyNode[],
+    opacity: number,
+  ): React.ReactNode | null => {
+    if (anchors.length < 2) return null;
+    const projected = anchors
+      .map(star => project(star.ra, star.dec))
+      .filter(Boolean) as { x: number; y: number }[];
+    if (projected.length < 2) return null;
+
+    const strokeColor = '#c084fc';
+    const fillColor = `rgba(192, 132, 252, ${(0.12 * opacity).toFixed(3)})`;
+    const sw = 1.2;
+    const so = opacity;
+
+    switch (patternType) {
+      case 'triangle':
+      case 'diamond':
+      case 'trapezoid':
+      case 'kite': {
+        if (projected.length < 3) return null;
+        const pts = projected.map(p => `${p.x},${p.y}`).join(' ');
+        return <polygon points={pts} fill={fillColor} stroke={strokeColor} strokeWidth={sw} opacity={so} strokeLinejoin="round" />;
+      }
+      case 'chain':
+      case 'zigzag': {
+        const pts = projected.map(p => `${p.x},${p.y}`).join(' ');
+        return <polyline points={pts} fill="none" stroke={strokeColor} strokeWidth={sw} opacity={so} strokeDasharray={patternType === 'zigzag' ? '3 2' : '5 3'} strokeLinecap="round" />;
+      }
+      case 'arc': {
+        if (projected.length < 3) return null;
+        const d = projected.length === 3
+          ? `M${projected[0].x},${projected[0].y} Q${projected[1].x},${projected[1].y} ${projected[2].x},${projected[2].y}`
+          : `M${projected.map(p => `${p.x},${p.y}`).join(' L')}`;
+        return <path d={d} fill="none" stroke={strokeColor} strokeWidth={sw} opacity={so} strokeDasharray="4 3" strokeLinecap="round" />;
+      }
+      case 'cross': {
+        if (projected.length < 4) return null;
+        return (
+          <g>
+            <line x1={projected[0].x} y1={projected[0].y} x2={projected[1].x} y2={projected[1].y} stroke={strokeColor} strokeWidth={sw} opacity={so} />
+            <line x1={projected[2].x} y1={projected[2].y} x2={projected[3].x} y2={projected[3].y} stroke={strokeColor} strokeWidth={sw} opacity={so} />
+          </g>
+        );
+      }
+      case 'arrow': {
+        const pts = projected.map(p => `${p.x},${p.y}`).join(' ');
+        return <polyline points={pts} fill="none" stroke={strokeColor} strokeWidth={sw} opacity={so} markerEnd="url(#pattern-arrowhead)" strokeLinecap="round" strokeLinejoin="round" />;
+      }
+      case 'bracket': {
+        if (!fovCenter || projected.length < 2) return null;
+        return (
+          <g>
+            {projected.map((p, i) => (
+              <line key={i} x1={fovCenter.x} y1={fovCenter.y} x2={p.x} y2={p.y} stroke={strokeColor} strokeWidth={sw * 0.8} opacity={so * 0.7} strokeDasharray="4 3" />
+            ))}
+          </g>
+        );
+      }
+      case 'pair': {
+        return <line x1={projected[0].x} y1={projected[0].y} x2={projected[1].x} y2={projected[1].y} stroke={strokeColor} strokeWidth={sw * 0.7} opacity={so * 0.5} strokeDasharray="3 4" />;
+      }
+      default:
+        return null;
+    }
+  }, [project, fovCenter]);
+
+  const patternShapeSvg = useMemo(() => {
+    if (!route || !currentHop) return null;
+    return renderPatternShape(currentHop.patternType, currentHop.patternAnchors, 0.55);
+  }, [route, currentHop, renderPatternShape]);
+
+  const ghostPatternShapes = useMemo(() => {
+    if (!route) return null;
+    return route.hops
+      .filter((_, index) => index !== animStep && index > animStep)
+      .map((hop, i) => (
+        <g key={`ghost-pattern-${i}`}>
+          {renderPatternShape(hop.patternType, hop.patternAnchors, 0.12)}
+        </g>
+      ));
+  }, [route, animStep, renderPatternShape]);
+
   return (
     <div
       ref={containerRef}
@@ -613,6 +699,16 @@ export function SkyChart({
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          <marker
+            id="pattern-arrowhead"
+            markerWidth="6"
+            markerHeight="4"
+            refX="5"
+            refY="2"
+            orient="auto"
+          >
+            <polygon points="0 0, 6 2, 0 4" fill="#c084fc" opacity="0.7" />
+          </marker>
         </defs>
 
         <rect width={CHART_SIZE} height={CHART_SIZE} fill="url(#sky-gradient)" rx="8" />
@@ -655,6 +751,11 @@ export function SkyChart({
 
         {routePath && <path d={routePath} stroke="#315e86" strokeWidth="1.2" fill="none" opacity="0.26" strokeDasharray="5 4" />}
         {routeProgressPath && <path d={routeProgressPath} stroke="#4fc3ff" strokeWidth="1.8" fill="none" opacity="0.88" />}
+
+        {/* Ghost pattern shapes for upcoming hops */}
+        {ghostPatternShapes}
+        {/* Active pattern shape visualization */}
+        {patternShapeSvg}
 
         {plottedStars.map(({ star, point, radius, isAnchor, isTarget, isPatternAnchor, isGuide }) => (
           <g
@@ -957,7 +1058,7 @@ export function SkyChart({
           <button
             onClick={() => {
               setZoom((z) => {
-                const next = Math.min(MAX_ZOOM, z * 1.3);
+                const next = Math.min(MAX_ZOOM, z * 1.15);
                 setPanX((px) => clampPan(px, 0, next).x);
                 setPanY((py) => clampPan(0, py, next).y);
                 return next;
@@ -972,7 +1073,7 @@ export function SkyChart({
           <button
             onClick={() => {
               setZoom((z) => {
-                const next = Math.max(MIN_ZOOM, z / 1.3);
+                const next = Math.max(MIN_ZOOM, z / 1.15);
                 setPanX((px) => clampPan(px, 0, next).x);
                 setPanY((py) => clampPan(0, py, next).y);
                 return next;
