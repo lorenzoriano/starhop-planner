@@ -17,11 +17,11 @@ import {
   Info, Sparkles, Image as ImageIcon, WifiOff, Wifi
 } from 'lucide-react';
 import {
-  planRoutes, findBestObservingTime, loadMessier, loadConstellations, loadBinocularTargets, loadDenseStars,
+  planRoutes, findBestObservingTime, loadMessier, loadConstellations, loadBinocularTargets, loadDenseStars, loadMilkyWay,
   buildUnifiedTargets,
   PRESETS, BINOCULAR_CATEGORY_LABELS,
   type Route, type SkyNode, type ObservingParams, type MessierObject, type ConstellationLine, type ObservingMode,
-  type BinocularTarget, type UnifiedTarget, type BinocularCategory, type DenseStar, type DifficultyLevel,
+  type BinocularTarget, type UnifiedTarget, type BinocularCategory, type DenseStar, type MilkyWayFeature, type DifficultyLevel,
 } from '@/lib/astronomy';
 import { SkyChart } from '@/components/SkyChart';
 import { ImageFallback } from '@/components/ImageFallback';
@@ -66,18 +66,20 @@ export default function PlannerPage() {
   const [constellations, setConstellations] = useState<ConstellationLine[]>([]);
   const [unifiedTargets, setUnifiedTargets] = useState<UnifiedTarget[]>([]);
   const [denseStars, setDenseStars] = useState<DenseStar[]>([]);
+  const [milkyWay, setMilkyWay] = useState<MilkyWayFeature[]>([]);
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
 
   // Tab
   const [activeTab, setActiveTab] = useState('planner');
 
   useEffect(() => {
-    Promise.all([loadMessier(), loadBinocularTargets(), loadConstellations(), loadDenseStars()]).then(
-      ([m, b, c, d]) => {
+    Promise.all([loadMessier(), loadBinocularTargets(), loadConstellations(), loadDenseStars(), loadMilkyWay()]).then(
+      ([m, b, c, d, mw]) => {
         setMessierList(m);
         setBinocularTargets(b);
         setConstellations(c);
         setDenseStars(d);
+        setMilkyWay(mw);
         setUnifiedTargets(buildUnifiedTargets(m, b));
       }
     );
@@ -594,6 +596,7 @@ export default function PlannerPage() {
               date={observingDate}
               limitingMag={limitingMag}
               denseStars={denseStars}
+              milkyWay={milkyWay}
             />
           </Card>
 

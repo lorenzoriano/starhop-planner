@@ -2,10 +2,12 @@ import { useMemo, useRef, useState, useCallback, useEffect } from 'react';
 import {
   stereographicProject,
   angularDistance,
+  getConstellationName,
   type Route,
   type SkyNode,
   type ConstellationLine,
   type DenseStar,
+  type MilkyWayFeature,
   type PatternType,
 } from '@/lib/astronomy';
 
@@ -23,6 +25,7 @@ interface SkyChartProps {
   date: Date;
   limitingMag: number;
   denseStars: DenseStar[];
+  milkyWay: MilkyWayFeature[];
 }
 
 const CHART_SIZE = 600;
@@ -41,6 +44,7 @@ export function SkyChart({
   fovShape,
   limitingMag,
   denseStars,
+  milkyWay,
 }: SkyChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,6 +56,7 @@ export function SkyChart({
   const [navStarSize, setNavStarSize] = useState(5); // 1-10; /5 → multiplier (default 1.0×)
   const [showLegend, setShowLegend] = useState(true);
   const [showGhostCircles, setShowGhostCircles] = useState(true);
+  const [showConstellations, setShowConstellations] = useState(true);
 
   // Zoom and pan state
   const [zoom, setZoom] = useState(1);
@@ -286,6 +291,17 @@ export function SkyChart({
     return '#4a5870';
   };
 
+  // Glow gradient ID from B-V color index for bright star halos
+  const bvGlowId = (bv: number) => {
+    if (bv <= -0.3) return 'glow-blue';
+    if (bv <= 0.0)  return 'glow-bluewhite';
+    if (bv <= 0.3)  return 'glow-white';
+    if (bv <= 0.6)  return 'glow-yellowwhite';
+    if (bv <= 1.0)  return 'glow-yellow';
+    if (bv <= 1.5)  return 'glow-orange';
+    return 'glow-red';
+  };
+
   // Realistic star color from B-V color index (spectral type)
   const bvColor = (bv: number) => {
     if (bv <= -0.3) return '#a0b5ff'; // O-type: blue
@@ -390,6 +406,37 @@ export function SkyChart({
     return result;
   }, [denseStars, limitingMag, center.ra, center.dec, viewRadius, scale]);
 
+  // ───── Milky Way outline paths (from d3-celestial mw.json) ─────
+  // 5 nested polygon layers (ol1–ol5) rendered with additive opacity:
+  // overlapping regions appear brighter, creating a natural brightness gradient.
+  const milkyWayPaths = useMemo(() => {
+    if (!milkyWay.length) return [];
+    const paths: { d: string; id: string }[] = [];
+    for (const feature of milkyWay) {
+      for (let ri = 0; ri < feature.coordinates.length; ri++) {
+        const ring = feature.coordinates[ri];
+        let d = '';
+        let hasVisiblePoint = false;
+        for (const [ra, dec] of ring) {
+          const p = stereographicProject(ra, dec, center.ra, center.dec, scale);
+          if (!p) {
+            if (d) { d += ' Z'; paths.push({ d, id: `${feature.id}-${ri}` }); d = ''; }
+            continue;
+          }
+          const x = cx + p.x;
+          const y = cy + p.y;
+          hasVisiblePoint = true;
+          d += d ? ` L${x},${y}` : `M${x},${y}`;
+        }
+        if (d && hasVisiblePoint) {
+          d += ' Z';
+          paths.push({ d, id: `${feature.id}-${ri}` });
+        }
+      }
+    }
+    return paths;
+  }, [milkyWay, center.ra, center.dec, scale]);
+
   const constellationPaths = useMemo(() => {
     const paths: { d: string; id: string; nearFocus: boolean }[] = [];
     for (const constellation of constellations) {
@@ -418,6 +465,47 @@ export function SkyChart({
     }
     return paths;
   }, [constellations, center.ra, center.dec, scale, viewRadius, focusPoint, localRadius, activeConstellationIds]);
+
+  // ───── Constellation name labels at centroid of visible constellations ─────
+  const constellationLabels = useMemo(() => {
+    if (!showConstellations) return [];
+    const labels: { x: number; y: number; name: string; abbr: string; nearFocus: boolean }[] = [];
+    for (const constellation of constellations) {
+      // Compute centroid of all vertices
+      let sumRa = 0, sumDec = 0, count = 0;
+      for (const seg of constellation.points) {
+        for (const [ra, dec] of seg) {
+          sumRa += ra;
+          sumDec += dec;
+          count++;
+        }
+      }
+      if (count === 0) continue;
+      const avgRa = sumRa / count;
+      const avgDec = sumDec / count;
+
+      // Only show if centroid is within the view
+      const dist = angularDistance(avgRa, avgDec, center.ra, center.dec);
+      if (dist > viewRadius * 1.1) continue;
+
+      const p = stereographicProject(avgRa, avgDec, center.ra, center.dec, scale);
+      if (!p) continue;
+      const x = cx + p.x;
+      const y = cy + p.y;
+      if (x < 20 || x > CHART_SIZE - 20 || y < 20 || y > CHART_SIZE - 20) continue;
+
+      const isNearFocus = focusPoint ? dist < localRadius * 1.2 : false;
+      const isActive = activeConstellationIds.has(constellation.id);
+
+      labels.push({
+        x, y,
+        name: getConstellationName(constellation.id),
+        abbr: constellation.id,
+        nearFocus: isNearFocus || isActive,
+      });
+    }
+    return labels;
+  }, [constellations, center.ra, center.dec, scale, viewRadius, focusPoint, localRadius, activeConstellationIds, showConstellations]);
 
   const routePath = useMemo(() => {
     if (!route) return null;
@@ -699,6 +787,14 @@ export function SkyChart({
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          {/* Star glow gradients by spectral type */}
+          <radialGradient id="glow-blue"><stop offset="0%" stopColor="#a0b5ff" stopOpacity="0.4" /><stop offset="100%" stopColor="#a0b5ff" stopOpacity="0" /></radialGradient>
+          <radialGradient id="glow-bluewhite"><stop offset="0%" stopColor="#c4d4ff" stopOpacity="0.35" /><stop offset="100%" stopColor="#c4d4ff" stopOpacity="0" /></radialGradient>
+          <radialGradient id="glow-white"><stop offset="0%" stopColor="#e8eeff" stopOpacity="0.3" /><stop offset="100%" stopColor="#e8eeff" stopOpacity="0" /></radialGradient>
+          <radialGradient id="glow-yellowwhite"><stop offset="0%" stopColor="#fff8f0" stopOpacity="0.3" /><stop offset="100%" stopColor="#fff8f0" stopOpacity="0" /></radialGradient>
+          <radialGradient id="glow-yellow"><stop offset="0%" stopColor="#ffddb0" stopOpacity="0.25" /><stop offset="100%" stopColor="#ffddb0" stopOpacity="0" /></radialGradient>
+          <radialGradient id="glow-orange"><stop offset="0%" stopColor="#ffaa80" stopOpacity="0.25" /><stop offset="100%" stopColor="#ffaa80" stopOpacity="0" /></radialGradient>
+          <radialGradient id="glow-red"><stop offset="0%" stopColor="#ff9070" stopOpacity="0.25" /><stop offset="100%" stopColor="#ff9070" stopOpacity="0" /></radialGradient>
           <marker
             id="pattern-arrowhead"
             markerWidth="6"
@@ -713,6 +809,14 @@ export function SkyChart({
 
         <rect width={CHART_SIZE} height={CHART_SIZE} fill="url(#sky-gradient)" rx="8" />
 
+        {/* Milky Way band — 5 nested polygon layers with additive opacity */}
+        <g clipPath="inset(0)">
+          {milkyWayPaths.map((path, i) => (
+            <path key={`mw-${path.id}-${i}`} d={path.d}
+              fill="rgba(170, 190, 255, 0.055)" stroke="none" />
+          ))}
+        </g>
+
         {[5, 10, 20].filter((r) => r < viewRadius).map((r) => (
           <circle
             key={r}
@@ -726,27 +830,53 @@ export function SkyChart({
           />
         ))}
 
-        {constellationPaths.map((path, index) => (
+        {showConstellations && constellationPaths.map((path, index) => (
           <path
             key={`${path.id}-${index}`}
             d={path.d}
-            stroke={path.nearFocus ? '#2a3a5c' : '#1a2136'}
-            strokeWidth={path.nearFocus ? 0.9 : 0.7}
+            stroke={path.nearFocus ? '#5a8abf' : '#3a5580'}
+            strokeWidth={path.nearFocus ? 1.4 : 0.9}
             fill="none"
-            opacity={path.nearFocus ? 0.55 : 0.3}
+            opacity={path.nearFocus ? 0.8 : 0.45}
+            strokeLinecap="round"
           />
+        ))}
+
+        {/* Constellation name labels */}
+        {showConstellations && constellationLabels.map((label) => (
+          <text
+            key={`cname-${label.abbr}`}
+            x={label.x}
+            y={label.y}
+            textAnchor="middle"
+            fill={label.nearFocus ? '#5a8abf' : '#3a5580'}
+            opacity={label.nearFocus ? 0.7 : 0.35}
+            fontSize="9"
+            fontFamily="var(--font-sans)"
+            fontWeight="500"
+            letterSpacing="1.5"
+            pointerEvents="none"
+          >
+            {label.name.toUpperCase()}
+          </text>
         ))}
 
         {/* Dense background star field from Hipparcos catalog */}
         {backgroundStarLayer.map((star, i) => (
-          <circle
-            key={i}
-            cx={star.x}
-            cy={star.y}
-            r={bgStarSize(star.mag) * brightMul}
-            fill={bvColor(star.bv)}
-            opacity={Math.min(0.97, bgStarOpacity(star.mag) * brightMul)}
-          />
+          <g key={i}>
+            {star.mag < 2.5 && (
+              <circle cx={star.x} cy={star.y}
+                r={bgStarSize(star.mag) * brightMul * 4}
+                fill={`url(#${bvGlowId(star.bv)})`} />
+            )}
+            <circle
+              cx={star.x}
+              cy={star.y}
+              r={bgStarSize(star.mag) * brightMul}
+              fill={bvColor(star.bv)}
+              opacity={Math.min(0.97, bgStarOpacity(star.mag) * brightMul)}
+            />
+          </g>
         ))}
 
         {routePath && <path d={routePath} stroke="#315e86" strokeWidth="1.2" fill="none" opacity="0.26" strokeDasharray="5 4" />}
@@ -1049,6 +1179,41 @@ export function SkyChart({
               style={{ color: showGhostCircles ? 'rgba(245,158,11,0.6)' : '#4d6280' }}
             >
               ◌
+            </span>
+          </div>
+          {/* Constellation lines toggle */}
+          <div
+            className="flex flex-col items-center gap-0.5"
+            title={showConstellations ? 'Hide constellation lines' : 'Show constellation lines'}
+          >
+            <button
+              onClick={() => setShowConstellations(v => !v)}
+              style={{
+                width: 18,
+                height: 60,
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="3" cy="3" r="1.5" fill={showConstellations ? '#5a8abf' : '#4d6280'} />
+                <circle cx="11" cy="5" r="1.5" fill={showConstellations ? '#5a8abf' : '#4d6280'} />
+                <circle cx="7" cy="11" r="1.5" fill={showConstellations ? '#5a8abf' : '#4d6280'} />
+                <line x1="3" y1="3" x2="11" y2="5" stroke={showConstellations ? '#5a8abf' : '#4d6280'} strokeWidth="1" opacity={showConstellations ? 0.8 : 0.4} />
+                <line x1="11" y1="5" x2="7" y2="11" stroke={showConstellations ? '#5a8abf' : '#4d6280'} strokeWidth="1" opacity={showConstellations ? 0.8 : 0.4} />
+                <line x1="7" y1="11" x2="3" y2="3" stroke={showConstellations ? '#5a8abf' : '#4d6280'} strokeWidth="1" opacity={showConstellations ? 0.8 : 0.4} />
+              </svg>
+            </button>
+            <span
+              className="text-[9px] select-none leading-none"
+              style={{ color: showConstellations ? '#5a8abf' : '#4d6280' }}
+            >
+              ✳
             </span>
           </div>
         </div>
