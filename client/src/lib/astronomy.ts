@@ -1446,7 +1446,7 @@ function generateHopSteps(
 
     hops.push({
       center: { ra: node.ra, dec: node.dec, alt: node.alt, az: node.az },
-      visibleGuideStars: deduped,
+      visibleGuideStars: [node, ...deduped],
       pattern,
       patternType: patternAnalysis.type,
       patternConfidence: patternAnalysis.confidence,
