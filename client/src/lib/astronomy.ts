@@ -165,11 +165,18 @@ function parseDec(decStr: string): number {
 // Dense star catalog type: [ra_deg, dec_deg, mag, bv_color_index]
 export type DenseStar = [number, number, number, number];
 
+// Milky Way outline feature (from d3-celestial mw.json)
+export interface MilkyWayFeature {
+  id: string;
+  coordinates: [number, number][][]; // rings of [ra_deg, dec_deg]
+}
+
 let _stars: Star[] | null = null;
 let _messier: MessierObject[] | null = null;
 let _constellations: ConstellationLine[] | null = null;
 let _binocularTargets: BinocularTarget[] | null = null;
 let _denseStars: DenseStar[] | null = null;
+let _milkyWay: MilkyWayFeature[] | null = null;
 
 export async function loadStars(): Promise<Star[]> {
   if (_stars) return _stars;
@@ -226,6 +233,22 @@ export async function loadDenseStars(): Promise<DenseStar[]> {
   const resp = await fetch('./data/stars-dense.json');
   _denseStars = await resp.json();
   return _denseStars!;
+}
+
+export async function loadMilkyWay(): Promise<MilkyWayFeature[]> {
+  if (_milkyWay) return _milkyWay;
+  const resp = await fetch('./data/mw.json');
+  const geojson = await resp.json();
+  _milkyWay = geojson.features.map((f: any) => ({
+    id: f.id,
+    coordinates: f.geometry.coordinates.map((poly: any) =>
+      poly[0].map(([lon, lat]: [number, number]) => [
+        lon < 0 ? lon + 360 : lon, // convert [-180,180] lon → [0,360] RA
+        lat,
+      ] as [number, number])
+    ),
+  }));
+  return _milkyWay!;
 }
 
 export async function loadBinocularTargets(): Promise<BinocularTarget[]> {
