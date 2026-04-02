@@ -1675,19 +1675,34 @@ export async function planRoutes(params: ObservingParams): Promise<{
       }
       if (!bestAnchor) continue;
 
-      // Build known route hops from waypoint instructions
-      const knownHops: HopStep[] = knownEntry.waypoints.map((wp) => ({
-        center: { ra: knownEntry.anchorRA_approx, dec: knownEntry.anchorDec_approx, alt: 45, az: 180 },
-        visibleGuideStars: [],
-        pattern: wp.instruction,
-        patternType: 'field' as PatternType,
-        patternConfidence: 1.0,
-        patternScore: 100,
-        patternAnchors: [],
-        direction: '',
-        distanceDeg: 0,
-        instruction: wp.instruction,
-      }));
+      // Build known route hops from waypoint instructions.
+      // Match each waypoint name to a real star/target for RA/Dec positioning.
+      const knownHops: HopStep[] = knownEntry.waypoints.map((wp) => {
+        // Try to find the waypoint star by name (case-insensitive partial match)
+        const wpLower = wp.name.toLowerCase();
+        const matchedNode = allNodes.find(n =>
+          n.name.toLowerCase().includes(wpLower) ||
+          wpLower.includes(n.name.toLowerCase()) && n.name.length > 2
+        );
+        // Also check if waypoint name matches the target
+        const isTarget = wp.name.toLowerCase().includes(params.targetId.toLowerCase()) ||
+          params.targetId.toLowerCase().includes(wp.name.toLowerCase().replace(/\s/g, ''));
+        const centerNode = isTarget ? targetNode :
+          matchedNode ?? bestAnchor!;
+
+        return {
+          center: { ra: centerNode.ra, dec: centerNode.dec, alt: centerNode.alt, az: centerNode.az },
+          visibleGuideStars: [centerNode],
+          pattern: wp.instruction,
+          patternType: 'field' as PatternType,
+          patternConfidence: 1.0,
+          patternScore: 100,
+          patternAnchors: [],
+          direction: '',
+          distanceDeg: 0,
+          instruction: wp.instruction,
+        };
+      });
 
       expertRoutes.push({
         id: 'route-expert-1',
