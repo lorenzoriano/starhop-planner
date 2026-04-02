@@ -193,3 +193,18 @@ export function findTarget(targets: SkyNode[], id: string): SkyNode {
   if (!found) throw new Error(`Target "${id}" not found in catalog`);
   return found;
 }
+
+export interface ConstellationLineData {
+  id: string;
+  points: [number, number][][];
+}
+
+export function loadConstellationsFromDisk(): ConstellationLineData[] {
+  const raw = JSON.parse(readFileSync(resolve(DATA_DIR, 'constellations.lines.json'), 'utf-8'));
+  return raw.features.map((f: any) => ({
+    id: f.id,
+    points: f.geometry.coordinates.map((line: number[][]) =>
+      line.map(([ra, dec]: number[]) => [ra < 0 ? ra + 360 : ra, dec] as [number, number])
+    ),
+  }));
+}

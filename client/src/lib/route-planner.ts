@@ -9,6 +9,7 @@
  */
 import { angularDistance } from './astronomy';
 import type { SkyNode } from './astronomy';
+import type { CostStrategy, CostContext } from './cost-strategies';
 
 // ─── Types ───────────────────────────────────────────────────
 
@@ -282,6 +283,8 @@ export function variableReachAStar(
   stars: SkyNode[],
   fov: number,
   difficulty: DifficultyLevel,
+  costStrategy?: CostStrategy,
+  costContext?: CostContext,
 ): SkyNode[] | null {
   // Graph connectivity uses full reach so all difficulty levels can find a route.
   // Difficulty affects hop cost: beginners prefer shorter hops (soft penalty),
@@ -314,6 +317,9 @@ export function variableReachAStar(
 
   // Heuristic: optimistic estimate of remaining hops
   function heuristic(node: SkyNode): number {
+    if (costStrategy) {
+      return costStrategy.heuristic(node, goal, fov);
+    }
     const dist = angularDistance(node.ra, node.dec, goal.ra, goal.dec);
     return (dist / (bestReach * 1.2)) * 0.9;
   }
@@ -379,27 +385,25 @@ export function variableReachAStar(
       if (dist > reach) continue;
       if (!isGoal && neighbor.mag > MAX_WAYPOINT_MAG) continue;
 
-      // For goal edges, use source-based cost (the target might be dim but
-      // you're navigating by the surrounding bright stars, not the target itself)
-      let hopCost = isGoal
-        ? edgeCost(dist, currentNode.mag, currentNode.name !== '', fov)
-        : edgeCost(dist, neighbor.mag, isNamed, fov);
+      let hopCost: number;
+      if (costStrategy && costContext) {
+        hopCost = costStrategy.edgeCost(currentNode, neighbor, dist, fov, costContext);
+      } else {
+        // Legacy cost function (backward compatible when no strategy provided)
+        hopCost = isGoal
+          ? edgeCost(dist, currentNode.mag, currentNode.name !== '', fov)
+          : edgeCost(dist, neighbor.mag, isNamed, fov);
 
-      // Difficulty-based hop distance preference:
-      // Beginner prefers shorter, easier hops; expert is comfortable with long jumps.
-      // Uses reachMultiplier to set a "comfort threshold" — hops beyond this get a
-      // quadratic penalty that makes A* prefer routes through intermediate waypoints.
-      const distFov = dist / fov;
-      const comfortThreshold = 1.0 + (params.reachMultiplier - 0.7) * 3.0;
-      if (distFov > comfortThreshold) {
-        const excess = distFov - comfortThreshold;
-        hopCost += excess * excess * 3.0;
-      }
+        const distFov = dist / fov;
+        const comfortThreshold = 1.0 + (params.reachMultiplier - 0.7) * 3.0;
+        if (distFov > comfortThreshold) {
+          const excess = distFov - comfortThreshold;
+          hopCost += excess * excess * 3.0;
+        }
 
-      // Difficulty-based waypoint brightness preference:
-      // Beginner prefers bright, easy-to-find waypoints; expert is OK with dim stars.
-      if (!isGoal && neighbor.mag > params.minWaypointMag) {
-        hopCost += (neighbor.mag - params.minWaypointMag) * 0.3;
+        if (!isGoal && neighbor.mag > params.minWaypointMag) {
+          hopCost += (neighbor.mag - params.minWaypointMag) * 0.3;
+        }
       }
 
       const g = current.g + hopCost;
@@ -432,8 +436,10 @@ export function planRoute(
   stars: SkyNode[],
   fov: number,
   difficulty: DifficultyLevel,
+  costStrategy?: CostStrategy,
+  costContext?: CostContext,
 ): { path: SkyNode[]; compressed: CompressedHop[] } | null {
-  const rawPath = variableReachAStar(start, goal, stars, fov, difficulty);
+  const rawPath = variableReachAStar(start, goal, stars, fov, difficulty, costStrategy, costContext);
   if (!rawPath) return null;
 
   const params = DIFFICULTY_PRESETS[difficulty];

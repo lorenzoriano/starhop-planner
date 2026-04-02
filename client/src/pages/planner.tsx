@@ -23,6 +23,7 @@ import {
   type Route, type SkyNode, type ObservingParams, type MessierObject, type ConstellationLine, type ObservingMode,
   type BinocularTarget, type UnifiedTarget, type BinocularCategory, type DenseStar, type MilkyWayFeature, type DifficultyLevel,
 } from '@/lib/astronomy';
+import type { CostStrategyId } from '@/lib/cost-strategies';
 import { SkyChart } from '@/components/SkyChart';
 import { ImageFallback } from '@/components/ImageFallback';
 import { PerplexityAttribution } from '@/components/PerplexityAttribution';
@@ -41,6 +42,7 @@ export default function PlannerPage() {
   const [numRoutes, setNumRoutes] = useState(3);
   const [observingMode, setObservingMode] = useState<ObservingMode>('telescope');
   const [difficulty, setDifficulty] = useState<DifficultyLevel>('intermediate');
+  const [algorithm, setAlgorithm] = useState<CostStrategyId>('auto');
   const [targetId, setTargetId] = useState('M31');
   const [targetSearch, setTargetSearch] = useState('');
 
@@ -190,6 +192,7 @@ export default function PlannerPage() {
         limitingMag, numRoutes, targetId,
         observingMode,
         difficulty,
+        algorithm,
       };
       const result = await planRoutes(params);
       setRoutes(result.routes);
@@ -213,7 +216,7 @@ export default function PlannerPage() {
       toast({ title: 'Error', description: 'Failed to compute routes. Check parameters.', variant: 'destructive' });
     }
     setIsComputing(false);
-  }, [lat, lon, observingDate, fovWidth, fovHeight, fovShape, limitingMag, numRoutes, targetId, observingMode, difficulty, toast]);
+  }, [lat, lon, observingDate, fovWidth, fovHeight, fovShape, limitingMag, numRoutes, targetId, observingMode, difficulty, algorithm, toast]);
 
   const selectedRoute = routes[selectedRouteIdx] || null;
 
@@ -521,6 +524,26 @@ export default function PlannerPage() {
                 ? 'Minimal stops with longer sweeps. Fastest but requires experience.'
                 : 'Balanced route with moderate stops at key landmarks.'}
             </p>
+            {/* Algorithm selector (Advanced) */}
+            <details className="mt-2">
+              <summary className="text-xs text-muted-foreground cursor-pointer hover:text-foreground">
+                Advanced: Routing Algorithm
+              </summary>
+              <div className="mt-2">
+                <Select value={algorithm} onValueChange={(v) => setAlgorithm(v as CostStrategyId)}>
+                  <SelectTrigger className="h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="auto">Auto (recommended)</SelectItem>
+                    <SelectItem value="landmark-discount">Landmark Discount</SelectItem>
+                    <SelectItem value="confidence-decay">Confidence Decay</SelectItem>
+                    <SelectItem value="focal-search">Focal Search</SelectItem>
+                    <SelectItem value="landmark-magnet">Landmark Magnet</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </details>
           </Card>
 
           {/* FOV Settings */}
