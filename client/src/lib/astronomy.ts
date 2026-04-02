@@ -1730,43 +1730,102 @@ export async function planRoutes(params: ObservingParams): Promise<{
     }
     const costContext: CostContext = { difficulty: params.difficulty, landmarkScores };
 
-    const anchors = findAnchors(allNodes, targetNode, params.numRoutes, params);
+    const anchors = findAnchors(allNodes, targetNode, params.numRoutes * 2, params);
+
+    // Build a ranked list of strategies: best first (context-dependent), then alternatives.
+    // If the user explicitly selected a strategy (not 'auto'), use only that one.
+    const sampleDist = anchors.length > 0
+      ? angularDistance(anchors[0].ra, anchors[0].dec, targetNode.ra, targetNode.dec)
+      : 30;
+    const userOverride = params.algorithm && params.algorithm !== 'auto';
+
+    let rankedStrategies: import('./cost-strategies').CostStrategy[];
+    if (userOverride) {
+      // User locked a specific strategy — use it for all routes
+      const chosen = getStrategy(params.algorithm!, params.difficulty, starNodes, landmarkScores, params.fovWidth);
+      rankedStrategies = [chosen];
+    } else {
+      // Auto: rank strategies by suitability, best first
+      const best = selectStrategy(sampleDist, params.fovWidth, params.difficulty, starNodes.length);
+      const allStrategies = [
+        getStrategy('landmark-discount', params.difficulty, starNodes, landmarkScores, params.fovWidth),
+        getStrategy('confidence-decay', params.difficulty, starNodes, landmarkScores, params.fovWidth),
+        getStrategy('focal-search', params.difficulty, starNodes, landmarkScores, params.fovWidth),
+        getStrategy('landmark-magnet', params.difficulty, starNodes, landmarkScores, params.fovWidth),
+      ];
+      // Put the auto-selected best strategy first, then the rest (deduplicated)
+      rankedStrategies = [best, ...allStrategies.filter(s => s.id !== best.id)];
+    }
 
     const routes: Route[] = [];
-    const usedAnchors = new Set<string>();
+    const usedPairs = new Set<string>(); // track anchor+strategy combos to avoid duplicates
 
-    for (const anchor of anchors) {
-      if (routes.length >= params.numRoutes) break;
-      if (usedAnchors.has(anchor.id)) continue;
+    for (let stratIdx = 0; stratIdx < rankedStrategies.length && routes.length < params.numRoutes; stratIdx++) {
+      const strategy = rankedStrategies[stratIdx];
 
-      // Select cost strategy (user override or auto)
-      const totalDist = angularDistance(anchor.ra, anchor.dec, targetNode.ra, targetNode.dec);
-      const strategy = params.algorithm && params.algorithm !== 'auto'
-        ? getStrategy(params.algorithm, params.difficulty, starNodes, landmarkScores, params.fovWidth)
-        : selectStrategy(totalDist, params.fovWidth, params.difficulty, starNodes.length);
+      for (const anchor of anchors) {
+        if (routes.length >= params.numRoutes) break;
+        const pairKey = `${anchor.id}:${strategy.id}`;
+        if (usedPairs.has(pairKey)) continue;
 
-      const result = planVariableReachRoute(
-        anchor, targetNode, starNodes, params.fovWidth, params.difficulty,
-        strategy, costContext,
-      );
-      if (!result) continue;
+        const result = planVariableReachRoute(
+          anchor, targetNode, starNodes, params.fovWidth, params.difficulty,
+          strategy, costContext,
+        );
+        if (!result) continue;
 
-      usedAnchors.add(anchor.id);
+        usedPairs.add(pairKey);
 
-      // Convert compressed waypoints to HopStep format for UI compatibility
-      const waypointIds = result.path.map(n => n.id);
-      const nodeMap = new Map(allNodes.map(n => [n.id, n]));
-      const hops = generateHopSteps(waypointIds, nodeMap, allNodes, params);
-      const score = scoreRoute(hops, params);
+        // Convert compressed waypoints to HopStep format for UI compatibility
+        const waypointIds = result.path.map(n => n.id);
+        const nodeMap = new Map(allNodes.map(n => [n.id, n]));
+        const hops = generateHopSteps(waypointIds, nodeMap, allNodes, params);
+        const score = scoreRoute(hops, params);
 
-      routes.push({
-        id: `route-${routes.length + 1}`,
-        score,
-        startAnchor: anchor,
-        target: targetNode,
-        hops,
-        strategyId: strategy.id,
-      });
+        routes.push({
+          id: `route-${routes.length + 1}`,
+          score,
+          startAnchor: anchor,
+          target: targetNode,
+          hops,
+          strategyId: strategy.id,
+        });
+
+        // Each strategy gets one route per pass — move to next strategy
+        break;
+      }
+    }
+
+    // If we still need more routes (more requested than strategies × anchors),
+    // fill remaining slots by repeating the best strategy with different anchors
+    if (routes.length < params.numRoutes) {
+      const bestStrategy = rankedStrategies[0];
+      for (const anchor of anchors) {
+        if (routes.length >= params.numRoutes) break;
+        const pairKey = `${anchor.id}:${bestStrategy.id}`;
+        if (usedPairs.has(pairKey)) continue;
+
+        const result = planVariableReachRoute(
+          anchor, targetNode, starNodes, params.fovWidth, params.difficulty,
+          bestStrategy, costContext,
+        );
+        if (!result) continue;
+
+        usedPairs.add(pairKey);
+        const waypointIds = result.path.map(n => n.id);
+        const nodeMap = new Map(allNodes.map(n => [n.id, n]));
+        const hops = generateHopSteps(waypointIds, nodeMap, allNodes, params);
+        const score = scoreRoute(hops, params);
+
+        routes.push({
+          id: `route-${routes.length + 1}`,
+          score,
+          startAnchor: anchor,
+          target: targetNode,
+          hops,
+          strategyId: bestStrategy.id,
+        });
+      }
     }
 
     routes.sort((a, b) => b.score - a.score);
