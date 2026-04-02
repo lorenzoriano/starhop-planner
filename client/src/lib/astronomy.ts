@@ -5,6 +5,8 @@
  */
 import * as Astro from 'astronomy-engine';
 import { planRoute as planVariableReachRoute, type DifficultyLevel } from './route-planner';
+import { landmarkScore, buildConstellationSegmentCounts } from './landmark-score';
+import { selectStrategy, getStrategy, type CostContext, type CostStrategyId } from './cost-strategies';
 
 // ─── Types ───────────────────────────────────────────────────
 
@@ -135,6 +137,7 @@ export interface ObservingParams {
   targetId: string;
   observingMode?: ObservingMode;
   difficulty?: DifficultyLevel;
+  algorithm?: CostStrategyId;
 }
 
 // ─── Parsing Utilities ────────────────────────────────────────
@@ -1616,6 +1619,16 @@ export async function planRoutes(params: ObservingParams): Promise<{
   // ─── New Variable-Reach A* algorithm (when difficulty is set) ───
   if (params.difficulty) {
     const starNodes = allNodes.filter(n => n.type === 'star' || n.type === 'planet');
+
+    // Precompute landmark scores for the cost strategy
+    const constellations = await loadConstellations();
+    const segCounts = buildConstellationSegmentCounts(constellations, starNodes);
+    const landmarkScores = new Map<string, number>();
+    for (const node of allNodes) {
+      landmarkScores.set(node.id, landmarkScore(node, segCounts));
+    }
+    const costContext: CostContext = { difficulty: params.difficulty, landmarkScores };
+
     const anchors = findAnchors(allNodes, targetNode, params.numRoutes, params);
 
     const routes: Route[] = [];
@@ -1625,7 +1638,16 @@ export async function planRoutes(params: ObservingParams): Promise<{
       if (routes.length >= params.numRoutes) break;
       if (usedAnchors.has(anchor.id)) continue;
 
-      const result = planVariableReachRoute(anchor, targetNode, starNodes, params.fovWidth, params.difficulty);
+      // Select cost strategy (user override or auto)
+      const totalDist = angularDistance(anchor.ra, anchor.dec, targetNode.ra, targetNode.dec);
+      const strategy = params.algorithm && params.algorithm !== 'auto'
+        ? getStrategy(params.algorithm, params.difficulty, starNodes, landmarkScores, params.fovWidth)
+        : selectStrategy(totalDist, params.fovWidth, params.difficulty, starNodes.length);
+
+      const result = planVariableReachRoute(
+        anchor, targetNode, starNodes, params.fovWidth, params.difficulty,
+        strategy, costContext,
+      );
       if (!result) continue;
 
       usedAnchors.add(anchor.id);
