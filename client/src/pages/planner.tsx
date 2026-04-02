@@ -26,7 +26,6 @@ import {
 import type { CostStrategyId } from '@/lib/cost-strategies';
 import { SkyChart } from '@/components/SkyChart';
 import { ImageFallback } from '@/components/ImageFallback';
-import { PerplexityAttribution } from '@/components/PerplexityAttribution';
 
 export default function PlannerPage() {
   const { toast } = useToast();
@@ -823,7 +822,6 @@ export default function PlannerPage() {
       <footer className="border-t border-border/30 px-4 py-4 mt-8">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between text-xs text-muted-foreground">
           <span>StarHop Planner — Uses astronomy-engine, BSC5, Messier, Caldwell, and binocular target catalogs.</span>
-          <PerplexityAttribution />
         </div>
       </footer>
     </div>
