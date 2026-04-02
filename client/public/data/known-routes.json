@@ -1,0 +1,3684 @@
+[
+  {
+    "targetId": "M1",
+    "targetName": "Crab Nebula",
+    "routes": [
+      {
+        "anchorStarName": "Zeta Tauri (Tianguan)",
+        "anchorRA_approx": 84.41,
+        "anchorDec_approx": 21.14,
+        "waypoints": [
+          {
+            "name": "Zeta Tauri",
+            "instruction": "Start at Zeta Tauri, the southern horn tip of Taurus, a 3rd-magnitude star found ENE of Aldebaran"
+          },
+          {
+            "name": "M1",
+            "instruction": "Move 1 degree NW. M1 is a faint oval smudge about 1 deg N and 1 deg W of Zeta Tauri"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Turn Left at Orion, Cloudy Nights",
+        "notes": "Very easy single hop. M1 fits in the same low-power FOV as Zeta Tauri. Mag 8.4, visible in 7x50 binoculars in dark sky. 114 Tau and 121 Tau form a triangle surrounding M1 for confirmation."
+      }
+    ]
+  },
+  {
+    "targetId": "M2",
+    "targetName": "Aquarius Globular",
+    "routes": [
+      {
+        "anchorStarName": "Beta Aquarii (Sadalsuud)",
+        "anchorRA_approx": 322.89,
+        "anchorDec_approx": -5.57,
+        "waypoints": [
+          {
+            "name": "Beta Aquarii (Sadalsuud)",
+            "instruction": "Start at Sadalsuud (Beta Aquarii), a 3rd-magnitude star in the western part of Aquarius"
+          },
+          {
+            "name": "M2",
+            "instruction": "Move 5 degrees due north of Sadalsuud. M2 forms a right triangle with Sadalsuud and Alpha Aquarii (Sadalmelik)"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Messier Objects, freestarcharts.com",
+        "notes": "A chain of 4-5 dim stars NE of M2 visible in binoculars/finderscope points toward the cluster. Appears as a compact fuzzy patch in 7x50 binoculars."
+      }
+    ]
+  },
+  {
+    "targetId": "M3",
+    "targetName": "Canes Venatici Globular",
+    "routes": [
+      {
+        "anchorStarName": "Arcturus (Alpha Bootis)",
+        "anchorRA_approx": 213.92,
+        "anchorDec_approx": 19.18,
+        "waypoints": [
+          {
+            "name": "Arcturus",
+            "instruction": "Start at Arcturus, the brightest star in Bootes, easily found by following the arc of the Big Dipper's handle"
+          },
+          {
+            "name": "Cor Caroli",
+            "instruction": "Identify Cor Caroli (Alpha CVn) about 22 degrees NW of Arcturus"
+          },
+          {
+            "name": "M3",
+            "instruction": "M3 lies almost exactly halfway along the line from Arcturus to Cor Caroli, slightly closer to Arcturus. Sweep slowly from Arcturus toward Cor Caroli until a fuzzy star appears"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Cloudy Nights, freestarcharts.com",
+        "notes": "One of the most reliable star hops. Alternative: form an isosceles triangle with Arcturus and Rho Bootis. Best seen March through May."
+      }
+    ]
+  },
+  {
+    "targetId": "M4",
+    "targetName": "Scorpius Globular",
+    "routes": [
+      {
+        "anchorStarName": "Antares (Alpha Scorpii)",
+        "anchorRA_approx": 247.35,
+        "anchorDec_approx": -26.43,
+        "waypoints": [
+          {
+            "name": "Antares",
+            "instruction": "Start at Antares, the bright red 1st-magnitude star at the heart of Scorpius"
+          },
+          {
+            "name": "M4",
+            "instruction": "Move just 1.3 degrees west of Antares. Both fit in the same wide-field eyepiece view. Move Antares out of your FOV to reduce glare"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky, Turn Left at Orion, lovethenightsky.com",
+        "notes": "One of the easiest Messier star hops. Only 1.3 degrees from Antares. Critical to move Antares out of the FOV to see detail in M4. Best in summer months."
+      }
+    ]
+  },
+  {
+    "targetId": "M5",
+    "targetName": "Rose of Serpens",
+    "routes": [
+      {
+        "anchorStarName": "5 Serpentis",
+        "anchorRA_approx": 228.95,
+        "anchorDec_approx": 1.77,
+        "waypoints": [
+          {
+            "name": "109 Virginis",
+            "instruction": "Start at 109 Virginis, a mag 3.7 star in eastern Virgo"
+          },
+          {
+            "name": "110 Virginis",
+            "instruction": "Move to 110 Virginis, about 2 degrees east"
+          },
+          {
+            "name": "5 Serpentis",
+            "instruction": "Continue in the same direction for about twice the 109-to-110 distance to reach 5 Serpentis"
+          },
+          {
+            "name": "M5",
+            "instruction": "M5 is just 1/3 degree NW of 5 Serpentis"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky, freestarcharts.com",
+        "notes": "Alternative: M5 sits at the western apex of a triangle formed with Alpha Serpentis and Mu Serpentis. Distance from 109 Virginis to M5 spans about 8 degrees. Visible from May through July."
+      }
+    ]
+  },
+  {
+    "targetId": "M6",
+    "targetName": "Butterfly Cluster",
+    "routes": [
+      {
+        "anchorStarName": "Shaula (Lambda Scorpii)",
+        "anchorRA_approx": 263.4,
+        "anchorDec_approx": -37.1,
+        "waypoints": [
+          {
+            "name": "Shaula",
+            "instruction": "Start at Shaula (Lambda Scorpii), the brighter of the two stinger stars at the tip of Scorpius's tail"
+          },
+          {
+            "name": "M6",
+            "instruction": "Move 5 degrees north-northeast of Shaula. M6 is about three finger-widths NE at arm's length"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky, starhopping.org SH032, lovethenightsky.com",
+        "notes": "Alternatively, find M7 first (4.75 deg NE of Shaula along the Lesath-Shaula line) then hop 3 degrees north to M6. The butterfly shape is unmistakable in binoculars. Nearly the apparent size of the full Moon."
+      }
+    ]
+  },
+  {
+    "targetId": "M7",
+    "targetName": "Ptolemy's Cluster",
+    "routes": [
+      {
+        "anchorStarName": "Shaula (Lambda Scorpii)",
+        "anchorRA_approx": 263.4,
+        "anchorDec_approx": -37.1,
+        "waypoints": [
+          {
+            "name": "Lesath (Upsilon Scorpii)",
+            "instruction": "Identify Lesath and Shaula, the Cat's Eyes or stinger of Scorpius, at the tip of the scorpion's tail"
+          },
+          {
+            "name": "Shaula (Lambda Scorpii)",
+            "instruction": "Shaula is the brighter of the stinger pair"
+          },
+          {
+            "name": "M7",
+            "instruction": "Draw a line from Lesath through Shaula and continue 4.75 degrees NE. M7 is the large obvious star cluster along this line"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky, starhopping.org SH032",
+        "notes": "M7 is visible to the unaided eye on dark moonless nights. Best seen in binoculars due to its large angular size. M6 is 3 degrees north for a nice pair."
+      }
+    ]
+  },
+  {
+    "targetId": "M8",
+    "targetName": "Lagoon Nebula",
+    "routes": [
+      {
+        "anchorStarName": "Kaus Borealis (Lambda Sagittarii)",
+        "anchorRA_approx": 276.99,
+        "anchorDec_approx": -25.42,
+        "waypoints": [
+          {
+            "name": "Kaus Borealis",
+            "instruction": "Start at Kaus Borealis (Lambda Sagittarii), the star at the top of the Teapot's lid in Sagittarius"
+          },
+          {
+            "name": "Gamma Sagittarii (Alnasl)",
+            "instruction": "Identify Alnasl (Gamma Sgr), the tip of the Teapot's spout, to the west"
+          },
+          {
+            "name": "M8",
+            "instruction": "Look about 6 degrees north of the spout, roughly above the line from Alnasl to Kaus Borealis. M8 appears as the bright hazy puff of steam above the teapot's spout"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky, Sky & Telescope, lovethenightsky.com",
+        "notes": "One of the brightest nebulae in the sky. Visible to the unaided eye as a faint patch in dark sky. Use the spout of the Teapot as a pointer - go about twice the spout's distance upward."
+      }
+    ]
+  },
+  {
+    "targetId": "M9",
+    "targetName": "Ophiuchus Globular",
+    "routes": [
+      {
+        "anchorStarName": "Sabik (Eta Ophiuchi)",
+        "anchorRA_approx": 257.59,
+        "anchorDec_approx": -15.72,
+        "waypoints": [
+          {
+            "name": "Sabik (Eta Ophiuchi)",
+            "instruction": "Start at Sabik (Eta Ophiuchi), a bright mag 2.4 star in the southeastern part of Ophiuchus"
+          },
+          {
+            "name": "M9",
+            "instruction": "Move 3 degrees SE of Sabik. M9 appears as a small, round, faint nebula in binoculars and small telescopes"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "galactic-hunter.com, go-astronomy.com, messier-objects.com",
+        "notes": "Requires dark sky due to its compact size and the rich star field in this region. 26 Ophiuchi makes a good finderscope confirmation star at the 2 o'clock position from M9. Best mid-summer."
+      }
+    ]
+  },
+  {
+    "targetId": "M10",
+    "targetName": "Ophiuchus Globular East",
+    "routes": [
+      {
+        "anchorStarName": "30 Ophiuchi",
+        "anchorRA_approx": 254.42,
+        "anchorDec_approx": -4.24,
+        "waypoints": [
+          {
+            "name": "Rasalhague (Alpha Ophiuchi)",
+            "instruction": "Start at Rasalhague, the brightest star in Ophiuchus, at the serpent-bearer's head"
+          },
+          {
+            "name": "Zeta Ophiuchi",
+            "instruction": "Identify Zeta Ophiuchi to the south of Rasalhague"
+          },
+          {
+            "name": "30 Ophiuchi",
+            "instruction": "Find 30 Ophiuchi (mag 4.8), the third star along the SE side of the Rasalhague-Zeta line heading from Rasalhague"
+          },
+          {
+            "name": "M10",
+            "instruction": "M10 is just 1 degree west of 30 Ophiuchi, visible in the same low-magnification eyepiece view"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "AstroPioneer, virtualastronomy.club",
+        "notes": "M12 is 3 degrees NW of M10 for a nice pair. Best viewed May through July."
+      }
+    ]
+  },
+  {
+    "targetId": "M11",
+    "targetName": "Wild Duck Cluster",
+    "routes": [
+      {
+        "anchorStarName": "Lambda Aquilae",
+        "anchorRA_approx": 286.56,
+        "anchorDec_approx": -4.88,
+        "waypoints": [
+          {
+            "name": "Altair",
+            "instruction": "Start at Altair, the brightest star in Aquila and the second brightest in the Summer Triangle"
+          },
+          {
+            "name": "Lambda Aquilae",
+            "instruction": "Follow the Eagle's body south to Lambda Aquilae (mag 3.4) in your finderscope"
+          },
+          {
+            "name": "12 Aquilae",
+            "instruction": "Move SW to the fainter star 12 Aquilae"
+          },
+          {
+            "name": "M11",
+            "instruction": "Continue about 2 degrees west from 12 Aquilae. M11 appears as a diamond-shaped patch in binoculars"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky, Astronomy.com, lovethenightsky.com",
+        "notes": "The brighter members form a V-shape resembling a flock of ducks, hence the name. One of the richest open clusters. Best viewed June through September."
+      }
+    ]
+  },
+  {
+    "targetId": "M12",
+    "targetName": "Gumball Globular",
+    "routes": [
+      {
+        "anchorStarName": "Yed Prior (Delta Ophiuchi)",
+        "anchorRA_approx": 243.59,
+        "anchorDec_approx": -3.69,
+        "waypoints": [
+          {
+            "name": "Yed Prior (Delta Ophiuchi)",
+            "instruction": "Start at Yed Prior (mag 2.7) and its close neighbor Yed Posterior (Epsilon Ophiuchi, mag 3.2) in western Ophiuchus"
+          },
+          {
+            "name": "M12",
+            "instruction": "Move about 8 degrees NE from Yed Prior. Alternatively, M12 is roughly 3 degrees east of Yed Prior"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "freestarcharts.com, AstroPioneer",
+        "notes": "If you have already found M10, M12 is 3 degrees NW of M10. Best viewed May through July."
+      }
+    ]
+  },
+  {
+    "targetId": "M13",
+    "targetName": "Great Hercules Cluster",
+    "routes": [
+      {
+        "anchorStarName": "Eta Herculis",
+        "anchorRA_approx": 250.73,
+        "anchorDec_approx": 38.92,
+        "waypoints": [
+          {
+            "name": "Keystone asterism",
+            "instruction": "Locate the Keystone of Hercules, a trapezoidal asterism about 1/3 of the way from Vega to Arcturus. The four stars are Eta, Zeta, Epsilon, and Pi Herculis"
+          },
+          {
+            "name": "Eta Herculis",
+            "instruction": "Identify Eta Herculis, on the Arcturus-facing (western) side of the Keystone"
+          },
+          {
+            "name": "M13",
+            "instruction": "M13 lies on the western side of the Keystone, about 2/3 of the way from Eta to Zeta Herculis (2.5 degrees south of Eta)"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky, Turn Left at Orion, astrobackyard.com",
+        "notes": "The finest globular cluster in northern skies. Barely visible to the unaided eye in dark sky. Easily resolved in an 8-inch telescope. Best viewed April through September."
+      }
+    ]
+  },
+  {
+    "targetId": "M14",
+    "targetName": "Ophiuchus Globular West",
+    "routes": [
+      {
+        "anchorStarName": "Beta Ophiuchi (Cebalrai)",
+        "anchorRA_approx": 265.87,
+        "anchorDec_approx": 4.57,
+        "waypoints": [
+          {
+            "name": "Cebalrai (Beta Ophiuchi)",
+            "instruction": "Start at Cebalrai (mag 2.8), a prominent star in Ophiuchus"
+          },
+          {
+            "name": "Sabik (Eta Ophiuchi)",
+            "instruction": "Identify Sabik (Eta Ophiuchi) to the SE"
+          },
+          {
+            "name": "M14",
+            "instruction": "M14 lies about 1/3 of the way from Cebalrai to Sabik, approximately 8 degrees south and slightly west of Cebalrai"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "galactic-hunter.com, skyledge.net, freestarcharts.com",
+        "notes": "Trickier than most due to the lack of bright stars nearby. If you know M10, look 0.8 degrees north and 10 degrees east. Best viewed May through July. Visible in magnifying finderscopes and binoculars."
+      }
+    ]
+  },
+  {
+    "targetId": "M15",
+    "targetName": "Great Pegasus Cluster",
+    "routes": [
+      {
+        "anchorStarName": "Enif (Epsilon Pegasi)",
+        "anchorRA_approx": 326.05,
+        "anchorDec_approx": 9.88,
+        "waypoints": [
+          {
+            "name": "Great Square of Pegasus",
+            "instruction": "Locate the Great Square of Pegasus, then hop along the two bright stars extending westward toward Aquarius"
+          },
+          {
+            "name": "Enif (Epsilon Pegasi)",
+            "instruction": "Arrive at Enif (Epsilon Pegasi), the brightest star in Pegasus (mag 2.4), at the horse's nose"
+          },
+          {
+            "name": "M15",
+            "instruction": "Move 4 degrees WNW from Enif. In most binoculars (>4 degree FOV) both Enif and M15 fit in the same field"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "lovethenightsky.com, freestarcharts.com, whenthecurveslineup.com",
+        "notes": "M15 is mag 6.2, easily visible in small binoculars as a fuzzy out-of-focus star. One of the densest known globular clusters. Best viewed September through November."
+      }
+    ]
+  },
+  {
+    "targetId": "M16",
+    "targetName": "Eagle Nebula",
+    "routes": [
+      {
+        "anchorStarName": "Gamma Scuti",
+        "anchorRA_approx": 278.8,
+        "anchorDec_approx": -14.57,
+        "waypoints": [
+          {
+            "name": "Altair",
+            "instruction": "Start at Altair in Aquila, one of the Summer Triangle stars"
+          },
+          {
+            "name": "Lambda Aquilae",
+            "instruction": "Follow the Eagle's back southward to Lambda Aquilae"
+          },
+          {
+            "name": "Gamma Scuti",
+            "instruction": "Continue to Gamma Scuti (mag 4.7) in the constellation Scutum"
+          },
+          {
+            "name": "M16",
+            "instruction": "M16 is about 2.5 degrees SW of Gamma Scuti. Look for a faint haze surrounding a small star cluster"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky, freestarcharts.com, Astronomy.com",
+        "notes": "M16 and M17 are close together and fit in the same binocular field. The famous Pillars of Creation require at least a 12-inch telescope. Alternatively, hop north from M24 through M18 and M17 to reach M16. Best viewed in summer."
+      }
+    ]
+  },
+  {
+    "targetId": "M17",
+    "targetName": "Omega Nebula (Swan Nebula)",
+    "routes": [
+      {
+        "anchorStarName": "Gamma Scuti",
+        "anchorRA_approx": 278.8,
+        "anchorDec_approx": -14.57,
+        "waypoints": [
+          {
+            "name": "Gamma Scuti",
+            "instruction": "Locate Gamma Scuti (mag 4.7) in the constellation Scutum, found by star-hopping south from Altair through Lambda Aquilae"
+          },
+          {
+            "name": "M17",
+            "instruction": "M17 lies about 2 degrees SW of Gamma Scuti, slightly south and east of M16. The bright nebula is obvious in binoculars"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky, lovethenightsky.com, freestarcharts.com",
+        "notes": "Alternative route: from M24 (Sagittarius Star Cloud), hop 1 degree north to M18, then 1 more degree north to M17. The swan or checkmark shape is visible in small telescopes. Best viewed in summer."
+      }
+    ]
+  },
+  {
+    "targetId": "M18",
+    "targetName": "Black Swan Cluster",
+    "routes": [
+      {
+        "anchorStarName": "Kaus Borealis (Lambda Sagittarii)",
+        "anchorRA_approx": 276.99,
+        "anchorDec_approx": -25.42,
+        "waypoints": [
+          {
+            "name": "Kaus Borealis",
+            "instruction": "Start at Kaus Borealis (Lambda Sagittarii), the top star of the Teapot's lid"
+          },
+          {
+            "name": "M24 (Sagittarius Star Cloud)",
+            "instruction": "Move 7 degrees north and slightly west to locate the large Sagittarius Star Cloud (M24)"
+          },
+          {
+            "name": "M18",
+            "instruction": "M18 lies about 1 degree north of M24's northern edge, between M24 and M17"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "freestarcharts.com, messier-objects.com",
+        "notes": "Small and often overlooked, sandwiched between the much more impressive M17 and M24. Easiest found by locating M17 and aiming slightly south, or M24 and aiming 2 degrees north. Best June through August."
+      }
+    ]
+  },
+  {
+    "targetId": "M19",
+    "targetName": "Ophiuchus Oblate Globular",
+    "routes": [
+      {
+        "anchorStarName": "Antares (Alpha Scorpii)",
+        "anchorRA_approx": 247.35,
+        "anchorDec_approx": -26.43,
+        "waypoints": [
+          {
+            "name": "Antares",
+            "instruction": "Start at Antares, the bright red heart of Scorpius"
+          },
+          {
+            "name": "36 Ophiuchi",
+            "instruction": "Move east from Antares into the Ophiuchus border region"
+          },
+          {
+            "name": "M19",
+            "instruction": "M19 lies about 8 degrees east of Antares, less than a fist-width. Look for the star that won't quite come to focus near 26 Ophiuchi"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "freestarcharts.com, messier-objects.com, deepskycorner.ch",
+        "notes": "26 Ophiuchi at the 2 o'clock position makes a great confirmation. One of the most oblate (squashed) globular clusters known. Also 4.5 degrees WSW of Theta Ophiuchi. Best in mid-summer."
+      }
+    ]
+  },
+  {
+    "targetId": "M20",
+    "targetName": "Trifid Nebula",
+    "routes": [
+      {
+        "anchorStarName": "Kaus Borealis (Lambda Sagittarii)",
+        "anchorRA_approx": 276.99,
+        "anchorDec_approx": -25.42,
+        "waypoints": [
+          {
+            "name": "Kaus Borealis (Lambda Sagittarii)",
+            "instruction": "Start at Kaus Borealis, the tip of the Teapot's lid in Sagittarius"
+          },
+          {
+            "name": "M8 (Lagoon Nebula)",
+            "instruction": "Hop NW from the spout of the Teapot to find the Lagoon Nebula (M8) first, the large bright nebula above the spout"
+          },
+          {
+            "name": "M20",
+            "instruction": "M20 lies about 2 degrees NW of the Lagoon Nebula. In the same binocular field, look for the smaller, fainter fuzzy patch above M8"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky, Turn Left at Orion, astrobackyard.com",
+        "notes": "Best strategy is to find M8 first (easy naked-eye target) then nudge NW to M20. The three-lobed structure that gives the Trifid its name requires a larger telescope to see. Best June through August."
+      }
+    ]
+  },
+  {
+    "targetId": "M21",
+    "targetName": "Webb's Cross Cluster",
+    "routes": [
+      {
+        "anchorStarName": "Kaus Borealis (Lambda Sagittarii)",
+        "anchorRA_approx": 276.99,
+        "anchorDec_approx": -25.42,
+        "waypoints": [
+          {
+            "name": "Kaus Borealis",
+            "instruction": "Start at Kaus Borealis, the top of the Teapot in Sagittarius"
+          },
+          {
+            "name": "M8 (Lagoon Nebula)",
+            "instruction": "Find M8 above the Teapot's spout"
+          },
+          {
+            "name": "M20 (Trifid Nebula)",
+            "instruction": "Move 2 degrees NW of M8 to find M20"
+          },
+          {
+            "name": "M21",
+            "instruction": "M21 is just 0.75 degrees NE of the Trifid Nebula (M20). Both fit in the same low-power telescope FOV"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Turn Left at Orion (Cambridge), freestarcharts.com, messier-objects.com",
+        "notes": "Best found in combination with M8 and M20 as a trio. Mag 6.5, visible in smallest binoculars on a dark night. Best June through August."
+      }
+    ]
+  },
+  {
+    "targetId": "M22",
+    "targetName": "Sagittarius Cluster",
+    "routes": [
+      {
+        "anchorStarName": "Kaus Borealis (Lambda Sagittarii)",
+        "anchorRA_approx": 276.99,
+        "anchorDec_approx": -25.42,
+        "waypoints": [
+          {
+            "name": "Kaus Borealis (Lambda Sagittarii)",
+            "instruction": "Start at Kaus Borealis, the top of the Teapot's lid in Sagittarius"
+          },
+          {
+            "name": "M22",
+            "instruction": "Move just 2.5 degrees NE of Kaus Borealis. In binoculars centered on Lambda, M22 appears in the 10 o'clock region of the FOV"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Astronomy.com, messier-objects.com, gardenastronomer.com",
+        "notes": "One of the closest and brightest globulars. At 5th magnitude, visible to the unaided eye under dark skies. In a finderscope, hop from Lambda NE to 24 Sagittarii and M22 is nearby. Best viewed in summer."
+      }
+    ]
+  },
+  {
+    "targetId": "M23",
+    "targetName": "Sagittarius Pinwheel Cluster",
+    "routes": [
+      {
+        "anchorStarName": "Mu Sagittarii (Polis)",
+        "anchorRA_approx": 273.44,
+        "anchorDec_approx": -21.06,
+        "waypoints": [
+          {
+            "name": "Mu Sagittarii (Polis)",
+            "instruction": "Start at Mu Sagittarii, the bright blue giant star above the Teapot asterism in northern Sagittarius"
+          },
+          {
+            "name": "M23",
+            "instruction": "Move about 1.5 degrees west and a finger's width north of Mu Sagittarii. M23 appears as a hazy patch in binoculars"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Turn Left at Orion (Cambridge), galactic-hunter.com, freestarcharts.com",
+        "notes": "Alternative: draw a mental line between Kaus Borealis and Xi Serpentis - M23 is roughly halfway along that line. Apparent size 27 arcminutes. Best viewed June through August."
+      }
+    ]
+  },
+  {
+    "targetId": "M24",
+    "targetName": "Sagittarius Star Cloud (Delle Caustiche)",
+    "routes": [
+      {
+        "anchorStarName": "Mu Sagittarii (Polis)",
+        "anchorRA_approx": 273.44,
+        "anchorDec_approx": -21.06,
+        "waypoints": [
+          {
+            "name": "Mu Sagittarii (Polis)",
+            "instruction": "Start at Mu Sagittarii (Polis), the bright star above the Teapot in northern Sagittarius"
+          },
+          {
+            "name": "M24",
+            "instruction": "Move 4 degrees north of Mu Sagittarii. M24 is a large, dense Milky Way star cloud easily visible to the naked eye in dark skies"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "freestarcharts.com, messier-objects.com, EarthSky",
+        "notes": "The densest concentration of individual stars visible in binoculars. Under dark skies, easily seen with the unaided eye as a bright patch in the Milky Way. Also about 7 degrees north and slightly west of Kaus Borealis. Best in summer."
+      }
+    ]
+  },
+  {
+    "targetId": "M25",
+    "targetName": "IC 4725 Cluster",
+    "routes": [
+      {
+        "anchorStarName": "Kaus Borealis (Lambda Sagittarii)",
+        "anchorRA_approx": 276.99,
+        "anchorDec_approx": -25.42,
+        "waypoints": [
+          {
+            "name": "Kaus Borealis (Lambda Sagittarii)",
+            "instruction": "Start at Kaus Borealis, the top of the Teapot in Sagittarius"
+          },
+          {
+            "name": "M25",
+            "instruction": "Move 6.5 degrees north and slightly east of Kaus Borealis. M25 is 3.5 degrees west of M24 (Sagittarius Star Cloud)"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "freestarcharts.com, messier-objects.com",
+        "notes": "Alternative: 2 degrees north and 4 degrees east from Mu Sagittarii, or 3 degrees south and 2 degrees east of M17. Best viewed in summer."
+      }
+    ]
+  },
+  {
+    "targetId": "M26",
+    "targetName": "Scutum Cluster",
+    "routes": [
+      {
+        "anchorStarName": "M11 (Wild Duck Cluster)",
+        "anchorRA_approx": 281.32,
+        "anchorDec_approx": -6.27,
+        "waypoints": [
+          {
+            "name": "Altair",
+            "instruction": "Start at Altair in Aquila"
+          },
+          {
+            "name": "Delta Aquilae",
+            "instruction": "Move SW to Delta Aquilae"
+          },
+          {
+            "name": "Lambda Aquilae / 12 Aquilae",
+            "instruction": "Continue curving south to the 4th-magnitude pair Lambda Aquilae and 12 Aquilae"
+          },
+          {
+            "name": "M11 (Wild Duck Cluster)",
+            "instruction": "Locate M11, the bright Wild Duck Cluster, about 2 degrees west of 12 Aquilae"
+          },
+          {
+            "name": "M26",
+            "instruction": "Move 3.5 degrees south of M11 to find M26, a smaller and fainter open cluster"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "theskyscrapers.org, freestarcharts.com, galactic-hunter.com",
+        "notes": "M26 is much fainter and more compact than nearby M11. Through an 80mm telescope it appears as a tight misty cluster about half the diameter of the full Moon. Best observed summer months."
+      }
+    ]
+  },
+  {
+    "targetId": "M27",
+    "targetName": "Dumbbell Nebula",
+    "routes": [
+      {
+        "anchorStarName": "Gamma Sagittae",
+        "anchorRA_approx": 299.69,
+        "anchorDec_approx": 19.49,
+        "waypoints": [
+          {
+            "name": "Altair",
+            "instruction": "Start at Altair (Alpha Aquilae), a bright Summer Triangle star"
+          },
+          {
+            "name": "Sagitta (the Arrow)",
+            "instruction": "Move about 10 degrees north of Altair to find the small constellation Sagitta, a distinctive line of 4 stars forming an arrow"
+          },
+          {
+            "name": "Gamma Sagittae",
+            "instruction": "Identify Gamma Sagittae, the brightest star in Sagitta, at the arrow's tip pointing east"
+          },
+          {
+            "name": "M27",
+            "instruction": "Move 3.5 degrees straight north from Gamma Sagittae. M27 appears as a rounded fuzzy patch about 1/4 the size of the full Moon"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky, constellation-guide.com, messier-objects.com",
+        "notes": "The largest and brightest planetary nebula in the sky. Bright enough for binoculars. Alternative: rotate Sagitta's shaft line 120 degrees counterclockwise about Gamma Sagittae - where Delta would end up marks M27. Best viewed July through October."
+      }
+    ]
+  },
+  {
+    "targetId": "M28",
+    "targetName": "Sagittarius Globular",
+    "routes": [
+      {
+        "anchorStarName": "Kaus Borealis (Lambda Sagittarii)",
+        "anchorRA_approx": 276.99,
+        "anchorDec_approx": -25.42,
+        "waypoints": [
+          {
+            "name": "Kaus Borealis (Lambda Sagittarii)",
+            "instruction": "Start at Kaus Borealis, the top of the Teapot's lid in Sagittarius"
+          },
+          {
+            "name": "M28",
+            "instruction": "M28 is less than 1 degree NW of Kaus Borealis. In binoculars centered on Lambda, look for a small faded grey circular area at the 1 o'clock position"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Astronomy.com, messier-objects.com, freestarcharts.com",
+        "notes": "Very easy to locate but faint. Invisible to the naked eye. In a finderscope, center on Lambda and shift NW slowly. Often overlooked in favor of the nearby and much brighter M22."
+      }
+    ]
+  },
+  {
+    "targetId": "M29",
+    "targetName": "Cooling Tower Cluster",
+    "routes": [
+      {
+        "anchorStarName": "Sadr (Gamma Cygni)",
+        "anchorRA_approx": 305.56,
+        "anchorDec_approx": 40.26,
+        "waypoints": [
+          {
+            "name": "Sadr (Gamma Cygni)",
+            "instruction": "Start at Sadr (Gamma Cygni, mag 2.2), the star at the center of the Northern Cross in Cygnus, where the cross-beam meets the shaft"
+          },
+          {
+            "name": "M29",
+            "instruction": "Move just 1.7 degrees south and slightly west of Sadr. M29 appears as a tight knot of stars"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Astronomy Now, freestarcharts.com, messier-objects.com",
+        "notes": "Very easy to locate from Sadr but unimpressive - a small sparse cluster sometimes called a mini-Pleiades. Visible in 10x50 binoculars. Best viewed July through October."
+      }
+    ]
+  },
+  {
+    "targetId": "M30",
+    "targetName": "Capricornus Globular",
+    "routes": [
+      {
+        "anchorStarName": "Zeta Capricorni",
+        "anchorRA_approx": 321.67,
+        "anchorDec_approx": -22.41,
+        "waypoints": [
+          {
+            "name": "Zeta Capricorni",
+            "instruction": "Start at Zeta Capricorni (mag 3.8), in the lower-left part of Capricornus's smile-shaped constellation pattern"
+          },
+          {
+            "name": "M30",
+            "instruction": "Move 3.3 degrees ESE of Zeta Capricorni. The mag 5.2 star 41 Capricorni lies just east of the cluster and helps confirm your position"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "messier-objects.com, skyledge.net, Sky & Telescope",
+        "notes": "One of the more challenging Messier objects to find due to the faintness of Capricornus. The constellation never rises high above the southern horizon for northern observers. Best viewed September through October."
+      }
+    ]
+  },
+  {
+    "targetId": "M31",
+    "targetName": "Andromeda Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Alpheratz",
+        "anchorRA_approx": 2.1,
+        "anchorDec_approx": 29.09,
+        "waypoints": [
+          {
+            "name": "Alpheratz",
+            "instruction": "Start at Alpheratz (Alpha And), the NE corner of the Great Square of Pegasus"
+          },
+          {
+            "name": "Delta Andromedae",
+            "instruction": "Hop about 7 degrees NE along the Andromeda chain to Delta Andromedae (mag +3.3)"
+          },
+          {
+            "name": "Mirach",
+            "instruction": "Continue another 8 degrees NE to Mirach (Beta And, mag +2.1)"
+          },
+          {
+            "name": "Mu Andromedae",
+            "instruction": "From Mirach, turn NW about 4 degrees to Mu Andromedae (mag +3.9)"
+          },
+          {
+            "name": "M31",
+            "instruction": "M31 is about 1 degree W of Mu And, visible as an elongated fuzzy glow"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Standard Andromeda chain route used by nearly all observing guides",
+        "notes": "The classic Alpheratz-Mirach-Mu And route. M31 is visible to the naked eye under dark skies."
+      }
+    ]
+  },
+  {
+    "targetId": "M32",
+    "targetName": "Satellite Galaxy of Andromeda",
+    "routes": [
+      {
+        "anchorStarName": "Alpheratz",
+        "anchorRA_approx": 2.1,
+        "anchorDec_approx": 29.09,
+        "waypoints": [
+          {
+            "name": "Alpheratz",
+            "instruction": "Start at Alpheratz, NE corner of the Great Square of Pegasus"
+          },
+          {
+            "name": "Mirach",
+            "instruction": "Hop NE along the Andromeda chain to Mirach (Beta And)"
+          },
+          {
+            "name": "Mu Andromedae",
+            "instruction": "From Mirach, turn NW about 4 degrees to Mu Andromedae"
+          },
+          {
+            "name": "M31",
+            "instruction": "Find M31 about 1 degree W of Mu And"
+          },
+          {
+            "name": "M32",
+            "instruction": "M32 is 22 arcmin S of M31's core - look for a small, bright fuzzy star just S of the galaxy's disk"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Standard route - M32 is found after locating M31",
+        "notes": "M32 appears as a bright compact companion south of M31's nucleus. Visible in 8x40 binoculars."
+      }
+    ]
+  },
+  {
+    "targetId": "M33",
+    "targetName": "Triangulum Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Mirach",
+        "anchorRA_approx": 17.43,
+        "anchorDec_approx": 35.62,
+        "waypoints": [
+          {
+            "name": "Mirach",
+            "instruction": "Start at Mirach (Beta And, mag +2.1) in the Andromeda chain"
+          },
+          {
+            "name": "M33",
+            "instruction": "From Mirach, M33 lies about 7 degrees to the SW, roughly equidistant from Mirach as M31 is but in the opposite direction. A line from M31 through Mirach extended the same distance lands near M33."
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Mirach bisector method from multiple observing guides",
+        "notes": "M33 is a large, low-surface-brightness galaxy. Easier in binoculars than telescopes due to wide field needed. Can be difficult even when pointing right at it."
+      }
+    ]
+  },
+  {
+    "targetId": "M34",
+    "targetName": "Open Cluster in Perseus",
+    "routes": [
+      {
+        "anchorStarName": "Algol",
+        "anchorRA_approx": 47.04,
+        "anchorDec_approx": 40.96,
+        "waypoints": [
+          {
+            "name": "Algol",
+            "instruction": "Start at Algol (Beta Persei, mag +2.1), the famous eclipsing variable 'Demon Star'"
+          },
+          {
+            "name": "M34",
+            "instruction": "M34 lies about 5 degrees NW of Algol, roughly halfway along a line from Algol to Almach (Gamma And). Look for a scattered cluster with a distinctive X-shaped pattern of bright stars."
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Algol-Almach midpoint method from freestarcharts and Astronomy Now",
+        "notes": "Easy binocular target about 2 binocular fields NW of Algol. The bright stars form a recognizable X pattern."
+      }
+    ]
+  },
+  {
+    "targetId": "M35",
+    "targetName": "Open Cluster in Gemini",
+    "routes": [
+      {
+        "anchorStarName": "Eta Geminorum",
+        "anchorRA_approx": 93.72,
+        "anchorDec_approx": 22.51,
+        "waypoints": [
+          {
+            "name": "Castor",
+            "instruction": "Identify Castor and Pollux, the twin bright stars of Gemini"
+          },
+          {
+            "name": "Tejat (Mu Gem)",
+            "instruction": "From Castor, look SW about 10 degrees to find Tejat (Mu Gem, mag +2.9) at Castor's foot"
+          },
+          {
+            "name": "Propus (Eta Gem)",
+            "instruction": "Continue about 2 degrees W to Propus (Eta Gem, mag +3.3)"
+          },
+          {
+            "name": "M35",
+            "instruction": "M35 is about 2 degrees NW of Propus. A large, rich cluster visible to the naked eye from dark sites."
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Standard Gemini foot route from multiple observing guides",
+        "notes": "M35 lies near Castor's foot. Also findable by drawing a line from Betelgeuse through Alhena and extending it."
+      }
+    ]
+  },
+  {
+    "targetId": "M36",
+    "targetName": "Pinwheel Cluster (Auriga)",
+    "routes": [
+      {
+        "anchorStarName": "Theta Aurigae",
+        "anchorRA_approx": 89.93,
+        "anchorDec_approx": 37.21,
+        "waypoints": [
+          {
+            "name": "Theta Aurigae",
+            "instruction": "Find Theta Aurigae (mag +2.6), about 8 degrees S of Menkalinan in the Auriga polygon"
+          },
+          {
+            "name": "El Nath",
+            "instruction": "Note El Nath (Beta Tau, mag +1.7) about 11 degrees SW of Theta Aur - these two stars bracket the cluster trio"
+          },
+          {
+            "name": "M36",
+            "instruction": "M36 lies just W of the midpoint of the line connecting Theta Aur and El Nath"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Theta Aur / El Nath midpoint method from nightskyinfo.com and freestarcharts",
+        "notes": "M36, M37, and M38 all lie along the Theta Aur - El Nath line. All three fit in a wide binocular field."
+      }
+    ]
+  },
+  {
+    "targetId": "M37",
+    "targetName": "Open Cluster in Auriga",
+    "routes": [
+      {
+        "anchorStarName": "Theta Aurigae",
+        "anchorRA_approx": 89.93,
+        "anchorDec_approx": 37.21,
+        "waypoints": [
+          {
+            "name": "Theta Aurigae",
+            "instruction": "Start at Theta Aurigae (mag +2.6)"
+          },
+          {
+            "name": "El Nath",
+            "instruction": "Note El Nath (Beta Tau, mag +1.7) about 11 degrees SW"
+          },
+          {
+            "name": "M36",
+            "instruction": "Find M36 just W of the midpoint of the Theta Aur - El Nath line"
+          },
+          {
+            "name": "M37",
+            "instruction": "From M36, continue about 4 degrees SE along the same line to find M37, the richest of the three Auriga clusters"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Auriga cluster trio route from nightskyinfo.com and Astronomy Now",
+        "notes": "M37 is the brightest and richest of the three Auriga clusters. It lies just E of the Theta Aur - El Nath midpoint."
+      }
+    ]
+  },
+  {
+    "targetId": "M38",
+    "targetName": "Starfish Cluster (Auriga)",
+    "routes": [
+      {
+        "anchorStarName": "Theta Aurigae",
+        "anchorRA_approx": 89.93,
+        "anchorDec_approx": 37.21,
+        "waypoints": [
+          {
+            "name": "Theta Aurigae",
+            "instruction": "Start at Theta Aurigae (mag +2.6)"
+          },
+          {
+            "name": "El Nath",
+            "instruction": "Note El Nath (Beta Tau, mag +1.7) about 11 degrees SW"
+          },
+          {
+            "name": "M36",
+            "instruction": "Find M36 at the midpoint of the Theta Aur - El Nath line"
+          },
+          {
+            "name": "M38",
+            "instruction": "M38 is about 2.5 degrees NW of M36, appearing as a vaguely cruciform (cross-shaped) cluster"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Auriga cluster trio route from nightskyinfo.com and freestarcharts",
+        "notes": "M38 has a characteristic cross or starfish shape. At mag +7.0 it requires binoculars."
+      }
+    ]
+  },
+  {
+    "targetId": "M39",
+    "targetName": "Open Cluster in Cygnus",
+    "routes": [
+      {
+        "anchorStarName": "Deneb",
+        "anchorRA_approx": 310.36,
+        "anchorDec_approx": 45.28,
+        "waypoints": [
+          {
+            "name": "Deneb",
+            "instruction": "Start at Deneb (Alpha Cyg, mag +1.25), the tail of the Swan and NE vertex of the Summer Triangle"
+          },
+          {
+            "name": "Rho Cygni",
+            "instruction": "Hop about 9 degrees E of Deneb to find Rho Cygni (mag +4.0)"
+          },
+          {
+            "name": "M39",
+            "instruction": "M39 is about 3 degrees N of Rho Cygni - look for a large, loose triangular cluster of bright stars"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Deneb to Rho Cygni route from freestarcharts and Astronomy Now",
+        "notes": "M39 spans over 30 arcmin (larger than the full Moon). Best at low magnification in binoculars."
+      }
+    ]
+  },
+  {
+    "targetId": "M40",
+    "targetName": "Winnecke 4 (Double Star)",
+    "routes": [
+      {
+        "anchorStarName": "Megrez",
+        "anchorRA_approx": 183.86,
+        "anchorDec_approx": 57.03,
+        "waypoints": [
+          {
+            "name": "Megrez",
+            "instruction": "Start at Megrez (Delta UMa, mag +3.3), the dimmest star in the Big Dipper where the bowl meets the handle"
+          },
+          {
+            "name": "70 Ursae Majoris",
+            "instruction": "Hop 1.1 degrees NE to 70 UMa (mag +5.5)"
+          },
+          {
+            "name": "M40",
+            "instruction": "Continue 0.25 degrees in the same direction to find M40, a pair of mag +9.6 and +10.1 stars separated by about 50 arcsec"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Megrez hop from Universe Today and freestarcharts",
+        "notes": "M40 is simply an optical double star, not a deep-sky object. It was a Messier catalog error but remains listed."
+      }
+    ]
+  },
+  {
+    "targetId": "M41",
+    "targetName": "Open Cluster in Canis Major",
+    "routes": [
+      {
+        "anchorStarName": "Sirius",
+        "anchorRA_approx": 101.29,
+        "anchorDec_approx": -16.72,
+        "waypoints": [
+          {
+            "name": "Sirius",
+            "instruction": "Start at Sirius (Alpha CMa, mag -1.46), the brightest star in the night sky - found by following Orion's belt downward"
+          },
+          {
+            "name": "M41",
+            "instruction": "Center Sirius and sweep exactly 4 degrees due S. M41 appears as a large, bright, loose cluster visible to the naked eye in dark skies."
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Direct Sirius hop from EarthSky, freestarcharts, and multiple guides",
+        "notes": "One of the simplest star hops in the Messier catalog. M41 forms a rough equilateral triangle with Sirius and Nu2 CMa."
+      }
+    ]
+  },
+  {
+    "targetId": "M42",
+    "targetName": "Orion Nebula",
+    "routes": [
+      {
+        "anchorStarName": "Alnilam",
+        "anchorRA_approx": 84.05,
+        "anchorDec_approx": -1.2,
+        "waypoints": [
+          {
+            "name": "Alnilam",
+            "instruction": "Start at Alnilam, the middle star of Orion's Belt"
+          },
+          {
+            "name": "Orion's Sword",
+            "instruction": "Look about 3 degrees directly S of the Belt for a short chain of 3 stars forming Orion's Sword"
+          },
+          {
+            "name": "M42",
+            "instruction": "M42 is the middle 'star' in the Sword - it appears fuzzy to the naked eye. Through any optics you will see bright nebulosity surrounding the Trapezium star cluster."
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Standard Orion's Sword route from NASA, Cosmos Safari, and all beginner guides",
+        "notes": "The easiest nebula to find. Visible to the naked eye. The Trapezium (4 stars in a diamond) is at its heart."
+      }
+    ]
+  },
+  {
+    "targetId": "M43",
+    "targetName": "De Mairan's Nebula",
+    "routes": [
+      {
+        "anchorStarName": "Alnilam",
+        "anchorRA_approx": 84.05,
+        "anchorDec_approx": -1.2,
+        "waypoints": [
+          {
+            "name": "Alnilam",
+            "instruction": "Start at Alnilam, the middle star of Orion's Belt"
+          },
+          {
+            "name": "M42",
+            "instruction": "Find M42 in the middle of Orion's Sword, 3 degrees S of the Belt"
+          },
+          {
+            "name": "M43",
+            "instruction": "M43 is just 8 arcmin N of M42's core, separated by a dark dust lane called the Fish's Mouth. It appears as a comma-shaped glow around a central star."
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "M42 companion from freestarcharts and Messier Objects",
+        "notes": "M43 is physically part of the same nebula complex as M42. It requires a telescope to distinguish from M42."
+      }
+    ]
+  },
+  {
+    "targetId": "M44",
+    "targetName": "Beehive Cluster (Praesepe)",
+    "routes": [
+      {
+        "anchorStarName": "Pollux",
+        "anchorRA_approx": 116.33,
+        "anchorDec_approx": 28.03,
+        "waypoints": [
+          {
+            "name": "Pollux",
+            "instruction": "Identify Pollux (Beta Gem, mag +1.1) and Castor, the twin bright stars of Gemini"
+          },
+          {
+            "name": "Regulus",
+            "instruction": "Note Regulus (Alpha Leo, mag +1.4) about 30 degrees to the ESE"
+          },
+          {
+            "name": "M44",
+            "instruction": "M44 lies roughly halfway between the Pollux-Castor pair and Regulus, in the center of the faint Y-shape of Cancer. Look for a fuzzy patch to the naked eye that resolves into a swarm of stars in binoculars."
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Pollux-Regulus midpoint method from EarthSky and Constellation Guide",
+        "notes": "M44 is best in binoculars or the naked eye - too large for most telescopes. Visible as a fuzzy patch unaided in dark skies."
+      }
+    ]
+  },
+  {
+    "targetId": "M45",
+    "targetName": "Pleiades (Seven Sisters)",
+    "routes": [
+      {
+        "anchorStarName": "Aldebaran",
+        "anchorRA_approx": 68.98,
+        "anchorDec_approx": 16.51,
+        "waypoints": [
+          {
+            "name": "Orion's Belt",
+            "instruction": "Start at the 3 belt stars of Orion and follow the line they form upward (NW)"
+          },
+          {
+            "name": "Aldebaran",
+            "instruction": "The line leads to Aldebaran, the bright orange eye of Taurus, surrounded by the V-shaped Hyades cluster"
+          },
+          {
+            "name": "M45",
+            "instruction": "Continue in the same direction about 14 degrees NW past Aldebaran. M45 appears as a compact, brilliant group of blue-white stars visible to the naked eye."
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Orion's Belt pointer method from EarthSky, StarWalk, and all beginner guides",
+        "notes": "No optics needed to find M45 - it is one of the most recognizable naked-eye objects. Best in binoculars for the full cluster."
+      }
+    ]
+  },
+  {
+    "targetId": "M46",
+    "targetName": "Open Cluster in Puppis",
+    "routes": [
+      {
+        "anchorStarName": "Sirius",
+        "anchorRA_approx": 101.29,
+        "anchorDec_approx": -16.72,
+        "waypoints": [
+          {
+            "name": "Sirius",
+            "instruction": "Start at Sirius (Alpha CMa), the brightest star in the night sky"
+          },
+          {
+            "name": "M47",
+            "instruction": "From Sirius, scan about 12 degrees E (and slightly S). M47 appears first as a bright, loose cluster."
+          },
+          {
+            "name": "M46",
+            "instruction": "M46 lies just 1.3 degrees ESE of M47 in the same binocular field. M46 is fainter and more compact, and contains a planetary nebula (NGC 2438) on its northern edge."
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Sirius eastward scan from Astronomy Now, freestarcharts, and The Astro Gazer",
+        "notes": "M46 and M47 are a classic pair visible together in binoculars. The planetary nebula in M46 is a bonus in telescopes."
+      }
+    ]
+  },
+  {
+    "targetId": "M47",
+    "targetName": "Open Cluster in Puppis",
+    "routes": [
+      {
+        "anchorStarName": "Sirius",
+        "anchorRA_approx": 101.29,
+        "anchorDec_approx": -16.72,
+        "waypoints": [
+          {
+            "name": "Sirius",
+            "instruction": "Start at Sirius (Alpha CMa), the brightest star in the night sky"
+          },
+          {
+            "name": "Mirzam",
+            "instruction": "Note Mirzam (Beta CMa, mag +2.0) about 5 degrees W of Sirius"
+          },
+          {
+            "name": "M47",
+            "instruction": "Extend a line from Mirzam through Sirius and continue about 14 degrees NE. M47 is a bright, scattered cluster of about 50 stars."
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Mirzam-Sirius extension from freestarcharts",
+        "notes": "M47 is the brighter of the Puppis pair. It and M46 are separated by just 1.3 degrees."
+      }
+    ]
+  },
+  {
+    "targetId": "M48",
+    "targetName": "Open Cluster in Hydra",
+    "routes": [
+      {
+        "anchorStarName": "Procyon",
+        "anchorRA_approx": 114.83,
+        "anchorDec_approx": 5.22,
+        "waypoints": [
+          {
+            "name": "Procyon",
+            "instruction": "Start at Procyon (Alpha CMi, mag +0.4), the bright star in Canis Minor"
+          },
+          {
+            "name": "Zeta Monocerotis",
+            "instruction": "Head about 14 degrees SE from Procyon. Locate Zeta Monocerotis (mag +4.4) as an intermediate reference."
+          },
+          {
+            "name": "M48",
+            "instruction": "M48 lies about 3 degrees SSE of Zeta Monocerotis, near the Hydra-Monoceros border. It is a large cluster spanning nearly a full degree."
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Zeta Monocerotis hop from freestarcharts and Astronomy.com",
+        "notes": "M48 covers almost twice the apparent size of the full Moon. Best at low magnification."
+      }
+    ]
+  },
+  {
+    "targetId": "M49",
+    "targetName": "Elliptical Galaxy in Virgo",
+    "routes": [
+      {
+        "anchorStarName": "Vindemiatrix",
+        "anchorRA_approx": 195.54,
+        "anchorDec_approx": 10.96,
+        "waypoints": [
+          {
+            "name": "Vindemiatrix",
+            "instruction": "Start at Vindemiatrix (Epsilon Vir, mag +2.8), located between Denebola and Arcturus, shifted toward Spica"
+          },
+          {
+            "name": "M49",
+            "instruction": "M49 lies about 4.1 degrees WSW of Vindemiatrix. It is the brightest galaxy in the Virgo Cluster (mag +8.4) and appears as a small oval glow."
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Vindemiatrix offset from freestarcharts and Messier Objects",
+        "notes": "M49 sits about 5 degrees S of the main Virgo Cluster chain. Requires dark skies. Faintly visible in large binoculars."
+      }
+    ]
+  },
+  {
+    "targetId": "M50",
+    "targetName": "Heart-Shaped Cluster (Monoceros)",
+    "routes": [
+      {
+        "anchorStarName": "Sirius",
+        "anchorRA_approx": 101.29,
+        "anchorDec_approx": -16.72,
+        "waypoints": [
+          {
+            "name": "Sirius",
+            "instruction": "Start at Sirius (Alpha CMa), the brightest star in the night sky"
+          },
+          {
+            "name": "Theta Canis Majoris",
+            "instruction": "Hop about 5 degrees N of Sirius to Theta CMa (mag +4.1)"
+          },
+          {
+            "name": "M50",
+            "instruction": "Continue the same line another 4-5 degrees N from Theta CMa to reach M50, a heart-shaped cluster at the Monoceros-CMa border"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Sirius-Theta CMa line from freestarcharts and BBC Sky at Night",
+        "notes": "M50 is about 9.5 degrees NNE of Sirius total. Through a scope it shows a distinctive heart shape of blue-white stars."
+      }
+    ]
+  },
+  {
+    "targetId": "M51",
+    "targetName": "Whirlpool Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Alkaid",
+        "anchorRA_approx": 206.89,
+        "anchorDec_approx": 49.31,
+        "waypoints": [
+          {
+            "name": "Alkaid",
+            "instruction": "Start at Alkaid (Eta UMa, mag +1.9), the end star of the Big Dipper's handle"
+          },
+          {
+            "name": "24 Canum Venaticorum",
+            "instruction": "Hop about 3 degrees SW to 24 CVn (mag +4.7)"
+          },
+          {
+            "name": "M51",
+            "instruction": "M51 is about 2 degrees further S, forming a right angle with Alkaid and 24 CVn. In a telescope, look for two fuzzy patches (M51a and its companion NGC 5195) in contact."
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Alkaid hop from Cloudy Nights, Messier Objects, and Astronomy Now",
+        "notes": "One of the most popular galaxies. The spiral arms require an 8-inch or larger scope under dark skies."
+      }
+    ]
+  },
+  {
+    "targetId": "M52",
+    "targetName": "Open Cluster in Cassiopeia",
+    "routes": [
+      {
+        "anchorStarName": "Schedar",
+        "anchorRA_approx": 10.13,
+        "anchorDec_approx": 56.54,
+        "waypoints": [
+          {
+            "name": "Schedar",
+            "instruction": "Start at Schedar (Alpha Cas, mag +2.2), on the right side of Cassiopeia's W"
+          },
+          {
+            "name": "Caph",
+            "instruction": "Note Caph (Beta Cas, mag +2.3), about 5 degrees to the NW of Schedar"
+          },
+          {
+            "name": "M52",
+            "instruction": "Draw a line from Schedar through Caph and extend it about 6 degrees in the same direction. M52 is a rich, compact cluster near the reddish star 4 Cas."
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Schedar-Caph extension from Love the Night Sky, freestarcharts, and Constellation Guide",
+        "notes": "A rich cluster of about 200 stars. The Schedar-Caph-M52 line is one of the most reliable star hops in the northern sky."
+      }
+    ]
+  },
+  {
+    "targetId": "M53",
+    "targetName": "Globular Cluster in Coma Berenices",
+    "routes": [
+      {
+        "anchorStarName": "Arcturus",
+        "anchorRA_approx": 213.92,
+        "anchorDec_approx": 19.18,
+        "waypoints": [
+          {
+            "name": "Arcturus",
+            "instruction": "Start at Arcturus (Alpha Boo, mag -0.05) - follow the arc of the Big Dipper's handle to find it"
+          },
+          {
+            "name": "Muphrid",
+            "instruction": "Find Muphrid (Eta Boo, mag +2.7) about 3 degrees W of Arcturus"
+          },
+          {
+            "name": "Diadem",
+            "instruction": "Continue the line from Arcturus through Muphrid about 11 degrees W to Diadem (Alpha Com, mag +4.3)"
+          },
+          {
+            "name": "M53",
+            "instruction": "M53 is just 1 degree NE of Diadem. Look for a small, round, bright fuzzy patch."
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Arcturus-Muphrid-Diadem route from Messier Objects and freestarcharts",
+        "notes": "M53 is one of the more remote Milky Way globulars at 58,000 light-years. Needs a 6-inch scope to begin resolving stars."
+      }
+    ]
+  },
+  {
+    "targetId": "M54",
+    "targetName": "Globular Cluster in Sagittarius",
+    "routes": [
+      {
+        "anchorStarName": "Ascella",
+        "anchorRA_approx": 285.65,
+        "anchorDec_approx": -29.88,
+        "waypoints": [
+          {
+            "name": "Ascella",
+            "instruction": "Start at Ascella (Zeta Sgr, mag +2.6), the star at the base of the Teapot's handle in Sagittarius"
+          },
+          {
+            "name": "M54",
+            "instruction": "M54 is just 1.75 degrees WSW of Ascella (0.5 deg S, 1.5 deg W). It appears as a small, unresolved fuzzy spot."
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Ascella offset from freestarcharts and Messier Objects",
+        "notes": "M54 is actually a globular cluster of the Sagittarius Dwarf Elliptical Galaxy, not the Milky Way. Cannot be resolved in amateur scopes."
+      }
+    ]
+  },
+  {
+    "targetId": "M55",
+    "targetName": "Summer Rose Star (Sagittarius)",
+    "routes": [
+      {
+        "anchorStarName": "Ascella",
+        "anchorRA_approx": 285.65,
+        "anchorDec_approx": -29.88,
+        "waypoints": [
+          {
+            "name": "Ascella",
+            "instruction": "Start at Ascella (Zeta Sgr, mag +2.6) at the base of the Teapot's handle"
+          },
+          {
+            "name": "Theta1/Theta2 Sgr",
+            "instruction": "About 5 degrees SE of Ascella, find the close pair Theta1 and Theta2 Sagittarii"
+          },
+          {
+            "name": "M55",
+            "instruction": "From Theta1/Theta2, M55 is about 4 degrees to the NW. Alternatively, about 7 degrees E and slightly S of Ascella. Look for a large, diffuse, resolved globular."
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Theta Sgr route from freestarcharts and Deep Sky Corner",
+        "notes": "M55 has low surface brightness and requires dark skies. It is one of the more challenging Messier globulars from northern latitudes due to its low declination (-31 deg)."
+      }
+    ]
+  },
+  {
+    "targetId": "M56",
+    "targetName": "Globular Cluster in Lyra",
+    "routes": [
+      {
+        "anchorStarName": "Albireo",
+        "anchorRA_approx": 292.68,
+        "anchorDec_approx": 27.96,
+        "waypoints": [
+          {
+            "name": "Albireo",
+            "instruction": "Start at Albireo (Beta Cyg, mag +3.1), the famous gold-and-blue double star at the head of Cygnus"
+          },
+          {
+            "name": "Sulafat",
+            "instruction": "Note Sulafat (Gamma Lyr, mag +3.2), the second-brightest star in Lyra, about 7.5 degrees to the WSW"
+          },
+          {
+            "name": "M56",
+            "instruction": "M56 lies almost halfway along the Albireo-Sulafat line, about 4.5 degrees from Albireo. It appears as a small fuzzy patch."
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Albireo-Sulafat midpoint from freestarcharts, Messier Objects, and Skyscrapers",
+        "notes": "M56 is a compact globular that requires an 8-inch scope to begin resolving. The Albireo-Sulafat line is very reliable."
+      }
+    ]
+  },
+  {
+    "targetId": "M57",
+    "targetName": "Ring Nebula",
+    "routes": [
+      {
+        "anchorStarName": "Vega",
+        "anchorRA_approx": 279.23,
+        "anchorDec_approx": 38.78,
+        "waypoints": [
+          {
+            "name": "Vega",
+            "instruction": "Start at Vega (Alpha Lyr, mag +0.0), the brilliant blue-white star and brightest in Lyra"
+          },
+          {
+            "name": "Sheliak",
+            "instruction": "Sweep about 6 degrees SE from Vega to Sheliak (Beta Lyr, mag +3.5)"
+          },
+          {
+            "name": "Sulafat",
+            "instruction": "Sulafat (Gamma Lyr, mag +3.2) is about 2 degrees ESE of Sheliak - these two stars form the bottom of Lyra's parallelogram"
+          },
+          {
+            "name": "M57",
+            "instruction": "M57 lies about 40% of the way from Sheliak to Sulafat. At 100x+ magnification it shows the classic smoke ring shape."
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Sheliak-Sulafat midpoint from NASA, Astronomy Now, and freestarcharts",
+        "notes": "The Ring Nebula is tiny (about 1 arcmin) but bright. Use 100x or more to see the ring shape. The central hole is visible in 4-inch scopes."
+      }
+    ]
+  },
+  {
+    "targetId": "M58",
+    "targetName": "Barred Spiral Galaxy in Virgo",
+    "routes": [
+      {
+        "anchorStarName": "Vindemiatrix",
+        "anchorRA_approx": 195.54,
+        "anchorDec_approx": 10.96,
+        "waypoints": [
+          {
+            "name": "Vindemiatrix",
+            "instruction": "Start at Vindemiatrix (Epsilon Vir, mag +2.8)"
+          },
+          {
+            "name": "Denebola",
+            "instruction": "Note the direction toward Denebola (Beta Leo, mag +2.1), roughly 15 degrees to the WNW"
+          },
+          {
+            "name": "M60",
+            "instruction": "Head about 4.5 degrees W of Vindemiatrix along the Vindemiatrix-Denebola line to find M60 (brightest of this trio)"
+          },
+          {
+            "name": "M59",
+            "instruction": "M59 is about 20 arcmin WNW of M60, in the same eyepiece field"
+          },
+          {
+            "name": "M58",
+            "instruction": "Continue about 1 degree further WNW from M59 to reach M58"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Vindemiatrix chain from freestarcharts, SEDS Messier, and Astronomy.com",
+        "notes": "M58, M59, and M60 form a chain best swept in sequence. All are faint galaxies requiring dark skies and patience."
+      }
+    ]
+  },
+  {
+    "targetId": "M59",
+    "targetName": "Elliptical Galaxy in Virgo",
+    "routes": [
+      {
+        "anchorStarName": "Vindemiatrix",
+        "anchorRA_approx": 195.54,
+        "anchorDec_approx": 10.96,
+        "waypoints": [
+          {
+            "name": "Vindemiatrix",
+            "instruction": "Start at Vindemiatrix (Epsilon Vir, mag +2.8)"
+          },
+          {
+            "name": "34 Virginis",
+            "instruction": "Hop 1 degree N and 3.5 degrees W to the double star 34 Vir (mag +6.1)"
+          },
+          {
+            "name": "M60",
+            "instruction": "About 1 degree SW of 34 Vir lies M60"
+          },
+          {
+            "name": "M59",
+            "instruction": "M59 is about 20 arcmin WNW of M60, in the same wide-field eyepiece view"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Vindemiatrix to 34 Vir route from SEDS Messier and Astronomy.com",
+        "notes": "M59 is about 5 degrees due W of Vindemiatrix. It and M60 are close enough to fit in a single low-power field."
+      }
+    ]
+  },
+  {
+    "targetId": "M60",
+    "targetName": "Elliptical Galaxy in Virgo",
+    "routes": [
+      {
+        "anchorStarName": "Vindemiatrix",
+        "anchorRA_approx": 195.54,
+        "anchorDec_approx": 10.96,
+        "waypoints": [
+          {
+            "name": "Vindemiatrix",
+            "instruction": "Start at Vindemiatrix (Epsilon Vir, mag +2.8)"
+          },
+          {
+            "name": "34 Virginis",
+            "instruction": "Hop 1 degree N and 3.5 degrees W to find the double star 34 Vir (mag +6.1)"
+          },
+          {
+            "name": "M60",
+            "instruction": "About 1 degree SW of 34 Vir lies M60 (mag +8.8), the brightest galaxy in this trio, with companion NGC 4647 nearby"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Vindemiatrix to 34 Vir route from SEDS Messier, freestarcharts, and Astronomy.com",
+        "notes": "M60 is the E-most and brightest of the M58-M59-M60 chain. The nearby NGC 4647 is an interacting companion visible in medium scopes."
+      }
+    ]
+  },
+  {
+    "targetId": "M61",
+    "targetName": "Swirling Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Vindemiatrix",
+        "anchorRA_approx": 195.54,
+        "anchorDec_approx": 10.96,
+        "waypoints": [
+          {
+            "name": "Vindemiatrix (Epsilon Virginis)",
+            "instruction": "Start at Vindemiatrix (mag 2.8), the bright star marking the eastern arm of Virgo"
+          },
+          {
+            "name": "16 Virginis",
+            "instruction": "Move about 8 degrees south-southwest to the mag 5.0 star 16 Virginis"
+          },
+          {
+            "name": "M61",
+            "instruction": "M61 is 1.25 degrees north-northeast of 16 Virginis. Look for a faint, round glow"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Messier Objects / freestarcharts.com",
+        "notes": "M61 has low surface brightness; best under dark skies. Also reachable from M49 by moving 3.5 degrees south and 2 degrees west."
+      },
+      {
+        "anchorStarName": "Eta Virginis (Zaniah)",
+        "anchorRA_approx": 184.98,
+        "anchorDec_approx": -0.67,
+        "waypoints": [
+          {
+            "name": "Eta Virginis (Zaniah)",
+            "instruction": "Start at Eta Virginis (mag 3.9), part of the Bowl of Virgo asterism"
+          },
+          {
+            "name": "16 Virginis",
+            "instruction": "Move about 5 degrees north to find 16 Virginis (mag 5.0)"
+          },
+          {
+            "name": "M61",
+            "instruction": "M61 lies 1.25 degrees north-northeast of 16 Virginis"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Tony Flanders Astronomy / Cloudy Nights",
+        "notes": "Alternative route if Vindemiatrix is too far; uses the Bowl of Virgo as orientation"
+      }
+    ]
+  },
+  {
+    "targetId": "M62",
+    "targetName": "Flickering Globular",
+    "routes": [
+      {
+        "anchorStarName": "Antares",
+        "anchorRA_approx": 247.35,
+        "anchorDec_approx": -26.43,
+        "waypoints": [
+          {
+            "name": "Antares (Alpha Scorpii)",
+            "instruction": "Start at Antares (mag 1.1), the red heart of Scorpius"
+          },
+          {
+            "name": "M62",
+            "instruction": "Move 7.5 degrees southeast of Antares. M62 appears as a small hazy patch in binoculars"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "starhopping.org / freestarcharts.com",
+        "notes": "M62 sits in rich Milky Way star fields and can be easily missed. An 8-inch telescope is needed to resolve outer stars."
+      },
+      {
+        "anchorStarName": "Epsilon Scorpii (Larawag)",
+        "anchorRA_approx": 252.54,
+        "anchorDec_approx": -34.29,
+        "waypoints": [
+          {
+            "name": "Epsilon Scorpii (Larawag)",
+            "instruction": "Start at Epsilon Scorpii (mag 2.3), just southeast of Antares in the Scorpion's body"
+          },
+          {
+            "name": "M62",
+            "instruction": "Move 4.75 degrees northeast to M62"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "freestarcharts.com",
+        "notes": "Closer starting point than Antares; M62 is a lopsided globular cluster"
+      }
+    ]
+  },
+  {
+    "targetId": "M63",
+    "targetName": "Sunflower Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Cor Caroli",
+        "anchorRA_approx": 194.01,
+        "anchorDec_approx": 38.32,
+        "waypoints": [
+          {
+            "name": "Cor Caroli (Alpha CVn)",
+            "instruction": "Start at Cor Caroli (mag 2.9), the brightest star in Canes Venatici, found one-third of the way from Alkaid to Denebola"
+          },
+          {
+            "name": "20 CVn / Gamma-shaped asterism",
+            "instruction": "Place Cor Caroli at the southwestern edge of your binocular field. On the opposite side, find four stars forming a right-triangle pattern"
+          },
+          {
+            "name": "M63",
+            "instruction": "M63 is about 1 degree north of 19 Canum Venaticorum, the star at the right angle of the triangle. It appears as a faint elongated glow"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Optics-Pro / EarthSky",
+        "notes": "About 4 degrees northeast of Cor Caroli. Visible as a bright, compact patch in 10x50 binoculars under dark skies."
+      }
+    ]
+  },
+  {
+    "targetId": "M64",
+    "targetName": "Black Eye Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Diadem (Alpha Comae Berenices)",
+        "anchorRA_approx": 197.5,
+        "anchorDec_approx": 17.53,
+        "waypoints": [
+          {
+            "name": "Diadem (Alpha Comae Berenices)",
+            "instruction": "Start at Diadem (mag 4.3), the gem in Queen Berenice's crown, located about 15 degrees west of Arcturus"
+          },
+          {
+            "name": "35 Comae Berenices",
+            "instruction": "Star hop approximately 4 degrees north-northwest to 35 Comae Berenices (mag 5.1)"
+          },
+          {
+            "name": "M64",
+            "instruction": "M64 is about 1 degree northeast of 35 Comae Berenices. Look for a bright core with a distinctive dark patch (the 'black eye') visible in 4-inch or larger telescopes"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "freestarcharts.com / Messier Objects",
+        "notes": "M64 lies 19 degrees west and slightly north of Arcturus. The dark dust band is visible in moderate apertures."
+      }
+    ]
+  },
+  {
+    "targetId": "M65",
+    "targetName": "Leo Triplet Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Chertan (Theta Leonis)",
+        "anchorRA_approx": 168.56,
+        "anchorDec_approx": 15.43,
+        "waypoints": [
+          {
+            "name": "Chertan (Theta Leonis)",
+            "instruction": "Start at Chertan (mag 3.3), in the haunches of Leo, forming a right triangle with Zosma and Denebola"
+          },
+          {
+            "name": "73 Leonis",
+            "instruction": "Move 2 degrees south to find 73 Leonis (mag 5.3)"
+          },
+          {
+            "name": "M65",
+            "instruction": "M65 lies 0.75 degrees east of 73 Leonis"
+          },
+          {
+            "name": "M66",
+            "instruction": "M66 is a further 0.33 degrees southeast of M65. Both fit in the same low-power field with NGC 3628 just 0.5 degrees north"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "freestarcharts.com / Cosmic Pursuits",
+        "notes": "The Leo Triplet (M65, M66, NGC 3628) all fit in one field of view. Best in March-May."
+      }
+    ]
+  },
+  {
+    "targetId": "M66",
+    "targetName": "Leo Triplet Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Chertan (Theta Leonis)",
+        "anchorRA_approx": 168.56,
+        "anchorDec_approx": 15.43,
+        "waypoints": [
+          {
+            "name": "Chertan (Theta Leonis)",
+            "instruction": "Start at Chertan (mag 3.3) in Leo's haunches"
+          },
+          {
+            "name": "73 Leonis",
+            "instruction": "Move 2 degrees south to 73 Leonis (mag 5.3)"
+          },
+          {
+            "name": "M65",
+            "instruction": "Move 0.75 degrees east to M65"
+          },
+          {
+            "name": "M66",
+            "instruction": "M66 is 0.33 degrees southeast of M65, slightly brighter with more obvious spiral structure"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "freestarcharts.com / Cosmic Pursuits",
+        "notes": "Same hop as M65. M66 is the brightest of the Leo Triplet."
+      }
+    ]
+  },
+  {
+    "targetId": "M67",
+    "targetName": "King Cobra Cluster",
+    "routes": [
+      {
+        "anchorStarName": "Acubens (Alpha Cancri)",
+        "anchorRA_approx": 134.62,
+        "anchorDec_approx": 11.86,
+        "waypoints": [
+          {
+            "name": "Acubens (Alpha Cancri)",
+            "instruction": "Start at Acubens (mag 4.2), the star marking the southeastern corner of the Crab's body"
+          },
+          {
+            "name": "M67",
+            "instruction": "Move about 1.5 degrees west of Acubens. M67 is a rich open cluster visible in binoculars, one of the oldest known open clusters"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Messier Objects / Cosmic Pursuits",
+        "notes": "Easy one-hop target from Alpha Cancri. M67 is 3-5 billion years old, unusually ancient for an open cluster."
+      }
+    ]
+  },
+  {
+    "targetId": "M68",
+    "targetName": "Globular Cluster in Hydra",
+    "routes": [
+      {
+        "anchorStarName": "Kraz (Beta Corvi)",
+        "anchorRA_approx": 188.6,
+        "anchorDec_approx": -23.4,
+        "waypoints": [
+          {
+            "name": "Kraz (Beta Corvi)",
+            "instruction": "Start at Kraz (mag 2.6), one of the stars forming the rectangle of Corvus the Crow"
+          },
+          {
+            "name": "M68",
+            "instruction": "Move 3.5 degrees southeast of Kraz. M68 appears as a faint patch in binoculars; a 4-inch telescope begins to resolve its brightest stars"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Messier Objects / Corvus Constellation Guide",
+        "notes": "M68 lies roughly halfway between Beta Corvi and Spica. Contains over 100,000 stars."
+      }
+    ]
+  },
+  {
+    "targetId": "M69",
+    "targetName": "Globular Cluster in Sagittarius",
+    "routes": [
+      {
+        "anchorStarName": "Kaus Australis (Epsilon Sagittarii)",
+        "anchorRA_approx": 276.04,
+        "anchorDec_approx": -34.38,
+        "waypoints": [
+          {
+            "name": "Kaus Australis (Epsilon Sagittarii)",
+            "instruction": "Start at Kaus Australis (mag 1.8), the brightest star in the Teapot's base in Sagittarius"
+          },
+          {
+            "name": "Ascella (Zeta Sagittarii)",
+            "instruction": "Identify Ascella (mag 2.6) at the other end of the Teapot's base, about 4 degrees east"
+          },
+          {
+            "name": "M69",
+            "instruction": "M69 lies about 2 degrees northeast of Ascella, roughly 1.5 degrees north of the imaginary line connecting Kaus Australis and Ascella"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "freestarcharts.com / Messier Objects",
+        "notes": "M69 and M70 are close neighbors inside the Teapot. Best viewed in summer from southern latitudes."
+      }
+    ]
+  },
+  {
+    "targetId": "M70",
+    "targetName": "Globular Cluster in Sagittarius",
+    "routes": [
+      {
+        "anchorStarName": "Kaus Australis (Epsilon Sagittarii)",
+        "anchorRA_approx": 276.04,
+        "anchorDec_approx": -34.38,
+        "waypoints": [
+          {
+            "name": "Kaus Australis (Epsilon Sagittarii)",
+            "instruction": "Start at Kaus Australis (mag 1.8) at the base of the Sagittarius Teapot"
+          },
+          {
+            "name": "Ascella (Zeta Sagittarii)",
+            "instruction": "Identify Ascella (mag 2.6) at the eastern end of the Teapot's base"
+          },
+          {
+            "name": "M70",
+            "instruction": "M70 is positioned almost exactly halfway along the line connecting Kaus Australis and Ascella, slightly above the line"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "freestarcharts.com / Messier Objects",
+        "notes": "Nearly identical in size and brightness to neighbor M69, about 2 degrees to its southwest."
+      }
+    ]
+  },
+  {
+    "targetId": "M71",
+    "targetName": "Globular Cluster in Sagitta",
+    "routes": [
+      {
+        "anchorStarName": "Gamma Sagittae",
+        "anchorRA_approx": 299.69,
+        "anchorDec_approx": 19.49,
+        "waypoints": [
+          {
+            "name": "Gamma Sagittae",
+            "instruction": "Start at Gamma Sagittae (mag 3.5), one of the stars forming the Arrow constellation inside the Summer Triangle"
+          },
+          {
+            "name": "Delta Sagittae",
+            "instruction": "Identify Delta Sagittae (mag 3.7), forming the other end of the arrow shaft"
+          },
+          {
+            "name": "M71",
+            "instruction": "M71 lies halfway between Gamma and Delta Sagittae, slightly south of the line connecting them. It appears as a hazy patch in binoculars"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky / freestarcharts.com / NASA",
+        "notes": "One of the easiest Messier objects to locate. M71 is a very loose globular cluster at mag 6.1."
+      }
+    ]
+  },
+  {
+    "targetId": "M72",
+    "targetName": "Globular Cluster in Aquarius",
+    "routes": [
+      {
+        "anchorStarName": "Albali (Epsilon Aquarii)",
+        "anchorRA_approx": 311.92,
+        "anchorDec_approx": -9.5,
+        "waypoints": [
+          {
+            "name": "Albali (Epsilon Aquarii)",
+            "instruction": "Start at Albali (mag 3.8) in the western part of Aquarius"
+          },
+          {
+            "name": "M72",
+            "instruction": "Move about 3 degrees south and 1.5 degrees east of Albali. M72 is a faint, remote globular cluster needing 8-inch or larger aperture to look good"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Tony Flanders Astronomy / Messier Objects",
+        "notes": "M72 and M73 are only 1.5 degrees apart. One of the most remote Messier globulars at 53,000 light-years."
+      }
+    ]
+  },
+  {
+    "targetId": "M73",
+    "targetName": "Asterism in Aquarius",
+    "routes": [
+      {
+        "anchorStarName": "Albali (Epsilon Aquarii)",
+        "anchorRA_approx": 311.92,
+        "anchorDec_approx": -9.5,
+        "waypoints": [
+          {
+            "name": "Albali (Epsilon Aquarii)",
+            "instruction": "Start at Albali (mag 3.8) in Aquarius"
+          },
+          {
+            "name": "M72",
+            "instruction": "Locate M72, about 3 degrees south and 1.5 degrees east of Albali"
+          },
+          {
+            "name": "M73",
+            "instruction": "From M72, move 1.5 degrees east to M73, an asterism of four stars in a Y-shape"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Tony Flanders Astronomy / Messier Objects",
+        "notes": "M73 is technically an asterism, not a true cluster. Only four stars in a distinctive pattern."
+      }
+    ]
+  },
+  {
+    "targetId": "M74",
+    "targetName": "Phantom Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Eta Piscium (Alpherg)",
+        "anchorRA_approx": 22.87,
+        "anchorDec_approx": 15.35,
+        "waypoints": [
+          {
+            "name": "Eta Piscium (Alpherg)",
+            "instruction": "Start at Eta Piscium (mag 3.6). To find it, extend a line from Hamal through Sheratan in Aries about 7.5 degrees southwest"
+          },
+          {
+            "name": "M74",
+            "instruction": "M74 is 1.5 degrees east-northeast of Eta Piscium. It is a face-on grand-design spiral with very low surface brightness, one of the hardest Messier objects"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "freestarcharts.com / Messier Objects",
+        "notes": "Extremely low surface brightness makes M74 one of the most challenging Messier objects. Requires dark skies and averted vision."
+      }
+    ]
+  },
+  {
+    "targetId": "M75",
+    "targetName": "Globular Cluster in Sagittarius",
+    "routes": [
+      {
+        "anchorStarName": "59 Sagittarii",
+        "anchorRA_approx": 296.17,
+        "anchorDec_approx": -27.17,
+        "waypoints": [
+          {
+            "name": "59 Sagittarii",
+            "instruction": "Locate the asterism of 58 (Omega), 59, 60, and 62 Sagittarii in eastern Sagittarius near the Capricornus border"
+          },
+          {
+            "name": "M75",
+            "instruction": "The cross-bar formed by 59 and 60 Sagittarii points almost directly NNE to M75, about 5.25 degrees away. Alternatively, M75 lies 2.75 degrees west of 4 Capricorni"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "The Skyscrapers / freestarcharts.com",
+        "notes": "One of the more difficult Messier objects to locate, in a sparse star field. A very concentrated globular cluster."
+      }
+    ]
+  },
+  {
+    "targetId": "M76",
+    "targetName": "Little Dumbbell Nebula",
+    "routes": [
+      {
+        "anchorStarName": "Phi Persei",
+        "anchorRA_approx": 25.92,
+        "anchorDec_approx": 50.69,
+        "waypoints": [
+          {
+            "name": "51 Andromedae",
+            "instruction": "Start at 51 Andromedae (mag 3.5)"
+          },
+          {
+            "name": "Phi Persei",
+            "instruction": "Move about 2 degrees north-northeast to Phi Persei (mag 4.0)"
+          },
+          {
+            "name": "M76",
+            "instruction": "M76 is less than 1 degree north-northwest of Phi Persei. At mag 12.2, it is the faintest Messier object but visible even in a 2.4-inch telescope as an elongated patch"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Love the Night Sky / Astronomy Now",
+        "notes": "Faintest object in the Messier catalog. Also findable roughly halfway between Epsilon Cassiopeiae and Mirfak (Alpha Persei)."
+      }
+    ]
+  },
+  {
+    "targetId": "M77",
+    "targetName": "Cetus A (Squid Galaxy)",
+    "routes": [
+      {
+        "anchorStarName": "Delta Ceti",
+        "anchorRA_approx": 40.83,
+        "anchorDec_approx": 0.33,
+        "waypoints": [
+          {
+            "name": "Menkar (Alpha Ceti)",
+            "instruction": "Identify Menkar (mag 2.5) in Cetus as an orientation anchor"
+          },
+          {
+            "name": "Gamma Ceti",
+            "instruction": "Move 5 degrees west from Menkar to Gamma Ceti (mag 3.5)"
+          },
+          {
+            "name": "Delta Ceti",
+            "instruction": "Move 3 degrees south and slightly west to Delta Ceti (mag 4.1)"
+          },
+          {
+            "name": "M77",
+            "instruction": "M77 lies about 1 degree southeast of Delta Ceti. It has a bright core visible in binoculars"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Love the Night Sky / freestarcharts.com",
+        "notes": "Brightest and nearest Seyfert galaxy. Easy to spot with binoculars thanks to its compact, bright core."
+      }
+    ]
+  },
+  {
+    "targetId": "M78",
+    "targetName": "Reflection Nebula in Orion",
+    "routes": [
+      {
+        "anchorStarName": "Alnitak (Zeta Orionis)",
+        "anchorRA_approx": 85.19,
+        "anchorDec_approx": -1.94,
+        "waypoints": [
+          {
+            "name": "Alnitak (Zeta Orionis)",
+            "instruction": "Start at Alnitak (mag 1.7), the easternmost star of Orion's Belt"
+          },
+          {
+            "name": "M78",
+            "instruction": "Move about 2 degrees north and 1.5 degrees east of Alnitak. M78 is the brightest diffuse reflection nebula in the sky, appearing like a small faint comet in a 4-inch telescope"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "astrobackyard.com / Love the Night Sky",
+        "notes": "Alternative approach: from Mintaka (westernmost belt star), track east at the same declination until M78 enters the field."
+      }
+    ]
+  },
+  {
+    "targetId": "M79",
+    "targetName": "Globular Cluster in Lepus",
+    "routes": [
+      {
+        "anchorStarName": "Nihal (Beta Leporis)",
+        "anchorRA_approx": 82.06,
+        "anchorDec_approx": -20.76,
+        "waypoints": [
+          {
+            "name": "Arneb (Alpha Leporis)",
+            "instruction": "Start at Arneb (mag 2.6), the brightest star in Lepus, found by extending a line from Betelgeuse through Saiph"
+          },
+          {
+            "name": "Nihal (Beta Leporis)",
+            "instruction": "Move 3 degrees southwest to Nihal (mag 2.8)"
+          },
+          {
+            "name": "HR 1771",
+            "instruction": "Continue the same direction for about 1.5 times the Arneb-Nihal distance to reach the 5th-magnitude star HR 1771"
+          },
+          {
+            "name": "M79",
+            "instruction": "M79 is only 0.5 degrees northeast of HR 1771, visible in the same binocular field as a single fuzzy star"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Sky & Telescope / EarthSky",
+        "notes": "Unusual winter globular cluster. One of few globulars visible in the winter sky."
+      }
+    ]
+  },
+  {
+    "targetId": "M80",
+    "targetName": "Globular Cluster in Scorpius",
+    "routes": [
+      {
+        "anchorStarName": "Antares (Alpha Scorpii)",
+        "anchorRA_approx": 247.35,
+        "anchorDec_approx": -26.43,
+        "waypoints": [
+          {
+            "name": "Antares (Alpha Scorpii)",
+            "instruction": "Start at Antares (mag 1.1), the bright red heart of Scorpius"
+          },
+          {
+            "name": "Graffias (Beta Scorpii)",
+            "instruction": "Identify Graffias (mag 2.5) in the claws of Scorpius, northwest of Antares"
+          },
+          {
+            "name": "M80",
+            "instruction": "M80 is located almost exactly halfway between Antares and Graffias, about 4.5 degrees northwest of Antares. It appears as a fuzzy ball of light in small telescopes"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Love the Night Sky / Messier Objects",
+        "notes": "Very easy to find given the two bright anchor stars. 8-inch telescopes show the bright nucleus and extended halo."
+      }
+    ]
+  },
+  {
+    "targetId": "M81",
+    "targetName": "Bode's Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Dubhe (Alpha Ursae Majoris)",
+        "anchorRA_approx": 165.93,
+        "anchorDec_approx": 61.75,
+        "waypoints": [
+          {
+            "name": "Phecda (Gamma Ursae Majoris)",
+            "instruction": "Identify Phecda at the lower-left corner of the Big Dipper's bowl"
+          },
+          {
+            "name": "Dubhe (Alpha Ursae Majoris)",
+            "instruction": "Draw a diagonal line across the bowl from Phecda to Dubhe (mag 1.8), about 10 degrees"
+          },
+          {
+            "name": "M81",
+            "instruction": "Continue this line the same distance beyond Dubhe (about 10 degrees northwest) into a sparse star field to find M81, a bright oval in binoculars"
+          },
+          {
+            "name": "M82",
+            "instruction": "M82 (Cigar Galaxy) lies only 38 arcminutes directly north of M81, both fit in one low-power field"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "starhopping.org / Cosmos Safari / freestarcharts.com",
+        "notes": "One of the most popular star hops for beginners. M81 is mag 6.9 and easy in binoculars. The pair is one of the finest galaxy duos in the sky."
+      }
+    ]
+  },
+  {
+    "targetId": "M82",
+    "targetName": "Cigar Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Dubhe (Alpha Ursae Majoris)",
+        "anchorRA_approx": 165.93,
+        "anchorDec_approx": 61.75,
+        "waypoints": [
+          {
+            "name": "Phecda (Gamma Ursae Majoris)",
+            "instruction": "Identify Phecda at the lower-left corner of the Big Dipper's bowl"
+          },
+          {
+            "name": "Dubhe (Alpha Ursae Majoris)",
+            "instruction": "Draw a line from Phecda through Dubhe (the diagonal of the bowl)"
+          },
+          {
+            "name": "M81",
+            "instruction": "Continue the same distance beyond Dubhe (about 10 degrees) to find M81"
+          },
+          {
+            "name": "M82",
+            "instruction": "M82 is 38 arcminutes due north of M81. It appears as a thin, elongated streak compared to M81's round glow"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "starhopping.org / Cosmos Safari",
+        "notes": "Same hop as M81. M82 is an edge-on starburst galaxy with distinctive mottled texture."
+      }
+    ]
+  },
+  {
+    "targetId": "M83",
+    "targetName": "Southern Pinwheel Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Gamma Hydrae",
+        "anchorRA_approx": 199.73,
+        "anchorDec_approx": -23.17,
+        "waypoints": [
+          {
+            "name": "Gamma Hydrae",
+            "instruction": "Start at Gamma Hydrae (mag 3.0), a prominent star in the body of Hydra"
+          },
+          {
+            "name": "Trail of faint stars",
+            "instruction": "Follow a trail of 5th-7th magnitude stars about 6.5 degrees south and 3 degrees east"
+          },
+          {
+            "name": "M83",
+            "instruction": "M83 is a bright face-on barred spiral, the finest visible to Northern Hemisphere observers. Spiral structure visible in 6-inch telescopes"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Messier Objects / NASA",
+        "notes": "Low declination makes it challenging for northern observers. Also reachable from Pi Hydrae (3 degrees south, 6 degrees west)."
+      }
+    ]
+  },
+  {
+    "targetId": "M84",
+    "targetName": "Lenticular Galaxy in Virgo",
+    "routes": [
+      {
+        "anchorStarName": "Denebola (Beta Leonis)",
+        "anchorRA_approx": 177.26,
+        "anchorDec_approx": 14.57,
+        "waypoints": [
+          {
+            "name": "Denebola (Beta Leonis)",
+            "instruction": "Start at Denebola (mag 2.1), the tail star of Leo"
+          },
+          {
+            "name": "Vindemiatrix (Epsilon Virginis)",
+            "instruction": "Identify Vindemiatrix (mag 2.8) about 15 degrees east in Virgo"
+          },
+          {
+            "name": "M84",
+            "instruction": "M84 lies almost exactly halfway between Denebola and Vindemiatrix. It marks the western end of Markarian's Chain, with M86 just 17 arcminutes to the east in the same eyepiece field"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "BBC Sky at Night / Messier Objects",
+        "notes": "Gateway to Markarian's Chain. M84 and M86 are a famous pair visible simultaneously in the same low-power field."
+      }
+    ]
+  },
+  {
+    "targetId": "M85",
+    "targetName": "Lenticular Galaxy in Coma Berenices",
+    "routes": [
+      {
+        "anchorStarName": "Denebola (Beta Leonis)",
+        "anchorRA_approx": 177.26,
+        "anchorDec_approx": 14.57,
+        "waypoints": [
+          {
+            "name": "Denebola (Beta Leonis)",
+            "instruction": "Start at Denebola (mag 2.1), the tail of Leo"
+          },
+          {
+            "name": "T-shaped asterism",
+            "instruction": "Look 7 degrees east with a finderscope to find a T-shaped asterism of five stars including 6 Virginis"
+          },
+          {
+            "name": "11 Comae Berenices",
+            "instruction": "About 2 degrees above the top of the T-shape, find 11 Comae Berenices (mag 4.7)"
+          },
+          {
+            "name": "M85",
+            "instruction": "M85 is about 1 degree east-northeast of 11 Comae Berenices"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "starhopping.org / Messier Objects",
+        "notes": "M85 lies midway between Denebola and Vindemiatrix but slightly north of the line. Northernmost member of the Virgo Cluster."
+      }
+    ]
+  },
+  {
+    "targetId": "M86",
+    "targetName": "Lenticular Galaxy in Virgo",
+    "routes": [
+      {
+        "anchorStarName": "Denebola (Beta Leonis)",
+        "anchorRA_approx": 177.26,
+        "anchorDec_approx": 14.57,
+        "waypoints": [
+          {
+            "name": "Denebola (Beta Leonis)",
+            "instruction": "Start at Denebola (mag 2.1), the tail of Leo"
+          },
+          {
+            "name": "Vindemiatrix (Epsilon Virginis)",
+            "instruction": "Identify Vindemiatrix (mag 2.8) about 15 degrees to the east"
+          },
+          {
+            "name": "M84",
+            "instruction": "Aim halfway between Denebola and Vindemiatrix to find M84"
+          },
+          {
+            "name": "M86",
+            "instruction": "M86 sits just 17 arcminutes east of M84, both visible in the same eyepiece. M86 has a slightly more oval appearance"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "BBC Sky at Night / Galactic Hunter",
+        "notes": "M86 is part of Markarian's Chain and often found together with M84 as a pair."
+      }
+    ]
+  },
+  {
+    "targetId": "M87",
+    "targetName": "Virgo A",
+    "routes": [
+      {
+        "anchorStarName": "Denebola (Beta Leonis)",
+        "anchorRA_approx": 177.26,
+        "anchorDec_approx": 14.57,
+        "waypoints": [
+          {
+            "name": "Denebola (Beta Leonis)",
+            "instruction": "Start at Denebola (mag 2.1) at the tail of Leo"
+          },
+          {
+            "name": "Vindemiatrix (Epsilon Virginis)",
+            "instruction": "Identify Vindemiatrix (mag 2.8) in Virgo, about 15 degrees east"
+          },
+          {
+            "name": "M87",
+            "instruction": "M87 is just over halfway along the Denebola-Vindemiatrix line, about 1.5 degrees southeast of the M84/M86 pair. Giant elliptical galaxy appearing as a featureless fuzzy ball"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "freestarcharts.com / Messier Objects",
+        "notes": "Central giant of the Virgo Cluster, containing a famous supermassive black hole. M84/M86 lie 1.5 degrees to the northwest."
+      }
+    ]
+  },
+  {
+    "targetId": "M88",
+    "targetName": "Spiral Galaxy in Coma Berenices",
+    "routes": [
+      {
+        "anchorStarName": "Denebola (Beta Leonis)",
+        "anchorRA_approx": 177.26,
+        "anchorDec_approx": 14.57,
+        "waypoints": [
+          {
+            "name": "Denebola (Beta Leonis)",
+            "instruction": "Start at Denebola (mag 2.1) in Leo"
+          },
+          {
+            "name": "M84/M86 pair",
+            "instruction": "Navigate to the M84/M86 pair halfway between Denebola and Vindemiatrix"
+          },
+          {
+            "name": "M87",
+            "instruction": "Move 1.5 degrees southeast to M87"
+          },
+          {
+            "name": "M89",
+            "instruction": "Continue about 1 degree east to M89"
+          },
+          {
+            "name": "M90",
+            "instruction": "From M89, move 0.75 degrees north to M90"
+          },
+          {
+            "name": "M88",
+            "instruction": "From M90, move 1.5 degrees northwest to M88. It is a bright, elongated spiral galaxy"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "SEDS Messier / Tony Flanders Astronomy",
+        "notes": "M88 is 50 arcminutes west of M91, so both fit in the same low-to-medium power field."
+      }
+    ]
+  },
+  {
+    "targetId": "M89",
+    "targetName": "Elliptical Galaxy in Virgo",
+    "routes": [
+      {
+        "anchorStarName": "Vindemiatrix (Epsilon Virginis)",
+        "anchorRA_approx": 195.54,
+        "anchorDec_approx": 10.96,
+        "waypoints": [
+          {
+            "name": "Vindemiatrix (Epsilon Virginis)",
+            "instruction": "Start at Vindemiatrix (mag 2.8) in Virgo"
+          },
+          {
+            "name": "Rho Virginis",
+            "instruction": "Move 5 degrees west and slightly south to Rho Virginis (mag 4.9)"
+          },
+          {
+            "name": "M60",
+            "instruction": "From Rho Virginis, move 1.5 degrees north to M60"
+          },
+          {
+            "name": "M59",
+            "instruction": "M59 is 0.4 degrees west of M60"
+          },
+          {
+            "name": "M58",
+            "instruction": "Continue 1 degree west to M58"
+          },
+          {
+            "name": "M89",
+            "instruction": "From M58, move slightly west and 1 degree north to M89, a nearly perfectly circular elliptical galaxy"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "SEDS Messier / Astronomy.com",
+        "notes": "M89 is nearly perfectly spherical -- the most circular elliptical galaxy known. Central hub for reaching M90, M87, and M58."
+      }
+    ]
+  },
+  {
+    "targetId": "M90",
+    "targetName": "Spiral Galaxy in Virgo",
+    "routes": [
+      {
+        "anchorStarName": "Vindemiatrix (Epsilon Virginis)",
+        "anchorRA_approx": 195.54,
+        "anchorDec_approx": 10.96,
+        "waypoints": [
+          {
+            "name": "Vindemiatrix (Epsilon Virginis)",
+            "instruction": "Start at Vindemiatrix (mag 2.8) in Virgo"
+          },
+          {
+            "name": "M84/M86",
+            "instruction": "Navigate to the M84/M86 pair halfway between Denebola and Vindemiatrix"
+          },
+          {
+            "name": "M87",
+            "instruction": "Move 1.5 degrees southeast to M87"
+          },
+          {
+            "name": "M89",
+            "instruction": "Move about 1 degree east to M89"
+          },
+          {
+            "name": "M90",
+            "instruction": "M90 is 0.75 degrees north of M89. One of the largest spirals in the Virgo Cluster, visible in the same field as M89"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Tony Flanders Astronomy / freestarcharts.com",
+        "notes": "M90 is one of the few galaxies approaching us (blueshifted). It forms a nice pair with M89 in the same low-power field."
+      }
+    ]
+  },
+  {
+    "targetId": "M91",
+    "targetName": "Barred Spiral Galaxy in Coma Berenices",
+    "routes": [
+      {
+        "anchorStarName": "Denebola (Beta Leonis)",
+        "anchorRA_approx": 177.26,
+        "anchorDec_approx": 14.57,
+        "waypoints": [
+          {
+            "name": "Denebola (Beta Leonis)",
+            "instruction": "Start at Denebola (mag 2.1) and navigate to the Virgo Cluster core"
+          },
+          {
+            "name": "M89",
+            "instruction": "Locate M89 in the Virgo Cluster core (see M89 route)"
+          },
+          {
+            "name": "M90",
+            "instruction": "Move 0.75 degrees north to M90"
+          },
+          {
+            "name": "M91",
+            "instruction": "From M90, move about 1 degree north-northwest. M91 is one of the faintest Messier objects and very hard to see; M88 is 50 arcminutes to its west"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Tony Flanders Astronomy / SEDS Messier",
+        "notes": "One of the faintest Messier objects. Very difficult in small apertures. Hopeless from light-polluted sites."
+      }
+    ]
+  },
+  {
+    "targetId": "M92",
+    "targetName": "Globular Cluster in Hercules",
+    "routes": [
+      {
+        "anchorStarName": "Pi Herculis",
+        "anchorRA_approx": 258.76,
+        "anchorDec_approx": 36.81,
+        "waypoints": [
+          {
+            "name": "Pi Herculis",
+            "instruction": "Start at Pi Herculis (mag 3.2), at the northern end of the Keystone asterism in Hercules"
+          },
+          {
+            "name": "Iota Herculis",
+            "instruction": "Identify Iota Herculis (mag 3.8), outside the Keystone to the northeast"
+          },
+          {
+            "name": "M92",
+            "instruction": "M92 lies about one-third of the way from Pi to Iota Herculis. It's a magnificent globular cluster at mag 6.4, just on the edge of naked-eye visibility under very dark skies"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Starlust / freestarcharts.com",
+        "notes": "Often overshadowed by M13 nearby but M92 is a superb globular in its own right. One of the oldest known globular clusters."
+      }
+    ]
+  },
+  {
+    "targetId": "M93",
+    "targetName": "Open Cluster in Puppis",
+    "routes": [
+      {
+        "anchorStarName": "Xi Puppis",
+        "anchorRA_approx": 115.95,
+        "anchorDec_approx": -24.86,
+        "waypoints": [
+          {
+            "name": "Sirius (Alpha Canis Majoris)",
+            "instruction": "Start at Sirius, the brightest star in the night sky"
+          },
+          {
+            "name": "Omicron 1 & 2 Canis Majoris",
+            "instruction": "Move about a fist-width (10 degrees) southeast to the north-south pairing of Omicron 1 and 2 CMa"
+          },
+          {
+            "name": "Xi Puppis",
+            "instruction": "Continue another 10 degrees in the same direction to reach Xi Puppis (mag 3.3)"
+          },
+          {
+            "name": "M93",
+            "instruction": "M93 lies 1.5 degrees northwest of Xi Puppis. It is a bright open cluster (mag 6.0) resembling a butterfly, visible in binoculars"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Astronomy.com / Messier Objects",
+        "notes": "Bright and easy in any optics. Best viewed in winter months when Puppis is visible."
+      }
+    ]
+  },
+  {
+    "targetId": "M94",
+    "targetName": "Cat's Eye Galaxy (Croc's Eye Galaxy)",
+    "routes": [
+      {
+        "anchorStarName": "Cor Caroli (Alpha CVn)",
+        "anchorRA_approx": 194.01,
+        "anchorDec_approx": 38.32,
+        "waypoints": [
+          {
+            "name": "Cor Caroli (Alpha CVn)",
+            "instruction": "Start at Cor Caroli (mag 2.9), the brightest star in Canes Venatici"
+          },
+          {
+            "name": "Chara (Beta CVn)",
+            "instruction": "Identify Chara (mag 4.2), about 5 degrees northwest of Cor Caroli"
+          },
+          {
+            "name": "M94",
+            "instruction": "M94 forms a flat equilateral triangle with Cor Caroli and Chara, positioned to the north. It is about 3 degrees east and slightly south of Chara, or about 2 finger-widths north of Cor Caroli"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Galactic Hunter / Optics-Pro",
+        "notes": "M94 has a very bright, compact core. Through binoculars it appears bright and compact but not point-shaped."
+      }
+    ]
+  },
+  {
+    "targetId": "M95",
+    "targetName": "Barred Spiral Galaxy in Leo",
+    "routes": [
+      {
+        "anchorStarName": "Regulus (Alpha Leonis)",
+        "anchorRA_approx": 152.09,
+        "anchorDec_approx": 11.97,
+        "waypoints": [
+          {
+            "name": "Regulus (Alpha Leonis)",
+            "instruction": "Start at Regulus (mag 1.4), the heart of Leo"
+          },
+          {
+            "name": "52 Leonis",
+            "instruction": "Move about halfway along the Lion's belly between Regulus and Chertan to find 52 Leonis (mag 5.5)"
+          },
+          {
+            "name": "53 Leonis",
+            "instruction": "53 Leonis (mag 5.3) appears just south of 52 Leonis in the same field"
+          },
+          {
+            "name": "M96",
+            "instruction": "M96 lies centered between 52 and 53 Leonis"
+          },
+          {
+            "name": "M95",
+            "instruction": "M95 is about 40 arcminutes west of M96. It is a barred spiral galaxy"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Astronomy.com / Astronomy Now",
+        "notes": "M95, M96, and M105 form a trio. All three challenge binoculars even under dark, clear skies."
+      }
+    ]
+  },
+  {
+    "targetId": "M96",
+    "targetName": "Spiral Galaxy in Leo",
+    "routes": [
+      {
+        "anchorStarName": "Regulus (Alpha Leonis)",
+        "anchorRA_approx": 152.09,
+        "anchorDec_approx": 11.97,
+        "waypoints": [
+          {
+            "name": "Regulus (Alpha Leonis)",
+            "instruction": "Start at Regulus (mag 1.4), the heart of Leo"
+          },
+          {
+            "name": "52 Leonis",
+            "instruction": "Move halfway between Regulus and Chertan to find 52 Leonis (mag 5.5)"
+          },
+          {
+            "name": "53 Leonis",
+            "instruction": "Place 52 Leonis at the top of the field; 53 Leonis appears at the bottom"
+          },
+          {
+            "name": "M96",
+            "instruction": "M96 is centered in the field between 52 and 53 Leonis. It is the brightest of the trio, an intermediate spiral galaxy"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Astronomy.com / Astronomy Now",
+        "notes": "M96 is the eponymous member of the M96 galaxy group, which also includes M95 and M105."
+      }
+    ]
+  },
+  {
+    "targetId": "M97",
+    "targetName": "Owl Nebula",
+    "routes": [
+      {
+        "anchorStarName": "Merak (Beta Ursae Majoris)",
+        "anchorRA_approx": 165.46,
+        "anchorDec_approx": 56.38,
+        "waypoints": [
+          {
+            "name": "Merak (Beta Ursae Majoris)",
+            "instruction": "Start at Merak (mag 2.3), the southwest corner of the Big Dipper's bowl"
+          },
+          {
+            "name": "M97",
+            "instruction": "Move about 2.5 degrees east-southeast of Merak, just south of the line connecting Merak and Phecda. The Owl Nebula appears as a faint ball of light. M108 lies about 48 arcminutes northwest, and both fit in one low-power field"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Messier Objects / Astronomy.com",
+        "notes": "The 'owl eyes' are visible in 10-inch and larger telescopes. M108 is in the same field, making a popular pairing."
+      }
+    ]
+  },
+  {
+    "targetId": "M98",
+    "targetName": "Spiral Galaxy in Coma Berenices",
+    "routes": [
+      {
+        "anchorStarName": "6 Comae Berenices",
+        "anchorRA_approx": 181.93,
+        "anchorDec_approx": 14.27,
+        "waypoints": [
+          {
+            "name": "Denebola (Beta Leonis)",
+            "instruction": "Start at Denebola (mag 2.1) at the tail of Leo"
+          },
+          {
+            "name": "6 Comae Berenices",
+            "instruction": "Move about 7 degrees east to find 6 Comae Berenices, part of a distinctive T-shaped asterism of five stars"
+          },
+          {
+            "name": "M98",
+            "instruction": "M98 lies half a degree due west of 6 Comae Berenices. It is a dim, elongated spiral galaxy and one of the most difficult galaxies in the Virgo Cluster"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "starhopping.org / Tony Flanders Astronomy",
+        "notes": "M98, M99, and M100 all cluster around 6 Comae Berenices, each within 0.5 degrees. Found by Mechain on the same night in 1781."
+      }
+    ]
+  },
+  {
+    "targetId": "M99",
+    "targetName": "Coma Pinwheel",
+    "routes": [
+      {
+        "anchorStarName": "6 Comae Berenices",
+        "anchorRA_approx": 181.93,
+        "anchorDec_approx": 14.27,
+        "waypoints": [
+          {
+            "name": "Denebola (Beta Leonis)",
+            "instruction": "Start at Denebola (mag 2.1), the tail of Leo"
+          },
+          {
+            "name": "6 Comae Berenices",
+            "instruction": "Move about 7 degrees east to 6 Comae Berenices in the T-shaped asterism"
+          },
+          {
+            "name": "M99",
+            "instruction": "M99 is just under 1 degree southeast of 6 Comae Berenices. It is a nearly face-on spiral galaxy"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "starhopping.org / Tony Flanders Astronomy",
+        "notes": "M99 is one of the brighter spirals in the Virgo Cluster, discovered by Mechain on the same night as M98."
+      }
+    ]
+  },
+  {
+    "targetId": "M100",
+    "targetName": "Spiral Galaxy in Coma Berenices",
+    "routes": [
+      {
+        "anchorStarName": "6 Comae Berenices",
+        "anchorRA_approx": 181.93,
+        "anchorDec_approx": 14.27,
+        "waypoints": [
+          {
+            "name": "Denebola (Beta Leonis)",
+            "instruction": "Start at Denebola (mag 2.1) at the tail of Leo"
+          },
+          {
+            "name": "6 Comae Berenices",
+            "instruction": "Move about 7 degrees east to 6 Comae Berenices"
+          },
+          {
+            "name": "M100",
+            "instruction": "From 6 Comae, proceed northeast through two mag-6 stars, each about 0.5 degrees apart, continuing about 1 degree total. M100 is the brightest of the three galaxies near 6 Comae, a grand-design spiral"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "starhopping.org / Tony Flanders Astronomy",
+        "notes": "M100 is one of the brightest and largest spirals in the Virgo Cluster. Best seen in spring."
+      }
+    ]
+  },
+  {
+    "targetId": "M101",
+    "targetName": "Pinwheel Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Mizar (Zeta Ursae Majoris)",
+        "anchorRA_approx": 200.98,
+        "anchorDec_approx": 54.93,
+        "waypoints": [
+          {
+            "name": "Mizar (Zeta Ursae Majoris)",
+            "instruction": "Start at Mizar (mag 2.2), the second star from the end of the Big Dipper's handle, with its famous companion Alcor"
+          },
+          {
+            "name": "Alkaid (Eta Ursae Majoris)",
+            "instruction": "Identify Alkaid (mag 1.9) at the tip of the handle"
+          },
+          {
+            "name": "M101",
+            "instruction": "Form an equilateral triangle on the scoop-side of the handle using Mizar and Alkaid as the base. M101 sits at the apex of this triangle, about 5.5 degrees northeast of Mizar. It is a large, face-on spiral with low surface brightness"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Cloudy Nights / Optical Mechanics / freestarcharts.com",
+        "notes": "Alternative: from Mizar-Alcor, follow a chain of 5th-6th mag stars (81, 83, 84, 86 UMa) to M101. Requires dark, transparent skies."
+      }
+    ]
+  },
+  {
+    "targetId": "M102",
+    "targetName": "Spindle Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Iota Draconis (Edasich)",
+        "anchorRA_approx": 231.23,
+        "anchorDec_approx": 58.97,
+        "waypoints": [
+          {
+            "name": "Iota Draconis (Edasich)",
+            "instruction": "Start at Edasich (mag 3.3), a red giant star in the southern part of Draco"
+          },
+          {
+            "name": "M102",
+            "instruction": "Move about 4 degrees southwest of Edasich, in the direction of Alkaid (Eta Ursae Majoris) at the tip of the Big Dipper's handle. M102 appears as a considerably bright elliptical or spindle-shaped nebulous object with a brighter core"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "SEDS Messier / freestarcharts.com",
+        "notes": "M102's identity is debated; commonly identified as NGC 5866. A lenticular galaxy with a visible dust lane in larger apertures."
+      }
+    ]
+  },
+  {
+    "targetId": "M103",
+    "targetName": "Open Cluster in Cassiopeia",
+    "routes": [
+      {
+        "anchorStarName": "Ruchbah (Delta Cassiopeiae)",
+        "anchorRA_approx": 21.45,
+        "anchorDec_approx": 60.24,
+        "waypoints": [
+          {
+            "name": "Ruchbah (Delta Cassiopeiae)",
+            "instruction": "Start at Ruchbah (mag 2.7), one of the bright stars forming Cassiopeia's W asterism"
+          },
+          {
+            "name": "M103",
+            "instruction": "M103 is about 1 degree east of Ruchbah, along the line toward Epsilon Cassiopeiae. It appears as a diamond-shaped patch in binoculars, resolving into about 40 stars in a small telescope"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "freestarcharts.com / Sky & Telescope",
+        "notes": "Very easy to locate from the unmistakable Cassiopeia W. Dominated by the foreground multiple star Struve 131."
+      }
+    ]
+  },
+  {
+    "targetId": "M104",
+    "targetName": "Sombrero Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Delta Corvi (Algorab)",
+        "anchorRA_approx": 187.47,
+        "anchorDec_approx": -16.52,
+        "waypoints": [
+          {
+            "name": "Delta Corvi (Algorab)",
+            "instruction": "Start at Delta Corvi (mag 2.9), in the trapezoid of Corvus the Crow"
+          },
+          {
+            "name": "Triangular star group",
+            "instruction": "Move about 3 degrees north to a triangular arrangement of 5th-6th magnitude stars"
+          },
+          {
+            "name": "Close pair of 6th-mag stars",
+            "instruction": "Follow the line of the triangle about 1 degree further to a close pair of mid-6th magnitude stars"
+          },
+          {
+            "name": "M104",
+            "instruction": "Move 1 degree east-northeast from this pair to reach M104. The Sombrero Galaxy appears as an elongated glow; larger telescopes reveal its famous dark dust lane"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "Cosmic Voyage / astrobackyard",
+        "notes": "Also findable roughly halfway between Spica and the star Epsilon Corvi. The dust lane is visible in 4-inch telescopes under good conditions."
+      }
+    ]
+  },
+  {
+    "targetId": "M105",
+    "targetName": "Elliptical Galaxy in Leo",
+    "routes": [
+      {
+        "anchorStarName": "Regulus (Alpha Leonis)",
+        "anchorRA_approx": 152.09,
+        "anchorDec_approx": 11.97,
+        "waypoints": [
+          {
+            "name": "Regulus (Alpha Leonis)",
+            "instruction": "Start at Regulus (mag 1.4) in Leo"
+          },
+          {
+            "name": "52 Leonis",
+            "instruction": "Move halfway between Regulus and Chertan to find 52 Leonis (mag 5.5)"
+          },
+          {
+            "name": "53 Leonis",
+            "instruction": "53 Leonis is just south of 52 Leonis in the same field"
+          },
+          {
+            "name": "M105",
+            "instruction": "M105 is the northernmost galaxy of the Leo trio, about 50 arcminutes north of M96. It is an elliptical galaxy, the brightest member of the M96 group"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "skyledge.net / freestarcharts.com",
+        "notes": "M105 forms a compact group with NGC 3384 and NGC 3389, all three visible in the same eyepiece field."
+      }
+    ]
+  },
+  {
+    "targetId": "M106",
+    "targetName": "Spiral Galaxy in Canes Venatici",
+    "routes": [
+      {
+        "anchorStarName": "Phecda (Gamma Ursae Majoris)",
+        "anchorRA_approx": 178.46,
+        "anchorDec_approx": 53.69,
+        "waypoints": [
+          {
+            "name": "Phecda (Gamma Ursae Majoris)",
+            "instruction": "Start at Phecda (mag 2.4), the lower-left star of the Big Dipper's bowl"
+          },
+          {
+            "name": "M106",
+            "instruction": "Move about 7.5 degrees southeast from Phecda, roughly halfway toward Cor Caroli. M106 is a bright spiral galaxy visible in binoculars under dark conditions"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "astrobackyard / Astronomy Now / Messier Objects",
+        "notes": "Alternative: extend a line from Dubhe through Phecda; M106 lies at roughly the same distance beyond. One of the nearest Seyfert galaxies."
+      }
+    ]
+  },
+  {
+    "targetId": "M107",
+    "targetName": "Globular Cluster in Ophiuchus",
+    "routes": [
+      {
+        "anchorStarName": "Zeta Ophiuchi",
+        "anchorRA_approx": 249.29,
+        "anchorDec_approx": -10.57,
+        "waypoints": [
+          {
+            "name": "Zeta Ophiuchi",
+            "instruction": "Start at Zeta Ophiuchi (mag 2.6), located about 16 degrees north of Antares"
+          },
+          {
+            "name": "M107",
+            "instruction": "Move about 2.75 degrees south-southwest of Zeta Ophiuchi. M107 is a loose globular cluster of 8th magnitude, a difficult binocular object but easier in small telescopes"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Messier Objects / freestarcharts.com",
+        "notes": "Best in late spring and early summer. Lies between Beta Scorpii and Beta Ophiuchi."
+      }
+    ]
+  },
+  {
+    "targetId": "M108",
+    "targetName": "Surfboard Galaxy",
+    "routes": [
+      {
+        "anchorStarName": "Merak (Beta Ursae Majoris)",
+        "anchorRA_approx": 165.46,
+        "anchorDec_approx": 56.38,
+        "waypoints": [
+          {
+            "name": "Merak (Beta Ursae Majoris)",
+            "instruction": "Start at Merak (mag 2.3), the southwest corner of the Big Dipper's bowl"
+          },
+          {
+            "name": "M108",
+            "instruction": "Move 1.5 degrees southeast of Merak along the Merak-Phecda line, then 0.3 degrees south-southwest. M108 is an edge-on barred spiral appearing as a streaky spindle with mottled texture. The Owl Nebula (M97) lies about 48 arcminutes to its southeast"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "BBC Sky at Night / Optical Mechanics",
+        "notes": "M108 and M97 (Owl Nebula) make a popular pairing in the same low-power field."
+      }
+    ]
+  },
+  {
+    "targetId": "M109",
+    "targetName": "Barred Spiral Galaxy in Ursa Major",
+    "routes": [
+      {
+        "anchorStarName": "Phecda (Gamma Ursae Majoris)",
+        "anchorRA_approx": 178.46,
+        "anchorDec_approx": 53.69,
+        "waypoints": [
+          {
+            "name": "Phecda (Gamma Ursae Majoris)",
+            "instruction": "Start at Phecda (mag 2.4), the lower-left star of the Big Dipper's bowl"
+          },
+          {
+            "name": "M109",
+            "instruction": "M109 is less than 1 degree southeast of Phecda. Because Phecda is bright, glare can hinder detection -- use low power first then increase magnification to improve contrast"
+          }
+        ],
+        "equipmentType": "telescope",
+        "source": "Astronomy.com / BBC Sky at Night",
+        "notes": "One of the closest Messier galaxies to a bright naked-eye star. A barred spiral galaxy with a distinctive central bar."
+      }
+    ]
+  },
+  {
+    "targetId": "M110",
+    "targetName": "Dwarf Elliptical Galaxy in Andromeda",
+    "routes": [
+      {
+        "anchorStarName": "Mirach (Beta Andromedae)",
+        "anchorRA_approx": 17.43,
+        "anchorDec_approx": 35.62,
+        "waypoints": [
+          {
+            "name": "Alpheratz",
+            "instruction": "Start at Alpheratz (mag 2.1), the top-left star of the Great Square of Pegasus, which is also Alpha Andromedae"
+          },
+          {
+            "name": "Mirach (Beta Andromedae)",
+            "instruction": "Hop two stars along the Andromeda chain to Mirach (mag 2.1)"
+          },
+          {
+            "name": "Mu Andromedae",
+            "instruction": "Turn 90 degrees north from Mirach and hop one step to the fainter star Mu Andromedae (mag 3.9)"
+          },
+          {
+            "name": "M31",
+            "instruction": "Continue the same distance beyond Mu Andromedae to find M31, the great Andromeda Galaxy"
+          },
+          {
+            "name": "M110",
+            "instruction": "M110 is a diffuse elliptical galaxy about 35 arcminutes northwest of M31's core. It is larger but fainter than M32 (which is on the opposite side), and best seen under darker skies with averted vision"
+          }
+        ],
+        "equipmentType": "both",
+        "source": "EarthSky / BBC Sky at Night / Turn Left at Orion",
+        "notes": "M110 is the last object in the Messier catalog. A satellite galaxy of M31, more diffuse and challenging than M32."
+      }
+    ]
+  },
+  {
+    "targetId": "AST-Hyades",
+    "targetName": "Hyades",
+    "routes": [
+      {
+        "anchorStarName": "Orion's Belt",
+        "anchorRA_approx": 84.05,
+        "anchorDec_approx": -1.2,
+        "waypoints": [
+          {
+            "name": "Orion's Belt",
+            "instruction": "Start at the three stars of Orion's Belt (Alnitak, Alnilam, Mintaka), one of the most recognizable patterns in the sky"
+          },
+          {
+            "name": "Aldebaran",
+            "instruction": "Extend a line through the Belt toward the upper-right (northwest) for about 15 degrees. You will reach the bright orange star Aldebaran (mag 0.9), the eye of Taurus the Bull"
+          },
+          {
+            "name": "Hyades",
+            "instruction": "Aldebaran sits at the tip of a prominent V-shaped pattern of stars spanning about 5.5 degrees. This is the Hyades cluster. Although Aldebaran appears in the V, it is actually a foreground star not part of the cluster. Binoculars reveal up to 100 stars including Theta-1 and Theta-2 Tauri, Gamma, Delta, and Epsilon Tauri within the V"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "EarthSky; BBC Sky at Night Magazine; Space.com",
+        "notes": "The nearest open cluster to Earth at 153 light-years. Best viewed with wide-field binoculars (7x35 or 7x50) with fields of 8-10 degrees. A naked-eye object, but binoculars transform it into a rich scatter of dozens of stars. Aldebaran, though visually in the V, is at 65 light-years and not a cluster member"
+      }
+    ]
+  },
+  {
+    "targetId": "Cr399",
+    "targetName": "Coathanger (Brocchi's Cluster / Cr 399)",
+    "routes": [
+      {
+        "anchorStarName": "Altair",
+        "anchorRA_approx": 297.7,
+        "anchorDec_approx": 8.87,
+        "waypoints": [
+          {
+            "name": "Altair (Alpha Aql)",
+            "instruction": "Start at Altair (mag 0.8), the brightest star in Aquila and the southern vertex of the Summer Triangle"
+          },
+          {
+            "name": "Tarazed (Gamma Aql)",
+            "instruction": "Look 2 degrees northwest of Altair for the orange star Tarazed (mag 2.7)"
+          },
+          {
+            "name": "Coathanger",
+            "instruction": "Continue northwest from Tarazed about 8 degrees further (one-third of the way toward Vega). Against a darker region of the Milky Way you will find 10 stars arranged unmistakably in a coat-hanger shape, with a straight bar of 6 stars and a hook of 4 stars"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "EarthSky; BBC Sky at Night Magazine",
+        "notes": "Visible to the naked eye as an unresolved glow. Sweep slowly along the Altair-to-Vega line. Best seen in July-August from northern latitudes"
+      },
+      {
+        "anchorStarName": "Albireo",
+        "anchorRA_approx": 292.68,
+        "anchorDec_approx": 27.96,
+        "waypoints": [
+          {
+            "name": "Albireo (Beta Cyg)",
+            "instruction": "Start at Albireo (mag 3.1) at the foot of the Northern Cross in Cygnus"
+          },
+          {
+            "name": "Alpha Vulpeculae",
+            "instruction": "Move about 6 degrees south-southwest to Alpha Vulpeculae (Anser, mag 4.4)"
+          },
+          {
+            "name": "Coathanger",
+            "instruction": "Continue the same distance beyond Alpha Vulpeculae in the same direction. The Coathanger will appear as a prominent line of stars with a hook hanging down"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Astronomy.com; Houston Astronomical Society",
+        "notes": "The Coathanger appears 'upside down' (hook pointing up) when Vulpecula is high overhead"
+      }
+    ]
+  },
+  {
+    "targetId": "Cr69",
+    "targetName": "Collinder 69 (Lambda Orionis Cluster)",
+    "routes": [
+      {
+        "anchorStarName": "Betelgeuse",
+        "anchorRA_approx": 88.79,
+        "anchorDec_approx": 7.41,
+        "waypoints": [
+          {
+            "name": "Betelgeuse (Alpha Ori)",
+            "instruction": "Start at Betelgeuse (mag 0.5), the red supergiant at Orion's upper-left shoulder"
+          },
+          {
+            "name": "Bellatrix (Gamma Ori)",
+            "instruction": "Note Bellatrix (mag 1.6) at Orion's upper-right shoulder, about 8 degrees west of Betelgeuse"
+          },
+          {
+            "name": "Meissa / Collinder 69",
+            "instruction": "Look 3 degrees north of the midpoint between Betelgeuse and Bellatrix for Meissa (Lambda Orionis, mag 3.4). This marks Orion's head. Surrounding Meissa is a triangular grouping of stars including Phi-1 and Phi-2 Orionis forming the core of Collinder 69. Binoculars reveal about 20 stars scattered across just over 1 degree"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Astronomy.com; British Astronomical Association; Houston Astronomical Society",
+        "notes": "Often overlooked but easy to find at Orion's head. The compact triangle of Meissa + Phi-1 + Phi-2 is visible to the naked eye. Binoculars show additional cluster members. Meissa illuminates a vast ring of gas 150 light-years across (Sh2-264), though the ring itself is a photographic target only"
+      }
+    ]
+  },
+  {
+    "targetId": "DS-Albireo",
+    "targetName": "Albireo (Beta Cygni)",
+    "routes": [
+      {
+        "anchorStarName": "Deneb",
+        "anchorRA_approx": 310.36,
+        "anchorDec_approx": 45.28,
+        "waypoints": [
+          {
+            "name": "Deneb (Alpha Cyg)",
+            "instruction": "Start at Deneb (mag 1.25), the tail of the swan at the top of the Northern Cross"
+          },
+          {
+            "name": "Sadr (Gamma Cyg)",
+            "instruction": "Move about 7 degrees south-southwest to Sadr (mag 2.2), the central star of the Northern Cross where the beam and crossbar intersect"
+          },
+          {
+            "name": "Eta Cygni",
+            "instruction": "Continue about 7 degrees further south along the swan's neck to Eta Cygni (mag 3.9)"
+          },
+          {
+            "name": "Albireo (Beta Cyg)",
+            "instruction": "Continue another 6 degrees south-southwest to reach Albireo (mag 3.1) at the head of the swan. In binoculars or any small telescope, it splits into a vivid gold and blue pair separated by 34 arcseconds"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "EarthSky; High Point Scientific; Astronomy.com",
+        "notes": "Follow the beam of the Northern Cross from Deneb down through Sadr to its base. In 10x50 binoculars mounted on a tripod the two components may just be split; a small telescope easily shows the famous gold-and-sapphire color contrast"
+      }
+    ]
+  },
+  {
+    "targetId": "DS-DoubleDbl",
+    "targetName": "Double-Double (Epsilon Lyrae)",
+    "routes": [
+      {
+        "anchorStarName": "Vega",
+        "anchorRA_approx": 279.23,
+        "anchorDec_approx": 38.78,
+        "waypoints": [
+          {
+            "name": "Vega (Alpha Lyr)",
+            "instruction": "Start at Vega (mag 0.0), the brilliant blue-white star and the fifth-brightest star in the entire sky"
+          },
+          {
+            "name": "Epsilon Lyrae (Double-Double)",
+            "instruction": "Look just 1.6 degrees northeast of Vega. Epsilon Lyrae is the nearest bright companion star to Vega and fits easily in the same binocular field. In binoculars, what appears as one star to the naked eye resolves into two components (Epsilon-1 and Epsilon-2), separated by about 3.5 arcminutes. Each of these is itself a close double, but resolving the sub-pairs requires a telescope"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "EarthSky; Almanac.com; BBC Sky at Night Magazine",
+        "notes": "One of the easiest star-hops in the sky since it is less than 2 degrees from Vega. The wide pair splits easily in any binoculars. The four-star nature (double-double) requires ~100x magnification in a telescope"
+      }
+    ]
+  },
+  {
+    "targetId": "DS-MizarAlcor",
+    "targetName": "Mizar & Alcor",
+    "routes": [
+      {
+        "anchorStarName": "Alkaid",
+        "anchorRA_approx": 206.89,
+        "anchorDec_approx": 49.31,
+        "waypoints": [
+          {
+            "name": "Alkaid (Eta UMa)",
+            "instruction": "Start at Alkaid (mag 1.9), the star at the very tip of the Big Dipper's handle"
+          },
+          {
+            "name": "Mizar & Alcor",
+            "instruction": "Move one star inward along the handle (about 5 degrees) to the second star from the end. This is Mizar (mag 2.3). Look closely with your naked eye or binoculars and you will see Alcor (mag 4.0) sitting just 12 arcminutes away (about one-third of the Moon's diameter). Binoculars also reveal that Mizar itself has a fainter companion (Mizar B) at about 14 arcseconds separation"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "EarthSky; Sky & Telescope; BBC Sky at Night Magazine",
+        "notes": "The ancient eye test: try to see Alcor with unaided vision first. Known as the Horse and Rider. In binoculars the pair is obvious. Mizar was the first double star discovered telescopically (1617)"
+      }
+    ]
+  },
+  {
+    "targetId": "IC4665",
+    "targetName": "IC 4665 (Summer Beehive)",
+    "routes": [
+      {
+        "anchorStarName": "Rasalhague",
+        "anchorRA_approx": 263.73,
+        "anchorDec_approx": 12.56,
+        "waypoints": [
+          {
+            "name": "Rasalhague (Alpha Oph)",
+            "instruction": "Start at Rasalhague (mag 2.1), the brightest star in Ophiuchus, located at the top (head) of the constellation"
+          },
+          {
+            "name": "Cebalrai (Beta Oph)",
+            "instruction": "Move about 8 degrees south to Cebalrai (mag 2.8), a noticeable star in the upper body of Ophiuchus"
+          },
+          {
+            "name": "IC 4665",
+            "instruction": "IC 4665 lies just 1 degree north-northeast of Cebalrai, close enough to appear in the same binocular field. You will see approximately 25 stars spread over about 1 square degree. If southwest is 'up' in your field of view, the inner stars spell out the letters 'HI'"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Cosmic Pursuits; SkyLedge; Wikipedia",
+        "notes": "One of the largest open clusters for binoculars (41 arcmin). Also called the Summer Beehive. At magnitude 4.2 it is barely visible to the naked eye. Best observed in summer months when Ophiuchus is high. The 'HI' pattern in the inner stars is a fun feature"
+      }
+    ]
+  },
+  {
+    "targetId": "KemblesCascade",
+    "targetName": "Kemble's Cascade",
+    "routes": [
+      {
+        "anchorStarName": "Caph",
+        "anchorRA_approx": 2.29,
+        "anchorDec_approx": 59.15,
+        "waypoints": [
+          {
+            "name": "Caph (Beta Cas)",
+            "instruction": "Start at Caph (mag 2.3), the rightmost (westernmost) star of Cassiopeia's W"
+          },
+          {
+            "name": "Segin (Epsilon Cas)",
+            "instruction": "Move to Segin (mag 3.4), the leftmost (easternmost) star of Cassiopeia's W, about 13 degrees away"
+          },
+          {
+            "name": "Kemble's Cascade",
+            "instruction": "Extend the Caph-to-Segin line the same distance beyond Segin toward the southeast into Camelopardalis. You will encounter a stunning chain of 20+ stars stretching over 2.5 degrees, ending in the fuzzy patch of open cluster NGC 1502"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "BBC Sky at Night Magazine; Wikipedia",
+        "notes": "Stars range from 5th to 9th magnitude. More than a dozen are visible in 10x50 binoculars. Best seen on early evenings during November-December. The chain has a striking waterfall appearance"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2244",
+    "targetName": "Rosette Nebula / Cluster (NGC 2237/2244)",
+    "routes": [
+      {
+        "anchorStarName": "Betelgeuse",
+        "anchorRA_approx": 88.79,
+        "anchorDec_approx": 7.41,
+        "waypoints": [
+          {
+            "name": "Betelgeuse (Alpha Ori)",
+            "instruction": "Start at Betelgeuse (mag 0.5), the bright red supergiant marking Orion's shoulder"
+          },
+          {
+            "name": "Triangle in Monoceros",
+            "instruction": "Look about 10 degrees east of Betelgeuse for a triangle of three 4th-magnitude stars forming the head of Monoceros the Unicorn (13 Mon, Epsilon Mon, and nearby stars)"
+          },
+          {
+            "name": "Rosette Cluster (NGC 2244)",
+            "instruction": "The Rosette Cluster (mag 4.8) lies within this triangle. In binoculars you will see an obvious cluster of stars. The Rosette Nebula (NGC 2237) surrounds the cluster but is extremely faint and requires dark skies and possibly an OIII filter to detect visually"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Constellation Guide; Astronomy Now; Galactic Hunter",
+        "notes": "The cluster at mag 4.8 is easy; the surrounding nebula at mag 9 is challenging. The nebula spans over twice the diameter of the full Moon. Best viewed in February when Monoceros is high. Also located roughly halfway between Betelgeuse and Procyon, slightly south of the midpoint line"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2264",
+    "targetName": "Christmas Tree Cluster (NGC 2264)",
+    "routes": [
+      {
+        "anchorStarName": "Betelgeuse",
+        "anchorRA_approx": 88.79,
+        "anchorDec_approx": 7.41,
+        "waypoints": [
+          {
+            "name": "Betelgeuse (Alpha Ori)",
+            "instruction": "Start at Betelgeuse (mag 0.5), the red supergiant at Orion's shoulder"
+          },
+          {
+            "name": "15 Monocerotis / NGC 2264",
+            "instruction": "Move about 13 degrees east and 3 degrees north from Betelgeuse into Monoceros. The Christmas Tree Cluster is centered on the star 15 Monocerotis (mag 4.6), which forms the 'trunk' of the tree. In binoculars the inverted tree shape is evident, with about 20 stars spanning 20 arcminutes. The associated Cone Nebula requires photography to see"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Astronomy.com; Cloudy Nights",
+        "notes": "At magnitude 3.9, the cluster is easy in binoculars. The tree appears inverted (point down) in a standard view. Located roughly 4 degrees north of the Rosette Cluster, so both can be visited in one binocular session through Monoceros"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC457",
+    "targetName": "NGC 457 (ET Cluster / Owl Cluster)",
+    "routes": [
+      {
+        "anchorStarName": "Ruchbah",
+        "anchorRA_approx": 18.18,
+        "anchorDec_approx": 60.24,
+        "waypoints": [
+          {
+            "name": "Ruchbah (Delta Cas)",
+            "instruction": "Start at Ruchbah (mag 2.7), the fourth star of Cassiopeia's W (counting from the right/west)"
+          },
+          {
+            "name": "NGC 457 (ET Cluster)",
+            "instruction": "Move 2 degrees south-southeast of Ruchbah. You will find the cluster adjacent to the bright star Phi Cassiopeiae (mag 5.0). Phi Cas and the nearby star HD 7902 form the two bright 'eyes' of the owl/ET figure. The cluster's fainter members spread out to form arms and a body below the eyes"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Astronomy Now; Constellation Guide; freestarcharts.com",
+        "notes": "Very easy to find thanks to its proximity to the W of Cassiopeia. Binoculars show the bright 'eyes' (Phi Cas) and a fuzzy glow; a small telescope reveals the full stick-figure shape. Also known as Caldwell 13"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6231",
+    "targetName": "NGC 6231 (Northern Jewel Box / Table of Scorpius)",
+    "routes": [
+      {
+        "anchorStarName": "Zeta Scorpii",
+        "anchorRA_approx": 253.5,
+        "anchorDec_approx": -42.36,
+        "waypoints": [
+          {
+            "name": "Shaula (Lambda Sco)",
+            "instruction": "Start at Shaula (mag 1.6) at the stinger of Scorpius's tail, one of the brightest stars in the constellation"
+          },
+          {
+            "name": "Zeta Scorpii pair",
+            "instruction": "Move about 6 degrees northwest along the tail to the Zeta Scorpii pair (Zeta-1 at mag 4.7 and Zeta-2 at mag 3.6), a colorful optical double in binoculars"
+          },
+          {
+            "name": "NGC 6231",
+            "instruction": "NGC 6231 lies less than 1 degree north of the Zeta Scorpii pair. It appears as a brilliant, compact cluster with numerous stars resolvable in binoculars. At magnitude 2.6, it is visible to the naked eye and spectacular in any binoculars"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Constellation Guide; Cloudy Nights; NASA Caldwell Catalog",
+        "notes": "Also called the Table of Scorpius cluster and Caldwell 76. Spectacular from southern latitudes. The surrounding region includes Trumpler 24 and Collinder 316 forming a 'false comet' shape in binoculars. Best viewed in July-August when Scorpius is well-placed"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC7000",
+    "targetName": "North America Nebula (NGC 7000)",
+    "routes": [
+      {
+        "anchorStarName": "Deneb",
+        "anchorRA_approx": 310.36,
+        "anchorDec_approx": 45.28,
+        "waypoints": [
+          {
+            "name": "Deneb (Alpha Cyg)",
+            "instruction": "Start at Deneb (mag 1.25), the tail star of Cygnus and the brightest star at the top of the Northern Cross"
+          },
+          {
+            "name": "North America Nebula",
+            "instruction": "Move 3 degrees east of Deneb. Under dark skies the nebula appears as a large foggy patch roughly twice the diameter of the full Moon. Xi Cygni (mag 3.7) marks its southeastern edge. An OIII or UHC filter held in front of the eyepiece greatly improves contrast"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Constellation Guide; freestarcharts.com",
+        "notes": "Very low surface brightness; requires dark skies for visual detection. Wide-field binoculars (7x50 or similar) with a 3+ degree field work best. The nebula appears grey; an OIII filter helps enormously"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC752",
+    "targetName": "NGC 752",
+    "routes": [
+      {
+        "anchorStarName": "Almach",
+        "anchorRA_approx": 30.97,
+        "anchorDec_approx": 42.33,
+        "waypoints": [
+          {
+            "name": "Almach (Gamma And)",
+            "instruction": "Start at Almach (mag 2.1), the third-brightest star in Andromeda, a beautiful gold-and-blue double star at the eastern end of the Andromeda chain"
+          },
+          {
+            "name": "NGC 752",
+            "instruction": "Move 5 degrees south and slightly west of Almach. The cluster is also located roughly halfway between Almach and Beta Trianguli. NGC 752 appears as a large scattered glow in binoculars, with the brightest dozen stars individually resolvable in 10x50 binoculars. The cluster spans about 50 arcminutes, comparable to the full Moon"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "TheSkyLive; Astronomy.com; freestarcharts.com",
+        "notes": "At magnitude 5.7, easily visible in binoculars. A large, loose cluster ideal for low-power observation. Can also be found by using Gamma and Beta Trianguli as pointer stars, extending a line northward about 1.5x their separation. Discovered by Caroline Herschel in 1783"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC7789",
+    "targetName": "NGC 7789 (Caroline's Rose)",
+    "routes": [
+      {
+        "anchorStarName": "Caph",
+        "anchorRA_approx": 2.29,
+        "anchorDec_approx": 59.15,
+        "waypoints": [
+          {
+            "name": "Caph (Beta Cas)",
+            "instruction": "Start at Caph (mag 2.3), the rightmost (westernmost) star of Cassiopeia's W"
+          },
+          {
+            "name": "Schedar (Alpha Cas)",
+            "instruction": "Note Schedar (mag 2.2), the next star along the W from Caph, about 5 degrees to the east"
+          },
+          {
+            "name": "NGC 7789 (Caroline's Rose)",
+            "instruction": "Form a right triangle outside the W using Caph and Schedar as the two base points. NGC 7789 lies at the third vertex, about 3 degrees southwest of Caph. Through binoculars it appears as a misty half-Moon-sized patch between the 5th-magnitude stars Sigma and Rho Cassiopeiae. Binoculars reveal a haze of unresolved stars; a telescope shows the rose petal pattern of curving star lanes"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Constellation Guide; Astronomy.com; SkyLedge",
+        "notes": "Discovered by Caroline Herschel in 1783. At magnitude 6.7 it is visible in binoculars as a fuzzy glow under dark skies but needs a telescope to see the distinctive rose-petal pattern of interleaving star chains. Contains roughly 1000 stars at a distance of 7600 light-years"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC869",
+    "targetName": "Double Cluster (h Persei / NGC 869+884)",
+    "routes": [
+      {
+        "anchorStarName": "Mirfak",
+        "anchorRA_approx": 51.08,
+        "anchorDec_approx": 49.86,
+        "waypoints": [
+          {
+            "name": "Mirfak (Alpha Per)",
+            "instruction": "Start at Mirfak (mag 1.8), the brightest star in Perseus"
+          },
+          {
+            "name": "Double Cluster",
+            "instruction": "Scan about 8 degrees northwest from Mirfak toward Cassiopeia. The Double Cluster lies roughly halfway between Mirfak and Gamma Cassiopeiae (the center star of the W). Two adjacent fuzzy patches resolve into twin star clusters in binoculars"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Freestarcharts.com; Phil Harrington, Touring the Universe Through Binoculars",
+        "notes": "Visible to the naked eye as a fuzzy patch between Perseus and Cassiopeia. Magnificent in any binoculars, filling the field with hundreds of stars"
+      },
+      {
+        "anchorStarName": "Segin",
+        "anchorRA_approx": 28.6,
+        "anchorDec_approx": 63.67,
+        "waypoints": [
+          {
+            "name": "Segin (Epsilon Cas)",
+            "instruction": "Start at Segin, the westernmost star of Cassiopeia's W"
+          },
+          {
+            "name": "Miram (Eta Per)",
+            "instruction": "Hop about 7 degrees southeast to Miram (Eta Persei, mag 3.8), the northernmost bright star of Perseus"
+          },
+          {
+            "name": "Double Cluster",
+            "instruction": "The Double Cluster lies about 4.5 degrees northwest of Miram, roughly midway between Segin and Miram. Both clusters fit in the same binocular field of view"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Eyes on the Sky; freestarcharts.com",
+        "notes": "This route approaches from Cassiopeia's side. Also works well by extending a line from Gamma Cas through Ruchbah (Delta Cas) to the southeast"
+      }
+    ]
+  },
+  {
+    "targetId": "Stock2",
+    "targetName": "Stock 2 (Muscleman Cluster)",
+    "routes": [
+      {
+        "anchorStarName": "Double Cluster",
+        "anchorRA_approx": 34.75,
+        "anchorDec_approx": 57.13,
+        "waypoints": [
+          {
+            "name": "Double Cluster (NGC 869/884)",
+            "instruction": "Start at the Double Cluster between Perseus and Cassiopeia (find it using any of the Double Cluster routes above)"
+          },
+          {
+            "name": "Stock 2",
+            "instruction": "From the Cassiopeia-side (northern edge) of the Double Cluster, follow a 2-degree curved chain of stars leading northward. Stock 2 appears as a roughly degree-wide scatter of 9th-10th magnitude stars forming a decapitated stick-figure flexing its muscles. In binoculars the Muscleman is spread over about 1 degree with its feet to the east in a bicep-flexing pose"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "Astroleague.org; BinocularSky.com; Cloudy Nights",
+        "notes": "Splendid in binoculars and rich-field telescopes; loses its grandeur in narrow telescope fields. Located at the Cassiopeia/Perseus border. The cluster appears to be hauling the Double Cluster on a leash of stars"
+      },
+      {
+        "anchorStarName": "Gamma Cassiopeiae",
+        "anchorRA_approx": 14.18,
+        "anchorDec_approx": 60.72,
+        "waypoints": [
+          {
+            "name": "Gamma Cas (center of W)",
+            "instruction": "Start at Gamma Cassiopeiae (mag 2.5), the center star of Cassiopeia's W"
+          },
+          {
+            "name": "Ruchbah (Delta Cas)",
+            "instruction": "Move to Ruchbah (mag 2.7), the next star eastward in the W"
+          },
+          {
+            "name": "Stock 2",
+            "instruction": "Continue the line from Gamma Cas through Ruchbah and extend it about 5 degrees further to the southeast. Stock 2 appears as a broad scatter of stars about 1 degree across, just 2 degrees north of the Double Cluster"
+          }
+        ],
+        "equipmentType": "binocular",
+        "source": "BBC Sky at Night Magazine; BinocularSky.com",
+        "notes": "The same sweep that finds the Double Cluster passes near Stock 2, which lies just to the north"
+      }
+    ]
+  }
+]
