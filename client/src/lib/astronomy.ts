@@ -121,6 +121,8 @@ export interface Route {
   startAnchor: SkyNode;
   target: SkyNode;
   hops: HopStep[];
+  isExpertRoute?: boolean;
+  expertSource?: string;
 }
 
 export type { DifficultyLevel };
@@ -174,12 +176,35 @@ export interface MilkyWayFeature {
   coordinates: [number, number][][]; // rings of [ra_deg, dec_deg]
 }
 
+// Known (expert) star-hopping routes
+export interface KnownRouteWaypoint {
+  name: string;
+  instruction: string;
+}
+
+export interface KnownRouteEntry {
+  anchorStarName: string;
+  anchorRA_approx: number;
+  anchorDec_approx: number;
+  waypoints: KnownRouteWaypoint[];
+  equipmentType: 'telescope' | 'binocular' | 'both';
+  source: string;
+  notes?: string;
+}
+
+export interface KnownRoute {
+  targetId: string;
+  targetName: string;
+  routes: KnownRouteEntry[];
+}
+
 let _stars: Star[] | null = null;
 let _messier: MessierObject[] | null = null;
 let _constellations: ConstellationLine[] | null = null;
 let _binocularTargets: BinocularTarget[] | null = null;
 let _denseStars: DenseStar[] | null = null;
 let _milkyWay: MilkyWayFeature[] | null = null;
+let _knownRoutes: KnownRoute[] | null = null;
 
 export async function loadStars(): Promise<Star[]> {
   if (_stars) return _stars;
@@ -252,6 +277,23 @@ export async function loadMilkyWay(): Promise<MilkyWayFeature[]> {
     ),
   }));
   return _milkyWay!;
+}
+
+export async function loadKnownRoutes(): Promise<KnownRoute[]> {
+  if (_knownRoutes) return _knownRoutes;
+  const resp = await fetch('./data/known-routes.json');
+  _knownRoutes = await resp.json();
+  return _knownRoutes!;
+}
+
+export function isKnownRouteFeasible(
+  route: KnownRouteEntry,
+  lat: number, lon: number, date: Date,
+): boolean {
+  // Check anchor star
+  const { alt: anchorAlt } = eqToHorizontal(route.anchorRA_approx, route.anchorDec_approx, lat, lon, date);
+  if (anchorAlt < 5) return false;
+  return true;
 }
 
 export async function loadBinocularTargets(): Promise<BinocularTarget[]> {
@@ -1616,6 +1658,49 @@ export async function planRoutes(params: ObservingParams): Promise<{
     return { routes: [], nodes: allNodes, targetNode: null, belowHorizon: false };
   }
 
+  // ─── Load known (expert) routes for this target ───
+  const knownRoutesData = await loadKnownRoutes().catch(() => [] as KnownRoute[]);
+  const matchingKnown = knownRoutesData.find(kr => kr.targetId === params.targetId);
+  const expertRoutes: Route[] = [];
+  if (matchingKnown) {
+    for (const knownEntry of matchingKnown.routes) {
+      if (!isKnownRouteFeasible(knownEntry, params.lat, params.lon, params.date)) continue;
+      // Find nearest star in allNodes to anchor RA/Dec
+      let bestAnchor: SkyNode | null = null;
+      let bestDist = Infinity;
+      for (const node of allNodes) {
+        if (node.type !== 'star' && node.type !== 'planet') continue;
+        const d = angularDistance(node.ra, node.dec, knownEntry.anchorRA_approx, knownEntry.anchorDec_approx);
+        if (d < bestDist) { bestDist = d; bestAnchor = node; }
+      }
+      if (!bestAnchor) continue;
+
+      // Build known route hops from waypoint instructions
+      const knownHops: HopStep[] = knownEntry.waypoints.map((wp) => ({
+        center: { ra: knownEntry.anchorRA_approx, dec: knownEntry.anchorDec_approx, alt: 45, az: 180 },
+        visibleGuideStars: [],
+        pattern: wp.instruction,
+        patternType: 'field' as PatternType,
+        patternConfidence: 1.0,
+        patternScore: 100,
+        patternAnchors: [],
+        direction: '',
+        distanceDeg: 0,
+        instruction: wp.instruction,
+      }));
+
+      expertRoutes.push({
+        id: 'route-expert-1',
+        score: 100,
+        startAnchor: bestAnchor,
+        target: targetNode,
+        hops: knownHops,
+        isExpertRoute: true,
+        expertSource: knownEntry.source,
+      });
+    }
+  }
+
   // ─── New Variable-Reach A* algorithm (when difficulty is set) ───
   if (params.difficulty) {
     const starNodes = allNodes.filter(n => n.type === 'star' || n.type === 'planet');
@@ -1668,7 +1753,8 @@ export async function planRoutes(params: ObservingParams): Promise<{
     }
 
     routes.sort((a, b) => b.score - a.score);
-    return { routes, nodes: allNodes, targetNode, belowHorizon: false };
+    const allRoutes = [...expertRoutes, ...routes];
+    return { routes: allRoutes, nodes: allNodes, targetNode, belowHorizon: false };
   }
 
   // ─── Legacy Dijkstra algorithm (no difficulty set) ───
@@ -1722,7 +1808,7 @@ export async function planRoutes(params: ObservingParams): Promise<{
   // Sort by score descending
   routes.sort((a, b) => b.score - a.score);
 
-  return { routes, nodes: allNodes, targetNode, belowHorizon: false };
+  return { routes: [...expertRoutes, ...routes], nodes: allNodes, targetNode, belowHorizon: false };
 }
 
 // ─── Stereo Projection ───────────────────────────────────────

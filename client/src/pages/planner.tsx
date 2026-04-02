@@ -665,6 +665,11 @@ export default function PlannerPage() {
                     data-testid={`route-select-${i}`}
                   >
                     <span className="font-medium">Route {i + 1}</span>
+                    {r.isExpertRoute && (
+                      <Badge variant="outline" className="text-[10px] px-1 py-0 border-amber-500/50 text-amber-400">
+                        Expert
+                      </Badge>
+                    )}
                     <Badge variant="secondary" className="text-xs">
                       {r.hops.length} hops
                     </Badge>
@@ -782,6 +787,11 @@ export default function PlannerPage() {
                       </div>
                     ))}
                   </div>
+                  {selectedRoute.isExpertRoute && selectedRoute.expertSource && (
+                    <p className="text-xs text-muted-foreground mt-3 pt-3 border-t border-border/30">
+                      Source: {selectedRoute.expertSource}
+                    </p>
+                  )}
                 </Card>
               )}
             </>
