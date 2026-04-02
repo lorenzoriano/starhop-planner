@@ -679,6 +679,14 @@ export default function PlannerPage() {
                     <Badge variant="outline" className="text-xs capitalize">
                       {observingMode}
                     </Badge>
+                    {r.strategyId && !r.isExpertRoute && (
+                      <Badge variant="outline" className="text-[10px] px-1 py-0 border-sky-500/40 text-sky-400">
+                        {r.strategyId === 'landmark-discount' ? 'LD' :
+                         r.strategyId === 'confidence-decay' ? 'CD' :
+                         r.strategyId === 'focal-search' ? 'FS' :
+                         r.strategyId === 'landmark-magnet' ? 'LM' : r.strategyId}
+                      </Badge>
+                    )}
                   </button>
                 ))}
               </div>

@@ -123,6 +123,7 @@ export interface Route {
   hops: HopStep[];
   isExpertRoute?: boolean;
   expertSource?: string;
+  strategyId?: string;
 }
 
 export type { DifficultyLevel };
@@ -1764,6 +1765,7 @@ export async function planRoutes(params: ObservingParams): Promise<{
         startAnchor: anchor,
         target: targetNode,
         hops,
+        strategyId: strategy.id,
       });
     }
 
