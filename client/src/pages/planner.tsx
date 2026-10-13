@@ -32,6 +32,8 @@ import { useLocalState } from "@/hooks/use-local-state";
 import { useOffline } from "@/lib/offline";
 import {
   defaultSettings,
+  resolveLocalMoment,
+  resolvePlannedMoment,
   settingsSchema,
   nightListSchema,
   type Settings,
@@ -108,6 +110,8 @@ import {
 } from "@/components/ObservingVisuals";
 import { ImageFallback } from "@/components/ImageFallback";
 import { BinocularGuide } from "@/components/BinocularGuide";
+import { MoonObservatory, MoonlightCard, LunarNightItem } from "@/components/MoonObservatory";
+import { lunarFeatures } from "@/lib/moon";
 
 type Catalogs = {
   stars: CatalogStar[];
@@ -123,11 +127,11 @@ const EMPTY_CATALOGS: Catalogs = {
   dense: [],
   milkyWay: [],
 };
-type Page = "tonight" | "binocular" | "hop" | "night" | "image";
+type Page = "tonight" | "binocular" | "moon" | "hop" | "night" | "image";
 
 export default function PlannerPage() {
   const { toast } = useToast();
-  const [settings, setSettings, settingsError] = useLocalState(
+  const [settings, setSettings, settingsError] = useLocalState<Settings>(
     "starhop-settings-v2",
     defaultSettings,
     settingsSchema,
@@ -177,11 +181,17 @@ export default function PlannerPage() {
     targetId,
     difficulty,
   } = settings;
+  const [lunarSelection, setLunarSelection] = useState(lunarFeatures[0].id);
   const timezone = useMemo(() => tzLookup(lat, lon), [lat, lon]);
   useEffect(() => {
     if (settings.timeMode !== "live") return;
-    const timer = window.setInterval(() => setClockNow(new Date()), 30_000);
-    return () => window.clearInterval(timer);
+    const refresh = () => setClockNow(new Date());
+    refresh();
+    const timer = window.setInterval(refresh, 30_000);
+    const resume = () => { if (document.visibilityState === "visible") refresh(); };
+    window.addEventListener("focus", refresh);
+    document.addEventListener("visibilitychange", resume);
+    return () => { window.clearInterval(timer); window.removeEventListener("focus", refresh); document.removeEventListener("visibilitychange", resume); };
   }, [settings.timeMode]);
   const observingDate =
     settings.timeMode === "live"
@@ -195,8 +205,8 @@ export default function PlannerPage() {
     () =>
       settings.timeMode === "live"
         ? clockNow
-        : fromZonedTime(`${settings.date}T${settings.time}:00`, timezone),
-    [settings.date, settings.time, settings.timeMode, timezone, clockNow],
+        : resolvePlannedMoment(settings.date, settings.time, timezone, settings.plannedAt),
+    [settings.date, settings.time, settings.timeMode, settings.plannedAt, timezone, clockNow],
   );
   const params: ObservingParams = useMemo(
     () => ({
@@ -390,6 +400,11 @@ export default function PlannerPage() {
           ],
     );
   }
+  function planLocalTime(localDate: string, localTime: string) {
+    const at = resolveLocalMoment(localDate, localTime, timezone);
+    if (!at) { toast({ title:"That local time does not exist", description:"The clock changes for daylight saving at your location. Choose a time before or after the jump." }); return; }
+    update({ date:localDate, time:localTime, timeMode:"planned", plannedAt:at.toISOString() });
+  }
   function useNow() {
     const now = new Date();
     setClockNow(now);
@@ -397,6 +412,7 @@ export default function PlannerPage() {
       date: formatInTimeZone(now, timezone, "yyyy-MM-dd"),
       time: formatInTimeZone(now, timezone, "HH:mm"),
       timeMode: "live",
+      plannedAt:undefined,
     });
   }
   function locate() {
@@ -474,7 +490,7 @@ export default function PlannerPage() {
       limitingMag: starLimit,
     };
     const key = JSON.stringify(plannedParams);
-    update({ targetId: id, date: localDate, time: localTime, timeMode: "planned", mode: "binocular", instrumentSelected: true, fov: field, fovHeight: field, shape: "circle", limitingMag: starLimit });
+    update({ targetId: id, date: localDate, time: localTime, timeMode: "planned", plannedAt:plannedParams.date.toISOString(), mode: "binocular", instrumentSelected: true, fov: field, fovHeight: field, shape: "circle", limitingMag: starLimit });
     setPage("hop");
     setRouteResult(null);
     setComputing(true);
@@ -512,6 +528,7 @@ export default function PlannerPage() {
           date: formatInTimeZone(window.date, timezone, "yyyy-MM-dd"),
           time: formatInTimeZone(window.date, timezone, "HH:mm"),
           timeMode: "planned",
+          plannedAt:window.date.toISOString(),
         });
         toast({
           title: "A better observing window",
@@ -551,7 +568,7 @@ export default function PlannerPage() {
     night.forEach((item) => {
       const t = catalogs.targets.find((t) => t.id === item.id);
       lines.push(
-        `## ${t?.displayName || item.id}`,
+        `## ${item.id.startsWith("moon:") ? `Moon — ${lunarFeatures.find(f => `moon:${f.id}` === item.id)?.name || item.id}` : t?.displayName || item.id}`,
         item.observedAt
           ? `Observed: ${formatInTimeZone(new Date(item.observedAt), timezone, "MMM d, yyyy HH:mm")}`
           : "To observe",
@@ -602,7 +619,7 @@ export default function PlannerPage() {
     );
   }
 
-  const dateLabel = formatInTimeZone(date, timezone, "EEE, MMM d");
+  const dateLabel = formatInTimeZone(date, timezone, "EEE, MMM d, yyyy");
   const locationLabel =
     lat === 37.77 && lon === -122.42
       ? "San Francisco · default location"
@@ -642,6 +659,7 @@ export default function PlannerPage() {
             [
               ["tonight", "Tonight", Compass],
               ["binocular", "Binoculars", Binoculars],
+              ["moon", "Moon", Moon],
               ["hop", "Star hop", Navigation],
               ["night", "My night", BookOpen],
             ] as const
@@ -755,11 +773,7 @@ export default function PlannerPage() {
                       e.target.value &&
                       !isNaN(new Date(e.target.value).getTime())
                     )
-                      update({
-                        date: e.target.value,
-                        time: observingTime,
-                        timeMode: "planned",
-                      });
+                      planLocalTime(e.target.value, observingTime);
                   }}
                   data-testid="input-date"
                 />
@@ -774,11 +788,7 @@ export default function PlannerPage() {
                   value={observingTime}
                   onChange={(e) => {
                     if (e.target.value)
-                      update({
-                        date: observingDate,
-                        time: e.target.value,
-                        timeMode: "planned",
-                      });
+                      planLocalTime(observingDate, e.target.value);
                   }}
                   data-testid="input-time"
                 />
@@ -1012,6 +1022,10 @@ export default function PlannerPage() {
               </Button>
             </div>
           )}
+          <section className={`session-timebar ${settings.timeMode === "planned" ? "planned" : ""}`} aria-label="Observing time" data-testid="session-timebar">
+            <div><Clock size={14} /><span><strong>{settings.timeMode === "live" ? "Live sky" : "Planned session · fixed time"}</strong> · {dateLabel} · {observingTime}<small>{timezone.replaceAll("_", " ")} (UTC{formatInTimeZone(date,timezone,"xxx")}) · {locationLabel}</small></span></div>
+            <div className="session-time-actions"><details><summary>Plan a time</summary><div><label>Date<input aria-label="Session date" type="date" value={observingDate} onChange={e => { if (e.target.value && Number.isFinite(new Date(e.target.value).getTime())) planLocalTime(e.target.value, observingTime); }} /></label><label>Time<input aria-label="Session time" type="time" value={observingTime} onChange={e => { if (e.target.value) planLocalTime(observingDate, e.target.value); }} /></label><small>Local time at your observing location.</small></div></details><button className="text-action" onClick={useNow}>{settings.timeMode === "live" ? "Refresh now" : "Use current time"}</button></div>
+          </section>
           {page === "tonight" && (
             <>
               <div className="page-heading">
@@ -1026,17 +1040,6 @@ export default function PlannerPage() {
                   </p>
                   <button className="text-action binocular-home-link" onClick={() => setPage("binocular")}>
                     <Binoculars size={14} /> Explore binocular favorites, month by month <ArrowUpRight size={13} />
-                  </button>
-                </div>
-                <div className="date-stamp">
-                  <span>
-                    {settings.timeMode === "live" ? "Right now" : "Planning for"} · {dateLabel}
-                  </span>
-                  <strong>{observingTime}</strong>
-                  <small>{timezone.replaceAll("_", " ")} local</small>
-                  <button className="text-action" onClick={useNow}>
-                    <Clock size={12} />
-                    {settings.timeMode === "live" ? "Update now" : "Use current time"}
                   </button>
                 </div>
               </div>
@@ -1080,6 +1083,7 @@ export default function PlannerPage() {
                   Where the data comes from
                 </button>
               </div>
+              {conditions.moonAlt >= 15 && conditions.illumination >= 60 && <button className="moon-tonight-link" onClick={() => setPage("moon")}><Moon size={18} /><span>A bright Moon is up. Explore seas and ray systems, or find a darker window.</span><ArrowUpRight size={15} /></button>}
               <div className="tonight-hero">
                 <section className="panel sky-panel">
                   <div className="panel-heading">
@@ -1155,6 +1159,7 @@ export default function PlannerPage() {
                         <Eye size={14} />
                         {guideFor(selected).equipment}
                       </p>
+                      <MoonlightCard target={selected} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => setPage("moon")} />
                       <div className="featured-actions">
                         <Button
                           onClick={compute}
@@ -1637,6 +1642,7 @@ export default function PlannerPage() {
                         <h2>At the eyepiece</h2>
                       </div>
                       <p>{guideFor(selected).lookFor}</p>
+                      <MoonlightCard target={selected} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => setPage("moon")} />
                       <AltitudeChart
                         target={selected}
                         lat={lat}
@@ -1776,6 +1782,10 @@ export default function PlannerPage() {
               )}
               <div className="night-list">
                 {night.map((item) => {
+                  if (item.id.startsWith("moon:")) {
+                    const feature = lunarFeatures.find(f => `moon:${f.id}` === item.id);
+                    return feature ? <LunarNightItem key={item.id} feature={feature} item={item} timezone={timezone} onRemove={() => toggleSave(item.id)} onObserved={() => markObserved(item.id)} onOpen={() => { setLunarSelection(feature.id); setPage("moon"); }} onNotes={notes => setNight(current => current.map(t => t.id === item.id ? {...t,notes} : t))} /> : null;
+                  }
                   const object = ranked.find((o) => o.target.id === item.id);
                   if (!object) return null;
                   return (
@@ -1863,8 +1873,9 @@ export default function PlannerPage() {
             </>
           )}
           {page === "binocular" && (
-            <BinocularGuide targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
+            <BinocularGuide targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
           )}
+          {page === "moon" && <MoonObservatory lat={lat} lon={lon} date={date} timezone={timezone} settings={settings} update={update} target={selected} initialFeatureId={lunarSelection} onDate={at => { setPlaying(false); update({ date:formatInTimeZone(at,timezone,"yyyy-MM-dd"), time:formatInTimeZone(at,timezone,"HH:mm"), timeMode:"planned", plannedAt:at.toISOString() }); }} savedIds={savedIds} onSave={toggleSave} />}
           {page === "image" && (
             <>
               <div className="page-heading">

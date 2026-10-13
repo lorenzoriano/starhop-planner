@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { formatInTimeZone } from "date-fns-tz";
+import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 
 export const settingsSchema = z.object({
   lat: z.number().finite().min(-90).max(90),
@@ -16,6 +16,7 @@ export const settingsSchema = z.object({
     }),
   time: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
   timeMode: z.enum(["live", "planned"]).default("live"),
+  plannedAt: z.string().datetime().optional(),
   mode: z.enum(["binocular", "telescope"]),
   instrumentSelected: z.boolean().default(false),
   fov: z.number().min(0.2).max(15),
@@ -25,6 +26,9 @@ export const settingsSchema = z.object({
   difficulty: z.enum(["beginner", "intermediate", "expert"]),
   targetId: z.string(),
   redLight: z.boolean(),
+  binocularMagnification: z.number().min(5).max(40).default(10),
+  binocularAperture: z.number().min(20).max(150).default(50),
+  skyBrightness: z.number().min(17).max(22).default(21.6),
 }).transform((settings) => {
   // Older releases defaulted new installs to binoculars without asking.
   // Move that implicit choice to a telescope profile once; keep later choices.
@@ -56,6 +60,9 @@ export const defaultSettings: Settings = {
   difficulty: "beginner",
   targetId: "M31",
   redLight: false,
+  binocularMagnification: 10,
+  binocularAperture: 50,
+  skyBrightness: 21.6,
 };
 export const nightListSchema = z
   .array(
@@ -68,3 +75,22 @@ export const nightListSchema = z
   )
   .max(1000);
 export type NightItem = z.infer<typeof nightListSchema>[number];
+
+// Reject civil times skipped by a daylight-saving change instead of displaying
+// one time while calculating a different instant. A repeated fall-back hour uses
+// date-fns-tz's default occurrence; the full zone is always shown in the UI.
+export function resolveLocalMoment(localDate: string, localTime: string, timezone: string): Date | null {
+  const local = `${localDate}T${localTime}:00`;
+  const at = fromZonedTime(local, timezone);
+  return Number.isFinite(at.getTime()) && formatInTimeZone(at,timezone,"yyyy-MM-dd'T'HH:mm:ss") === local ? at : null;
+}
+
+// Preserve an explicitly selected instant during a repeated fall-back hour.
+// Changing the civil date/time or location invalidates this hint automatically.
+export function resolvePlannedMoment(localDate: string, localTime: string, timezone: string, storedInstant?: string): Date {
+  if (storedInstant) {
+    const at = new Date(storedInstant);
+    if (Number.isFinite(at.getTime()) && formatInTimeZone(at,timezone,"yyyy-MM-dd'T'HH:mm") === `${localDate}T${localTime}`) return at;
+  }
+  return fromZonedTime(`${localDate}T${localTime}:00`, timezone);
+}

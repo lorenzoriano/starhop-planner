@@ -1,10 +1,10 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
-import type { ZodType } from "zod";
+import type { ZodType, ZodTypeDef } from "zod";
 
 export function useLocalState<T>(
   key: string,
   initial: T,
-  schema: ZodType<T>,
+  schema: ZodType<T, ZodTypeDef, unknown>,
 ): [T, Dispatch<SetStateAction<T>>, boolean] {
   const [value, setValue] = useState<T>(() => {
     try {

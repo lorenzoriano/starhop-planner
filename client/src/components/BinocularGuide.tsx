@@ -1,3 +1,4 @@
+import { MoonlightCard } from "./MoonObservatory";
 import { useMemo, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
 import { ArrowUpRight, Binoculars, BookOpen, Check, Clock, Eye, MapPin, Navigation, Plus, Search, Star, WifiOff, X } from "lucide-react";
@@ -12,6 +13,7 @@ import { compassLabel, skyConditions } from "@/lib/observing";
 import { BINOCULAR_BOOKS, BINOCULAR_ENTRIES, FAMILY_LABELS, LEVEL_LABELS, MONTH_NAMES, binocularCollection, binocularEvening, type BinocularFamily, type BinocularPick } from "@/lib/binocular-guide";
 
 interface Props {
+  skyBrightness?: number;
   targets: UnifiedTarget[]; stars: CatalogStar[]; lat: number; lon: number;
   timezone: string; observingDate: Date; savedIds: Set<string>; loading: boolean;
   onSave: (id: string) => void; onPlan: (id: string, at: Date) => void;
@@ -20,7 +22,7 @@ interface Props {
   onFovChange: (width: number) => void; onLimitingMagChange: (magnitude: number) => void;
 }
 
-export function BinocularGuide({ targets, stars, lat, lon, timezone, observingDate, savedIds, loading, onSave, onPlan, constellations, denseStars, milkyWay, fovWidth, fovHeight, fovShape, limitingMag, onFovChange, onLimitingMagChange }: Props) {
+export function BinocularGuide({ skyBrightness = 21.6, targets, stars, lat, lon, timezone, observingDate, savedIds, loading, onSave, onPlan, constellations, denseStars, milkyWay, fovWidth, fovHeight, fovShape, limitingMag, onFovChange, onLimitingMagChange }: Props) {
   const currentYear = Number(formatInTimeZone(observingDate, timezone, "yyyy"));
   const [year, setYear] = useState(currentYear);
   const [month, setMonth] = useState(Number(formatInTimeZone(observingDate, timezone, "M")));
@@ -142,6 +144,7 @@ export function BinocularGuide({ targets, stars, lat, lon, timezone, observingDa
           {detail && <>
             <DialogHeader><span className="eyebrow">{FAMILY_LABELS[detail.family]} · {detail.target.id}</span><DialogTitle>{detail.name ?? detail.target.name}</DialogTitle><DialogDescription>{getConstellationName(detail.target.con)} · {LEVEL_LABELS[detail.level]} · {detail.equipment}</DialogDescription></DialogHeader>
             <div className="binocular-detail-chart"><SkyChart key={detail.targetId} nodes={fieldTarget ? [...fieldNodes, fieldTarget] : fieldNodes} constellations={constellations} denseStars={denseStars} milkyWay={milkyWay} route={null} targetNode={fieldTarget} animStep={0} fovWidth={fovWidth} fovHeight={fovHeight} fovShape={fovShape} limitingMag={limitingMag} lat={lat} lon={lon} date={at} onFovChange={onFovChange} onLimitingMagChange={onLimitingMagChange} /></div>
+            <MoonlightCard target={detail.target} lat={lat} lon={lon} date={at} skyBrightness={skyBrightness} />
             <div className="binocular-detail-notes"><div><h3>What to look for</h3><p>{detail.impression}</p></div><div><h3>Start here</h3><p>{detail.finding}</p></div></div>
             <BinocularObservations id={detail.targetId} />
             <details className="binocular-reference-photos"><summary>Reference photographs · optical, infrared & telescope views</summary><BinocularImages key={detail.targetId} id={detail.targetId} name={detail.name ?? detail.target.name} /></details>

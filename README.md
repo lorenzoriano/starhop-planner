@@ -34,9 +34,21 @@ The Tonight sky, binocular finder and hopping route use the same chart controls.
 
 Sky darkness and Moon illumination are astronomical calculations, not a weather forecast. Object altitude and integrated magnitude do not guarantee visibility: sky brightness, surface brightness, aperture, and experience matter. The general object artwork is labeled as an illustration. Catalog charts show real star positions to magnitude 8; stars-only mode does not simulate nebulae or guarantee eyepiece visibility.
 
+## Moon observing and time
+
+The **Moon** section contains 55 named seas, bays and craters with IAU/USGS coordinates, original observing notes and links to their feature records. The NASA LROC surface map is bundled offline. The atlas projects the surface for the actual observer, including lunar libration, and calculates the illuminated side. **Inspect atlas** enlarges it for identification; **Binocular field** uses your magnification, aperture and true field to scale and limit the preview. Mirror and rotation share the sky-chart display settings. The smooth-sphere preview does not simulate crater relief shadows, earthshine, eclipses or exact visual perception.
+
+The daily Moon altitude chart shows your selected target too, plus astronomical darkness, rise/set azimuths and the highest point. Moonless windows cover the next 24 hours from the chosen moment and carry date labels; post-set shortcuts identify daylight or twilight. Choose a time or a moonless window to update the whole session. Times use the observing location's time zone and handle 23/25-hour daylight-saving days. No-event dates at polar latitudes are labeled. Flat horizon and standard refraction are assumed; terrain and weather are not measured.
+
+Target guidance shows angular separation from the Moon, its illumination and altitude, catalog magnitude and a moonlight estimate based on the [Krisciunas–Schaefer paper](https://articles.adsabs.harvard.edu/pdf/1991PASP..103.1033K). The extra sky glow is expressed in magnitudes, not an object visibility probability. Change the assumed moonless zenith sky brightness in the Moon section; default extinction is 0.172 mag/airmass. Faint diffuse structure, bright stars and clusters receive different guidance. Twilight, low altitude, very close/far separation and eclipses limit the model's use.
+
+The date bar stays visible on all pages and phones. **Live sky** follows the device clock every 30 seconds and on resume, including date rollover. **Planned session · fixed time** explicitly pins the chosen date and minute; **Use current time** returns to live. Full year, time zone and location are shown. The monthly binocular guide still uses its labeled sample time on the 15th; it is not a live clock. Inputs reject times skipped by a daylight-saving jump.
+
+Moon features can be saved, marked observed and annotated in **My night**, and included in exported Markdown notes. Sources and credits are linked in the section and recorded in [the offline map credits](client/public/data/moon/CREDITS.md).
+
 ## Offline use
 
-Open the production app once online and wait for **Offline ready**. The build generates a manifest of every JS/CSS asset, icon, and all seven astronomy data files. The service worker stores that complete build before activating it. It can then reopen and calculate new routes without network access. The status checks that all required files are actually cached.
+Open the production app once online and wait for **Offline ready**. The build generates a manifest of every JS/CSS asset, icon, and the astronomy catalogs, survey images and lunar map. The service worker stores that complete build before activating it. It can then reopen and calculate new routes without network access. The status checks that all required files are actually cached.
 
 Install the app using your browser’s install or Add to Home Screen action if desired. Use the same browser and address at the observing site. Preferences, your list, and notes use local storage; clearing browser data removes them. Export notes for a portable backup. Each origin and hosting path keeps its own offline cache.
 
