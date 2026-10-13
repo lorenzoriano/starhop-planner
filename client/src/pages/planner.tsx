@@ -103,7 +103,6 @@ import {
 import type { CostStrategyId } from "@/lib/cost-strategies";
 import { SkyChart } from "@/components/SkyChart";
 import {
-  SkyOverview,
   ObjectArt,
   AltitudeChart,
 } from "@/components/ObservingVisuals";
@@ -290,9 +289,16 @@ export default function PlannerPage() {
           alt: selection.alt,
           az: selection.az,
           name: selected.name,
+          constellation: selected.con,
           type: selected.source === "messier" ? "messier" : "binocular",
         }
       : null;
+  const overviewNodes = useMemo<SkyNode[]>(() => {
+    const objects = ranked.filter((o) => o.alt > 15).slice(0, 7);
+    const markers = objects.map((o): SkyNode => ({ ...o.target, alt: o.alt, az: o.az, type: o.target.source === "messier" ? "messier" : "binocular", constellation: o.target.con }));
+    if (previewTarget && previewTarget.alt > 0 && !markers.some((o) => o.id === previewTarget.id)) markers.push(previewTarget);
+    return [...previewNodes, ...markers];
+  }, [previewNodes, ranked, targetId]);
 
   const loadCatalogs = useCallback(async () => {
     setLoading(true);
@@ -455,8 +461,8 @@ export default function PlannerPage() {
   async function planBinocularHop(id: string, at: Date) {
     const localDate = formatInTimeZone(at, timezone, "yyyy-MM-dd");
     const localTime = formatInTimeZone(at, timezone, "HH:mm");
-    const field = mode === "binocular" && settings.instrumentSelected ? fov : 7;
-    const starLimit = mode === "binocular" && settings.instrumentSelected ? limitingMag : 6.5;
+    const field = fov;
+    const starLimit = limitingMag;
     const plannedParams: ObservingParams = {
       ...params,
       date: fromZonedTime(`${localDate}T${localTime}:00`, timezone),
@@ -1091,14 +1097,24 @@ export default function PlannerPage() {
                       <p>Opening the sky atlas…</p>
                     </div>
                   ) : (
-                    <SkyOverview
-                      stars={catalogs.stars}
+                    <SkyChart
+                      overview
+                      nodes={overviewNodes}
                       constellations={catalogs.constellations}
-                      objects={ranked}
+                      denseStars={catalogs.dense}
+                      milkyWay={catalogs.milkyWay}
+                      route={null}
+                      targetNode={previewTarget}
+                      animStep={0}
+                      fovWidth={fov}
+                      fovHeight={shape === "circle" ? fov : fovHeight}
+                      fovShape={shape}
+                      limitingMag={limitingMag}
+                      onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })}
+                      onLimitingMagChange={(value) => update({ limitingMag: value })}
                       lat={lat}
                       lon={lon}
                       date={date}
-                      selectedId={targetId}
                       onSelect={selectTarget}
                     />
                   )}
@@ -1456,6 +1472,8 @@ export default function PlannerPage() {
                     limitingMag={limitingMag}
                     denseStars={catalogs.dense}
                     milkyWay={catalogs.milkyWay}
+                    onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })}
+                    onLimitingMagChange={(value) => update({ limitingMag: value })}
                   />
                   <div className="chart-footnote">
                     {route
@@ -1554,6 +1572,7 @@ export default function PlannerPage() {
                                 setStep(step + 1);
                                 setPlaying(false);
                               } else {
+                                setPlaying(false);
                                 markObserved(targetId);
                               }
                             }}
@@ -1844,7 +1863,7 @@ export default function PlannerPage() {
             </>
           )}
           {page === "binocular" && (
-            <BinocularGuide targets={catalogs.targets} stars={catalogs.stars} lat={lat} lon={lon} timezone={timezone} observingDate={date} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
+            <BinocularGuide targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
           )}
           {page === "image" && (
             <>

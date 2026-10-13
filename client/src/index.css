@@ -441,6 +441,25 @@ button:disabled { opacity: .45; cursor: default; }
 .chart-toolbar button, .chart-toolbar select { border: 1px solid #354b58; border-radius: 4px; color: #a2b8c1; font-size: 10px; background: #10222c; padding: 5px 8px; min-height: 28px; }
 .chart-toolbar button.active { background: #a3c6b120; color: #c6dec9; border-color: #a3c6b155; }
 .chart-toolbar-group { display: flex; gap: 5px; align-items: center; }
+.chart-field-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 0 14px 12px; background: #0c1a25; }
+.chart-field-controls label { display: flex; align-items: center; gap: 6px; color: #a9bfc4; font-size: 10px; }
+.chart-field-controls input { width: 59px; padding: 5px; min-height: 32px; border-radius: 4px; border: 1px solid #496458; background: #10222c; color: #d2e4d5; font-family: var(--font-mono); }
+.chart-field-controls button { min-height: 32px; padding: 5px 9px; border: 1px solid #354b58; border-radius: 4px; color: #a2b8c1; font-size: 10px; }
+.chart-field-controls button.active { border-color: #a3c6b1; color: #c6dec9; background: #a3c6b120; }
+.chart-accuracy-note { padding: 0 14px 13px; color: #8ca3aa; background: #0c1a25; font-size: 9px; line-height: 1.7; }
+.binocular-detail-chart { border: 1px solid #38524d; border-radius: 7px; overflow: hidden; }
+.binocular-detail-notes { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.binocular-detail-notes p { margin-top: 7px; color: #a1b6bf; font-size: 12px; line-height: 1.9; }
+.binocular-reference-photos { border-top: 1px solid #304851; padding-top: 15px; color: #9bb3ba; font-size: 11px; }
+.binocular-reference-photos summary { cursor: pointer; color: #bed2bf; line-height: 1.7; }
+.binocular-reference-photos .binocular-image-gallery { margin-top: 18px; }
+.binocular-observer-views { padding: 16px; border: 1px solid #476557; border-radius: 6px; background: #82ae9510; }
+.binocular-observer-views h3 { display: flex; align-items: center; gap: 7px; color: #bed9bd; }
+.binocular-observer-views > p { margin-top: 8px; font-size: 11px; color: #9ab2b6; line-height: 1.8; }
+.binocular-observer-views a { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 12px; color: #b7d7bd; font-size: 11px; line-height: 1.7; }
+.binocular-observer-views a small { display: block; color: #8ca5ad; font-size: 10px; margin-top: 3px; }
+.binocular-observer-views a svg { flex-shrink: 0; }
+@media (max-width: 760px) { .binocular-detail-notes { grid-template-columns: 1fr; gap: 14px; } .chart-field-controls { gap: 8px 12px; } }
 .chart-display-settings { padding: 0 14px 12px; background: #0c1a25; }
 .chart-display-settings summary { color: #8fa9b6; font-size: 10px; cursor: pointer; }
 .chart-display-settings .display-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding-top: 13px; }

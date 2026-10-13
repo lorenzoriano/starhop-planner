@@ -22,7 +22,7 @@ Southern additions to the guide use [Tonkin's IC 2602 notes](https://binocularsk
 
 Albireo is labeled a steadiness-dependent challenge; a 34-arcsecond pair is not a guaranteed handheld 10× split. Epsilon Lyrae means its wide pair, not resolving both close binaries. Mizar–Alcor means the wide pair, not splitting Mizar's close binary. The selected 56 Andromedae reference gives about 128 arcseconds; the old catalog's 200-arcsecond value and misleading location tip were corrected.
 
-The Carina Nebula's reference magnitude was aligned to the published 4.8 value on [NASA's Caldwell 92 page](https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-caldwell-catalog/caldwell-92/). The dashed circle in the guide's original finder fields is a labeled 7-degree reference, rather than a promise that every binocular has that exact field.
+The Carina Nebula's reference magnitude was aligned to the published 4.8 value on [NASA's Caldwell 92 page](https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-caldwell-catalog/caldwell-92/). The original fixed 7-degree finder diagrams have been replaced by the same configurable chart used for star hopping; the field now follows the observer's setup.
 
 ## Month calculation
 
@@ -60,3 +60,13 @@ python script/download-binocular-media.py /tmp/binocular-media-plan.json
 ```
 
 The acquisition script requires Python's Pillow package. Its checks must pass before publishing; the guide tests verify that every target has both images at its catalog coordinates.
+
+## Shared charts and binocular observing views
+
+All celestial star charts now use `SkyChart`: the overhead sky, the binocular target finder, and the hopping route. The same magnitude/FOV inputs, zoom/pan, Fit field, mirror/rotation, display sliders and layers are available. Display preferences are validated and saved locally. The finder uses the complete BSC/Hipparcos star layers through the configured magnitude, up to the dense catalog's limit of 8. Wide maps reduce point sizes to stay readable; their catalog membership does not change when moving through a route.
+
+A target's finder and its alternative routes share one fixed stereographic frame centered on the destination. A spherical mean of hop positions supplies a fallback when no target is available. Advancing through fields translates the viewport on that plane. It does not recompute north around each new tangent point, which previously made near-polar routes appear to rotate. Explicit mirror/rotate controls retain their values when marking a target observed or changing sections. Regression tests cover RA wrap, polar route geometry, zenith coordinates and saved-setting validation.
+
+The target's configurable finder is now shown first. A Stars only option removes labels, guide patterns and photographic-style glow, using subdued stellar colors for faint stars. It is a catalog diagram, not an eye-response simulation; diffuse object structure is not synthesized. Research photographs remain available in a collapsed reference section with their original credits and wavelength labels.
+
+To provide closer comparisons with actual binocular observing, target-specific links were checked against the [VdS binocular sketch index](https://deepsky.vdsastro.de/en/project-deep-sky-with-binoculars.php?index=True&list=sketches). Its reports record instruments and sky conditions, including dark and light-polluted sites; individual observations are not universal visibility promises. Additional direct sources include [Rony De Laet's 8×56 Coathanger sketch](https://www.asod.info/?p=1070), a [15×70 Andromeda observation](https://www.cloudynights.com/forums/topic/88600-first-sketch-m31-through-15-x-70mm-binos/), and a [tripod-mounted 10×50 Orion Nebula sketch under Bortle 6](https://www.cloudynights.com/forums/topic/805760-m42-orion-nebula-made-with-binoculars/). These author-owned sketches are linked on their source sites, with their observing context; the offline app retains the original catalog charts and licensed survey images.

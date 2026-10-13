@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import PlannerPage from "@/pages/planner";
+import { ChartPreferencesProvider } from "@/components/ChartPreferences";
 
 function AppRouter() {
   return (
@@ -22,7 +23,7 @@ function App() {
       <TooltipProvider>
         <Toaster />
         <Router hook={useHashLocation}>
-          <AppRouter />
+          <ChartPreferencesProvider><AppRouter /></ChartPreferencesProvider>
         </Router>
       </TooltipProvider>
     </QueryClientProvider>
