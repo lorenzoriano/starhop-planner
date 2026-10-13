@@ -71,6 +71,7 @@ import {
   ArrowUpRight,
   Compass,
   BookOpen,
+  CalendarDays,
   Settings2,
   Navigation,
   X,
@@ -111,6 +112,8 @@ import {
 import { ImageFallback } from "@/components/ImageFallback";
 import { BinocularGuide } from "@/components/BinocularGuide";
 import { MoonObservatory, MoonlightCard, LunarNightItem } from "@/components/MoonObservatory";
+import { SessionPlanner } from "@/components/SessionPlanner";
+import { emptyPlanner, plannerStoreSchema, makeSession, planningShortcut, sessionTimezone, starPlanningTarget, type PlannerStore, type ObservingSession } from "@/lib/session-planner";
 import { lunarFeatures } from "@/lib/moon";
 
 type Catalogs = {
@@ -136,11 +139,19 @@ export default function PlannerPage() {
     defaultSettings,
     settingsSchema,
   );
-  const [night, setNight, nightError] = useLocalState<NightItem[]>(
+  const [legacyNight, setLegacyNight, nightError] = useLocalState<NightItem[]>(
     "starhop-night-v2",
     [],
     nightListSchema,
   );
+  const [plannerStore,setPlannerStore,plannerError] = useLocalState<PlannerStore>("starhop-session-planner-v1",emptyPlanner,plannerStoreSchema);
+  const activeSession = plannerStore.sessions.find(s=>s.id===plannerStore.activeId&&!s.archived);
+  const night=activeSession?.items??legacyNight;
+  function setNight(next:NightItem[]|((previous:NightItem[])=>NightItem[])) {
+    if(activeSession) setPlannerStore(current=>({...current,sessions:current.sessions.map(s=>s.id===activeSession.id?{...s,items:typeof next==="function"?next(s.items):next}:s)}));
+    else setLegacyNight(next);
+  }
+  const [inspectedStar,setInspectedStar] = useState<CatalogStar|null>(null);
   const update = (patch: Partial<Settings>) =>
     setSettings((prev) => ({ ...prev, ...patch }));
   const [page, setPage] = useState<Page>("tonight");
@@ -252,6 +263,7 @@ export default function PlannerPage() {
     () => rankTargets(catalogs.targets, lat, lon, date, mode),
     [catalogs.targets, lat, lon, date, mode],
   );
+  const planningTargets = useMemo(()=>[...catalogs.targets,...catalogs.stars.map(starPlanningTarget)],[catalogs.targets,catalogs.stars]);
   const selection = ranked.find((t) => t.target.id === targetId);
   const conditions = useMemo(
     () => skyConditions(lat, lon, date),
@@ -367,9 +379,41 @@ export default function PlannerPage() {
   }, [playing, route, speed]);
 
   function selectTarget(id: string) {
+    if(id.startsWith("star:")){setInspectedStar(catalogs.stars.find(s=>`star:${s.id}`===id)??null);return;}
+    const star=catalogs.stars.find(s=>s.id===id);
+    if(star&&!catalogs.targets.some(t=>t.id===id)){setInspectedStar(star);return;}
     update({ targetId: id });
   }
+  function previewMoment(at:Date,latitude:number,longitude:number,navigate=true) {
+    const zone=sessionTimezone({lat:latitude,lon:longitude});
+    update({lat:latitude,lon:longitude,date:formatInTimeZone(at,zone,"yyyy-MM-dd"),time:formatInTimeZone(at,zone,"HH:mm"),timeMode:"planned",plannedAt:at.toISOString()});
+    if(navigate)setPage("tonight");
+  }
+  function createSession(s:ObservingSession) {
+    setPlannerStore(current=>({...current,sessions:[...current.sessions,s],activeId:s.id}));
+    previewMoment(new Date(s.startAt),s.lat,s.lon,false); setPage("night");
+  }
+  function updateSession(s:ObservingSession) {
+    setPlannerStore(current=>({...current,sessions:current.sessions.map(previous=>previous.id===s.id?s:previous)}));
+    if(activeSession?.id===s.id&&!s.archived)previewMoment(new Date(s.startAt),s.lat,s.lon,false);
+  }
+  function selectSession(id:string|null) {
+    setPlannerStore(current=>({...current,activeId:id}));
+    const s=plannerStore.sessions.find(s=>s.id===id);if(s)previewMoment(new Date(s.startAt),s.lat,s.lon,false);
+  }
+  function visitScheduledTarget(id:string,at:Date) {
+    previewMoment(at,activeSession?.lat??lat,activeSession?.lon??lon,false);
+    if(id.startsWith("moon:")){setLunarSelection(id.slice(5));setPage("moon");}
+    else if(id.startsWith("star:")){setInspectedStar(catalogs.stars.find(s=>`star:${s.id}`===id)??null);setPage("tonight");}
+    else {update({targetId:id});setPage("hop");}
+  }
   function toggleSave(id: string) {
+    if(!activeSession&&!legacyNight.some(i=>i.id===id)) {
+      const at=settings.timeMode==="live"?planningShortcut("tonight",lat,lon).date:date;
+      const s=makeSession(`${formatInTimeZone(at,timezone,"MMM d")} observing night`,at,lat,lon,[...legacyNight,{id,addedAt:new Date().toISOString(),notes:""}]);
+      setPlannerStore(current=>({...current,sessions:[...current.sessions,s],activeId:s.id}));
+      toast({title:"Added to your observing session",description:`${s.name}. Open Planner to edit its date, site and viewing sequence.`});return;
+    }
     setNight((prev) =>
       prev.some((t) => t.id === id)
         ? prev.filter((t) => t.id !== id)
@@ -559,18 +603,20 @@ export default function PlannerPage() {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   function exportNight() {
+    const exportZone=activeSession?sessionTimezone(activeSession):timezone;
+    const exportDate=activeSession?new Date(activeSession.startAt):date;
     const lines = [
-      `# My StarHop observing night`,
-      `${observingDate} at ${observingTime} (${timezone})`,
-      `Location: ${lat}°, ${lon}° · ${mode} · ${fov}° field`,
+      `# ${activeSession?.name??"My StarHop observing night"}`,
+      `${formatInTimeZone(exportDate,exportZone,"yyyy-MM-dd HH:mm")} (${exportZone})`,
+      `Location: ${activeSession?.locationName??""} ${activeSession?.lat??lat}°, ${activeSession?.lon??lon}° · ${mode} · ${fov}° field`,
       "",
     ];
     night.forEach((item) => {
-      const t = catalogs.targets.find((t) => t.id === item.id);
+      const t = planningTargets.find((t) => t.id === item.id);
       lines.push(
         `## ${item.id.startsWith("moon:") ? `Moon — ${lunarFeatures.find(f => `moon:${f.id}` === item.id)?.name || item.id}` : t?.displayName || item.id}`,
         item.observedAt
-          ? `Observed: ${formatInTimeZone(new Date(item.observedAt), timezone, "MMM d, yyyy HH:mm")}`
+          ? `Observed: ${formatInTimeZone(new Date(item.observedAt), exportZone, "MMM d, yyyy HH:mm")}`
           : "To observe",
         item.notes || "",
         "",
@@ -578,7 +624,7 @@ export default function PlannerPage() {
     });
     download(
       lines.join("\n"),
-      `starhop-night-${observingDate}.md`,
+      `starhop-night-${formatInTimeZone(exportDate,exportZone,"yyyy-MM-dd")}.md`,
       "text/markdown",
     );
   }
@@ -661,7 +707,7 @@ export default function PlannerPage() {
               ["binocular", "Binoculars", Binoculars],
               ["moon", "Moon", Moon],
               ["hop", "Star hop", Navigation],
-              ["night", "My night", BookOpen],
+              ["night", "Planner", CalendarDays],
             ] as const
           ).map(([id, label, Icon]) => (
             <button
@@ -1003,7 +1049,7 @@ export default function PlannerPage() {
         </aside>
 
         <main className="main-content">
-          {(settingsError || nightError) && (
+          {(settingsError || nightError || plannerError) && (
             <div className="notice warning">
               <AlertTriangle size={16} />
               Device storage is unavailable. Export your notes before closing
@@ -1023,8 +1069,8 @@ export default function PlannerPage() {
             </div>
           )}
           <section className={`session-timebar ${settings.timeMode === "planned" ? "planned" : ""}`} aria-label="Observing time" data-testid="session-timebar">
-            <div><Clock size={14} /><span><strong>{settings.timeMode === "live" ? "Live sky" : "Planned session · fixed time"}</strong> · {dateLabel} · {observingTime}<small>{timezone.replaceAll("_", " ")} (UTC{formatInTimeZone(date,timezone,"xxx")}) · {locationLabel}</small></span></div>
-            <div className="session-time-actions"><details><summary>Plan a time</summary><div><label>Date<input aria-label="Session date" type="date" value={observingDate} onChange={e => { if (e.target.value && Number.isFinite(new Date(e.target.value).getTime())) planLocalTime(e.target.value, observingTime); }} /></label><label>Time<input aria-label="Session time" type="time" value={observingTime} onChange={e => { if (e.target.value) planLocalTime(observingDate, e.target.value); }} /></label><small>Local time at your observing location.</small></div></details><button className="text-action" onClick={useNow}>{settings.timeMode === "live" ? "Refresh now" : "Use current time"}</button></div>
+            <div><Clock size={14} /><span><strong>{settings.timeMode === "live" ? "Live sky" : "Viewing planned sky"}</strong> · {dateLabel} · {observingTime}<small>{timezone.replaceAll("_", " ")} (UTC{formatInTimeZone(date,timezone,"xxx")}) · {locationLabel}</small>{activeSession&&<small className="session-list-context">Targets saved to “{activeSession.name}”</small>}</span></div>
+            <div className="session-time-actions"><button className="text-action" onClick={()=>setPage("night")}><CalendarDays size={13}/>{activeSession ? `Planner · ${night.length} objects` : "Open planner"}</button><details><summary>Plan a time</summary><div><label>Date<input aria-label="Session date" type="date" value={observingDate} onChange={e => { if (e.target.value && Number.isFinite(new Date(e.target.value).getTime())) planLocalTime(e.target.value, observingTime); }} /></label><label>Time<input aria-label="Session time" type="time" value={observingTime} onChange={e => { if (e.target.value) planLocalTime(observingDate, e.target.value); }} /></label><small>Local time at your observing location.</small></div></details><button className="text-action" onClick={useNow}>{settings.timeMode === "live" ? "Refresh now" : "Use current time"}</button></div>
           </section>
           {page === "tonight" && (
             <>
@@ -1464,6 +1510,7 @@ export default function PlannerPage() {
                   </div>
                   <SkyChart
                     nodes={result?.nodes ?? previewNodes}
+                    onSelect={selectTarget}
                     constellations={catalogs.constellations}
                     route={route}
                     targetNode={result?.targetNode ?? previewTarget}
@@ -1734,10 +1781,10 @@ export default function PlannerPage() {
                 <div>
                   <p className="eyebrow">SMALL DISCOVERIES, WORTH KEEPING</p>
                   <h1>
-                    Make a night of it<span>.</span>
+                    A night worth planning<span>.</span>
                   </h1>
                   <p>
-                    Your observing list and field notes, saved on this device.
+                    Plan a night, choose your observing site, and build a route through the sky.
                   </p>
                 </div>
                 <Button
@@ -1749,6 +1796,8 @@ export default function PlannerPage() {
                   Export notes
                 </Button>
               </div>
+              <SessionPlanner sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} onCreate={createSession} onUpdate={updateSession} onSelect={selectSession} onPreview={previewMoment} onVisit={visitScheduledTarget} onAdd={toggleSave} onExplore={()=>setPage("tonight")} />
+              <div className="planner-list-heading"><h2>{activeSession ? `${activeSession.name} · objects & notes` : "Unscheduled list & notes"}</h2><p>Use + to add, × to remove, and the circle to record an observation. Your notes stay with this session.</p></div>
               <div className="night-summary">
                 <span>
                   <BookOpen size={17} />
@@ -1784,9 +1833,10 @@ export default function PlannerPage() {
                 {night.map((item) => {
                   if (item.id.startsWith("moon:")) {
                     const feature = lunarFeatures.find(f => `moon:${f.id}` === item.id);
-                    return feature ? <LunarNightItem key={item.id} feature={feature} item={item} timezone={timezone} onRemove={() => toggleSave(item.id)} onObserved={() => markObserved(item.id)} onOpen={() => { setLunarSelection(feature.id); setPage("moon"); }} onNotes={notes => setNight(current => current.map(t => t.id === item.id ? {...t,notes} : t))} /> : null;
+                    return feature ? <LunarNightItem key={item.id} feature={feature} item={item} timezone={timezone} onRemove={() => toggleSave(item.id)} onObserved={() => markObserved(item.id)} onOpen={() => visitScheduledTarget(item.id,activeSession?new Date(activeSession.startAt):date)} onNotes={notes => setNight(current => current.map(t => t.id === item.id ? {...t,notes} : t))} /> : null;
                   }
-                  const object = ranked.find((o) => o.target.id === item.id);
+                  const starTarget = planningTargets.find(t=>t.id===item.id);
+                  const object = activeSession && starTarget ? {target:starTarget,...eqToHorizontal(starTarget.ra,starTarget.dec,activeSession.lat,activeSession.lon,new Date(activeSession.startAt))} : ranked.find((o) => o.target.id === item.id) ?? (starTarget ? {target:starTarget,...eqToHorizontal(starTarget.ra,starTarget.dec,lat,lon,date)} : null);
                   if (!object) return null;
                   return (
                     <article
@@ -1836,11 +1886,10 @@ export default function PlannerPage() {
                           <button
                             className="text-action"
                             onClick={() => {
-                              selectTarget(item.id);
-                              setPage("hop");
+                              visitScheduledTarget(item.id,activeSession?new Date(activeSession.startAt):date);
                             }}
                           >
-                            Star hop
+                            {item.id.startsWith("star:")?"View star":"Star hop"}
                             <ArrowUpRight size={14} />
                           </button>
                         </div>
@@ -1873,7 +1922,7 @@ export default function PlannerPage() {
             </>
           )}
           {page === "binocular" && (
-            <BinocularGuide targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
+            <BinocularGuide targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
           )}
           {page === "moon" && <MoonObservatory lat={lat} lon={lon} date={date} timezone={timezone} settings={settings} update={update} target={selected} initialFeatureId={lunarSelection} onDate={at => { setPlaying(false); update({ date:formatInTimeZone(at,timezone,"yyyy-MM-dd"), time:formatInTimeZone(at,timezone,"HH:mm"), timeMode:"planned", plannedAt:at.toISOString() }); }} savedIds={savedIds} onSave={toggleSave} />}
           {page === "image" && (
@@ -1908,6 +1957,7 @@ export default function PlannerPage() {
           </footer>
         </main>
       </div>
+      <Dialog open={!!inspectedStar} onOpenChange={open=>{if(!open)setInspectedStar(null);}}><DialogContent className="star-detail-dialog"><DialogHeader><DialogTitle>{inspectedStar?starPlanningTarget(inspectedStar).name:"Star"}</DialogTitle><DialogDescription>Bright Star Catalogue · {formatInTimeZone(date,timezone,"MMM d, yyyy · HH:mm")} local</DialogDescription></DialogHeader>{inspectedStar&&(()=>{const target=starPlanningTarget(inspectedStar);const pos=eqToHorizontal(target.ra,target.dec,lat,lon,date);const node:SkyNode={...inspectedStar,...pos,id:target.id,name:target.name,type:"star"};return <><p className="object-location">Magnitude {target.mag.toFixed(1)} · {Math.round(pos.alt)}° {compassLabel(pos.az)} · {altitudeLabel(pos.alt)}</p><p>{activeSession?`Add to ${activeSession.name}, or remove it from that session.`:"Add this star to an observing session, then open Planner to choose a date and sequence."}</p><Button onClick={()=>toggleSave(target.id)}>{savedIds.has(target.id)?<Check size={14}/>:<Plus size={14}/>} {savedIds.has(target.id)?"Remove from session":"Add to session"}</Button><SkyChart onSelect={selectTarget} nodes={[...previewNodes.filter(s=>s.id!==inspectedStar.id),node]} constellations={catalogs.constellations} route={null} targetNode={node} animStep={0} fovWidth={fov} fovHeight={shape==="circle"?fov:fovHeight} fovShape={shape} lat={lat} lon={lon} date={date} limitingMag={limitingMag} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} onFovChange={width=>update({fov:width,...(shape==="circle"?{fovHeight:width}:{})})} onLimitingMagChange={value=>update({limitingMag:value})}/><MoonlightCard target={target} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness}/></>;})()}</DialogContent></Dialog>
       <Dialog open={sourcesOpen} onOpenChange={setSourcesOpen}>
         <DialogContent className="data-sources-dialog">
           <DialogHeader>

@@ -927,19 +927,19 @@ export function SkyChart({
         {/* Active pattern shape visualization */}
         {!starsOnly && patternShapeSvg}
 
-        {plottedStars.filter(({ star }) => !starsOnly || star.type === 'star' || star.type === 'planet').map(({ star, point, radius, isAnchor, isTarget, isPatternAnchor, isGuide }) => (
+        {plottedStars.filter(({ star }) => !starsOnly || star.type === 'star' || star.type === 'planet').slice().sort((a,b) => Number(a.isTarget)-Number(b.isTarget) || b.star.mag-a.star.mag).map(({ star, point, radius, isAnchor, isTarget, isPatternAnchor, isGuide }) => (
           <g
             key={star.id}
             data-star-id={star.id}
-            role={onSelect && star.type !== 'star' ? 'button' : undefined}
-            tabIndex={onSelect && star.type !== 'star' ? 0 : undefined}
-            aria-label={onSelect && star.type !== 'star' ? `Select ${star.name}` : undefined}
-            onClick={() => { if (!didDrag.current && star.type !== 'star') onSelect?.(star.id); }}
-            onKeyDown={(event) => { if (onSelect && star.type !== 'star' && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onSelect(star.id); } }}
+            role={onSelect ? 'button' : undefined}
+            tabIndex={onSelect ? 0 : undefined}
+            aria-label={onSelect ? `Select ${star.name}` : undefined}
+            onClick={() => { if (!didDrag.current) onSelect?.(star.id); }}
+            onKeyDown={(event) => { if (onSelect && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onSelect(star.id); } }}
             onMouseEnter={() => setHoveredStar(star)}
             onMouseLeave={() => setHoveredStar(null)}
           >
-            {onSelect && star.type !== 'star' && <circle cx={point.x} cy={point.y} r={12 / zoom} fill="transparent" />}
+            {onSelect && <circle cx={point.x} cy={point.y} r={(star.type === "star" ? 5 : 12) * screenUnit} fill="transparent" />}
             {!starsOnly && (isTarget || isAnchor || isPatternAnchor) && (
               <circle cx={point.x} cy={point.y} r={radius * 3.5 * navMul * screenUnit} fill="white" opacity="0.05" />
             )}
@@ -1069,7 +1069,7 @@ export function SkyChart({
           if (!text) return null;
           const pad = Math.max(screenUnit, labelUnits * 0.4);
           return (
-            <g key={`${label.star.id}-label`} pointerEvents="none">
+            <g key={`${label.star.id}-label`} pointerEvents={onSelect ? "auto" : "none"} role={onSelect ? "button" : undefined} tabIndex={onSelect ? 0 : undefined} aria-label={onSelect ? `Select ${chartLabel(label.star)}` : undefined} onClick={() => { if(!didDrag.current)onSelect?.(label.star.id); }} onKeyDown={event => {if(onSelect&&(event.key==="Enter"||event.key===" ")){event.preventDefault();onSelect(label.star.id);}}}>
               <rect
                 x={label.anchor === 'start' ? label.x - pad : label.x - label.width - pad}
                 y={label.y - labelUnits - pad * 0.5}

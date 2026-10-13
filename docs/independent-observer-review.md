@@ -35,3 +35,19 @@ The atlas is a smooth-sphere preview using NASA LROC texture and IAU geometry. I
 The user reported hidden label-size controls and an unhelpful tiny starting field. Shared chart controls now keep label size, star brightness and guide-star size visible. Routes open framed on their starting field; Route overview and Reset switch between context and the active field. Label sizes are measured in screen pixels, star glyphs and line widths remain readable while zooming, and label placement checks the visible viewport.
 
 The independent reviewer checked Job’s Coffin via Altair with a 3.7° field at 390 and 776 pixels. The active field was readable at 18-pixel labels; all three controls were visible; mirror/90° rotation and zoom survived Next; the overview worked; Tonight inherited the shared display preferences. No horizontal overflow occurred. Dense overview labels at a large chosen size remain a tradeoff: reduce the visible label-size slider for more context.
+
+## Calendar, Moon separation and atlas interaction
+
+The reviewer explored separate San Francisco and Sydney sessions, October 18/25 and November 8, at 776/390 pixels. The calendar, site/time editor, target additions/removals, session-specific notes, archive/restore and offline reopening worked. Tonight after dark selected October 13 at 20:16 with the Sun below −18°. A San Francisco sequence allocated Albireo at 21:00, M31 at 21:15 and a lunar feature at 21:30; the Sydney session scheduled 47 Tucanae and flagged low M31/Altair rather than suggesting them. Changing one session's notes or list did not change the other.
+
+The Moon graph now distinguishes height above the horizon from angular separation. Visible legends explain the gold Moon-altitude curve, dashed mint target-altitude curve, darkness and chosen-time cursor. The separate 0–180° curve and selected-time guidance reacted to changes of target and time. In the full-Moon San Francisco scenario, M31 was about 30° from a 100%-illuminated Moon at 35° altitude; changing to M2 produced about 65° separation. These are astronomical geometry checks, not evidence that a target will be visible.
+
+| Finding | Priority | Change and recheck |
+| --- | --- | --- |
+| Overlapping chart-star hit areas selected a faint neighbor instead of Altair. | P2 | Bright stars render above faint stars with smaller hit areas; named labels select their exact star. Reviewer verified Altair's marker and label at Sydney November 8, 22:00. |
+| Previewing another night could make saved target cards show that preview's altitude. | P2 | Saved cards, opening actions and export use their owning session's date/site. The time bar identifies which session receives targets. Reviewer verified an October 25 preview retained October 18 M31 at 55° E and opening it restored October 18. |
+| Pinch zoom failed when a finger began on a lunar landmark label. | P2 | Landmark touches join gesture tracking; selection occurs only after an unmoved tap. Drag/pinch does not select a landmark. |
+
+Mouse drag, wheel zoom, ± controls, Reset and touch pan worked. Panning preserved the selected 90° orientation; Reset restored a centered 1× view without resetting orientation. Lunar labels remained 18 screen pixels during zoom and shared their setting with Tonight. Mobile had no horizontal overflow. The implementation also disables text selection while dragging the atlas. The final independent recheck at 390 pixels confirmed a label-start pinch changed 1× to 1.8× without selecting a landmark, a plain tap selected Mare Nectaris, dragging a label only panned, and keyboard Enter selected Mare Crisium. No issue remained from these checks.
+
+Parent verification covered the complete session/calendar workflow, named-star addition, new-Moon shortcut, angular-distance chart, notes isolation, mobile layout and offline persistence without browser errors. The core regression suite passed 134 tests across 14 files, plus TypeScript and the production build.
