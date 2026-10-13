@@ -207,10 +207,15 @@ let _denseStars: DenseStar[] | null = null;
 let _milkyWay: MilkyWayFeature[] | null = null;
 let _knownRoutes: KnownRoute[] | null = null;
 
+async function fetchCatalog(path: string): Promise<any> {
+  const response = await fetch(path);
+  if (!response.ok) throw new Error(`Could not load catalog ${path} (${response.status})`);
+  return response.json();
+}
+
 export async function loadStars(): Promise<Star[]> {
   if (_stars) return _stars;
-  const resp = await fetch('./data/bsc5-short.json');
-  const raw = await resp.json();
+  const raw = await fetchCatalog('./data/bsc5-short.json');
   _stars = raw.map((s: any) => ({
     id: `HR${s.HR}`,
     hr: parseInt(s.HR),
@@ -227,8 +232,7 @@ export async function loadStars(): Promise<Star[]> {
 
 export async function loadMessier(): Promise<MessierObject[]> {
   if (_messier) return _messier;
-  const resp = await fetch('./data/messier.json');
-  const raw = await resp.json();
+  const raw = await fetchCatalog('./data/messier.json');
   _messier = raw.map((m: any) => ({
     id: m.M,
     m: m.M,
@@ -246,8 +250,7 @@ export async function loadMessier(): Promise<MessierObject[]> {
 
 export async function loadConstellations(): Promise<ConstellationLine[]> {
   if (_constellations) return _constellations;
-  const resp = await fetch('./data/constellations.lines.json');
-  const raw = await resp.json();
+  const raw = await fetchCatalog('./data/constellations.lines.json');
   _constellations = raw.features.map((f: any) => ({
     id: f.id,
     points: f.geometry.coordinates.map((line: number[][]) =>
@@ -259,15 +262,13 @@ export async function loadConstellations(): Promise<ConstellationLine[]> {
 
 export async function loadDenseStars(): Promise<DenseStar[]> {
   if (_denseStars) return _denseStars;
-  const resp = await fetch('./data/stars-dense.json');
-  _denseStars = await resp.json();
+  _denseStars = await fetchCatalog('./data/stars-dense.json');
   return _denseStars!;
 }
 
 export async function loadMilkyWay(): Promise<MilkyWayFeature[]> {
   if (_milkyWay) return _milkyWay;
-  const resp = await fetch('./data/mw.json');
-  const geojson = await resp.json();
+  const geojson = await fetchCatalog('./data/mw.json');
   _milkyWay = geojson.features.map((f: any) => ({
     id: f.id,
     coordinates: f.geometry.coordinates.map((poly: any) =>
@@ -282,8 +283,7 @@ export async function loadMilkyWay(): Promise<MilkyWayFeature[]> {
 
 export async function loadKnownRoutes(): Promise<KnownRoute[]> {
   if (_knownRoutes) return _knownRoutes;
-  const resp = await fetch('./data/known-routes.json');
-  _knownRoutes = await resp.json();
+  _knownRoutes = await fetchCatalog('./data/known-routes.json');
   return _knownRoutes!;
 }
 
@@ -299,8 +299,7 @@ export function isKnownRouteFeasible(
 
 export async function loadBinocularTargets(): Promise<BinocularTarget[]> {
   if (_binocularTargets) return _binocularTargets;
-  const resp = await fetch('./data/binocular-catalog.json');
-  const raw = await resp.json();
+  const raw = await fetchCatalog('./data/binocular-catalog.json');
   _binocularTargets = raw.map((t: any) => ({
     id: t.id,
     cat: t.cat as BinocularCategory,
@@ -1632,6 +1631,60 @@ function scoreRoute(hops: HopStep[], params: ObservingParams): number {
 
 // ─── Main Route Planner ──────────────────────────────────────
 
+const GREEK_DESIGNATIONS: Record<string, string> = {
+  alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', epsilon: 'ε', zeta: 'ζ', eta: 'η', theta: 'θ',
+  iota: 'ι', kappa: 'κ', lambda: 'λ', mu: 'μ', nu: 'ν', xi: 'ξ', omicron: 'ο', pi: 'π',
+  rho: 'ρ', sigma: 'σ', tau: 'τ', upsilon: 'υ', phi: 'φ', chi: 'χ', psi: 'ψ', omega: 'ω',
+};
+const CONSTELLATION_GENITIVES: Record<string, string> = {
+  andromedae: 'and', aquarii: 'aqr', aquilae: 'aql', arietis: 'ari', aurigae: 'aur',
+  bootis: 'boo', cancri: 'cnc', 'canum venaticorum': 'cvn', 'canis majoris': 'cma', 'canis minoris': 'cmi',
+  capricorni: 'cap', cassiopeiae: 'cas', cephei: 'cep', ceti: 'cet', comae: 'com',
+  cygni: 'cyg', draconis: 'dra', geminorum: 'gem', herculis: 'her', hydrae: 'hya',
+  lacertae: 'lac', leonis: 'leo', leporis: 'lep', librae: 'lib', lyrae: 'lyr',
+  monocerotis: 'mon', ophiuchi: 'oph', orionis: 'ori', pegasi: 'peg', persei: 'per',
+  piscium: 'psc', sagittae: 'sge', sagittarii: 'sgr', scorpii: 'sco', scuti: 'sct',
+  serpentis: 'ser', tauri: 'tau', trianguli: 'tri', 'ursae majoris': 'uma', 'ursae minoris': 'umi',
+  virginis: 'vir', vulpeculae: 'vul',
+};
+const DESIGNATION_REPLACEMENTS = Object.entries({
+  ...CONSTELLATION_GENITIVES, ...GREEK_DESIGNATIONS,
+  ...Object.fromEntries(Object.entries(CONSTELLATION_NAMES).map(([abbr, name]) => [name.toLowerCase(), abbr.toLowerCase()])),
+}).sort((a, b) => b[0].length - a[0].length).map(([name, replacement]) => ({ pattern: new RegExp(`\\b${name}\\b`, 'g'), replacement }));
+const designationCache = new Map<string, string>();
+function normalizedDesignation(value: string): string {
+  const cached = designationCache.get(value);
+  if (cached !== undefined) return cached;
+  let result = value.toLowerCase().replace(/[¹²³]/g, '');
+  for (const { pattern, replacement } of DESIGNATION_REPLACEMENTS) result = result.replace(pattern, replacement);
+  result = result.replace(/[\s.-]/g, '');
+  designationCache.set(value, result);
+  return result;
+}
+
+/** Match complete star aliases and designations. Never substitute an unrelated star. */
+export function resolveKnownWaypoint(name: string, nodes: SkyNode[]): SkyNode | null {
+  const candidates = [name, ...name.split(/[()/]/)].map(normalizedDesignation).filter(Boolean);
+  const catalogId = name.match(/\b(?:M|NGC|IC)\s*\d+\b/i)?.[0].replace(/\s/g, '').toUpperCase();
+  if (catalogId) return nodes.find(n => n.id.toUpperCase() === catalogId) ?? null;
+  return nodes.find(node => {
+    const aliases = [node.name, node.id];
+    if (node.bayer && node.constellation) aliases.push(`${node.bayer} ${node.constellation}`);
+    if (node.flamsteed && node.constellation) aliases.push(`${node.flamsteed} ${node.constellation}`);
+    return aliases.some(alias => candidates.includes(normalizedDesignation(alias)));
+  }) ?? null;
+}
+
+export function buildKnownRoute(entry: KnownRouteEntry, nodes: SkyNode[], target: SkyNode, params: ObservingParams): Route | null {
+  const resolved = entry.waypoints.map(wp => resolveKnownWaypoint(wp.name, nodes));
+  if (resolved.some(node => !node || node.alt < 5) || resolved.length < 2) return null;
+  const waypoints = resolved as SkyNode[];
+  if (waypoints[waypoints.length - 1].id !== target.id) return null;
+  const hops = generateHopSteps(waypoints.map(n => n.id), new Map(nodes.map(n => [n.id, n])), nodes, params);
+  hops.forEach((hop, i) => { hop.instruction = entry.waypoints[i].instruction; });
+  return { id: 'route-expert', score: scoreRoute(hops, params), startAnchor: waypoints[0], target, hops, isExpertRoute: true, expertSource: entry.source };
+}
+
 export async function planRoutes(params: ObservingParams): Promise<{
   routes: Route[];
   nodes: SkyNode[];
@@ -1666,54 +1719,9 @@ export async function planRoutes(params: ObservingParams): Promise<{
   if (matchingKnown) {
     for (const knownEntry of matchingKnown.routes) {
       if (!isKnownRouteFeasible(knownEntry, params.lat, params.lon, params.date)) continue;
-      // Find nearest star in allNodes to anchor RA/Dec
-      let bestAnchor: SkyNode | null = null;
-      let bestDist = Infinity;
-      for (const node of allNodes) {
-        if (node.type !== 'star' && node.type !== 'planet') continue;
-        const d = angularDistance(node.ra, node.dec, knownEntry.anchorRA_approx, knownEntry.anchorDec_approx);
-        if (d < bestDist) { bestDist = d; bestAnchor = node; }
-      }
-      if (!bestAnchor) continue;
-
-      // Build known route hops from waypoint instructions.
-      // Match each waypoint name to a real star/target for RA/Dec positioning.
-      const knownHops: HopStep[] = knownEntry.waypoints.map((wp) => {
-        // Try to find the waypoint star by name (case-insensitive partial match)
-        const wpLower = wp.name.toLowerCase();
-        const matchedNode = allNodes.find(n =>
-          n.name.toLowerCase().includes(wpLower) ||
-          wpLower.includes(n.name.toLowerCase()) && n.name.length > 2
-        );
-        // Also check if waypoint name matches the target
-        const isTarget = wp.name.toLowerCase().includes(params.targetId.toLowerCase()) ||
-          params.targetId.toLowerCase().includes(wp.name.toLowerCase().replace(/\s/g, ''));
-        const centerNode = isTarget ? targetNode :
-          matchedNode ?? bestAnchor!;
-
-        return {
-          center: { ra: centerNode.ra, dec: centerNode.dec, alt: centerNode.alt, az: centerNode.az },
-          visibleGuideStars: [centerNode],
-          pattern: wp.instruction,
-          patternType: 'field' as PatternType,
-          patternConfidence: 1.0,
-          patternScore: 100,
-          patternAnchors: [],
-          direction: '',
-          distanceDeg: 0,
-          instruction: wp.instruction,
-        };
-      });
-
-      expertRoutes.push({
-        id: 'route-expert-1',
-        score: 100,
-        startAnchor: bestAnchor,
-        target: targetNode,
-        hops: knownHops,
-        isExpertRoute: true,
-        expertSource: knownEntry.source,
-      });
+      if (knownEntry.equipmentType !== 'both' && knownEntry.equipmentType !== (params.observingMode ?? 'telescope')) continue;
+      const resolved = buildKnownRoute(knownEntry, allNodes, targetNode, params);
+      if (resolved) expertRoutes.push({ ...resolved, id: `route-expert-${expertRoutes.length + 1}` });
     }
   }
 
@@ -1759,6 +1767,7 @@ export async function planRoutes(params: ObservingParams): Promise<{
 
     const routes: Route[] = [];
     const usedPairs = new Set<string>(); // track anchor+strategy combos to avoid duplicates
+    const usedPaths = new Set<string>();
 
     for (let stratIdx = 0; stratIdx < rankedStrategies.length && routes.length < params.numRoutes; stratIdx++) {
       const strategy = rankedStrategies[stratIdx];
@@ -1775,6 +1784,9 @@ export async function planRoutes(params: ObservingParams): Promise<{
         if (!result) continue;
 
         usedPairs.add(pairKey);
+        const pathKey = result.path.map(n => n.id).join('→');
+        if (usedPaths.has(pathKey)) continue;
+        usedPaths.add(pathKey);
 
         // Convert compressed waypoints to HopStep format for UI compatibility
         const waypointIds = result.path.map(n => n.id);
@@ -1812,6 +1824,9 @@ export async function planRoutes(params: ObservingParams): Promise<{
         if (!result) continue;
 
         usedPairs.add(pairKey);
+        const pathKey = result.path.map(n => n.id).join('→');
+        if (usedPaths.has(pathKey)) continue;
+        usedPaths.add(pathKey);
         const waypointIds = result.path.map(n => n.id);
         const nodeMap = new Map(allNodes.map(n => [n.id, n]));
         const hops = generateHopSteps(waypointIds, nodeMap, allNodes, params);
@@ -1829,7 +1844,7 @@ export async function planRoutes(params: ObservingParams): Promise<{
     }
 
     routes.sort((a, b) => b.score - a.score);
-    const allRoutes = [...expertRoutes, ...routes];
+    const allRoutes = [...routes, ...expertRoutes].sort((a, b) => b.score - a.score);
     return { routes: allRoutes, nodes: allNodes, targetNode, belowHorizon: false };
   }
 
@@ -1884,7 +1899,7 @@ export async function planRoutes(params: ObservingParams): Promise<{
   // Sort by score descending
   routes.sort((a, b) => b.score - a.score);
 
-  return { routes: [...expertRoutes, ...routes], nodes: allNodes, targetNode, belowHorizon: false };
+  return { routes: [...routes, ...expertRoutes].sort((a, b) => b.score - a.score), nodes: allNodes, targetNode, belowHorizon: false };
 }
 
 // ─── Stereo Projection ───────────────────────────────────────
@@ -1902,7 +1917,9 @@ export function stereographicProject(
   const cosc = Math.sin(d0) * Math.sin(d1) + Math.cos(d0) * Math.cos(d1) * Math.cos(r1 - r0);
   if (cosc < -0.1) return null; // behind projection
 
-  const k = 1 / (1 + cosc);
+  // Factor 2 preserves angular scale at the projection center.
+  // The chart scale and field rings are expressed in pixels per degree.
+  const k = 2 / (1 + cosc);
   // Note: RA increases to the left (east) in sky charts
   const x = -k * Math.cos(d1) * Math.sin(r1 - r0) * (180 / Math.PI) * scale;
   const y = -k * (Math.cos(d0) * Math.sin(d1) - Math.sin(d0) * Math.cos(d1) * Math.cos(r1 - r0)) * (180 / Math.PI) * scale;

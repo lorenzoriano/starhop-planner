@@ -1,150 +1,106 @@
-// StarHop Planner — Service Worker for offline support
-// Cache version — bump when deploying new versions
-const CACHE_VERSION = 'starhop-v1';
-const DATA_CACHE = 'starhop-data-v1';
+// The build generates an asset manifest and inserts a content-based version.
+const PREFIX = `starhop-${encodeURIComponent(new URL(self.registration.scope).pathname)}-`;
+const CACHE = `${PREFIX}__STARHOP_BUILD__`;
+const urlFor = (path) => new URL(path, self.registration.scope).href;
 
-// App shell files cached on install
-const APP_SHELL = [
-  './',
-  './index.html',
-  './manifest.json',
-];
-
-// Astronomy data files — critical for offline planning
-const DATA_FILES = [
-  './data/bsc5-short.json',
-  './data/constellations.lines.json',
-  './data/messier.json',
-  './data/binocular-catalog.json',
-];
-
-// Install — cache app shell and data
-self.addEventListener('install', (event) => {
+self.addEventListener("install", (event) => {
   event.waitUntil(
-    Promise.all([
-      caches.open(CACHE_VERSION).then((cache) => cache.addAll(APP_SHELL)),
-      caches.open(DATA_CACHE).then((cache) => cache.addAll(DATA_FILES)),
-    ]).then(() => self.skipWaiting())
-  );
-});
-
-// Activate — clean old caches
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys
-          .filter((key) => key !== CACHE_VERSION && key !== DATA_CACHE)
-          .map((key) => caches.delete(key))
-      )
-    ).then(() => self.clients.claim())
-  );
-});
-
-// Fetch strategy:
-// - Data files: cache-first (they don't change often)
-// - App shell / JS / CSS: stale-while-revalidate
-// - Fonts (Google Fonts): cache-first with long TTL
-// - Everything else: network-first with cache fallback
-self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-
-  // Skip non-GET requests
-  if (event.request.method !== 'GET') return;
-
-  // Skip chrome-extension and other non-http(s) requests
-  if (!url.protocol.startsWith('http')) return;
-
-  // Data files — cache-first
-  if (url.pathname.includes('/data/') && url.pathname.endsWith('.json')) {
-    event.respondWith(
-      caches.match(event.request).then((cached) => {
-        if (cached) return cached;
-        return fetch(event.request).then((response) => {
-          if (response.ok) {
-            const clone = response.clone();
-            caches.open(DATA_CACHE).then((cache) => cache.put(event.request, clone));
-          }
-          return response;
-        });
-      })
-    );
-    return;
-  }
-
-  // Google Fonts — cache-first
-  if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
-    event.respondWith(
-      caches.match(event.request).then((cached) => {
-        if (cached) return cached;
-        return fetch(event.request).then((response) => {
-          if (response.ok) {
-            const clone = response.clone();
-            caches.open(CACHE_VERSION).then((cache) => cache.put(event.request, clone));
-          }
-          return response;
-        });
-      })
-    );
-    return;
-  }
-
-  // JS/CSS assets — stale-while-revalidate
-  if (url.pathname.includes('/assets/') || url.pathname.endsWith('.js') || url.pathname.endsWith('.css')) {
-    event.respondWith(
-      caches.match(event.request).then((cached) => {
-        const fetchPromise = fetch(event.request).then((response) => {
-          if (response.ok) {
-            const clone = response.clone();
-            caches.open(CACHE_VERSION).then((cache) => cache.put(event.request, clone));
-          }
-          return response;
-        }).catch(() => cached);
-        return cached || fetchPromise;
-      })
-    );
-    return;
-  }
-
-  // Navigation requests (HTML) — network-first, cache fallback
-  if (event.request.mode === 'navigate') {
-    event.respondWith(
-      fetch(event.request).then((response) => {
-        if (response.ok) {
-          const clone = response.clone();
-          caches.open(CACHE_VERSION).then((cache) => cache.put(event.request, clone));
-        }
-        return response;
-      }).catch(() => caches.match('./index.html'))
-    );
-    return;
-  }
-
-  // Icons and images — cache-first
-  if (url.pathname.includes('/icons/') || url.pathname.endsWith('.png') || url.pathname.endsWith('.svg')) {
-    event.respondWith(
-      caches.match(event.request).then((cached) => {
-        if (cached) return cached;
-        return fetch(event.request).then((response) => {
-          if (response.ok) {
-            const clone = response.clone();
-            caches.open(CACHE_VERSION).then((cache) => cache.put(event.request, clone));
-          }
-          return response;
-        });
-      })
-    );
-    return;
-  }
-
-  // Default: network-first
-  event.respondWith(
-    fetch(event.request).then((response) => {
-      if (response.ok) {
-        const clone = response.clone();
-        caches.open(CACHE_VERSION).then((cache) => cache.put(event.request, clone));
+    (async () => {
+      const response = await fetch(urlFor("./offline-assets.json"), {
+        cache: "no-store",
+      });
+      if (!response.ok) throw new Error("Offline manifest unavailable");
+      const manifest = await response.json();
+      const cache = await caches.open(CACHE);
+      try {
+        await cache.addAll(
+          manifest.files.map(
+            (path) => new Request(urlFor(path), { cache: "reload" }),
+          ),
+        );
+        await cache.put(
+          urlFor("./offline-assets.json"),
+          new Response(JSON.stringify(manifest), {
+            headers: { "Content-Type": "application/json" },
+          }),
+        );
+        await self.skipWaiting();
+      } catch (error) {
+        await caches.delete(CACHE);
+        throw error;
       }
-      return response;
-    }).catch(() => caches.match(event.request))
+    })(),
+  );
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(
+        keys
+          .filter((key) => key.startsWith(PREFIX) && key !== CACHE)
+          .map((key) => caches.delete(key)),
+      );
+      await self.clients.claim();
+    })(),
+  );
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type !== "OFFLINE_STATUS") return;
+  event.waitUntil(
+    (async () => {
+      const cache = await caches.open(CACHE);
+      const response = await cache.match(urlFor("./offline-assets.json"));
+      const manifest = response ? await response.json() : null;
+      const resources = manifest
+        ? await Promise.all(
+            manifest.files.map((path) => cache.match(urlFor(path))),
+          )
+        : [];
+      event.ports[0]?.postMessage({
+        ready: resources.length > 0 && resources.every(Boolean),
+        files: resources.length,
+      });
+    })(),
+  );
+});
+
+self.addEventListener("fetch", (event) => {
+  const url = new URL(event.request.url);
+  if (
+    event.request.method !== "GET" ||
+    url.origin !== self.location.origin ||
+    url.pathname.includes("/api/")
+  )
+    return;
+  event.respondWith(
+    (async () => {
+      const cache = await caches.open(CACHE);
+      // Navigations use the live app while connected and the complete stored build offline.
+      if (event.request.mode === "navigate") {
+        try {
+          return await fetch(event.request);
+        } catch {
+          return (
+            (await cache.match(urlFor("./index.html"))) ||
+            new Response("Open StarHop once online to prepare it.", {
+              status: 503,
+            })
+          );
+        }
+      }
+      const cached = await cache.match(event.request);
+      if (cached) return cached;
+      try {
+        return await fetch(event.request);
+      } catch {
+        return new Response(
+          "This resource has not been prepared for offline use.",
+          { status: 503 },
+        );
+      }
+    })(),
   );
 });

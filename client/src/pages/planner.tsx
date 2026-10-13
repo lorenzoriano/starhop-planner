@@ -1,878 +1,1981 @@
-import { useState, useCallback, useMemo, useRef, useEffect, useSyncExternalStore } from 'react';
-import tzLookup from 'tz-lookup';
-import { fromZonedTime, formatInTimeZone } from 'date-fns-tz';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
-import { useToast } from '@/hooks/use-toast';
 import {
-  Star, Telescope, Play, Pause, SkipForward, SkipBack, Download, Search,
-  MapPin, Clock, Eye, ChevronRight, Crosshair, Loader2, AlertTriangle,
-  Info, Sparkles, Image as ImageIcon, WifiOff, Wifi
-} from 'lucide-react';
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+  useEffect,
+  type ReactNode,
+} from "react";
+import tzLookup from "tz-lookup";
+import { fromZonedTime, formatInTimeZone } from "date-fns-tz";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
-  planRoutes, findBestObservingTime, loadMessier, loadConstellations, loadBinocularTargets, loadDenseStars, loadMilkyWay,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { useLocalState } from "@/hooks/use-local-state";
+import { useOffline } from "@/lib/offline";
+import {
+  defaultSettings,
+  settingsSchema,
+  nightListSchema,
+  type Settings,
+  type NightItem,
+} from "@/lib/session";
+import {
+  rankTargets,
+  skyConditions,
+  guideFor,
+  compassLabel,
+  altitudeLabel,
+  type VisibleTarget,
+} from "@/lib/observing";
+import {
+  Star,
+  Telescope,
+  Play,
+  Pause,
+  SkipForward,
+  SkipBack,
+  Download,
+  Search,
+  MapPin,
+  Clock,
+  Eye,
+  ChevronRight,
+  Crosshair,
+  Loader2,
+  AlertTriangle,
+  Sparkles,
+  WifiOff,
+  Check,
+  Plus,
+  Moon,
+  ArrowUpRight,
+  Compass,
+  BookOpen,
+  Settings2,
+  Navigation,
+  X,
+  Binoculars,
+  Image as ImageIcon,
+  CheckCircle2,
+  Circle,
+  ArrowLeft,
+  RotateCcw,
+} from "lucide-react";
+import {
+  planRoutes,
+  findBestObservingTime,
+  loadStars,
+  loadMessier,
+  loadConstellations,
+  loadBinocularTargets,
+  loadDenseStars,
+  loadMilkyWay,
   buildUnifiedTargets,
-  PRESETS, BINOCULAR_CATEGORY_LABELS,
-  type Route, type SkyNode, type ObservingParams, type MessierObject, type ConstellationLine, type ObservingMode,
-  type BinocularTarget, type UnifiedTarget, type BinocularCategory, type DenseStar, type MilkyWayFeature, type DifficultyLevel,
-} from '@/lib/astronomy';
-import type { CostStrategyId } from '@/lib/cost-strategies';
-import { SkyChart } from '@/components/SkyChart';
-import { ImageFallback } from '@/components/ImageFallback';
+  eqToHorizontal,
+  getConstellationName,
+  type ObservingParams,
+  type Route,
+  type SkyNode,
+  type Star as CatalogStar,
+  type UnifiedTarget,
+  type ConstellationLine,
+  type DenseStar,
+  type MilkyWayFeature,
+} from "@/lib/astronomy";
+import type { CostStrategyId } from "@/lib/cost-strategies";
+import { SkyChart } from "@/components/SkyChart";
+import {
+  SkyOverview,
+  ObjectArt,
+  AltitudeChart,
+} from "@/components/ObservingVisuals";
+import { ImageFallback } from "@/components/ImageFallback";
+
+type Catalogs = {
+  stars: CatalogStar[];
+  targets: UnifiedTarget[];
+  constellations: ConstellationLine[];
+  dense: DenseStar[];
+  milkyWay: MilkyWayFeature[];
+};
+const EMPTY_CATALOGS: Catalogs = {
+  stars: [],
+  targets: [],
+  constellations: [],
+  dense: [],
+  milkyWay: [],
+};
+type Page = "tonight" | "hop" | "night" | "image";
 
 export default function PlannerPage() {
   const { toast } = useToast();
-  // Observing params
-  const [lat, setLat] = useState(37.77);
-  const [lon, setLon] = useState(-122.42);
-  const [dateStr, setDateStr] = useState(formatDate(new Date()));
-  const [timeStr, setTimeStr] = useState('21:00');
-  const [fovWidth, setFovWidth] = useState(5);
-  const [fovHeight, setFovHeight] = useState(3.5);
-  const [fovShape, setFovShape] = useState<'circle' | 'rectangle'>('circle');
-  const [limitingMag, setLimitingMag] = useState(6.0);
-  const [numRoutes, setNumRoutes] = useState(3);
-  const [observingMode, setObservingMode] = useState<ObservingMode>('telescope');
-  const [difficulty, setDifficulty] = useState<DifficultyLevel>('intermediate');
-  const [algorithm, setAlgorithm] = useState<CostStrategyId>('auto');
-  const [targetId, setTargetId] = useState('M31');
-  const [targetSearch, setTargetSearch] = useState('');
+  const [settings, setSettings, settingsError] = useLocalState(
+    "starhop-settings-v2",
+    defaultSettings,
+    settingsSchema,
+  );
+  const [night, setNight, nightError] = useLocalState<NightItem[]>(
+    "starhop-night-v2",
+    [],
+    nightListSchema,
+  );
+  const update = (patch: Partial<Settings>) =>
+    setSettings((prev) => ({ ...prev, ...patch }));
+  const [page, setPage] = useState<Page>("tonight");
+  const [setupOpen, setSetupOpen] = useState(false);
+  const [catalogs, setCatalogs] = useState<Catalogs>(EMPTY_CATALOGS);
+  const [catalogError, setCatalogError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("all");
+  const [visibleOnly, setVisibleOnly] = useState(true);
+  const [friendlyOnly, setFriendlyOnly] = useState(false);
+  const [limit, setLimit] = useState(8);
+  const [offlineOpen, setOfflineOpen] = useState(false);
+  const [locating, setLocating] = useState(false);
+  const [algorithm, setAlgorithm] = useState<CostStrategyId>("auto");
+  const [computing, setComputing] = useState(false);
+  const [findingTime, setFindingTime] = useState(false);
+  const [routeResult, setRouteResult] = useState<{
+    key: string;
+    result: Awaited<ReturnType<typeof planRoutes>>;
+  } | null>(null);
+  const [routeIndex, setRouteIndex] = useState(0);
+  const [step, setStep] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [speed, setSpeed] = useState(3500);
+  const offline = useOffline();
+  const {
+    lat,
+    lon,
+    mode,
+    fov,
+    fovHeight,
+    shape,
+    limitingMag,
+    targetId,
+    difficulty,
+  } = settings;
+  const timezone = useMemo(() => tzLookup(lat, lon), [lat, lon]);
+  const date = useMemo(
+    () => fromZonedTime(`${settings.date}T${settings.time}:00`, timezone),
+    [settings.date, settings.time, timezone],
+  );
+  const params: ObservingParams = useMemo(
+    () => ({
+      lat,
+      lon,
+      date,
+      fovWidth: fov,
+      fovHeight: shape === "circle" ? fov : fovHeight,
+      fovShape: shape,
+      limitingMag,
+      numRoutes: 3,
+      targetId,
+      observingMode: mode,
+      difficulty,
+      algorithm,
+    }),
+    [
+      lat,
+      lon,
+      date,
+      fov,
+      fovHeight,
+      shape,
+      limitingMag,
+      targetId,
+      mode,
+      difficulty,
+      algorithm,
+    ],
+  );
+  const paramsKey = JSON.stringify(params);
+  const keyRef = useRef(paramsKey);
+  keyRef.current = paramsKey;
+  const result = routeResult?.key === paramsKey ? routeResult.result : null;
+  const route: Route | null = result?.routes[routeIndex] ?? null;
+  const hop = route?.hops[step] ?? null;
+  const selected = catalogs.targets.find((t) => t.id === targetId);
+  const ranked = useMemo(
+    () => rankTargets(catalogs.targets, lat, lon, date, mode),
+    [catalogs.targets, lat, lon, date, mode],
+  );
+  const selection = ranked.find((t) => t.target.id === targetId);
+  const conditions = useMemo(
+    () => skyConditions(lat, lon, date),
+    [lat, lon, date],
+  );
+  const savedIds = new Set(night.map((t) => t.id));
+  const observed = night.filter((t) => t.observedAt).length;
+  const categories = useMemo(
+    () =>
+      Array.from(new Set(catalogs.targets.map((t) => t.categoryShort))).sort(),
+    [catalogs.targets],
+  );
+  const filtered = useMemo(
+    () =>
+      ranked.filter(
+        (o) =>
+          (!visibleOnly || o.alt >= 15) &&
+          (!friendlyOnly || guideFor(o.target).binocular) &&
+          (category === "all" || o.target.categoryShort === category) &&
+          (!query ||
+            `${o.target.id} ${o.target.name} ${o.target.category} ${getConstellationName(o.target.con)}`
+              .toLowerCase()
+              .includes(query.toLowerCase())),
+      ),
+    [ranked, visibleOnly, friendlyOnly, category, query],
+  );
+  const previewNodes = useMemo<SkyNode[]>(
+    () =>
+      catalogs.stars
+        .filter((s) => s.mag <= limitingMag)
+        .map((s) => ({
+          ...s,
+          ...eqToHorizontal(s.ra, s.dec, lat, lon, date),
+          name: s.name || s.bayer || s.id,
+          type: "star" as const,
+        }))
+        .filter((s) => s.alt > 0),
+    [catalogs.stars, limitingMag, lat, lon, date],
+  );
+  const previewTarget: SkyNode | null =
+    selected && selection
+      ? {
+          ...selected,
+          ...selection,
+          alt: selection.alt,
+          az: selection.az,
+          name: selected.name,
+          type: selected.source === "messier" ? "messier" : "binocular",
+        }
+      : null;
 
-  // Results
-  const [routes, setRoutes] = useState<Route[]>([]);
-  const [nodes, setNodes] = useState<SkyNode[]>([]);
-  const [targetNode, setTargetNode] = useState<SkyNode | null>(null);
-  const [selectedRouteIdx, setSelectedRouteIdx] = useState(0);
-  const [isComputing, setIsComputing] = useState(false);
-  const [belowHorizon, setBelowHorizon] = useState(false);
-  const [isFindingBestTime, setIsFindingBestTime] = useState(false);
-  const [hasComputed, setHasComputed] = useState(false);
-
-  // Animation
-  const [animStep, setAnimStep] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const animRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const [animSpeed, setAnimSpeed] = useState(2000);
-
-  // Catalogs
-  const [messierList, setMessierList] = useState<MessierObject[]>([]);
-  const [binocularTargets, setBinocularTargets] = useState<BinocularTarget[]>([]);
-  const [constellations, setConstellations] = useState<ConstellationLine[]>([]);
-  const [unifiedTargets, setUnifiedTargets] = useState<UnifiedTarget[]>([]);
-  const [denseStars, setDenseStars] = useState<DenseStar[]>([]);
-  const [milkyWay, setMilkyWay] = useState<MilkyWayFeature[]>([]);
-  const [categoryFilter, setCategoryFilter] = useState<string>('all');
-
-  // Tab
-  const [activeTab, setActiveTab] = useState('planner');
-
-  useEffect(() => {
-    Promise.all([loadMessier(), loadBinocularTargets(), loadConstellations(), loadDenseStars(), loadMilkyWay()]).then(
-      ([m, b, c, d, mw]) => {
-        setMessierList(m);
-        setBinocularTargets(b);
-        setConstellations(c);
-        setDenseStars(d);
-        setMilkyWay(mw);
-        setUnifiedTargets(buildUnifiedTargets(m, b));
-      }
-    );
-  }, []);
-
-  // All unique categories derived from the unified target list
-  const availableCategories = useMemo(() => {
-    const cats = new Set<string>();
-    for (const t of unifiedTargets) cats.add(t.categoryShort);
-    return Array.from(cats).sort();
-  }, [unifiedTargets]);
-
-  const filteredTargets = useMemo(() => {
-    let list = unifiedTargets;
-
-    // Apply category filter
-    if (categoryFilter !== 'all') {
-      list = list.filter(t => t.categoryShort === categoryFilter);
-    }
-
-    // Apply text search
-    if (targetSearch) {
-      const q = targetSearch.toLowerCase();
-      list = list.filter(t =>
-        t.id.toLowerCase().includes(q) ||
-        t.name.toLowerCase().includes(q) ||
-        t.displayName.toLowerCase().includes(q) ||
-        t.con.toLowerCase().includes(q) ||
-        t.category.toLowerCase().includes(q) ||
-        (t.desc && t.desc.toLowerCase().includes(q))
-      );
-    }
-
-    return list.slice(0, 30);
-  }, [targetSearch, categoryFilter, unifiedTargets]);
-
-  const observingTimeZone = useMemo(() => {
+  const loadCatalogs = useCallback(async () => {
+    setLoading(true);
+    setCatalogError(false);
     try {
-      return tzLookup(lat, lon);
-    } catch {
-      return Intl.DateTimeFormat().resolvedOptions().timeZone;
-    }
-  }, [lat, lon]);
-
-  const observingDate = useMemo(() => {
-    const localIso = `${dateStr}T${timeStr}:00`;
-    return fromZonedTime(localIso, observingTimeZone);
-  }, [dateStr, timeStr, observingTimeZone]);
-
-  const handleFindBestTime = useCallback(async () => {
-    setIsFindingBestTime(true);
-    // Yield to the event loop so React paints the spinner before the
-    // synchronous scan (~88–440 ms) blocks the JS thread.
-    await new Promise(resolve => setTimeout(resolve, 0));
-    try {
-      const [messier, binoTargets] = await Promise.all([
-        loadMessier(),
-        loadBinocularTargets(),
-      ]);
-      const mTarget = messier.find(m => m.id === targetId);
-      const bTarget = binoTargets.find(t => t.id === targetId);
-      const target = mTarget ?? bTarget;
-
-      if (!target) {
-        toast({ title: 'Target not found', description: `Could not find catalog data for ${targetId}.`, variant: 'destructive' });
-        return;
-      }
-
-      const result = findBestObservingTime(
-        target.ra,
-        target.dec,
-        lat,
-        lon,
-        observingDate,
-      );
-
-      if (!result) {
-        toast({
-          title: 'No visible window',
-          description: `${targetId} doesn't reach 30° above the horizon at this location within the next year.`,
-          variant: 'destructive',
-        });
-        return;
-      }
-
-      setDateStr(formatInTimeZone(result.date, observingTimeZone, 'yyyy-MM-dd'));
-      setTimeStr(formatInTimeZone(result.date, observingTimeZone, 'HH:mm'));
-      toast({
-        title: 'Time updated',
-        description: `Switched to ${formatInTimeZone(result.date, observingTimeZone, 'MMM d')} — ${targetId} will be at ${Math.round(result.alt)}°. Click 'Plan Star-Hop Routes' to compute.`,
+      const [stars, messier, binocular, constellations, dense, milkyWay] =
+        await Promise.all([
+          loadStars(),
+          loadMessier(),
+          loadBinocularTargets(),
+          loadConstellations(),
+          loadDenseStars(),
+          loadMilkyWay(),
+        ]);
+      setCatalogs({
+        stars,
+        targets: buildUnifiedTargets(messier, binocular),
+        constellations,
+        dense,
+        milkyWay,
       });
-    } catch (err) {
-      console.error(err);
-      toast({ title: 'Error', description: 'Could not search for an observing window.', variant: 'destructive' });
+    } catch {
+      setCatalogError(true);
     } finally {
-      setIsFindingBestTime(false);
+      setLoading(false);
     }
-  }, [targetId, lat, lon, observingDate, observingTimeZone, toast]);
-
-  const handleCompute = useCallback(async () => {
-    setIsComputing(true);
-    setHasComputed(false);
-    setBelowHorizon(false);
-    try {
-      const params: ObservingParams = {
-        lat, lon, date: observingDate,
-        fovWidth, fovHeight, fovShape,
-        limitingMag, numRoutes, targetId,
-        observingMode,
-        difficulty,
-        algorithm,
-      };
-      const result = await planRoutes(params);
-      setRoutes(result.routes);
-      setNodes(result.nodes);
-      setTargetNode(result.targetNode);
-      setBelowHorizon(result.belowHorizon);
-      setSelectedRouteIdx(0);
-      setAnimStep(0);
-      setIsPlaying(false);
-      setHasComputed(true);
-
-      if (result.belowHorizon) {
-        toast({ title: 'Target below horizon', description: `${targetId} is below the horizon at this time and location.`, variant: 'destructive' });
-      } else if (result.routes.length === 0) {
-        toast({ title: 'No routes found', description: 'Try adjusting parameters or choosing a different target.', variant: 'destructive' });
-      } else {
-        toast({ title: `Found ${result.routes.length} route${result.routes.length > 1 ? 's' : ''}`, description: `Best route has ${result.routes[0].hops.length} hops with score ${result.routes[0].score}/100.` });
-      }
-    } catch (err) {
-      console.error(err);
-      toast({ title: 'Error', description: 'Failed to compute routes. Check parameters.', variant: 'destructive' });
-    }
-    setIsComputing(false);
-  }, [lat, lon, observingDate, fovWidth, fovHeight, fovShape, limitingMag, numRoutes, targetId, observingMode, difficulty, algorithm, toast]);
-
-  const selectedRoute = routes[selectedRouteIdx] || null;
-
-  // Animation controls
+  }, []);
   useEffect(() => {
-    if (isPlaying && selectedRoute) {
-      animRef.current = setInterval(() => {
-        setAnimStep(prev => {
-          if (prev >= selectedRoute.hops.length - 1) {
-            setIsPlaying(false);
+    void loadCatalogs();
+  }, [loadCatalogs]);
+  useEffect(() => {
+    document.documentElement.classList.toggle("red-light", settings.redLight);
+  }, [settings.redLight]);
+  useEffect(() => {
+    setPlaying(false);
+    setStep(0);
+    setRouteIndex(0);
+  }, [paramsKey]);
+  useEffect(() => {
+    setLimit(8);
+  }, [query, category, visibleOnly, friendlyOnly]);
+  useEffect(() => {
+    if (!playing || !route) return;
+    const timer = setInterval(
+      () =>
+        setStep((prev) => {
+          if (prev >= route.hops.length - 1) {
+            setPlaying(false);
             return prev;
           }
           return prev + 1;
+        }),
+      speed,
+    );
+    return () => clearInterval(timer);
+  }, [playing, route, speed]);
+
+  function selectTarget(id: string) {
+    update({ targetId: id });
+  }
+  function toggleSave(id: string) {
+    setNight((prev) =>
+      prev.some((t) => t.id === id)
+        ? prev.filter((t) => t.id !== id)
+        : [...prev, { id, addedAt: new Date().toISOString(), notes: "" }],
+    );
+  }
+  function markObserved(id: string) {
+    setNight((prev) =>
+      prev.some((t) => t.id === id)
+        ? prev.map((t) =>
+            t.id === id
+              ? {
+                  ...t,
+                  observedAt: t.observedAt
+                    ? undefined
+                    : new Date().toISOString(),
+                }
+              : t,
+          )
+        : [
+            ...prev,
+            {
+              id,
+              addedAt: new Date().toISOString(),
+              observedAt: new Date().toISOString(),
+              notes: "",
+            },
+          ],
+    );
+  }
+  function useNow() {
+    update({
+      date: formatInTimeZone(new Date(), timezone, "yyyy-MM-dd"),
+      time: formatInTimeZone(new Date(), timezone, "HH:mm"),
+    });
+  }
+  function locate() {
+    if (!navigator.geolocation) {
+      toast({
+        title: "Location unavailable",
+        description: "Enter your coordinates in the observing setup.",
+        variant: "destructive",
+      });
+      return;
+    }
+    setLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      (p) => {
+        update({
+          lat: Math.round(p.coords.latitude * 10000) / 10000,
+          lon: Math.round(p.coords.longitude * 10000) / 10000,
         });
-      }, animSpeed);
+        setLocating(false);
+      },
+      () => {
+        setLocating(false);
+        toast({
+          title: "Could not get your location",
+          description: "You can enter latitude and longitude manually.",
+          variant: "destructive",
+        });
+      },
+      { timeout: 10000, maximumAge: 300000 },
+    );
+  }
+  async function compute() {
+    setPage("hop");
+    setComputing(true);
+    setPlaying(false);
+    const key = paramsKey;
+    await new Promise((resolve) => setTimeout(resolve, 40));
+    try {
+      const computed = await planRoutes(params);
+      if (keyRef.current !== key) return;
+      setRouteResult({ key, result: computed });
+      setRouteIndex(0);
+      setStep(0);
+    } catch {
+      toast({
+        title: "Could not plan this route",
+        description: "Check that the catalogs have loaded, then try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setComputing(false);
     }
-    return () => { if (animRef.current) clearInterval(animRef.current); };
-  }, [isPlaying, selectedRoute, animSpeed]);
-
-  const handlePlay = () => {
-    if (!selectedRoute) return;
-    if (animStep >= selectedRoute.hops.length - 1) setAnimStep(0);
-    setIsPlaying(true);
-  };
-
-  const handlePreset = (preset: typeof PRESETS[0]) => {
-    setTargetId(preset.targetId);
-    setLat(preset.lat);
-    setLon(preset.lon);
-  };
-
-  const applyObservingMode = (mode: ObservingMode) => {
-    setObservingMode(mode);
-    if (mode === 'binocular') {
-      setFovShape('circle');
-      setFovWidth((prev) => (prev < 5 ? 7 : prev));
-      setLimitingMag((prev) => Math.min(prev, 7.0));
-      setNumRoutes((prev) => Math.min(prev, 4));
+  }
+  async function bestTime() {
+    if (!selected) return;
+    setFindingTime(true);
+    const key = paramsKey;
+    await new Promise((resolve) => setTimeout(resolve, 40));
+    try {
+      const window = findBestObservingTime(
+        selected.ra,
+        selected.dec,
+        lat,
+        lon,
+        date,
+      );
+      if (keyRef.current !== key) return;
+      if (window) {
+        update({
+          date: formatInTimeZone(window.date, timezone, "yyyy-MM-dd"),
+          time: formatInTimeZone(window.date, timezone, "HH:mm"),
+        });
+        toast({
+          title: "A better observing window",
+          description: `${selected.name} reaches ${Math.round(window.alt)}° in dark skies on ${formatInTimeZone(window.date, timezone, "MMM d, yyyy · HH:mm")}.`,
+        });
+      } else
+        toast({
+          title: "No suitable window found",
+          description:
+            "This object does not reach 30° during darkness here in the next year. Try another target.",
+        });
+    } catch {
+      toast({
+        title: "Could not find a window",
+        description: "Check your location and time, then try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setFindingTime(false);
     }
-  };
-
-  const handleDownloadJSON = () => {
-    if (!selectedRoute) return;
-    const data = {
-      route: selectedRoute,
-      observingParams: { lat, lon, date: observingDate.toISOString(), fovWidth, fovHeight, fovShape, limitingMag, observingMode },
-      generatedAt: new Date().toISOString(),
-    };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+  }
+  function download(content: string, filename: string, type = "text/plain") {
+    const url = URL.createObjectURL(new Blob([content], { type }));
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `starhop-${targetId}-${selectedRoute.id}.json`;
+    a.download = filename;
     a.click();
-    URL.revokeObjectURL(url);
-  };
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  function exportNight() {
+    const lines = [
+      `# My StarHop observing night`,
+      `${settings.date} at ${settings.time} (${timezone})`,
+      `Location: ${lat}°, ${lon}° · ${mode} · ${fov}° field`,
+      "",
+    ];
+    night.forEach((item) => {
+      const t = catalogs.targets.find((t) => t.id === item.id);
+      lines.push(
+        `## ${t?.displayName || item.id}`,
+        item.observedAt
+          ? `Observed: ${formatInTimeZone(new Date(item.observedAt), timezone, "MMM d, yyyy HH:mm")}`
+          : "To observe",
+        item.notes || "",
+        "",
+      );
+    });
+    download(
+      lines.join("\n"),
+      `starhop-night-${settings.date}.md`,
+      "text/markdown",
+    );
+  }
+  function exportRoute() {
+    if (!route || !selected) return;
+    download(
+      [
+        `# Star hop to ${selected.displayName}`,
+        `${settings.date} ${settings.time} (${timezone}) · ${lat}°, ${lon}°`,
+        `${mode} · ${fov}° field · guide stars to magnitude ${limitingMag}`,
+        "",
+        ...route.hops.map(
+          (h, i) =>
+            `${i + 1}. ${h.instruction}\n   ${h.pattern} · Alt ${h.center.alt.toFixed(0)}° · Az ${h.center.az.toFixed(0)}°`,
+        ),
+        "",
+        `At the target: ${guideFor(selected).lookFor}`,
+      ].join("\n"),
+      `starhop-${targetId}.md`,
+      "text/markdown",
+    );
+  }
+
+  function exportRouteJSON() {
+    if (!route) return;
+    download(
+      JSON.stringify(
+        {
+          route,
+          observingParams: params,
+          generatedAt: new Date().toISOString(),
+        },
+        null,
+        2,
+      ),
+      `starhop-${targetId}-${route.id}.json`,
+      "application/json",
+    );
+  }
+
+  const dateLabel = formatInTimeZone(date, timezone, "EEE, MMM d");
+  const locationLabel =
+    lat === 37.77 && lon === -122.42
+      ? "San Francisco · default location"
+      : `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? "N" : "S"} · ${Math.abs(lon).toFixed(2)}°${lon >= 0 ? "E" : "W"}`;
+  const offlineLabel =
+    offline.state === "ready"
+      ? offline.online
+        ? "Offline ready"
+        : "Working offline"
+      : offline.state === "preparing"
+        ? "Preparing offline…"
+        : offline.online
+          ? "Offline setup"
+          : "Offline · not prepared";
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border/50 px-4 py-3">
-        <div className="max-w-[1600px] mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <StarHopLogo />
-            <div>
-              <h1 className="text-lg font-semibold tracking-tight" data-testid="text-app-title">StarHop Planner</h1>
-              <p className="text-xs text-muted-foreground">Interactive star-hopping route finder</p>
-            </div>
+    <div className="observatory-shell">
+      <header className="app-header">
+        <a
+          href="#/"
+          className="brand"
+          onClick={() => setPage("tonight")}
+          aria-label="StarHop home"
+        >
+          <StarHopLogo />
+          <div>
+            <span className="brand-title" data-testid="text-app-title">
+              StarHop<span className="brand-dot">.</span>
+            </span>
+            <span className="brand-subtitle">
+              A NIGHT SKY WATCHER COMPANION
+            </span>
           </div>
-          <div className="flex items-center gap-3">
-            <OfflineIndicator />
-            <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="bg-muted/50">
-                <TabsTrigger value="planner" className="text-xs" data-testid="tab-planner">
-                  <Telescope className="w-3.5 h-3.5 mr-1.5" />Planner
-                </TabsTrigger>
-                <TabsTrigger value="image" className="text-xs" data-testid="tab-image">
-                  <ImageIcon className="w-3.5 h-3.5 mr-1.5" />Image Mode
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
+        </a>
+        <nav className="main-nav" aria-label="Main navigation">
+          {(
+            [
+              ["tonight", "Tonight", Compass],
+              ["hop", "Star hop", Navigation],
+              ["night", "My night", BookOpen],
+            ] as const
+          ).map(([id, label, Icon]) => (
+            <button
+              key={id}
+              onClick={() => setPage(id)}
+              className={page === id ? "active" : ""}
+              aria-current={page === id ? "page" : undefined}
+              data-testid={`tab-${id}`}
+            >
+              <Icon size={16} />
+              <span>{label}</span>
+              {id === "night" && night.length > 0 && (
+                <span className="nav-count">{night.length}</span>
+              )}
+            </button>
+          ))}
+        </nav>
+        <div className="header-actions">
+          <button
+            className="icon-button mobile-setup-toggle"
+            onClick={() => setSetupOpen(!setupOpen)}
+            aria-label="Observing setup"
+            aria-expanded={setupOpen}
+          >
+            <Settings2 size={17} />
+          </button>
+          <button
+            aria-label={offlineLabel}
+            className={`offline-pill ${offline.state === "ready" ? "ready" : ""}`}
+            onClick={() => setOfflineOpen(true)}
+            data-testid="offline-indicator"
+          >
+            <span className="status-dot" />
+            <span>{offlineLabel}</span>
+          </button>
+          <button
+            className={`icon-button red-toggle ${settings.redLight ? "active" : ""}`}
+            onClick={() => update({ redLight: !settings.redLight })}
+            aria-label="Red light mode"
+            aria-pressed={settings.redLight}
+            title="Red light mode"
+            data-testid="button-red-light"
+          >
+            <Moon size={18} />
+          </button>
         </div>
       </header>
 
-      {activeTab === 'image' ? (
-        <ImageFallback />
-      ) : (
-      <div className="max-w-[1600px] mx-auto p-4 grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-4">
-        {/* Left Panel — Controls */}
-        <div className="space-y-4">
-          {/* Quick Presets */}
-          <Card className="p-4 bg-card border-card-border">
-            <div className="flex items-center gap-2 mb-3">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <h2 className="text-sm font-medium">Quick Presets</h2>
+      <div className="workspace-layout">
+        <aside className={`setup-panel ${setupOpen ? "open" : ""}`}>
+          <div className="setup-title">
+            <span className="eyebrow">YOUR OBSERVING SETUP</span>
+            <Settings2 size={14} />
+          </div>
+          <section className="setup-section">
+            <div className="section-label">
+              <MapPin size={15} />
+              <h2>Where are you watching?</h2>
             </div>
-            <div className="flex flex-wrap gap-1.5">
-              {PRESETS.map(p => (
+            <p className="location-name">{locationLabel}</p>
+            <div className="grid grid-cols-2 gap-2 mt-3">
+              <CoordinateInput
+                label="Latitude"
+                value={lat}
+                min={-90}
+                max={90}
+                onChange={(v) => update({ lat: v })}
+              />
+              <CoordinateInput
+                label="Longitude"
+                value={lon}
+                min={-180}
+                max={180}
+                onChange={(v) => update({ lon: v })}
+              />
+            </div>
+            <button
+              className="text-action mt-3"
+              onClick={locate}
+              disabled={locating}
+            >
+              {locating ? (
+                <Loader2 size={13} className="animate-spin" />
+              ) : (
+                <Crosshair size={13} />
+              )}
+              Use my location
+            </button>
+          </section>
+          <section className="setup-section">
+            <div className="section-label">
+              <Clock size={15} />
+              <h2>Pick your moment</h2>
+              <button className="text-action ml-auto" onClick={useNow}>
+                Now
+              </button>
+            </div>
+            <div className="grid grid-cols-[1.3fr_1fr] gap-2 mt-3">
+              <div>
+                <Label htmlFor="observing-date" className="field-label">
+                  Date
+                </Label>
+                <Input
+                  id="observing-date"
+                  type="date"
+                  value={settings.date}
+                  onChange={(e) => {
+                    if (
+                      e.target.value &&
+                      !isNaN(new Date(e.target.value).getTime())
+                    )
+                      update({ date: e.target.value });
+                  }}
+                  data-testid="input-date"
+                />
+              </div>
+              <div>
+                <Label htmlFor="observing-time" className="field-label">
+                  Local time
+                </Label>
+                <Input
+                  id="observing-time"
+                  type="time"
+                  value={settings.time}
+                  onChange={(e) => {
+                    if (e.target.value) update({ time: e.target.value });
+                  }}
+                  data-testid="input-time"
+                />
+              </div>
+            </div>
+            <p className="setup-hint mt-2">{timezone.replaceAll("_", " ")}</p>
+          </section>
+          <section className="setup-section">
+            <div className="section-label">
+              <Binoculars size={16} />
+              <h2>Your window to the sky</h2>
+            </div>
+            <div className="equipment-options">
+              <button
+                className={mode === "binocular" ? "selected" : ""}
+                aria-pressed={mode === "binocular"}
+                onClick={() =>
+                  update({
+                    mode: "binocular",
+                    fov: 7,
+                    fovHeight: 7,
+                    shape: "circle",
+                    limitingMag: 6.5,
+                  })
+                }
+                data-testid="button-mode-binocular"
+              >
+                <Binoculars size={22} />
+                <span>Binoculars</span>
+                <small>Wide & easy</small>
+              </button>
+              <button
+                className={mode === "telescope" ? "selected" : ""}
+                aria-pressed={mode === "telescope"}
+                onClick={() =>
+                  update({
+                    mode: "telescope",
+                    fov: 5,
+                    fovHeight: 5,
+                    limitingMag: 8,
+                  })
+                }
+                data-testid="button-mode-telescope"
+              >
+                <Telescope size={22} />
+                <span>Small telescope</span>
+                <small>Finder & eyepiece</small>
+              </button>
+            </div>
+            <div className="flex justify-between mb-3">
+              <Label className="field-label">Navigation field</Label>
+              <span className="text-xs text-primary font-mono">
+                {fov.toFixed(1)}°
+              </span>
+            </div>
+            <Slider
+              value={[fov]}
+              onValueChange={([v]) => update({ fov: v })}
+              min={0.5}
+              max={12}
+              step={0.1}
+              aria-label="Navigation field of view"
+              data-testid="slider-fov-width"
+            />
+            <p className="setup-hint mt-3">
+              {mode === "binocular"
+                ? "Match the field printed on your binoculars."
+                : "Use your finder’s field while hopping, then switch to the eyepiece for detail."}
+            </p>
+            <details className="advanced-settings">
+              <summary>
+                Fine tune equipment <ChevronRight size={13} />
+              </summary>
+              <div className="space-y-4 pt-3">
+                <div>
+                  <Label className="field-label">
+                    Faintest guide star · mag {limitingMag.toFixed(1)}
+                  </Label>
+                  <Slider
+                    className="mt-2"
+                    value={[limitingMag]}
+                    onValueChange={([v]) => update({ limitingMag: v })}
+                    min={3}
+                    max={12}
+                    step={0.1}
+                    aria-label="Limiting guide star magnitude"
+                  />
+                </div>
+                <div>
+                  <Label className="field-label">Field shape</Label>
+                  <Select
+                    value={shape}
+                    onValueChange={(v: "circle" | "rectangle") =>
+                      update({ shape: v })
+                    }
+                    disabled={mode === "binocular"}
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="circle">Circular field</SelectItem>
+                      <SelectItem value="rectangle">
+                        Rectangular field
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                {shape === "rectangle" && (
+                  <div>
+                    <Label className="field-label">
+                      Field height · {fovHeight.toFixed(1)}°
+                    </Label>
+                    <Slider
+                      className="mt-2"
+                      value={[fovHeight]}
+                      onValueChange={([v]) => update({ fovHeight: v })}
+                      min={0.5}
+                      max={12}
+                      step={0.1}
+                      aria-label="Field height"
+                    />
+                  </div>
+                )}
+                <div>
+                  <Label className="field-label">Route preference</Label>
+                  <Select
+                    value={algorithm}
+                    onValueChange={(v: CostStrategyId) => setAlgorithm(v)}
+                  >
+                    <SelectTrigger className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="auto">Automatic</SelectItem>
+                      <SelectItem value="landmark-discount">
+                        Bright landmarks
+                      </SelectItem>
+                      <SelectItem value="confidence-decay">
+                        Steady confidence
+                      </SelectItem>
+                      <SelectItem value="focal-search">
+                        Flexible search
+                      </SelectItem>
+                      <SelectItem value="landmark-magnet">
+                        Landmark attraction
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </details>
+          </section>
+          <section className="setup-section">
+            <div className="section-label">
+              <Navigation size={15} />
+              <h2>A comfortable pace</h2>
+            </div>
+            <div className="pace-options">
+              {(["beginner", "intermediate", "expert"] as const).map((d) => (
                 <button
-                  key={p.targetId}
-                  onClick={() => handlePreset(p)}
-                  className={`text-xs px-2.5 py-1 rounded-full border transition-colors ${
-                    targetId === p.targetId
-                      ? 'bg-primary/20 border-primary/50 text-primary'
-                      : 'border-border hover:border-primary/30 hover:text-primary/80'
-                  }`}
-                  data-testid={`preset-${p.targetId}`}
+                  key={d}
+                  className={difficulty === d ? "selected" : ""}
+                  onClick={() => update({ difficulty: d })}
+                  aria-pressed={difficulty === d}
                 >
-                  {p.targetId}
+                  {d === "beginner"
+                    ? "Guided"
+                    : d === "intermediate"
+                      ? "Balanced"
+                      : "Direct"}
                 </button>
               ))}
             </div>
-          </Card>
+            <p className="setup-hint">
+              {difficulty === "beginner"
+                ? "Shorter hops and bright landmarks. A good place to start."
+                : difficulty === "intermediate"
+                  ? "A balance of recognizable landmarks and fewer stops."
+                  : "Longer sweeps for experienced observers."}
+            </p>
+          </section>
+          <div className="field-tip">
+            <Sparkles size={16} />
+            <span className="eyebrow">A MOMENT TO ADAPT</span>
+            <p>
+              Give your eyes 20–30 minutes in the dark. Look slightly beside a
+              faint object to bring it into view.
+            </p>
+            <button
+              className="text-action"
+              onClick={() => update({ redLight: !settings.redLight })}
+            >
+              {settings.redLight
+                ? "Leave red light mode"
+                : "Try red light mode"}
+              <ArrowUpRight size={13} />
+            </button>
+          </div>
+          <button className="photo-chart-link" onClick={() => setPage("image")}>
+            <ImageIcon size={15} />
+            Calibrate a photo chart
+            <ArrowUpRight size={13} />
+          </button>
+        </aside>
 
-          {/* Target Selection */}
-          <Card className="p-4 bg-card border-card-border">
-            <div className="flex items-center gap-2 mb-3">
-              <Crosshair className="w-4 h-4 text-amber-400" />
-              <h2 className="text-sm font-medium">Target</h2>
-              <span className="text-[10px] text-muted-foreground ml-auto">{unifiedTargets.length} objects</span>
+        <main className="main-content">
+          {(settingsError || nightError) && (
+            <div className="notice warning">
+              <AlertTriangle size={16} />
+              Device storage is unavailable. Export your notes before closing
+              this page.
             </div>
-            <div className="space-y-2">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 w-3.5 h-3.5 text-muted-foreground" />
-                <Input
-                  placeholder="Search name, type, constellation…"
-                  value={targetSearch}
-                  onChange={e => setTargetSearch(e.target.value)}
-                  className="pl-8 h-9 text-sm bg-background"
-                  data-testid="input-target-search"
+          )}
+          {catalogError && (
+            <div className="notice warning">
+              <AlertTriangle size={16} />
+              <span>
+                Could not load the sky catalogs. Connect once to prepare the app
+                for offline use.
+              </span>
+              <Button variant="outline" size="sm" onClick={loadCatalogs}>
+                Retry
+              </Button>
+            </div>
+          )}
+          {page === "tonight" && (
+            <>
+              <div className="page-heading">
+                <div>
+                  <p className="eyebrow">LOOK UP. THERE’S A WHOLE UNIVERSE.</p>
+                  <h1>
+                    A little wonder, tonight<span>.</span>
+                  </h1>
+                  <p>
+                    Find your next faint fuzzy, familiar friend, or first
+                    discovery.
+                  </p>
+                </div>
+                <div className="date-stamp">
+                  <span>{dateLabel}</span>
+                  <strong>{settings.time}</strong>
+                  <small>AT YOUR OBSERVING LOCATION</small>
+                </div>
+              </div>
+              <div className="conditions-strip">
+                <Condition
+                  icon={<Sparkles />}
+                  label="Sky at your time"
+                  value={conditions.darkness}
+                  detail={
+                    conditions.isDark
+                      ? "Sun below −18°"
+                      : `Sun altitude ${Math.round(conditions.sunAlt)}°`
+                  }
+                />
+                <Condition
+                  icon={<Moon />}
+                  label={conditions.moonPhase}
+                  value={`${conditions.illumination}% illuminated`}
+                  detail={
+                    conditions.moonAlt > 0
+                      ? `Moon ${Math.round(conditions.moonAlt)}° above horizon`
+                      : "Moon below the horizon"
+                  }
+                />
+                <Condition
+                  icon={<Eye />}
+                  label="Above 15° at your time"
+                  value={`${ranked.filter((t) => t.alt >= 15).length} objects`}
+                  detail="From the combined catalogs"
+                />
+                <Condition
+                  icon={<BookOpen />}
+                  label="Your observing list"
+                  value={`${night.length} saved`}
+                  detail={`${observed} observed · saved on this device`}
                 />
               </div>
-              {/* Category filter pills */}
-              <div className="flex flex-wrap gap-1">
-                <button
-                  onClick={() => setCategoryFilter('all')}
-                  className={`text-[10px] px-2 py-0.5 rounded-full border transition-colors ${
-                    categoryFilter === 'all'
-                      ? 'bg-primary/20 border-primary/50 text-primary'
-                      : 'border-border hover:border-primary/30 text-muted-foreground'
-                  }`}
-                  data-testid="filter-all"
-                >
-                  All
-                </button>
-                {availableCategories.map(cat => (
-                  <button
-                    key={cat}
-                    onClick={() => setCategoryFilter(categoryFilter === cat ? 'all' : cat)}
-                    className={`text-[10px] px-2 py-0.5 rounded-full border transition-colors ${
-                      categoryFilter === cat
-                        ? 'bg-primary/20 border-primary/50 text-primary'
-                        : 'border-border hover:border-primary/30 text-muted-foreground'
-                    }`}
-                    data-testid={`filter-${cat}`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-              <div className="max-h-48 overflow-y-auto space-y-0.5 rounded border border-border/50 bg-background/50 p-1">
-                {filteredTargets.map(t => (
-                  <button
-                    key={t.id}
-                    onClick={() => { setTargetId(t.id); setTargetSearch(''); }}
-                    className={`w-full text-left text-xs px-2 py-1.5 rounded transition-colors ${
-                      targetId === t.id ? 'bg-primary/15 text-primary' : 'hover:bg-muted/50'
-                    }`}
-                    data-testid={`target-${t.id}`}
-                  >
-                    <div className="flex items-center justify-between gap-1">
-                      <span className="font-medium truncate">{t.displayName}</span>
-                      <span className="flex-shrink-0 flex items-center gap-1">
-                        <Badge variant="outline" className="text-[9px] px-1 py-0 h-4 border-border/60">{t.categoryShort}</Badge>
-                        <span className="text-[10px] text-muted-foreground w-8 text-right">{t.mag.toFixed(1)}</span>
-                      </span>
+              <div className="tonight-hero">
+                <section className="panel sky-panel">
+                  <div className="panel-heading">
+                    <div>
+                      <span className="eyebrow">GET YOUR BEARINGS</span>
+                      <h2>Your sky, overhead</h2>
                     </div>
-                    {t.binoTip && targetId !== t.id && (
-                      <p className="text-[10px] text-muted-foreground/70 mt-0.5 truncate">{t.binoTip}</p>
-                    )}
-                  </button>
-                ))}
-                {filteredTargets.length === 0 && (
-                  <p className="text-xs text-muted-foreground text-center py-3">No targets match your search</p>
+                    <span className="live-label">
+                      <span className="status-dot" />
+                      {settings.time} local
+                    </span>
+                  </div>
+                  {loading ? (
+                    <div className="sky-loading">
+                      <Loader2 className="animate-spin" />
+                      <p>Opening the sky atlas…</p>
+                    </div>
+                  ) : (
+                    <SkyOverview
+                      stars={catalogs.stars}
+                      constellations={catalogs.constellations}
+                      objects={ranked}
+                      lat={lat}
+                      lon={lon}
+                      date={date}
+                      selectedId={targetId}
+                      onSelect={selectTarget}
+                    />
+                  )}
+                  <div className="sky-caption">
+                    <span>
+                      <i className="legend-target" />
+                      Deep sky object
+                    </span>
+                    <span>Outer ring = horizon · center = zenith</span>
+                  </div>
+                </section>
+                {selected && selection ? (
+                  <section className="panel featured-object">
+                    <div className="featured-art">
+                      <ObjectArt target={selected} />
+                      <span className="art-badge">IN FOCUS</span>
+                    </div>
+                    <div className="featured-body">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="eyebrow">
+                          {selected.id} · {selected.category.toUpperCase()}
+                        </span>
+                        <span
+                          className={`visibility-tag ${selection.alt < 15 ? "low" : ""}`}
+                        >
+                          {altitudeLabel(selection.alt)}
+                        </span>
+                      </div>
+                      <h2>{selected.name}</h2>
+                      <p className="object-location">
+                        {getConstellationName(selected.con)}
+                        <span>·</span>
+                        {Math.round(selection.alt)}°{" "}
+                        {compassLabel(selection.az)}
+                      </p>
+                      <p className="object-story">{guideFor(selected).story}</p>
+                      <p className="equipment-tag">
+                        <Binoculars size={14} />
+                        {guideFor(selected).equipment}
+                      </p>
+                      <div className="featured-actions">
+                        <Button
+                          onClick={compute}
+                          disabled={computing || loading}
+                          data-testid="button-compute"
+                        >
+                          <Navigation size={15} />
+                          Show me the way
+                          <ArrowUpRight size={15} />
+                        </Button>
+                        <button
+                          className={`save-button ${savedIds.has(targetId) ? "saved" : ""}`}
+                          onClick={() => toggleSave(targetId)}
+                          aria-label={
+                            savedIds.has(targetId)
+                              ? "Remove from my night"
+                              : "Add to my night"
+                          }
+                          title={
+                            savedIds.has(targetId)
+                              ? "Remove from my night"
+                              : "Add to my night"
+                          }
+                          data-testid="button-save-target"
+                        >
+                          {savedIds.has(targetId) ? (
+                            <Check size={18} />
+                          ) : (
+                            <Plus size={18} />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  </section>
+                ) : (
+                  <section className="panel empty-state">
+                    <Star size={30} />
+                    <h2>
+                      {loading
+                        ? "Gathering a little starlight…"
+                        : "Choose an object below"}
+                    </h2>
+                  </section>
                 )}
               </div>
-              {/* Selected target info — contained with overflow protection */}
-              {(() => {
-                const sel = unifiedTargets.find(t => t.id === targetId);
-                if (!sel) return (
-                  <div className="rounded border border-border/40 bg-muted/30 px-3 py-2 text-xs text-muted-foreground">
-                    Selected: <span className="text-foreground font-medium">{targetId}</span>
+              <section className="discover-section">
+                <div className="section-heading">
+                  <div>
+                    <span className="eyebrow">LET CURIOSITY LEAD</span>
+                    <h2>What will you find?</h2>
                   </div>
-                );
-                return (
-                  <div className="rounded border border-border/40 bg-muted/30 px-3 py-2 text-xs space-y-0.5 max-h-24 overflow-y-auto">
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="text-foreground font-medium truncate max-w-[200px]">{sel.displayName}</span>
-                      <Badge variant="secondary" className="text-[9px] px-1 py-0 h-4">{sel.categoryShort}</Badge>
-                    </div>
-                    {sel.desc && <p className="text-muted-foreground line-clamp-2">{sel.desc}</p>}
-                    {sel.binoTip && <p className="text-primary/80 italic line-clamp-2">{sel.binoTip}</p>}
+                  <span className="text-xs text-muted-foreground">
+                    {filtered.length} objects match your setup
+                  </span>
+                </div>
+                <div className="discovery-toolbar">
+                  <div className="search-field">
+                    <Search size={16} />
+                    <Input
+                      placeholder="Search objects, constellations…"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      aria-label="Search sky objects"
+                      data-testid="input-target-search"
+                    />
+                    {query && (
+                      <button
+                        onClick={() => setQuery("")}
+                        aria-label="Clear search"
+                      >
+                        <X size={14} />
+                      </button>
+                    )}
                   </div>
-                );
-              })()}
-            </div>
-          </Card>
-
-          {/* Location & Time */}
-          <Card className="p-4 bg-card border-card-border">
-            <div className="flex items-center gap-2 mb-3">
-              <MapPin className="w-4 h-4 text-primary" />
-              <h2 className="text-sm font-medium">Location & Time</h2>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label className="text-xs text-muted-foreground">Latitude</Label>
-                <Input type="number" step="0.01" value={lat} onChange={e => setLat(parseFloat(e.target.value) || 0)} className="h-8 text-sm bg-background" data-testid="input-lat" />
-              </div>
-              <div>
-                <Label className="text-xs text-muted-foreground">Longitude</Label>
-                <Input type="number" step="0.01" value={lon} onChange={e => setLon(parseFloat(e.target.value) || 0)} className="h-8 text-sm bg-background" data-testid="input-lon" />
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3 mt-3">
-              <div>
-                <Label className="text-xs text-muted-foreground">Date</Label>
-                <Input type="date" value={dateStr} onChange={e => setDateStr(e.target.value)} className="h-8 text-sm bg-background [&::-webkit-calendar-picker-indicator]:opacity-60 [&::-webkit-calendar-picker-indicator]:cursor-pointer" data-testid="input-date" />
-              </div>
-              <div>
-                <Label className="text-xs text-muted-foreground">Local Time</Label>
-                <Input type="time" value={timeStr} onChange={e => setTimeStr(e.target.value)} className="h-8 text-sm bg-background [&::-webkit-calendar-picker-indicator]:opacity-60 [&::-webkit-calendar-picker-indicator]:cursor-pointer" data-testid="input-time" />
-              </div>
-            </div>
-            <p className="mt-2 text-[11px] text-muted-foreground">
-              Time is interpreted in the observing location timezone: {observingTimeZone}
-            </p>
-          </Card>
-
-          {/* Observing Mode */}
-          <Card className="p-4 bg-card border-card-border">
-            <div className="flex items-center gap-2 mb-3">
-              <Eye className="w-4 h-4 text-primary" />
-              <h2 className="text-sm font-medium">Observing Mode</h2>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <Button
-                variant={observingMode === 'telescope' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => applyObservingMode('telescope')}
-                data-testid="button-mode-telescope"
-              >
-                Telescope
-              </Button>
-              <Button
-                variant={observingMode === 'binocular' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => applyObservingMode('binocular')}
-                data-testid="button-mode-binocular"
-              >
-                Binoculars
-              </Button>
-            </div>
-            <p className="mt-2 text-[11px] text-muted-foreground">
-              {observingMode === 'binocular'
-                ? 'Favor wider, brighter, pattern-led hops that fit common hand-held binocular fields.'
-                : 'Use more flexible star-hop spacing for finder scopes and telescopic views.'}
-            </p>
-          </Card>
-
-          {/* Difficulty Level */}
-          <Card className="p-4 bg-card border-card-border">
-            <div className="flex items-center gap-2 mb-3">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <h2 className="text-sm font-medium">Difficulty</h2>
-            </div>
-            <div className="grid grid-cols-3 gap-2">
-              <Button
-                variant={difficulty === 'beginner' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setDifficulty('beginner')}
-              >
-                Beginner
-              </Button>
-              <Button
-                variant={difficulty === 'intermediate' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setDifficulty('intermediate')}
-              >
-                Normal
-              </Button>
-              <Button
-                variant={difficulty === 'expert' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setDifficulty('expert')}
-              >
-                Expert
-              </Button>
-            </div>
-            <p className="mt-2 text-[11px] text-muted-foreground">
-              {difficulty === 'beginner'
-                ? 'More waypoints with bright landmarks. Easier to follow but more steps.'
-                : difficulty === 'expert'
-                ? 'Minimal stops with longer sweeps. Fastest but requires experience.'
-                : 'Balanced route with moderate stops at key landmarks.'}
-            </p>
-            {/* Algorithm selector (Advanced) */}
-            <details className="mt-2">
-              <summary className="text-xs text-muted-foreground cursor-pointer hover:text-foreground">
-                Advanced: Routing Algorithm
-              </summary>
-              <div className="mt-2">
-                <Select value={algorithm} onValueChange={(v) => setAlgorithm(v as CostStrategyId)}>
-                  <SelectTrigger className="h-8 text-xs">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="auto">Auto (recommended)</SelectItem>
-                    <SelectItem value="landmark-discount">Landmark Discount</SelectItem>
-                    <SelectItem value="confidence-decay">Confidence Decay</SelectItem>
-                    <SelectItem value="focal-search">Focal Search</SelectItem>
-                    <SelectItem value="landmark-magnet">Landmark Magnet</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </details>
-          </Card>
-
-          {/* FOV Settings */}
-          <Card className="p-4 bg-card border-card-border">
-            <div className="flex items-center gap-2 mb-3">
-              <Eye className="w-4 h-4 text-primary" />
-              <h2 className="text-sm font-medium">Field of View</h2>
-            </div>
-            <div className="space-y-3">
-              <div>
-                <Label className="text-xs text-muted-foreground">FOV Shape</Label>
-                <Select value={fovShape} onValueChange={(v: 'circle' | 'rectangle') => setFovShape(v)} disabled={observingMode === 'binocular'}>
-                  <SelectTrigger className="h-8 text-sm bg-background" data-testid="select-fov-shape">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="circle">Circle (eyepiece)</SelectItem>
-                    <SelectItem value="rectangle">Rectangle (camera)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label className="text-xs text-muted-foreground">Width: {fovWidth}°</Label>
-                <Slider value={[fovWidth]} onValueChange={([v]) => setFovWidth(v)} min={1} max={15} step={0.1} className="mt-1" data-testid="slider-fov-width" />
-              </div>
-              {fovShape === 'rectangle' && (
-                <div>
-                  <Label className="text-xs text-muted-foreground">Height: {fovHeight}°</Label>
-                  <Slider value={[fovHeight]} onValueChange={([v]) => setFovHeight(v)} min={1} max={15} step={0.1} className="mt-1" data-testid="slider-fov-height" />
+                  <Select value={category} onValueChange={setCategory}>
+                    <SelectTrigger
+                      className="category-select"
+                      aria-label="Object category"
+                    >
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All object types</SelectItem>
+                      {categories.map((c) => (
+                        <SelectItem value={c} key={c}>
+                          {c}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <button
+                    className={`filter-toggle ${visibleOnly ? "active" : ""}`}
+                    onClick={() => setVisibleOnly(!visibleOnly)}
+                    aria-pressed={visibleOnly}
+                  >
+                    <Eye size={14} />
+                    Above 15°
+                  </button>
+                  <button
+                    className={`filter-toggle ${friendlyOnly ? "active" : ""}`}
+                    onClick={() => setFriendlyOnly(!friendlyOnly)}
+                    aria-pressed={friendlyOnly}
+                  >
+                    <Binoculars size={15} />
+                    Binocular picks
+                  </button>
                 </div>
-              )}
-              <div>
-                <Label className="text-xs text-muted-foreground">Limiting Mag: {limitingMag}</Label>
-                <Slider value={[limitingMag]} onValueChange={([v]) => setLimitingMag(v)} min={3} max={10} step={0.5} className="mt-1" data-testid="slider-limiting-mag" />
-              </div>
-              <div>
-                <Label className="text-xs text-muted-foreground">Routes: {numRoutes}</Label>
-                <Slider value={[numRoutes]} onValueChange={([v]) => setNumRoutes(v)} min={1} max={5} step={1} className="mt-1" data-testid="slider-num-routes" />
-              </div>
-            </div>
-          </Card>
-
-          {/* Compute Button */}
-          <Button
-            onClick={handleCompute}
-            disabled={isComputing}
-            className="w-full h-10 bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
-            data-testid="button-compute"
-          >
-            {isComputing ? (
-              <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Computing Routes...</>
-            ) : (
-              <><Telescope className="w-4 h-4 mr-2" />Plan Star-Hop Routes</>
-            )}
-          </Button>
-        </div>
-
-        {/* Right Panel — Sky Chart & Results */}
-        <div className="space-y-4">
-          {/* Sky Chart */}
-          <Card className="bg-card border-card-border overflow-hidden">
-            <SkyChart
-              nodes={nodes}
-              constellations={constellations}
-              route={selectedRoute}
-              targetNode={targetNode}
-              animStep={animStep}
-              fovWidth={fovWidth}
-              fovHeight={fovShape === 'circle' ? fovWidth : fovHeight}
-              fovShape={fovShape}
-              lat={lat}
-              lon={lon}
-              date={observingDate}
-              limitingMag={limitingMag}
-              denseStars={denseStars}
-              milkyWay={milkyWay}
-            />
-          </Card>
-
-          {/* Below Horizon Warning */}
-          {belowHorizon && (
-            <Card className="p-4 bg-destructive/10 border-destructive/30">
-              <div className="flex items-center justify-between gap-2 text-destructive">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 shrink-0" />
-                  <span className="text-sm font-medium">{targetId} is below the horizon at this time and location.</span>
+                {!conditions.isDark && (
+                  <p className="twilight-note">
+                    <Sparkles size={13} />
+                    {conditions.darkness} at your selected time. Faint objects
+                    are easier when the Sun is below −18°.
+                  </p>
+                )}
+                <div className="object-grid">
+                  {filtered.slice(0, limit).map((o) => (
+                    <TargetCard
+                      key={o.target.id}
+                      object={o}
+                      saved={savedIds.has(o.target.id)}
+                      selected={targetId === o.target.id}
+                      onSelect={() => selectTarget(o.target.id)}
+                      onSave={() => toggleSave(o.target.id)}
+                      onHop={() => {
+                        selectTarget(o.target.id);
+                        setPage("hop");
+                      }}
+                    />
+                  ))}
                 </div>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={handleFindBestTime}
-                  disabled={isFindingBestTime || isComputing}
-                  className="shrink-0 border-destructive/50 text-destructive hover:bg-destructive/10"
-                >
-                  {isFindingBestTime ? (
-                    <><Loader2 className="w-3 h-3 mr-1 animate-spin" />Searching…</>
-                  ) : (
-                    'Plan for best time'
-                  )}
-                </Button>
-              </div>
-            </Card>
+                {!loading && !filtered.length && (
+                  <div className="panel empty-state">
+                    <Search size={28} />
+                    <h3>No objects in this view</h3>
+                    <p>
+                      Try another time, turn off “Above 15°”, or broaden your
+                      search.
+                    </p>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setQuery("");
+                        setCategory("all");
+                        setVisibleOnly(false);
+                        setFriendlyOnly(false);
+                      }}
+                    >
+                      Browse the full catalog
+                    </Button>
+                  </div>
+                )}
+                {filtered.length > limit && (
+                  <button
+                    className="load-more"
+                    onClick={() => setLimit(limit + 12)}
+                  >
+                    Explore more objects
+                    <ChevronRight size={15} />
+                  </button>
+                )}
+              </section>
+            </>
           )}
 
-          {/* Route Results */}
-          {hasComputed && routes.length > 0 && (
+          {page === "hop" && (
             <>
-              {/* Route Selector */}
-              <div className="flex items-center gap-2 flex-wrap">
-                {routes.map((r, i) => (
-                  <button
-                    key={r.id}
-                    onClick={() => { setSelectedRouteIdx(i); setAnimStep(0); setIsPlaying(false); }}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition-all ${
-                      selectedRouteIdx === i
-                        ? 'bg-primary/15 border-primary/50 text-primary glow-primary'
-                        : 'border-border hover:border-primary/30'
-                    }`}
-                    data-testid={`route-select-${i}`}
-                  >
-                    <span className="font-medium">Route {i + 1}</span>
-                    {r.isExpertRoute && (
-                      <Badge variant="outline" className="text-[10px] px-1 py-0 border-amber-500/50 text-amber-400">
-                        Expert
-                      </Badge>
-                    )}
-                    <Badge variant="secondary" className="text-xs">
-                      {r.hops.length} hops
-                    </Badge>
-                    <Badge variant={r.score >= 70 ? 'default' : r.score >= 40 ? 'secondary' : 'destructive'} className="text-xs">
-                      {r.score}/100
-                    </Badge>
-                    <Badge variant="outline" className="text-xs capitalize">
-                      {observingMode}
-                    </Badge>
-                    {r.strategyId && !r.isExpertRoute && (
-                      <Badge variant="outline" className="text-[10px] px-1 py-0 border-sky-500/40 text-sky-400">
-                        {r.strategyId === 'landmark-discount' ? 'LD' :
-                         r.strategyId === 'confidence-decay' ? 'CD' :
-                         r.strategyId === 'focal-search' ? 'FS' :
-                         r.strategyId === 'landmark-magnet' ? 'LM' : r.strategyId}
-                      </Badge>
-                    )}
-                  </button>
-                ))}
+              <div className="page-heading">
+                <div>
+                  <p className="eyebrow">ONE LANDMARK AT A TIME</p>
+                  <h1>
+                    Follow the stars<span>.</span>
+                  </h1>
+                  <p>
+                    A familiar bright star. A few small steps. A new discovery.
+                  </p>
+                </div>
+                <button
+                  className="text-action"
+                  onClick={() => setPage("tonight")}
+                >
+                  <ArrowLeft size={14} />
+                  Explore targets
+                </button>
               </div>
-
-              {/* Playback Controls */}
-              {selectedRoute && (
-                <Card className="p-3 bg-card border-card-border">
-                  <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1">
-                      <Button size="sm" variant="ghost" onClick={() => { setAnimStep(Math.max(0, animStep - 1)); setIsPlaying(false); }} data-testid="button-prev-step">
-                        <SkipBack className="w-4 h-4" />
-                      </Button>
-                      <Button size="sm" variant={isPlaying ? 'default' : 'ghost'} onClick={isPlaying ? () => setIsPlaying(false) : handlePlay} data-testid="button-play-pause">
-                        {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                      </Button>
-                      <Button size="sm" variant="ghost" onClick={() => { setAnimStep(Math.min((selectedRoute?.hops.length || 1) - 1, animStep + 1)); setIsPlaying(false); }} data-testid="button-next-step">
-                        <SkipForward className="w-4 h-4" />
-                      </Button>
-                    </div>
-                    <div className="flex-1 flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground whitespace-nowrap">Step {animStep + 1}/{selectedRoute.hops.length}</span>
-                      <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-primary rounded-full transition-all duration-300"
-                          style={{ width: `${((animStep + 1) / selectedRoute.hops.length) * 100}%` }}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Label className="text-xs text-muted-foreground">Speed</Label>
-                      <Select value={String(animSpeed)} onValueChange={v => setAnimSpeed(parseInt(v))}>
-                        <SelectTrigger className="h-7 w-20 text-xs" data-testid="select-speed">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="1000">Fast</SelectItem>
-                          <SelectItem value="2000">Normal</SelectItem>
-                          <SelectItem value="3500">Slow</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Button size="sm" variant="ghost" onClick={handleDownloadJSON} data-testid="button-download-json">
-                        <Download className="w-4 h-4" />
-                      </Button>
-                    </div>
+              <div className="hop-target-bar">
+                <div className="flex items-center gap-3 min-w-0">
+                  <Crosshair size={22} className="text-gold shrink-0" />
+                  <div>
+                    <span className="eyebrow">YOUR DESTINATION</span>
+                    <h2>{selected?.displayName || targetId}</h2>
                   </div>
-                </Card>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="visibility-tag">
+                    {selection
+                      ? `${Math.round(selection.alt)}° ${compassLabel(selection.az)}`
+                      : "Loading"}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={bestTime}
+                    disabled={findingTime || computing || !selected}
+                  >
+                    {findingTime ? (
+                      <Loader2 size={14} className="animate-spin" />
+                    ) : (
+                      <Clock size={14} />
+                    )}
+                    Find a dark window
+                  </Button>
+                  <Button
+                    onClick={compute}
+                    disabled={computing || loading || !selected}
+                    data-testid="button-plan-route"
+                  >
+                    {computing ? (
+                      <Loader2 className="animate-spin" size={15} />
+                    ) : (
+                      <Navigation size={15} />
+                    )}
+                    {computing
+                      ? "Tracing a path…"
+                      : result
+                        ? "Replan route"
+                        : "Plan my star hop"}
+                  </Button>
+                </div>
+              </div>
+              {selection && selection.alt < 15 && (
+                <div className="notice warning">
+                  <AlertTriangle size={16} />
+                  <span>
+                    {selection.alt < 0
+                      ? "This object is below the horizon."
+                      : "This object is very low in the sky."}{" "}
+                    Use “Find a dark window” or choose a different time.
+                  </span>
+                </div>
               )}
-
-              {/* Hop Instructions */}
-              {selectedRoute && (
-                <Card className="p-4 bg-card border-card-border">
-                  <h3 className="text-sm font-medium mb-3 flex items-center gap-2">
-                    <Info className="w-4 h-4 text-primary" />
-                    Route Instructions
-                    <span className="text-xs text-muted-foreground ml-auto">
-                      From {selectedRoute.startAnchor.name} → {selectedRoute.target.name}
+              {result && !result.routes.length && (
+                <div className="notice warning">
+                  <Compass size={16} />
+                  <span>
+                    {result.belowHorizon
+                      ? "The target is too low for a route at this time."
+                      : "No usable route found. Try a wider navigation field or a fainter guide star limit."}
+                  </span>
+                </div>
+              )}
+              {result && result.routes.length > 0 && (
+                <div className="route-options" aria-label="Available routes">
+                  {result.routes.map((r, i) => (
+                    <button
+                      key={r.id}
+                      onClick={() => {
+                        setRouteIndex(i);
+                        setStep(0);
+                        setPlaying(false);
+                      }}
+                      className={routeIndex === i ? "selected" : ""}
+                      aria-pressed={routeIndex === i}
+                      data-testid={`route-select-${i}`}
+                    >
+                      <span>
+                        {r.isExpertRoute
+                          ? "Field guide route"
+                          : `Via ${r.startAnchor.name}`}
+                      </span>
+                      <small>
+                        {r.hops.length} fields · {r.score}/100
+                      </small>
+                      {routeIndex === i && <Check size={14} />}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <div className="hop-layout">
+                <section className="panel route-chart-panel">
+                  <div className="panel-heading">
+                    <div>
+                      <span className="eyebrow">YOUR FIELD MAP</span>
+                      <h2>
+                        {route
+                          ? `From ${route.startAnchor.name}`
+                          : "Get to know the neighborhood"}
+                      </h2>
+                    </div>
+                    <span className="text-xs text-muted-foreground">
+                      {fov.toFixed(1)}°{" "}
+                      {shape === "circle"
+                        ? "field"
+                        : `× ${fovHeight.toFixed(1)}°`}
                     </span>
-                  </h3>
-                  <div className="space-y-2">
-                    {selectedRoute.hops.map((hop, i) => (
-                      <div
-                        key={i}
-                        className={`flex items-start gap-3 p-3 rounded-lg border transition-all cursor-pointer ${
-                          animStep === i
-                            ? 'bg-primary/10 border-primary/40'
-                            : 'border-transparent hover:bg-muted/30'
-                        }`}
-                        onClick={() => { setAnimStep(i); setIsPlaying(false); }}
-                        data-testid={`hop-step-${i}`}
-                      >
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
-                          animStep === i ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
-                        }`}>
-                          {i + 1}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm">{hop.instruction}</p>
-                          <div className="flex items-center gap-2 mt-1 flex-wrap">
-                            {hop.distanceDeg > 0 && (
-                              <Badge variant="outline" className="text-xs">{hop.distanceDeg.toFixed(1)}°</Badge>
-                            )}
-                            {hop.distanceDeg > 0 && (() => {
-                              const ratio = hop.distanceDeg / fovWidth;
-                              const overlap = Math.max(0, Math.round((1 - ratio) * 100));
-                              return (
-                                <Badge
-                                  variant={ratio <= 0.85 ? 'default' : 'destructive'}
-                                  className="text-xs"
-                                >
-                                  {ratio <= 1 ? `${overlap}% overlap` : 'no overlap'}
-                                </Badge>
-                              );
-                            })()}
-                            {hop.direction && (
-                              <Badge variant="outline" className="text-xs">{hop.direction}</Badge>
-                            )}
-                            <Badge variant="outline" className="text-xs capitalize">
-                              {hop.patternType} · {hop.patternScore >= 90 ? 'Excellent' : hop.patternScore >= 75 ? 'Strong' : hop.patternScore >= 55 ? 'Good' : hop.patternScore >= 35 ? 'Fair' : 'Weak'}
-                            </Badge>
-                            <span className="text-xs text-muted-foreground">{hop.pattern}</span>
-                          </div>
-                        </div>
-                        <ChevronRight className={`w-4 h-4 flex-shrink-0 transition-transform ${
-                          animStep === i ? 'text-primary rotate-90' : 'text-muted-foreground'
-                        }`} />
-                      </div>
-                    ))}
                   </div>
-                  {selectedRoute.isExpertRoute && selectedRoute.expertSource && (
-                    <p className="text-xs text-muted-foreground mt-3 pt-3 border-t border-border/30">
-                      Source: {selectedRoute.expertSource}
+                  <SkyChart
+                    nodes={result?.nodes ?? previewNodes}
+                    constellations={catalogs.constellations}
+                    route={route}
+                    targetNode={result?.targetNode ?? previewTarget}
+                    animStep={step}
+                    fovWidth={fov}
+                    fovHeight={shape === "circle" ? fov : fovHeight}
+                    fovShape={shape}
+                    lat={lat}
+                    lon={lon}
+                    date={date}
+                    limitingMag={limitingMag}
+                    denseStars={catalogs.dense}
+                    milkyWay={catalogs.milkyWay}
+                  />
+                  <div className="chart-footnote">
+                    Equatorial map · north up, east left · drag to pan, pinch to
+                    zoom
+                  </div>
+                </section>
+                <div className="hop-guide-column">
+                  <section className="panel current-field" aria-live="polite">
+                    <span className="eyebrow">
+                      {hop && route
+                        ? `FIELD ${step + 1} OF ${route.hops.length}`
+                        : "BEFORE YOU BEGIN"}
+                    </span>
+                    <h2>
+                      {hop
+                        ? step === 0
+                          ? "Find your starting star"
+                          : step === route!.hops.length - 1
+                            ? "You’ve arrived"
+                            : "Make the next hop"
+                        : "Start with a bright landmark"}
+                    </h2>
+                    <p className="current-instruction">
+                      {hop?.instruction ||
+                        "Plan a route to connect your target with a recognizable bright star. Then move one field at a time, matching the patterns you see."}
+                    </p>
+                    {hop && (
+                      <>
+                        <div className="hop-metrics">
+                          <span>
+                            <Navigation size={13} />
+                            {hop.distanceDeg > 0
+                              ? `${hop.distanceDeg.toFixed(1)}° ${hop.direction}`
+                              : "Starting field"}
+                          </span>
+                          <span>
+                            <ArrowUpRight size={13} />
+                            {Math.round(hop.center.alt)}° high
+                          </span>
+                          {hop.distanceDeg > 0 && (
+                            <span>
+                              {(hop.distanceDeg / fov).toFixed(1)} field widths
+                              {hop.distanceDeg > fov ? " · no overlap" : ""}
+                            </span>
+                          )}
+                        </div>
+                        <div className="pattern-tip">
+                          <span className="eyebrow">CONFIRM YOUR FIELD</span>
+                          <p>
+                            {hop.pattern === hop.instruction
+                              ? "Match the stars in your field to the chart before moving on."
+                              : hop.pattern}
+                          </p>
+                          <small>
+                            {hop.patternType} pattern ·{" "}
+                            {hop.patternScore >= 75
+                              ? "strong landmark"
+                              : hop.patternScore >= 40
+                                ? "use with nearby stars"
+                                : "check carefully"}
+                          </small>
+                        </div>
+                        <div className="step-progress">
+                          {route!.hops.map((_, i) => (
+                            <button
+                              key={i}
+                              className={i <= step ? "done" : ""}
+                              onClick={() => {
+                                setStep(i);
+                                setPlaying(false);
+                              }}
+                              aria-label={`Go to field ${i + 1}`}
+                              aria-current={i === step ? "step" : undefined}
+                            />
+                          ))}
+                        </div>
+                        <div className="step-controls">
+                          <button
+                            className="icon-button"
+                            disabled={step === 0}
+                            aria-label="Previous field"
+                            onClick={() => {
+                              setStep(step - 1);
+                              setPlaying(false);
+                            }}
+                            data-testid="button-prev-step"
+                          >
+                            <SkipBack size={17} />
+                          </button>
+                          <Button
+                            className="flex-1"
+                            onClick={() => {
+                              if (step < route!.hops.length - 1) {
+                                setStep(step + 1);
+                                setPlaying(false);
+                              } else {
+                                markObserved(targetId);
+                              }
+                            }}
+                            data-testid="button-next-step"
+                          >
+                            {step === route!.hops.length - 1 ? (
+                              <>
+                                <Check size={16} />
+                                {night.find((t) => t.id === targetId)
+                                  ?.observedAt
+                                  ? "Mark unseen"
+                                  : "I found it!"}
+                              </>
+                            ) : (
+                              <>
+                                Next field
+                                <ChevronRight size={16} />
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                        <div className="playback-row">
+                          <button
+                            className="text-action"
+                            onClick={() => {
+                              if (!playing && step >= route!.hops.length - 1)
+                                setStep(0);
+                              setPlaying(!playing);
+                            }}
+                            data-testid="button-play-pause"
+                          >
+                            {playing ? <Pause size={13} /> : <Play size={13} />}
+                            {playing ? "Pause preview" : "Preview route"}
+                          </button>
+                          <select
+                            value={speed}
+                            onChange={(e) => setSpeed(Number(e.target.value))}
+                            aria-label="Route preview speed"
+                          >
+                            <option value={1500}>Fast</option>
+                            <option value={3500}>Steady</option>
+                            <option value={6000}>Slow</option>
+                          </select>
+                        </div>
+                      </>
+                    )}
+                    {!hop && (
+                      <div className="pattern-tip">
+                        <Eye size={18} />
+                        <p>
+                          Match the chart to your view. A telescope diagonal can
+                          mirror the field; the map controls let you flip or
+                          rotate it.
+                        </p>
+                      </div>
+                    )}
+                  </section>
+                  {selected && (
+                    <section className="panel at-the-eyepiece">
+                      <div className="section-label">
+                        <Eye size={15} />
+                        <h2>At the eyepiece</h2>
+                      </div>
+                      <p>{guideFor(selected).lookFor}</p>
+                      <AltitudeChart
+                        target={selected}
+                        lat={lat}
+                        lon={lon}
+                        date={date}
+                        timezone={timezone}
+                      />
+                      <button
+                        className="text-action mt-4"
+                        onClick={() => toggleSave(targetId)}
+                      >
+                        {savedIds.has(targetId) ? (
+                          <Check size={14} />
+                        ) : (
+                          <Plus size={14} />
+                        )}
+                        {savedIds.has(targetId)
+                          ? "Saved to my night · remove"
+                          : "Add to my night"}
+                      </button>
+                    </section>
+                  )}
+                </div>
+              </div>
+              {route && (
+                <section className="panel all-steps">
+                  <div className="panel-heading">
+                    <div>
+                      <span className="eyebrow">THE WHOLE JOURNEY</span>
+                      <h2>Your route at a glance</h2>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <button
+                        className="text-action"
+                        onClick={exportRoute}
+                        data-testid="button-download-route"
+                      >
+                        <Download size={14} />
+                        Field notes
+                      </button>
+                      <button
+                        className="text-action"
+                        onClick={exportRouteJSON}
+                        data-testid="button-download-json"
+                        aria-label="Download route JSON"
+                      >
+                        JSON
+                      </button>
+                    </div>
+                  </div>
+                  {route.hops.map((h, i) => (
+                    <button
+                      key={i}
+                      className={`route-step ${i === step ? "active" : ""}`}
+                      onClick={() => {
+                        setStep(i);
+                        setPlaying(false);
+                      }}
+                      data-testid={`hop-step-${i}`}
+                    >
+                      <span className="step-number">{i + 1}</span>
+                      <div>
+                        <p>{h.instruction}</p>
+                        <small>
+                          {h.distanceDeg > 0
+                            ? `${h.distanceDeg.toFixed(1)}° · `
+                            : ""}
+                          {h.pattern !== h.instruction
+                            ? h.pattern
+                            : "Confirm this field on the chart."}
+                        </small>
+                      </div>
+                      <ChevronRight size={16} />
+                    </button>
+                  ))}
+                  {route.expertSource && (
+                    <p className="route-source">
+                      Field guide source: {route.expertSource}
                     </p>
                   )}
-                </Card>
+                </section>
               )}
             </>
           )}
 
-          {/* Empty state */}
-          {!hasComputed && (
-            <Card className="p-12 bg-card border-card-border text-center">
-              <Telescope className="w-12 h-12 mx-auto mb-4 text-muted-foreground/50" />
-              <h3 className="text-sm font-medium text-muted-foreground mb-1">Ready to plan</h3>
-              <p className="text-xs text-muted-foreground/70">
-                Select a target, set your location and time, then click "Plan Star-Hop Routes".
-              </p>
-            </Card>
+          {page === "night" && (
+            <>
+              <div className="page-heading">
+                <div>
+                  <p className="eyebrow">SMALL DISCOVERIES, WORTH KEEPING</p>
+                  <h1>
+                    Make a night of it<span>.</span>
+                  </h1>
+                  <p>
+                    Your observing list and field notes, saved on this device.
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={exportNight}
+                  disabled={!night.length}
+                >
+                  <Download size={15} />
+                  Export notes
+                </Button>
+              </div>
+              <div className="night-summary">
+                <span>
+                  <BookOpen size={17} />
+                  <strong>{night.length}</strong> on your list
+                </span>
+                <span>
+                  <CheckCircle2 size={17} />
+                  <strong>{observed}</strong> observed
+                </span>
+                <div className="night-progress">
+                  <div
+                    style={{
+                      width: `${night.length ? (observed / night.length) * 100 : 0}%`,
+                    }}
+                  />
+                </div>
+              </div>
+              {!night.length && (
+                <div className="panel empty-state night-empty">
+                  <BookOpen size={38} />
+                  <h2>A night starts with a little curiosity.</h2>
+                  <p>
+                    Add objects with the + button, follow their star hops, and
+                    keep a note of what you saw.
+                  </p>
+                  <Button onClick={() => setPage("tonight")}>
+                    <Compass size={16} />
+                    Find something wonderful
+                  </Button>
+                </div>
+              )}
+              <div className="night-list">
+                {night.map((item) => {
+                  const object = ranked.find((o) => o.target.id === item.id);
+                  if (!object) return null;
+                  return (
+                    <article
+                      key={item.id}
+                      className={`panel night-item ${item.observedAt ? "observed" : ""}`}
+                    >
+                      <div className="night-item-art">
+                        <ObjectArt target={object.target} compact />
+                      </div>
+                      <div className="night-item-body">
+                        <div className="flex justify-between gap-3">
+                          <div>
+                            <span className="eyebrow">
+                              {object.target.id} · {object.target.category}
+                            </span>
+                            <h2>{object.target.name}</h2>
+                            <p className="object-location">
+                              {getConstellationName(object.target.con)} ·{" "}
+                              {Math.round(object.alt)}°{" "}
+                              {compassLabel(object.az)} ·{" "}
+                              {altitudeLabel(object.alt)}
+                            </p>
+                          </div>
+                          <button
+                            className="icon-button"
+                            onClick={() => toggleSave(item.id)}
+                            aria-label={`Remove ${object.target.name} from my night`}
+                            title="Remove from list"
+                          >
+                            <X size={16} />
+                          </button>
+                        </div>
+                        <div className="night-item-actions">
+                          <button
+                            className={`observed-toggle ${item.observedAt ? "active" : ""}`}
+                            onClick={() => markObserved(item.id)}
+                          >
+                            {item.observedAt ? (
+                              <CheckCircle2 size={16} />
+                            ) : (
+                              <Circle size={16} />
+                            )}
+                            {item.observedAt
+                              ? `Observed ${formatInTimeZone(new Date(item.observedAt), timezone, "MMM d")}`
+                              : "Mark as observed"}
+                          </button>
+                          <button
+                            className="text-action"
+                            onClick={() => {
+                              selectTarget(item.id);
+                              setPage("hop");
+                            }}
+                          >
+                            Star hop
+                            <ArrowUpRight size={14} />
+                          </button>
+                        </div>
+                        <Label
+                          htmlFor={`note-${item.id}`}
+                          className="field-label"
+                        >
+                          Your field notes
+                        </Label>
+                        <Textarea
+                          id={`note-${item.id}`}
+                          placeholder="What caught your eye? Conditions, colors, a sketch to try next time…"
+                          value={item.notes}
+                          onChange={(e) =>
+                            setNight((prev) =>
+                              prev.map((t) =>
+                                t.id === item.id
+                                  ? { ...t, notes: e.target.value }
+                                  : t,
+                              ),
+                            )
+                          }
+                          rows={2}
+                        />
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </>
           )}
-        </div>
+          {page === "image" && (
+            <>
+              <div className="page-heading">
+                <div>
+                  <p className="eyebrow">BRING YOUR OWN CHART</p>
+                  <h1>
+                    A map you know<span>.</span>
+                  </h1>
+                  <p>
+                    Calibrate a star chart image with known stars and mark your
+                    destination.
+                  </p>
+                </div>
+                <button
+                  className="text-action"
+                  onClick={() => setPage("tonight")}
+                >
+                  <ArrowLeft size={14} />
+                  Back to tonight
+                </button>
+              </div>
+              <ImageFallback />
+            </>
+          )}
+          <footer className="app-footer">
+            <span>
+              <Star size={12} />A quieter screen. A bigger sky.
+            </span>
+            <span>Calculated locally · BSC5 & deep sky catalogs</span>
+          </footer>
+        </main>
       </div>
-      )}
-
-      {/* Footer */}
-      <footer className="border-t border-border/30 px-4 py-4 mt-8">
-        <div className="max-w-[1600px] mx-auto flex items-center justify-between text-xs text-muted-foreground">
-          <span>StarHop Planner — Uses astronomy-engine, BSC5, Messier, Caldwell, and binocular target catalogs.</span>
-        </div>
-      </footer>
+      <Dialog open={offlineOpen} onOpenChange={setOfflineOpen}>
+        <DialogContent className="offline-dialog">
+          <DialogHeader>
+            <div className="offline-dialog-icon">
+              {offline.state === "ready" ? (
+                <CheckCircle2 size={28} />
+              ) : (
+                <WifiOff size={28} />
+              )}
+            </div>
+            <DialogTitle>
+              {offline.state === "ready"
+                ? "Ready for a night off the grid."
+                : "Prepare before you head out."}
+            </DialogTitle>
+            <DialogDescription>
+              {offline.state === "ready"
+                ? "The app and every sky catalog are stored on this device. Reopen this same address or install the app, even without a connection."
+                : offline.state === "unavailable"
+                  ? "Offline preparation is available in the production build on HTTPS or localhost. This development preview still calculates everything locally."
+                  : "Keep this page open while the app stores its charts and catalogs. A connection is only needed for the first visit and updates."}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="offline-checklist">
+            {[
+              "Bright and dense star catalogs",
+              "Deep sky objects & constellation maps",
+              "Milky Way & field guide routes",
+              "Your observing list & notes",
+            ].map((label) => (
+              <div key={label}>
+                {offline.state === "ready" ||
+                (label === "Your observing list & notes" && !nightError) ? (
+                  <Check size={15} />
+                ) : (
+                  <Circle size={15} />
+                )}
+                {label}
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Notes stay in this browser. Export them for a backup. Clearing
+            browser data removes downloaded catalogs and saved notes.
+          </p>
+          {offline.state === "error" && (
+            <Button onClick={offline.prepare}>
+              <RotateCcw size={15} />
+              Retry offline preparation
+            </Button>
+          )}
+          {offline.state === "preparing" && (
+            <p className="text-sm flex gap-2 items-center">
+              <Loader2 size={16} className="animate-spin" />
+              Downloading the offline atlas…
+            </p>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
 
+function Condition({
+  icon,
+  label,
+  value,
+  detail,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string;
+  detail: string;
+}) {
+  return (
+    <div className="condition">
+      <div className="condition-icon">{icon}</div>
+      <div>
+        <span>{label}</span>
+        <strong>{value}</strong>
+        <small>{detail}</small>
+      </div>
+    </div>
+  );
+}
+function TargetCard({
+  object,
+  saved,
+  selected,
+  onSelect,
+  onSave,
+  onHop,
+}: {
+  object: VisibleTarget;
+  saved: boolean;
+  selected: boolean;
+  onSelect: () => void;
+  onSave: () => void;
+  onHop: () => void;
+}) {
+  const { target, alt, az } = object;
+  return (
+    <article className={`target-card ${selected ? "selected" : ""}`}>
+      <button
+        className="target-card-main"
+        onClick={onSelect}
+        aria-label={`Explore ${target.displayName}`}
+        data-testid={`target-${target.id}`}
+      >
+        <div className="target-thumbnail">
+          <ObjectArt target={target} compact />
+        </div>
+        <div className="target-card-info">
+          <span className="eyebrow">
+            {target.id} · {target.categoryShort}
+          </span>
+          <h3>{target.name}</h3>
+          <p>{getConstellationName(target.con)}</p>
+          <div className={`target-alt ${alt < 15 ? "low" : ""}`}>
+            <span className="status-dot" />
+            {Math.round(alt)}° {compassLabel(az)}
+            <span>· mag {target.mag.toFixed(1)}</span>
+          </div>
+        </div>
+      </button>
+      <div className="target-card-actions">
+        <button onClick={onHop}>
+          Find it
+          <ArrowUpRight size={13} />
+        </button>
+        <button
+          className={saved ? "saved" : ""}
+          onClick={onSave}
+          aria-label={`${saved ? "Remove" : "Save"} ${target.name}`}
+          aria-pressed={saved}
+        >
+          {saved ? <Check size={15} /> : <Plus size={15} />}
+        </button>
+      </div>
+    </article>
+  );
+}
+function CoordinateInput({
+  label,
+  value,
+  min,
+  max,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  onChange: (v: number) => void;
+}) {
+  const [draft, setDraft] = useState(String(value));
+  const [invalid, setInvalid] = useState(false);
+  useEffect(() => {
+    setDraft(String(value));
+    setInvalid(false);
+  }, [value]);
+  return (
+    <div>
+      <Label htmlFor={`coordinate-${label}`} className="field-label">
+        {label}
+      </Label>
+      <Input
+        id={`coordinate-${label}`}
+        type="number"
+        step=".01"
+        min={min}
+        max={max}
+        value={draft}
+        onChange={(e) => {
+          setDraft(e.target.value);
+          setInvalid(false);
+        }}
+        onBlur={() => {
+          const n = Number(draft);
+          if (!draft.trim() || !Number.isFinite(n) || n < min || n > max) {
+            setInvalid(true);
+            return;
+          }
+          onChange(n);
+        }}
+        aria-invalid={invalid}
+        data-testid={label === "Latitude" ? "input-lat" : "input-lon"}
+      />
+      {invalid && (
+        <p className="text-xs text-destructive mt-1">
+          Use {min} to {max}°.
+        </p>
+      )}
+    </div>
+  );
+}
 function StarHopLogo() {
   return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="StarHop Planner logo" className="flex-shrink-0">
-      <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
-      <circle cx="16" cy="16" r="8" stroke="hsl(200 85% 50%)" strokeWidth="1" strokeDasharray="2 3" />
-      <circle cx="10" cy="10" r="2" fill="hsl(200 85% 50%)" />
-      <circle cx="20" cy="8" r="1.5" fill="hsl(200 85% 60%)" />
-      <circle cx="22" cy="16" r="1.8" fill="hsl(200 85% 55%)" />
-      <circle cx="18" cy="22" r="2.2" fill="hsl(38 90% 55%)" />
-      <line x1="10" y1="10" x2="20" y2="8" stroke="hsl(200 85% 50%)" strokeWidth="1" opacity="0.6" />
-      <line x1="20" y1="8" x2="22" y2="16" stroke="hsl(200 85% 50%)" strokeWidth="1" opacity="0.6" />
-      <line x1="22" y1="16" x2="18" y2="22" stroke="hsl(200 85% 50%)" strokeWidth="1" opacity="0.6" />
+    <svg
+      width="39"
+      height="39"
+      viewBox="0 0 40 40"
+      fill="none"
+      aria-hidden="true"
+    >
+      <circle cx="20" cy="20" r="17" stroke="#829a9e" strokeOpacity=".3" />
+      <path d="M10 27L17 13L28 17L24 29" stroke="#a3c8bf" strokeWidth="1.2" />
+      <circle cx="10" cy="27" r="2" fill="#a3c8bf" />
+      <circle cx="17" cy="13" r="2.6" fill="#e7e5d7" />
+      <circle cx="28" cy="17" r="1.8" fill="#a3c8bf" />
+      <path d="M24 24V34M19 29H29" stroke="#d9bc7e" strokeWidth="1.4" />
+      <circle cx="24" cy="29" r="2.5" fill="#d9bc7e" />
     </svg>
   );
-}
-
-function useOnlineStatus() {
-  return useSyncExternalStore(
-    (cb) => {
-      window.addEventListener('online', cb);
-      window.addEventListener('offline', cb);
-      return () => {
-        window.removeEventListener('online', cb);
-        window.removeEventListener('offline', cb);
-      };
-    },
-    () => navigator.onLine,
-    () => true
-  );
-}
-
-function OfflineIndicator() {
-  const isOnline = useOnlineStatus();
-  if (isOnline) return null;
-  return (
-    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[11px] font-medium" data-testid="offline-indicator">
-      <WifiOff className="w-3 h-3" />
-      <span>Offline</span>
-    </div>
-  );
-}
-
-function formatDate(d: Date): string {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
 }

@@ -1,3 +1,4 @@
+import { orientChartPoint } from '@/lib/observing';
 import { useMemo, useRef, useState, useCallback, useEffect } from 'react';
 import {
   stereographicProject,
@@ -51,12 +52,14 @@ export function SkyChart({
   const [hoveredStar, setHoveredStar] = useState<SkyNode | null>(null);
 
   // Chart display controls (internal — shown as sliders in the overlay)
-  const [labelSize, setLabelSize] = useState(7);    // 0 = no labels, 1-8 px
+  const [labelSize, setLabelSize] = useState(() => window.matchMedia('(max-width: 760px)').matches ? 16 : 11); // SVG units; larger on phones
   const [starBrightness, setStarBrightness] = useState(7); // 1-10; /5 → multiplier (default 1.4×)
   const [navStarSize, setNavStarSize] = useState(5); // 1-10; /5 → multiplier (default 1.0×)
   const [showLegend, setShowLegend] = useState(true);
   const [showGhostCircles, setShowGhostCircles] = useState(true);
   const [showConstellations, setShowConstellations] = useState(true);
+  const [mirrored, setMirrored] = useState(false);
+  const [rotation, setRotation] = useState(0);
 
   // Zoom and pan state
   const [zoom, setZoom] = useState(1);
@@ -117,8 +120,8 @@ export function SkyChart({
   // Clamp pan so chart doesn't fly offscreen
   const clampPan = useCallback((px: number, py: number, z: number) => {
     const viewSize = CHART_SIZE / z;
-    const maxPan = (CHART_SIZE - viewSize) / 2;
-    const minPan = -(CHART_SIZE - viewSize) / 2;
+    const maxPan = Math.max(0, (CHART_SIZE - viewSize) / 2);
+    const minPan = -maxPan;
     return {
       x: Math.max(minPan, Math.min(maxPan, px)),
       y: Math.max(minPan, Math.min(maxPan, py)),
@@ -127,7 +130,7 @@ export function SkyChart({
 
   // ───── Mouse wheel zoom ─────
   const handleWheel = useCallback((e: React.WheelEvent) => {
-    e.preventDefault();
+    // The non-passive native listener below prevents page scrolling.
     e.stopPropagation();
     const delta = e.deltaY > 0 ? -0.07 : 0.07;
     setZoom((prev) => {
@@ -194,7 +197,7 @@ export function SkyChart({
   }, [panX, panY, zoom]);
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    e.preventDefault();
+    // touch-action and the native pinch listener prevent browser gestures.
     const container = containerRef.current;
     if (!container) return;
     const rect = container.getBoundingClientRect();
@@ -263,15 +266,17 @@ export function SkyChart({
   const scale = (CHART_SIZE - CHART_PAD * 2) / (viewRadius * 2);
   const cx = CHART_SIZE / 2;
   const cy = CHART_SIZE / 2;
+  const fovRadius = 2 * Math.tan(fovWidth * Math.PI / 720) * 180 / Math.PI * scale;
 
-  const project = (ra: number, dec: number) => {
+  const project = useCallback((ra: number, dec: number) => {
     const p = stereographicProject(ra, dec, center.ra, center.dec, scale);
     if (!p) return null;
-    const x = cx + p.x;
-    const y = cy + p.y;
+    const oriented = orientChartPoint(p, mirrored, rotation);
+    const x = cx + oriented.x;
+    const y = cy + oriented.y;
     if (x < -16 || x > CHART_SIZE + 16 || y < -16 || y > CHART_SIZE + 16) return null;
     return { x, y };
-  };
+  }, [center.ra, center.dec, scale, mirrored, rotation]);
 
   const starSize = (mag: number) => {
     if (mag < 0.5) return 4.5;
@@ -386,7 +391,7 @@ export function SkyChart({
       // Show all stars up to the user's limiting magnitude
       return node.mag <= limitingMag;
     });
-  }, [nodes, center.ra, center.dec, viewRadius, highlightedIds, limitingMag]);
+  }, [nodes, mirrored, rotation, center.ra, center.dec, viewRadius, highlightedIds, limitingMag]);
 
   // Background star layer from dense Hipparcos catalog — pure rendering, no routing
   const backgroundStarLayer = useMemo(() => {
@@ -398,13 +403,14 @@ export function SkyChart({
       if (dist > viewRadius * 1.05) continue;
       const p = stereographicProject(ra, dec, center.ra, center.dec, scale);
       if (!p) continue;
-      const x = cx + p.x;
-      const y = cy + p.y;
+      const oriented = orientChartPoint(p, mirrored, rotation);
+      const x = cx + oriented.x;
+      const y = cy + oriented.y;
       if (x < -8 || x > CHART_SIZE + 8 || y < -8 || y > CHART_SIZE + 8) continue;
       result.push({ x, y, mag, bv });
     }
     return result;
-  }, [denseStars, limitingMag, center.ra, center.dec, viewRadius, scale]);
+  }, [denseStars, limitingMag, mirrored, rotation, center.ra, center.dec, viewRadius, scale]);
 
   // ───── Milky Way outline paths (from d3-celestial mw.json) ─────
   // 5 nested polygon layers (ol1–ol5) rendered with additive opacity:
@@ -423,8 +429,9 @@ export function SkyChart({
             if (d) { d += ' Z'; paths.push({ d, id: `${feature.id}-${ri}` }); d = ''; }
             continue;
           }
-          const x = cx + p.x;
-          const y = cy + p.y;
+          const oriented = orientChartPoint(p, mirrored, rotation);
+          const x = cx + oriented.x;
+          const y = cy + oriented.y;
           hasVisiblePoint = true;
           d += d ? ` L${x},${y}` : `M${x},${y}`;
         }
@@ -435,7 +442,7 @@ export function SkyChart({
       }
     }
     return paths;
-  }, [milkyWay, center.ra, center.dec, scale]);
+  }, [milkyWay, mirrored, rotation, center.ra, center.dec, scale]);
 
   const constellationPaths = useMemo(() => {
     const paths: { d: string; id: string; nearFocus: boolean }[] = [];
@@ -464,7 +471,7 @@ export function SkyChart({
       }
     }
     return paths;
-  }, [constellations, center.ra, center.dec, scale, viewRadius, focusPoint, localRadius, activeConstellationIds]);
+  }, [constellations, mirrored, rotation, center.ra, center.dec, scale, viewRadius, focusPoint, localRadius, activeConstellationIds]);
 
   // ───── Constellation name labels at centroid of visible constellations ─────
   const constellationLabels = useMemo(() => {
@@ -490,8 +497,9 @@ export function SkyChart({
 
       const p = stereographicProject(avgRa, avgDec, center.ra, center.dec, scale);
       if (!p) continue;
-      const x = cx + p.x;
-      const y = cy + p.y;
+      const oriented = orientChartPoint(p, mirrored, rotation);
+      const x = cx + oriented.x;
+      const y = cy + oriented.y;
       if (x < 20 || x > CHART_SIZE - 20 || y < 20 || y > CHART_SIZE - 20) continue;
 
       const isNearFocus = focusPoint ? dist < localRadius * 1.2 : false;
@@ -505,7 +513,7 @@ export function SkyChart({
       });
     }
     return labels;
-  }, [constellations, center.ra, center.dec, scale, viewRadius, focusPoint, localRadius, activeConstellationIds, showConstellations]);
+  }, [constellations, mirrored, rotation, center.ra, center.dec, scale, viewRadius, focusPoint, localRadius, activeConstellationIds, showConstellations]);
 
   const routePath = useMemo(() => {
     if (!route) return null;
@@ -516,7 +524,7 @@ export function SkyChart({
     let d = `M${points[0].x},${points[0].y}`;
     for (let i = 1; i < points.length; i++) d += ` L${points[i].x},${points[i].y}`;
     return d;
-  }, [route, center.ra, center.dec, scale, viewRadius]);
+  }, [route, mirrored, rotation, center.ra, center.dec, scale, viewRadius]);
 
   const routeProgressPath = useMemo(() => {
     if (!route) return null;
@@ -528,7 +536,7 @@ export function SkyChart({
     let d = `M${points[0].x},${points[0].y}`;
     for (let i = 1; i < points.length; i++) d += ` L${points[i].x},${points[i].y}`;
     return d;
-  }, [route, animStep, center.ra, center.dec, scale, viewRadius]);
+  }, [route, animStep, mirrored, rotation, center.ra, center.dec, scale, viewRadius]);
 
   const plottedStars = useMemo(() => {
     return visibleStars
@@ -558,7 +566,7 @@ export function SkyChart({
       isPatternAnchor: boolean;
       isGuide: boolean;
     }>;
-  }, [visibleStars, route, targetNode, currentHop, center.ra, center.dec, scale]);
+  }, [visibleStars, route, targetNode, currentHop, mirrored, rotation, center.ra, center.dec, scale]);
 
   // Compact chart labels: constellation abbreviation to save space
   const chartLabel = (star: SkyNode): string => {
@@ -759,6 +767,8 @@ export function SkyChart({
         viewBox={`${viewBoxX.toFixed(2)} ${viewBoxY.toFixed(2)} ${viewBoxSize.toFixed(2)} ${viewBoxSize.toFixed(2)}`}
         className="bg-[#0a0c14] rounded-lg cursor-grab active:cursor-grabbing"
         style={{ aspectRatio: '1/1', maxHeight: '600px' }}
+        role="img"
+        aria-label="Interactive star hopping field chart"
         onWheel={handleWheel}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
@@ -936,7 +946,7 @@ export function SkyChart({
                   <circle
                     cx={pt.x}
                     cy={pt.y}
-                    r={(fovWidth / 2) * scale}
+                    r={fovRadius}
                     fill="rgba(245, 158, 11, 0.05)"
                     stroke="rgba(245, 158, 11, 0.30)"
                     strokeWidth="1"
@@ -994,7 +1004,7 @@ export function SkyChart({
               <circle
                 cx={fovCenter.x}
                 cy={fovCenter.y}
-                r={(fovWidth / 2) * scale}
+                r={fovRadius}
                 fill="rgba(79, 195, 255, 0.05)"
                 stroke="rgba(79, 195, 255, 0.45)"
                 strokeWidth="1"
@@ -1075,246 +1085,37 @@ export function SkyChart({
         </text>
       </svg>
 
-      {/* Chart controls overlay: sliders + zoom buttons */}
-      <div className="absolute top-2 right-2 flex flex-row items-start gap-1.5">
-        {/* Vertical sliders panel */}
-        <div className="flex flex-row gap-2 bg-[#0d1220]/90 border border-[#1d2740] rounded-lg px-2 pt-1.5 pb-1">
-          {/* Label size slider (0 = off) */}
-          <div
-            className="flex flex-col items-center gap-0.5"
-            title={labelSize === 0 ? 'Labels: off' : `Labels: ${labelSize}px`}
-          >
-            <div style={{ width: 18, height: 60, position: 'relative', overflow: 'visible' }}>
-              <input
-                type="range"
-                min={0} max={8} step={1}
-                value={labelSize}
-                onChange={e => setLabelSize(Number(e.target.value))}
-                style={{
-                  position: 'absolute', top: '50%', left: '50%',
-                  width: 60, height: 18, margin: 0,
-                  transform: 'translate(-50%, -50%) rotate(-90deg)',
-                  cursor: 'pointer',
-                  accentColor: '#4fc3ff',
-                }}
-              />
-            </div>
-            <span className="text-[9px] font-bold select-none leading-none" style={{ color: '#4d6280' }}>A</span>
-          </div>
-          {/* Star brightness slider */}
-          <div
-            className="flex flex-col items-center gap-0.5"
-            title={`Stars: ${Math.round(brightMul * 100)}%`}
-          >
-            <div style={{ width: 18, height: 60, position: 'relative', overflow: 'visible' }}>
-              <input
-                type="range"
-                min={1} max={10} step={1}
-                value={starBrightness}
-                onChange={e => setStarBrightness(Number(e.target.value))}
-                style={{
-                  position: 'absolute', top: '50%', left: '50%',
-                  width: 60, height: 18, margin: 0,
-                  transform: 'translate(-50%, -50%) rotate(-90deg)',
-                  cursor: 'pointer',
-                  accentColor: '#4fc3ff',
-                }}
-              />
-            </div>
-            <span className="text-[9px] select-none leading-none" style={{ color: '#4d6280' }}>★</span>
-          </div>
-          {/* Navigation star size slider */}
-          <div
-            className="flex flex-col items-center gap-0.5"
-            title={`Nav stars: ${Math.round(navMul * 100)}%`}
-          >
-            <div style={{ width: 18, height: 60, position: 'relative', overflow: 'visible' }}>
-              <input
-                type="range"
-                min={1} max={10} step={1}
-                value={navStarSize}
-                onChange={e => setNavStarSize(Number(e.target.value))}
-                style={{
-                  position: 'absolute', top: '50%', left: '50%',
-                  width: 60, height: 18, margin: 0,
-                  transform: 'translate(-50%, -50%) rotate(-90deg)',
-                  cursor: 'pointer',
-                  accentColor: '#4fc3ff',
-                }}
-              />
-            </div>
-            <span className="text-[9px] select-none leading-none" style={{ color: '#4d6280' }}>◎</span>
-          </div>
-          {/* Ghost FOV circles toggle */}
-          <div
-            className="flex flex-col items-center gap-0.5"
-            title={showGhostCircles ? 'Hide upcoming FOV circles' : 'Show upcoming FOV circles'}
-          >
-            <button
-              onClick={() => setShowGhostCircles(v => !v)}
-              style={{
-                width: 18,
-                height: 60,
-                background: 'none',
-                border: 'none',
-                padding: 0,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle
-                  cx="7" cy="7" r="5.5"
-                  stroke={showGhostCircles ? 'rgba(245,158,11,0.75)' : 'rgba(77,98,128,0.6)'}
-                  strokeWidth="1.2"
-                  strokeDasharray="3 2"
-                  fill={showGhostCircles ? 'rgba(245,158,11,0.12)' : 'none'}
-                />
-              </svg>
-            </button>
-            <span
-              className="text-[9px] select-none leading-none"
-              style={{ color: showGhostCircles ? 'rgba(245,158,11,0.6)' : '#4d6280' }}
-            >
-              ◌
-            </span>
-          </div>
-          {/* Constellation lines toggle */}
-          <div
-            className="flex flex-col items-center gap-0.5"
-            title={showConstellations ? 'Hide constellation lines' : 'Show constellation lines'}
-          >
-            <button
-              onClick={() => setShowConstellations(v => !v)}
-              style={{
-                width: 18,
-                height: 60,
-                background: 'none',
-                border: 'none',
-                padding: 0,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="3" cy="3" r="1.5" fill={showConstellations ? '#5a8abf' : '#4d6280'} />
-                <circle cx="11" cy="5" r="1.5" fill={showConstellations ? '#5a8abf' : '#4d6280'} />
-                <circle cx="7" cy="11" r="1.5" fill={showConstellations ? '#5a8abf' : '#4d6280'} />
-                <line x1="3" y1="3" x2="11" y2="5" stroke={showConstellations ? '#5a8abf' : '#4d6280'} strokeWidth="1" opacity={showConstellations ? 0.8 : 0.4} />
-                <line x1="11" y1="5" x2="7" y2="11" stroke={showConstellations ? '#5a8abf' : '#4d6280'} strokeWidth="1" opacity={showConstellations ? 0.8 : 0.4} />
-                <line x1="7" y1="11" x2="3" y2="3" stroke={showConstellations ? '#5a8abf' : '#4d6280'} strokeWidth="1" opacity={showConstellations ? 0.8 : 0.4} />
-              </svg>
-            </button>
-            <span
-              className="text-[9px] select-none leading-none"
-              style={{ color: showConstellations ? '#5a8abf' : '#4d6280' }}
-            >
-              ✳
-            </span>
-          </div>
+      <div className="chart-toolbar">
+        <div className="chart-toolbar-group" data-testid="zoom-controls">
+          <button aria-label="Zoom in" title="Zoom in" data-testid="button-zoom-in" onClick={() => setZoom(z => Math.min(MAX_ZOOM, z * 1.2))}>+</button>
+          <button aria-label="Zoom out" title="Zoom out" data-testid="button-zoom-out" onClick={() => { const z = Math.max(MIN_ZOOM, zoom / 1.2); setZoom(z); setPanX(px => clampPan(px, 0, z).x); setPanY(py => clampPan(0, py, z).y); }}>−</button>
+          <button onClick={handleResetView} data-testid="button-zoom-reset">Reset {zoom !== 1 ? `${zoom.toFixed(1)}×` : ''}</button>
         </div>
-
-        {/* Zoom buttons */}
-        <div className="flex flex-col gap-1" data-testid="zoom-controls">
-          <button
-            onClick={() => {
-              setZoom((z) => {
-                const next = Math.min(MAX_ZOOM, z * 1.15);
-                setPanX((px) => clampPan(px, 0, next).x);
-                setPanY((py) => clampPan(0, py, next).y);
-                return next;
-              });
-            }}
-            className="w-7 h-7 rounded bg-[#121726]/90 border border-[#28314a] text-[#93a3c7] hover:text-white hover:border-[#4fc3ff]/50 flex items-center justify-center text-sm font-bold transition-colors"
-            title="Zoom in"
-            data-testid="button-zoom-in"
-          >
-            +
-          </button>
-          <button
-            onClick={() => {
-              setZoom((z) => {
-                const next = Math.max(MIN_ZOOM, z / 1.15);
-                setPanX((px) => clampPan(px, 0, next).x);
-                setPanY((py) => clampPan(0, py, next).y);
-                return next;
-              });
-            }}
-            className="w-7 h-7 rounded bg-[#121726]/90 border border-[#28314a] text-[#93a3c7] hover:text-white hover:border-[#4fc3ff]/50 flex items-center justify-center text-sm font-bold transition-colors"
-            title="Zoom out"
-            data-testid="button-zoom-out"
-          >
-            −
-          </button>
-          {!isDefaultView && (
-            <button
-              onClick={handleResetView}
-              className="w-7 h-7 rounded bg-[#121726]/90 border border-[#28314a] text-[#93a3c7] hover:text-white hover:border-[#4fc3ff]/50 flex items-center justify-center transition-colors"
-              title="Reset view"
-              data-testid="button-zoom-reset"
-            >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M1 1v4h4" />
-                <path d="M3.5 9a5 5 0 1 0 1-5.2L1 5" />
-              </svg>
-            </button>
-          )}
+        <div className="chart-toolbar-group">
+          <button className={mirrored ? 'active' : ''} aria-pressed={mirrored} onClick={() => setMirrored(v => !v)} data-testid="button-mirror-chart">Mirror</button>
+          <button onClick={() => setRotation(r => (r + 90) % 360)} data-testid="button-rotate-chart">Rotate · {rotation}°</button>
         </div>
       </div>
-
-      {/* Legend overlay */}
-      {showLegend ? (
-        <div className="absolute top-2 left-2 bg-[#0d1220]/90 border border-[#1d2740] rounded-lg px-2 py-1.5 flex flex-col gap-1">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-1.5">
-              <span className="inline-block w-[5px] h-[5px] rounded-full bg-[#d6def6]" />
-              <span className="text-[8px] text-[#7382a1] leading-none">Stars</span>
-            </div>
-            <button
-              onClick={() => setShowLegend(false)}
-              className="text-[#4d6280] hover:text-[#93a3c7] text-[9px] leading-none transition-colors"
-              title="Hide legend"
-            >
-              ×
-            </button>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="inline-block w-[5px] h-[5px] rounded-full bg-[#c084fc]" />
-            <span className="text-[8px] text-[#7382a1] leading-none">Pattern</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="inline-block w-[5px] h-[5px] rounded-full bg-[#38bdf8]" />
-            <span className="text-[8px] text-[#7382a1] leading-none">Anchor</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="inline-block w-[5px] h-[5px] rounded-full bg-[#f59e0b]" />
-            <span className="text-[8px] text-[#7382a1] leading-none">Target</span>
-          </div>
+      <details className="chart-display-settings">
+        <summary>Chart layers & display</summary>
+        <div className="display-options">
+          <label>Label size<input aria-label="Chart label size" type="range" min={0} max={18} value={labelSize} onChange={e => setLabelSize(Number(e.target.value))} /></label>
+          <label>Star brightness<input aria-label="Chart star brightness" type="range" min={1} max={10} value={starBrightness} onChange={e => setStarBrightness(Number(e.target.value))} /></label>
+          <label>Guide star size<input aria-label="Chart guide star size" type="range" min={1} max={10} value={navStarSize} onChange={e => setNavStarSize(Number(e.target.value))} /></label>
+          <label><input type="checkbox" checked={showConstellations} onChange={e => setShowConstellations(e.target.checked)} />Constellation lines</label>
+          <label><input type="checkbox" checked={showGhostCircles} onChange={e => setShowGhostCircles(e.target.checked)} />Upcoming fields</label>
+          <label><input type="checkbox" checked={showLegend} onChange={e => setShowLegend(e.target.checked)} />Legend</label>
         </div>
-      ) : (
-        <button
-          onClick={() => setShowLegend(true)}
-          className="absolute top-2 left-2 w-6 h-6 rounded bg-[#0d1220]/90 border border-[#1d2740] text-[#4d6280] hover:text-[#93a3c7] flex items-center justify-center text-[10px] transition-colors"
-          title="Show legend"
-        >
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-            <circle cx="6" cy="6" r="4.5" />
-            <line x1="6" y1="4.5" x2="6" y2="7.5" />
-            <circle cx="6" cy="3.2" r="0.4" fill="currentColor" stroke="none" />
-          </svg>
-        </button>
-      )}
-
-      {/* Zoom level indicator */}
-      {zoom !== 1 && (
-        <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-[#121726]/80 border border-[#28314a] text-[10px] text-[#93a3c7] font-mono tabular-nums">
-          {zoom.toFixed(1)}×
-        </div>
-      )}
+      </details>
+      {showLegend && <div className="absolute top-3 left-3 flex gap-3 rounded border border-[#2a414e] bg-[#0a1721]/90 px-2 py-1.5 text-[9px]">
+        <span className="text-[#38bdf8]">● Anchor</span><span className="text-[#c084fc]">● Pattern</span><span className="text-[#d8bc80]">● Target</span>
+      </div>}
+      <svg className="absolute top-3 right-3 pointer-events-none" width="60" height="60" viewBox="0 0 60 60" aria-label={`Chart orientation, ${mirrored ? 'mirrored, ' : ''}rotated ${rotation} degrees`}>
+        {([{ label: 'N', point: { x: 0, y: -16 } }, { label: 'E', point: { x: -16, y: 0 } }]).map(({ label, point }) => {
+          const p = orientChartPoint(point, mirrored, rotation);
+          return <g key={label}><line x1="30" y1="30" x2={30 + p.x} y2={30 + p.y} stroke="#91aab6" strokeWidth="1" /><text x={30 + p.x * 1.5} y={33 + p.y * 1.5} textAnchor="middle" fill="#b0c6cc" fontSize="9">{label}</text></g>;
+        })}
+      </svg>
     </div>
   );
 }
