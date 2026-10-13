@@ -1,13 +1,13 @@
 {
-  "name": "StarHop Planner",
+  "name": "StarHop — Night Sky Companion",
   "short_name": "StarHop",
-  "description": "Interactive star-hopping route finder for visual astronomy. Plan FOV-aware routes from bright anchors to deep-sky targets.",
+  "description": "Explore the sky, follow star hops, and keep observing notes offline.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#0a0c14",
-  "theme_color": "#0a0c14",
+  "background_color": "#0a1721",
+  "theme_color": "#0a1721",
   "categories": ["education", "utilities"],
   "icons": [
     {
