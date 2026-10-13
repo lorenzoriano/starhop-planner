@@ -58,6 +58,9 @@ async function buildAll() {
     hash.update(await readFile(file));
   }
   const build = hash.digest("hex").slice(0, 16);
+  // The page can distinguish its own assets from a still-active older worker.
+  const html = await readFile("dist/public/index.html", "utf8");
+  await writeFile("dist/public/index.html", html.replace("</head>", `<meta name="starhop-build" content="${build}"></head>`));
   await writeFile(
     "dist/public/offline-assets.json",
     JSON.stringify({

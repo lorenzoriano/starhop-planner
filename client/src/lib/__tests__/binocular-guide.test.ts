@@ -4,6 +4,7 @@ import { resolve } from "path";
 import { formatInTimeZone } from "date-fns-tz";
 import { buildUnifiedTargets, loadBinocularTargets, loadMessier, planRoutes, type UnifiedTarget } from "../astronomy";
 import { BINOCULAR_ENTRIES, binocularCollection, binocularEvening } from "../binocular-guide";
+import { binocularMedia, binocularDatabaseResources, binocularFeaturedImage } from "../binocular-media";
 
 vi.stubGlobal("fetch", async (input: string) => new Response(readFileSync(resolve(__dirname, "../../../public", input.replace(/^\.\//, "")), "utf8"), { status: 200 }));
 afterAll(() => vi.unstubAllGlobals());
@@ -15,7 +16,7 @@ const south = (month: number) => binocularCollection(targets, -33.87, 151.21, 20
 describe("monthly binocular guide", () => {
   it("resolves every sourced guide target against the actual offline catalogs", () => {
     const collection = north(10);
-    expect(BINOCULAR_ENTRIES.length).toBeGreaterThanOrEqual(50);
+    expect(BINOCULAR_ENTRIES.length).toBeGreaterThanOrEqual(200);
     expect(new Set(BINOCULAR_ENTRIES.map((e) => e.targetId)).size).toBe(BINOCULAR_ENTRIES.length);
     expect(collection).toHaveLength(BINOCULAR_ENTRIES.length);
     for (const pick of collection) {
@@ -23,6 +24,47 @@ describe("monthly binocular guide", () => {
       expect(pick.references.every((ref) => new URL(ref.url).protocol === "https:")).toBe(true);
       expect(Number.isFinite(pick.target.ra) && Number.isFinite(pick.target.dec)).toBe(true);
       expect(pick.bestMonths.length).toBeGreaterThan(0);
+    }
+  });
+  it("bundles two credited, decoded survey cutouts at the actual coordinates of every guide target", () => {
+    for (const pick of north(10)) {
+      const media = binocularMedia(pick.targetId)!;
+      expect(media).toBeDefined();
+      expect(media.ra).toBeCloseTo(pick.target.ra, 5);
+      expect(media.dec).toBeCloseTo(pick.target.dec, 5);
+      expect(media.fov).toBeGreaterThan(0);
+      expect(media.images.map((image) => image.variant)).toEqual(["optical", "infrared"]);
+      for (const image of media.images) {
+        const contents = readFileSync(resolve(__dirname, "../../../public", image.path));
+        expect(contents.subarray(0, 3).toString("hex")).toBe("ffd8ff");
+        expect(contents.length).toBeGreaterThan(1000);
+        const query = new URL(image.url).searchParams;
+        expect(Number(query.get("ra"))).toBeCloseTo(pick.target.ra, 5);
+        expect(Number(query.get("dec"))).toBeCloseTo(pick.target.dec, 5);
+        expect(query.get("hips")).toBe(image.variant === "optical" ? "CDS/P/DSS2/color" : "CDS/P/2MASS/color");
+      }
+      const resources = binocularDatabaseResources(pick.target, media.fov);
+      expect(resources).toHaveLength(2);
+      expect(resources.every((r) => !r.url.includes("undefined") && new URL(r.url).protocol === "https:")).toBe(true);
+    }
+  });
+  it("keeps the large-binocular tier distinct from ordinary handheld equipment", () => {
+    const m110 = BINOCULAR_ENTRIES.find((e) => e.targetId === "M110")!;
+    expect(m110.level).toBe("large");
+    expect(m110.minAperture).toBe(80);
+    const fields = north(5);
+    expect(fields.find((p) => p.targetId === "LMC")!.neverRises).toBe(true);
+    expect(south(1).find((p) => p.targetId === "LMC")!.alt).toBeGreaterThan(15);
+    expect(fields.filter((p) => (p.minAperture ?? 50) <= 50).length).toBeGreaterThan(200);
+  });
+  it("retains individual attribution and licenses for the resolved-star photographs", () => {
+    for (const id of ["DS-Albireo", "DS-MizarAlcor", "STAR-Betelgeuse", "STAR-Sirius"]) {
+      const image = binocularFeaturedImage(id)!;
+      expect(image.credit.length).toBeGreaterThan(5);
+      expect(image.licenseName.length).toBeGreaterThan(5);
+      expect(new URL(image.licenseUrl).protocol).toBe("https:");
+      expect(new URL(image.source).hostname).toBe("commons.wikimedia.org");
+      expect(readFileSync(resolve(__dirname, "../../../public", image.path)).subarray(0, 3).toString("hex")).toBe("ffd8ff");
     }
   });
   it("uses 21:00 in the observing location across daylight-saving changes", () => {

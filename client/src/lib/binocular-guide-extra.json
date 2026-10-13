@@ -1,0 +1,2874 @@
+[
+  {
+    "targetId": "M1",
+    "family": "nebula",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "The Crab is a faint remnant of an exploded star. Seek a small haze; filament detail is beyond this view.",
+    "finding": "Locate the Tau field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M2",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A compact globular glow offers a satisfying contrast with the wider star fields of Aquarius.",
+    "finding": "Locate the Aqr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M4",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A diffuse globular beside Antares. Sky transparency and its low southern altitude matter more than its total magnitude.",
+    "finding": "Locate the Sco field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M6",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "Frame the Butterfly Cluster as a small gathering of bright stars above Scorpius’s tail.",
+    "finding": "Locate the Sco field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M7",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A broad, bright cluster rewards a wide field. Try tracing pairs and chains among its scattered members.",
+    "finding": "Locate the Sco field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M9",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "This small globular is a demanding haze in Ophiuchus. Confirm the field before claiming a detection.",
+    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M10",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "Compare this globular’s round glow with nearby M12 during the same observing session.",
+    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M11",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A compact, rich cluster can look more like mist than a flock of resolved stars at low power.",
+    "finding": "Locate the Sct field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M12",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A softer globular glow than nearby M10 makes an interesting comparison under the same sky.",
+    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M14",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A faint, concentrated globular rewards patient field matching and a stable view.",
+    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M15",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A dense globular can resemble a fuzzy star. Look for its surrounding haze once the field is secure.",
+    "finding": "Locate the Peg field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M16",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "The Eagle’s star cluster is the modest binocular goal. Its famous pillars are not visible in ordinary binoculars.",
+    "finding": "Locate the Ser field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M18",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A small sprinkling of cluster stars sits between grander Sagittarius fields. Compare its scale with M24.",
+    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M19",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A modest globular glow in a busy southern field. Choose a high, transparent observing window.",
+    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M20",
+    "family": "nebula",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "The Trifid is a difficult nebulous glow. Its photographic colors and dark lanes are not a low-power expectation.",
+    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M23",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A generous scattering of stars suits a slow binocular sweep through Sagittarius.",
+    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M25",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A loose, bright cluster provides a stellar contrast with the denser background of the nearby star cloud.",
+    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M26",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A little unresolved cluster in Scutum. Use the field pattern to separate its haze from neighboring stars.",
+    "finding": "Locate the Sct field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M28",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A compact globular near the Teapot’s lid. Compare its small glow with the much broader M22.",
+    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M29",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A small knot of stars sits in Cygnus’s rich background. Look for the group, not a dramatic isolated cluster.",
+    "finding": "Locate the Cyg field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M30",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A concentrated globular in Capricornus. A steady view helps distinguish it from a nearby star.",
+    "finding": "Locate the Cap field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M32",
+    "family": "galaxy",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "Andromeda’s compact companion can masquerade as a star. A careful, supported view is needed to establish its haze.",
+    "finding": "Locate the And field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M34",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A spacious Perseus cluster with a handful of brighter members. Try sketching the strongest pairs.",
+    "finding": "Locate the Per field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M39",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A broad, loose group in Cygnus. Low magnification keeps the cluster distinct from its busy surroundings.",
+    "finding": "Locate the Cyg field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M40",
+    "family": "double",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "An optical double cataloged by Messier. The binocular goal is the two stars, rather than a nebulous object.",
+    "finding": "Locate the UMa field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M48",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A loose cluster in Hydra. Sweep gently and compare the concentration with the surrounding stars.",
+    "finding": "Locate the Hya field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M49",
+    "family": "galaxy",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A small oval glow in Virgo. Dark skies and a confirmed finder field are essential.",
+    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M50",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A compact open cluster in Monoceros. Look for a small grainy glow among the surrounding Milky Way stars.",
+    "finding": "Locate the Mon field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M51",
+    "family": "galaxy",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A faint patch near the Big Dipper. Detecting the galaxy is the goal; spiral arms need a much larger view.",
+    "finding": "Locate the CVn field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M53",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A small globular near Alpha Comae Berenices. Check for an extended glow rather than a pinpoint.",
+    "finding": "Locate the Com field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M54",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "This distant globular is a tiny haze against Sagittarius. Higher altitude and support improve the chance of detection.",
+    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M55",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A broad, diffuse globular with a low surface brightness. An open southern horizon and a dark sky help.",
+    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M56",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A faint globular in a rich Lyra field. Verify its position before looking for the subtle nonstellar glow.",
+    "finding": "Locate the Lyr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M58",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A small Virgo galaxy is an advanced binocular detection. Expect a faint haze without visible spiral structure.",
+    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M59",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A challenging little glow in Virgo’s galaxy country. A detailed finder field is more useful than a sweeping search.",
+    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M60",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "Look for a concentrated galaxy glow in Virgo. Nearby galaxies make careful identification especially important.",
+    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M61",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A faint Virgo spiral is a detection project for mounted large binoculars, rather than a detailed visual subject.",
+    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M62",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A southern globular offers a compact haze. Wait for it to climb clear of the murky horizon.",
+    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M63",
+    "family": "galaxy",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "The Sunflower Galaxy’s binocular signature is a faint elongated glow; its namesake texture is not visible.",
+    "finding": "Locate the CVn field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M64",
+    "family": "galaxy",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "Look for the galaxy’s concentrated center. The famous dark eye needs a larger, more detailed view.",
+    "finding": "Locate the Com field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M65",
+    "family": "galaxy",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "One member of Leo’s galaxy trio. Seek a small elongated haze with a stable view and a dark sky.",
+    "finding": "Locate the Leo field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M66",
+    "family": "galaxy",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "Compare its oval glow with nearby M65. Binoculars can frame the neighborhood even when details remain elusive.",
+    "finding": "Locate the Leo field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M67",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "An old open cluster appears softer and less obvious than the Beehive. Compare the two in one evening.",
+    "finding": "Locate the Cnc field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M68",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A faint southern globular needs good transparency. Use the marked stars to verify its small glow.",
+    "finding": "Locate the Hya field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M69",
+    "family": "cluster",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A small, concentrated globular in the southern Teapot is a challenge for mounted large binoculars.",
+    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M70",
+    "family": "cluster",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A tiny globular glow sits near M69. Compare both only after confirming their separate finder positions.",
+    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M71",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A subtle cluster haze in Sagitta can blend into the Milky Way. Spend time on the exact marked field.",
+    "finding": "Locate the Sge field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M72",
+    "family": "cluster",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A faint globular in Aquarius offers an advanced detection project under a transparent dark sky.",
+    "finding": "Locate the Aqr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M75",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A distant globular looks nearly stellar at low power. A stable, larger binocular view helps reveal its haze.",
+    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M77",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A compact galaxy in Cetus. Seek its bright center; its faint outer structure is a much harder visual goal.",
+    "finding": "Locate the Cet field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M78",
+    "family": "nebula",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A small reflection-nebula glow in Orion. Dark skies help distinguish real haze from glare or misted optics.",
+    "finding": "Locate the Ori field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M79",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A small winter globular in Lepus makes a change from Orion’s brilliant clusters and nebulae.",
+    "finding": "Locate the Lep field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M80",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A concentrated globular near Scorpius’s head. Expect a tiny glow, rather than resolved stars.",
+    "finding": "Locate the Sco field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M83",
+    "family": "galaxy",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A face-on southern galaxy has a diffuse glow. Its low surface brightness demands a clear, dark sky.",
+    "finding": "Locate the Hya field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M84",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A small Virgo galaxy near M86. Use the surrounding field to keep their identities separate.",
+    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M85",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A concentrated galaxy glow near Coma Berenices. Confirm the field before searching with averted vision.",
+    "finding": "Locate the Com field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M86",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "Frame this galaxy with M84 for an advanced Virgo comparison. Expect faint smudges rather than photographic detail.",
+    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M87",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A compact glow marks this enormous Virgo galaxy. Its jet is not visible in binoculars.",
+    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M88",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "An elongated galaxy in the Virgo region. Its low-power view is subtle and needs well-supported large binoculars.",
+    "finding": "Locate the Com field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M89",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A small rounded galaxy glow is an advanced field-identification exercise in Virgo.",
+    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M90",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "This Virgo galaxy is a difficult binocular detection. Look for a low-contrast elongated haze.",
+    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M93",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A small, bright Puppis cluster rewards a slow sweep. Look for its strongest stars first.",
+    "finding": "Locate the Pup field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M94",
+    "family": "galaxy",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A galaxy with a concentrated core in Canes Venatici. Seek a small round glow rather than its faint outer disk.",
+    "finding": "Locate the CVn field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M95",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A faint Leo galaxy is a supported large-binocular challenge. Separate it carefully from the neighboring M96 field.",
+    "finding": "Locate the Leo field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M96",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A low-contrast oval in Leo. Compare its position with M95 and M105 before recording a detection.",
+    "finding": "Locate the Leo field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M97",
+    "family": "nebula",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "The Owl Nebula is a faint, diffuse patch near the Big Dipper. Its eyes are not a binocular expectation.",
+    "finding": "Locate the UMa field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M99",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A low-surface-brightness spiral offers a difficult galaxy detection in Coma Berenices.",
+    "finding": "Locate the Com field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M100",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A diffuse galaxy glow in the Virgo region needs a dark sky and large, supported binoculars.",
+    "finding": "Locate the Com field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M101",
+    "family": "galaxy",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "A large face-on galaxy can hide despite its total magnitude. Search for a broad, very low-contrast patch.",
+    "finding": "Locate the UMa field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M102",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "The usual M102 identification, NGC 5866, is an elongated galaxy glow. Messier’s historical identification is disputed.",
+    "finding": "Locate the Dra field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · tough",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M103",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A small Cassiopeia cluster can appear as a modest knot. Confirm the group rather than expecting a large swarm.",
+    "finding": "Locate the Cas field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · easy",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M104",
+    "family": "galaxy",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "The Sombrero’s binocular signature is a small elongated glow. Its dark lane requires greater magnification.",
+    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M105",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A concentrated Leo galaxy glow shares a field with fainter companions. Establish its position before comparing them.",
+    "finding": "Locate the Leo field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M106",
+    "family": "galaxy",
+    "level": "challenge",
+    "equipment": "7×50 / 10×50; dark sky",
+    "impression": "An elongated galaxy in Canes Venatici. Support and dark skies help bring out its faint extent.",
+    "finding": "Locate the CVn field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · small binocular Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M107",
+    "family": "cluster",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A faint globular in Ophiuchus needs a careful field match and large, mounted binoculars.",
+    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M108",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A low-contrast, elongated galaxy near the Big Dipper is an advanced binocular catch.",
+    "finding": "Locate the UMa field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M109",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "A faint galaxy close to a bright Big Dipper star can be lost in glare. Keep the finder field steady.",
+    "finding": "Locate the UMa field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M110",
+    "family": "galaxy",
+    "level": "large",
+    "equipment": "Mounted 80 mm binoculars; dark sky",
+    "impression": "Andromeda’s diffuse companion is harder than its total magnitude suggests. Seek a faint oval beyond M31’s main glow.",
+    "finding": "Locate the And field using the finder map, then compare the marked position with the surrounding stars.",
+    "minAperture": 80,
+    "references": [
+      {
+        "title": "Astronomical League · 80 mm Messier list · challenge",
+        "url": "https://www.astroleague.org/binocular-messier-program-appendix-b/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "M21",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "10×50",
+    "impression": "A small star gathering beside the Trifid field. Seek the cluster without requiring its neighboring nebulosity.",
+    "finding": "Compare its marked field with M20 in Sagittarius.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "O’Meara · p. 65 (publisher index)",
+        "url": "https://assets.cambridge.org/97805217/21707/index/9780521721707_index.pdf",
+        "kind": "book-index"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC129",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A broad Cas star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC457",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A bright stellar pair anchors the Owl or ET cluster. Its little outline becomes clearer with support.",
+    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC663",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small grainy Cassiopeia cluster invites comparison with neighboring M103.",
+    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "Cr463",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50",
+    "impression": "A broad Cassiopeia cluster rewards a wide field and patient tracing of its brighter stars.",
+    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "Stock2",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50",
+    "impression": "The large Muscleman cluster invites a wide-field sketch. Trace the bright stellar limbs beside the Double Cluster.",
+    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "Mark6",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small Cas star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "Mel15",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "The Heart Nebula’s central cluster is the binocular goal. Do not expect the surrounding photographic nebulosity.",
+    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "Tr2",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50",
+    "impression": "A broad Per star cluster invites a careful field comparison. Trace its brighter stars before exploring the surrounding background.",
+    "finding": "Use the finder map in Per to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "Tr3",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A broad Cas star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "Stock23",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small gathering at the Camelopardalis border offers a compact contrast with Kemble’s long star chain.",
+    "finding": "Use the finder map in Cam to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC1342",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small Per star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Per to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC1528",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A modest Perseus cluster offers a small stellar concentration in a busy winter field.",
+    "finding": "Use the finder map in Per to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC1582",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A broad Per star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Per to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC1647",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A faint cluster near Aldebaran provides a good contrast with the bright, sprawling Hyades.",
+    "finding": "Use the finder map in Tau to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC1662",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A compact Orion cluster is the goal. Its playful spacecraft outline may need greater magnification.",
+    "finding": "Use the finder map in Ori to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC1746",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A broad Taurus star grouping is an enjoyable field even though its historical cluster designation is debated.",
+    "finding": "Use the finder map in Tau to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC1807",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small gathering near NGC 1817. Compare their separate finder positions before deciding which patch you have found.",
+    "finding": "Use the finder map in Tau to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC1817",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "Supported 10×50; dark sky",
+    "impression": "A faint cluster near NGC 1807 rewards a dark, supported view. Look for a weak concentration of stars.",
+    "finding": "Use the finder map in Tau to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC1893",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "Supported 10×50; dark sky",
+    "impression": "A small Aur star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Aur to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC1907",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "Supported 10×50; dark sky",
+    "impression": "A tiny cluster beside M38 is an advanced catch. Find M38 first, then look for the small secondary haze.",
+    "finding": "Use the finder map in Aur to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC1981",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50",
+    "impression": "Orion’s Sword contains this bright stellar gathering above the nebula. Enjoy the stars as a separate stop.",
+    "finding": "Use the finder map in Ori to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "AST-IC37",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50",
+    "impression": "The compact Number 37 cluster is easier to locate than to read. Its numerical outline usually needs telescope magnification.",
+    "finding": "Use the finder map in Ori to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2232",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50",
+    "impression": "A loose Monoceros cluster makes a stellar stop away from Orion’s bright nebula.",
+    "finding": "Use the finder map in Mon to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2251",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small Mon star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Mon to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2281",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50",
+    "impression": "A modest Auriga cluster offers a quiet alternative to the familiar Messier trio.",
+    "finding": "Use the finder map in Aur to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2301",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small concentration in Monoceros rewards a stable view. Compare the brightest members with the surrounding field.",
+    "finding": "Use the finder map in Mon to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2343",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small Mon star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Mon to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2360",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "Caroline’s Cluster is a modest soft glow in Canis Major. A dark sky makes its rich background easier to notice.",
+    "finding": "Use the finder map in CMa to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2403",
+    "family": "galaxy",
+    "level": "challenge",
+    "equipment": "Supported 10×50; dark sky",
+    "impression": "A diffuse northern galaxy is a challenge in ordinary binoculars. Seek a low-contrast oval rather than visible arms.",
+    "finding": "Use the finder map in Cam to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2527",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A broad Pup star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Pup to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2539",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A broad Pup star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Pup to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2571",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small Pup star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Pup to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6520",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "Supported 10×50; dark sky",
+    "impression": "A tiny stellar cluster beside dark cloud Barnard86. The cluster is the modest goal; the dark cloud needs excellent skies.",
+    "finding": "Use the finder map in Sgr to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6709",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small Aql star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Aql to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6716",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "Supported 10×50; dark sky",
+    "impression": "A small Sgr star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Sgr to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6819",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A compact cluster in Cygnus can blend into the Milky Way. Support the binoculars and check the exact field.",
+    "finding": "Use the finder map in Cyg to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6823",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small Vul star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Vul to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6910",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small Cyg star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Cyg to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6934",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "Supported 10×50; dark sky",
+    "impression": "A faint globular in Delphinus is a demanding binocular haze. Careful field matching matters more than a quick sweep.",
+    "finding": "Use the finder map in Del to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6940",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A broad, rich cluster in Vulpecula turns a slow sweep into a rewarding stellar field.",
+    "finding": "Use the finder map in Vul to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC7063",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small Cyg star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Cyg to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC7160",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A small Cep star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Cep to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC7209",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "Supported 10×50; dark sky",
+    "impression": "A broad Lac star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Lac to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC7235",
+    "family": "cluster",
+    "level": "challenge",
+    "equipment": "Supported 10×50; dark sky",
+    "impression": "A small Cep star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
+    "finding": "Use the finder map in Cep to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC7243",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "A loose Lacerta cluster rewards a wide field and a slow comparison with its surrounding stars.",
+    "finding": "Use the finder map in Lac to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC7789",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50",
+    "impression": "Caroline’s Rose is a rich but faint cluster. Binoculars reveal a misty patch; the intricate rose needs more power.",
+    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · deep-sky binocular target table",
+        "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "SMC",
+    "family": "galaxy",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A wide, irregular galaxy patch rewards a dark southern sky. Frame it separately from nearby 47 Tucanae.",
+    "finding": "Check that this Tuc field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC362",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A globular glow in Tuc rewards a careful sweep. Look for a small rounded haze without expecting resolved stars.",
+    "finding": "Check that this Tuc field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC1851",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A globular glow in Col rewards a careful sweep. Look for a small rounded haze without expecting resolved stars.",
+    "finding": "Check that this Col field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "LMC",
+    "family": "galaxy",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "This nearby galaxy is a whole binocular landscape. Sweep across its broad bar and brighter stellar patches.",
+    "finding": "Check that this Dor field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2451",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A bright, loose Puppis field surrounds a warm-colored star. Two line-of-sight cluster populations share this direction.",
+    "finding": "Check that this Pup field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2477",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A rich, compact cluster appears softer than nearby NGC 2451. Compare both through the same binoculars.",
+    "finding": "Check that this Pup field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2516",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "The Southern Beehive offers a rich gathering in Carina. Support helps show the fainter members.",
+    "finding": "Check that this Car field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2547",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Vel rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Vel field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2546",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Pup rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Pup field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "IC2391",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A spacious stellar gathering around Omicron Velorum is a pleasing low-power southern field.",
+    "finding": "Check that this Vel field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "IC2395",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Vel rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Vel field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2808",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A globular glow in Car rewards a careful sweep. Look for a small rounded haze without expecting resolved stars.",
+    "finding": "Check that this Car field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC2910",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Vel rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Vel field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC3114",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Car rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Car field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC3201",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A globular glow in Vel rewards a careful sweep. Look for a small rounded haze without expecting resolved stars.",
+    "finding": "Check that this Vel field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC3228",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Vel rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Vel field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC3293",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Car rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Car field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC3766",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Cen rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Cen field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC4463",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Mus rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Mus field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC4609",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Cru rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Cru field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC4755",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A bright knot near the Southern Cross marks the Jewel Box. Its jewel-like color detail is easier in a telescope.",
+    "finding": "Check that this Cru field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC5128",
+    "family": "galaxy",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "Centaurus A is a compact galaxy glow in binoculars. The famous dust lane is a much harder, higher-power goal.",
+    "finding": "Check that this Cen field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC5316",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Cen rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Cen field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC5460",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Cen rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Cen field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC5617",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Cen rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Cen field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC5662",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Cen rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Cen field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC5822",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Lup rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Lup field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6025",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in TrA rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this TrA field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6067",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Nor rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Nor field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6087",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Nor rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Nor field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6124",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Sco rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Sco field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6134",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Nor rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Nor field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6167",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Nor rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Nor field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6208",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Ara rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Ara field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6231",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A bright cluster above Scorpius’s tail anchors a richly starred Milky Way sweep.",
+    "finding": "Check that this Sco field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "IC4651",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A southern star cluster in Ara rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
+    "finding": "Check that this Ara field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6397",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A broad southern globular glow invites comparison with Omega Centauri. Individual stars are a telescope reward.",
+    "finding": "Check that this Ara field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6541",
+    "family": "cluster",
+    "level": "dark",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A globular glow in CrA rewards a careful sweep. Look for a small rounded haze without expecting resolved stars.",
+    "finding": "Check that this CrA field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "NGC6752",
+    "family": "cluster",
+    "level": "easy",
+    "equipment": "7×50 / 10×50; southern sky",
+    "impression": "A bright globular in Pavo offers an easy southern haze, distinct from the surrounding point-like stars.",
+    "finding": "Check that this Pav field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Astronomical League · southern-sky binocular list",
+        "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "STAR-Capella",
+    "family": "star",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "Compare this bright golden star with nearby blue-white winter stars. Its close binary is not a binocular split.",
+    "finding": "Center the bright corner of Auriga’s pentagon.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "O’Meara · pp. 115, 126–127 (publisher index)",
+        "url": "https://assets.cambridge.org/97805217/21707/index/9780521721707_index.pdf",
+        "kind": "book-index"
+      }
+    ],
+    "variable": false
+  },
+  {
+    "targetId": "STAR-Sirius",
+    "family": "star",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "Enjoy the brightest night-sky star and its busy winter surroundings. Its faint close companion is not a binocular goal.",
+    "finding": "Follow Orion’s Belt southeast toward Canis Major.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "O’Meara · pp. 130 (publisher index)",
+        "url": "https://assets.cambridge.org/97805217/21707/index/9780521721707_index.pdf",
+        "kind": "book-index"
+      }
+    ],
+    "variable": false
+  },
+  {
+    "targetId": "STAR-Procyon",
+    "family": "star",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A bright winter landmark is a useful starting point for exploring faint Monoceros fields. The close companion is beyond binoculars.",
+    "finding": "Find the bright star east of Orion, opposite Betelgeuse across the Winter Triangle.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "O’Meara · pp. 134 (publisher index)",
+        "url": "https://assets.cambridge.org/97805217/21707/index/9780521721707_index.pdf",
+        "kind": "book-index"
+      }
+    ],
+    "variable": false
+  },
+  {
+    "targetId": "STAR-Vega",
+    "family": "star",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A brilliant blue-white star anchors rich Lyra fields. Compare it with the nearby wide Epsilon Lyrae pair.",
+    "finding": "Find the brightest star at the western corner of the Summer Triangle.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "O’Meara · pp. 48, 68, 71 (publisher index)",
+        "url": "https://assets.cambridge.org/97805217/21707/index/9780521721707_index.pdf",
+        "kind": "book-index"
+      }
+    ],
+    "variable": false
+  },
+  {
+    "targetId": "STAR-Deneb",
+    "family": "star",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "Explore the crowded Cygnus field around this blue-white supergiant. Photographic nebulosity is not guaranteed in the binocular view.",
+    "finding": "Center the head of Cygnus’s Northern Cross.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "O’Meara · pp. 68, 73, 76 (publisher index)",
+        "url": "https://assets.cambridge.org/97805217/21707/index/9780521721707_index.pdf",
+        "kind": "book-index"
+      }
+    ],
+    "variable": true
+  },
+  {
+    "targetId": "STAR-Fomalhaut",
+    "family": "star",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "An isolated bright southern star offers a clear color study. Its debris disk is a research-image subject, not a binocular feature.",
+    "finding": "Look south of Aquarius; a clear low horizon helps northern observers.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "O’Meara · pp. 84–85 (publisher index)",
+        "url": "https://assets.cambridge.org/97805217/21707/index/9780521721707_index.pdf",
+        "kind": "book-index"
+      }
+    ],
+    "variable": false
+  },
+  {
+    "targetId": "STAR-Alphard",
+    "family": "star",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "Hydra’s warm-colored heart stands apart from its faint neighbors. Compare its hue with nearby Regulus.",
+    "finding": "Find the bright solitary star below Leo and west of Hydra’s long body.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "O’Meara · pp. 24–25 (publisher index)",
+        "url": "https://assets.cambridge.org/97805217/21707/index/9780521721707_index.pdf",
+        "kind": "book-index"
+      }
+    ],
+    "variable": false
+  },
+  {
+    "targetId": "STAR-LaSuperba",
+    "family": "star",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "This carbon star rewards a slow comparison of warm stellar hues. Brightness varies; the catalog value is not a current prediction.",
+    "finding": "Match the marked field in Canes Venatici below the Big Dipper’s handle.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "O’Meara · pp. 33 (publisher index)",
+        "url": "https://assets.cambridge.org/97805217/21707/index/9780521721707_index.pdf",
+        "kind": "book-index"
+      }
+    ],
+    "variable": true
+  },
+  {
+    "targetId": "DS-ThetaTau",
+    "family": "double",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "A widely spaced stellar pair sits in the Hyades. Compare the two colors while keeping the surrounding V in view.",
+    "finding": "Locate Theta Tauri in the Hyades near Aldebaran.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Tonkin · February binocular fields",
+        "url": "https://binocularsky.com/newsletter/archive/202202.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "DS-16Cyg",
+    "family": "double",
+    "level": "steady",
+    "equipment": "Supported 10×50",
+    "impression": "The wide 16 and 17 Draconis pair rewards a steady view. The close inner pair needs a telescope.",
+    "finding": "Match the marked field in Draco north of Hercules.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Sky & Telescope · double-star tour of Draco",
+        "url": "https://skyandtelescope.org/stargazing-and-observing/double-date-with-a-dragon/",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "DS-39Dra",
+    "family": "double",
+    "level": "steady",
+    "equipment": "Supported 10×50; dark sky",
+    "impression": "Seek the much fainter wide companion with a supported view. Resolving the close inner pair is a telescope task.",
+    "finding": "Match the marked Draco field north of Vega.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Tonkin · May wide double-star table",
+        "url": "https://binocularsky.com/newsletter/archive/201705.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "DS-14Ari",
+    "family": "double",
+    "level": "steady",
+    "equipment": "Supported 10×50; dark sky",
+    "impression": "A wide pair with a much fainter companion, separated by 106 arcseconds. Stability helps distinguish the secondary from the background.",
+    "finding": "Match the finder field around 14 Arietis; compare nearby stars before identifying the faint companion.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Tonkin · February wide double-star table",
+        "url": "https://binocularsky.com/newsletter/archive/202202.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "DS-NuGem",
+    "family": "double",
+    "level": "steady",
+    "equipment": "Supported 10×50; dark sky",
+    "impression": "A wide pair with a much fainter companion, separated by 113 arcseconds. Stability helps distinguish the secondary from the background.",
+    "finding": "Match the finder field around ν Geminorum; compare nearby stars before identifying the faint companion.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Tonkin · February wide double-star table",
+        "url": "https://binocularsky.com/newsletter/archive/202202.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "AST-FlyingMinnow",
+    "family": "asterism",
+    "level": "easy",
+    "equipment": "7×35 / 10×50; wide field",
+    "impression": "A small fish-like pattern swims through Auriga’s bright field. Trace the stars as a playful alternative to hunting faint clusters.",
+    "finding": "Explore the region around 16, 18 and 19 Aurigae using the finder map.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Tonkin · Leaping Minnow observing tour",
+        "url": "https://binocularsky.com/newsletter/archive/202202.pdf",
+        "kind": "reference"
+      }
+    ]
+  },
+  {
+    "targetId": "AST-DavisDog",
+    "family": "asterism",
+    "level": "easy",
+    "equipment": "7×35 / 10×50; wide field",
+    "impression": "A chance pattern of stars invites a little imagination. Frame the whole field and try sketching your own outline.",
+    "finding": "Match the finder field in Taurus rather than expecting a physical star cluster.",
+    "minAperture": 50,
+    "references": [
+      {
+        "title": "Tonkin · Davis’ Dog binocular tour",
+        "url": "https://binocularsky.com/newsletter/archive/202102.pdf",
+        "kind": "reference"
+      }
+    ]
+  }
+]

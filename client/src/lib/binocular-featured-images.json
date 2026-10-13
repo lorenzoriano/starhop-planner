@@ -1,0 +1,38 @@
+{
+  "DS-Albireo": {
+    "title": "Albireo · telescope photograph",
+    "path": "data/binocular-images/DS-Albireo-featured.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Albireo_01.jpg",
+    "licenseName": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "credit": "阿爾特斯 · Wikimedia Commons",
+    "note": "A telescope exposure shows the two colored components. This is not a handheld binocular simulation. The source image is displayed without editing."
+  },
+  "DS-MizarAlcor": {
+    "title": "Mizar & Alcor · telescope photograph",
+    "path": "data/binocular-images/DS-MizarAlcor-featured.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Mizar_and_Alcor_scaled.jpg",
+    "licenseName": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "credit": "Thomas Bresson; source scaled by Antonsusi · Wikimedia Commons",
+    "note": "The telescope photograph resolves Mizar’s close binary as well as the wide Alcor companion. Ordinary binoculars reveal the wide pair. StarHop displays the source image without further editing."
+  },
+  "STAR-Betelgeuse": {
+    "title": "Betelgeuse · ALMA stellar disk",
+    "path": "data/binocular-images/STAR-Betelgeuse-featured.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Betelgeuse_captured_by_ALMA.jpg",
+    "licenseName": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "credit": "ALMA (ESO/NAOJ/NRAO) / E. O’Gorman / P. Kervella · Wikimedia Commons",
+    "note": "A false-color submillimeter image resolves the star’s disk. Binoculars show a point of light; they cannot resolve this surface. The source image is displayed without editing."
+  },
+  "STAR-Sirius": {
+    "title": "Sirius A & B · Hubble close-up",
+    "path": "data/binocular-images/STAR-Sirius-featured.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Sirius_A_and_B_Hubble_photo.jpg",
+    "licenseName": "Public domain",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Sirius_A_and_B_Hubble_photo.jpg#Licensing",
+    "credit": "NASA / ESA / H. Bond (STScI) / M. Barstow (University of Leicester)",
+    "note": "Hubble’s exposure overexposes Sirius A to reveal faint Sirius B. The companion is not a binocular target. The source image is displayed without editing."
+  }
+}

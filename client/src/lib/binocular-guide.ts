@@ -1,21 +1,23 @@
 import { fromZonedTime } from "date-fns-tz";
 import { eqToHorizontal, type UnifiedTarget } from "./astronomy";
+import expandedEntries from "./binocular-guide-extra.json";
 
 export const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 export type BinocularFamily = "star" | "asterism" | "double" | "cluster" | "nebula" | "galaxy";
-export type BinocularLevel = "easy" | "dark" | "steady" | "challenge";
+export type BinocularLevel = "easy" | "dark" | "steady" | "challenge" | "large";
 export const FAMILY_LABELS: Record<BinocularFamily, string> = {
   star: "Stars & variables", asterism: "Asterisms & fields", double: "Double stars",
   cluster: "Star clusters", nebula: "Nebulae", galaxy: "Galaxies",
 };
 export const LEVEL_LABELS: Record<BinocularLevel, string> = {
-  easy: "Handheld favorite", dark: "Dark sky helps", steady: "Steady support", challenge: "Dark-sky challenge",
+  easy: "Handheld favorite", dark: "Dark sky helps", steady: "Steady support", challenge: "Dark-sky challenge", large: "Large binoculars",
 };
 export interface GuideReference { title: string; url: string; kind: "book-index" | "author-guide" | "reference"; }
 export interface BinocularEntry {
   targetId: string; family: BinocularFamily; level: BinocularLevel;
   equipment: string; impression: string; finding: string; references: GuideReference[];
   name?: string; variable?: boolean;
+  minAperture?: number;
 }
 export const OMEARA_INDEX = "https://assets.cambridge.org/97805217/21707/index/9780521721707_index.pdf";
 const index = (pages: string): GuideReference => ({ title: `O’Meara · pp. ${pages} (publisher index)`, url: OMEARA_INDEX, kind: "book-index" });
@@ -98,6 +100,7 @@ export const BINOCULAR_ENTRIES: BinocularEntry[] = [
   entry("NGC3372", "nebula", "dark", "7×35 / 10×50; dark sky", "The Carina Nebula spreads across a richly starred southern field. Its broad glow benefits from a wide view and a dark sky.", "Use Crux and the surrounding southern Milky Way to locate the Carina region.", undefined, [{ title: "NASA · Caldwell 92 / Carina Nebula", url: "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-caldwell-catalog/caldwell-92/", kind: "reference" }, { title: "University of Manchester · Carina observing guide", url: "https://www.jb.man.ac.uk/astronomy/nightsky/AList/Carina.html", kind: "reference" }]),
   entry("NGC5139", "cluster", "easy", "7×35 / 10×50", "Omega Centauri shows a large, unmistakably nonstellar glow. Its far-southern position limits access from northern sites.", "Locate Centaurus west of Crux, then match the globular’s field on the chart.", undefined, [{ title: "Texas Tech University · Omega Centauri observing notes", url: "https://www.phys.ttu.edu/~ozprof/5139c.htm", kind: "reference" }]),
   entry("NGC104", "cluster", "easy", "7×35 / 10×50", "47 Tucanae offers a bright, rounded globular glow in southern skies. Check its altitude before planning from a northern location.", "Locate Tucana near the Small Magellanic Cloud and match the marked globular field.", undefined, [{ title: "NASA · Caldwell 106 / 47 Tucanae", url: "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-caldwell-catalog/caldwell-106/", kind: "reference" }]),
+  ...expandedEntries as BinocularEntry[],
 ];
 
 export const BINOCULAR_BOOKS = [

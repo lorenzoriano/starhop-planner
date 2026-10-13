@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 export type OfflineState = "preparing" | "ready" | "error" | "unavailable";
 export function useOffline() {
@@ -15,7 +15,9 @@ export function useOffline() {
     () => true,
   );
   const [state, setState] = useState<OfflineState>("preparing");
+  const generation = useRef(0);
   async function prepare() {
+    const attempt = ++generation.current;
     if (!import.meta.env.PROD || !("serviceWorker" in navigator)) {
       setState("unavailable");
       return;
@@ -28,28 +30,33 @@ export function useOffline() {
         new Promise<never>((_, reject) =>
           setTimeout(
             () => reject(new Error("Offline preparation timed out")),
-            30_000,
+            180_000,
           ),
         ),
       ]);
-      const channel = new MessageChannel();
-      const status = await new Promise<boolean>((resolve) => {
-        const timeout = setTimeout(() => {
-          channel.port1.close();
-          resolve(false);
-        }, 5000);
-        channel.port1.onmessage = (event) => {
-          clearTimeout(timeout);
-          channel.port1.close();
-          resolve(event.data.ready === true);
-        };
-        registration.active?.postMessage({ type: "OFFLINE_STATUS" }, [
-          channel.port2,
-        ]);
-      });
-      setState(status ? "ready" : "error");
+      const expectedBuild = document.querySelector<HTMLMetaElement>('meta[name="starhop-build"]')?.content;
+      const deadline = Date.now() + 180_000;
+      while (generation.current === attempt) {
+        const channel = new MessageChannel();
+        const status = await new Promise<{ ready: boolean; build?: string }>((resolve) => {
+          const timeout = setTimeout(() => { channel.port1.close(); resolve({ ready: false }); }, 5000);
+          channel.port1.onmessage = (event) => {
+            clearTimeout(timeout);
+            channel.port1.close();
+            resolve(event.data);
+          };
+          registration.active?.postMessage({ type: "OFFLINE_STATUS" }, [channel.port2]);
+        });
+        if (generation.current !== attempt) return;
+        if (status.ready && (!expectedBuild || status.build === expectedBuild)) {
+          setState("ready");
+          return;
+        }
+        if (Date.now() >= deadline) { setState("error"); return; }
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
     } catch {
-      setState("error");
+      if (generation.current === attempt) setState("error");
     }
   }
   useEffect(() => {
@@ -58,8 +65,10 @@ export function useOffline() {
       void prepare();
     };
     navigator.serviceWorker?.addEventListener("controllerchange", changed);
-    return () =>
+    return () => {
+      generation.current++;
       navigator.serviceWorker?.removeEventListener("controllerchange", changed);
+    };
   }, []);
   return { online, state, prepare };
 }

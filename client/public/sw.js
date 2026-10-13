@@ -13,11 +13,12 @@ self.addEventListener("install", (event) => {
       const manifest = await response.json();
       const cache = await caches.open(CACHE);
       try {
-        await cache.addAll(
-          manifest.files.map(
+        // Bounded batches keep the complete photo atlas reliable on mobile connections.
+        for (let i = 0; i < manifest.files.length; i += 16) {
+          await cache.addAll(manifest.files.slice(i, i + 16).map(
             (path) => new Request(urlFor(path), { cache: "reload" }),
-          ),
-        );
+          ));
+        }
         await cache.put(
           urlFor("./offline-assets.json"),
           new Response(JSON.stringify(manifest), {
@@ -60,6 +61,7 @@ self.addEventListener("message", (event) => {
           )
         : [];
       event.ports[0]?.postMessage({
+        build: manifest?.build,
         ready: resources.length > 0 && resources.every(Boolean),
         files: resources.length,
       });

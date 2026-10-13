@@ -497,6 +497,27 @@ button:disabled { opacity: .45; cursor: default; }
 .binocular-feature-field { background: #09141d; position: relative; display: grid; align-items: center; border-left: 1px solid #2b424b; }
 .binocular-field { width: 100%; height: auto; display: block; }
 .binocular-feature-field .binocular-field { max-height: 300px; }
+.binocular-photo { display: block; width: 100%; height: 100%; object-fit: cover; }
+.binocular-feature-field .binocular-photo { min-height: 270px; max-height: 330px; }
+.binocular-field-caption { background: #08121ace; padding: 5px 8px; border-radius: 3px; }
+.binocular-photo-label { position: absolute; right: 12px; bottom: 10px; font-size: 7px; letter-spacing: 1px; color: #c2cbc4; text-shadow: 0 1px 4px #000; background: #08121ab0; padding: 3px 5px; border-radius: 2px; }
+.binocular-image-gallery { padding: 0 0 18px; border-bottom: 1px solid #304851; }
+.binocular-gallery-heading { display: flex; gap: 12px; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.binocular-gallery-heading .eyebrow { display: flex; align-items: center; gap: 7px; color: #c7b481; font-size: 9px; letter-spacing: 1.3px; }
+.binocular-gallery-heading > span:last-child { font-size: 10px; color: #8aa3ad; }
+.binocular-image-gallery figure { border: 1px solid #314a54; border-radius: 7px; overflow: hidden; background: #08131c; }
+.binocular-gallery-photo { width: 100%; height: 280px; object-fit: contain; display: block; }
+.binocular-image-gallery figcaption { display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 10px 13px; border-top: 1px solid #304851; font-size: 10px; color: #b1c7bd; }
+.binocular-image-gallery figcaption strong { font-weight: 400; }
+.binocular-image-gallery a { display: inline-flex; align-items: center; gap: 5px; color: #a5c9b7; }
+.binocular-image-options { display: flex; gap: 9px; margin-top: 11px; }
+.binocular-image-options button { display: flex; flex: 1; gap: 10px; align-items: center; text-align: left; border: 1px solid #314851; border-radius: 5px; padding: 6px; color: #8faab5; min-width: 0; font-size: 10px; }
+.binocular-image-options button.active { border-color: #99c3aa; background: #92c6ad0d; color: #c3d7c4; }
+.binocular-image-options img { width: 60px; height: 44px; object-fit: cover; border-radius: 3px; }
+.binocular-image-explanation { color: #8ba3af; font-size: 10px; line-height: 1.8; margin-top: 12px; }
+.binocular-image-credit { display: flex; gap: 12px; justify-content: space-between; align-items: flex-start; font-size: 8px; line-height: 1.7; color: #8fa49f; margin-top: 9px; }
+.binocular-image-credit a { flex-shrink: 0; }
+.binocular-image-service { display: block; color: #6f8b99; font-size: 8px; margin-top: 7px; }
 .binocular-field-caption { position: absolute; bottom: 10px; left: 18px; font-size: 8px; color: #7b9ba6; }
 .binocular-twilight { margin-top: 15px; line-height: 1.7; }
 .binocular-collection, .binocular-books { margin-top: 42px; }
@@ -530,6 +551,7 @@ button:disabled { opacity: .45; cursor: default; }
 .binocular-card-position .low { color: #c1a97d; }
 .binocular-target-bottom { padding: 9px 17px 9px 21px; border-top: 1px solid #293f49; display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #9fbfaf; font-size: 10px; }
 .level-challenge .binocular-target-bottom { color: #c9b37e; }
+.level-large .binocular-target-bottom { color: #bbadcf; }
 .binocular-target-bottom button { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #405855; border-radius: 5px; }
 .binocular-target-bottom button.saved { background: #9bceb81a; color: #c2e2ce; }
 .binocular-collection-note { display: flex; align-items: flex-start; gap: 8px; font-size: 10px; color: #77929e; line-height: 1.7; margin-top: 18px; }
@@ -601,6 +623,12 @@ button:disabled { opacity: .45; cursor: default; }
   .binocular-feature h2 { font-size: 32px; }
   .binocular-feature-field { border-left: 0; border-top: 1px solid #2b424b; }
   .binocular-feature-field .binocular-field { height: 210px; }
+  .binocular-feature-field .binocular-photo { min-height: 210px; max-height: 250px; }
+  .binocular-gallery-photo { height: 210px; }
+  .binocular-image-options button { flex-direction: column; align-items: flex-start; gap: 6px; font-size: 9px; }
+  .binocular-image-options img { width: 100%; height: 60px; }
+  .binocular-gallery-heading { align-items: flex-start; }
+  .binocular-gallery-heading > span:last-child { text-align: right; font-size: 8px; }
   .binocular-target-body { padding-left: 17px; padding-right: 17px; }
   .binocular-family-tabs { gap: 0; }
   .binocular-family-tabs button { padding-left: 9px; padding-right: 9px; font-size: 10px; }
