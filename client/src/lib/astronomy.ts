@@ -1482,8 +1482,9 @@ function generateHopSteps(
       const dn = displayName(node);
       instruction = `Start at ${dn}${node.constellation ? ` in ${getConstellationName(node.constellation)}` : ''}.`;
       if (node.type === 'planet') instruction = `Start at the planet ${node.name}, easily visible to the naked eye.`;
-      if (profile.mode === 'binocular' && patternAnalysis.type !== 'field' && patternAnalysis.anchors.length > 0) {
-        instruction += ` In binoculars, confirm the ${patternAnalysis.type} pattern anchored by ${patternAnalysis.anchors.map(displayName).join(patternAnalysis.anchors.length > 2 ? ', ' : ' and ')}.`;
+      if (patternAnalysis.type !== 'field' && patternAnalysis.anchors.length > 0) {
+        const optics = profile.mode === 'binocular' ? 'binoculars' : 'your telescope';
+        instruction += ` In ${optics}, confirm the ${patternAnalysis.type} pattern anchored by ${patternAnalysis.anchors.map(displayName).join(patternAnalysis.anchors.length > 2 ? ', ' : ' and ')}.`;
       }
     } else if (i === path.length - 1) {
       const dn = displayName(node);

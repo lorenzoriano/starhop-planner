@@ -15,7 +15,9 @@ export const settingsSchema = z.object({
       );
     }),
   time: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/),
+  timeMode: z.enum(["live", "planned"]).default("live"),
   mode: z.enum(["binocular", "telescope"]),
+  instrumentSelected: z.boolean().default(false),
   fov: z.number().min(0.2).max(15),
   fovHeight: z.number().min(0.2).max(15),
   shape: z.enum(["circle", "rectangle"]),
@@ -23,18 +25,34 @@ export const settingsSchema = z.object({
   difficulty: z.enum(["beginner", "intermediate", "expert"]),
   targetId: z.string(),
   redLight: z.boolean(),
+}).transform((settings) => {
+  // Older releases defaulted new installs to binoculars without asking.
+  // Move that implicit choice to a telescope profile once; keep later choices.
+  if (!settings.instrumentSelected && settings.mode === "binocular") {
+    return {
+      ...settings,
+      mode: "telescope" as const,
+      instrumentSelected: false,
+      fov: 5,
+      fovHeight: 5,
+      limitingMag: 8,
+    };
+  }
+  return settings;
 });
 export type Settings = z.infer<typeof settingsSchema>;
 export const defaultSettings: Settings = {
   lat: 37.77,
   lon: -122.42,
   date: formatInTimeZone(new Date(), "America/Los_Angeles", "yyyy-MM-dd"),
-  time: "21:00",
-  mode: "binocular",
-  fov: 7,
-  fovHeight: 7,
+  time: formatInTimeZone(new Date(), "America/Los_Angeles", "HH:mm"),
+  timeMode: "live",
+  mode: "telescope",
+  instrumentSelected: false,
+  fov: 5,
+  fovHeight: 5,
   shape: "circle",
-  limitingMag: 6.5,
+  limitingMag: 8,
   difficulty: "beginner",
   targetId: "M31",
   redLight: false,

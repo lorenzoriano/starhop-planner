@@ -355,7 +355,7 @@ export function AltitudeChart({
     <div className="altitude-chart">
       <div className="flex justify-between text-xs mb-2">
         <span className="text-muted-foreground">
-          Altitude over the next 8 hours
+          Calculated altitude · next 8 hours
         </span>
         <span className="text-primary">
           {best
@@ -366,7 +366,7 @@ export function AltitudeChart({
       <svg
         viewBox="0 0 330 116"
         role="img"
-        aria-label={`Altitude forecast for ${target.name}. Shaded bands show astronomical darkness.`}
+        aria-label={`Calculated altitude for ${target.name} over eight hours. Shaded bands mark times when the Sun is below 18 degrees under the horizon; this is not a weather forecast.`}
       >
         {samples.map(
           (s, i) =>
@@ -413,7 +413,7 @@ export function AltitudeChart({
         ))}
       </svg>
       <p className="text-[10px] text-muted-foreground mt-1">
-        Shaded = astronomical darkness · aim for 30° or higher
+        Shaded = Sun below −18° · position only, no weather data · aim for 30° or higher
       </p>
     </div>
   );

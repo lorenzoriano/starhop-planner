@@ -91,10 +91,19 @@ export function SkyChart({
   }, [currentHop, targetNode]);
 
   const viewRadius = useMemo(() => {
-    if (currentHop) return Math.max(12, Math.min(22, fovWidth * 3.1));
+    if (currentHop) {
+      const routeSpan = route
+        ? Math.max(0, ...route.hops.map((hop) =>
+            Math.max(...route.hops.map((other) =>
+              angularDistance(hop.center.ra, hop.center.dec, other.center.ra, other.center.dec),
+            )),
+          ))
+        : 0;
+      return Math.max(12, Math.min(70, Math.max(fovWidth * 3.1, routeSpan + fovWidth * 1.5)));
+    }
     if (targetNode) return 24;
     return 40;
-  }, [currentHop, targetNode, fovWidth]);
+  }, [currentHop, targetNode, fovWidth, route]);
 
   // Reset zoom/pan when viewRadius changes (new route computed or cleared),
   // but NOT when stepping through hops — preserve user's zoom/pan across steps.
@@ -343,11 +352,9 @@ export function SkyChart({
     const ids = new Set<string>();
     if (route?.startAnchor) ids.add(route.startAnchor.id);
     if (targetNode) ids.add(targetNode.id);
-    route?.hops.forEach((hop, index) => {
-      if (index === animStep) {
-        hop.patternAnchors.forEach((star) => ids.add(star.id));
-        hop.visibleGuideStars.slice(0, 5).forEach((star) => ids.add(star.id));
-      }
+    route?.hops.forEach((hop) => {
+      hop.patternAnchors.forEach((star) => ids.add(star.id));
+      hop.visibleGuideStars.slice(0, 5).forEach((star) => ids.add(star.id));
     });
     if (hoveredStar) ids.add(hoveredStar.id);
     return ids;
@@ -363,14 +370,16 @@ export function SkyChart({
   // Constellation IDs relevant to the active hop's guide stars — show more of those figures
   const activeConstellationIds = useMemo(() => {
     const ids = new Set<string>();
-    if (currentHop) {
-      for (const s of currentHop.patternAnchors) if (s.constellation) ids.add(s.constellation);
-      for (const s of currentHop.visibleGuideStars.slice(0, 8)) if (s.constellation) ids.add(s.constellation);
+    if (route) {
+      for (const hop of route.hops) {
+        for (const s of hop.patternAnchors) if (s.constellation) ids.add(s.constellation);
+        for (const s of hop.visibleGuideStars.slice(0, 8)) if (s.constellation) ids.add(s.constellation);
+      }
     }
     if (targetNode?.constellation) ids.add(targetNode.constellation);
     if (route?.startAnchor?.constellation) ids.add(route.startAnchor.constellation);
     return ids;
-  }, [currentHop, targetNode, route]);
+  }, [targetNode, route]);
 
   // The local enrichment radius — within this distance from the focus point, show deeper stars
   const localRadius = useMemo(() => {

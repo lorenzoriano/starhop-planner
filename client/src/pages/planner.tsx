@@ -141,6 +141,7 @@ export default function PlannerPage() {
     setSettings((prev) => ({ ...prev, ...patch }));
   const [page, setPage] = useState<Page>("tonight");
   const [setupOpen, setSetupOpen] = useState(false);
+  const [sourcesOpen, setSourcesOpen] = useState(false);
   const [catalogs, setCatalogs] = useState<Catalogs>(EMPTY_CATALOGS);
   const [catalogError, setCatalogError] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -161,7 +162,9 @@ export default function PlannerPage() {
   const [routeIndex, setRouteIndex] = useState(0);
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const featuredObjectRef = useRef<HTMLElement>(null);
   const [speed, setSpeed] = useState(3500);
+  const [clockNow, setClockNow] = useState(() => new Date());
   const offline = useOffline();
   const {
     lat,
@@ -175,9 +178,25 @@ export default function PlannerPage() {
     difficulty,
   } = settings;
   const timezone = useMemo(() => tzLookup(lat, lon), [lat, lon]);
+  useEffect(() => {
+    if (settings.timeMode !== "live") return;
+    const timer = window.setInterval(() => setClockNow(new Date()), 30_000);
+    return () => window.clearInterval(timer);
+  }, [settings.timeMode]);
+  const observingDate =
+    settings.timeMode === "live"
+      ? formatInTimeZone(clockNow, timezone, "yyyy-MM-dd")
+      : settings.date;
+  const observingTime =
+    settings.timeMode === "live"
+      ? formatInTimeZone(clockNow, timezone, "HH:mm")
+      : settings.time;
   const date = useMemo(
-    () => fromZonedTime(`${settings.date}T${settings.time}:00`, timezone),
-    [settings.date, settings.time, timezone],
+    () =>
+      settings.timeMode === "live"
+        ? clockNow
+        : fromZonedTime(`${settings.date}T${settings.time}:00`, timezone),
+    [settings.date, settings.time, settings.timeMode, timezone, clockNow],
   );
   const params: ObservingParams = useMemo(
     () => ({
@@ -208,7 +227,11 @@ export default function PlannerPage() {
       algorithm,
     ],
   );
-  const paramsKey = JSON.stringify(params);
+  const paramsKey = JSON.stringify({
+    ...params,
+    // Keep an in-progress route visible as the live clock advances.
+    date: settings.timeMode === "live" ? "live" : params.date,
+  });
   const keyRef = useRef(paramsKey);
   keyRef.current = paramsKey;
   const result = routeResult?.key === paramsKey ? routeResult.result : null;
@@ -361,9 +384,12 @@ export default function PlannerPage() {
     );
   }
   function useNow() {
+    const now = new Date();
+    setClockNow(now);
     update({
-      date: formatInTimeZone(new Date(), timezone, "yyyy-MM-dd"),
-      time: formatInTimeZone(new Date(), timezone, "HH:mm"),
+      date: formatInTimeZone(now, timezone, "yyyy-MM-dd"),
+      time: formatInTimeZone(now, timezone, "HH:mm"),
+      timeMode: "live",
     });
   }
   function locate() {
@@ -396,6 +422,14 @@ export default function PlannerPage() {
     );
   }
   async function compute() {
+    if (!settings.instrumentSelected) {
+      setSetupOpen(true);
+      toast({
+        title: "Choose your instrument",
+        description: "Select binoculars or a small telescope so the hop matches your field of view.",
+      });
+      return;
+    }
     setPage("hop");
     setComputing(true);
     setPlaying(false);
@@ -467,7 +501,7 @@ export default function PlannerPage() {
   function exportNight() {
     const lines = [
       `# My StarHop observing night`,
-      `${settings.date} at ${settings.time} (${timezone})`,
+      `${observingDate} at ${observingTime} (${timezone})`,
       `Location: ${lat}°, ${lon}° · ${mode} · ${fov}° field`,
       "",
     ];
@@ -484,7 +518,7 @@ export default function PlannerPage() {
     });
     download(
       lines.join("\n"),
-      `starhop-night-${settings.date}.md`,
+      `starhop-night-${observingDate}.md`,
       "text/markdown",
     );
   }
@@ -493,7 +527,7 @@ export default function PlannerPage() {
     download(
       [
         `# Star hop to ${selected.displayName}`,
-        `${settings.date} ${settings.time} (${timezone}) · ${lat}°, ${lon}°`,
+        `${observingDate} ${observingTime} (${timezone}) · ${lat}°, ${lon}°`,
         `${mode} · ${fov}° field · guide stars to magnitude ${limitingMag}`,
         "",
         ...route.hops.map(
@@ -671,13 +705,17 @@ export default function PlannerPage() {
                 <Input
                   id="observing-date"
                   type="date"
-                  value={settings.date}
+                  value={observingDate}
                   onChange={(e) => {
                     if (
                       e.target.value &&
                       !isNaN(new Date(e.target.value).getTime())
                     )
-                      update({ date: e.target.value });
+                      update({
+                        date: e.target.value,
+                        time: observingTime,
+                        timeMode: "planned",
+                      });
                   }}
                   data-testid="input-date"
                 />
@@ -689,9 +727,14 @@ export default function PlannerPage() {
                 <Input
                   id="observing-time"
                   type="time"
-                  value={settings.time}
+                  value={observingTime}
                   onChange={(e) => {
-                    if (e.target.value) update({ time: e.target.value });
+                    if (e.target.value)
+                      update({
+                        date: observingDate,
+                        time: e.target.value,
+                        timeMode: "planned",
+                      });
                   }}
                   data-testid="input-time"
                 />
@@ -701,16 +744,17 @@ export default function PlannerPage() {
           </section>
           <section className="setup-section">
             <div className="section-label">
-              <Binoculars size={16} />
+              {!settings.instrumentSelected ? <Eye size={16} /> : mode === "binocular" ? <Binoculars size={16} /> : <Telescope size={16} />}
               <h2>Your window to the sky</h2>
             </div>
             <div className="equipment-options">
               <button
-                className={mode === "binocular" ? "selected" : ""}
-                aria-pressed={mode === "binocular"}
+                className={settings.instrumentSelected && mode === "binocular" ? "selected" : ""}
+                aria-pressed={settings.instrumentSelected && mode === "binocular"}
                 onClick={() =>
                   update({
                     mode: "binocular",
+                    instrumentSelected: true,
                     fov: 7,
                     fovHeight: 7,
                     shape: "circle",
@@ -724,11 +768,12 @@ export default function PlannerPage() {
                 <small>Wide & easy</small>
               </button>
               <button
-                className={mode === "telescope" ? "selected" : ""}
-                aria-pressed={mode === "telescope"}
+                className={settings.instrumentSelected && mode === "telescope" ? "selected" : ""}
+                aria-pressed={settings.instrumentSelected && mode === "telescope"}
                 onClick={() =>
                   update({
                     mode: "telescope",
+                    instrumentSelected: true,
                     fov: 5,
                     fovHeight: 5,
                     limitingMag: 8,
@@ -741,6 +786,11 @@ export default function PlannerPage() {
                 <small>Finder & eyepiece</small>
               </button>
             </div>
+            {!settings.instrumentSelected && (
+              <p className="setup-hint mt-2">
+                Choose binoculars or a telescope for this session. StarHop will match the hop distances and guidance to your instrument.
+              </p>
+            )}
             <div className="flex justify-between mb-3">
               <Label className="field-label">Navigation field</Label>
               <span className="text-xs text-primary font-mono">
@@ -932,19 +982,25 @@ export default function PlannerPage() {
                   </p>
                 </div>
                 <div className="date-stamp">
-                  <span>{dateLabel}</span>
-                  <strong>{settings.time}</strong>
-                  <small>AT YOUR OBSERVING LOCATION</small>
+                  <span>
+                    {settings.timeMode === "live" ? "Right now" : "Planning for"} · {dateLabel}
+                  </span>
+                  <strong>{observingTime}</strong>
+                  <small>{timezone.replaceAll("_", " ")} local</small>
+                  <button className="text-action" onClick={useNow}>
+                    <Clock size={12} />
+                    {settings.timeMode === "live" ? "Update now" : "Use current time"}
+                  </button>
                 </div>
               </div>
               <div className="conditions-strip">
                 <Condition
                   icon={<Sparkles />}
-                  label="Sky at your time"
+                  label="Sun position at your time"
                   value={conditions.darkness}
                   detail={
                     conditions.isDark
-                      ? "Sun below −18°"
+                      ? "Sun below −18°; clouds and light pollution not measured"
                       : `Sun altitude ${Math.round(conditions.sunAlt)}°`
                   }
                 />
@@ -960,9 +1016,9 @@ export default function PlannerPage() {
                 />
                 <Condition
                   icon={<Eye />}
-                  label="Above 15° at your time"
+                  label="Catalog objects above 15°"
                   value={`${ranked.filter((t) => t.alt >= 15).length} objects`}
-                  detail="From the combined catalogs"
+                  detail="Calculated from the included catalogs"
                 />
                 <Condition
                   icon={<BookOpen />}
@@ -970,6 +1026,12 @@ export default function PlannerPage() {
                   value={`${night.length} saved`}
                   detail={`${observed} observed · saved on this device`}
                 />
+              </div>
+              <div className="data-source-row">
+                <span>Calculated on this device from stored sky catalogs</span>
+                <button className="text-action" onClick={() => setSourcesOpen(true)}>
+                  Where the data comes from
+                </button>
               </div>
               <div className="tonight-hero">
                 <section className="panel sky-panel">
@@ -979,8 +1041,7 @@ export default function PlannerPage() {
                       <h2>Your sky, overhead</h2>
                     </div>
                     <span className="live-label">
-                      <span className="status-dot" />
-                      {settings.time} local
+                      {settings.timeMode === "live" ? "Live sky" : "Planned sky"} · {observingTime}
                     </span>
                   </div>
                   {loading ? (
@@ -1009,7 +1070,7 @@ export default function PlannerPage() {
                   </div>
                 </section>
                 {selected && selection ? (
-                  <section className="panel featured-object">
+                  <section className="panel featured-object" ref={featuredObjectRef}>
                     <div className="featured-art">
                       <ObjectArt target={selected} />
                       <span className="art-badge">IN FOCUS</span>
@@ -1034,7 +1095,7 @@ export default function PlannerPage() {
                       </p>
                       <p className="object-story">{guideFor(selected).story}</p>
                       <p className="equipment-tag">
-                        <Binoculars size={14} />
+                        <Eye size={14} />
                         {guideFor(selected).equipment}
                       </p>
                       <div className="featured-actions">
@@ -1044,7 +1105,7 @@ export default function PlannerPage() {
                           data-testid="button-compute"
                         >
                           <Navigation size={15} />
-                          Show me the way
+                          {settings.instrumentSelected ? "Show me the way" : "Choose your instrument"}
                           <ArrowUpRight size={15} />
                         </Button>
                         <button
@@ -1158,7 +1219,12 @@ export default function PlannerPage() {
                       object={o}
                       saved={savedIds.has(o.target.id)}
                       selected={targetId === o.target.id}
-                      onSelect={() => selectTarget(o.target.id)}
+                      onSelect={() => {
+                        selectTarget(o.target.id);
+                        requestAnimationFrame(() =>
+                          featuredObjectRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }),
+                        );
+                      }}
                       onSave={() => toggleSave(o.target.id)}
                       onHop={() => {
                         selectTarget(o.target.id);
@@ -1246,7 +1312,7 @@ export default function PlannerPage() {
                     ) : (
                       <Clock size={14} />
                     )}
-                    Find a dark window
+                    Find an astronomical night
                   </Button>
                   <Button
                     onClick={compute}
@@ -1260,6 +1326,8 @@ export default function PlannerPage() {
                     )}
                     {computing
                       ? "Tracing a path…"
+                      : !settings.instrumentSelected
+                        ? "Choose your instrument"
                       : result
                         ? "Replan route"
                         : "Plan my star hop"}
@@ -1349,8 +1417,10 @@ export default function PlannerPage() {
                     milkyWay={catalogs.milkyWay}
                   />
                   <div className="chart-footnote">
-                    Equatorial map · north up, east left · drag to pan, pinch to
-                    zoom
+                    {route
+                      ? "Full route stays in view · Next field centers the next field"
+                      : "Equatorial map · north up, east left"}
+                    {" · "}drag to pan, pinch to zoom
                   </div>
                 </section>
                 <div className="hop-guide-column">
@@ -1764,6 +1834,26 @@ export default function PlannerPage() {
           </footer>
         </main>
       </div>
+      <Dialog open={sourcesOpen} onOpenChange={setSourcesOpen}>
+        <DialogContent className="data-sources-dialog">
+          <DialogHeader>
+            <DialogTitle>Where the sky information comes from</DialogTitle>
+            <DialogDescription>
+              StarHop works offline using catalog data bundled with the app. It
+              does not download a live sky feed.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="data-sources-content">
+            <p><strong>Positions and observing times.</strong> Star and deep-sky coordinates come from the included Bright Star, Hipparcos, Messier, and binocular-object catalogs. The app calculates altitude, direction, and route geometry from those coordinates, your location, and the selected time.</p>
+            <p><strong>Sun and Moon.</strong> The bundled Astronomy Engine computes the Sun and Moon positions, Moon phase, and illumination on your device. “Astronomical night” means the Sun is at least 18° below the horizon.</p>
+            <p><strong>What the sky conditions mean.</strong> The app has no weather, cloud, seeing, local light-pollution, or horizon-obstruction feed. A dark astronomical sky label describes the Sun’s position; it does not promise dark or clear observing conditions. Object magnitudes are catalog values and do not predict visibility by themselves.</p>
+            <p><strong>Finding guides and artwork.</strong> Hop descriptions are curated observing instructions; named field-guide routes show their references in the route details. Object artwork is an illustration of a visual impression, not a telescope image or measured brightness map.</p>
+            <p className="data-source-links">
+              References: <a href="https://cdsarc.cds.unistra.fr/viz-bin/cat/V/50" target="_blank" rel="noreferrer">Bright Star Catalogue</a>, <a href="https://cdsarc.cds.unistra.fr/viz-bin/cat/I/239" target="_blank" rel="noreferrer">Hipparcos Catalogue</a>, <a href="https://messier.seds.org/" target="_blank" rel="noreferrer">SEDS Messier database</a>, and <a href="https://github.com/cosinekitty/astronomy" target="_blank" rel="noreferrer">Astronomy Engine</a>.
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
       <Dialog open={offlineOpen} onOpenChange={setOfflineOpen}>
         <DialogContent className="offline-dialog">
           <DialogHeader>
@@ -1871,6 +1961,8 @@ function TargetCard({
         className="target-card-main"
         onClick={onSelect}
         aria-label={`Explore ${target.displayName}`}
+        aria-pressed={selected}
+        title="Select this object and show its details above"
         data-testid={`target-${target.id}`}
       >
         <div className="target-thumbnail">
