@@ -3,7 +3,7 @@ import { z } from "zod";
 import { useLocalState } from "@/hooks/use-local-state";
 
 export const chartPreferencesSchema = z.object({
-  labelSize: z.number().min(0).max(18), starBrightness: z.number().min(1).max(10),
+  labelSize: z.number().min(0).max(30), starBrightness: z.number().min(1).max(10),
   navStarSize: z.number().min(1).max(10), showLegend: z.boolean(),
   showGhostCircles: z.boolean(), showConstellations: z.boolean(),
   mirrored: z.boolean(), rotation: z.union([z.literal(0), z.literal(90), z.literal(180), z.literal(270)]),

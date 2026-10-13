@@ -1482,7 +1482,7 @@ export default function PlannerPage() {
                   />
                   <div className="chart-footnote">
                     {route
-                      ? "Full route stays in view · Next field centers the next field"
+                      ? "Continuous sky · Next field moves the view · Route overview shows the journey"
                       : "Equatorial map · north up, east left"}
                     {" · "}drag to pan, pinch to zoom
                   </div>

@@ -24,3 +24,11 @@ export function projectChartPoint(point: EquatorialPoint, frame: EquatorialPoint
   const offset = stereographicProject(focus.ra, focus.dec, frame.ra, frame.dec, scale);
   return projected && offset ? { x: projected.x - offset.x, y: projected.y - offset.y } : null;
 }
+
+/** Frame the active field with surrounding sky instead of opening on a distant route. */
+export function fieldViewZoom(viewRadius: number, fieldWidth: number, fieldHeight = fieldWidth, fillRadius = 180, maxZoom = 200) {
+  const radians = Math.PI / 180;
+  const planeRadius = 2*Math.tan(viewRadius*radians/2)/radians;
+  const fieldRadius = 2*Math.tan(Math.max(fieldWidth,fieldHeight)*radians/4)/radians;
+  return Math.max(.5, Math.min(maxZoom, fillRadius/(fieldRadius*260/planeRadius)));
+}

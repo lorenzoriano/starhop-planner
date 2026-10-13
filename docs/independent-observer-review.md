@@ -29,3 +29,9 @@ The reviewer verified the first three fixes in the browser and rechecked the las
 ## Practical limits
 
 The atlas is a smooth-sphere preview using NASA LROC texture and IAU geometry. It does not model crater-relief shadows, earthshine, eclipses, atmospheric seeing or individual eyesight. Moonlight is an estimate using assumed clear-air extinction and moonless sky brightness, not a weather forecast or a probability of seeing an object. Local horizon obstructions are not measured. These limits are explained in the interface.
+
+## Follow-up chart annotation
+
+The user reported hidden label-size controls and an unhelpful tiny starting field. Shared chart controls now keep label size, star brightness and guide-star size visible. Routes open framed on their starting field; Route overview and Reset switch between context and the active field. Label sizes are measured in screen pixels, star glyphs and line widths remain readable while zooming, and label placement checks the visible viewport.
+
+The independent reviewer checked Job’s Coffin via Altair with a 3.7° field at 390 and 776 pixels. The active field was readable at 18-pixel labels; all three controls were visible; mirror/90° rotation and zoom survived Next; the overview worked; Tonight inherited the shared display preferences. No horizontal overflow occurred. Dense overview labels at a large chosen size remain a tradeoff: reduce the visible label-size slider for more context.

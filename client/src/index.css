@@ -828,3 +828,9 @@ button:disabled { opacity: .45; cursor: default; }
 .lunar-section-links button, .lunar-back-to-atlas { font-size:11px; min-height:32px; }
 #lunar-atlas, #lunar-planning, #lunar-landmarks { scroll-margin-top:20px; }
 @media (max-width:760px) { .lunar-section-links { gap:8px 18px; } .lunar-back-to-atlas { font-size:10px; } .lunar-feature-library .section-heading { flex-wrap:wrap; gap:12px; } }
+
+.chart-readability-controls { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; padding:12px 14px; border-top:1px solid #2b424e; background:#0c1a25; }
+.chart-readability-controls label { display:grid; grid-template-columns:1fr auto; align-items:center; gap:8px; color:#b5c8ca; font-size:10px; }
+.chart-readability-controls output { color:#d2e4d5; font-family:var(--font-mono); font-size:10px; }
+.chart-readability-controls input { grid-column:1/-1; width:100%; accent-color:#b1cdbb; min-height:24px; cursor:pointer; }
+@media (max-width:760px) { .chart-readability-controls { grid-template-columns:1fr; gap:10px; } .chart-readability-controls label { grid-template-columns:105px 1fr 30px; font-size:11px; } .chart-readability-controls input { grid-column:2; grid-row:1; min-height:32px; } .chart-readability-controls output { grid-column:3; grid-row:1; text-align:right; } }

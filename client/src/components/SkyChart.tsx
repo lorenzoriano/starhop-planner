@@ -1,7 +1,7 @@
 import { orientChartPoint } from '@/lib/observing';
-import { chartFrame, projectChartPoint, skyZenith } from '@/lib/chart-view';
+import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom } from '@/lib/chart-view';
 import { useChartPreferences } from './ChartPreferences';
-import { useMemo, useRef, useState, useCallback, useEffect } from 'react';
+import { useMemo, useRef, useState, useCallback, useEffect, useLayoutEffect } from 'react';
 import {
   angularDistance,
   getConstellationName,
@@ -37,7 +37,7 @@ interface SkyChartProps {
 const CHART_SIZE = 600;
 const CHART_PAD = 40;
 const MIN_ZOOM = 0.5;
-const MAX_ZOOM = 24;
+const MAX_ZOOM = 200;
 
 export function SkyChart({
   nodes,
@@ -59,7 +59,7 @@ export function SkyChart({
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredStar, setHoveredStar] = useState<SkyNode | null>(null);
 
-  // Chart display controls (internal — shown as sliders in the overlay)
+  // Shared display preferences; primary controls remain visible below every chart.
   const { preferences, update: updateDisplay } = useChartPreferences();
   const { labelSize, starBrightness, navStarSize, showLegend, showGhostCircles, showConstellations, mirrored, rotation, starsOnly } = preferences;
 
@@ -67,6 +67,13 @@ export function SkyChart({
   const [zoom, setZoom] = useState(1);
   const [panX, setPanX] = useState(0);
   const [panY, setPanY] = useState(0);
+  const [viewportPixels, setViewportPixels] = useState(CHART_SIZE);
+  useLayoutEffect(() => {
+    const svg = svgRef.current; if (!svg) return;
+    const measure = () => { const box = svg.getBoundingClientRect(); setViewportPixels(Math.max(1, Math.min(box.width, box.height))); };
+    measure(); const observer = new ResizeObserver(measure); observer.observe(svg);
+    return () => observer.disconnect();
+  }, []);
 
   // Drag state (pointer-based for both mouse and touch)
   const isDragging = useRef(false);
@@ -112,21 +119,27 @@ export function SkyChart({
     return 40;
   }, [currentHop, targetNode, fovWidth, route, overview]);
 
-  // Reset zoom/pan when viewRadius changes (new route computed or cleared),
-  // but NOT when stepping through hops — preserve user's zoom/pan across steps.
-  useEffect(() => {
-    setZoom(1);
-    setPanX(0);
-    setPanY(0);
-  }, [viewRadius]);
+  const planeRadius = 2 * Math.tan(viewRadius * Math.PI / 360) * 180 / Math.PI;
+  const scale = (CHART_SIZE / 2 - CHART_PAD) / planeRadius;
+  // Keep wide maps readable without changing which catalog stars are shown.
+  const backgroundPointScale = Math.min(1, 12 / (viewRadius / zoom));
+  const catalogPointScale = Math.max(0.25, backgroundPointScale);
+  const scaleBarDegrees = [0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10].filter((angle) => angle * scale * zoom <= 90).at(-1) ?? 0.05;
+  const cx = CHART_SIZE / 2;
+  const cy = CHART_SIZE / 2;
+  const fovRadius = 2 * Math.tan(fovWidth * Math.PI / 720) * 180 / Math.PI * scale;
 
+  const initialZoom = overview || !route ? 1 : fieldViewZoom(viewRadius, fovWidth, fovShape === "rectangle" ? fovHeight : fovWidth);
+  const screenUnit = CHART_SIZE / viewportPixels / zoom;
+  const labelUnits = labelSize * screenUnit;
+  // Field changes reset the camera. Advancing a hop preserves zoom and orientation.
+  useLayoutEffect(() => {
+    setZoom(initialZoom); setPanX(0); setPanY(0);
+  }, [viewRadius, route?.id, overview, fovWidth, fovHeight, fovShape]);
   const handleResetView = useCallback(() => {
-    setZoom(1);
-    setPanX(0);
-    setPanY(0);
-  }, []);
-
-  const isDefaultView = zoom === 1 && panX === 0 && panY === 0;
+    setZoom(initialZoom); setPanX(0); setPanY(0);
+  }, [initialZoom]);
+  const isDefaultView = zoom === initialZoom && panX === 0 && panY === 0;
 
   // SVG viewBox with zoom and pan applied
   const viewBoxSize = CHART_SIZE / zoom;
@@ -283,15 +296,6 @@ export function SkyChart({
     };
   }, []);
 
-  const planeRadius = 2 * Math.tan(viewRadius * Math.PI / 360) * 180 / Math.PI;
-  const scale = (CHART_SIZE / 2 - CHART_PAD) / planeRadius;
-  // Keep wide maps readable without changing which catalog stars are shown.
-  const backgroundPointScale = Math.min(1, 12 / viewRadius);
-  const catalogPointScale = Math.max(0.25, backgroundPointScale);
-  const scaleBarDegrees = [0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10].filter((angle) => angle * scale * zoom <= 90).at(-1) ?? 0.05;
-  const cx = CHART_SIZE / 2;
-  const cy = CHART_SIZE / 2;
-  const fovRadius = 2 * Math.tan(fovWidth * Math.PI / 720) * 180 / Math.PI * scale;
 
   const project = useCallback((ra: number, dec: number) => {
     if (overview && angularDistance(ra, dec, center.ra, center.dec) > 90) return null;
@@ -644,24 +648,24 @@ export function SkyChart({
       const text = chartLabel(candidate.star);
       // Skip empty labels (HR-only stars) and deduplicate
       if (!text || usedNames.has(text)) continue;
-      const charWidth = labelSize * 0.63;
-      const lPad = Math.max(1, Math.round(labelSize * 0.4));
-      const width = Math.max(labelSize * 2, text.length * charWidth);
+      const charWidth = labelUnits * 0.63;
+      const lPad = Math.max(screenUnit, labelUnits * 0.4);
+      const width = Math.max(labelUnits * 2, text.length * charWidth);
       for (const placement of placements) {
-        const x = candidate.point.x + placement.dx;
-        const y = candidate.point.y + placement.dy;
+        const x = candidate.point.x + placement.dx * screenUnit;
+        const y = candidate.point.y + placement.dy * screenUnit;
         const left = placement.anchor === 'start' ? x - lPad : x - width - lPad;
         const right = placement.anchor === 'start' ? x + width + lPad : x + lPad;
-        const top = y - labelSize - lPad;
+        const top = y - labelUnits - lPad;
         const bottom = y + lPad;
         const overlaps = accepted.some((label) => {
           const existingLeft = label.anchor === 'start' ? label.x - lPad : label.x - label.width - lPad;
           const existingRight = label.anchor === 'start' ? label.x + label.width + lPad : label.x + lPad;
-          const existingTop = label.y - labelSize - lPad;
+          const existingTop = label.y - labelUnits - lPad;
           const existingBottom = label.y + lPad;
           return !(right < existingLeft || left > existingRight || bottom < existingTop || top > existingBottom);
         });
-        const outOfBounds = left < 6 || right > CHART_SIZE - 6 || top < 6 || bottom > CHART_SIZE - 6;
+        const outOfBounds = left < viewBoxX + 6*screenUnit || right > viewBoxX + viewBoxSize - 6*screenUnit || top < viewBoxY + 6*screenUnit || bottom > viewBoxY + viewBoxSize - 6*screenUnit;
         if (!overlaps && !outOfBounds) {
           accepted.push({
             star: candidate.star,
@@ -681,7 +685,7 @@ export function SkyChart({
     }
 
     return accepted;
-  }, [plottedStars, activeConstellationIds, focusPoint, localRadius, labelSize]);
+  }, [plottedStars, activeConstellationIds, focusPoint, localRadius, labelSize, labelUnits, screenUnit, viewBoxX, viewBoxY, viewBoxSize]);
 
   const fovCenter = currentHop ? project(currentHop.center.ra, currentHop.center.dec) : targetNode ? project(targetNode.ra, targetNode.dec) : null;
 
@@ -709,45 +713,45 @@ export function SkyChart({
       case 'kite': {
         if (projected.length < 3) return null;
         const pts = projected.map(p => `${p.x},${p.y}`).join(' ');
-        return <polygon points={pts} fill={fillColor} stroke={strokeColor} strokeWidth={sw} opacity={so} strokeLinejoin="round" />;
+        return <polygon points={pts} fill={fillColor} stroke={strokeColor} vectorEffect="non-scaling-stroke" strokeWidth={sw} opacity={so} strokeLinejoin="round" />;
       }
       case 'chain':
       case 'zigzag': {
         const pts = projected.map(p => `${p.x},${p.y}`).join(' ');
-        return <polyline points={pts} fill="none" stroke={strokeColor} strokeWidth={sw} opacity={so} strokeDasharray={patternType === 'zigzag' ? '3 2' : '5 3'} strokeLinecap="round" />;
+        return <polyline points={pts} fill="none" stroke={strokeColor} vectorEffect="non-scaling-stroke" strokeWidth={sw} opacity={so} strokeDasharray={patternType === 'zigzag' ? '3 2' : '5 3'} strokeLinecap="round" />;
       }
       case 'arc': {
         if (projected.length < 3) return null;
         const d = projected.length === 3
           ? `M${projected[0].x},${projected[0].y} Q${projected[1].x},${projected[1].y} ${projected[2].x},${projected[2].y}`
           : `M${projected.map(p => `${p.x},${p.y}`).join(' L')}`;
-        return <path d={d} fill="none" stroke={strokeColor} strokeWidth={sw} opacity={so} strokeDasharray="4 3" strokeLinecap="round" />;
+        return <path d={d} fill="none" stroke={strokeColor} vectorEffect="non-scaling-stroke" strokeWidth={sw} opacity={so} strokeDasharray="4 3" strokeLinecap="round" />;
       }
       case 'cross': {
         if (projected.length < 4) return null;
         return (
           <g>
-            <line x1={projected[0].x} y1={projected[0].y} x2={projected[1].x} y2={projected[1].y} stroke={strokeColor} strokeWidth={sw} opacity={so} />
-            <line x1={projected[2].x} y1={projected[2].y} x2={projected[3].x} y2={projected[3].y} stroke={strokeColor} strokeWidth={sw} opacity={so} />
+            <line x1={projected[0].x} y1={projected[0].y} x2={projected[1].x} y2={projected[1].y} stroke={strokeColor} vectorEffect="non-scaling-stroke" strokeWidth={sw} opacity={so} />
+            <line x1={projected[2].x} y1={projected[2].y} x2={projected[3].x} y2={projected[3].y} stroke={strokeColor} vectorEffect="non-scaling-stroke" strokeWidth={sw} opacity={so} />
           </g>
         );
       }
       case 'arrow': {
         const pts = projected.map(p => `${p.x},${p.y}`).join(' ');
-        return <polyline points={pts} fill="none" stroke={strokeColor} strokeWidth={sw} opacity={so} markerEnd="url(#pattern-arrowhead)" strokeLinecap="round" strokeLinejoin="round" />;
+        return <polyline points={pts} fill="none" stroke={strokeColor} vectorEffect="non-scaling-stroke" strokeWidth={sw} opacity={so} markerEnd="url(#pattern-arrowhead)" strokeLinecap="round" strokeLinejoin="round" />;
       }
       case 'bracket': {
         if (!fovCenter || projected.length < 2) return null;
         return (
           <g>
             {projected.map((p, i) => (
-              <line key={i} x1={fovCenter.x} y1={fovCenter.y} x2={p.x} y2={p.y} stroke={strokeColor} strokeWidth={sw * 0.8} opacity={so * 0.7} strokeDasharray="4 3" />
+              <line key={i} x1={fovCenter.x} y1={fovCenter.y} x2={p.x} y2={p.y} stroke={strokeColor} vectorEffect="non-scaling-stroke" strokeWidth={sw * 0.8} opacity={so * 0.7} strokeDasharray="4 3" />
             ))}
           </g>
         );
       }
       case 'pair': {
-        return <line x1={projected[0].x} y1={projected[0].y} x2={projected[1].x} y2={projected[1].y} stroke={strokeColor} strokeWidth={sw * 0.7} opacity={so * 0.5} strokeDasharray="3 4" />;
+        return <line x1={projected[0].x} y1={projected[0].y} x2={projected[1].x} y2={projected[1].y} stroke={strokeColor} vectorEffect="non-scaling-stroke" strokeWidth={sw * 0.7} opacity={so * 0.5} strokeDasharray="3 4" />;
       }
       default:
         return null;
@@ -778,6 +782,8 @@ export function SkyChart({
       data-projection={overview ? 'overhead' : 'fixed-equatorial'}
       data-rotation={rotation}
       data-mirrored={mirrored}
+      data-zoom={zoom}
+      data-fov-radius={fovRadius}
     >
       <svg
         ref={svgRef}
@@ -804,14 +810,14 @@ export function SkyChart({
             <stop offset="100%" stopColor="#070910" />
           </radialGradient>
           <filter id="glow-soft">
-            <feGaussianBlur stdDeviation="1.2" result="blur" />
+            <feGaussianBlur stdDeviation={1.2*screenUnit} result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
           <filter id="glow-strong">
-            <feGaussianBlur stdDeviation="2.2" result="blur" />
+            <feGaussianBlur stdDeviation={2.2*screenUnit} result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -857,7 +863,7 @@ export function SkyChart({
             r={r * scale}
             fill="none"
             stroke="#182034"
-            strokeWidth="0.6"
+            vectorEffect="non-scaling-stroke" strokeWidth="0.6"
             strokeDasharray="4 5"
           />
         ))}
@@ -867,7 +873,7 @@ export function SkyChart({
             key={`${path.id}-${index}`}
             d={path.d}
             stroke={path.nearFocus ? '#5a8abf' : '#3a5580'}
-            strokeWidth={path.nearFocus ? 1.4 : 0.9}
+            vectorEffect="non-scaling-stroke" strokeWidth={path.nearFocus ? 1.4 : 0.9}
             fill="none"
             opacity={path.nearFocus ? 0.8 : 0.45}
             strokeLinecap="round"
@@ -875,7 +881,7 @@ export function SkyChart({
         ))}
 
         {/* Constellation name labels */}
-        {!starsOnly && showConstellations && constellationLabels.map((label) => (
+        {!starsOnly && labelSize > 0 && showConstellations && constellationLabels.map((label) => (
           <text
             key={`cname-${label.abbr}`}
             x={label.x}
@@ -883,11 +889,11 @@ export function SkyChart({
             textAnchor="middle"
             fill={label.nearFocus ? '#a7cfa0' : '#8bad86'}
             opacity={label.nearFocus ? 0.95 : 0.8}
-            fontSize={Math.max(10, labelSize * 0.85)}
+            fontSize={Math.max(10, labelSize * 0.85)*screenUnit}
             data-chart-label="constellation"
             fontFamily="var(--font-sans)"
             fontWeight="500"
-            letterSpacing="1.5"
+            letterSpacing={1.5*screenUnit}
             pointerEvents="none"
           >
             {label.name.toUpperCase()}
@@ -899,22 +905,22 @@ export function SkyChart({
           <g key={i}>
             {!starsOnly && star.mag < 2.5 && (
               <circle cx={star.x} cy={star.y}
-                r={bgStarSize(star.mag) * brightMul * backgroundPointScale * 4}
+                r={bgStarSize(star.mag) * brightMul * backgroundPointScale * 4 * screenUnit}
                 fill={`url(#${bvGlowId(star.bv)})`} />
             )}
             <circle
               data-background-star="true"
               cx={star.x}
               cy={star.y}
-              r={bgStarSize(star.mag) * brightMul * backgroundPointScale}
+              r={bgStarSize(star.mag) * brightMul * backgroundPointScale * screenUnit}
               fill={star.mag > 4 ? '#c8d0dc' : starsOnly && star.mag > 3 ? '#dce3e7' : bvColor(star.bv)}
               opacity={Math.min(0.97, bgStarOpacity(star.mag) * brightMul)}
             />
           </g>
         ))}
 
-        {!starsOnly && routePath && <path d={routePath} stroke="#315e86" strokeWidth="1.2" fill="none" opacity="0.26" strokeDasharray="5 4" />}
-        {!starsOnly && routeProgressPath && <path d={routeProgressPath} stroke="#4fc3ff" strokeWidth="1.8" fill="none" opacity="0.88" />}
+        {!starsOnly && routePath && <path d={routePath} stroke="#315e86" vectorEffect="non-scaling-stroke" strokeWidth="1.2" fill="none" opacity="0.26" strokeDasharray="5 4" />}
+        {!starsOnly && routeProgressPath && <path d={routeProgressPath} stroke="#4fc3ff" vectorEffect="non-scaling-stroke" strokeWidth="1.8" fill="none" opacity="0.88" />}
 
         {/* Ghost pattern shapes for upcoming hops */}
         {!starsOnly && ghostPatternShapes}
@@ -935,13 +941,13 @@ export function SkyChart({
           >
             {onSelect && star.type !== 'star' && <circle cx={point.x} cy={point.y} r={12 / zoom} fill="transparent" />}
             {!starsOnly && (isTarget || isAnchor || isPatternAnchor) && (
-              <circle cx={point.x} cy={point.y} r={radius * 3.5 * navMul} fill="white" opacity="0.05" />
+              <circle cx={point.x} cy={point.y} r={radius * 3.5 * navMul * screenUnit} fill="white" opacity="0.05" />
             )}
             <circle
               data-chart-star="true"
               cx={point.x}
               cy={point.y}
-              r={isTarget ? Math.max(radius + 1.5 * navMul, 4.2 * navMul) : isAnchor || isPatternAnchor ? Math.max(radius + 0.8 * navMul, 2.8 * navMul) : isGuide ? radius * navMul : radius * Math.min(1.8, brightMul) * catalogPointScale}
+              r={(isTarget ? Math.max(radius + 1.5 * navMul, 4.2 * navMul) : isAnchor || isPatternAnchor ? Math.max(radius + 0.8 * navMul, 2.8 * navMul) : isGuide ? radius * navMul : radius * Math.min(1.8, brightMul) * catalogPointScale) * screenUnit}
               fill={
                 starsOnly ? '#e0e5e9' : isTarget
                   ? '#f59e0b'
@@ -981,7 +987,7 @@ export function SkyChart({
                     r={fovRadius}
                     fill="rgba(245, 158, 11, 0.05)"
                     stroke="rgba(245, 158, 11, 0.30)"
-                    strokeWidth="1"
+                    vectorEffect="non-scaling-stroke" strokeWidth="1"
                     strokeDasharray="4 4"
                   />
                 ) : (
@@ -992,7 +998,7 @@ export function SkyChart({
                     height={fovHeight * scale}
                     fill="rgba(245, 158, 11, 0.05)"
                     stroke="rgba(245, 158, 11, 0.30)"
-                    strokeWidth="1"
+                    vectorEffect="non-scaling-stroke" strokeWidth="1"
                     strokeDasharray="4 4"
                     rx="3"
                   />
@@ -1010,17 +1016,17 @@ export function SkyChart({
               <circle
                 cx={point.x}
                 cy={point.y}
-                r={(active ? 4.3 : 2.6) * navMul}
+                r={(active ? 4.3 : 2.6) * navMul * screenUnit}
                 fill={index === 0 ? '#38bdf8' : index === route.hops.length - 1 ? '#f59e0b' : '#6366f1'}
                 opacity={active ? 1 : 0.7}
                 filter={active ? 'url(#glow-soft)' : undefined}
               />
               <text
                 x={point.x}
-                y={point.y - 8}
+                y={point.y - 8*screenUnit}
                 textAnchor="middle"
                 fill={active ? '#f5f7ff' : '#94a3c7'}
-                fontSize="8"
+                fontSize={8*screenUnit}
                 fontWeight={active ? '700' : '500'}
                 fontFamily="var(--font-sans)"
               >
@@ -1039,7 +1045,7 @@ export function SkyChart({
                 r={fovRadius}
                 fill="rgba(79, 195, 255, 0.05)"
                 stroke="rgba(79, 195, 255, 0.45)"
-                strokeWidth="1"
+                vectorEffect="non-scaling-stroke" strokeWidth="1"
                 strokeDasharray="4 4"
               />
             ) : (
@@ -1050,7 +1056,7 @@ export function SkyChart({
                 height={fovHeight * scale}
                 fill="rgba(79, 195, 255, 0.05)"
                 stroke="rgba(79, 195, 255, 0.45)"
-                strokeWidth="1"
+                vectorEffect="non-scaling-stroke" strokeWidth="1"
                 strokeDasharray="4 4"
                 rx="3"
               />
@@ -1061,15 +1067,15 @@ export function SkyChart({
         {!starsOnly && labels.map((label) => {
           const text = chartLabel(label.star);
           if (!text) return null;
-          const pad = Math.max(1, Math.round(labelSize * 0.4));
+          const pad = Math.max(screenUnit, labelUnits * 0.4);
           return (
             <g key={`${label.star.id}-label`} pointerEvents="none">
               <rect
                 x={label.anchor === 'start' ? label.x - pad : label.x - label.width - pad}
-                y={label.y - labelSize - Math.round(pad * 0.5)}
+                y={label.y - labelUnits - pad * 0.5}
                 width={label.width + pad * 2}
-                height={labelSize + pad * 2}
-                rx={Math.min(4, labelSize * 0.5)}
+                height={labelUnits + pad * 2}
+                rx={Math.min(4*screenUnit, labelUnits * 0.5)}
                 fill="rgba(8, 10, 18, 0.78)"
               />
               <text
@@ -1078,7 +1084,7 @@ export function SkyChart({
                 y={label.y}
                 textAnchor={label.anchor}
                 fill={label.isTarget ? '#ffd089' : label.isAnchor ? '#7dd3fc' : label.isPatternAnchor ? '#ddb8ff' : '#d6deef'}
-                fontSize={labelSize}
+                fontSize={labelUnits}
                 fontWeight={label.isTarget || label.isAnchor ? '700' : '500'}
                 fontFamily="var(--font-sans)"
               >
@@ -1092,7 +1098,7 @@ export function SkyChart({
           const point = project(hoveredStar.ra, hoveredStar.dec);
           if (!point) return null;
           return (
-            <g pointerEvents="none">
+            <g pointerEvents="none" transform={`translate(${point.x},${point.y}) scale(${screenUnit}) translate(${-point.x},${-point.y})`}>
               <rect x={point.x + 10} y={point.y - 28} width="150" height="42" rx="6" fill="#121726" stroke="#28314a" />
               <text x={point.x + 16} y={point.y - 12} fill="#edf2ff" fontSize="10" fontWeight="600" fontFamily="var(--font-sans)">
                 {hoveredStar.name}
@@ -1106,7 +1112,7 @@ export function SkyChart({
 
         </g>
         {overview && <g>
-          <circle cx={cx} cy={cy} r={CHART_SIZE / 2 - CHART_PAD} fill="none" stroke="#76948b" strokeWidth="1" />
+          <circle cx={cx} cy={cy} r={CHART_SIZE / 2 - CHART_PAD} fill="none" stroke="#76948b" vectorEffect="non-scaling-stroke" strokeWidth="1" />
           {[{ label: 'N', x: 0, y: -280 }, { label: 'E', x: -280, y: 0 }, { label: 'S', x: 0, y: 280 }, { label: 'W', x: 280, y: 0 }].map((point) => {
             const p = orientChartPoint(point, mirrored, rotation);
             return <text key={point.label} x={cx + p.x} y={cy + p.y + 4} textAnchor="middle" fill="#afc9b7" fontSize="12">{point.label}</text>;
@@ -1116,13 +1122,13 @@ export function SkyChart({
         {/* Legend moved to HTML overlay */}
 
         {!overview && <g transform={`translate(${viewBoxX + viewBoxSize - 120 / zoom}, ${viewBoxY + viewBoxSize - 20 / zoom})`}>
-          <line x1="0" y1="0" x2={scaleBarDegrees * scale} y2="0" stroke="#8797a5" strokeWidth={1 / zoom} />
-          <line x1="0" y1={-3 / zoom} x2="0" y2={3 / zoom} stroke="#8797a5" strokeWidth={1 / zoom} />
-          <line x1={scaleBarDegrees * scale} y1={-3 / zoom} x2={scaleBarDegrees * scale} y2={3 / zoom} stroke="#8797a5" strokeWidth={1 / zoom} />
+          <line x1="0" y1="0" x2={scaleBarDegrees * scale} y2="0" stroke="#8797a5" vectorEffect="non-scaling-stroke" strokeWidth={1} />
+          <line x1="0" y1={-3 / zoom} x2="0" y2={3 / zoom} stroke="#8797a5" vectorEffect="non-scaling-stroke" strokeWidth={1} />
+          <line x1={scaleBarDegrees * scale} y1={-3 / zoom} x2={scaleBarDegrees * scale} y2={3 / zoom} stroke="#8797a5" vectorEffect="non-scaling-stroke" strokeWidth={1} />
           <text x={scaleBarDegrees / 2 * scale} y={-6 / zoom} fill="#8797a5" fontSize={8 / zoom} textAnchor="middle" fontFamily="var(--font-sans)">{scaleBarDegrees}°</text>
         </g>}
 
-        <text x={CHART_SIZE - 16} y={24} textAnchor="end" fill="#7382a1" fontSize="8" fontFamily="var(--font-sans)">
+        <text x={CHART_SIZE - 16} y={24} textAnchor="end" fill="#7382a1" fontSize={8*screenUnit} fontFamily="var(--font-sans)">
           {overview ? 'Horizon = outer ring' : `Fixed map · ${fovWidth.toFixed(1)}° field`}
         </text>
       </svg>
@@ -1132,7 +1138,8 @@ export function SkyChart({
           <button aria-label="Zoom in" title="Zoom in" data-testid="button-zoom-in" onClick={() => setZoom(z => Math.min(MAX_ZOOM, z * 1.2))}>+</button>
           <button aria-label="Zoom out" title="Zoom out" data-testid="button-zoom-out" onClick={() => { const z = Math.max(MIN_ZOOM, zoom / 1.2); setZoom(z); setPanX(px => clampPan(px, 0, z).x); setPanY(py => clampPan(0, py, z).y); }}>−</button>
           <button onClick={handleResetView} data-testid="button-zoom-reset">Reset {zoom !== 1 ? `${zoom.toFixed(1)}×` : ''}</button>
-          <button disabled={!fovCenter} onClick={() => { const z = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, 230 / fovRadius)); setZoom(z); const p = clampPan(cx - (fovCenter?.x ?? cx), cy - (fovCenter?.y ?? cy), z); setPanX(p.x); setPanY(p.y); }} data-testid="button-fit-field">Fit field</button>
+          <button disabled={!fovCenter} onClick={() => { const z = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, fieldViewZoom(viewRadius, fovWidth, fovShape === "rectangle" ? fovHeight : fovWidth, 220))); setZoom(z); const p = clampPan(cx - (fovCenter?.x ?? cx), cy - (fovCenter?.y ?? cy), z); setPanX(p.x); setPanY(p.y); }} data-testid="button-fit-field">Fit field</button>
+          {route && <button onClick={() => { setZoom(1); setPanX(0); setPanY(0); }} data-testid="button-route-overview">Route overview</button>}
         </div>
         <div className="chart-toolbar-group">
           <button className={mirrored ? 'active' : ''} aria-pressed={mirrored} onClick={() => updateDisplay({ mirrored: !mirrored })} data-testid="button-mirror-chart">Mirror</button>
@@ -1144,12 +1151,14 @@ export function SkyChart({
         {onLimitingMagChange && <label>Stars to mag <input type="number" aria-label="Chart limiting magnitude" min="3" max="8" step="0.1" value={Math.min(8, limitingMag)} onChange={(event) => { const value = Number(event.target.value); if (value >= 3 && value <= 8) onLimitingMagChange(value); }} /></label>}
         <button className={starsOnly ? 'active' : ''} aria-pressed={starsOnly} onClick={() => updateDisplay({ starsOnly: !starsOnly })} data-testid="button-stars-only">Stars only</button>
       </div>
+      <div className="chart-readability-controls" aria-label="Chart readability">
+          <label>Label size<output>{labelSize === 0 ? "Off" : `${labelSize}px`}</output><input aria-label="Chart label size" type="range" min={0} max={30} value={labelSize} onChange={e => updateDisplay({ labelSize: Number(e.target.value) })} /></label>
+          <label>Star brightness<output>{starBrightness}</output><input aria-label="Chart star brightness" type="range" min={1} max={10} value={starBrightness} onChange={e => updateDisplay({ starBrightness: Number(e.target.value) })} /></label>
+          <label>Guide star size<output>{navStarSize}</output><input aria-label="Chart guide star size" type="range" min={1} max={10} value={navStarSize} onChange={e => updateDisplay({ navStarSize: Number(e.target.value) })} /></label>
+      </div>
       <details className="chart-display-settings">
         <summary>Chart layers & display</summary>
         <div className="display-options">
-          <label>Label size<input aria-label="Chart label size" type="range" min={0} max={18} value={labelSize} onChange={e => updateDisplay({ labelSize: Number(e.target.value) })} /></label>
-          <label>Star brightness<input aria-label="Chart star brightness" type="range" min={1} max={10} value={starBrightness} onChange={e => updateDisplay({ starBrightness: Number(e.target.value) })} /></label>
-          <label>Guide star size<input aria-label="Chart guide star size" type="range" min={1} max={10} value={navStarSize} onChange={e => updateDisplay({ navStarSize: Number(e.target.value) })} /></label>
           <label><input type="checkbox" checked={showConstellations} onChange={e => updateDisplay({ showConstellations: e.target.checked })} />Constellation lines</label>
           <label><input type="checkbox" checked={showGhostCircles} disabled={!route} onChange={e => updateDisplay({ showGhostCircles: e.target.checked })} />Upcoming fields</label>
           <label><input type="checkbox" checked={showLegend} onChange={e => updateDisplay({ showLegend: e.target.checked })} />Legend</label>
@@ -1162,7 +1171,7 @@ export function SkyChart({
       <svg className="absolute top-3 right-3 pointer-events-none" width="60" height="60" viewBox="0 0 60 60" aria-label={`Chart orientation, ${mirrored ? 'mirrored, ' : ''}rotated ${rotation} degrees`}>
         {([{ label: 'N', point: { x: 0, y: -16 } }, { label: 'E', point: { x: -16, y: 0 } }]).map(({ label, point }) => {
           const p = orientChartPoint(point, mirrored, rotation);
-          return <g key={label}><line x1="30" y1="30" x2={30 + p.x} y2={30 + p.y} stroke="#91aab6" strokeWidth="1" /><text x={30 + p.x * 1.5} y={33 + p.y * 1.5} textAnchor="middle" fill="#b0c6cc" fontSize="9">{label}</text></g>;
+          return <g key={label}><line x1="30" y1="30" x2={30 + p.x} y2={30 + p.y} stroke="#91aab6" vectorEffect="non-scaling-stroke" strokeWidth="1" /><text x={30 + p.x * 1.5} y={33 + p.y * 1.5} textAnchor="middle" fill="#b0c6cc" fontSize="9">{label}</text></g>;
         })}
       </svg>
     </div>

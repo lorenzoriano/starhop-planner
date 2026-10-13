@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { chartFrame, projectChartPoint, skyZenith } from "../chart-view";
+import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom } from "../chart-view";
 import { eqToHorizontal, stereographicProject } from "../astronomy";
 import { chartPreferencesSchema } from "../../components/ChartPreferences";
 
@@ -50,5 +50,23 @@ describe("shared sky chart projection", () => {
     expect(chartPreferencesSchema.safeParse(settings).success).toBe(true);
     expect(chartPreferencesSchema.safeParse({ ...settings, rotation: 17 }).success).toBe(false);
     expect(chartPreferencesSchema.safeParse({ ...settings, starBrightness: 50 }).success).toBe(false);
+  });
+});
+
+describe("field camera framing", () => {
+  it("opens on a useful field size for both short and long routes", () => {
+    for (const radius of [12,25,70]) {
+      const radians=Math.PI/180;
+      const zoom=fieldViewZoom(radius,3.7);
+      const planeRadius=2*Math.tan(radius*radians/2)/radians;
+      const fieldRadius=2*Math.tan(3.7*radians/4)/radians*260/planeRadius;
+      expect(fieldRadius*zoom).toBeCloseTo(180,8);
+      expect(zoom).toBeGreaterThan(1);
+    }
+  });
+  it("fits the larger side of a rectangular field and bounds extreme zoom", () => {
+    expect(fieldViewZoom(40,2,5)).toBe(fieldViewZoom(40,5,5));
+    expect(fieldViewZoom(70,.2)).toBeLessThanOrEqual(200);
+    expect(fieldViewZoom(2,15)).toBeGreaterThanOrEqual(.5);
   });
 });
