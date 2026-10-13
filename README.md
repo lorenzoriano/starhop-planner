@@ -28,6 +28,8 @@ Use the production build to test offline operation. Service workers need HTTPS o
 4. Add objects to **My night**, or select **Star hop**. Plan a route and confirm each field before moving. Mirror and rotate the chart to match your optics.
 5. Record observations and notes. Export notes as Markdown or a route as JSON. Red light mode dims and recolors the interface.
 
+The **Binoculars** section offers a sourced monthly collection of stars, asterisms, wide double stars, clusters, nebulae, and galaxies. Select a month to see recommendations calculated for your location at 21:00 on the 15th. Open a target for its real catalog field, annual altitude pattern, equipment guidance, and references. Save it to **My night** or explicitly plan a binocular hop at the displayed time. Browse all targets to explore southern fields that may be below your horizon. See [the research notes](docs/binocular-guide-research.md) for the book evidence and calendar method.
+
 Sky darkness and Moon illumination are astronomical calculations, not a weather forecast. Object altitude and integrated magnitude do not guarantee visibility: sky brightness, surface brightness, aperture, and experience matter. The object artwork illustrates a visual impression; it is not an astrophotograph.
 
 ## Offline use

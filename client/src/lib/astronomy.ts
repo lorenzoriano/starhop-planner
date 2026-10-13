@@ -36,9 +36,10 @@ export interface MessierObject {
 }
 
 // Categories for the expanded binocular catalog
-export type BinocularCategory = 'DS' | 'AST' | 'OC' | 'GC' | 'EN' | 'PN' | 'SNR' | 'GAL';
+export type BinocularCategory = 'STAR' | 'DS' | 'AST' | 'OC' | 'GC' | 'EN' | 'PN' | 'SNR' | 'GAL';
 
 export const BINOCULAR_CATEGORY_LABELS: Record<BinocularCategory, string> = {
+  STAR: 'Star',
   DS: 'Double Star',
   AST: 'Asterism',
   OC: 'Open Cluster',
@@ -50,6 +51,7 @@ export const BINOCULAR_CATEGORY_LABELS: Record<BinocularCategory, string> = {
 };
 
 export const BINOCULAR_CATEGORY_SHORT: Record<BinocularCategory, string> = {
+  STAR: 'Star',
   DS: 'Dbl Star',
   AST: 'Asterism',
   OC: 'Open Cl.',

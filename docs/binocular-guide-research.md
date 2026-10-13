@@ -1,0 +1,33 @@
+# Binocular guide: research and curation
+
+Research completed October 13, 2026, using two Luna research agents and primary-source follow-up. The app includes an original curated selection, not a reproduction of any book's full target list or text.
+
+## Books and evidence
+
+- Stephen James O’Meara, *Observing the Night Sky with Binoculars* (Cambridge, 2008): [publisher frontmatter and monthly contents](https://assets.cambridge.org/97805217/21707/frontmatter/9780521721707_frontmatter.pdf), [publisher index](https://assets.cambridge.org/97805217/21707/index/9780521721707_index.pdf). This is the strongest accessible evidence for specific book coverage. The app's per-target references identify the printed pages listed in that index. An index entry establishes inclusion; it does not provide the original observing narrative.
+- Gary Seronik, *Binocular Highlights*, revised and expanded edition: [author's description](https://garyseronik.com/binocular-highlights-2nd-edition-now-available/). Verified as an ordinary-binocular guide with 109 highlights. Its specific printed target membership was not inferred from unrelated articles or reader anecdotes.
+- Phil Harrington, *Touring the Universe through Binoculars*: [author's companion atlas](https://www.philharrington.net/tuba.htm). The author says the atlas plots the book's objects; the software download was not available to inspect in this research. Public authored columns used here include [Hercules](https://www.cloudynights.com/articles/column/binocular-universe/binocular-universe-hero-of-song-and-story-r2703/), [Andromeda](https://www.cloudynights.com/articles/column/binocular-universe/binocular-universe-next-stop-andromeda-r2743/), [Pleiades](https://www.cloudynights.com/articles/column/binocular-universe/binocular-universe-subaru-r1999/), [Coathanger](https://www.cloudynights.com/articles/cat/column/binocular-universe/binocular-universe-the-coathanger-r1954/), and [M81/M82](https://www.cloudynights.com/articles/column/binocular-universe/binocular-universe-a-galactic-dynamic-duo-r2544/). These are labeled author guides, rather than asserted as exact printed-book entries.
+- Craig Crossen and Wil Tirion, *Binocular Astronomy*, second edition: [publisher description](https://shopatsky.com/products/binocular-astronomy-2nd-edition). Reading-shelf recommendation; individual target membership was not verified from a free preview.
+- Stephen Tonkin, *Binocular Astronomy*, second edition: [Springer publication](https://link.springer.com/book/10.1007/978-1-4614-7467-8). Author's [BinocularSky archive](https://binocularsky.com/newsletter_archive.php) and object guides support practical observing choices. References link to object-specific guides or the exact newsletter used, rather than to the book indiscriminately.
+
+The initial request linked [this Cloudy Nights book discussion](https://www.cloudynights.com/forums/topic/858306-best-binocular-targets-book/). It informed the reading shelf; forum recommendations alone were not treated as proof of a specific target's book coverage.
+
+## Coordinates, guidance and southern coverage
+
+Coordinates for new named stars come from the existing Bright Star Catalogue records: HR 936 (Algol), 681 (Mira), 2061 (Betelgeuse), 1457 (Aldebaran), 5340 (Arcturus), 6134 (Antares), 6406 (Rasalgethi), and 8316 (Mu Cephei). Catalog magnitude is a reference value, not a live variable-star brightness estimate.
+
+New field coordinates come from Tonkin's [Collinder 70 guide](https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=Cr70), [Melotte 20 guide](https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=Mel20), [Melotte 111 guide](https://binocularsky.com/binoc_object_file.php?aperture=70&object_id=Mel111), and [September 2023 newsletter](https://binocularsky.com/newsletter/archive/202309.pdf) for IC 4756. The charts use actual BSC stars with a conventional marker at the target position, rather than invented star patterns.
+
+Southern additions to the guide use [Tonkin's IC 2602 notes](https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=IC2602), [Jodrell Bank's Carina guide](https://www.jb.man.ac.uk/astronomy/nightsky/AList/Carina.html), [Texas Tech's NGC 3532 notes](https://www.phys.ttu.edu/~ozprof/3532oz09_dslr.htm), [Omega Centauri notes](https://www.phys.ttu.edu/~ozprof/5139c.htm), and [NASA's 47 Tucanae page](https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-caldwell-catalog/caldwell-106/). They retain location-dependent horizon checks.
+
+Albireo is labeled a steadiness-dependent challenge; a 34-arcsecond pair is not a guaranteed handheld 10× split. Epsilon Lyrae means its wide pair, not resolving both close binaries. Mizar–Alcor means the wide pair, not splitting Mizar's close binary. The selected 56 Andromedae reference gives about 128 arcseconds; the old catalog's 200-arcsecond value and misleading location tip were corrected.
+
+The Carina Nebula's reference magnitude was aligned to the published 4.8 value on [NASA's Caldwell 92 page](https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-caldwell-catalog/caldwell-92/). The dashed circle in the guide's original finder fields is a labeled 7-degree reference, rather than a promise that every binocular has that exact field.
+
+## Month calculation
+
+Each target's altitude is computed at 21:00 local civil time on the 15th of all twelve months, for the chosen year and observing coordinates. Monthly picks are above 40 degrees or within 18 degrees of that target's highest sampled evening altitude. This retains high, worthwhile fields outside their exact peak month. The default Above 15° filter removes low fields. Near-polar targets can be available year-round; targets that never rise at the latitude are explicitly labeled when browsing the full collection.
+
+The month calendar is not reversed for the Southern Hemisphere. Right ascension determines the calendar progression, while latitude determines altitude and horizon access. The displayed evening is a representative planning sample. The solar position is calculated separately and can warn that the sample falls during twilight or daylight. Weather, horizon obstructions, lunar glare, and variable-star brightness are not part of the target-ranking calculation.
+
+The catalog, original notes, source titles, and monthly calculations are bundled for offline use. Visiting the external references requires a connection. The main observing list stores all selected targets locally, and the explicit Plan binocular hop action sets binocular mode and the clearly displayed planning time.

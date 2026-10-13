@@ -108,6 +108,7 @@ import {
   AltitudeChart,
 } from "@/components/ObservingVisuals";
 import { ImageFallback } from "@/components/ImageFallback";
+import { BinocularGuide } from "@/components/BinocularGuide";
 
 type Catalogs = {
   stars: CatalogStar[];
@@ -123,7 +124,7 @@ const EMPTY_CATALOGS: Catalogs = {
   dense: [],
   milkyWay: [],
 };
-type Page = "tonight" | "hop" | "night" | "image";
+type Page = "tonight" | "binocular" | "hop" | "night" | "image";
 
 export default function PlannerPage() {
   const { toast } = useToast();
@@ -451,6 +452,41 @@ export default function PlannerPage() {
       setComputing(false);
     }
   }
+  async function planBinocularHop(id: string, at: Date) {
+    const localDate = formatInTimeZone(at, timezone, "yyyy-MM-dd");
+    const localTime = formatInTimeZone(at, timezone, "HH:mm");
+    const field = mode === "binocular" && settings.instrumentSelected ? fov : 7;
+    const starLimit = mode === "binocular" && settings.instrumentSelected ? limitingMag : 6.5;
+    const plannedParams: ObservingParams = {
+      ...params,
+      date: fromZonedTime(`${localDate}T${localTime}:00`, timezone),
+      targetId: id,
+      observingMode: "binocular",
+      fovWidth: field,
+      fovHeight: field,
+      fovShape: "circle",
+      limitingMag: starLimit,
+    };
+    const key = JSON.stringify(plannedParams);
+    update({ targetId: id, date: localDate, time: localTime, timeMode: "planned", mode: "binocular", instrumentSelected: true, fov: field, fovHeight: field, shape: "circle", limitingMag: starLimit });
+    setPage("hop");
+    setRouteResult(null);
+    setComputing(true);
+    setPlaying(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    await new Promise((resolve) => setTimeout(resolve, 40));
+    try {
+      const computed = await planRoutes(plannedParams);
+      if (keyRef.current !== key) return;
+      setRouteResult({ key, result: computed });
+      setRouteIndex(0);
+      setStep(0);
+    } catch {
+      toast({ title: "Could not plan this binocular hop", description: "Check that the sky catalogs have loaded and try again.", variant: "destructive" });
+    } finally {
+      setComputing(false);
+    }
+  }
   async function bestTime() {
     if (!selected) return;
     setFindingTime(true);
@@ -469,6 +505,7 @@ export default function PlannerPage() {
         update({
           date: formatInTimeZone(window.date, timezone, "yyyy-MM-dd"),
           time: formatInTimeZone(window.date, timezone, "HH:mm"),
+          timeMode: "planned",
         });
         toast({
           title: "A better observing window",
@@ -598,6 +635,7 @@ export default function PlannerPage() {
           {(
             [
               ["tonight", "Tonight", Compass],
+              ["binocular", "Binoculars", Binoculars],
               ["hop", "Star hop", Navigation],
               ["night", "My night", BookOpen],
             ] as const
@@ -980,6 +1018,9 @@ export default function PlannerPage() {
                     Find your next faint fuzzy, familiar friend, or first
                     discovery.
                   </p>
+                  <button className="text-action binocular-home-link" onClick={() => setPage("binocular")}>
+                    <Binoculars size={14} /> Explore binocular favorites, month by month <ArrowUpRight size={13} />
+                  </button>
                 </div>
                 <div className="date-stamp">
                   <span>
@@ -1801,6 +1842,9 @@ export default function PlannerPage() {
                 })}
               </div>
             </>
+          )}
+          {page === "binocular" && (
+            <BinocularGuide targets={catalogs.targets} stars={catalogs.stars} lat={lat} lon={lon} timezone={timezone} observingDate={date} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
           )}
           {page === "image" && (
             <>

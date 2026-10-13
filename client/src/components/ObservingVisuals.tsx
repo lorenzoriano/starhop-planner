@@ -45,7 +45,14 @@ export function ObjectArt({
           opacity={0.3 + (i % 5) / 9}
         />
       ))}
-      {type === "Galaxy" ? (
+      {type === "Star" ? (
+        <g>
+          {[36, 20, 10].map((r) => (
+            <circle key={r} cx="180" cy="110" r={r} fill="#e8cc95" opacity={0.04} />
+          ))}
+          <circle cx="180" cy="110" r="3.5" fill="#e8cc95" />
+        </g>
+      ) : type === "Galaxy" ? (
         <g transform="translate(180 110) rotate(-28)">
           {[76, 62, 48, 32, 18].map((r, i) => (
             <ellipse

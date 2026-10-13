@@ -449,6 +449,7 @@ button:disabled { opacity: .45; cursor: default; }
 .display-options input[type=checkbox] { accent-color: #aacbba; }
 .red-light { --background: 0 35% 4%; --foreground: 5 55% 60%; --card: 0 30% 7%; --primary: 5 50% 48%; --primary-foreground: 0 35% 5%; --muted-foreground: 5 40% 45%; --border: 0 25% 18%; --ring: 5 50% 48%; }
 .red-light #root { filter: grayscale(1) sepia(1) saturate(5) hue-rotate(305deg) brightness(.65); }
+.red-light [role="dialog"] { filter: grayscale(1) sepia(1) saturate(5) hue-rotate(305deg) brightness(.65); }
 @media (min-width: 1600px) { .main-content { padding-left: 50px; padding-right: 50px; } .sky-overview { max-height: 420px; } .featured-art { height: 185px; } .featured-body { padding: 25px; } .object-story { font-size: 12px; } }
 @media (max-width: 1250px) { .app-header { padding: 0 25px; gap: 15px; } .workspace-layout { grid-template-columns: 240px minmax(0, 1fr); } .setup-panel { padding: 30px 19px; } .main-content { padding: 30px 25px 0; } .conditions-strip { gap: 9px; } .condition { gap: 6px; } .condition-icon { display: none; } .object-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .tonight-hero { grid-template-columns: 1.25fr 1fr; gap: 15px; } .featured-body { padding: 17px; } .featured-body h2 { font-size: 26px; } .featured-body .visibility-tag { font-size: 7px; } .featured-body .eyebrow { font-size: 7px; } .object-story { font-size: 10px; } .sky-caption { font-size: 8px; } .hop-layout { grid-template-columns: minmax(0, 1.5fr) minmax(240px, 1fr); gap: 14px; } .current-field { padding: 19px; } .main-nav { gap: 3px; } }
 @media (max-width: 1000px) { .brand-subtitle { font-size: 7px; letter-spacing: 1px; } .app-header { height: 80px; } .workspace-layout { grid-template-columns: 1fr; } .setup-panel { display: none; } .setup-panel.open { display: grid; grid-template-columns: 1fr 1fr; gap: 0 30px; border-right: 0; border-bottom: 1px solid #29404c; padding: 20px 28px; } .setup-title { grid-column: 1/-1; } .field-tip { margin: 20px 0 0; } .mobile-setup-toggle { display: inline-flex; } .main-content { padding: 28px 28px 0; } .object-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .page-heading h1 { font-size: 40px; } .header-actions { gap: 5px; } .offline-pill { font-size: 9px; padding: 7px 9px; } }
@@ -460,4 +461,166 @@ button:disabled { opacity: .45; cursor: default; }
   .target-card-actions > button { min-height: 34px; }
   .target-card-actions > button:last-child { width: 34px; }
   .chart-toolbar button, .chart-toolbar select { min-height: 36px; }
+}
+
+/* The monthly binocular field guide */
+.binocular-home-link { margin-top: 14px; font-size: 11px; }
+.binocular-guide { padding-bottom: 15px; }
+.binocular-heading h1 { font-size: clamp(35px, 3.4vw, 52px); }
+.binocular-heading-mark { width: 100px; height: 100px; display: grid; place-items: center; border: 1px solid #9dc8b432; border-radius: 50%; background: radial-gradient(circle, #81b9a814, transparent); color: #a8cbb9; flex-shrink: 0; }
+.binocular-heading-mark svg { width: 48px; height: 48px; }
+.binocular-calendar { border-top: 1px solid #34515a; padding-top: 25px; }
+.binocular-calendar-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 15px; margin-bottom: 22px; }
+.binocular-calendar-heading h2 { font-family: var(--font-serif); font-size: 28px; font-weight: 400; color: #dfe6dc; margin-top: 7px; line-height: 1.3; }
+.binocular-year { color: #869ea8; font-size: 10px; display: grid; gap: 5px; }
+.binocular-year select { background: #101f29; border: 1px solid #344c56; border-radius: 5px; padding: 7px 12px; color: #d7e2da; font-family: var(--font-mono); font-size: 13px; min-height: 36px; }
+.binocular-months { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 4px; }
+.binocular-months button { display: grid; justify-items: center; gap: 5px; padding: 11px 3px; border: 1px solid transparent; border-radius: 6px; color: #8da4ad; min-width: 0; }
+.binocular-months button > span { font-family: var(--font-mono); font-size: 8px; color: #5e7886; }
+.binocular-months strong { font-family: var(--font-serif); font-size: 19px; font-weight: 400; }
+.binocular-months small { font-size: 8px; color: #789ca0; }
+.binocular-months button:hover { background: #86c2ad0b; }
+.binocular-months button.active { border-color: #9bcbbb70; background: #91c4ad12; color: #daeadf; }
+.binocular-months button.active strong { color: #cbe4d2; }
+.binocular-calendar-context { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; padding: 17px 0 10px; color: #9bb5b6; font-size: 11px; }
+.binocular-calendar-context > span { display: flex; align-items: center; gap: 6px; }
+.binocular-calendar-context > span:last-child { margin-left: auto; color: #c8b47f; }
+.binocular-method-note { color: #7f9aa7; font-size: 11px; line-height: 1.8; max-width: 850px; margin-bottom: 25px; }
+.binocular-feature { display: grid; grid-template-columns: 1.2fr 1fr; background: linear-gradient(110deg, #102631, #0b1a24); }
+.binocular-feature-copy { padding: 28px 32px; align-self: center; }
+.binocular-feature-copy .eyebrow { color: #cdb983; }
+.binocular-feature h2 { font-family: var(--font-serif); font-size: 36px; font-weight: 400; color: #e0e6d9; margin: 11px 0 12px; line-height: 1.2; }
+.binocular-feature-copy > p { font-size: 13px; line-height: 1.9; color: #a3bac0; max-width: 520px; }
+.binocular-meta { display: flex; flex-wrap: wrap; gap: 12px 20px; margin: 18px 0; font-size: 10px; color: #b4ccbe; }
+.binocular-meta > span { display: flex; align-items: center; gap: 6px; }
+.binocular-feature .text-action { color: #acd6bd; font-size: 12px; }
+.binocular-feature-field { background: #09141d; position: relative; display: grid; align-items: center; border-left: 1px solid #2b424b; }
+.binocular-field { width: 100%; height: auto; display: block; }
+.binocular-feature-field .binocular-field { max-height: 300px; }
+.binocular-field-caption { position: absolute; bottom: 10px; left: 18px; font-size: 8px; color: #7b9ba6; }
+.binocular-twilight { margin-top: 15px; line-height: 1.7; }
+.binocular-collection, .binocular-books { margin-top: 42px; }
+.binocular-collection .section-heading h2, .binocular-books .section-heading h2 { font-family: var(--font-serif); font-size: 30px; font-weight: 400; color: #e1e5d9; }
+.binocular-collection .section-heading > span { font-size: 11px; color: #8ca3ae; }
+.binocular-family-tabs { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid #2b424d; margin-bottom: 17px; }
+.binocular-family-tabs button { color: #8fa7b0; font-size: 11px; min-height: 43px; padding: 7px 13px; position: relative; }
+.binocular-family-tabs button.active { color: #c9e0d1; }
+.binocular-family-tabs button.active:after { content: ''; position: absolute; bottom: -1px; left: 13px; right: 13px; height: 2px; background: #b2d5bf; }
+.binocular-toolbar { display: flex; gap: 9px; margin-bottom: 21px; flex-wrap: wrap; align-items: center; }
+.binocular-search { min-width: 230px; flex: 1; min-height: 41px; border: 1px solid #304b59; border-radius: 6px; display: flex; align-items: center; gap: 9px; padding: 0 12px; color: #8daab7; }
+.binocular-search input { background: transparent; outline: none; width: 100%; min-width: 0; color: #d0dfd7; font-size: 11px; padding: 11px 0; }
+.binocular-search input::placeholder { color: #728f9e; }
+.binocular-search:focus-within { border-color: #9bc8b7; }
+.binocular-search button { flex-shrink: 0; }
+.binocular-toolbar > select { background: #0d1d28; border: 1px solid #304b59; border-radius: 6px; min-height: 41px; color: #b4c8ca; padding: 8px 11px; font-size: 11px; }
+.binocular-toolbar > .filter-toggle { min-height: 41px; font-size: 11px; padding: 8px 11px; }
+.binocular-target-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.binocular-target-card { background: #0c1c27; border: 1px solid #2c4653; border-radius: 9px; overflow: hidden; display: flex; flex-direction: column; transition: border-color .2s; }
+.binocular-target-card:hover { border-color: #8fbaa36c; }
+.binocular-target-main { display: flex; flex-direction: column; flex: 1; text-align: left; width: 100%; }
+.binocular-target-field { height: 145px; overflow: hidden; width: 100%; position: relative; border-bottom: 1px solid #263d48; background: #09141d; }
+.binocular-target-field .binocular-field { height: 100%; object-fit: cover; }
+.binocular-family-label { position: absolute; top: 13px; left: 13px; font-size: 8px; color: #b7cdbe; padding: 5px 8px; border: 1px solid #789f8737; border-radius: 3px; background: #0b1825dc; }
+.binocular-target-body { padding: 19px 21px 15px; width: 100%; flex: 1; }
+.binocular-target-body .eyebrow { color: #90a9aa; font-size: 8px; letter-spacing: 1px; }
+.binocular-target-body h3 { font-family: var(--font-serif); font-size: 26px; font-weight: 400; margin: 10px 0; color: #e0e5d8; line-height: 1.25; }
+.binocular-target-body > p { color: #93abb7; font-size: 11px; line-height: 1.9; }
+.binocular-card-position { display: flex; justify-content: space-between; gap: 8px; margin-top: 18px; color: #a9c6b5; font-size: 9px; }
+.binocular-card-position > span:last-child { color: #819ca9; }
+.binocular-card-position .low { color: #c1a97d; }
+.binocular-target-bottom { padding: 9px 17px 9px 21px; border-top: 1px solid #293f49; display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #9fbfaf; font-size: 10px; }
+.level-challenge .binocular-target-bottom { color: #c9b37e; }
+.binocular-target-bottom button { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #405855; border-radius: 5px; }
+.binocular-target-bottom button.saved { background: #9bceb81a; color: #c2e2ce; }
+.binocular-collection-note { display: flex; align-items: flex-start; gap: 8px; font-size: 10px; color: #77929e; line-height: 1.7; margin-top: 18px; }
+.binocular-collection-note svg { flex-shrink: 0; margin-top: 2px; }
+.binocular-books { border-top: 1px solid #2c424e; padding-top: 28px; }
+.binocular-books .section-heading > svg { color: #c1ad7e; }
+.binocular-books-intro { font-size: 12px; color: #8da6b1; line-height: 1.9; margin-bottom: 23px; max-width: 770px; }
+.binocular-book-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 15px; }
+.binocular-book { display: flex; flex-direction: column; color: #99b0b7; }
+.binocular-book-spine { border-left: 4px solid #867449; background: linear-gradient(140deg, #314039, #18232b); height: 140px; padding: 14px 17px; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; border-radius: 2px 6px 6px 2px; color: #cbbb8b; }
+.book-mint .binocular-book-spine { background: linear-gradient(140deg, #28463e, #18232b); border-left-color: #6a9a83; color: #a7d0b2; }
+.book-blue .binocular-book-spine { background: linear-gradient(140deg, #274452, #17232c); border-left-color: #678c9c; color: #91b5c7; }
+.binocular-book-spine > span { font-family: var(--font-serif); font-size: 25px; }
+.binocular-book-spine > small { font-size: 6px; letter-spacing: 1.7px; }
+.binocular-book h3 { color: #d0ddcf; font-family: var(--font-serif); font-size: 21px; font-weight: 400; line-height: 1.35; margin: 13px 0 6px; }
+.binocular-book > div:last-child > span { color: #b4c2b3; font-size: 10px; }
+.binocular-book p { color: #829aa7; line-height: 1.8; font-size: 10px; margin-top: 10px; }
+.binocular-book > div:last-child > small { display: flex; gap: 5px; align-items: center; font-size: 9px; color: #a9c3b0; margin-top: 13px; }
+.binocular-provenance { margin-top: 28px; border-top: 1px solid #2b444e; padding: 16px 0; color: #89a1ad; font-size: 11px; line-height: 1.9; }
+.binocular-provenance summary { cursor: pointer; color: #b2c9bb; }
+.binocular-provenance p { margin-top: 13px; max-width: 950px; }
+.binocular-provenance a { color: #bcceaa; text-decoration: underline; text-underline-offset: 3px; }
+.binocular-detail { max-width: 730px; max-height: 90vh; overflow-y: auto; padding: 28px; border-color: #4f675c; gap: 20px; }
+.binocular-detail h2 { font-family: var(--font-serif); font-size: 34px; font-weight: 400; line-height: 1.2; color: #e1e8d8; }
+.binocular-detail h3 { font-size: 12px; color: #c8d7c5; font-weight: 500; }
+.binocular-detail-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 23px; align-items: center; }
+.binocular-detail-layout > .binocular-field { border: 1px solid #314a54; border-radius: 6px; }
+.binocular-detail-layout p { color: #99b1bd; font-size: 12px; line-height: 1.8; margin: 7px 0 15px; }
+.binocular-year-path { border-top: 1px solid #304851; padding-top: 17px; }
+.binocular-year-path > .eyebrow { font-size: 8px; letter-spacing: 1.4px; }
+.binocular-altitude-months { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 4px; margin-top: 12px; }
+.binocular-altitude-months button { color: #849fac; display: grid; justify-items: center; gap: 6px; padding: 7px 3px; border-radius: 4px; }
+.binocular-altitude-months button.active { background: #88b69e12; color: #d2e0c8; }
+.binocular-altitude-bar { display: flex; align-items: flex-end; justify-content: center; width: 100%; height: 55px; border-bottom: 1px solid #385048; }
+.binocular-altitude-bar i { width: 60%; display: block; background: #91bca5; opacity: .65; border-radius: 2px 2px 0 0; }
+.binocular-altitude-bar i.low { background: #7a8790; opacity: .4; }
+.binocular-altitude-months small { font-size: 8px; }
+.binocular-year-path > p { color: #91abb6; font-size: 11px; line-height: 1.7; margin-top: 11px; }
+.binocular-detail-actions { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
+.binocular-detail-actions > span { margin-left: auto; color: #8faaa9; font-size: 10px; }
+.binocular-detail > .text-action { font-size: 10px; color: #a0c1ad; }
+.binocular-detail-sources { border-top: 1px solid #2e474f; padding-top: 16px; display: grid; gap: 8px; }
+.binocular-detail-sources h3 { display: flex; gap: 7px; align-items: center; color: #c1b482; margin-bottom: 3px; }
+.binocular-detail-sources a { display: flex; justify-content: space-between; align-items: center; color: #9fc3af; font-size: 11px; gap: 10px; padding: 5px 0; }
+.binocular-detail-sources small { font-size: 9px; color: #718c9b; line-height: 1.8; margin-top: 3px; }
+@media (min-width: 761px) and (max-width: 1050px) {
+  .main-nav > button { padding-left: 9px; padding-right: 9px; font-size: 11px; gap: 6px; }
+  .brand-subtitle { display: none; }
+  .offline-pill > span:last-child { display: none; }
+  .offline-pill { width: 32px; height: 32px; padding: 7px; justify-content: center; }
+}
+@media (max-width: 1250px) {
+  .binocular-target-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .binocular-book-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+}
+@media (max-width: 1000px) { .binocular-months { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+  .main-nav > button { font-size: 10px; padding: 0 5px; gap: 5px; }
+  .main-nav > button svg { width: 14px; }
+  .binocular-heading-mark { display: none; }
+  .binocular-guide .binocular-heading h1 { font-size: 35px; }
+  .binocular-calendar-heading { align-items: flex-start; }
+  .binocular-calendar-heading h2 { font-size: 24px; }
+  .binocular-calendar-context { gap: 8px 15px; font-size: 10px; }
+  .binocular-calendar-context > span:last-child { margin-left: 0; }
+  .binocular-method-note { font-size: 10px; }
+  .binocular-feature { grid-template-columns: 1fr; }
+  .binocular-feature-copy { padding: 24px; }
+  .binocular-feature h2 { font-size: 32px; }
+  .binocular-feature-field { border-left: 0; border-top: 1px solid #2b424b; }
+  .binocular-feature-field .binocular-field { height: 210px; }
+  .binocular-target-body { padding-left: 17px; padding-right: 17px; }
+  .binocular-family-tabs { gap: 0; }
+  .binocular-family-tabs button { padding-left: 9px; padding-right: 9px; font-size: 10px; }
+  .binocular-search { flex-basis: 100%; }
+  .binocular-toolbar > select { flex: 1; min-width: 155px; }
+  .binocular-toolbar > .filter-toggle { font-size: 10px; }
+  .binocular-book-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .binocular-detail { padding: 23px; width: calc(100% - 28px); }
+  .binocular-detail-layout { grid-template-columns: 1fr; gap: 18px; }
+  .binocular-detail-layout > .binocular-field { max-height: 215px; }
+  .binocular-detail-actions > span { margin-left: 0; flex-basis: 100%; }
+  .binocular-books .section-heading h2, .binocular-collection .section-heading h2 { font-size: 27px; }
+}
+@media (max-width: 560px) {
+  .binocular-target-grid { grid-template-columns: 1fr; }
+  .binocular-target-field { height: 170px; }
+  .binocular-target-body > p { font-size: 12px; }
+  .binocular-book-grid { grid-template-columns: 1fr; }
+  .binocular-book { display: grid; grid-template-columns: 90px 1fr; gap: 18px; }
+  .binocular-book-spine { height: 140px; padding: 13px; }
+  .binocular-book h3 { margin-top: 0; }
+  .binocular-book-spine > small { font-size: 5px; }
 }
