@@ -57,6 +57,23 @@ describe("monthly binocular guide", () => {
     expect(south(1).find((p) => p.targetId === "LMC")!.alt).toBeGreaterThan(15);
     expect(fields.filter((p) => (p.minAperture ?? 50) <= 50).length).toBeGreaterThan(200);
   });
+  it("bundles an optical photograph at the catalog coordinates of every discovery target", () => {
+    for (const target of targets) {
+      const media=binocularMedia(target.id)!;
+      expect(media, target.id).toBeDefined();
+      expect(media.ra).toBeCloseTo(target.ra,5);
+      expect(media.dec).toBeCloseTo(target.dec,5);
+      const image=media.images.find(image=>image.variant==="optical")!;
+      expect(image, target.id).toBeDefined();
+      const query=new URL(image.url).searchParams;
+      expect(query.get("hips")).toBe("CDS/P/DSS2/color");
+      expect(Number(query.get("ra"))).toBeCloseTo(target.ra,5);
+      expect(Number(query.get("dec"))).toBeCloseTo(target.dec,5);
+      const bytes=readFileSync(resolve(__dirname,"../../../public",image.path));
+      expect(bytes.subarray(0,3).toString("hex")).toBe("ffd8ff");
+      expect(bytes.length).toBeGreaterThan(1000);
+    }
+  });
   it("retains individual attribution and licenses for the resolved-star photographs", () => {
     for (const id of ["DS-Albireo", "DS-MizarAlcor", "STAR-Betelgeuse", "STAR-Sirius"]) {
       const image = binocularFeaturedImage(id)!;

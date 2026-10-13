@@ -4078,5 +4078,689 @@
         "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2F2MASS%2Fcolor&ra=62.5000000&dec=18.0000000&width=640&height=480&fov=8&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
       }
     ]
+  },
+  "M43": {
+    "ra": 83.9,
+    "dec": -5.266666666666667,
+    "fov": 0.6666666666666666,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/M43-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=83.9000000&dec=-5.2666667&width=640&height=480&fov=0.6666666666666666&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "M57": {
+    "ra": 283.40000000000003,
+    "dec": 33.03333333333333,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/M57-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=283.4000000&dec=33.0333333&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "M73": {
+    "ra": 314.75,
+    "dec": -12.633333333333333,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/M73-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=314.7500000&dec=-12.6333333&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "M74": {
+    "ra": 24.175,
+    "dec": 15.783333333333333,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/M74-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=24.1750000&dec=15.7833333&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "M76": {
+    "ra": 25.599999999999998,
+    "dec": 51.56666666666667,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/M76-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=25.6000000&dec=51.5666667&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "M91": {
+    "ra": 188.875,
+    "dec": 14.5,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/M91-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=188.8750000&dec=14.5000000&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "M98": {
+    "ra": 183.47500000000002,
+    "dec": 14.916666666666666,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/M98-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=183.4750000&dec=14.9166667&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-AlmaakDS": {
+    "ra": 30.974999999999998,
+    "dec": 42.333333333333336,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-AlmaakDS-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=30.9750000&dec=42.3333333&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-61Cyg": {
+    "ra": 316.72499999999997,
+    "dec": 38.75,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-61Cyg-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=316.7250000&dec=38.7500000&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-AlpCVn": {
+    "ra": 194,
+    "dec": 38.31666666666667,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-AlpCVn-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=194.0000000&dec=38.3166667&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-DeltaCep": {
+    "ra": 337.3,
+    "dec": 58.416666666666664,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-DeltaCep-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=337.3000000&dec=58.4166667&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-IotaCas": {
+    "ra": 37.275,
+    "dec": 67.4,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-IotaCas-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=37.2750000&dec=67.4000000&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-15Mon": {
+    "ra": 100.25,
+    "dec": 9.9,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-15Mon-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=100.2500000&dec=9.9000000&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-BetMon": {
+    "ra": 97.2,
+    "dec": -7.033333333333333,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-BetMon-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=97.2000000&dec=-7.0333333&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-100Her": {
+    "ra": 271.95,
+    "dec": 26.1,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-100Her-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=271.9500000&dec=26.1000000&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-OmSgr": {
+    "ra": 298.95,
+    "dec": -26.3,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-OmSgr-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=298.9500000&dec=-26.3000000&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-DelCep": {
+    "ra": 349.65,
+    "dec": 68.11666666666666,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-DelCep-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=349.6500000&dec=68.1166667&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-GamAri": {
+    "ra": 28.375,
+    "dec": 19.3,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-GamAri-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=28.3750000&dec=19.3000000&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-Winnecke4": {
+    "ra": 185.54999999999998,
+    "dec": 58.083333333333336,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-Winnecke4-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=185.5500000&dec=58.0833333&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-SigCas": {
+    "ra": 359.75,
+    "dec": 55.75,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-SigCas-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=359.7500000&dec=55.7500000&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-EtaCas": {
+    "ra": 12.275,
+    "dec": 57.81666666666667,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-EtaCas-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=12.2750000&dec=57.8166667&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "DS-PsiDra": {
+    "ra": 265.475,
+    "dec": 72.15,
+    "fov": 0.3,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/DS-PsiDra-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=265.4750000&dec=72.1500000&width=640&height=480&fov=0.3&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "AST-KemblesKite": {
+    "ra": 51.25,
+    "dec": 71.68333333333334,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/AST-KemblesKite-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=51.2500000&dec=71.6833333&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "AST-LittleCassiopeia": {
+    "ra": 336.25,
+    "dec": 49.483333333333334,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/AST-LittleCassiopeia-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=336.2500000&dec=49.4833333&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "AST-NorthernFly": {
+    "ra": 41.5,
+    "dec": 28.05,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/AST-NorthernFly-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=41.5000000&dec=28.0500000&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "AST-SinOrion": {
+    "ra": 83.5,
+    "dec": -0.7666666666666667,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/AST-SinOrion-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=83.5000000&dec=-0.7666667&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "AST-HomePlate": {
+    "ra": 2,
+    "dec": 40.583333333333336,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/AST-HomePlate-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=2.0000000&dec=40.5833333&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "AST-LambdaLambda": {
+    "ra": 83.775,
+    "dec": 9.933333333333334,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/AST-LambdaLambda-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=83.7750000&dec=9.9333333&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "AST-SmileyFace": {
+    "ra": 81.25,
+    "dec": 34.5,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/AST-SmileyFace-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=81.2500000&dec=34.5000000&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "AST-QuestionMark": {
+    "ra": 39,
+    "dec": 6.883333333333333,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/AST-QuestionMark-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=39.0000000&dec=6.8833333&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "AST-HermansCross": {
+    "ra": 299.25,
+    "dec": -26.733333333333334,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/AST-HermansCross-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=299.2500000&dec=-26.7333333&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "AST-GolfPutter": {
+    "ra": 28.749999999999996,
+    "dec": 37.833333333333336,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/AST-GolfPutter-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=28.7500000&dec=37.8333333&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "AST-Pakan3": {
+    "ra": 102.5,
+    "dec": -10.5,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/AST-Pakan3-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=102.5000000&dec=-10.5000000&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "AST-Lucky7": {
+    "ra": 197.75,
+    "dec": 59.55,
+    "fov": 5,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/AST-Lucky7-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=197.7500000&dec=59.5500000&width=640&height=480&fov=5&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC884": {
+    "ra": 35.599999999999994,
+    "dec": 57.11666666666667,
+    "fov": 1,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC884-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=35.6000000&dec=57.1166667&width=640&height=480&fov=1&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC6530": {
+    "ra": 271.2,
+    "dec": -24.333333333333332,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC6530-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=271.2000000&dec=-24.3333333&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC6885": {
+    "ra": 303,
+    "dec": 26.483333333333334,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC6885-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=303.0000000&dec=26.4833333&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC1502": {
+    "ra": 61.925,
+    "dec": 62.333333333333336,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC1502-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=61.9250000&dec=62.3333333&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC7293": {
+    "ra": 337.4,
+    "dec": -20.8,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC7293-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=337.4000000&dec=-20.8000000&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC2392": {
+    "ra": 112.3,
+    "dec": 20.916666666666668,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC2392-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=112.3000000&dec=20.9166667&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC2362": {
+    "ra": 109.7,
+    "dec": -24.95,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC2362-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=109.7000000&dec=-24.9500000&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC6826": {
+    "ra": 296.2,
+    "dec": 50.516666666666666,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC6826-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=296.2000000&dec=50.5166667&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC6992": {
+    "ra": 314.1,
+    "dec": 31.716666666666665,
+    "fov": 2,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC6992-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=314.1000000&dec=31.7166667&width=640&height=480&fov=2&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC6960": {
+    "ra": 311.425,
+    "dec": 30.716666666666665,
+    "fov": 2.3333333333333335,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC6960-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=311.4250000&dec=30.7166667&width=640&height=480&fov=2.3333333333333335&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC2237": {
+    "ra": 98.075,
+    "dec": 5.05,
+    "fov": 2.6666666666666665,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC2237-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=98.0750000&dec=5.0500000&width=640&height=480&fov=2.6666666666666665&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC6888": {
+    "ra": 303,
+    "dec": 38.35,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC6888-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=303.0000000&dec=38.3500000&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "IC405": {
+    "ra": 79.05,
+    "dec": 34.266666666666666,
+    "fov": 1,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/IC405-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=79.0500000&dec=34.2666667&width=640&height=480&fov=1&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC891": {
+    "ra": 35.650000000000006,
+    "dec": 42.35,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC891-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=35.6500000&dec=42.3500000&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC7009": {
+    "ra": 316.05,
+    "dec": -11.366666666666667,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC7009-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=316.0500000&dec=-11.3666667&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC3242": {
+    "ra": 156.20000000000002,
+    "dec": -18.633333333333333,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC3242-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=156.2000000&dec=-18.6333333&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC6543": {
+    "ra": 269.65,
+    "dec": 66.63333333333334,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC6543-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=269.6500000&dec=66.6333333&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC4565": {
+    "ra": 189.07500000000002,
+    "dec": 25.983333333333334,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC4565-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=189.0750000&dec=25.9833333&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC7662": {
+    "ra": 351.47499999999997,
+    "dec": 42.53333333333333,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC7662-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=351.4750000&dec=42.5333333&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC7331": {
+    "ra": 339.275,
+    "dec": 34.416666666666664,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC7331-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=339.2750000&dec=34.4166667&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC6802": {
+    "ra": 292.65000000000003,
+    "dec": 20.266666666666666,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC6802-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=292.6500000&dec=20.2666667&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC6871": {
+    "ra": 301.47499999999997,
+    "dec": 35.78333333333333,
+    "fov": 0.6666666666666666,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC6871-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=301.4750000&dec=35.7833333&width=640&height=480&fov=0.6666666666666666&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
+  },
+  "NGC2158": {
+    "ra": 91.875,
+    "dec": 24.1,
+    "fov": 0.6,
+    "images": [
+      {
+        "variant": "optical",
+        "path": "data/binocular-images/NGC2158-optical.jpg",
+        "url": "https://alasky.cds.unistra.fr/hips-image-services/hips2fits?hips=CDS%2FP%2FDSS2%2Fcolor&ra=91.8750000&dec=24.1000000&width=640&height=480&fov=0.6&projection=TAN&coordsys=icrs&rotation_angle=0&format=jpg"
+      }
+    ]
   }
 }

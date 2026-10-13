@@ -105,14 +105,12 @@ import {
 } from "@/lib/astronomy";
 import type { CostStrategyId } from "@/lib/cost-strategies";
 import { SkyChart } from "@/components/SkyChart";
-import {
-  ObjectArt,
-  AltitudeChart,
-} from "@/components/ObservingVisuals";
+import { AltitudeChart } from "@/components/ObservingVisuals";
 import { ImageFallback } from "@/components/ImageFallback";
 import { BinocularGuide } from "@/components/BinocularGuide";
 import { MoonObservatory, MoonlightCard, LunarNightItem } from "@/components/MoonObservatory";
 import { SessionPlanner } from "@/components/SessionPlanner";
+import { TargetPhoto, TargetPhotoCredit } from "@/components/TargetPhoto";
 import { emptyPlanner, plannerStoreSchema, makeSession, planningShortcut, sessionTimezone, starPlanningTarget, type PlannerStore, type ObservingSession } from "@/lib/session-planner";
 import { lunarFeatures } from "@/lib/moon";
 
@@ -1179,7 +1177,7 @@ export default function PlannerPage() {
                 {selected && selection ? (
                   <section className="panel featured-object" ref={featuredObjectRef}>
                     <div className="featured-art">
-                      <ObjectArt target={selected} />
+                      <TargetPhoto target={selected} />
                       <span className="art-badge">IN FOCUS</span>
                     </div>
                     <div className="featured-body">
@@ -1201,6 +1199,7 @@ export default function PlannerPage() {
                         {compassLabel(selection.az)}
                       </p>
                       <p className="object-story">{guideFor(selected).story}</p>
+                      <TargetPhotoCredit target={selected} />
                       <p className="equipment-tag">
                         <Eye size={14} />
                         {guideFor(selected).equipment}
@@ -1844,7 +1843,7 @@ export default function PlannerPage() {
                       className={`panel night-item ${item.observedAt ? "observed" : ""}`}
                     >
                       <div className="night-item-art">
-                        <ObjectArt target={object.target} compact />
+                        <TargetPhoto target={object.target} compact />
                       </div>
                       <div className="night-item-body">
                         <div className="flex justify-between gap-3">
@@ -2090,7 +2089,7 @@ function TargetCard({
         data-testid={`target-${target.id}`}
       >
         <div className="target-thumbnail">
-          <ObjectArt target={target} compact />
+          <TargetPhoto target={target} compact />
         </div>
         <div className="target-card-info">
           <span className="eyebrow">

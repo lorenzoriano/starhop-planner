@@ -20,7 +20,10 @@ public = root / 'client/public'
 manifest_path = root / 'client/src/lib/binocular-media.json'
 previous = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
 previous_urls = {image['path']: image['url'] for target in previous.values() for image in target['images']}
-planned = {target['id']: {key: target[key] for key in ['ra', 'dec', 'fov', 'images']} for target in plan}
+planned_entries = {target['id']: {key: target[key] for key in ['ra', 'dec', 'fov', 'images']} for target in plan}
+# Keep established records in order, making new acquisitions easy to review.
+planned = {key: planned_entries[key] for key in previous if key in planned_entries}
+planned.update(planned_entries)
 # Preserve the acquisition plan for resuming; publication tests require every file.
 manifest_path.write_text(json.dumps(planned, indent=2) + '\n')
 

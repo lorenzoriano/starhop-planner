@@ -1,4 +1,4 @@
-/** Regenerate the coordinate-based image acquisition plan from the offline catalogs.
+/** Regenerate survey photographs for every target in the offline catalogs.
  * Run: node --import tsx script/binocular-media-plan.ts > /tmp/binocular-media-plan.json
  */
 import { readFile } from "node:fs/promises";
@@ -16,12 +16,13 @@ const overrides: Record<string, number> = {
   "AST-OrionBelt": 7, "AST-DavisDog": 8, "AST-EngagementRing": 2,
   "DS-MizarAlcor": 0.7, "AST-JobsCoffin": 4,
 };
-const images = BINOCULAR_ENTRIES.map((e) => {
-  const t = targets.get(e.targetId);
-  if (!t) throw new Error(`Missing target: ${e.targetId}`);
+const entries = new Map(BINOCULAR_ENTRIES.map(e => [e.targetId,e]));
+const images = [...targets.values()].map((t) => {
+  const e = entries.get(t.id);
+  const family = e?.family ?? (t.categoryShort === "Star" ? "star" : t.categoryShort === "Dbl Star" ? "double" : /Asterism|MW Patch/.test(t.categoryShort) ? "asterism" : "deep-sky");
   const size = Math.max(...(sizes.get(t.id)?.match(/[\d.]+/g)?.map(Number) ?? [20]));
-  const fov = overrides[t.id] ?? (e.family === "star" ? 0.6 : e.family === "double" ? 0.3 : e.family === "asterism" ? 5 : Math.max(0.6, Math.min(7, size / 60 * 2)));
-  const variants = ["optical", "infrared"].map((variant) => {
+  const fov = overrides[t.id] ?? (family === "star" ? 0.6 : family === "double" ? 0.3 : family === "asterism" ? 5 : Math.max(0.6, Math.min(7, size / 60 * 2)));
+  const variants = (e ? ["optical", "infrared"] : ["optical"]).map((variant) => {
     const query = new URLSearchParams({ hips: variant === "optical" ? "CDS/P/DSS2/color" : "CDS/P/2MASS/color", ra: t.ra.toFixed(7), dec: t.dec.toFixed(7), width: "640", height: "480", fov: String(fov), projection: "TAN", coordsys: "icrs", rotation_angle: "0", format: "jpg" });
     return { variant, path: `data/binocular-images/${t.id}-${variant}.jpg`, url: `https://alasky.cds.unistra.fr/hips-image-services/hips2fits?${query}` };
   });
