@@ -1,7 +1,8 @@
 import type { UnifiedTarget } from "./astronomy";
+import { normalizeStellarWords } from "./stellar-search";
 
 export function normalizedSearch(value:string) {
-  return value.trim().toLowerCase().replace(/\bmessier\s*(\d+)/g,"m$1").replace(/\b(m|ngc|ic|hr)\s+(\d+)/g,"$1$2").replace(/\s+/g," ");
+  return normalizeStellarWords(value.trim().toLowerCase()).replace(/\bmessier\s*(\d+)/g,"m$1").replace(/\b(m|ngc|ic|hr)\s+(\d+)/g,"$1$2").replace(/\s+/g," ");
 }
 /** Exact identifiers win; astronomical suitability keeps its order within each tier. */
 export function catalogSearchScore(target:UnifiedTarget,query:string,extra="") {

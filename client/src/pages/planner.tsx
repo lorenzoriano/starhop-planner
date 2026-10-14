@@ -10,6 +10,7 @@ import tzLookup from "tz-lookup";
 import { useLocation } from "wouter";
 import { pageForPath, pathForPage, targetFromPath, type Page } from "@/lib/navigation";
 import { catalogSearchScore } from "@/lib/catalog-search";
+import { readHopProgress, writeHopProgress, routeFingerprint, matchingRouteIndex } from "@/lib/hop-progress";
 import { fromZonedTime, formatInTimeZone } from "date-fns-tz";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -96,6 +97,7 @@ import {
   loadMilkyWay,
   buildUnifiedTargets,
   eqToHorizontal,
+  angularDistance,
   getConstellationName,
   type ObservingParams,
   type Route,
@@ -109,6 +111,8 @@ import {
 import type { CostStrategyId } from "@/lib/cost-strategies";
 import { SkyChart } from "@/components/SkyChart";
 import { HopFieldNavigation, HopViewDirection } from "@/components/HopFieldNavigation";
+import { EyepieceCalculator } from "@/components/EyepieceCalculator";
+import { NavigationStarResults, type NavigationStarHit } from "@/components/NavigationStarResults";
 import { AltitudeChart } from "@/components/ObservingVisuals";
 import { ImageFallback } from "@/components/ImageFallback";
 import { BinocularGuide } from "@/components/BinocularGuide";
@@ -174,7 +178,10 @@ export default function PlannerPage() {
   const [limit, setLimit] = useState(8);
   const [offlineOpen, setOfflineOpen] = useState(false);
   const [locating, setLocating] = useState(false);
-  const [algorithm, setAlgorithm] = useState<CostStrategyId>("auto");
+  const [savedHop] = useState(readHopProgress);
+  const restoreAttempted = useRef(false);
+  const storageWarning = useRef(false);
+  const [algorithm, setAlgorithm] = useState<CostStrategyId>(savedHop?.algorithm ?? "auto");
   const [computing, setComputing] = useState(false);
   const [findingTime, setFindingTime] = useState(false);
   const [routeResult, setRouteResult] = useState<{
@@ -240,6 +247,7 @@ export default function PlannerPage() {
       observingMode: mode,
       difficulty,
       algorithm,
+      startStarId: settings.startStarId,
     }),
     [
       lat,
@@ -253,6 +261,7 @@ export default function PlannerPage() {
       mode,
       difficulty,
       algorithm,
+      settings.startStarId,
     ],
   );
   const paramsKey = JSON.stringify({
@@ -272,6 +281,15 @@ export default function PlannerPage() {
   );
   const planningTargets = useMemo(()=>[...catalogs.targets,...catalogs.stars.map(starPlanningTarget)],[catalogs.targets,catalogs.stars]);
   const selection = ranked.find((t) => t.target.id === targetId);
+  const selectedStart = catalogs.stars.find(star => star.id === settings.startStarId);
+  const startOptions = useMemo(() => {
+    if (!selected) return [];
+    const nearby = catalogs.stars.filter(star => star.mag <= Math.min(4.5,limitingMag) && !!(star.name || star.bayer || star.flamsteed))
+      .map(star => ({ star, ...eqToHorizontal(star.ra,star.dec,lat,lon,date), distance:angularDistance(star.ra,star.dec,selected.ra,selected.dec) }))
+      .filter(star => star.alt >= 5).sort((a,b) => a.distance-b.distance || a.star.mag-b.star.mag).slice(0,80);
+    if (selectedStart && !nearby.some(option => option.star.id === selectedStart.id)) nearby.unshift({ star:selectedStart, ...eqToHorizontal(selectedStart.ra,selectedStart.dec,lat,lon,date), distance:angularDistance(selectedStart.ra,selectedStart.dec,selected.ra,selected.dec) });
+    return nearby;
+  }, [selected, catalogs.stars, selectedStart, limitingMag, lat, lon, date]);
   const conditions = useMemo(
     () => skyConditions(lat, lon, date),
     [lat, lon, date],
@@ -294,6 +312,18 @@ export default function PlannerPage() {
       ).sort((a,b)=>catalogSearchScore(a.target,query,getConstellationName(a.target.con))-catalogSearchScore(b.target,query,getConstellationName(b.target.con))),
     [ranked, visibleOnly, friendlyOnly, category, query],
   );
+  const starSearchTargets = useMemo(() => catalogs.stars.map(star => ({ star, target:starPlanningTarget(star) })), [catalogs.stars]);
+  const starHits = useMemo<NavigationStarHit[]>(() => {
+    if (!query.trim() || (category !== "all" && category !== "Star")) return [];
+    return starSearchTargets.flatMap(({star,target}) => {
+      const score = catalogSearchScore(target, query, getConstellationName(target.con));
+      if (!Number.isFinite(score) || (friendlyOnly && star.mag > 6.5)) return [];
+      const pos = eqToHorizontal(star.ra, star.dec, lat, lon, date);
+      if (visibleOnly && pos.alt < 15) return [];
+      if (filtered.some(object => /star/i.test(object.target.category) && angularDistance(star.ra, star.dec, object.target.ra, object.target.dec) < .02)) return [];
+      return [{ star, name:target.name, ...pos, score }];
+    }).sort((a,b) => a.score-b.score || a.star.mag-b.star.mag || b.alt-a.alt);
+  }, [starSearchTargets, query, category, friendlyOnly, visibleOnly, lat, lon, date, filtered]);
   const previewNodes = useMemo<SkyNode[]>(
     () =>
       catalogs.stars
@@ -322,7 +352,7 @@ export default function PlannerPage() {
   useEffect(()=>{
     if(!catalogs.targets.length)return;
     const linked=targetFromPath(location);
-    if(linked){firstTarget.current=false;if(catalogs.targets.some(t=>t.id===linked)){if(targetId!==linked)update({targetId:linked});}else navigate("/hop",{replace:true});return;}
+    if(linked){firstTarget.current=false;if(catalogs.targets.some(t=>t.id===linked)){if(targetId!==linked)update({targetId:linked,startStarId:undefined});}else navigate("/hop",{replace:true});return;}
     if(firstTarget.current){firstTarget.current=false;const pick=ranked.find(o=>o.alt>=15&&guideFor(o.target).binocular);if(pick)update({targetId:pick.target.id});}
   },[catalogs.targets.length,location]);
   const overviewNodes = useMemo<SkyNode[]>(() => {
@@ -370,6 +400,33 @@ export default function PlannerPage() {
     setRouteIndex(0);
   }, [paramsKey]);
   useEffect(() => {
+    if (loading || catalogError || page !== "hop" || restoreAttempted.current || computing || routeResult) return;
+    const linked = targetFromPath(location);
+    if (linked && linked !== targetId) return;
+    restoreAttempted.current = true;
+    if (!savedHop || savedHop.configKey !== paramsKey) return;
+    const key = paramsKey;
+    setComputing(true);
+    void planRoutes(params).then(computed => {
+      if (keyRef.current !== key) return;
+      const index = matchingRouteIndex(computed.routes, savedHop);
+      setRouteResult({ key, result: computed });
+      setRouteIndex(index < 0 ? 0 : index);
+      setStep(index < 0 ? 0 : savedHop.step);
+      toast({ title: index < 0 ? "The sky or route has changed" : "Hop resumed",
+        description: index < 0 ? "Plan checked for your current sky. Begin at the first field if a route is available." : `Restored field ${savedHop.step + 1}. Positions are recalculated for your observing time.` });
+    }).catch(() => toast({ title: "Could not restore this hop", description: "Try planning the route again.", variant: "destructive" }))
+      .finally(() => setComputing(false));
+  }, [loading, catalogError, page, location, targetId, paramsKey, computing, routeResult]);
+  useEffect(() => {
+    if (!route || computing) return;
+    const stored = writeHopProgress({ configKey: paramsKey, algorithm, fingerprint: routeFingerprint(route), step, savedAt: Date.now(), live: settings.timeMode === "live" });
+    if (!stored && !storageWarning.current) {
+      storageWarning.current = true;
+      toast({ title: "Hop progress could not be saved", description: "Keep this page open, or allow site storage to resume after a reload." });
+    }
+  }, [route, step, paramsKey, algorithm, computing]);
+  useEffect(() => {
     setLimit(8);
   }, [query, category, visibleOnly, friendlyOnly]);
   useEffect(() => {
@@ -393,7 +450,7 @@ export default function PlannerPage() {
     if(id.startsWith("star:")){setInspectedStar(catalogs.stars.find(s=>`star:${s.id}`===id)??null);return;}
     const star=catalogs.stars.find(s=>s.id===id);
     if(star&&!catalogs.targets.some(t=>t.id===id)){setInspectedStar(star);return;}
-    update({ targetId: id });
+    update({ targetId: id, ...(id !== targetId ? { startStarId:undefined } : {}) });
     if(page==="hop")navigate(pathForPage("hop",id),{replace:true});
   }
   function previewMoment(at:Date,latitude:number,longitude:number,navigate=true) {
@@ -417,7 +474,7 @@ export default function PlannerPage() {
     previewMoment(at,activeSession?.lat??lat,activeSession?.lon??lon,false);
     if(id.startsWith("moon:")){setLunarSelection(id.slice(5));setPage("moon");}
     else if(id.startsWith("star:")){setInspectedStar(catalogs.stars.find(s=>`star:${s.id}`===id)??null);setPage("tonight");}
-    else {update({targetId:id});setPage("hop",id);}
+    else {update({targetId:id,...(id !== targetId ? {startStarId:undefined} : {})});setPage("hop",id);}
   }
   function saveNewSession(items: NightItem[], title: string) {
     const at = settings.timeMode === "live" ? planningShortcut("tonight", lat, lon).date : date;
@@ -515,13 +572,13 @@ export default function PlannerPage() {
     update(patch);
     return patch;
   }
-  async function compute(chosenMode?: Settings["mode"]) {
+  async function compute(chosenMode?: Settings["mode"], forcedStart?: string) {
     if (!settings.instrumentSelected && !chosenMode) {
       setInstrumentOpen(true);
       return;
     }
     const instrument = chosenMode ? selectInstrument(chosenMode) : null;
-    const computeParams: ObservingParams = instrument ? { ...params, observingMode: instrument.mode, fovWidth: instrument.fov, fovHeight: instrument.fovHeight, fovShape: instrument.shape, limitingMag: instrument.limitingMag } : params;
+    const computeParams: ObservingParams = { ...(instrument ? { ...params, observingMode: instrument.mode, fovWidth: instrument.fov, fovHeight: instrument.fovHeight, fovShape: instrument.shape, limitingMag: instrument.limitingMag } : params), ...(forcedStart ? { startStarId:forcedStart } : {}) };
     setInstrumentOpen(false);
     setPage("hop",targetId);
     setComputing(true);
@@ -557,6 +614,7 @@ export default function PlannerPage() {
     const starLimit = limitingMag;
     const plannedParams: ObservingParams = {
       ...params,
+      startStarId: undefined,
       date: fromZonedTime(`${localDate}T${localTime}:00`, timezone),
       targetId: id,
       observingMode: "binocular",
@@ -566,7 +624,7 @@ export default function PlannerPage() {
       limitingMag: starLimit,
     };
     const key = JSON.stringify(plannedParams);
-    update({ targetId: id, date: localDate, time: localTime, timeMode: "planned", plannedAt:plannedParams.date.toISOString(), mode: "binocular", instrumentSelected: true, fov: field, fovHeight: field, shape: "circle", limitingMag: starLimit });
+    update({ targetId: id, startStarId: undefined, date: localDate, time: localTime, timeMode: "planned", plannedAt:plannedParams.date.toISOString(), mode: "binocular", instrumentSelected: true, fov: field, fovHeight: field, shape: "circle", limitingMag: starLimit });
     setPage("hop",id);
     setRouteResult(null);
     setComputing(true);
@@ -931,6 +989,7 @@ export default function PlannerPage() {
                 Fine tune equipment <ChevronRight size={13} />
               </summary>
               <div className="space-y-4 pt-3">
+                {mode === "telescope" && <EyepieceCalculator onApply={field => update({ fov: field, fovHeight: field, shape: "circle" })}/>}
                 <div>
                   <Label className="field-label">
                     Faintest guide star · mag {limitingMag.toFixed(1)}
@@ -1275,14 +1334,14 @@ export default function PlannerPage() {
                     <h2>What will you find?</h2>
                   </div>
                   <span className="text-xs text-muted-foreground">
-                    {filtered.length} objects match your setup
+                    {filtered.length + starHits.length} objects match your setup
                   </span>
                 </div>
                 <div className="discovery-toolbar">
                   <div className="search-field">
                     <Search size={16} />
                     <Input
-                      placeholder="Search objects, constellations…"
+                      placeholder="Search objects, stars, constellations…"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
                       aria-label="Search sky objects"
@@ -1337,6 +1396,7 @@ export default function PlannerPage() {
                     are easier when the Sun is below −18°.
                   </p>
                 )}
+                {!!starHits.length && <NavigationStarResults hits={starHits.slice(0,limit)} savedIds={savedIds} onInspect={setInspectedStar} onSave={toggleSave}/>}
                 <div className="object-grid">
                   {filtered.slice(0, limit).map((o) => (
                     <TargetCard
@@ -1358,7 +1418,7 @@ export default function PlannerPage() {
                     />
                   ))}
                 </div>
-                {!loading && !filtered.length && (
+                {!loading && !filtered.length && !starHits.length && (
                   <div className="panel empty-state">
                     <Search size={28} />
                     <h3>No objects in this view</h3>
@@ -1379,12 +1439,12 @@ export default function PlannerPage() {
                     </Button>
                   </div>
                 )}
-                {filtered.length > limit && (
+                {Math.max(filtered.length, starHits.length) > limit && (
                   <button
                     className="load-more"
                     onClick={() => setLimit(limit + 12)}
                   >
-                    Explore more objects
+                    {starHits.length ? "Explore more matches" : "Explore more objects"}
                     <ChevronRight size={15} />
                   </button>
                 )}
@@ -1474,7 +1534,9 @@ export default function PlannerPage() {
                 <div className="notice warning">
                   <Compass size={16} />
                   <span>
-                    {result.belowHorizon
+                    {result.anchorUnavailable
+                      ? "Your starting star is too low or outside the guide-star limit. Choose another reference or use Automatic."
+                      : result.belowHorizon
                       ? "The target is too low for a route at this time."
                       : "No usable route found. Try a wider navigation field or a fainter guide star limit."}
                   </span>
@@ -1501,12 +1563,19 @@ export default function PlannerPage() {
                       </span>
                       <small>
                         {r.hops.length} fields · {r.score}/100
+                        {!r.isExpertRoute && result.routes.filter(candidate => !candidate.isExpertRoute && candidate.startAnchor.id === r.startAnchor.id).length > 1 && <>
+                          {" · Route "}{result.routes.slice(0, i + 1).filter(candidate => !candidate.isExpertRoute && candidate.startAnchor.id === r.startAnchor.id).length}
+                        </>}
                       </small>
                       {routeIndex === i && <Check size={14} />}
                     </button>
                   ))}
                 </div>
               )}
+              <div className="route-start-choice"><label>Starting star <select aria-label="Starting star" value={settings.startStarId ?? ""} onChange={event => update({ startStarId:event.target.value || undefined })}>
+                <option value="">Automatic starting stars</option>
+                {startOptions.map(({star,alt}) => <option key={star.id} value={star.id}>{starPlanningTarget(star).name} · mag {star.mag.toFixed(1)} · {Math.round(alt)}° high</option>)}
+              </select></label><small>Choose a visible reference and replan. Your field and guide-star limit still apply.</small></div>
               <div className="hop-layout">
                 <section className="panel route-chart-panel">
                   <div className="panel-heading">
@@ -1969,7 +2038,7 @@ export default function PlannerPage() {
           </footer>
         </main>
       </div>
-      <Dialog open={!!inspectedStar} onOpenChange={open=>{if(!open)setInspectedStar(null);}}><DialogContent className="star-detail-dialog"><DialogHeader><DialogTitle>{inspectedStar?starPlanningTarget(inspectedStar).name:"Star"}</DialogTitle><DialogDescription>Bright Star Catalogue · {formatInTimeZone(date,timezone,"MMM d, yyyy · HH:mm")} local</DialogDescription></DialogHeader>{inspectedStar&&(()=>{const target=starPlanningTarget(inspectedStar);const pos=eqToHorizontal(target.ra,target.dec,lat,lon,date);const node:SkyNode={...inspectedStar,...pos,id:target.id,name:target.name,type:"star"};return <><p className="object-location">Magnitude {target.mag.toFixed(1)} · {Math.round(pos.alt)}° {compassLabel(pos.az)} · {altitudeLabel(pos.alt)}</p><p>{activeSession?`Add to ${activeSession.name}, or remove it from that session.`:"Add this star to an observing session, then open Planner to choose a date and sequence."}</p><Button onClick={()=>toggleSave(target.id)}>{savedIds.has(target.id)?<Check size={14}/>:<Plus size={14}/>} {savedIds.has(target.id)?"Remove from session":"Add to session"}</Button><SkyChart onSelect={selectTarget} nodes={[...previewNodes.filter(s=>s.id!==inspectedStar.id),node]} constellations={catalogs.constellations} route={null} targetNode={node} animStep={0} fovWidth={fov} fovHeight={shape==="circle"?fov:fovHeight} fovShape={shape} lat={lat} lon={lon} date={date} limitingMag={limitingMag} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} onFovChange={width=>update({fov:width,...(shape==="circle"?{fovHeight:width}:{})})} onLimitingMagChange={value=>update({limitingMag:value})}/><MoonlightCard target={target} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness}/></>;})()}</DialogContent></Dialog>
+      <Dialog open={!!inspectedStar} onOpenChange={open=>{if(!open)setInspectedStar(null);}}><DialogContent className="star-detail-dialog"><DialogHeader><DialogTitle>{inspectedStar?starPlanningTarget(inspectedStar).name:"Star"}</DialogTitle><DialogDescription>Bright Star Catalogue · {formatInTimeZone(date,timezone,"MMM d, yyyy · HH:mm")} local</DialogDescription></DialogHeader>{inspectedStar&&(()=>{const target=starPlanningTarget(inspectedStar);const pos=eqToHorizontal(target.ra,target.dec,lat,lon,date);const node:SkyNode={...inspectedStar,...pos,id:target.id,name:target.name,type:"star"};return <><p className="object-location">Magnitude {target.mag.toFixed(1)} · {Math.round(pos.alt)}° {compassLabel(pos.az)} · {altitudeLabel(pos.alt)}</p><p>{activeSession?`Add to ${activeSession.name}, or remove it from that session.`:"Add this star to an observing session, then open Planner to choose a date and sequence."}</p><Button onClick={()=>toggleSave(target.id)}>{savedIds.has(target.id)?<Check size={14}/>:<Plus size={14}/>} {savedIds.has(target.id)?"Remove from session":"Add to session"}</Button>{selected&&<Button variant="outline" disabled={computing||loading||inspectedStar.mag>Math.min(4.5,limitingMag)||pos.alt<5} onClick={()=>{const id=inspectedStar.id;update({startStarId:id});setInspectedStar(null);void compute(undefined,id);}}>Start hop from this star</Button>}{selected&&<p className="setup-hint">Destination: {selected.name}. Starting references must be above 5° and magnitude {Math.min(4.5,limitingMag).toFixed(1)} or brighter at your observing time.</p>}<SkyChart onSelect={selectTarget} nodes={[...previewNodes.filter(s=>s.id!==inspectedStar.id),node]} constellations={catalogs.constellations} route={null} targetNode={node} animStep={0} fovWidth={fov} fovHeight={shape==="circle"?fov:fovHeight} fovShape={shape} lat={lat} lon={lon} date={date} limitingMag={limitingMag} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} onFovChange={width=>update({fov:width,...(shape==="circle"?{fovHeight:width}:{})})} onLimitingMagChange={value=>update({limitingMag:value})}/><MoonlightCard target={target} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness}/></>;})()}</DialogContent></Dialog>
       <Dialog open={instrumentOpen} onOpenChange={setInstrumentOpen}>
         <DialogContent className="instrument-choice-dialog">
           <DialogHeader><DialogTitle>Choose your instrument</DialogTitle><DialogDescription>Start with a finder field that suits your view. Adjust the field width below the chart to match your optics.</DialogDescription></DialogHeader>

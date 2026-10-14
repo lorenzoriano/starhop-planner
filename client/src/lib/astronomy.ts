@@ -144,6 +144,7 @@ export interface ObservingParams {
   observingMode?: ObservingMode;
   difficulty?: DifficultyLevel;
   algorithm?: CostStrategyId;
+  startStarId?: string;
 }
 
 // ─── Parsing Utilities ────────────────────────────────────────
@@ -225,7 +226,7 @@ export async function loadStars(): Promise<Star[]> {
     ra: parseRA(s.RA),
     dec: parseDec(s.Dec),
     mag: parseFloat(s.V),
-    name: s.N || undefined,
+    name: s.N || majorStarNamesFor(`HR${s.HR}`)[0] || undefined,
     bayer: s.B || undefined,
     constellation: s.C || undefined,
     flamsteed: s.F ? parseInt(s.F) : undefined,
@@ -416,6 +417,7 @@ const MAJOR_STAR_NAMES: Record<string, string> = {
   'Mirach': 'HR337', 'Almach': 'HR603',
   'Polaris': 'HR424', 'Dubhe': 'HR4301', 'Merak': 'HR4295',
 };
+export function majorStarNamesFor(id: string) { return Object.keys(MAJOR_STAR_NAMES).filter(name => MAJOR_STAR_NAMES[name] === id); }
 
 // ─── Coordinate Transforms ──────────────────────────────────
 
@@ -1380,6 +1382,7 @@ function dijkstra(
 
 // Find candidate start anchors
 function findAnchors(nodes: SkyNode[], targetNode: SkyNode, count: number, params: ObservingParams): SkyNode[] {
+  if (params.startStarId) return nodes.filter(node => node.id === params.startStarId && node.type === 'star' && node.mag <= 4.5 && node.alt >= 5);
   const profile = observingProfile(params);
   // Prefer bright, named, high-altitude stars and planets that are reasonably close.
   const candidates = nodes.filter(n =>
@@ -1723,6 +1726,7 @@ export async function planRoutes(params: ObservingParams): Promise<{
   nodes: SkyNode[];
   targetNode: SkyNode | null;
   belowHorizon: boolean;
+  anchorUnavailable?: boolean;
 }> {
   const [stars, messier, binoTargets] = await Promise.all([
     loadStars(), loadMessier(), loadBinocularTargets()
@@ -1746,6 +1750,9 @@ export async function planRoutes(params: ObservingParams): Promise<{
   }
 
   // ─── Load known (expert) routes for this target ───
+  if (params.startStarId && !findAnchors(allNodes, targetNode, 1, params).length) {
+    return { routes: [], nodes: allNodes, targetNode, belowHorizon:false, anchorUnavailable:true };
+  }
   const knownRoutesData = await loadKnownRoutes().catch(() => [] as KnownRoute[]);
   const matchingKnown = knownRoutesData.find(kr => kr.targetId === params.targetId);
   const expertRoutes: Route[] = [];
@@ -1754,7 +1761,7 @@ export async function planRoutes(params: ObservingParams): Promise<{
       if (!isKnownRouteFeasible(knownEntry, params.lat, params.lon, params.date)) continue;
       if (knownEntry.equipmentType !== 'both' && knownEntry.equipmentType !== (params.observingMode ?? 'telescope')) continue;
       const resolved = buildKnownRoute(knownEntry, allNodes, targetNode, params);
-      if (resolved) expertRoutes.push({ ...resolved, id: `route-expert-${expertRoutes.length + 1}` });
+      if (resolved && (!params.startStarId || resolved.startAnchor.id === params.startStarId)) expertRoutes.push({ ...resolved, id: `route-expert-${expertRoutes.length + 1}` });
     }
   }
 

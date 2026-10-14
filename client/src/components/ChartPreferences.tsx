@@ -8,7 +8,7 @@ export const chartPreferencesSchema = z.object({
   showGhostCircles: z.boolean(), showConstellations: z.boolean(),
   mirrored: z.boolean(), rotation: z.union([z.literal(0), z.literal(90), z.literal(180), z.literal(270)]),
   starsOnly: z.boolean(),
-  finderReticle: z.enum(["field", "telrad", "rigel"]).default("field"),
+  finderReticle: z.enum(["field", "telrad", "rigel", "crosshair"]).default("field"),
 });
 type Preferences = z.infer<typeof chartPreferencesSchema>;
 const defaults: Preferences = { labelSize: 12, starBrightness: 8, navStarSize: 5, showLegend: true, showGhostCircles: true, showConstellations: true, mirrored: false, rotation: 0, starsOnly: false, finderReticle: "field" };

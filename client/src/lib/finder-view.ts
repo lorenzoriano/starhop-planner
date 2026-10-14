@@ -2,10 +2,10 @@ import { stereographicProject } from "./astronomy";
 import type { EquatorialPoint } from "./chart-view";
 import { orientChartPoint } from "./observing";
 
-export type FinderReticle = "field" | "telrad" | "rigel";
+export type FinderReticle = "field" | "telrad" | "rigel" | "crosshair";
 /** Manufacturer ring sizes are diameters, in degrees. */
 export const RETICLE_DIAMETERS: Record<FinderReticle, readonly number[]> = {
-  field: [], telrad: [0.5, 2, 4], rigel: [0.5, 2],
+  field: [], telrad: [0.5, 2, 4], rigel: [0.5, 2], crosshair: [],
 };
 
 /** Small circle on the celestial sphere, including RA wrap and polar fields. */

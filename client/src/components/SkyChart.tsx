@@ -708,15 +708,20 @@ export function SkyChart({
   },[constellationLabels,labels,labelSize,screenUnit,viewBoxX,viewBoxY,viewBoxSize,viewportPixels,showLegend,starsOnly]);
 
   const fovCenter = currentHop ? project(currentHop.center.ra, currentHop.center.dec) : targetNode ? project(targetNode.ra, targetNode.dec) : null;
-  const finderRings = useMemo(() => {
+  const finderRings = useMemo<Array<{ id: string; diameter?: number; d: string }>>(() => {
     const focus = currentHop?.center ?? targetNode;
     if (overview || !focus) return [];
+    if (finderReticle === 'crosshair') return [fovWidth, fovShape === 'rectangle' ? fovHeight : fovWidth].flatMap((field, axis) => {
+      const points = Array.from({ length: 33 }, (_, index) => angularRing(focus, (index / 32 - .5) * field, 4)[axis === 0 ? 1 : 0]).map(point => project(point.ra, point.dec));
+      if (points.some(point => !point)) return [];
+      return [{ id: `axis-${axis}`, d: points.map((point, index) => `${index ? 'L' : 'M'}${point!.x},${point!.y}`).join(' ') }];
+    });
     return RETICLE_DIAMETERS[finderReticle].flatMap(diameter => {
       const points = angularRing(focus, diameter / 2).map(point => project(point.ra, point.dec));
       if (points.some(point => !point)) return [];
-      return [{ diameter, d: points.map((point, index) => `${index ? 'L' : 'M'}${point!.x},${point!.y}`).join(' ') + ' Z' }];
+      return [{ id: String(diameter), diameter, d: points.map((point, index) => `${index ? 'L' : 'M'}${point!.x},${point!.y}`).join(' ') + ' Z' }];
     });
-  }, [currentHop, targetNode, overview, finderReticle, project]);
+  }, [currentHop, targetNode, overview, finderReticle, project, fovWidth, fovHeight, fovShape]);
 
   // SVG shapes for pattern visualization
   const renderPatternShape = useCallback((
@@ -1093,7 +1098,7 @@ export function SkyChart({
           </g>
         )}
 
-        {!starsOnly && finderRings.map(ring => <path key={ring.diameter} data-reticle-diameter={ring.diameter} d={ring.d} fill="none" stroke="#adc7b6" strokeWidth="1.2" vectorEffect="non-scaling-stroke" opacity=".85" pointerEvents="none"/>)}
+        {!starsOnly && finderRings.map(ring => <path key={ring.id} data-reticle-diameter={ring.diameter} data-finder-crosshair={finderReticle === 'crosshair' ? true : undefined} d={ring.d} fill="none" stroke="#adc7b6" strokeWidth="1.2" vectorEffect="non-scaling-stroke" opacity=".85" pointerEvents="none"/>)}
 
         {!starsOnly && labels.map((label) => {
           const text = chartLabel(label.star);
@@ -1180,13 +1185,13 @@ export function SkyChart({
       </div>
       <div className="chart-field-controls">
         {!overview && <label>Reticle <select aria-label="Finder reticle" value={finderReticle} onChange={event => updateDisplay({ finderReticle: event.target.value as FinderReticle })}>
-          <option value="field">Field only</option><option value="telrad">Telrad · ½° / 2° / 4°</option><option value="rigel">Rigel · ½° / 2°</option>
+          <option value="field">Field only</option><option value="telrad">Telrad · ½° / 2° / 4°</option><option value="rigel">Rigel · ½° / 2°</option><option value="crosshair">Optical finder · crosshair</option>
         </select></label>}
-        {onFovChange && <label>Field width <input type="number" aria-label="Chart field of view" min="0.2" max="15" step="0.1" value={fovWidth} onChange={(event) => { const value = Number(event.target.value); if (value >= 0.2 && value <= 15) onFovChange(value); }} />°{fovShape === 'rectangle' && <span> × {fovHeight.toFixed(1)}°</span>}</label>}
+        {onFovChange && <label>Field width <input type="number" aria-label="Chart field of view" min="0.2" max="15" step="0.01" value={fovWidth} onChange={(event) => { const value = Number(event.target.value); if (value >= 0.2 && value <= 15) onFovChange(value); }} />°{fovShape === 'rectangle' && <span> × {fovHeight.toFixed(1)}°</span>}</label>}
         {onLimitingMagChange && <label>Stars to mag <input type="number" aria-label="Chart limiting magnitude" min="3" max="8" step="0.1" value={Math.min(8, limitingMag)} onChange={(event) => { const value = Number(event.target.value); if (value >= 3 && value <= 8) onLimitingMagChange(value); }} /></label>}
         <button className={starsOnly ? 'active' : ''} aria-pressed={starsOnly} onClick={() => updateDisplay({ starsOnly: !starsOnly })} data-testid="button-stars-only">Stars only</button>
       </div>
-      {!overview && finderReticle !== 'field' && !starsOnly && <p className="chart-reticle-note">Ring diameters in degrees · Field width sets hop spacing.</p>}
+      {!overview && finderReticle !== 'field' && !starsOnly && <p className="chart-reticle-note">{finderReticle === 'crosshair' ? 'Crosshair follows your field · Set your finder’s measured width.' : 'Ring diameters in degrees · Field width sets hop spacing.'}</p>}
       <div className="chart-readability-controls" aria-label="Chart readability">
           <label>Label size<output>{labelSize === 0 ? "Off" : `${labelSize}px`}</output><input aria-label="Chart label size" type="range" min={0} max={30} value={labelSize} onChange={e => updateDisplay({ labelSize: Number(e.target.value) })} /></label>
           <label>Star brightness<output>{starBrightness}</output><input aria-label="Chart star brightness" type="range" min={1} max={10} value={starBrightness} onChange={e => updateDisplay({ starBrightness: Number(e.target.value) })} /></label>

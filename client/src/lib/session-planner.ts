@@ -3,6 +3,7 @@ import * as Astro from "astronomy-engine";
 import tzLookup from "tz-lookup";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import { nightListSchema, type NightItem } from "./session";
+import { starSearchAliases } from "./stellar-search";
 import { eqToHorizontal, angularDistance, type UnifiedTarget, type Star } from "./astronomy";
 import { moonState, lunarFeatures, lunarFrame, projectLunarFeature, scatteredMoonlight } from "./moon";
 
@@ -91,5 +92,5 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
 
 export function starPlanningTarget(star:Star):UnifiedTarget {
   const name=star.name||`${star.bayer||star.flamsteed||star.id}${star.constellation?` ${star.constellation}`:""}`;
-  return {id:`star:${star.id}`,name,displayName:name,mag:star.mag,ra:star.ra,dec:star.dec,con:star.constellation||"",category:"Star",categoryShort:"Star",source:"binocular",desc:star.magnitudeNote??"Position and magnitude from the bundled Bright Star Catalogue. Individual stellar brightness can vary."};
+  return {id:`star:${star.id}`,name,displayName:name,aliases:starSearchAliases(star),mag:star.mag,ra:star.ra,dec:star.dec,con:star.constellation||"",category:"Star",categoryShort:"Star",source:"binocular",desc:star.magnitudeNote??"Position and magnitude from the bundled Bright Star Catalogue. Individual stellar brightness can vary."};
 }

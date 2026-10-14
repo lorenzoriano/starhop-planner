@@ -58,6 +58,14 @@ The suggested viewing sequence allocates nonoverlapping slots within the session
 
 Tabs have bookmarkable hash routes and work with browser Back/Forward and reload; target links such as `#/hop/M31` open their finder view.
 
+Tonight search also finds Bright Star Catalogue names, Bayer designations such as Alpha UMi, Flamsteed numbers and HR identifiers. Inspect a result using the shared chart or add it to your session. The ordinary discovery gallery stays focused on curated objects. Search filters still apply; turn off **Above 15°** to include low or below-horizon stars.
+
+On Star hop, choose a nearby **Starting star**, or use **Start hop from this star** in a star inspector, to keep your destination and plan from a visible reference. The chosen reference must be above 5° and within both the bright-anchor and guide-star limits. Unavailable starts produce a warning rather than an automatic substitution. Intermediate waypoint editing is not included.
+
+Active hop progress is saved on this device. Reload regenerates positions and restores the same physical route and field when the observing settings still match. A changed path restarts at the first field with an explanation; live records expire after eight hours. Live sky keeps running rather than restoring an old instant. Orientation preferences persist, but manual camera position and zoom are not saved with the hop.
+
+**Fine tune equipment** for a telescope includes an eyepiece calculator: telescope focal length, eyepiece focal length and apparent field give magnification and approximate true field. **Apply this field** changes the chart only when requested. Use a finder field for navigation when appropriate. **Optical finder · crosshair** uses your measured field width; magnification and aperture alone do not specify a finder's true field.
+
 Previewing another date or site does not move a saved session. The time bar identifies which session receives added targets; saved target cards and exported notes use that session's date and site. Everything persists on the device and works offline after preparation.
 
 ## Offline use

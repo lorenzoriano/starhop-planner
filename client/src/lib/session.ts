@@ -26,6 +26,7 @@ export const settingsSchema = z.object({
   limitingMag: z.number().min(3).max(12),
   difficulty: z.enum(["beginner", "intermediate", "expert"]),
   targetId: z.string(),
+  startStarId: z.string().regex(/^HR\d+$/).optional(),
   redLight: z.boolean(),
   binocularMagnification: z.number().min(5).max(40).default(10),
   binocularAperture: z.number().min(20).max(150).default(50),
