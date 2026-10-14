@@ -108,6 +108,7 @@ import {
 } from "@/lib/astronomy";
 import type { CostStrategyId } from "@/lib/cost-strategies";
 import { SkyChart } from "@/components/SkyChart";
+import { HopFieldNavigation, HopViewDirection } from "@/components/HopFieldNavigation";
 import { AltitudeChart } from "@/components/ObservingVisuals";
 import { ImageFallback } from "@/components/ImageFallback";
 import { BinocularGuide } from "@/components/BinocularGuide";
@@ -161,6 +162,7 @@ export default function PlannerPage() {
   useEffect(()=>{if(!pageForPath(location))navigate("/",{replace:true});},[location,navigate]);
   useEffect(()=>{window.scrollTo({top:0,behavior:"instant"});},[page]);
   const [setupOpen, setSetupOpen] = useState(false);
+  const [instrumentOpen, setInstrumentOpen] = useState(false);
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const [catalogs, setCatalogs] = useState<Catalogs>(EMPTY_CATALOGS);
   const [catalogError, setCatalogError] = useState(false);
@@ -417,12 +419,16 @@ export default function PlannerPage() {
     else if(id.startsWith("star:")){setInspectedStar(catalogs.stars.find(s=>`star:${s.id}`===id)??null);setPage("tonight");}
     else {update({targetId:id});setPage("hop",id);}
   }
+  function saveNewSession(items: NightItem[], title: string) {
+    const at = settings.timeMode === "live" ? planningShortcut("tonight", lat, lon).date : date;
+    const s = makeSession(`${formatInTimeZone(at, timezone, "MMM d")} observing night`, at, lat, lon, items);
+    setPlannerStore(current => ({ ...current, sessions: [...current.sessions, s], activeId: s.id }));
+    toast({ title, description: `${s.name}. Open Planner to edit its date, site and viewing sequence.` });
+  }
   function toggleSave(id: string) {
     if(!activeSession&&!legacyNight.some(i=>i.id===id)) {
-      const at=settings.timeMode==="live"?planningShortcut("tonight",lat,lon).date:date;
-      const s=makeSession(`${formatInTimeZone(at,timezone,"MMM d")} observing night`,at,lat,lon,[...legacyNight,{id,addedAt:new Date().toISOString(),notes:""}]);
-      setPlannerStore(current=>({...current,sessions:[...current.sessions,s],activeId:s.id}));
-      toast({title:"Added to your observing session",description:`${s.name}. Open Planner to edit its date, site and viewing sequence.`});return;
+      saveNewSession([...legacyNight, { id, addedAt:new Date().toISOString(), notes:"" }], "Added to your observing session");
+      return;
     }
     setNight((prev) =>
       prev.some((t) => t.id === id)
@@ -431,7 +437,7 @@ export default function PlannerPage() {
     );
   }
   function markObserved(id: string) {
-    setNight((prev) =>
+    const updateItems = (prev: NightItem[]) =>
       prev.some((t) => t.id === id)
         ? prev.map((t) =>
             t.id === id
@@ -451,8 +457,14 @@ export default function PlannerPage() {
               observedAt: new Date().toISOString(),
               notes: "",
             },
-          ],
-    );
+          ];
+    // Completing a first hop uses the same dated destination as the add button.
+    // Keep the map and its orientation in place while the session is created.
+    if (!activeSession && page === "hop") {
+      saveNewSession(updateItems(legacyNight), "Observation saved to your session");
+      return;
+    }
+    setNight(updateItems);
   }
   function planLocalTime(localDate: string, localTime: string) {
     const at = resolveLocalMoment(localDate, localTime, timezone);
@@ -498,22 +510,26 @@ export default function PlannerPage() {
       { timeout: 10000, maximumAge: 300000 },
     );
   }
-  async function compute() {
-    if (!settings.instrumentSelected) {
-      setSetupOpen(true);
-      toast({
-        title: "Choose your instrument",
-        description: "Select binoculars or a small telescope so the hop matches your field of view.",
-      });
+  function selectInstrument(selectedMode: Settings["mode"]) {
+    const patch = { mode: selectedMode, instrumentSelected: true, fov: selectedMode === "binocular" ? 7 : 5, fovHeight: selectedMode === "binocular" ? 7 : 5, shape: "circle" as const, limitingMag: selectedMode === "binocular" ? 6.5 : 8 };
+    update(patch);
+    return patch;
+  }
+  async function compute(chosenMode?: Settings["mode"]) {
+    if (!settings.instrumentSelected && !chosenMode) {
+      setInstrumentOpen(true);
       return;
     }
+    const instrument = chosenMode ? selectInstrument(chosenMode) : null;
+    const computeParams: ObservingParams = instrument ? { ...params, observingMode: instrument.mode, fovWidth: instrument.fov, fovHeight: instrument.fovHeight, fovShape: instrument.shape, limitingMag: instrument.limitingMag } : params;
+    setInstrumentOpen(false);
     setPage("hop",targetId);
     setComputing(true);
     setPlaying(false);
-    const key = paramsKey;
+    const key = JSON.stringify({ ...computeParams, date: settings.timeMode === "live" ? "live" : computeParams.date });
     await new Promise((resolve) => setTimeout(resolve, 40));
     try {
-      const computed = await planRoutes(params);
+      const computed = await planRoutes(computeParams);
       if (keyRef.current !== key) return;
       setRouteResult({ key, result: computed });
       setRouteIndex(0);
@@ -527,6 +543,12 @@ export default function PlannerPage() {
     } finally {
       setComputing(false);
     }
+  }
+  function advanceField() {
+    if (!route) return;
+    setPlaying(false);
+    if (step < route.hops.length - 1) setStep(step + 1);
+    else markObserved(targetId);
   }
   async function planBinocularHop(id: string, at: Date) {
     const localDate = formatInTimeZone(at, timezone, "yyyy-MM-dd");
@@ -861,16 +883,7 @@ export default function PlannerPage() {
               <button
                 className={settings.instrumentSelected && mode === "binocular" ? "selected" : ""}
                 aria-pressed={settings.instrumentSelected && mode === "binocular"}
-                onClick={() =>
-                  update({
-                    mode: "binocular",
-                    instrumentSelected: true,
-                    fov: 7,
-                    fovHeight: 7,
-                    shape: "circle",
-                    limitingMag: 6.5,
-                  })
-                }
+                onClick={() => selectInstrument("binocular")}
                 data-testid="button-mode-binocular"
               >
                 <Binoculars size={22} />
@@ -880,15 +893,7 @@ export default function PlannerPage() {
               <button
                 className={settings.instrumentSelected && mode === "telescope" ? "selected" : ""}
                 aria-pressed={settings.instrumentSelected && mode === "telescope"}
-                onClick={() =>
-                  update({
-                    mode: "telescope",
-                    instrumentSelected: true,
-                    fov: 5,
-                    fovHeight: 5,
-                    limitingMag: 8,
-                  })
-                }
+                onClick={() => selectInstrument("telescope")}
                 data-testid="button-mode-telescope"
               >
                 <Telescope size={22} />
@@ -1220,7 +1225,7 @@ export default function PlannerPage() {
                       <MoonlightCard target={selected} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => setPage("moon")} />
                       <div className="featured-actions">
                         <Button
-                          onClick={compute}
+                          onClick={() => compute()}
                           disabled={computing || loading}
                           data-testid="button-compute"
                         >
@@ -1435,7 +1440,7 @@ export default function PlannerPage() {
                     Find an astronomical night
                   </Button>
                   <Button
-                    onClick={compute}
+                    onClick={() => compute()}
                     disabled={computing || loading || !selected}
                     data-testid="button-plan-route"
                   >
@@ -1527,6 +1532,7 @@ export default function PlannerPage() {
                     route={route}
                     targetNode={result?.targetNode ?? previewTarget}
                     animStep={step}
+                    fieldNavigation={route ? <HopFieldNavigation route={route} step={step} observed={!!night.find(item => item.id === targetId)?.observedAt} onPrevious={() => { setStep(Math.max(0, step - 1)); setPlaying(false); }} onNext={advanceField}/> : undefined}
                     fovWidth={fov}
                     fovHeight={shape === "circle" ? fov : fovHeight}
                     fovShape={shape}
@@ -1572,9 +1578,10 @@ export default function PlannerPage() {
                           <span>
                             <Navigation size={13} />
                             {hop.distanceDeg > 0
-                              ? `${hop.distanceDeg.toFixed(1)}° ${hop.direction}`
+                              ? `Sky: ${hop.distanceDeg.toFixed(1)}° ${hop.direction}`
                               : "Starting field"}
                           </span>
+                          <HopViewDirection route={route!} step={step}/>
                           <span>
                             <ArrowUpRight size={13} />
                             {Math.round(hop.center.alt)}° high
@@ -1586,6 +1593,7 @@ export default function PlannerPage() {
                             </span>
                           )}
                         </div>
+                        {step > 0 && <p className="hop-direction-note">Chart directions show where the next field lies in your matched view. Telescope movement can differ from image motion.</p>}
                         <div className="pattern-tip">
                           <span className="eyebrow">CONFIRM YOUR FIELD</span>
                           <p>
@@ -1631,15 +1639,7 @@ export default function PlannerPage() {
                           </button>
                           <Button
                             className="flex-1"
-                            onClick={() => {
-                              if (step < route!.hops.length - 1) {
-                                setStep(step + 1);
-                                setPlaying(false);
-                              } else {
-                                setPlaying(false);
-                                markObserved(targetId);
-                              }
-                            }}
+                            onClick={advanceField}
                             data-testid="button-next-step"
                           >
                             {step === route!.hops.length - 1 ? (
@@ -1970,6 +1970,16 @@ export default function PlannerPage() {
         </main>
       </div>
       <Dialog open={!!inspectedStar} onOpenChange={open=>{if(!open)setInspectedStar(null);}}><DialogContent className="star-detail-dialog"><DialogHeader><DialogTitle>{inspectedStar?starPlanningTarget(inspectedStar).name:"Star"}</DialogTitle><DialogDescription>Bright Star Catalogue · {formatInTimeZone(date,timezone,"MMM d, yyyy · HH:mm")} local</DialogDescription></DialogHeader>{inspectedStar&&(()=>{const target=starPlanningTarget(inspectedStar);const pos=eqToHorizontal(target.ra,target.dec,lat,lon,date);const node:SkyNode={...inspectedStar,...pos,id:target.id,name:target.name,type:"star"};return <><p className="object-location">Magnitude {target.mag.toFixed(1)} · {Math.round(pos.alt)}° {compassLabel(pos.az)} · {altitudeLabel(pos.alt)}</p><p>{activeSession?`Add to ${activeSession.name}, or remove it from that session.`:"Add this star to an observing session, then open Planner to choose a date and sequence."}</p><Button onClick={()=>toggleSave(target.id)}>{savedIds.has(target.id)?<Check size={14}/>:<Plus size={14}/>} {savedIds.has(target.id)?"Remove from session":"Add to session"}</Button><SkyChart onSelect={selectTarget} nodes={[...previewNodes.filter(s=>s.id!==inspectedStar.id),node]} constellations={catalogs.constellations} route={null} targetNode={node} animStep={0} fovWidth={fov} fovHeight={shape==="circle"?fov:fovHeight} fovShape={shape} lat={lat} lon={lon} date={date} limitingMag={limitingMag} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} onFovChange={width=>update({fov:width,...(shape==="circle"?{fovHeight:width}:{})})} onLimitingMagChange={value=>update({limitingMag:value})}/><MoonlightCard target={target} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness}/></>;})()}</DialogContent></Dialog>
+      <Dialog open={instrumentOpen} onOpenChange={setInstrumentOpen}>
+        <DialogContent className="instrument-choice-dialog">
+          <DialogHeader><DialogTitle>Choose your instrument</DialogTitle><DialogDescription>Start with a finder field that suits your view. Adjust the field width below the chart to match your optics.</DialogDescription></DialogHeader>
+          <div className="instrument-choice-options">
+            <button onClick={() => compute("binocular")}><Binoculars size={25}/><span>Binoculars</span><small>7° starting field · wide views</small></button>
+            <button onClick={() => compute("telescope")}><Telescope size={25}/><span>Small telescope</span><small>5° finder field · then check at low power</small></button>
+          </div>
+          <p>The hop opens as soon as you choose. Use your actual finder field for the route.</p>
+        </DialogContent>
+      </Dialog>
       <Dialog open={sourcesOpen} onOpenChange={setSourcesOpen}>
         <DialogContent className="data-sources-dialog">
           <DialogHeader>

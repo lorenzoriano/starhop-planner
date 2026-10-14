@@ -8,9 +8,10 @@ export const chartPreferencesSchema = z.object({
   showGhostCircles: z.boolean(), showConstellations: z.boolean(),
   mirrored: z.boolean(), rotation: z.union([z.literal(0), z.literal(90), z.literal(180), z.literal(270)]),
   starsOnly: z.boolean(),
+  finderReticle: z.enum(["field", "telrad", "rigel"]).default("field"),
 });
 type Preferences = z.infer<typeof chartPreferencesSchema>;
-const defaults: Preferences = { labelSize: 12, starBrightness: 8, navStarSize: 5, showLegend: true, showGhostCircles: true, showConstellations: true, mirrored: false, rotation: 0, starsOnly: false };
+const defaults: Preferences = { labelSize: 12, starBrightness: 8, navStarSize: 5, showLegend: true, showGhostCircles: true, showConstellations: true, mirrored: false, rotation: 0, starsOnly: false, finderReticle: "field" };
 const Context = createContext({ preferences: defaults, update: (_patch: Partial<Preferences>) => {} });
 export function ChartPreferencesProvider({ children }: { children: ReactNode }) {
   const [preferences, setPreferences] = useLocalState("starhop-chart-display-v1", { ...defaults, labelSize: window.matchMedia("(max-width: 760px)").matches ? 16 : 12 }, chartPreferencesSchema);

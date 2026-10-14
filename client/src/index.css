@@ -454,6 +454,29 @@ button:disabled { opacity: .45; cursor: default; }
 .chart-field-controls input { width: 59px; padding: 5px; min-height: 32px; border-radius: 4px; border: 1px solid #496458; background: #10222c; color: #d2e4d5; font-family: var(--font-mono); }
 .chart-field-controls button { min-height: 32px; padding: 5px 9px; border: 1px solid #354b58; border-radius: 4px; color: #a2b8c1; font-size: 10px; }
 .chart-field-controls button.active { border-color: #a3c6b1; color: #c6dec9; background: #a3c6b120; }
+.chart-field-controls select { max-width:210px; min-width:0; min-height:36px; padding:5px 7px; border:1px solid #354b58; border-radius:4px; color:#bdd0c8; background:#10222c; }
+.chart-reticle-note { padding:0 14px 12px; background:#0c1a25; color:#8da8a4; font-size:10px; }
+.chart-hop-navigation { display:none; }
+.hop-view-direction { color:#b7d0be; }
+.hop-direction-note { margin:-6px 0 16px; color:#8faab2; font-size:10px; line-height:1.7; }
+.instrument-choice-dialog { width:480px; max-width:calc(100vw - 32px); border-color:#506e61; background:#0b1922; color:#dde5d9; }
+.instrument-choice-options { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.instrument-choice-options button { display:flex; flex-direction:column; align-items:flex-start; gap:12px; padding:18px; text-align:left; border:1px solid #45635b; border-radius:8px; background:#a3c7b50a; color:#b6d2c2; }
+.instrument-choice-options button:hover { border-color:#a3c7b5; background:#a3c7b514; }
+.instrument-choice-options span { color:#e0e5d8; font-size:15px; }
+.instrument-choice-options small, .instrument-choice-dialog > p { color:#95afb6; font-size:11px; line-height:1.7; }
+@media (max-width:760px) {
+  .chart-hop-navigation { display:block; padding:14px; border-top:1px solid #385447; background:#10212a; }
+  .chart-hop-heading { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .chart-hop-heading > div:first-child { min-width:0; }
+  .chart-hop-heading p { color:#d0dfd2; font-size:12px; line-height:1.6; margin:5px 0; }
+  .chart-hop-heading .hop-view-direction { display:block; font-size:10px; line-height:1.7; }
+  .chart-hop-actions { display:flex; gap:7px; flex-shrink:0; }
+  .chart-hop-actions > button { min-height:44px; min-width:44px; font-size:12px; }
+  .chart-hop-navigation details { margin-top:10px; font-size:11px; color:#a7c6bb; }
+  .chart-hop-navigation details p { margin-top:10px; line-height:1.8; color:#aec1c4; }
+}
+@media (max-width:400px) { .instrument-choice-options { grid-template-columns:1fr; } }
 .chart-accuracy-note { padding: 0 14px 13px; color: #8ca3aa; background: #0c1a25; font-size: 9px; line-height: 1.7; }
 .binocular-detail-chart { border: 1px solid #38524d; border-radius: 7px; overflow: hidden; }
 .binocular-detail-notes { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
