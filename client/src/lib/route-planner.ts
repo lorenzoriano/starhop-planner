@@ -49,7 +49,7 @@ export interface CompressedHop {
 
 export const DIFFICULTY_PRESETS: Record<DifficultyLevel, DifficultyParams> = {
   beginner: {
-    maxSweepFovRatio: 1.5,
+    maxSweepFovRatio: 0.7,
     reachMultiplier: 0.85,
     minWaypointMag: 5.0,
     directionTolerance: 25,
@@ -237,11 +237,14 @@ function buildSpatialGrid(stars: SkyNode[]): SpatialGrid {
 
 function getNeighborCandidates(grid: SpatialGrid, ra: number, dec: number, radius: number): SkyNode[] {
   const candidates: SkyNode[] = [];
-  const raBuckets = Math.ceil(radius / CELL_SIZE) + 1;
+  const rad=Math.PI/180;
+  const raSpan=Math.abs(dec)+radius>=90?180:Math.asin(Math.min(1,Math.sin(radius*rad)/Math.cos(dec*rad)))/rad;
+  const raBuckets = Math.min(36,Math.ceil(raSpan / CELL_SIZE) + 1);
   const decBuckets = Math.ceil(radius / CELL_SIZE) + 1;
   const centerRaBucket = Math.floor(ra / CELL_SIZE);
   const centerDecBucket = Math.floor((dec + 90) / CELL_SIZE);
 
+  const seen=new Set<string>();
   for (let dr = -raBuckets; dr <= raBuckets; dr++) {
     for (let dd = -decBuckets; dd <= decBuckets; dd++) {
       let raBucket = centerRaBucket + dr;
@@ -254,6 +257,7 @@ function getNeighborCandidates(grid: SpatialGrid, ra: number, dec: number, radiu
       if (decBucket < 0 || decBucket >= Math.ceil(180 / CELL_SIZE)) continue;
 
       const key = `${raBucket},${decBucket}`;
+      if(seen.has(key))continue;seen.add(key);
       const bucket = grid.cells.get(key);
       if (bucket) {
         candidates.push(...bucket);
@@ -356,7 +360,7 @@ export function variableReachAStar(
     const currentNode = allNodes.get(current.id)!;
 
     // Max reach from current position — depends on what we can see
-    const searchRadius = bestReach;
+    const searchRadius = difficulty==='beginner'?Math.min(bestReach,fov*.7):bestReach;
 
     // Get neighbor candidates from spatial grid
     const candidates = getNeighborCandidates(grid, currentNode.ra, currentNode.dec, searchRadius);
@@ -382,6 +386,7 @@ export function variableReachAStar(
         reach = maxReach(neighbor.mag, fov, isNamed);
       }
 
+      if(difficulty==='beginner')reach=Math.min(reach,fov*.7);
       if (dist > reach) continue;
       if (!isGoal && neighbor.mag > MAX_WAYPOINT_MAG) continue;
 

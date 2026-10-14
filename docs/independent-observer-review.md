@@ -61,3 +61,14 @@ The independent reviewer selected M27, M57 and M31 and verified loaded local 640
 The parent checked M27/M57/M31 selection, saved-session photography, credits, mobile and offline use without browser errors. A catalog-wide regression verifies optical image files, source survey and coordinates for every discovery object; all 135 tests across 14 files passed, along with TypeScript and the production build.
 
 The reviewer caught a mobile blank strip after the desktop aspect-ratio adjustment. Explicit full-width sizing and a mobile aspect-ratio override fixed it. The final independent recheck confirmed the photo fills the 352-pixel card content at a 390-pixel viewport, with no overflow; desktop and tablet retain 4:3 imagery. The desktop featured panel no longer stretches into a large empty gap.
+
+
+## GitHub feedback review
+
+A separate review pass checked the 19 GitHub reports against the published baseline, then explored the revised production build. Confirmed repairs include the M8-first sequence (M8 → M13 → M39), the missing neighborhood target, daylight guidance, exact/spaced catalog search, ordinary wheel scrolling, the mobile time editor, selected-calendar contrast and hash navigation with Back/reload. The broad header-scroll claim did not reproduce; the featured action did.
+
+At San Francisco, June's after-dark sample is 22:43 with the Sun below −18°; the retained 21:00 reference correctly warns of civil twilight. The explicit next-occurrence action plans June 2027. Adding from the monthly sample matches the named destination session rather than silently moving it to the sample date. Next new Moon stays in Planner; empty search and singular counts are clear. The reviewer caught the literal sample-time text and a mobile popup border clipping; both were fixed and rechecked.
+
+The reviewer inspected 375, 620, 776 and 1440 pixel layouts, red mode, plain scrolling through the binocular dialog and Ctrl-wheel zoom in 20% steps. No horizontal overflow remained. Label placement was refined against actual rendered font metrics. The two Serpens source figures now have unique keys, fixing a stale label left behind on resize; centered target placements preserve long destination names on small screens. The quiet palette, typography and chart density were preserved.
+
+Parent browser verification compared Milky Way shading with the source spherical polygons at 3,976 plotted catalog-star positions, then repeated all 3,976 checks after mirror/90° rotation. Every membership matched. It also verified an offline reload of a target bookmark, persistent orientation and migration of old target IDs with merged notes and retained observing timestamps, without browser errors. TypeScript, the production build and all 150 tests across 15 files passed. See [the issue-by-issue decisions](github-feedback-review.md) for qualified suggestions and astronomical references.

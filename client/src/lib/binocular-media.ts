@@ -17,7 +17,7 @@ export const SURVEY_CREDITS = {
 /** Resolved identifiers for physical objects; coordinate queries for informal patterns. */
 export function binocularDatabaseResources(target: UnifiedTarget, fov: number) {
   const hr: Record<string, number> = { Algol: 936, Mira: 681, Betelgeuse: 2061, Aldebaran: 1457, Arcturus: 5340, Antares: 6134, Rasalgethi: 6406, MuCep: 8316, Capella: 1708, Sirius: 2491, Procyon: 2943, Vega: 7001, Deneb: 7924, Fomalhaut: 8728, Alphard: 3748, LaSuperba: 4846 };
-  const doubles: Record<string, string> = { "DS-MizarAlcor": "Mizar", "DS-NuDra": "nu Dra", "DS-AlpCap": "alf01 Cap", "DS-AlpLib": "alf Lib", "DS-DoubleDbl": "eps01 Lyr", "DS-56And": "56 And", "DS-Albireo": "bet Cyg", "DS-ThetaTau": "tet01 Tau", "DS-16Cyg": "16 Dra", "DS-39Dra": "39 Dra", "DS-14Ari": "14 Ari", "DS-NuGem": "nu Gem" };
+  const doubles: Record<string, string> = { "DS-MizarAlcor": "Mizar", "DS-NuDra": "nu Dra", "DS-AlpCap": "alf01 Cap", "DS-AlpLib": "alf Lib", "DS-DoubleDbl": "eps01 Lyr", "DS-56And": "56 And", "DS-Albireo": "bet Cyg", "DS-ThetaTau": "tet01 Tau", "DS-16Dra": "16 Dra", "DS-39Dra": "39 Dra", "DS-14Ari": "14 Ari", "DS-NuGem": "nu Gem" };
   const id = target.id.startsWith("STAR-") ? `HR ${hr[target.id.slice(5)]}` : doubles[target.id] ?? (/^(M\d+|NGC\d+|IC\d+|Mel\d+|Stock\d+|Tr\d+|Cr\d+)$/.test(target.id) ? target.id.replace(/^(NGC|IC|Mel|Stock|Tr|Cr)/, "$1 ") : target.id === "LMC" || target.id === "SMC" ? target.id : undefined);
   const coordinate = `${target.ra.toFixed(7)} ${target.dec >= 0 ? "+" : ""}${target.dec.toFixed(7)}`;
   return [

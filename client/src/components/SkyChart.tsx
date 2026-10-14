@@ -1,5 +1,7 @@
 import { orientChartPoint } from '@/lib/observing';
 import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom } from '@/lib/chart-view';
+import { milkyWayPaths as projectMilkyWay } from '@/lib/sky-polygons';
+import { boxesOverlap,labelFits,type LabelBox } from '@/lib/chart-labels';
 import { useChartPreferences } from './ChartPreferences';
 import { useMemo, useRef, useState, useCallback, useEffect, useLayoutEffect } from 'react';
 import {
@@ -146,6 +148,11 @@ export function SkyChart({
   const viewBoxX = (CHART_SIZE - viewBoxSize) / 2 - panX;
   const viewBoxY = (CHART_SIZE - viewBoxSize) / 2 - panY;
 
+  const labelViewport={left:viewBoxX+6*screenUnit,top:viewBoxY+6*screenUnit,right:viewBoxX+viewBoxSize-6*screenUnit,bottom:viewBoxY+viewBoxSize-6*screenUnit};
+  const labelCircle=overview?{x:cx,y:cy,r:260-3*screenUnit}:undefined;
+  const reservedLabels:LabelBox[]=[{left:viewBoxX+viewBoxSize-75*screenUnit,top:viewBoxY,right:viewBoxX+viewBoxSize,bottom:viewBoxY+75*screenUnit}];
+  if(showLegend&&!starsOnly)reservedLabels.push({left:viewBoxX,top:viewBoxY,right:viewBoxX+(route?280:180)*screenUnit,bottom:viewBoxY+42*screenUnit});
+
   // Clamp pan so chart doesn't fly offscreen
   const clampPan = useCallback((px: number, py: number, z: number) => {
     const viewSize = CHART_SIZE / z;
@@ -159,17 +166,17 @@ export function SkyChart({
 
   // ───── Mouse wheel zoom ─────
   const handleWheel = useCallback((e: React.WheelEvent) => {
-    // The non-passive native listener below prevents page scrolling.
+    if(!e.ctrlKey&&!e.metaKey)return;
+    if((e.deltaY>0&&zoom<=MIN_ZOOM)||(e.deltaY<0&&zoom>=MAX_ZOOM))return;
     e.stopPropagation();
-    const delta = e.deltaY > 0 ? -0.07 : 0.07;
     setZoom((prev) => {
-      const next = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, prev * (1 + delta)));
+      const next = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, prev * (e.deltaY>0?1/1.2:1.2)));
       // Adjust pan to stay clamped
       setPanX((px) => clampPan(px, 0, next).x);
       setPanY((py) => clampPan(0, py, next).y);
       return next;
     });
-  }, [clampPan]);
+  }, [clampPan,zoom]);
 
   // ───── Pointer (mouse/single-touch) drag ─────
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
@@ -286,7 +293,8 @@ export function SkyChart({
       if (e.touches.length >= 2) e.preventDefault();
     };
     const preventWheel = (e: WheelEvent) => {
-      if (el.contains(e.target as Node)) e.preventDefault();
+      // The modifier always belongs to chart zoom; never resize the browser at a limit.
+      if((e.ctrlKey||e.metaKey)&&svgRef.current?.contains(e.target as Node))e.preventDefault();
     };
     el.addEventListener('touchmove', preventZoom, { passive: false });
     el.addEventListener('wheel', preventWheel, { passive: false });
@@ -294,7 +302,7 @@ export function SkyChart({
       el.removeEventListener('touchmove', preventZoom);
       el.removeEventListener('wheel', preventWheel);
     };
-  }, []);
+  }, [zoom]);
 
 
   const project = useCallback((ra: number, dec: number) => {
@@ -443,34 +451,7 @@ export function SkyChart({
   // ───── Milky Way outline paths (from d3-celestial mw.json) ─────
   // 5 nested polygon layers (ol1–ol5) rendered with additive opacity:
   // overlapping regions appear brighter, creating a natural brightness gradient.
-  const milkyWayPaths = useMemo(() => {
-    if (!milkyWay.length) return [];
-    const paths: { d: string; id: string }[] = [];
-    for (const feature of milkyWay) {
-      for (let ri = 0; ri < feature.coordinates.length; ri++) {
-        const ring = feature.coordinates[ri];
-        let d = '';
-        let hasVisiblePoint = false;
-        for (const [ra, dec] of ring) {
-          const p = projectChartPoint({ ra, dec }, projectionFrame, center, scale);
-          if (!p) {
-            if (d) { d += ' Z'; paths.push({ d, id: `${feature.id}-${ri}` }); d = ''; }
-            continue;
-          }
-          const oriented = orientChartPoint(p, mirrored, rotation);
-          const x = cx + oriented.x;
-          const y = cy + oriented.y;
-          hasVisiblePoint = true;
-          d += d ? ` L${x},${y}` : `M${x},${y}`;
-        }
-        if (d && hasVisiblePoint) {
-          d += ' Z';
-          paths.push({ d, id: `${feature.id}-${ri}` });
-        }
-      }
-    }
-    return paths;
-  }, [milkyWay, projectionFrame, mirrored, rotation, center.ra, center.dec, scale]);
+  const milkyWayPaths=useMemo(()=>projectMilkyWay(milkyWay,projectionFrame,center,scale,mirrored,rotation,overview),[milkyWay,projectionFrame,center,scale,mirrored,rotation,overview]);
 
   const constellationPaths = useMemo(() => {
     const paths: { d: string; id: string; nearFocus: boolean }[] = [];
@@ -504,8 +485,9 @@ export function SkyChart({
   // ───── Constellation name labels at centroid of visible constellations ─────
   const constellationLabels = useMemo(() => {
     if (!showConstellations) return [];
-    const labels: { x: number; y: number; name: string; abbr: string; nearFocus: boolean }[] = [];
-    for (const constellation of constellations) {
+    const labels: { x: number; y: number; name: string; key: string; nearFocus: boolean }[] = [];
+    for (let index=0;index<constellations.length;index++) {
+      const constellation=constellations[index];
       // Compute centroid of all vertices
       const vertices = constellation.points.flat().map(([ra, dec]) => ({ ra, dec }));
       if (!vertices.length) continue;
@@ -528,7 +510,9 @@ export function SkyChart({
       labels.push({
         x, y,
         name: getConstellationName(constellation.id),
-        abbr: constellation.id,
+        // Serpens has two separate source figures. Reusing its abbreviation
+        // as a React key leaves stale labels behind after resize or filtering.
+        key: `${constellation.id}-${index}`,
         nearFocus: isNearFocus || isActive,
       });
     }
@@ -636,36 +620,42 @@ export function SkyChart({
       star: SkyNode;
       x: number;
       y: number;
-      anchor: 'start' | 'end';
+      anchor: 'start' | 'end' | 'middle';
       width: number;
       isAnchor: boolean;
       isTarget: boolean;
       isPatternAnchor: boolean;
+      box:LabelBox;
+      leader:{x:number;y:number}|null;
     }> = [];
 
+    const measure=document.createElement('canvas').getContext('2d');
+    const family=getComputedStyle(svgRef.current??document.body).getPropertyValue('--font-sans')||'sans-serif';
     const usedNames = new Set<string>();
     for (const candidate of candidates) {
       const text = chartLabel(candidate.star);
       // Skip empty labels (HR-only stars) and deduplicate
       if (!text || usedNames.has(text)) continue;
-      const charWidth = labelUnits * 0.63;
       const lPad = Math.max(screenUnit, labelUnits * 0.4);
-      const width = Math.max(labelUnits * 2, text.length * charWidth);
-      for (const placement of placements) {
-        const x = candidate.point.x + placement.dx * screenUnit;
-        const y = candidate.point.y + placement.dy * screenUnit;
-        const left = placement.anchor === 'start' ? x - lPad : x - width - lPad;
-        const right = placement.anchor === 'start' ? x + width + lPad : x + lPad;
+      if(measure)measure.font=`${candidate.isTarget||candidate.isAnchor?'700':'500'} ${labelUnits}px ${family}`;
+      const width = Math.max(labelUnits * 2, measure?.measureText(text).width??text.length*labelUnits*.63);
+      const options=candidate.isTarget||candidate.isAnchor
+        ? [...placements,{dx:0,dy:-16,anchor:'middle' as const},{dx:0,dy:22,anchor:'middle' as const}]
+        : placements;
+      const inward=overview&&(candidate.isTarget||candidate.isAnchor)?[0,12,24,48,72]:[0];
+      let placed=false;
+      for(const nudge of inward){
+       const length=Math.hypot(cx-candidate.point.x,cy-candidate.point.y)||1;
+       for (const placement of options) {
+        const x = candidate.point.x + placement.dx * screenUnit+(cx-candidate.point.x)/length*nudge*screenUnit;
+        const y = candidate.point.y + placement.dy * screenUnit+(cy-candidate.point.y)/length*nudge*screenUnit;
+        const left = placement.anchor === 'start' ? x - lPad : placement.anchor === 'middle' ? x-width/2-lPad : x - width - lPad;
+        const right = placement.anchor === 'start' ? x + width + lPad : placement.anchor === 'middle' ? x+width/2+lPad : x + lPad;
         const top = y - labelUnits - lPad;
         const bottom = y + lPad;
-        const overlaps = accepted.some((label) => {
-          const existingLeft = label.anchor === 'start' ? label.x - lPad : label.x - label.width - lPad;
-          const existingRight = label.anchor === 'start' ? label.x + label.width + lPad : label.x + lPad;
-          const existingTop = label.y - labelUnits - lPad;
-          const existingBottom = label.y + lPad;
-          return !(right < existingLeft || left > existingRight || bottom < existingTop || top > existingBottom);
-        });
-        const outOfBounds = left < viewBoxX + 6*screenUnit || right > viewBoxX + viewBoxSize - 6*screenUnit || top < viewBoxY + 6*screenUnit || bottom > viewBoxY + viewBoxSize - 6*screenUnit;
+        const box={left,right,top,bottom};
+        const overlaps = accepted.some(label=>boxesOverlap(box,label.box));
+        const outOfBounds=!labelFits(box,labelViewport,labelCircle)||reservedLabels.some(area=>boxesOverlap(box,area));
         if (!overlaps && !outOfBounds) {
           accepted.push({
             star: candidate.star,
@@ -676,16 +666,44 @@ export function SkyChart({
             isAnchor: candidate.isAnchor,
             isTarget: candidate.isTarget,
             isPatternAnchor: candidate.isPatternAnchor,
+            box,leader:nudge?candidate.point:null,
           });
-          usedNames.add(text);
+          usedNames.add(text);placed=true;
           break;
         }
+       }
+       if(placed)break;
       }
       if (accepted.length >= 22) break;
     }
 
     return accepted;
   }, [plottedStars, activeConstellationIds, focusPoint, localRadius, labelSize, labelUnits, screenUnit, viewBoxX, viewBoxY, viewBoxSize]);
+
+  const placedConstellationLabels=useMemo(()=>{
+    const occupied=[...reservedLabels,...labels.map(label=>label.box)];
+    const accepted:typeof constellationLabels=[];
+    const font=Math.max(10,labelSize*.85)*screenUnit;
+    // Uppercase names vary considerably in width (e.g. SERPENS). Measure
+    // the same font as the SVG so collision bounds match the visible text.
+    const measure=document.createElement('canvas').getContext('2d');
+    if(measure)measure.font=`500 ${font}px ${getComputedStyle(svgRef.current??document.body).getPropertyValue('--font-sans')||'sans-serif'}`;
+    for(const label of constellationLabels.slice().sort((a,b)=>Number(b.nearFocus)-Number(a.nearFocus)||Math.hypot(a.x-cx,a.y-cy)-Math.hypot(b.x-cx,b.y-cy))){
+      const text=label.name.toUpperCase();
+      const metrics=measure?.measureText(text);
+      const width=(metrics?.width??text.length*font*.8)+text.length*1.5*screenUnit;
+      const ascent=Math.max(font,metrics?.fontBoundingBoxAscent??font);
+      const descent=Math.max(font*.3,metrics?.fontBoundingBoxDescent??font*.3);
+      for(const dy of [0,-14,14]){
+        const y=label.y+dy*screenUnit;
+        const box={left:label.x-width/2,right:label.x+width/2,top:y-ascent,bottom:y+descent};
+        if(!labelFits(box,labelViewport,labelCircle)||occupied.some(area=>boxesOverlap(box,area,3*screenUnit)))continue;
+        occupied.push(box);accepted.push({...label,y});break;
+      }
+      if(overview&&accepted.length>=(viewportPixels<430?12:22))break;
+    }
+    return accepted;
+  },[constellationLabels,labels,labelSize,screenUnit,viewBoxX,viewBoxY,viewBoxSize,viewportPixels,showLegend,starsOnly]);
 
   const fovCenter = currentHop ? project(currentHop.center.ra, currentHop.center.dec) : targetNode ? project(targetNode.ra, targetNode.dec) : null;
 
@@ -851,7 +869,7 @@ export function SkyChart({
         <g clipPath="inset(0)">
           {!starsOnly && milkyWayPaths.map((path, i) => (
             <path key={`mw-${path.id}-${i}`} d={path.d}
-              fill="rgba(170, 190, 255, 0.055)" stroke="none" />
+              fill="rgba(170, 190, 255, 0.055)" fillRule="evenodd" stroke="none" />
           ))}
         </g>
 
@@ -881,9 +899,9 @@ export function SkyChart({
         ))}
 
         {/* Constellation name labels */}
-        {!starsOnly && labelSize > 0 && showConstellations && constellationLabels.map((label) => (
+        {!starsOnly && labelSize > 0 && showConstellations && placedConstellationLabels.map((label) => (
           <text
-            key={`cname-${label.abbr}`}
+            key={`cname-${label.key}`}
             x={label.x}
             y={label.y}
             textAnchor="middle"
@@ -1070,8 +1088,9 @@ export function SkyChart({
           const pad = Math.max(screenUnit, labelUnits * 0.4);
           return (
             <g key={`${label.star.id}-label`} pointerEvents={onSelect ? "auto" : "none"} role={onSelect ? "button" : undefined} tabIndex={onSelect ? 0 : undefined} aria-label={onSelect ? `Select ${chartLabel(label.star)}` : undefined} onClick={() => { if(!didDrag.current)onSelect?.(label.star.id); }} onKeyDown={event => {if(onSelect&&(event.key==="Enter"||event.key===" ")){event.preventDefault();onSelect(label.star.id);}}}>
+              {label.leader&&<line x1={label.leader.x} y1={label.leader.y} x2={label.x} y2={label.y} stroke="#78929e" strokeWidth={.7} vectorEffect="non-scaling-stroke" opacity={.6}/>}
               <rect
-                x={label.anchor === 'start' ? label.x - pad : label.x - label.width - pad}
+                x={label.anchor === 'start' ? label.x - pad : label.anchor === 'middle' ? label.x-label.width/2-pad : label.x - label.width - pad}
                 y={label.y - labelUnits - pad * 0.5}
                 width={label.width + pad * 2}
                 height={labelUnits + pad * 2}
@@ -1128,9 +1147,7 @@ export function SkyChart({
           <text x={scaleBarDegrees / 2 * scale} y={-6 / zoom} fill="#8797a5" fontSize={8 / zoom} textAnchor="middle" fontFamily="var(--font-sans)">{scaleBarDegrees}°</text>
         </g>}
 
-        <text x={CHART_SIZE - 16} y={24} textAnchor="end" fill="#7382a1" fontSize={8*screenUnit} fontFamily="var(--font-sans)">
-          {overview ? 'Horizon = outer ring' : `Fixed map · ${fovWidth.toFixed(1)}° field`}
-        </text>
+
       </svg>
 
       <div className="chart-toolbar">
@@ -1164,16 +1181,16 @@ export function SkyChart({
           <label><input type="checkbox" checked={showLegend} onChange={e => updateDisplay({ showLegend: e.target.checked })} />Legend</label>
         </div>
       </details>
-      <p className="chart-accuracy-note">{starsOnly ? 'Catalog stars without labels or guide patterns. Nebulosity is not simulated.' : 'Catalog chart · constellation names in green · star names in white, blue or lilac.'} Star catalog extends to magnitude 8; the view depends on your optics and sky.</p>
+      <p className="chart-accuracy-note">Ctrl / ⌘ + scroll to zoom · drag to pan. {starsOnly ? 'Catalog stars without labels or guide patterns. Nebulosity is not simulated.' : 'Catalog chart · constellation names in green · star names in white, blue or lilac.'} Star catalog extends to magnitude 8; the view depends on your optics and sky.</p>
       {showLegend && !starsOnly && <div className="absolute top-3 left-3 flex gap-3 rounded border border-[#2a414e] bg-[#0a1721]/90 px-2 py-1.5 text-[9px]">
         {route && <><span className="text-[#38bdf8]">● Anchor</span><span className="text-[#c084fc]">● Pattern</span></>}<span className="text-[#d8bc80]">● Target</span><span className="text-[#a7cfa0]">Constellation</span>
       </div>}
-      <svg className="absolute top-3 right-3 pointer-events-none" width="60" height="60" viewBox="0 0 60 60" aria-label={`Chart orientation, ${mirrored ? 'mirrored, ' : ''}rotated ${rotation} degrees`}>
+      {!overview&&<svg className="absolute top-3 right-3 pointer-events-none" width="60" height="60" viewBox="0 0 60 60" aria-label={`Chart orientation, ${mirrored ? 'mirrored, ' : ''}rotated ${rotation} degrees`}>
         {([{ label: 'N', point: { x: 0, y: -16 } }, { label: 'E', point: { x: -16, y: 0 } }]).map(({ label, point }) => {
           const p = orientChartPoint(point, mirrored, rotation);
           return <g key={label}><line x1="30" y1="30" x2={30 + p.x} y2={30 + p.y} stroke="#91aab6" vectorEffect="non-scaling-stroke" strokeWidth="1" /><text x={30 + p.x * 1.5} y={33 + p.y * 1.5} textAnchor="middle" fill="#b0c6cc" fontSize="9">{label}</text></g>;
         })}
-      </svg>
+      </svg>}
     </div>
   );
 }

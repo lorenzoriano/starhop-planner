@@ -63,7 +63,7 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
     const impact=target?{...scatteredMoonlight(moon,pos.alt,separation!,skyBrightness),diffuse:/galaxy|nebula|cloud/i.test(target.category)}:null;
     const usable=pos.alt>=minimum&&darkEnough;
     const score=pos.alt-(impact?.brightening??0)*(impact?.diffuse?14:brightStellar?2:6);
-    const point={id,name:feature?.name??target!.name,date:at,alt:pos.alt,az:pos.az,separation:separation,moonlight:impact?.brightening??0,lunar,usable,score,minimum,darkEnough};
+    const point={id,name:feature?.name??target!.displayName,date:at,alt:pos.alt,az:pos.az,separation:separation,moonlight:impact?.brightening??0,lunar,usable,score,minimum,darkEnough};
     targetCache.set(key,point); return point;
   };
   let current=start;
@@ -72,12 +72,14 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
       const samples:NonNullable<ReturnType<typeof atTarget>>[]=[];
       for(let ms=current.getTime();ms+session.minutesPerTarget*60_000<=end.getTime();ms+=15*60_000){const p=atTarget(id,new Date(ms));if(p?.usable&&atTarget(id,new Date(ms+session.minutesPerTarget*60_000))?.usable)samples.push(p);}
       const first=samples[0];if(!first)return null;
-      const last=samples.at(-1)!;
+      // Use the first continuous viewing window, not a later reappearance.
+      const gap=samples.findIndex((p,i)=>i>0&&p.date.getTime()-samples[i-1].date.getTime()>15*60_000);
+      const last=samples[gap<0?samples.length-1:gap-1];
       const urgency=last.date.getTime()-current.getTime()<45*60_000?55:0;
-      return {...first,score:first.score+urgency,urgent:!!urgency};
-    }).filter(Boolean) as (NonNullable<ReturnType<typeof atTarget>> & {urgent:boolean})[];
+      return {...first,score:first.score,urgent:!!urgency,latestStart:last.date.getTime()};
+    }).filter(Boolean) as (NonNullable<ReturnType<typeof atTarget>> & {urgent:boolean;latestStart:number})[];
     if(!options.length)break;
-    options.sort((a,b)=>a.date.getTime()-b.date.getTime()||b.score-a.score);
+    options.sort((a,b)=>a.date.getTime()-b.date.getTime()||a.latestStart-b.latestStart||b.score-a.score);
     const best=options[0];
     steps.push({...best,reason:best.urgent?"Observe before its usable window closes":best.moonlight>=1?"Moonlit sky: prioritize bright detail":best.lunar?"Moon is up and safely separated from the Sun":"Well placed at this time"});
     remaining.splice(remaining.indexOf(best.id),1);
@@ -89,5 +91,5 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
 
 export function starPlanningTarget(star:Star):UnifiedTarget {
   const name=star.name||`${star.bayer||star.flamsteed||star.id}${star.constellation?` ${star.constellation}`:""}`;
-  return {id:`star:${star.id}`,name,displayName:name,mag:star.mag,ra:star.ra,dec:star.dec,con:star.constellation||"",category:"Star",categoryShort:"Star",source:"binocular",desc:"Position and magnitude from the bundled Bright Star Catalogue. Individual stellar brightness can vary."};
+  return {id:`star:${star.id}`,name,displayName:name,mag:star.mag,ra:star.ra,dec:star.dec,con:star.constellation||"",category:"Star",categoryShort:"Star",source:"binocular",desc:star.magnitudeNote??"Position and magnitude from the bundled Bright Star Catalogue. Individual stellar brightness can vary."};
 }

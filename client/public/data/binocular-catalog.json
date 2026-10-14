@@ -38,8 +38,8 @@
     "mag2": 5.0,
     "sep": 9.8,
     "con": "And",
-    "desc": "Gold & blue-green double; tight split needs mounted binoculars",
-    "binoTip": "Challenging in 10×50; steady hands or support help. Beautiful color contrast"
+    "desc": "Gold & blue-green double; tight split requires telescope magnification",
+    "binoTip": "Binoculars locate the star and surrounding field. Resolving this close pair requires a telescope; do not expect a split in ordinary 7×–15× binoculars."
   },
   {
     "id": "DS-DoubleDbl",
@@ -84,7 +84,7 @@
     "binoTip": "Easy split in 10x binos. Look for subtle color difference"
   },
   {
-    "id": "DS-16Cyg",
+    "id": "DS-16Dra",
     "cat": "DS",
     "name": "16/17 Draconis",
     "altId": "16 Dra",
@@ -220,8 +220,8 @@
     "mag2": 5.4,
     "sep": 7.4,
     "con": "Mon",
-    "desc": "Elegant triple star — needs steady binoculars to split",
-    "binoTip": "Tight for binoculars but worth trying; triple in a telescope"
+    "desc": "Elegant triple star — requires a telescope to split",
+    "binoTip": "Binoculars locate the star and surrounding field. Resolving this close pair requires a telescope; do not expect a split in ordinary 7×–15× binoculars."
   },
   {
     "id": "DS-100Her",
@@ -252,9 +252,9 @@
     "binoTip": "Easy wide optical double; forms a cross with nearby stars"
   },
   {
-    "id": "DS-DelCep",
+    "id": "DS-OmCep",
     "cat": "DS",
-    "name": "Kemble 2 / ο Cephei",
+    "name": "ο Cephei",
     "altId": "ο Cep",
     "ra": "23h 18.6m",
     "dec": "+68° 07′",
@@ -262,8 +262,8 @@
     "mag2": 7.1,
     "sep": 3.3,
     "con": "Cep",
-    "desc": "Orangish primary with wide companion",
-    "binoTip": "Visible in 10× binos on steady nights"
+    "desc": "Orangish primary with close companion",
+    "binoTip": "Binoculars locate the star and surrounding field. Resolving this close pair requires a telescope; do not expect a split in ordinary 7×–15× binoculars."
   },
   {
     "id": "DS-GamAri",
@@ -277,7 +277,7 @@
     "sep": 7.5,
     "con": "Ari",
     "desc": "Mesarthim — matched white pair; first telescopic double discovered (1664)",
-    "binoTip": "Tight for binoculars; use mounted binos or IS for best results"
+    "binoTip": "Binoculars locate the star and surrounding field. Resolving this close pair requires a telescope; do not expect a split in ordinary 7×–15× binoculars."
   },
   {
     "id": "DS-Winnecke4",
@@ -305,7 +305,7 @@
     "sep": 3.0,
     "con": "Cas",
     "desc": "Blue-white primary with fainter companion",
-    "binoTip": "Challenge double; needs steady 10× or 15× binoculars"
+    "binoTip": "Binoculars locate the star and surrounding field. Resolving this close pair requires a telescope; do not expect a split in ordinary 7×–15× binoculars."
   },
   {
     "id": "DS-EtaCas",
@@ -571,17 +571,17 @@
     "binoTip": "Linear chain with a right-angle 'putter head' — NGC 752 completes the scene"
   },
   {
-    "id": "AST-IC37",
-    "cat": "AST",
-    "name": "Number 37",
+    "id": "NGC2169",
+    "cat": "OC",
+    "name": "Number 37 Cluster",
     "altId": "NGC 2169",
     "ra": "6h 08.4m",
     "dec": "+13° 57′",
     "mag": 5.9,
     "con": "Ori",
     "size": "7",
-    "desc": "Stars in NGC 2169 form the digits '37'",
-    "binoTip": "Best in a telescope but visible as a fuzzy spot; the 37 pattern is fun"
+    "desc": "NGC 2169 is a real open cluster whose stars suggest the digits '37'.",
+    "binoTip": "Binoculars locate the small cluster as a fuzzy patch. Use a telescope to identify the digit-shaped pattern."
   },
   {
     "id": "AST-Pakan3",

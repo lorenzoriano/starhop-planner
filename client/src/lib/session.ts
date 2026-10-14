@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
+import { canonicalTargetId } from "./catalog-identifiers";
 
 export const settingsSchema = z.object({
   lat: z.number().finite().min(-90).max(90),
@@ -30,6 +31,7 @@ export const settingsSchema = z.object({
   binocularAperture: z.number().min(20).max(150).default(50),
   skyBrightness: z.number().min(17).max(22).default(21.6),
 }).transform((settings) => {
+  settings={...settings,targetId:canonicalTargetId(settings.targetId)};
   // Older releases defaulted new installs to binoculars without asking.
   // Move that implicit choice to a telescope profile once; keep later choices.
   if (!settings.instrumentSelected && settings.mode === "binocular") {
@@ -73,7 +75,17 @@ export const nightListSchema = z
       notes: z.string(),
     }),
   )
-  .max(1000);
+  .max(1000).transform(items=>{
+    const merged=new Map<string,typeof items[number]>();
+    for(const item of items){
+      const id=canonicalTargetId(item.id),previous=merged.get(id);
+      if(!previous){merged.set(id,{...item,id});continue;}
+      merged.set(id,{...previous,addedAt:previous.addedAt<item.addedAt?previous.addedAt:item.addedAt,
+        notes:previous.notes&&item.notes&&previous.notes!==item.notes?`${previous.notes}\n\n${item.notes}`:previous.notes||item.notes,
+        observedAt:previous.observedAt&&item.observedAt?(previous.observedAt>item.observedAt?previous.observedAt:item.observedAt):previous.observedAt??item.observedAt});
+    }
+    return Array.from(merged.values());
+  });
 export type NightItem = z.infer<typeof nightListSchema>[number];
 
 // Reject civil times skipped by a daylight-saving change instead of displaying

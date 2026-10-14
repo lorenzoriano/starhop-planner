@@ -21,7 +21,7 @@ export function moonState(lat: number, lon: number, date: Date) {
   const horizon = Astro.Horizon(date, observer, eq.ra, eq.dec, "normal");
   const light = Astro.Illumination(Astro.Body.Moon, date);
   const solarEq = Astro.Equator(Astro.Body.Sun, date, observer, true, true);
-  const sunAlt = Astro.Horizon(date, observer, solarEq.ra, solarEq.dec, "normal").altitude;
+  const sunAlt = Astro.Horizon(date, observer, solarEq.ra, solarEq.dec).altitude;
   const phase = Astro.MoonPhase(date);
   const phaseName = phase < 22.5 || phase >= 337.5 ? "New Moon" : phase < 67.5 ? "Waxing crescent" : phase < 112.5 ? "First quarter" : phase < 157.5 ? "Waxing gibbous" : phase < 202.5 ? "Full Moon" : phase < 247.5 ? "Waning gibbous" : phase < 292.5 ? "Last quarter" : "Waning crescent";
   const distanceKm = eq.dist * Astro.KM_PER_AU;
@@ -96,16 +96,22 @@ export function moonDay(lat: number, lon: number, date: Date, timezone: string) 
     const at = new Date(start.getTime() + (end.getTime() - start.getTime()) * i / 96);
     return { date: at, ...moonState(lat, lon, at) };
   });
-  const futureSamples = Array.from({ length:97 }, (_,i) => {
-    const at = new Date(date.getTime()+i*15*60_000);
-    return { date:at, ...moonState(lat,lon,at) };
-  });
+  const futureEnd=new Date(date.getTime()+86_400_000);
+  const crossings=[date,futureEnd];
+  for(const direction of [-1,1] as const){
+    const solar=Astro.SearchAltitude(Astro.Body.Sun,observer,direction,date,1,-18)?.date;
+    const lunar=Astro.SearchRiseSet(Astro.Body.Moon,observer,direction,date,1)?.date;
+    for(const crossing of [solar,lunar])if(crossing&&crossing>date&&crossing<futureEnd)crossings.push(crossing);
+  }
+  crossings.sort((a,b)=>a.getTime()-b.getTime());
   const windows: { start: Date; end: Date }[] = [];
-  for (const p of futureSamples) {
-    if (p.sunAlt > -18 || p.alt > -p.diameter/2) continue;
+  for(let i=1;i<crossings.length;i++){
+    const intervalStart=crossings[i-1],intervalEnd=crossings[i];
+    const p=moonState(lat,lon,new Date((intervalStart.getTime()+intervalEnd.getTime())/2));
+    if(p.sunAlt>-18||p.alt>-p.diameter/2)continue;
     const previous = windows[windows.length - 1];
-    if (previous && p.date.getTime()-previous.end.getTime() < 20*60_000) previous.end = p.date;
-    else windows.push({ start:p.date, end:p.date });
+    if(previous&&previous.end.getTime()===intervalStart.getTime())previous.end=intervalEnd;
+    else windows.push({start:intervalStart,end:intervalEnd});
   }
   return { start, end, rise:inDay(rise), set:inDay(set), transit:inDay(transit.time), nextRise, nextSet, samples, windows:windows.filter(w => w.end>w.start) };
 }
@@ -135,6 +141,6 @@ export function targetMoonlight(target: UnifiedTarget, lat: number, lon: number,
   const diffuse = /galaxy|nebula|cloud/i.test(target.category);
   const stars = /star|asterism/i.test(target.category);
   const level = moon.alt <= -moon.diameter/2 ? "Moon below horizon" : model.brightening < 0.3 ? "Little moonlight" : model.brightening < 1 ? "Some moonlight" : model.brightening < 2 ? "Brightened sky" : "Strong moonlight";
-  const advice = position.alt <= 0 ? "This target is below the horizon at this time." : moon.sunAlt > -18 ? "Twilight also brightens the sky. Wait for astronomical darkness for faint targets." : moon.alt <= -moon.diameter/2 ? "The Moon is down. Local light pollution and transparency still matter." : diffuse ? "Diffuse detail loses contrast. A bright core may remain visible; try a darker window for the outer glow." : stars ? target.mag > 6 ? "This is a faint stellar target. Moonlight makes identification harder; choose a darker window and use steady support." : "Bright stars and wide pairs tolerate moonlight. Faint companions and subtle colors become harder." : "Bright cluster members may remain visible; the faint stars and unresolved glow lose contrast.";
+  const advice = moon.sunAlt >= 0 ? "Daylight at your selected time. Plan after dark to find stars and deep-sky targets." : position.alt <= 0 ? "This target is below the horizon at this time." : moon.sunAlt > -18 ? "Twilight also brightens the sky. Wait for astronomical darkness for faint targets." : moon.alt <= -moon.diameter/2 ? "The Moon is down. Local light pollution and transparency still matter." : diffuse ? "Diffuse detail loses contrast. A bright core may remain visible; try a darker window for the outer glow." : stars ? target.mag > 6 ? "This is a faint stellar target. Moonlight makes identification harder; choose a darker window and use steady support." : "Bright stars and wide pairs tolerate moonlight. Faint companions and subtle colors become harder." : "Bright cluster members may remain visible; the faint stars and unresolved glow lose contrast.";
   return { moon, ...model, separation, targetAlt: position.alt, targetAz: position.az, level, advice, diffuse, stars, reliable: moon.sunAlt <= -18 && position.alt >= 10 && moon.alt >= 5 && separation >= 10 && separation <= 120 };
 }

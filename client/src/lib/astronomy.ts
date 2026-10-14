@@ -4,7 +4,7 @@
  * sky graph construction, and route planning.
  */
 import * as Astro from 'astronomy-engine';
-import { planRoute as planVariableReachRoute, type DifficultyLevel } from './route-planner';
+import { planRoute as planVariableReachRoute, directionAngle, type DifficultyLevel } from './route-planner';
 import { landmarkScore, buildConstellationSegmentCounts } from './landmark-score';
 import { selectStrategy, getStrategy, type CostContext, type CostStrategyId } from './cost-strategies';
 
@@ -20,6 +20,7 @@ export interface Star {
   bayer?: string;
   constellation?: string;
   flamsteed?: number;
+  magnitudeNote?: string;
 }
 
 export interface MessierObject {
@@ -176,7 +177,7 @@ export type DenseStar = [number, number, number, number];
 // Milky Way outline feature (from d3-celestial mw.json)
 export interface MilkyWayFeature {
   id: string;
-  coordinates: [number, number][][]; // rings of [ra_deg, dec_deg]
+  coordinates: [number, number][][][]; // polygons, including outer rings and holes
 }
 
 // Known (expert) star-hopping routes
@@ -228,6 +229,7 @@ export async function loadStars(): Promise<Star[]> {
     bayer: s.B || undefined,
     constellation: s.C || undefined,
     flamsteed: s.F ? parseInt(s.F) : undefined,
+    magnitudeNote:s.magnitudeNote,
   }));
   return _stars!;
 }
@@ -274,10 +276,10 @@ export async function loadMilkyWay(): Promise<MilkyWayFeature[]> {
   _milkyWay = geojson.features.map((f: any) => ({
     id: f.id,
     coordinates: f.geometry.coordinates.map((poly: any) =>
-      poly[0].map(([lon, lat]: [number, number]) => [
+      poly.map((ring:[number,number][])=>ring.map(([lon, lat]: [number, number]) => [
         lon < 0 ? lon + 360 : lon, // convert [-180,180] lon → [0,360] RA
         lat,
-      ] as [number, number])
+      ] as [number, number]))
     ),
   }));
   return _milkyWay!;
@@ -328,6 +330,7 @@ export interface UnifiedTarget {
   id: string;
   name: string;
   displayName: string; // short label for lists
+  aliases?: string[];
   mag: number;
   ra: number;
   dec: number;
@@ -366,6 +369,7 @@ export function buildUnifiedTargets(
       id: m.id,
       name: m.name || m.id,
       displayName: `${m.id}${m.name ? ' — ' + m.name : ''}`,
+      aliases: m.ngc ? [`NGC${m.ngc}`] : [],
       mag: m.mag,
       ra: m.ra,
       dec: m.dec,
@@ -384,6 +388,7 @@ export function buildUnifiedTargets(
       id: t.id,
       name: t.name,
       displayName: t.name + (t.altId ? ` (${t.altId})` : ''),
+      aliases: t.altId ? [t.altId] : [],
       mag: t.mag,
       ra: t.ra,
       dec: t.dec,
@@ -485,7 +490,7 @@ export function findBestObservingTime(
       // Astro.Equator returns ra in sidereal hours; Astro.Horizon accepts hours directly.
       const astroTime = Astro.MakeTime(sampleTime);
       const sunEq = Astro.Equator(Astro.Body.Sun, astroTime, observer, true, true);
-      const sunHor = Astro.Horizon(astroTime, observer, sunEq.ra, sunEq.dec, 'normal');
+      const sunHor = Astro.Horizon(astroTime, observer, sunEq.ra, sunEq.dec);
       if (sunHor.altitude >= -18) continue;
 
       qualifying.push({ time: sampleTime, alt: targetAlt });
@@ -530,22 +535,24 @@ export function getPlanetPositions(lat: number, lon: number, date: Date): SkyNod
     { body: Astro.Body.Jupiter, name: 'Jupiter' },
     { body: Astro.Body.Saturn, name: 'Saturn' },
   ];
-  const planetMags: Record<string, number> = {
-    Mercury: 0.0, Venus: -4.0, Mars: 1.0, Jupiter: -2.5, Saturn: 0.5
-  };
+  const sunEq=Astro.Equator(Astro.Body.Sun,time,observer,true,true);
+  const sunAlt=Astro.Horizon(time,observer,sunEq.ra,sunEq.dec).altitude;
+  if(sunAlt>-6)return [];
+  const sunJ2000=Astro.Equator(Astro.Body.Sun,time,observer,false,true);
 
   for (const { body, name } of planetsToTrack) {
     try {
-      const eq = Astro.Equator(body, time, observer, true, true);
-      const hor = Astro.Horizon(time, observer, eq.ra, eq.dec, 'normal');
-      if (hor.altitude > 5) {
+      const eq = Astro.Equator(body, time, observer, false, true);
+      const eqOfDate=Astro.Equator(body,time,observer,true,true);
+      const hor = Astro.Horizon(time, observer, eqOfDate.ra, eqOfDate.dec, 'normal');
+      if (hor.altitude > 5 && angularDistance(eq.ra*15,eq.dec,sunJ2000.ra*15,sunJ2000.dec)>=30) {
         planets.push({
           id: `planet-${name}`,
           ra: eq.ra * 15, // hours to degrees
           dec: eq.dec,
           alt: hor.altitude,
           az: hor.azimuth,
-          mag: planetMags[name] ?? 0,
+          mag:Astro.Illumination(body,time).mag,
           name: name as string,
           type: 'planet',
         });
@@ -792,18 +799,24 @@ function fitCircularArc(
 }
 
 // Compact label for pattern descriptions (no access to full constellation name map here)
-function patternLabel(n: SkyNode): string {
+function patternLabel(n: SkyNode,reference?:SkyNode): string {
   const hasProperName = n.name && n.name.length > 2 && !n.name.startsWith('HR')
     && n.name !== n.bayer;
   if (hasProperName) return n.name;
   if (n.bayer && n.constellation) return `${n.bayer} ${n.constellation}`;
   if (n.flamsteed && n.constellation) return `${n.flamsteed} ${n.constellation}`;
+  if(reference&&angularDistance(n.ra,n.dec,reference.ra,reference.dec)>.1){
+    const bearing=directionAngle(reference.ra,reference.dec,n.ra,n.dec);
+    const dir=['N','NE','E','SE','S','SW','W','NW'][Math.round(bearing/45)%8];
+    return `a mag-${n.mag.toFixed(1)} star ${angularDistance(n.ra,n.dec,reference.ra,reference.dec).toFixed(1)}° ${dir} of center`;
+  }
   if (n.constellation) return `a mag-${n.mag.toFixed(1)} star`;
   if (n.name && !n.name.startsWith('HR')) return n.name;
   return `a mag-${n.mag.toFixed(1)} star`;
 }
 
 export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalysis {
+  const describeStar=(star:SkyNode)=>patternLabel(star,center);
   if (visible.length === 0) {
     return {
       type: 'field',
@@ -821,8 +834,8 @@ export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalys
   let best: PatternAnalysis = {
     type: top.length >= 2 ? 'pair' : 'field',
     description: top.length >= 2
-      ? `${patternLabel(primary)} and ${patternLabel(top[1])} frame the hop`
-      : `${patternLabel(primary)} is the main guide star in the field`,
+      ? `${describeStar(primary)} and ${describeStar(top[1])} frame the hop`
+      : `${describeStar(primary)} is the main guide star in the field`,
     score: top.length >= 2 ? 48 : 32,
     confidence: top.length >= 2 ? 0.55 : 0.45,
     anchors: top.slice(0, Math.min(2, top.length)),
@@ -852,7 +865,7 @@ export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalys
           if (angles[0] > 28 && triangleScore > best.score) {
             best = {
               type: 'triangle',
-              description: `${patternLabel(stars[0])}, ${patternLabel(stars[1])}, and ${patternLabel(stars[2])} form a triangle around the hop`,
+              description: `${describeStar(stars[0])}, ${describeStar(stars[1])}, and ${describeStar(stars[2])} form a triangle around the hop`,
               score: triangleScore,
               confidence: Math.min(0.98, 0.55 + triangleBalance * 0.25 + triangleSeparation * 0.15),
               anchors: stars,
@@ -872,7 +885,7 @@ export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalys
             });
             best = {
               type: 'chain',
-              description: `${ordered.map((star) => patternLabel(star)).join(' → ')} make a chain pointing through the field`,
+              description: `${ordered.map((star) => describeStar(star)).join(' → ')} make a chain pointing through the field`,
               score: chainScore,
               confidence: Math.min(0.96, 0.5 + Math.max(0, (chainAngle - 150) / 40) + (1 - chainTightness) * 0.18),
               anchors: ordered,
@@ -899,7 +912,7 @@ export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalys
                   });
                   best = {
                     type: 'arc',
-                    description: `${ordered.map(s => patternLabel(s)).join(' → ')} trace a curved arc`,
+                    description: `${ordered.map(s => describeStar(s)).join(' → ')} trace a curved arc`,
                     score: arcScore,
                     confidence: Math.min(0.90, 0.52 + arcFit.consistency * 0.25 + Math.min(1, deviation / chordLen) * 0.12),
                     anchors: ordered,
@@ -928,7 +941,7 @@ export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalys
               if (arrowScore > best.score) {
                 best = {
                   type: 'arrow',
-                  description: `${patternLabel(wings[0])} and ${patternLabel(wings[1])} point toward ${patternLabel(tip)}`,
+                  description: `${describeStar(wings[0])} and ${describeStar(wings[1])} point toward ${describeStar(tip)}`,
                   score: arrowScore,
                   confidence: Math.min(0.88, 0.52 + symmetry * 0.2 + wingBalance * 0.15),
                   anchors: [wings[0], wings[1], tip], // [wing1, wing2, tip] for SVG rendering
@@ -981,7 +994,7 @@ export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalys
               if (diamondScore > best.score) {
                 best = {
                   type: 'diamond',
-                  description: `${ordered.map(s => patternLabel(s)).join(', ')} form a diamond`,
+                  description: `${ordered.map(s => describeStar(s)).join(', ')} form a diamond`,
                   score: diamondScore,
                   confidence: Math.min(0.96, 0.58 + sideRatio * 0.22 + Math.min(1, (minAngle - 40) / 60) * 0.14),
                   anchors: ordered,
@@ -1008,7 +1021,7 @@ export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalys
                 if (minAngle > 30 && trapScore > best.score) {
                   best = {
                     type: 'trapezoid',
-                    description: `${ordered.map(s => patternLabel(s)).join(', ')} form a trapezoid`,
+                    description: `${ordered.map(s => describeStar(s)).join(', ')} form a trapezoid`,
                     score: trapScore,
                     confidence: Math.min(0.94, 0.56 + parallelism * 0.24 + Math.min(1, (minAngle - 30) / 60) * 0.12),
                     anchors: ordered,
@@ -1032,7 +1045,7 @@ export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalys
                 if (minAngle > 25 && kiteScore > best.score) {
                   best = {
                     type: 'kite',
-                    description: `${ordered.map(s => patternLabel(s)).join(', ')} form a kite shape`,
+                    description: `${ordered.map(s => describeStar(s)).join(', ')} form a kite shape`,
                     score: kiteScore,
                     confidence: Math.min(0.92, 0.55 + symmetry * 0.22 + Math.min(1, (minAngle - 25) / 60) * 0.12),
                     anchors: ordered,
@@ -1073,7 +1086,7 @@ export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalys
                 if (crossScore > best.score) {
                   best = {
                     type: 'cross',
-                    description: `${patternLabel(top[i])}–${patternLabel(top[j])} and ${patternLabel(top[k])}–${patternLabel(top[l])} form a cross`,
+                    description: `${describeStar(top[i])}–${describeStar(top[j])} and ${describeStar(top[k])}–${describeStar(top[l])} form a cross`,
                     score: crossScore,
                     confidence: Math.min(0.95, 0.58 + perpQuality * 0.22 + intersectQuality * 0.14),
                     anchors: [top[i], top[j], top[k], top[l]], // [arm1-start, arm1-end, arm2-start, arm2-end]
@@ -1122,7 +1135,7 @@ export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalys
         if (zigzagScore > best.score) {
           best = {
             type: 'zigzag',
-            description: `${subset.map(o => patternLabel(o.star)).join(' ↔ ')} trace a zigzag`,
+            description: `${subset.map(o => describeStar(o.star)).join(' ↔ ')} trace a zigzag`,
             score: zigzagScore,
             confidence: Math.min(0.88, 0.50 + turnConsistency * 0.22 + Math.min(1, minTurnAngle / 80) * 0.15),
             anchors: subset.map(o => o.star),
@@ -1149,7 +1162,7 @@ export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalys
         if (opening >= 75 && opening <= 160 && sideBalance > 0.45 && sep > 1.2 && bracketScore > best.score) {
           best = {
             type: 'bracket',
-            description: `${patternLabel(a)} and ${patternLabel(b)} bracket the next move`,
+            description: `${describeStar(a)} and ${describeStar(b)} bracket the next move`,
             score: bracketScore,
             confidence: Math.min(0.95, 0.54 + sideBalance * 0.25 + Math.max(0, (opening - 75) / 90) * 0.18),
             anchors: [a, b],
@@ -1373,6 +1386,7 @@ function findAnchors(nodes: SkyNode[], targetNode: SkyNode, count: number, param
     n.id !== targetNode.id &&
     n.mag < profile.anchorMagLimit &&
     n.alt > 15 &&
+    (n.type==='planet'||!!n.bayer||!!n.flamsteed|| (!!n.name&&!n.name.startsWith('HR'))) &&
     (n.type === 'star' || n.type === 'planet')
   );
 
@@ -1454,7 +1468,7 @@ function generateHopSteps(
     const hopDistLabel = dist > 0
       ? (fovRatio <= 0.85
         ? `${dist.toFixed(1)}°, ~${overlapPct}% overlap`
-        : `${dist.toFixed(1)}° (~${fovRatio.toFixed(1)} FOV${fovRatio !== 1 ? 's' : ''})`)
+        : `${dist.toFixed(1)}° · about ${fovRatio.toFixed(1)} fields`)
       : '0';
 
     const namedStars = deduped.filter(v => v.name && v.name !== v.id);
@@ -1472,9 +1486,9 @@ function generateHopSteps(
         }
         return n.name;
       }
-      if (n.bayer && n.constellation) return `${n.bayer} ${getConstellationName(n.constellation)}`;
-      if (n.flamsteed && n.constellation) return `${n.flamsteed} ${getConstellationName(n.constellation)}`;
-      if (n.constellation) return `a mag-${n.mag.toFixed(1)} star in ${getConstellationName(n.constellation)}`;
+      if (n.bayer && n.constellation) return `${n.bayer} ${getConstellationGenitive(n.constellation)}`;
+      if (n.flamsteed && n.constellation) return `${n.flamsteed} ${getConstellationGenitive(n.constellation)}`;
+      if (n.constellation) return patternLabel(n,node);
       if (n.name && !n.name.startsWith('HR')) return n.name;
       return `a mag-${n.mag.toFixed(1)} star`;
     };
@@ -1483,7 +1497,7 @@ function generateHopSteps(
     if (i === 0) {
       const dn = displayName(node);
       instruction = `Start at ${dn}${node.constellation ? ` in ${getConstellationName(node.constellation)}` : ''}.`;
-      if (node.type === 'planet') instruction = `Start at the planet ${node.name}, easily visible to the naked eye.`;
+      if (node.type === 'planet') instruction = `Start at the planet ${node.name} and confirm its position against the surrounding stars.`;
       if (patternAnalysis.type !== 'field' && patternAnalysis.anchors.length > 0) {
         const optics = profile.mode === 'binocular' ? 'binoculars' : 'your telescope';
         instruction += ` In ${optics}, confirm the ${patternAnalysis.type} pattern anchored by ${patternAnalysis.anchors.map(displayName).join(patternAnalysis.anchors.length > 2 ? ', ' : ' and ')}.`;
@@ -1496,7 +1510,7 @@ function generateHopSteps(
         instruction = `Move ${dir} (${hopDistLabel}) to bring ${dn} into view.`;
       }
       if (patternAnalysis.type !== 'field') {
-        instruction += ` The target should sit in a ${patternAnalysis.type} pattern with ${patternAnalysis.anchors.map(displayName).join(patternAnalysis.anchors.length > 2 ? ', ' : ' and ')}.`;
+        instruction += ` The target should sit in ${/^[aeiou]/.test(patternAnalysis.type)?'an':'a'} ${patternAnalysis.type} pattern with ${patternAnalysis.anchors.map(displayName).join(patternAnalysis.anchors.length > 2 ? ', ' : ' and ')}.`;
       }
     } else {
       const dn = displayName(node);
@@ -1560,6 +1574,8 @@ const CONSTELLATION_NAMES: Record<string, string> = {
 export function getConstellationName(abbr: string): string {
   return CONSTELLATION_NAMES[abbr] || abbr;
 }
+const GENITIVE_NAMES:Record<string,string>=Object.fromEntries('And:Andromedae|Ant:Antliae|Aps:Apodis|Aqr:Aquarii|Aql:Aquilae|Ara:Arae|Ari:Arietis|Aur:Aurigae|Boo:Boötis|Cae:Caeli|Cam:Camelopardalis|Cnc:Cancri|CVn:Canum Venaticorum|CMa:Canis Majoris|CMi:Canis Minoris|Cap:Capricorni|Car:Carinae|Cas:Cassiopeiae|Cen:Centauri|Cep:Cephei|Cet:Ceti|Cha:Chamaeleontis|Cir:Circini|Col:Columbae|Com:Comae Berenices|CrA:Coronae Australis|CrB:Coronae Borealis|Crv:Corvi|Crt:Crateris|Cru:Crucis|Cyg:Cygni|Del:Delphini|Dor:Doradus|Dra:Draconis|Equ:Equulei|Eri:Eridani|For:Fornacis|Gem:Geminorum|Gru:Gruis|Her:Herculis|Hor:Horologii|Hya:Hydrae|Hyi:Hydri|Ind:Indi|Lac:Lacertae|Leo:Leonis|LMi:Leonis Minoris|Lep:Leporis|Lib:Librae|Lup:Lupi|Lyn:Lyncis|Lyr:Lyrae|Men:Mensae|Mic:Microscopii|Mon:Monocerotis|Mus:Muscae|Nor:Normae|Oct:Octantis|Oph:Ophiuchi|Ori:Orionis|Pav:Pavonis|Peg:Pegasi|Per:Persei|Phe:Phoenicis|Pic:Pictoris|Psc:Piscium|PsA:Piscis Austrini|Pup:Puppis|Pyx:Pyxidis|Ret:Reticuli|Sge:Sagittae|Sgr:Sagittarii|Sco:Scorpii|Scl:Sculptoris|Sct:Scuti|Ser:Serpentis|Sex:Sextantis|Tau:Tauri|Tel:Telescopii|Tri:Trianguli|TrA:Trianguli Australis|Tuc:Tucanae|UMa:Ursae Majoris|UMi:Ursae Minoris|Vel:Velorum|Vir:Virginis|Vol:Volantis|Vul:Vulpeculae'.split('|').map(pair=>pair.split(':')));
+export function getConstellationGenitive(abbr:string){return GENITIVE_NAMES[abbr]??getConstellationName(abbr);}
 
 // Score a route
 function scoreRoute(hops: HopStep[], params: ObservingParams): number {
@@ -1681,10 +1697,24 @@ export function resolveKnownWaypoint(name: string, nodes: SkyNode[]): SkyNode | 
 export function buildKnownRoute(entry: KnownRouteEntry, nodes: SkyNode[], target: SkyNode, params: ObservingParams): Route | null {
   const resolved = entry.waypoints.map(wp => resolveKnownWaypoint(wp.name, nodes));
   if (resolved.some(node => !node || node.alt < 5) || resolved.length < 2) return null;
-  const waypoints = resolved as SkyNode[];
+  let waypoints = resolved as SkyNode[];
   if (waypoints[waypoints.length - 1].id !== target.id) return null;
+  const field=params.fovShape==='rectangle'?Math.min(params.fovWidth,params.fovHeight):params.fovWidth;
+  let adapted=false;
+  if(params.difficulty==='beginner'){
+    const expanded=[waypoints[0]];
+    for(let i=1;i<waypoints.length;i++){
+      const from=waypoints[i-1],to=waypoints[i];
+      if(angularDistance(from.ra,from.dec,to.ra,to.dec)>field*.7){
+        const segment=planVariableReachRoute(from,to,nodes.filter(n=>n.type==='star'),field,'beginner');
+        if(!segment)return null;
+        expanded.push(...segment.path.slice(1));adapted=true;
+      }else expanded.push(to);
+    }
+    waypoints=expanded;
+  }
   const hops = generateHopSteps(waypoints.map(n => n.id), new Map(nodes.map(n => [n.id, n])), nodes, params);
-  hops.forEach((hop, i) => { hop.instruction = entry.waypoints[i].instruction; });
+  if(!adapted)hops.forEach((hop, i) => { hop.instruction = entry.waypoints[i].instruction; });
   return { id: 'route-expert', score: scoreRoute(hops, params), startAnchor: waypoints[0], target, hops, isExpertRoute: true, expertSource: entry.source };
 }
 
@@ -1781,7 +1811,7 @@ export async function planRoutes(params: ObservingParams): Promise<{
         if (usedPairs.has(pairKey)) continue;
 
         const result = planVariableReachRoute(
-          anchor, targetNode, starNodes, params.fovWidth, params.difficulty,
+          anchor, targetNode, starNodes, params.fovShape === 'rectangle' ? Math.min(params.fovWidth,params.fovHeight) : params.fovWidth, params.difficulty,
           strategy, costContext,
         );
         if (!result) continue;
@@ -1821,7 +1851,7 @@ export async function planRoutes(params: ObservingParams): Promise<{
         if (usedPairs.has(pairKey)) continue;
 
         const result = planVariableReachRoute(
-          anchor, targetNode, starNodes, params.fovWidth, params.difficulty,
+          anchor, targetNode, starNodes, params.fovShape === 'rectangle' ? Math.min(params.fovWidth,params.fovHeight) : params.fovWidth, params.difficulty,
           bestStrategy, costContext,
         );
         if (!result) continue;

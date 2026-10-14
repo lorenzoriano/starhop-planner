@@ -1,5 +1,6 @@
 import { fromZonedTime } from "date-fns-tz";
-import { eqToHorizontal, type UnifiedTarget } from "./astronomy";
+import { eqToHorizontal, getConstellationName, type UnifiedTarget } from "./astronomy";
+import { eveningOn } from "./session-planner";
 import expandedEntries from "./binocular-guide-extra.json";
 
 export const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -20,7 +21,7 @@ export interface BinocularEntry {
   minAperture?: number;
 }
 export const OMEARA_INDEX = "https://assets.cambridge.org/97805217/21707/index/9780521721707_index.pdf";
-const index = (pages: string): GuideReference => ({ title: `O’Meara · pp. ${pages} (publisher index)`, url: OMEARA_INDEX, kind: "book-index" });
+const index = (pages: string): GuideReference => ({ title: `O’Meara · ${/^\d+$/.test(pages)?"p.":"pp."} ${pages} (publisher index)`, url: OMEARA_INDEX, kind: "book-index" });
 const sky = (id: string): GuideReference => ({ title: "Stephen Tonkin · BinocularSky observing guide", url: `https://binocularsky.com/binoc_object_file.php?aperture=100&object_id=${id}`, kind: "author-guide" });
 const article = (title: string, url: string): GuideReference => ({ title, url, kind: "author-guide" });
 const winter = article("Tonkin · February binocular observing list", "https://binocularsky.com/newsletter/archive/202102.pdf");
@@ -119,8 +120,12 @@ export interface BinocularPick extends BinocularEntry {
 export function binocularEvening(year: number, month: number, timezone: string): Date {
   return fromZonedTime(`${year}-${String(month).padStart(2, "0")}-15T21:00:00`, timezone);
 }
-export function binocularCollection(targets: UnifiedTarget[], lat: number, lon: number, year: number, month: number, timezone: string): BinocularPick[] {
-  const dates = MONTH_NAMES.map((_, i) => binocularEvening(year, i + 1, timezone));
+export type BinocularSampleMode="fixed"|"dark";
+export function binocularSample(year:number,month:number,lat:number,lon:number,timezone:string,mode:BinocularSampleMode){
+  return mode==="fixed"?binocularEvening(year,month,timezone):eveningOn(`${year}-${String(month).padStart(2,"0")}-15`,lat,lon).date;
+}
+export function binocularCollection(targets: UnifiedTarget[], lat: number, lon: number, year: number, month: number, timezone: string, sampleMode:BinocularSampleMode="fixed"): BinocularPick[] {
+  const dates = MONTH_NAMES.map((_, i) => binocularSample(year, i + 1,lat,lon, timezone,sampleMode));
   const catalog = new Map(targets.map((target) => [target.id, target]));
   return BINOCULAR_ENTRIES.flatMap((guide) => {
     const target = catalog.get(guide.targetId);
@@ -131,6 +136,7 @@ export function binocularCollection(targets: UnifiedTarget[], lat: number, lon: 
     // are included near their best altitude, then checked by the horizon filter.
     const bestMonths = monthlyAltitudes.flatMap((alt, i) => alt >= Math.min(40, peak - 18) ? [i + 1] : []);
     const position = eqToHorizontal(target.ra, target.dec, lat, lon, dates[month - 1]);
-    return [{ ...guide, target, ...position, monthlyAltitudes, bestMonths, neverRises: 90 - Math.abs(lat - target.dec) <= 0 }];
+    const expand=(text:string)=>text.replace(new RegExp(`\\b${target.con}\\b`,"g"),getConstellationName(target.con));
+    return [{ ...guide, impression:expand(guide.impression),finding:expand(guide.finding),target, ...position, monthlyAltitudes, bestMonths, neverRises: 90 - Math.abs(lat - target.dec) <= 0 }];
   }).sort((a, b) => (b.alt + (b.level === "easy" ? 12 : 0)) - (a.alt + (a.level === "easy" ? 12 : 0)));
 }

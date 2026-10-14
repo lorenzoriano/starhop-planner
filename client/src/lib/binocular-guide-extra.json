@@ -1600,11 +1600,11 @@
     ]
   },
   {
-    "targetId": "AST-IC37",
+    "targetId": "NGC2169",
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50",
-    "impression": "The compact Number 37 cluster is easier to locate than to read. Its numerical outline usually needs telescope magnification.",
+    "impression": "A compact open cluster in Orion. Binoculars locate its glow; a telescope reveals the digit-shaped stellar pattern.",
     "finding": "Use the finder map in Ori to match the marked position. Compare the concentration with the neighboring field.",
     "minAperture": 50,
     "references": [
@@ -2776,7 +2776,7 @@
     ]
   },
   {
-    "targetId": "DS-16Cyg",
+    "targetId": "DS-16Dra",
     "family": "double",
     "level": "steady",
     "equipment": "Supported 10×50",

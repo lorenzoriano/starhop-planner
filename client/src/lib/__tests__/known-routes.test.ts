@@ -51,26 +51,17 @@ describe("field guide route waypoints", () => {
     ).toBeNull();
     expect(resolveKnownWaypoint("M31 (Andromeda)", nodes)?.id).toBe("M31");
   });
-  it("maps the classic Andromeda chain to five distinct fields and measured hop distances", () => {
+  it("preserves the classic landmarks while inserting overlapping guided fields", () => {
     const route = buildKnownRoute(entry, nodes, target, params)!;
     expect(route).not.toBeNull();
-    expect(route.hops).toHaveLength(5);
-    expect(new Set(route.hops.map((h) => h.center.ra))).toHaveProperty(
-      "size",
-      5,
-    );
-    expect(route.hops[1].center.ra).toBe(
-      stars.find((s) => s.id === "HR165")!.ra,
-    );
-    const from = route.hops[0].center,
-      to = route.hops[1].center;
-    expect(route.hops[1].distanceDeg).toBeCloseTo(
-      angularDistance(from.ra, from.dec, to.ra, to.dec),
-    );
-    expect(route.hops[1].distanceDeg).toBeGreaterThan(0);
-    expect(route.hops[4].center.ra).toBe(target.ra);
-    expect(route.hops[4].distanceDeg).toBeCloseTo(4, 1);
-    expect(route.hops[4].instruction).toContain("4 degrees NW from Mu");
+    expect(route.hops.length).toBeGreaterThan(5);
+    for(const id of ["HR15","HR165","HR337","HR269"]){const star=stars.find(s=>s.id===id)!;expect(route.hops.some(h=>h.center.ra===star.ra&&h.center.dec===star.dec)).toBe(true);}
+    for(let i=1;i<route.hops.length;i++){
+      const from=route.hops[i-1].center,to=route.hops[i].center;
+      expect(route.hops[i].distanceDeg).toBeCloseTo(angularDistance(from.ra,from.dec,to.ra,to.dec));
+      expect(route.hops[i].distanceDeg).toBeLessThanOrEqual(params.fovWidth*.7+1e-6);
+    }
+    expect(route.hops.at(-1)!.center.ra).toBe(target.ra);
   });
   it("omits a route with unresolved or unavailable landmarks", () => {
     expect(

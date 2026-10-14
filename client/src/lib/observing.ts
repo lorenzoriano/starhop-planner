@@ -135,7 +135,6 @@ export function skyConditions(lat: number, lon: number, date: Date) {
     observer,
     sun.ra,
     sun.dec,
-    "normal",
   ).altitude;
   const moonHor = Astro.Horizon(date, observer, moon.ra, moon.dec, "normal");
   const phase = Astro.MoonPhase(date);
