@@ -50,7 +50,9 @@ Moon features can be saved, marked observed and annotated in **Planner**, and in
 
 ## Calendar and observing sessions
 
-**Planner** includes a calendar and separate named sessions. Set each session's date, local time, coordinates, duration and time per target. **Tonight after dark** calculates the end of astronomical twilight; **Next new Moon night** previews the evening near the next actual new Moon. These shortcuts preview a sky; create or edit a session to save its date and site.
+**Planner** is one compact workspace for the active night. **Plan tonight** creates or selects a nearby saved session with one click; **Next new Moon** starts a night near the next actual new Moon. Enter a date, local time and duration inline, then save changes. Site coordinates, names and minutes per target are under the site/details disclosure. The first target can save a new night without a separate creation dialog.
+
+Search and press Enter to add a target, or use a high-altitude suggestion. The viewing order, observed toggles, removal and expandable field notes share one target list. Observed targets and objects outside the usable window are grouped separately. Use the night selector to switch sessions, **Calendar** for the full calendar and archived nights, and **Export & more** (the download icon on phones) for SkySafari, notes and session actions. The general time bar and equipment sidebar are tucked away on this view to keep the planning controls central; the settings button still opens advanced equipment controls.
 
 Use the catalog search or an object's add/remove button to build the active session. Clicking an identified foreground chart star opens its details and a save button; faint background survey dots are contextual. Each session keeps its own targets, observations and notes. Completing a first hop with **I found it!** creates a dated session and records the observation while keeping the map in place. Switching sessions restores its observing time and site. Archive/restore retains its records, and the previous observing list remains available for migration.
 
@@ -67,6 +69,14 @@ Active hop progress is saved on this device. Reload regenerates positions and re
 **Fine tune equipment** for a telescope includes an eyepiece calculator: telescope focal length, eyepiece focal length and apparent field give magnification and approximate true field. **Apply this field** changes the chart only when requested. Use a finder field for navigation when appropriate. **Optical finder · crosshair** uses your measured field width; magnification and aperture alone do not specify a finder's true field.
 
 Previewing another date or site does not move a saved session. The time bar identifies which session receives added targets; saved target cards and exported notes use that session's date and site. Everything persists on the device and works offline after preparation.
+
+## Export to SkySafari
+
+In **Planner → Export & more → Export to SkySafari**, choose **Observing list** for all saved targets or **Night plan** for the active session's scheduled targets in the suggested order. Download the `.skylist` for SkySafari Plus and the `.txt` plan for times, site, observations and complete notes. Supported phone browsers also offer **Share .skylist** through the device's share sheet. Cancelling sharing does not download a file or claim it was imported.
+
+On Android, open the `.skylist` in **Files → Downloads** with **SkySafari Plus**, then look under **Observe → Observing Lists**. If the file handler is not offered, try opening an email attachment with SkySafari. From a computer, transfer the file to the phone by USB or email and follow those steps. Device/version differences and the official Android troubleshooting link are explained in the export dialog. Set SkySafari's date/time and location separately from the plan; list import does not change them.
+
+The exporter uses the documented V3 identifier format, including actual observed timestamps as Julian dates. Planned times remain comments. Lunar landmarks share one Moon entry with individual records in notes. Custom patterns without a standard identifier are explicitly listed for manual lookup and preserved with their positions in the complete notes file. StarHop never supplies its private target IDs as SkySafari database IDs. See [export details and compatibility limits](docs/skysafari-export.md).
 
 ## Offline use
 

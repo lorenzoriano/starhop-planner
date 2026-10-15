@@ -113,6 +113,7 @@ import { SkyChart } from "@/components/SkyChart";
 import { HopFieldNavigation, HopViewDirection } from "@/components/HopFieldNavigation";
 import { EyepieceCalculator } from "@/components/EyepieceCalculator";
 import { NavigationStarResults, type NavigationStarHit } from "@/components/NavigationStarResults";
+import { SkySafariExport } from "@/components/SkySafariExport";
 import { AltitudeChart } from "@/components/ObservingVisuals";
 import { ImageFallback } from "@/components/ImageFallback";
 import { BinocularGuide } from "@/components/BinocularGuide";
@@ -167,6 +168,7 @@ export default function PlannerPage() {
   useEffect(()=>{window.scrollTo({top:0,behavior:"instant"});},[page]);
   const [setupOpen, setSetupOpen] = useState(false);
   const [instrumentOpen, setInstrumentOpen] = useState(false);
+  useEffect(() => { if (page === "night") setSetupOpen(false); }, [page]);
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const [catalogs, setCatalogs] = useState<Catalogs>(EMPTY_CATALOGS);
   const [catalogError, setCatalogError] = useState(false);
@@ -794,10 +796,10 @@ export default function PlannerPage() {
           {(
             [
               ["tonight", "Tonight", Compass],
+              ["night", "Planner", CalendarDays],
               ["binocular", "Binoculars", Binoculars],
               ["moon", "Moon", Moon],
               ["hop", "Star hop", Navigation],
-              ["night", "Planner", CalendarDays],
             ] as const
           ).map(([id, label, Icon]) => (
             <button
@@ -817,7 +819,7 @@ export default function PlannerPage() {
         </nav>
         <div className="header-actions">
           <button
-            className="icon-button mobile-setup-toggle"
+            className={`icon-button mobile-setup-toggle ${page === "night" ? "planner-setup-toggle" : ""}`}
             onClick={() => setSetupOpen(!setupOpen)}
             aria-label="Observing setup"
             aria-expanded={setupOpen}
@@ -846,7 +848,7 @@ export default function PlannerPage() {
         </div>
       </header>
 
-      <div className="workspace-layout">
+      <div className={`workspace-layout ${page === "night" ? "planning-workspace" : ""}`}>
         <aside className={`setup-panel ${setupOpen ? "open" : ""}`}>
           <div className="setup-title">
             <span className="eyebrow">YOUR OBSERVING SETUP</span>
@@ -1142,10 +1144,10 @@ export default function PlannerPage() {
               </Button>
             </div>
           )}
-          <section className={`session-timebar ${settings.timeMode === "planned" ? "planned" : ""}`} aria-label="Observing time" data-testid="session-timebar">
+          {page !== "night" && <section className={`session-timebar ${settings.timeMode === "planned" ? "planned" : ""}`} aria-label="Observing time" data-testid="session-timebar">
             <div><Clock size={14} /><span><strong>{settings.timeMode === "live" ? "Live sky" : "Viewing planned sky"}</strong> · {dateLabel} · {observingTime}<small>{timezone.replaceAll("_", " ")} (UTC{formatInTimeZone(date,timezone,"xxx")}) · {locationLabel}</small>{activeSession&&<small className="session-list-context">Targets saved to “{activeSession.name}”</small>}</span></div>
             <div className="session-time-actions"><button className="text-action" onClick={()=>setPage("night")}><CalendarDays size={13}/>{activeSession ? `Planner · ${night.length} ${night.length===1?"object":"objects"}` : "Open planner"}</button><details><summary>Plan a time</summary><div><label>Date<input aria-label="Session date" type="date" value={observingDate} onChange={e => { if (e.target.value && Number.isFinite(new Date(e.target.value).getTime())) planLocalTime(e.target.value, observingTime); }} /></label><label>Time<input aria-label="Session time" type="time" value={observingTime} onChange={e => { if (e.target.value) planLocalTime(observingDate, e.target.value); }} /></label><small>Local time at your observing location.</small></div></details><button className="text-action" onClick={useNow}>{settings.timeMode === "live" ? "Refresh now" : "Use current time"}</button></div>
-          </section>
+          </section>}
           {page === "tonight" && (
             <>
               <div className="page-heading">
@@ -1858,148 +1860,12 @@ export default function PlannerPage() {
 
           {page === "night" && (
             <>
-              <div className="page-heading">
-                <div>
-                  <p className="eyebrow">SMALL DISCOVERIES, WORTH KEEPING</p>
-                  <h1>
-                    A night worth planning<span>.</span>
-                  </h1>
-                  <p>
-                    Plan a night, choose your observing site, and build a route through the sky.
-                  </p>
-                </div>
-                <Button
-                  variant="outline"
-                  onClick={exportNight}
-                  disabled={!night.length}
-                >
-                  <Download size={15} />
-                  Export notes
-                </Button>
-              </div>
-              <SessionPlanner sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} onCreate={createSession} onUpdate={updateSession} onSelect={selectSession} onPreview={(at,a,b,stay)=>previewMoment(at,a,b,!stay)} onVisit={visitScheduledTarget} onAdd={toggleSave} onExplore={()=>setPage("tonight")} />
-              <div className="planner-list-heading"><h2>{activeSession ? `${activeSession.name} · objects & notes` : "Unscheduled list & notes"}</h2><p>Use + to add, × to remove, and the circle to record an observation. Your notes stay with this session.</p></div>
-              <div className="night-summary">
-                <span>
-                  <BookOpen size={17} />
-                  <strong>{night.length}</strong> on your list
-                </span>
-                <span>
-                  <CheckCircle2 size={17} />
-                  <strong>{observed}</strong> observed
-                </span>
-                <div className="night-progress">
-                  <div
-                    style={{
-                      width: `${night.length ? (observed / night.length) * 100 : 0}%`,
-                    }}
-                  />
-                </div>
-              </div>
-              {!night.length && (
-                <div className="panel empty-state night-empty">
-                  <BookOpen size={38} />
-                  <h2>A night starts with a little curiosity.</h2>
-                  <p>
-                    Add objects with the + button, follow their star hops, and
-                    keep a note of what you saw.
-                  </p>
-                  <Button onClick={() => setPage("tonight")}>
-                    <Compass size={16} />
-                    Find something wonderful
-                  </Button>
-                </div>
-              )}
-              <div className="night-list">
-                {night.map((item) => {
-                  if (item.id.startsWith("moon:")) {
-                    const feature = lunarFeatures.find(f => `moon:${f.id}` === item.id);
-                    return feature ? <LunarNightItem key={item.id} feature={feature} item={item} timezone={timezone} onRemove={() => toggleSave(item.id)} onObserved={() => markObserved(item.id)} onOpen={() => visitScheduledTarget(item.id,activeSession?new Date(activeSession.startAt):date)} onNotes={notes => setNight(current => current.map(t => t.id === item.id ? {...t,notes} : t))} /> : null;
-                  }
-                  const starTarget = planningTargets.find(t=>t.id===item.id);
-                  const object = activeSession && starTarget ? {target:starTarget,...eqToHorizontal(starTarget.ra,starTarget.dec,activeSession.lat,activeSession.lon,new Date(activeSession.startAt))} : ranked.find((o) => o.target.id === item.id) ?? (starTarget ? {target:starTarget,...eqToHorizontal(starTarget.ra,starTarget.dec,lat,lon,date)} : null);
-                  if (!object) return null;
-                  return (
-                    <article
-                      key={item.id}
-                      className={`panel night-item ${item.observedAt ? "observed" : ""}`}
-                    >
-                      <div className="night-item-art">
-                        <TargetPhoto target={object.target} compact />
-                      </div>
-                      <div className="night-item-body">
-                        <div className="flex justify-between gap-3">
-                          <div>
-                            <span className="eyebrow">
-                              {object.target.id} · {object.target.category}
-                            </span>
-                            <h2>{object.target.name}</h2>
-                            <p className="object-location">
-                              {getConstellationName(object.target.con)} ·{" "}
-                              {Math.round(object.alt)}°{" "}
-                              {compassLabel(object.az)} ·{" "}
-                              {altitudeLabel(object.alt)}
-                            </p>
-                          </div>
-                          <button
-                            className="icon-button"
-                            onClick={() => toggleSave(item.id)}
-                            aria-label={`Remove ${object.target.name} from my night`}
-                            title="Remove from list"
-                          >
-                            <X size={16} />
-                          </button>
-                        </div>
-                        <div className="night-item-actions">
-                          <button
-                            className={`observed-toggle ${item.observedAt ? "active" : ""}`}
-                            onClick={() => markObserved(item.id)}
-                          >
-                            {item.observedAt ? (
-                              <CheckCircle2 size={16} />
-                            ) : (
-                              <Circle size={16} />
-                            )}
-                            {item.observedAt
-                              ? `Observed ${formatInTimeZone(new Date(item.observedAt), timezone, "MMM d")}`
-                              : "Mark as observed"}
-                          </button>
-                          <button
-                            className="text-action"
-                            onClick={() => {
-                              visitScheduledTarget(item.id,activeSession?new Date(activeSession.startAt):date);
-                            }}
-                          >
-                            {item.id.startsWith("star:")?"View star":"Star hop"}
-                            <ArrowUpRight size={14} />
-                          </button>
-                        </div>
-                        <Label
-                          htmlFor={`note-${item.id}`}
-                          className="field-label"
-                        >
-                          Your field notes
-                        </Label>
-                        <Textarea
-                          id={`note-${item.id}`}
-                          placeholder="What caught your eye? Conditions, colors, a sketch to try next time…"
-                          value={item.notes}
-                          onChange={(e) =>
-                            setNight((prev) =>
-                              prev.map((t) =>
-                                t.id === item.id
-                                  ? { ...t, notes: e.target.value }
-                                  : t,
-                              ),
-                            )
-                          }
-                          rows={2}
-                        />
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
+              <div className="page-heading night-page-heading"><div><p className="eyebrow">YOUR NEXT NIGHT OUT</p><h1>Plan your night<span>.</span></h1><p>Choose a night. Add targets. Follow the stars.</p></div></div>
+              <SessionPlanner sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} live={settings.timeMode === "live"}
+                onCreate={createSession} onUpdate={updateSession} onSelect={selectSession} onPreview={(at,a,b,stay)=>previewMoment(at,a,b,!stay)} onVisit={visitScheduledTarget} onAdd={toggleSave} onObserved={markObserved}
+                onNotes={(id,notes)=>setNight(current=>current.map(item=>item.id===id?{...item,notes}:item))}
+                actions={<><SkySafariExport items={night} targets={planningTargets} session={activeSession} date={date} lat={lat} lon={lon} skyBrightness={settings.skyBrightness}/><Button variant="outline" onClick={exportNight} disabled={!night.length}><Download size={15}/> Export notes</Button></>}
+              />
             </>
           )}
           {page === "binocular" && (

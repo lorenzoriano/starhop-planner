@@ -1,66 +1,131 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { formatInTimeZone } from "date-fns-tz";
 import { format } from "date-fns";
-import { catalogSearchScore } from "@/lib/catalog-search";
-import tzLookup from "tz-lookup";
-import { CalendarDays, Plus, Moon, Compass, ArrowUpRight, MapPin, Pencil, Archive, Check, X } from "lucide-react";
+import { CalendarDays, Plus, Moon, Compass, ArrowUpRight, MapPin, Archive, Download, Check, X, Circle, CheckCircle2 } from "lucide-react";
 import { Calendar } from "./ui/calendar";
 import { Button } from "./ui/button";
+import { Textarea } from "./ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog";
-import { makeSession, planningShortcut, eveningOn, sessionTimezone, suggestSequence, type ObservingSession } from "@/lib/session-planner";
-import { resolveLocalMoment, resolvePlannedMoment, type NightItem } from "@/lib/session";
-import type { UnifiedTarget } from "@/lib/astronomy";
-import { compassLabel, skyConditions } from "@/lib/observing";
+import { catalogSearchScore } from "@/lib/catalog-search";
+import { makeSession, planningShortcut, eveningOn, sessionTimezone, suggestSequence, type ObservingSession, type SequenceStep } from "@/lib/session-planner";
+import { sessionDraft, resolveSessionDraft, reuseNightItems, type SessionDraft } from "@/lib/session-draft";
+import { eqToHorizontal, type UnifiedTarget } from "@/lib/astronomy";
+import { lunarFeatures } from "@/lib/moon";
+import { compassLabel } from "@/lib/observing";
+import type { NightItem } from "@/lib/session";
 
 interface Props {
- sessions:ObservingSession[]; active:ObservingSession|undefined; targets:UnifiedTarget[];
- date:Date;lat:number;lon:number;timezone:string;items:NightItem[];skyBrightness:number;
- onCreate:(s:ObservingSession)=>void;onUpdate:(s:ObservingSession)=>void;onSelect:(id:string|null)=>void;
- onPreview:(at:Date,lat:number,lon:number,stay?:boolean)=>void;onVisit:(id:string,at:Date)=>void;onAdd:(id:string)=>void;onExplore:()=>void;
+  sessions:ObservingSession[]; active:ObservingSession|undefined; targets:UnifiedTarget[];
+  date:Date; lat:number; lon:number; timezone:string; items:NightItem[]; skyBrightness:number; live:boolean;
+  actions:ReactNode;
+  onCreate:(s:ObservingSession)=>void; onUpdate:(s:ObservingSession)=>void; onSelect:(id:string|null)=>void;
+  onPreview:(at:Date,lat:number,lon:number,stay?:boolean)=>void; onVisit:(id:string,at:Date)=>void;
+  onAdd:(id:string)=>void; onObserved:(id:string)=>void; onNotes:(id:string,notes:string)=>void;
 }
-export function SessionPlanner({sessions,active,targets,date,lat,lon,timezone,items,skyBrightness,onCreate,onUpdate,onSelect,onPreview,onVisit,onAdd,onExplore}:Props){
- const [month,setMonth]=useState(()=>new Date(`${formatInTimeZone(date,timezone,"yyyy-MM-dd")}T12:00:00`));
- const [selectedDay,setSelectedDay]=useState(formatInTimeZone(date,timezone,"yyyy-MM-dd"));
- const [editor,setEditor]=useState<ObservingSession|null>(null);const [editing,setEditing]=useState(false);
- const [name,setName]=useState("");const [localDate,setLocalDate]=useState("");const [localTime,setLocalTime]=useState("21:00");
- const [place,setPlace]=useState("");const [draftLat,setDraftLat]=useState(String(lat));const [draftLon,setDraftLon]=useState(String(lon));const [duration,setDuration]=useState("180");const [perTarget,setPerTarget]=useState("15");const [copy,setCopy]=useState(false);const [error,setError]=useState("");const [query,setQuery]=useState("");
- useEffect(()=>{if(!active)return;const day=formatInTimeZone(new Date(active.startAt),sessionTimezone(active),"yyyy-MM-dd");setSelectedDay(day);setMonth(new Date(`${day}T12:00:00`));},[active?.id,active?.startAt]);
- const present=sessions.filter(s=>!s.archived),archived=sessions.filter(s=>s.archived);
- const plannedDates=present.map(s=>new Date(`${formatInTimeZone(new Date(s.startAt),sessionTimezone(s),"yyyy-MM-dd")}T12:00:00`));
- const sequence=useMemo(()=>active?suggestSequence(active,targets,skyBrightness):[],[active,targets,skyBrightness]);
- const localLabel=(day:Date)=>`${day.getFullYear()}-${String(day.getMonth()+1).padStart(2,"0")}-${String(day.getDate()).padStart(2,"0")}`;
- const openEditor=(s?:ObservingSession,at?:Date)=>{
-   const moment=at??(s?new Date(s.startAt):date);const zone=s?sessionTimezone(s):timezone;
-   setEditor(s??makeSession("",moment,lat,lon));setEditing(!!s);setName(s?.name??`${formatInTimeZone(moment,zone,"MMM d")} observing night`);setLocalDate(formatInTimeZone(moment,zone,"yyyy-MM-dd"));setLocalTime(formatInTimeZone(moment,zone,"HH:mm"));setDraftLat(String(s?.lat??lat));setDraftLon(String(s?.lon??lon));setPlace(s?.locationName??"");setDuration(String(s?.durationMinutes??180));setPerTarget(String(s?.minutesPerTarget??15));setCopy(!s&&!active&&items.length>0);setError("");
- };
- const save=()=>{
-   const latitude=Number(draftLat),longitude=Number(draftLon),minutes=Number(duration),slot=Number(perTarget);
-   if(!name.trim()||draftLat===""||draftLon===""||!Number.isFinite(latitude)||Math.abs(latitude)>90||!Number.isFinite(longitude)||Math.abs(longitude)>180||minutes<30||minutes>720||slot<5||slot>60||!Number.isInteger(minutes)||!Number.isInteger(slot)){setError("Enter a name, valid latitude/longitude, a 30–720 minute session and 5–60 minutes per target.");return;}
-   const valid=resolveLocalMoment(localDate,localTime,tzLookup(latitude,longitude));if(!valid){setError("That local time does not exist. Choose a time outside the daylight-saving clock change.");return;}
-   const at=resolvePlannedMoment(localDate,localTime,tzLookup(latitude,longitude),editor?.startAt);
-   const value={...editor!,name:name.trim(),startAt:at.toISOString(),lat:latitude,lon:longitude,locationName:place.trim(),durationMinutes:minutes,minutesPerTarget:slot,items:editing?editor!.items:copy?items.map(i=>active?{id:i.id,addedAt:new Date().toISOString(),notes:""}:{...i}):[]};
-   if(editing)onUpdate(value);else onCreate(value);setEditor(null);
- };
- const shortcut=(kind:"tonight"|"new-moon")=>{const at=planningShortcut(kind,lat,lon).date;onPreview(at,lat,lon,true);setSelectedDay(formatInTimeZone(at,timezone,"yyyy-MM-dd"));setMonth(new Date(`${formatInTimeZone(at,timezone,"yyyy-MM-dd")}T12:00:00`));};
- const previewDay=()=>{const evening=eveningOn(selectedDay,lat,lon);onPreview(evening.date,lat,lon);};
- const matches=query.trim()?targets.filter(t=>Number.isFinite(catalogSearchScore(t,query))).sort((a,b)=>catalogSearchScore(a,query)-catalogSearchScore(b,query)).slice(0,8):[];
- return <div className="session-planner" data-testid="session-planner">
-   <div className="planner-intro"><p>Choose a night and observing site, save a session, then add objects with the + controls across the app. Each session keeps its own list and notes.</p><div className="planner-shortcuts"><Button variant="outline" onClick={()=>shortcut("tonight")}><Compass size={14}/> Tonight after dark</Button><Button variant="outline" onClick={()=>shortcut("new-moon")}><Moon size={14}/> Next new Moon night</Button><Button onClick={()=>openEditor()}><Plus size={14}/> New session</Button></div></div>
-   <div className="planner-calendar-layout"><section className="panel planner-calendar"><span className="eyebrow">YOUR OBSERVING CALENDAR</span><Calendar mode="single" month={month} onMonthChange={setMonth} selected={new Date(`${selectedDay}T12:00:00`)} onSelect={day=>{if(day)setSelectedDay(localLabel(day));}} labels={{labelDay:(day,modifiers)=>`${format(day,"EEEE, MMMM d, yyyy")}${modifiers.planned ? ", saved observing session" : ""}`}} modifiers={{planned:plannedDates}} modifiersClassNames={{planned:"calendar-has-session"}}/><p>Marked dates have saved sessions, in each site’s local time.</p><div className="planner-calendar-actions"><button className="text-action" onClick={previewDay}>Preview {selectedDay} after dark <ArrowUpRight size={12}/></button><button className="text-action" onClick={()=>openEditor(undefined,eveningOn(selectedDay,lat,lon).date)}><Plus size={12}/> Create session on this date</button></div></section>
-     <section className="panel planner-sessions"><div className="planner-section-heading"><div><span className="eyebrow">NIGHTS TO LOOK FORWARD TO</span><h2>Saved sessions</h2></div><CalendarDays size={22}/></div>
-       {present.length ? present.slice().sort((a,b)=>a.startAt.localeCompare(b.startAt)).map(s=><button key={s.id} className={`planner-session-card ${active?.id===s.id?"active":""}`} onClick={()=>onSelect(s.id)} data-testid={`session-${s.id}`}><strong>{s.name}</strong><span>{formatInTimeZone(new Date(s.startAt),sessionTimezone(s),"EEE, MMM d, yyyy · HH:mm")}</span><small><MapPin size={11}/> {s.locationName||`${s.lat.toFixed(2)}°, ${s.lon.toFixed(2)}°`} · {s.items.length} {s.items.length===1?"object":"objects"}{s.items.some(i=>i.observedAt)?` · ${s.items.filter(i=>i.observedAt).length} observed`:""}</small></button>):<div className="planner-empty"><Moon size={28}/><p>Pick a night on the calendar, then create your first session.</p></div>}
-       {items.length>0&&!active&&<p className="planner-legacy-note">Your existing unscheduled list is below. Create a session to give it a date and observing site.</p>}
-       {archived.length>0&&<details><summary>Archived sessions ({archived.length})</summary>{archived.map(s=><div key={s.id} className="planner-archived"><span>{s.name}</span><button className="text-action" onClick={()=>onUpdate({...s,archived:false})}>Restore</button></div>)}</details>}
-       {active&&<div className="planner-session-actions"><button className="text-action" onClick={()=>onPreview(new Date(active.startAt),active.lat,active.lon)}>View this session’s sky <ArrowUpRight size={12}/></button><button className="text-action" onClick={()=>openEditor(active)}><Pencil size={12}/> Edit session</button><button className="text-action" onClick={()=>{onUpdate({...active,archived:true});onSelect(null);}}><Archive size={12}/> Archive</button></div>}
-     </section></div>
-   {active&&<section className="panel planner-active"><div className="planner-section-heading"><div><span className="eyebrow">ADDING OBJECTS TO THIS SESSION</span><h2>{active.name}</h2><p>{formatInTimeZone(new Date(active.startAt),sessionTimezone(active),"MMM d, yyyy · HH:mm")} · {active.locationName||`${active.lat.toFixed(2)}°, ${active.lon.toFixed(2)}°`} · {active.durationMinutes} minutes</p></div><Button variant="outline" onClick={onExplore}><Plus size={14}/> Explore & add targets</Button></div>
-     <label className="planner-target-search">Add a catalog object<input aria-label="Add target to session" placeholder="Search a star, double star, cluster, galaxy…" value={query} onChange={e=>setQuery(e.target.value)}/></label>{matches.length>0&&<div className="planner-search-results">{matches.map(t=><button key={t.id} onClick={()=>onAdd(t.id)}><span>{t.displayName}</span>{items.some(i=>i.id===t.id)?<Check size={14}/>:<Plus size={14}/>}</button>)}</div>}
-     {query.trim()&&!matches.length&&<p className="planner-empty-copy" role="status">No catalog objects match “{query.trim()}”. Try a name or identifier such as M31.</p>}
-     <div className="planner-sequence-heading"><h3>Suggested viewing sequence</h3><span>{active.minutesPerTarget} minutes per target · recalculated when the list changes</span></div>
-     {!items.length&&<p className="planner-empty-copy">Add objects to see an observing order for this date and location.</p>}{items.length>0&&!sequence.length&&<p className="planner-empty-copy">All listed targets are marked observed. Add another target, or mark one unobserved to include it in the sequence.</p>}
-     <ol className="planner-sequence">{sequence.map((step,i)=><li key={step.id} className={!step.date?"unavailable":""}><span className="planner-order">{i+1}</span><div><strong>{step.name}</strong><span>{step.date?`${formatInTimeZone(step.date,sessionTimezone(active),"HH:mm")} · ${Math.round(step.alt)}° ${compassLabel(step.az)}${step.separation!==null?` · ${Math.round(step.separation)}° from Moon`:""}`:"Outside this session’s usable window"}</span><small>{step.reason}</small></div><div className="planner-sequence-actions">{step.date&&<button className="text-action" onClick={()=>onVisit(step.id,step.date!)}>View / find <ArrowUpRight size={12}/></button>}<button className="icon-button" aria-label={`Remove ${step.name} from session`} onClick={()=>onAdd(step.id)}><X size={14}/></button></div></li>)}</ol>
-     <p className="planner-method">The suggested order favors targets before they get too low, then altitude and reduced moonlight. Deep-sky targets require astronomical darkness; bright stellar targets allow nautical twilight. Lunar features must be sunlit and the Moon up. This is an observing guide, not a visibility guarantee; clouds and horizon obstructions are not measured.</p>
-   </section>}
-   <Dialog open={!!editor} onOpenChange={open=>{if(!open)setEditor(null);}}><DialogContent className="session-editor"><DialogHeader><DialogTitle>{editing?"Edit your observing session":"Plan an observing session"}</DialogTitle><DialogDescription>All times are local to the observing site. You can preview this sky, add targets and return to it offline.</DialogDescription></DialogHeader><div className="session-editor-fields"><label>Session name<input aria-label="Session name" value={name} onChange={e=>setName(e.target.value)}/></label><label>Observing site name<input aria-label="Observing site name" placeholder="Back garden, dark-sky campsite…" value={place} onChange={e=>setPlace(e.target.value)}/></label><label>Date<input aria-label="Planned session date" type="date" value={localDate} onChange={e=>setLocalDate(e.target.value)}/></label><label>Local start time<input aria-label="Planned session time" type="time" value={localTime} onChange={e=>setLocalTime(e.target.value)}/></label><label>Latitude<input aria-label="Session latitude" type="number" min={-90} max={90} step={.01} value={draftLat} onChange={e=>setDraftLat(e.target.value)}/></label><label>Longitude<input aria-label="Session longitude" type="number" min={-180} max={180} step={.01} value={draftLon} onChange={e=>setDraftLon(e.target.value)}/></label><label>Session length · minutes<input aria-label="Session duration" type="number" min={30} max={720} value={duration} onChange={e=>setDuration(e.target.value)}/></label><label>Minutes per target<input aria-label="Minutes per target" type="number" min={5} max={60} value={perTarget} onChange={e=>setPerTarget(e.target.value)}/></label></div><p className="session-editor-zone">Time zone: {draftLat!==""&&draftLon!==""&&Math.abs(Number(draftLat))<=90&&Math.abs(Number(draftLon))<=180?tzLookup(Number(draftLat),Number(draftLon)):"enter valid coordinates"}</p><div className="session-site-presets"><span>Try a site:</span>{[["San Francisco",37.77,-122.42],["London",51.5,-.12],["Sydney",-33.87,151.21]].map(([n,a,b])=><button key={String(n)} onClick={()=>{setPlace(String(n));setDraftLat(String(a));setDraftLon(String(b));}}>{n}</button>)}</div>{!editing&&items.length>0&&<label className="session-copy"><input type="checkbox" checked={copy} onChange={e=>setCopy(e.target.checked)}/> Copy my current list into this session</label>}{error&&<p role="alert" className="session-editor-error">{error}</p>}<Button onClick={save}>{editing?"Save changes":"Create session"}</Button></DialogContent></Dialog>
- </div>;
+export function SessionPlanner({sessions,active,targets,date,lat,lon,timezone,items,skyBrightness,live,actions,onCreate,onUpdate,onSelect,onPreview,onVisit,onAdd,onObserved,onNotes}:Props) {
+  const defaultNight = () => {
+    const at=live?planningShortcut("tonight",lat,lon).date:date;
+    return makeSession(`${formatInTimeZone(at,timezone,"MMM d")} observing night`,at,lat,lon);
+  };
+  const [draft,setDraft]=useState(()=>sessionDraft(active??defaultNight()));
+  const [isNew,setIsNew]=useState(!active);
+  const [copy,setCopy]=useState(!active&&items.length>0);
+  const [query,setQuery]=useState("");
+  const [error,setError]=useState("");
+  const [status,setStatus]=useState("");
+  const [calendarOpen,setCalendarOpen]=useState(false);
+  const [month,setMonth]=useState(()=>new Date(`${formatInTimeZone(date,timezone,"yyyy-MM-dd")}T12:00:00`));
+  const search=useRef<HTMLInputElement>(null);
+  const siteDetails=useRef<HTMLDetailsElement>(null);
+  useEffect(()=>{
+    setIsNew(!active);setDraft(sessionDraft(active??defaultNight()));setCopy(!active&&items.length>0);setError("");if(siteDetails.current)siteDetails.current.open=false;
+  },[active?.id,active?.name,active?.startAt,active?.lat,active?.lon,active?.locationName,active?.durationMinutes,active?.minutesPerTarget]);
+  const resolved=useMemo(()=>resolveSessionDraft(draft,isNew?undefined:active),[draft,isNew,active?.startAt]);
+  const visibleItems=useMemo(()=>isNew?(copy?reuseNightItems(items,!active):[]):items,[isNew,copy,items,active?.id]);
+  const preview=useMemo<ObservingSession|undefined>(()=>!isNew?active:resolved.ok?{...resolved.value,id:"draft",items:visibleItems,createdAt:date.toISOString(),archived:false}:undefined,[isNew,active,resolved,visibleItems]);
+  // Notes don't change scheduling. Avoid repeating the astronomical search on
+  // every keystroke in an expanded field-note editor.
+  const scheduleKey=preview?JSON.stringify([preview.startAt,preview.lat,preview.lon,preview.durationMinutes,preview.minutesPerTarget,preview.items.map(i=>[i.id,i.observedAt])]):"";
+  const sequence=useMemo(()=>preview?suggestSequence(preview,targets,skyBrightness):[],[scheduleKey,targets,skyBrightness]);
+  const zone=preview?sessionTimezone(preview):timezone;
+  const formZone=resolved.ok?sessionTimezone(resolved.value):zone;
+  const calendarDate=Number.isFinite(Date.parse(`${draft.date}T12:00:00`))?draft.date:formatInTimeZone(date,timezone,"yyyy-MM-dd");
+  const targetMap=useMemo(()=>new Map(targets.map(target=>[target.id,target])),[targets]);
+  const present=sessions.filter(session=>!session.archived),archived=sessions.filter(session=>session.archived);
+  const completed=visibleItems.filter(item=>item.observedAt);
+  const scheduled=sequence.filter(step=>step.date),unavailable=sequence.filter(step=>!step.date);
+  const savedIds=new Set(visibleItems.map(item=>item.id));
+  const dirty=!isNew&&active&&JSON.stringify(draft)!==JSON.stringify(sessionDraft(active));
+  const selectNight=(id:string)=>{const selected=sessions.find(session=>session.id===id);if(!selected)return;onSelect(id);setDraft(sessionDraft(selected));setIsNew(false);setQuery("");setError("");setStatus("");if(siteDetails.current)siteDetails.current.open=false;};
+  const matches=useMemo(()=>query.trim()?targets.filter(target=>Number.isFinite(catalogSearchScore(target,query))).sort((a,b)=>catalogSearchScore(a,query)-catalogSearchScore(b,query)).slice(0,8):[],[query,targets]);
+  const suggestions=useMemo(()=>preview?targets.filter(target=>!target.id.startsWith("star:")&&target.mag<=8&&!visibleItems.some(item=>item.id===target.id))
+    .map(target=>({target,...eqToHorizontal(target.ra,target.dec,preview.lat,preview.lon,new Date(preview.startAt))}))
+    .filter(target=>target.alt>=25).sort((a,b)=>b.alt-a.alt||a.target.mag-b.target.mag).slice(0,3):[],[targets,preview?.startAt,preview?.lat,preview?.lon,visibleItems]);
+  const patch=(value:Partial<SessionDraft>)=>{setDraft(previous=>({...previous,...value}));setError("");};
+  const openNew=(at?:Date)=>{
+    if(siteDetails.current)siteDetails.current.open=false;
+    const latitude=preview?.lat??lat,longitude=preview?.lon??lon;
+    const moment=at??planningShortcut("tonight",latitude,longitude).date;
+    const night=makeSession(`${formatInTimeZone(moment,zone,"MMM d")} observing night`,moment,latitude,longitude,[],preview?.locationName??"");
+    setDraft(sessionDraft(night));setIsNew(true);setCopy(!active&&items.length>0);setError("");setStatus("");setQuery("");
+  };
+  const save=(targetId?:string)=>{
+    if(!resolved.ok){setError(resolved.error);return false;}
+    const chosenItems=isNew?visibleItems:items;
+    const nextItems=targetId&&!chosenItems.some(item=>item.id===targetId)?[...chosenItems,{id:targetId,addedAt:new Date().toISOString(),notes:""}]:chosenItems;
+    if(isNew||!active){onCreate({...makeSession(resolved.value.name,new Date(resolved.value.startAt),resolved.value.lat,resolved.value.lon,nextItems,resolved.value.locationName),...resolved.value});}
+    else onUpdate({...active,...resolved.value,items:nextItems});
+    setIsNew(false);setError("");if(siteDetails.current)siteDetails.current.open=false;return true;
+  };
+  const add=(target:UnifiedTarget)=>{
+    if(savedIds.has(target.id)){setStatus(`${target.name} is already in this night.`);return;}
+    if(isNew||dirty){if(!save(target.id))return;}else onAdd(target.id);
+    setQuery("");setStatus(`Added ${target.name}.`);search.current?.focus({preventScroll:true});
+  };
+  const quickNight=(kind:"tonight"|"new-moon")=>{
+    if(siteDetails.current)siteDetails.current.open=false;
+    const latitude=preview?.lat??lat,longitude=preview?.lon??lon;
+    const at=planningShortcut(kind,latitude,longitude).date;
+    const existing=present.find(session=>Math.abs(session.lat-latitude)<.0001&&Math.abs(session.lon-longitude)<.0001&&Math.abs(Date.parse(session.startAt)-at.getTime())<=30*60_000);
+    if(existing){selectNight(existing.id);}
+    else onCreate(makeSession(`${formatInTimeZone(at,zone,"MMM d")} observing night`,at,latitude,longitude,!active?reuseNightItems(items,true):[],preview?.locationName??""));
+    setStatus(kind==="tonight"?"Tonight’s observing night is ready. Add targets below.":"A night near the next new Moon is ready. Add targets below.");setError("");
+  };
+  const nameFor=(id:string)=>targetMap.get(id)?.displayName??lunarFeatures.find(feature=>`moon:${feature.id}`===id)?.name??id;
+  const row=(item:NightItem,index:number,step?:SequenceStep)=> <li key={item.id} className={step&&!step.date?"unavailable":""}>
+    <div className="planner-row-main"><span className="planner-order">{item.observedAt?<Check size={13}/>:index+1}</span>
+      <div className="planner-row-copy"><strong>{nameFor(item.id)}</strong><span>{item.observedAt?`Observed ${formatInTimeZone(new Date(item.observedAt),zone,"MMM d, yyyy")}`:step?.date?`${formatInTimeZone(step.date,zone,"HH:mm")} · ${Math.round(step.alt)}° ${compassLabel(step.az)}${step.separation!==null?` · ${Math.round(step.separation)}° from Moon`:""}`:step?.reason??"No scheduled time"}</span>{step?.date&&step.reason!=="Well placed at this time"&&<small>{step.reason}</small>}</div>
+      <div className="planner-row-actions"><button className="icon-button" aria-label={`${item.observedAt?"Mark unobserved":"Mark observed"}: ${nameFor(item.id)}`} disabled={isNew} onClick={()=>onObserved(item.id)}>{item.observedAt?<CheckCircle2 size={17}/>:<Circle size={17}/>}</button><button className="text-action" disabled={isNew||(!targetMap.has(item.id)&&!item.id.startsWith("moon:"))} onClick={()=>onVisit(item.id,step?.date??new Date(preview!.startAt))}>Find <ArrowUpRight size={12}/></button><button className="icon-button" aria-label={`Remove ${nameFor(item.id)} from session`} disabled={isNew} onClick={()=>onAdd(item.id)}><X size={14}/></button></div>
+    </div>
+    <details className="planner-row-notes"><summary>{item.notes?"Field notes · saved":"Add field notes"}</summary><Textarea aria-label={`Notes for ${nameFor(item.id)}`} value={item.notes} disabled={isNew} rows={2} onChange={event=>onNotes(item.id,event.target.value)} placeholder="Conditions, colors, what caught your eye…"/>{isNew&&<p>Create this night to edit its records.</p>}</details>
+  </li>;
+
+  return <div className="session-planner planner-workbench" data-testid="session-planner">
+    <section className="panel planner-command" aria-label="Plan your observing night">
+      <div className="planner-night-switch"><label>Observing night<select aria-label="Observing session" value={isNew?"new":active?.id??"new"} onChange={event=>{if(event.target.value==="new")openNew();else{selectNight(event.target.value);}}}><option value="new">New observing night</option>{present.map(session=><option key={session.id} value={session.id}>{session.name} · {formatInTimeZone(new Date(session.startAt),sessionTimezone(session),"MMM d")}</option>)}</select></label><button className="text-action" aria-label="Calendar and saved nights" onClick={()=>{setMonth(new Date(`${calendarDate}T12:00:00`));setCalendarOpen(true);}}><CalendarDays size={15}/><span>Calendar</span></button><button className="text-action" aria-label="New night" onClick={()=>openNew()}><Plus size={15}/><span>New night</span></button><details className="planner-session-actions planner-workspace-menu"><summary aria-label="Export and session actions"><Download size={15}/><span>Export & more</span></summary><div className="planner-menu-actions">{(!isNew||!active)?actions:<p>Create this night before exporting it.</p>}{active&&!isNew&&<><button className="text-action" onClick={()=>onPreview(new Date(active.startAt),active.lat,active.lon)}>View this night’s sky <ArrowUpRight size={12}/></button><button className="text-action" onClick={()=>{onUpdate({...active,archived:true});onSelect(null);}}><Archive size={12}/> Archive night</button></>}</div></details></div>
+      <div className="planner-quick-nights"><button onClick={()=>quickNight("tonight")}><Compass size={14}/> Plan tonight</button><button onClick={()=>quickNight("new-moon")}><Moon size={14}/> Next new Moon</button></div>
+      <form onSubmit={event=>{event.preventDefault();save();}} className="planner-inline-form">
+        <div className="planner-time-fields"><label>Date<input aria-label="Planned session date" type="date" value={draft.date} onChange={event=>patch({date:event.target.value})}/></label><label>Local start<input aria-label="Planned session time" type="time" value={draft.time} onChange={event=>patch({time:event.target.value})}/></label><label>Length · min<input aria-label="Session duration" type="number" min={30} max={720} step={1} value={draft.duration} onChange={event=>patch({duration:event.target.value})}/></label>{(isNew||dirty)&&<Button type="submit" className={isNew?"planner-create-empty":""}>{isNew?"Create night":"Save changes"}</Button>}</div>
+        <details ref={siteDetails} className="planner-site-details"><summary><MapPin size={13}/>{draft.place||`${draft.lat}°, ${draft.lon}°`} · {formZone.replaceAll("_"," ")} <span>Change site & details</span></summary><div className="session-editor-fields"><label>Night name<input aria-label="Session name" value={draft.name} onChange={event=>patch({name:event.target.value})}/></label><label>Site name<input aria-label="Observing site name" value={draft.place} placeholder="Back garden, campsite…" onChange={event=>patch({place:event.target.value})}/></label><label>Latitude<input aria-label="Session latitude" type="number" min={-90} max={90} step="any" value={draft.lat} onChange={event=>patch({lat:event.target.value})}/></label><label>Longitude<input aria-label="Session longitude" type="number" min={-180} max={180} step="any" value={draft.lon} onChange={event=>patch({lon:event.target.value})}/></label><label>Minutes per target<input aria-label="Minutes per target" type="number" min={5} max={60} value={draft.perTarget} onChange={event=>patch({perTarget:event.target.value})}/></label></div><div className="session-site-presets"><span>Use a site:</span>{[["San Francisco",37.77,-122.42],["London",51.5,-.12],["Sydney",-33.87,151.21]].map(([name,a,b])=><button type="button" key={String(name)} onClick={()=>patch({place:String(name),lat:String(a),lon:String(b)})}>{name}</button>)}</div>{isNew&&items.length>0&&<label className="session-copy"><input type="checkbox" checked={copy} onChange={event=>setCopy(event.target.checked)}/>{active?"Reuse this night’s targets with fresh observations":"Keep my unscheduled targets, notes and observations"}</label>}{(isNew||dirty)&&<Button type="submit" variant="outline">{isNew?"Create night":"Save changes"}</Button>}</details>
+      </form>
+      {isNew&&<p className="planner-inline-hint">Your first target saves this night.</p>}{dirty&&<p className="planner-inline-hint">Save your changes to update this night’s viewing times. Exports use the saved night.</p>}{error&&<p className="session-editor-error" role="alert">{error}</p>}
+
+    </section>
+
+    <section className="panel planner-target-board" aria-label="Targets and viewing sequence">
+      <label className="planner-target-search">Add targets<input ref={search} aria-label="Add target to session" placeholder="Search M31, a star, cluster, double star…" value={query} onChange={event=>setQuery(event.target.value)} onKeyDown={event=>{if(event.key==="Enter"&&!event.nativeEvent.isComposing&&matches[0]){event.preventDefault();add(matches[0]);}}}/></label>
+      {matches.length>0&&<div className="planner-search-results">{matches.map(target=><button key={target.id} disabled={savedIds.has(target.id)} aria-label={`${savedIds.has(target.id)?"Already added":"Add"} ${target.displayName} to session`} onClick={()=>add(target)}><span>{target.displayName}</span>{savedIds.has(target.id)?<Check size={15}/>:<Plus size={15}/>}</button>)}</div>}
+      {query.trim()&&!matches.length&&<p className="planner-empty-copy" role="status">No matches for “{query.trim()}”. Try a name or catalog number.</p>}
+      {!query.trim()&&suggestions.length>0&&visibleItems.length===0&&<div className="planner-suggestions"><span>High at your {isNew?"chosen":"saved"} time</span><div>{suggestions.map(({target,alt})=><button key={target.id} aria-label={`Add ${target.displayName} to session`} onClick={()=>add(target)}><strong>{target.name}</strong><small>{Math.round(alt)}° high <Plus size={12}/></small></button>)}</div></div>}
+      <p className="planner-add-status" role="status">{status||"Search and press Enter to add the first match."}</p>
+      <div className="planner-sequence-heading"><h3>Your viewing order</h3><span>{scheduled.length} scheduled · {completed.length} observed{preview?` · ${preview.minutesPerTarget} min each`:""}</span></div>
+      {!visibleItems.length&&<p className="planner-empty-copy">Add a target above. StarHop will suggest an order that gives setting objects a chance before they get too low.</p>}
+      <ol className="planner-sequence">{scheduled.map((step,index)=>{const item=visibleItems.find(item=>item.id===step.id);return item?row(item,index,step):null;})}</ol>
+      {unavailable.length>0&&<details className="planner-unavailable" open={!scheduled.length}><summary>Outside this night’s usable window ({unavailable.length})</summary><ol className="planner-sequence">{unavailable.map((step,index)=>{const item=visibleItems.find(item=>item.id===step.id);return item?row(item,index,step):null;})}</ol></details>}
+      {completed.length>0&&<details className="planner-completed"><summary>Observed targets ({completed.length})</summary><ol className="planner-sequence">{completed.map((item,index)=>row(item,index))}</ol></details>}
+      <details className="planner-method"><summary>How the order is suggested</summary><p>Targets with earlier closing viewing windows come first, then altitude and reduced moonlight. Deep-sky targets need astronomical darkness; bright stellar targets allow twilight. Lunar features must be sunlit and the Moon up. Clouds and local obstructions are not measured.</p></details>
+    </section>
+
+    <Dialog open={calendarOpen} onOpenChange={setCalendarOpen}><DialogContent className="planner-calendar-dialog"><DialogHeader><DialogTitle>Calendar & saved nights</DialogTitle><DialogDescription>Select a saved night, or pick a date to start a new one. Existing nights keep their observations and notes.</DialogDescription></DialogHeader><div className="planner-calendar-layout"><section className="planner-calendar"><Calendar mode="single" month={month} onMonthChange={setMonth} selected={new Date(`${calendarDate}T12:00:00`)} onSelect={day=>{if(!day)return;const selected=format(day,"yyyy-MM-dd");const existing=present.find(session=>formatInTimeZone(new Date(session.startAt),sessionTimezone(session),"yyyy-MM-dd")===selected);if(existing){selectNight(existing.id);}else openNew(eveningOn(selected,preview?.lat??lat,preview?.lon??lon).date);setCalendarOpen(false);}} labels={{labelDay:(day,modifiers)=>`${format(day,"EEEE, MMMM d, yyyy")}${modifiers.planned?", saved observing session":""}`}} modifiers={{planned:present.map(session=>new Date(`${formatInTimeZone(new Date(session.startAt),sessionTimezone(session),"yyyy-MM-dd")}T12:00:00`))}} modifiersClassNames={{planned:"calendar-has-session"}}/><p>Marked dates have saved observing nights.</p></section><section className="planner-sessions"><h3>Saved nights</h3>{present.map(session=><button key={session.id} className={`planner-session-card ${active?.id===session.id?"active":""}`} onClick={()=>{selectNight(session.id);setCalendarOpen(false);}} data-testid={`session-${session.id}`}><strong>{session.name}</strong><span>{formatInTimeZone(new Date(session.startAt),sessionTimezone(session),"MMM d, yyyy · HH:mm")} · {session.items.length} targets</span></button>)}{!present.length&&<p className="planner-empty-copy">Your saved nights will appear here.</p>}{archived.length>0&&<details><summary>Archived nights ({archived.length})</summary>{archived.map(session=><div className="planner-archived" key={session.id}><span>{session.name}</span><button className="text-action" onClick={()=>{onUpdate({...session,archived:false});selectNight(session.id);setCalendarOpen(false);}}>Restore</button></div>)}</details>}</section></div></DialogContent></Dialog>
+  </div>;
 }
