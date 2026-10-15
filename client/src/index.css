@@ -1146,6 +1146,7 @@ button:disabled { opacity: .45; cursor: default; }
 }
 .planner-workbench { gap:0; border:1px solid #304c55; border-radius:12px; background:#0c1e28; }
 .planner-workbench .planner-command, .planner-workbench .planner-target-board { border:0; border-radius:0; background:transparent; box-shadow:none; }
+.planner-workbench .planner-command { overflow:visible; }
 .planner-workbench .planner-target-board { border-top:1px solid #29454d; }
 .planner-night-switch .planner-workspace-menu { position:relative; margin:0 0 0 auto; padding:0; border:0; display:block; }
 .planner-workspace-menu > summary { display:flex; align-items:center; justify-content:center; gap:6px; list-style:none; line-height:normal; min-height:44px; color:#b7ceb8; white-space:nowrap; }
