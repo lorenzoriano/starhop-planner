@@ -1,6 +1,6 @@
 // The build generates an asset manifest and inserts a content-based version.
 const PREFIX = `starhop-${encodeURIComponent(new URL(self.registration.scope).pathname)}-`;
-const CACHE = `${PREFIX}6e536f2d4a145238`;
+const CACHE = `${PREFIX}a357cacc219792d1`;
 const urlFor = (path) => new URL(path, self.registration.scope).href;
 
 self.addEventListener("install", (event) => {
