@@ -118,6 +118,8 @@ import { AltitudeChart } from "@/components/ObservingVisuals";
 import { ImageFallback } from "@/components/ImageFallback";
 import { BinocularGuide } from "@/components/BinocularGuide";
 import { MoonObservatory, MoonlightCard, LunarNightItem } from "@/components/MoonObservatory";
+import { SavedLocations } from "@/components/SavedLocations";
+import { savedLocationsSchema, matchingLocation, type SavedLocation } from "@/lib/saved-locations";
 import { SessionPlanner } from "@/components/SessionPlanner";
 import { TargetPhoto, TargetPhotoCredit } from "@/components/TargetPhoto";
 import { emptyPlanner, plannerStoreSchema, makeSession, planningShortcut, sessionTimezone, starPlanningTarget, type PlannerStore, type ObservingSession } from "@/lib/session-planner";
@@ -152,6 +154,7 @@ export default function PlannerPage() {
     nightListSchema,
   );
   const [plannerStore,setPlannerStore,plannerError] = useLocalState<PlannerStore>("starhop-session-planner-v1",emptyPlanner,plannerStoreSchema);
+  const [savedLocations,setSavedLocations,locationsError] = useLocalState<SavedLocation[]>("starhop-saved-locations-v1",[],savedLocationsSchema);
   const activeSession = plannerStore.sessions.find(s=>s.id===plannerStore.activeId&&!s.archived);
   const night=activeSession?.items??legacyNight;
   function setNight(next:NightItem[]|((previous:NightItem[])=>NightItem[])) {
@@ -480,7 +483,7 @@ export default function PlannerPage() {
   }
   function saveNewSession(items: NightItem[], title: string) {
     const at = settings.timeMode === "live" ? planningShortcut("tonight", lat, lon).date : date;
-    const s = makeSession(`${formatInTimeZone(at, timezone, "MMM d")} observing night`, at, lat, lon, items);
+    const s = makeSession(`${formatInTimeZone(at, timezone, "MMM d")} observing night`, at, lat, lon, items, matchingLocation(savedLocations,lat,lon)?.name??"");
     setPlannerStore(current => ({ ...current, sessions: [...current.sessions, s], activeId: s.id }));
     toast({ title, description: `${s.name}. Open Planner to edit its date, site and viewing sequence.` });
   }
@@ -758,10 +761,10 @@ export default function PlannerPage() {
   }
 
   const dateLabel = formatInTimeZone(date, timezone, "EEE, MMM d, yyyy");
-  const locationLabel =
-    lat === 37.77 && lon === -122.42
+  const locationLabel = matchingLocation(savedLocations,lat,lon)?.name ??
+    (lat === 37.77 && lon === -122.42
       ? "San Francisco · default location"
-      : `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? "N" : "S"} · ${Math.abs(lon).toFixed(2)}°${lon >= 0 ? "E" : "W"}`;
+      : `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? "N" : "S"} · ${Math.abs(lon).toFixed(2)}°${lon >= 0 ? "E" : "W"}`);
   const offlineLabel =
     offline.state === "ready"
       ? offline.online
@@ -860,6 +863,7 @@ export default function PlannerPage() {
               <h2>Where are you watching?</h2>
             </div>
             <p className="location-name">{locationLabel}</p>
+            <SavedLocations context="Sky" locations={savedLocations} lat={lat} lon={lon} onChange={setSavedLocations} onSelect={site=>update({lat:site.lat,lon:site.lon})}/>
             <div className="grid grid-cols-2 gap-2 mt-3">
               <CoordinateInput
                 label="Latitude"
@@ -1125,7 +1129,7 @@ export default function PlannerPage() {
         </aside>
 
         <main className="main-content">
-          {(settingsError || nightError || plannerError) && (
+          {(settingsError || nightError || plannerError || locationsError) && (
             <div className="notice warning">
               <AlertTriangle size={16} />
               Device storage is unavailable. Export your notes before closing
@@ -1861,7 +1865,7 @@ export default function PlannerPage() {
           {page === "night" && (
             <>
               <div className="page-heading night-page-heading"><div><p className="eyebrow">YOUR NEXT NIGHT OUT</p><h1>Plan your night<span>.</span></h1><p>Choose a night. Add targets. Follow the stars.</p></div></div>
-              <SessionPlanner sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} live={settings.timeMode === "live"}
+              <SessionPlanner savedLocations={savedLocations} onLocationsChange={setSavedLocations} sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} live={settings.timeMode === "live"}
                 onCreate={createSession} onUpdate={updateSession} onSelect={selectSession} onPreview={(at,a,b,stay)=>previewMoment(at,a,b,!stay)} onVisit={visitScheduledTarget} onAdd={toggleSave} onObserved={markObserved}
                 onNotes={(id,notes)=>setNight(current=>current.map(item=>item.id===id?{...item,notes}:item))}
                 actions={<><SkySafariExport items={night} targets={planningTargets} session={activeSession} date={date} lat={lat} lon={lon} skyBrightness={settings.skyBrightness}/><Button variant="outline" onClick={exportNight} disabled={!night.length}><Download size={15}/> Export notes</Button></>}

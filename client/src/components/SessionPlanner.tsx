@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { formatInTimeZone } from "date-fns-tz";
 import { format } from "date-fns";
 import { CalendarDays, Plus, Moon, Compass, ArrowUpRight, MapPin, Archive, Download, Check, X, Circle, CheckCircle2 } from "lucide-react";
+import { SavedLocations } from "./SavedLocations";
+import { matchingLocation, type SavedLocation } from "@/lib/saved-locations";
 import { Calendar } from "./ui/calendar";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
@@ -15,6 +17,7 @@ import { compassLabel } from "@/lib/observing";
 import type { NightItem } from "@/lib/session";
 
 interface Props {
+  savedLocations:SavedLocation[]; onLocationsChange:(locations:SavedLocation[])=>void;
   sessions:ObservingSession[]; active:ObservingSession|undefined; targets:UnifiedTarget[];
   date:Date; lat:number; lon:number; timezone:string; items:NightItem[]; skyBrightness:number; live:boolean;
   actions:ReactNode;
@@ -22,10 +25,10 @@ interface Props {
   onPreview:(at:Date,lat:number,lon:number,stay?:boolean)=>void; onVisit:(id:string,at:Date)=>void;
   onAdd:(id:string)=>void; onObserved:(id:string)=>void; onNotes:(id:string,notes:string)=>void;
 }
-export function SessionPlanner({sessions,active,targets,date,lat,lon,timezone,items,skyBrightness,live,actions,onCreate,onUpdate,onSelect,onPreview,onVisit,onAdd,onObserved,onNotes}:Props) {
+export function SessionPlanner({savedLocations,onLocationsChange,sessions,active,targets,date,lat,lon,timezone,items,skyBrightness,live,actions,onCreate,onUpdate,onSelect,onPreview,onVisit,onAdd,onObserved,onNotes}:Props) {
   const defaultNight = () => {
     const at=live?planningShortcut("tonight",lat,lon).date:date;
-    return makeSession(`${formatInTimeZone(at,timezone,"MMM d")} observing night`,at,lat,lon);
+    return makeSession(`${formatInTimeZone(at,timezone,"MMM d")} observing night`,at,lat,lon,[],matchingLocation(savedLocations,lat,lon)?.name??"");
   };
   const [draft,setDraft]=useState(()=>sessionDraft(active??defaultNight()));
   const [isNew,setIsNew]=useState(!active);
@@ -64,9 +67,10 @@ export function SessionPlanner({sessions,active,targets,date,lat,lon,timezone,it
   const patch=(value:Partial<SessionDraft>)=>{setDraft(previous=>({...previous,...value}));setError("");};
   const openNew=(at?:Date)=>{
     if(siteDetails.current)siteDetails.current.open=false;
-    const latitude=preview?.lat??lat,longitude=preview?.lon??lon;
+    const site=resolved.ok?resolved.value:preview;
+    const latitude=site?.lat??lat,longitude=site?.lon??lon;
     const moment=at??planningShortcut("tonight",latitude,longitude).date;
-    const night=makeSession(`${formatInTimeZone(moment,zone,"MMM d")} observing night`,moment,latitude,longitude,[],preview?.locationName??"");
+    const night=makeSession(`${formatInTimeZone(moment,sessionTimezone({lat:latitude,lon:longitude}),"MMM d")} observing night`,moment,latitude,longitude,[],site?.locationName??matchingLocation(savedLocations,latitude,longitude)?.name??"");
     setDraft(sessionDraft(night));setIsNew(true);setCopy(!active&&items.length>0);setError("");setStatus("");setQuery("");
   };
   const save=(targetId?:string)=>{
@@ -84,11 +88,12 @@ export function SessionPlanner({sessions,active,targets,date,lat,lon,timezone,it
   };
   const quickNight=(kind:"tonight"|"new-moon")=>{
     if(siteDetails.current)siteDetails.current.open=false;
-    const latitude=preview?.lat??lat,longitude=preview?.lon??lon;
+    const site=resolved.ok?resolved.value:preview;
+    const latitude=site?.lat??lat,longitude=site?.lon??lon;
     const at=planningShortcut(kind,latitude,longitude).date;
     const existing=present.find(session=>Math.abs(session.lat-latitude)<.0001&&Math.abs(session.lon-longitude)<.0001&&Math.abs(Date.parse(session.startAt)-at.getTime())<=30*60_000);
     if(existing){selectNight(existing.id);}
-    else onCreate(makeSession(`${formatInTimeZone(at,zone,"MMM d")} observing night`,at,latitude,longitude,!active?reuseNightItems(items,true):[],preview?.locationName??""));
+    else onCreate(makeSession(`${formatInTimeZone(at,sessionTimezone({lat:latitude,lon:longitude}),"MMM d")} observing night`,at,latitude,longitude,!active?reuseNightItems(items,true):[],site?.locationName??matchingLocation(savedLocations,latitude,longitude)?.name??""));
     setStatus(kind==="tonight"?"Tonight’s observing night is ready. Add targets below.":"A night near the next new Moon is ready. Add targets below.");setError("");
   };
   const nameFor=(id:string)=>targetMap.get(id)?.displayName??lunarFeatures.find(feature=>`moon:${feature.id}`===id)?.name??id;
@@ -106,6 +111,7 @@ export function SessionPlanner({sessions,active,targets,date,lat,lon,timezone,it
       <div className="planner-quick-nights"><button onClick={()=>quickNight("tonight")}><Compass size={14}/> Plan tonight</button><button onClick={()=>quickNight("new-moon")}><Moon size={14}/> Next new Moon</button></div>
       <form onSubmit={event=>{event.preventDefault();save();}} className="planner-inline-form">
         <div className="planner-time-fields"><label>Date<input aria-label="Planned session date" type="date" value={draft.date} onChange={event=>patch({date:event.target.value})}/></label><label>Local start<input aria-label="Planned session time" type="time" value={draft.time} onChange={event=>patch({time:event.target.value})}/></label><label>Length · min<input aria-label="Session duration" type="number" min={30} max={720} step={1} value={draft.duration} onChange={event=>patch({duration:event.target.value})}/></label>{(isNew||dirty)&&<Button type="submit" className={isNew?"planner-create-empty":""}>{isNew?"Create night":"Save changes"}</Button>}</div>
+        <SavedLocations context="Session" locations={savedLocations} lat={draft.lat.trim()?Number(draft.lat):NaN} lon={draft.lon.trim()?Number(draft.lon):NaN} name={draft.place} onChange={onLocationsChange} onSelect={site=>patch({place:site.name,lat:String(site.lat),lon:String(site.lon)})}/>
         <details ref={siteDetails} className="planner-site-details"><summary><MapPin size={13}/>{draft.place||`${draft.lat}°, ${draft.lon}°`} · {formZone.replaceAll("_"," ")} <span>Change site & details</span></summary><div className="session-editor-fields"><label>Night name<input aria-label="Session name" value={draft.name} onChange={event=>patch({name:event.target.value})}/></label><label>Site name<input aria-label="Observing site name" value={draft.place} placeholder="Back garden, campsite…" onChange={event=>patch({place:event.target.value})}/></label><label>Latitude<input aria-label="Session latitude" type="number" min={-90} max={90} step="any" value={draft.lat} onChange={event=>patch({lat:event.target.value})}/></label><label>Longitude<input aria-label="Session longitude" type="number" min={-180} max={180} step="any" value={draft.lon} onChange={event=>patch({lon:event.target.value})}/></label><label>Minutes per target<input aria-label="Minutes per target" type="number" min={5} max={60} value={draft.perTarget} onChange={event=>patch({perTarget:event.target.value})}/></label></div><div className="session-site-presets"><span>Use a site:</span>{[["San Francisco",37.77,-122.42],["London",51.5,-.12],["Sydney",-33.87,151.21]].map(([name,a,b])=><button type="button" key={String(name)} onClick={()=>patch({place:String(name),lat:String(a),lon:String(b)})}>{name}</button>)}</div>{isNew&&items.length>0&&<label className="session-copy"><input type="checkbox" checked={copy} onChange={event=>setCopy(event.target.checked)}/>{active?"Reuse this night’s targets with fresh observations":"Keep my unscheduled targets, notes and observations"}</label>}{(isNew||dirty)&&<Button type="submit" variant="outline">{isNew?"Create night":"Save changes"}</Button>}</details>
       </form>
       {isNew&&<p className="planner-inline-hint">Your first target saves this night.</p>}{dirty&&<p className="planner-inline-hint">Save your changes to update this night’s viewing times. Exports use the saved night.</p>}{error&&<p className="session-editor-error" role="alert">{error}</p>}

@@ -1176,3 +1176,17 @@ button:disabled { opacity: .45; cursor: default; }
 @media(max-width:760px) {
   .planner-row-actions .icon-button, .planner-row-actions .text-action { width:44px; min-width:44px; min-height:44px; }
 }
+
+/* Reusable observing spots in the planning workbench and sky setup. */
+.saved-locations { margin-top:12px; min-width:0; }
+.saved-location-picker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 14px; }
+.saved-location-picker select { flex:1; min-width:0; max-width:320px; min-height:44px; border:1px solid #39565f; border-radius:5px; background:#0e222c; color:#d6e1d5; padding:8px 10px; font-size:12px; }
+.saved-location-picker > button { min-height:44px; font-size:11px; }
+.saved-location-editor { margin-top:8px; padding:12px; border:1px solid #304c55; border-radius:6px; }
+.saved-location-editor > label { display:block; font-size:11px; color:#b4c9c6; margin-bottom:6px; }
+.saved-location-editor > input { width:100%; min-height:44px; padding:8px 10px; background:#0c1e28; border:1px solid #45646a; border-radius:4px; color:#d6e1d5; font-size:12px; }
+.saved-location-editor > p, .saved-location-status { font-size:11px; line-height:1.7; color:#a6bfbd; margin-top:8px; }
+.saved-location-editor > div { display:flex; align-items:center; flex-wrap:wrap; gap:8px 16px; margin-top:8px; }
+.saved-location-editor button { min-height:44px; }
+.saved-location-editor .icon-button { margin-left:auto; }
+.setup-panel .saved-location-picker select { flex-basis:100%; }
