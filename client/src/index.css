@@ -629,17 +629,6 @@ button:disabled { opacity: .45; cursor: default; }
 .binocular-books { border-top: 1px solid #2c424e; padding-top: 28px; }
 .binocular-books .section-heading > svg { color: #c1ad7e; }
 .binocular-books-intro { font-size: 12px; color: #8da6b1; line-height: 1.9; margin-bottom: 23px; max-width: 770px; }
-.binocular-book-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 15px; }
-.binocular-book { display: flex; flex-direction: column; color: #99b0b7; }
-.binocular-book-spine { border-left: 4px solid #867449; background: linear-gradient(140deg, #314039, #18232b); height: 140px; padding: 14px 17px; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; border-radius: 2px 6px 6px 2px; color: #cbbb8b; }
-.book-mint .binocular-book-spine { background: linear-gradient(140deg, #28463e, #18232b); border-left-color: #6a9a83; color: #a7d0b2; }
-.book-blue .binocular-book-spine { background: linear-gradient(140deg, #274452, #17232c); border-left-color: #678c9c; color: #91b5c7; }
-.binocular-book-spine > span { font-family: var(--font-serif); font-size: 25px; }
-.binocular-book-spine > small { font-size: 6px; letter-spacing: 1.7px; }
-.binocular-book h3 { color: #d0ddcf; font-family: var(--font-serif); font-size: 21px; font-weight: 400; line-height: 1.35; margin: 13px 0 6px; }
-.binocular-book > div:last-child > span { color: #b4c2b3; font-size: 10px; }
-.binocular-book p { color: #829aa7; line-height: 1.8; font-size: 10px; margin-top: 10px; }
-.binocular-book > div:last-child > small { display: flex; gap: 5px; align-items: center; font-size: 9px; color: #a9c3b0; margin-top: 13px; }
 .binocular-provenance { margin-top: 28px; border-top: 1px solid #2b444e; padding: 16px 0; color: #89a1ad; font-size: 11px; line-height: 1.9; }
 .binocular-provenance summary { cursor: pointer; color: #b2c9bb; }
 .binocular-provenance p { margin-top: 13px; max-width: 950px; }
@@ -675,7 +664,6 @@ button:disabled { opacity: .45; cursor: default; }
 }
 @media (max-width: 1250px) {
   .binocular-target-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .binocular-book-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
 }
 @media (max-width: 1000px) { .binocular-months { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
 @media (max-width: 760px) {
@@ -705,7 +693,6 @@ button:disabled { opacity: .45; cursor: default; }
   .binocular-search { flex-basis: 100%; }
   .binocular-toolbar > select { flex: 1; min-width: 155px; }
   .binocular-toolbar > .filter-toggle { font-size: 10px; }
-  .binocular-book-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .binocular-detail { padding: 23px; width: calc(100% - 28px); }
   .binocular-detail-layout { grid-template-columns: 1fr; gap: 18px; }
   .binocular-detail-layout > .binocular-field { max-height: 215px; }
@@ -716,11 +703,6 @@ button:disabled { opacity: .45; cursor: default; }
   .binocular-target-grid { grid-template-columns: 1fr; }
   .binocular-target-field { height: 170px; }
   .binocular-target-body > p { font-size: 12px; }
-  .binocular-book-grid { grid-template-columns: 1fr; }
-  .binocular-book { display: grid; grid-template-columns: 90px 1fr; gap: 18px; }
-  .binocular-book-spine { height: 140px; padding: 13px; }
-  .binocular-book h3 { margin-top: 0; }
-  .binocular-book-spine > small { font-size: 5px; }
 }
 
 /* Moon observatory: warm lunar light alongside the shared mint navigation. */
@@ -1190,3 +1172,31 @@ button:disabled { opacity: .45; cursor: default; }
 .saved-location-editor button { min-height:44px; }
 .saved-location-editor .icon-button { margin-left:auto; }
 .setup-panel .saved-location-picker select { flex-basis:100%; }
+
+.binocular-visibility { border:1px solid #304b57; border-radius:8px; padding:16px; margin:0 0 22px; background:#0c1b25; }
+.binocular-visibility-fields { display:flex; align-items:flex-end; flex-wrap:wrap; gap:12px; }
+.binocular-visibility-fields label { display:grid; gap:6px; min-width:0; font-size:11px; color:#a9c0bf; }
+.binocular-visibility-fields input, .binocular-visibility-fields select { min-height:44px; min-width:0; max-width:100%; border:1px solid #3c5b65; border-radius:5px; background:#10232e; color:#d4dfd5; padding:8px 10px; font-size:12px; }
+.binocular-visibility-fields input[type="number"] { width:120px; }
+.binocular-visibility-context { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-top:12px; font-size:11px; color:#b7c8b4; }
+.binocular-visibility-context > button { min-height:44px; }
+.binocular-visibility .binocular-method-note { margin:8px 0 0; font-size:10px; }
+.binocular-event-times { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; border-top:1px solid #2a444e; margin-top:14px; padding-top:12px; text-align:left; }
+.binocular-event-times > span { font-size:10px; color:#8fa9b0; }
+.binocular-event-times strong { display:block; margin-top:4px; font-size:12px; font-weight:400; color:#cbd9c9; font-variant-numeric:tabular-nums; }
+.binocular-references { margin-top:24px; padding-top:12px; }
+.binocular-references > details > summary { display:flex; align-items:center; gap:9px; min-height:44px; cursor:pointer; font-size:12px; color:#c1ba93; }
+.binocular-references summary > span { margin-left:auto; font-size:10px; color:#8da6aa; }
+.binocular-references .binocular-books-intro { font-size:11px; margin:10px 0; }
+.binocular-references ul { display:grid; gap:12px; margin:14px 0; }
+.binocular-references li { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 16px; font-size:11px; }
+.binocular-references li a { display:inline-flex; align-items:center; gap:5px; color:#b3ccba; }
+.binocular-references li > span { color:#8fa7ac; }
+@media(max-width:760px) {
+  .binocular-visibility-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .binocular-visibility-fields input[type="number"] { width:100%; }
+  .binocular-visibility-fields label:first-child { grid-column:1/-1; }
+  .binocular-visibility { padding:12px; }
+}
+.binocular-timing-notes { margin-top:8px; }
+.binocular-timing-notes > summary { cursor:pointer; color:#9cb7b4; font-size:11px; min-height:36px; line-height:36px; }
