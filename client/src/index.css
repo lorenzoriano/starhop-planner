@@ -1226,3 +1226,10 @@ button:disabled { opacity: .45; cursor: default; }
 .planner-row-forecast > summary { cursor:pointer; min-height:36px; line-height:36px; font-size:11px; color:#b4c9c1; }
 .planner-row-forecast .night-altitude-chart { max-width:440px; }
 @media(max-width:760px) { .planner-row-forecast { margin-left:0; } }
+.binocular-card-chart { padding:0 13px 10px; }
+.binocular-card-chart .night-altitude-chart { margin-top:6px; }
+.binocular-target-body { padding-bottom:4px; }
+.night-altitude-chart svg[role="slider"] { cursor:crosshair; touch-action:pan-y; border-radius:3px; }
+.night-altitude-chart svg[role="slider"]:focus-visible { outline:1px solid #b3d5c6; outline-offset:2px; }
+.night-chart-readout { display:block; min-height:30px; margin:2px 0 3px; font-size:10px; line-height:1.5; color:#819fa8; font-variant-numeric:tabular-nums; }
+.night-chart-readout.active { color:#d0e2d3; }
