@@ -937,7 +937,7 @@ button:disabled { opacity: .45; cursor: default; }
 .planner-order { border:1px solid #5f817d; width:28px; height:28px; display:flex; align-items:center; justify-content:center; flex-shrink:0; border-radius:50%; color:#b3d3c2; font-size:11px; }
 .planner-sequence li > div:nth-child(2) { flex:1; display:grid; gap:7px; }
 .planner-sequence strong { color:#d8e3d4; font-weight:400; font-size:14px; }
-.planner-sequence span:not(.planner-order) { color:#acc3c6; font-size:11px; }
+.planner-row-copy > span { color:#acc3c6; font-size:11px; }
 .planner-sequence small { color:#88a8b4; font-size:10px; line-height:1.5; }
 .planner-sequence li.unavailable .planner-order { border-color:#7c6551; color:#d2b184; }
 .planner-sequence li.unavailable small { color:#c0a781; }
@@ -1200,3 +1200,29 @@ button:disabled { opacity: .45; cursor: default; }
 }
 .binocular-timing-notes { margin-top:8px; }
 .binocular-timing-notes > summary { cursor:pointer; color:#9cb7b4; font-size:11px; min-height:36px; line-height:36px; }
+
+/* Dense target cards leave room for a real dusk-to-dawn altitude profile. */
+.binocular-target-grid { gap:12px; }
+.binocular-target-body { padding:12px 13px 10px; }
+.binocular-target-body h3 { font-size:21px; margin:6px 0; line-height:1.2; }
+.binocular-target-body > p { line-height:1.65; }
+.binocular-card-position { margin-top:10px; }
+.binocular-target-body .binocular-event-times { margin-top:8px; padding-top:8px; }
+.binocular-target-bottom { padding:0 8px 0 12px; min-height:44px; }
+.binocular-target-bottom button { width:44px; height:44px; border:0; border-left:1px solid #2d474e; border-radius:0; }
+.night-altitude-chart { margin-top:10px; width:100%; min-width:0; text-align:left; }
+.night-altitude-heading { display:flex; justify-content:space-between; gap:8px; color:#a3bcb9; font-size:10px; margin-bottom:3px; }
+.night-altitude-chart svg { display:block; width:100%; height:auto; }
+.night-altitude-unavailable { margin-top:10px; color:#a7b9ad; font-size:10px; line-height:1.5; }
+.binocular-detail > .night-altitude-chart { max-width:600px; margin-inline:auto; }
+.night-altitude-heading .night-altitude-key { color:#a2d5c5; }
+.night-altitude-heading .night-moon-key { color:#e3c17f; }
+.night-altitude-key::before, .night-moon-key::before { content:""; display:inline-block; width:12px; border-top:2px solid currentColor; margin-right:5px; vertical-align:middle; }
+.night-moon-key::before { border-top-style:dashed; }
+.night-moon-explanation { font-size:10px; line-height:1.5; color:#baa77e; margin:0; }
+.night-observation-suggestion { font-size:10px; line-height:1.5; color:#b7d3bf; margin-top:5px; }
+.night-observation-suggestion > span { color:#96afb2; }
+.planner-row-forecast { margin:8px 0 0 36px; max-width:640px; }
+.planner-row-forecast > summary { cursor:pointer; min-height:36px; line-height:36px; font-size:11px; color:#b4c9c1; }
+.planner-row-forecast .night-altitude-chart { max-width:440px; }
+@media(max-width:760px) { .planner-row-forecast { margin-left:0; } }

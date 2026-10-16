@@ -59,3 +59,14 @@ export function targetWindow(ra:number,dec:number,lat:number,lon:number,window:E
   }
   return {max,min,bestAt};
 }
+
+/** Sample only astronomical-darkness segments, retaining exact altitude extrema. */
+export function nightAltitudeSamples(ra:number,dec:number,lat:number,lon:number,night:VisibilityWindow) {
+  if(!night.ok)return [];
+  return night.segments.map(segment=>{
+    const count=Math.max(1,Math.ceil((+segment.end-+segment.start)/(15*60000)));
+    const times=new Set(Array.from({length:count+1},(_,i)=>+segment.start+(+segment.end-+segment.start)*i/count));
+    for(const angle of [0,180])for(const at of hourAngleEvents(ra,lon,angle,segment.start,segment.end))times.add(+at);
+    return {...segment,samples:Array.from(times).sort((a,b)=>a-b).map(ms=>({date:new Date(ms),alt:eqToHorizontal(ra,dec,lat,lon,new Date(ms)).alt}))};
+  });
+}

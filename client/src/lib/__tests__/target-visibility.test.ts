@@ -1,7 +1,7 @@
 import * as Astro from "astronomy-engine";
 import { describe,it,expect } from "vitest";
 import { eqToHorizontal } from "../astronomy";
-import { targetDayEvents, visibilityWindow, targetWindow } from "../target-visibility";
+import { targetDayEvents, visibilityWindow, targetWindow, nightAltitudeSamples } from "../target-visibility";
 const lat=37.77,lon=-122.42,zone="America/Los_Angeles",date=new Date("2026-10-16T20:00:00Z");
 describe("target rise/transit/set and observing windows",()=>{
   it("finds actual horizon crossings and upper transit within the selected local day",()=>{
@@ -37,6 +37,18 @@ describe("target rise/transit/set and observing windows",()=>{
     // At 50°N in midsummer the Sun falls below −12° but never reaches −18°.
     const twilightOnly=visibilityWindow("2026-06-21","20:00","22:00","night","Etc/UTC",50,0);
     expect(twilightOnly.ok).toBe(true);if(twilightOnly.ok)expect(twilightOnly.segments).toHaveLength(0);
+  });
+
+  it("samples graph endpoints at astronomical dusk/dawn with actual target altitudes",()=>{
+    const night=visibilityWindow("2026-10-16","12:00","12:00","night",zone,lat,lon);
+    const profiles=nightAltitudeSamples(83,12,lat,lon,night);expect(profiles).toHaveLength(1);
+    if(!night.ok)return;const profile=profiles[0];
+    expect(profile.samples[0].date).toEqual(night.segments[0].start);
+    expect(profile.samples.at(-1)!.date).toEqual(night.segments[0].end);
+    for(const sample of profile.samples){expect(sample.date>=profile.start&&sample.date<=profile.end).toBe(true);expect(sample.alt).toBeCloseTo(eqToHorizontal(83,12,lat,lon,sample.date).alt,10);}
+    const peak=targetWindow(83,12,lat,lon,night);expect(Math.max(...profile.samples.map(s=>s.alt))).toBeCloseTo(peak.max,8);
+    const summer=visibilityWindow("2026-06-21","12:00","12:00","night","Etc/UTC",50,0);expect(nightAltitudeSamples(83,12,50,0,summer)).toHaveLength(0);
+    expect(nightAltitudeSamples(83,12,lat,lon,{ok:false,error:"Invalid date"})).toHaveLength(0);
   });
 
 });
