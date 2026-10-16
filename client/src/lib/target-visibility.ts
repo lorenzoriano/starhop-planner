@@ -40,14 +40,14 @@ export function visibilityWindow(date:string,time:string,until:string,mode:Visib
   if(!start||!end)return {ok:false,error:"Choose valid local times. A daylight-saving change may skip that time."};
   if(mode!=="night")return {ok:true,start,end,segments:[{start,end}]};
   // The observing night is the darkness between local noon and the next noon.
-  // Roots delimit nautical darkness, including partial and polar nights.
+  // Roots delimit astronomical darkness, including partial and polar nights.
   const observer=new Astro.Observer(lat,lon,0),days=(end.getTime()-start.getTime())/86400000;
   const bounds=[start,end];
-  for(const direction of [-1,1]){const event=Astro.SearchAltitude(Astro.Body.Sun,observer,direction,start,days,-12)?.date;if(event&&event>start&&event<end)bounds.push(event);}
+  for(const direction of [-1,1]){const event=Astro.SearchAltitude(Astro.Body.Sun,observer,direction,start,days,-18)?.date;if(event&&event>start&&event<end)bounds.push(event);}
   bounds.sort((a,b)=>a.getTime()-b.getTime());
   const segments=[];
   for(let i=1;i<bounds.length;i++) {const a=bounds[i-1],b=bounds[i],mid=new Date((a.getTime()+b.getTime())/2),eq=Astro.Equator(Astro.Body.Sun,mid,observer,true,true);
-    if(Astro.Horizon(mid,observer,eq.ra,eq.dec).altitude<-12)segments.push({start:a,end:b});}
+    if(Astro.Horizon(mid,observer,eq.ra,eq.dec).altitude<-18)segments.push({start:a,end:b});}
   return {ok:true,start,end,segments};
 }
 /** Include exact culmination extrema so even a short high-altitude window counts. */

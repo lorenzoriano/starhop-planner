@@ -1,3 +1,4 @@
+import * as Astro from "astronomy-engine";
 import { describe,it,expect } from "vitest";
 import { eqToHorizontal } from "../astronomy";
 import { targetDayEvents, visibilityWindow, targetWindow } from "../target-visibility";
@@ -26,4 +27,16 @@ describe("target rise/transit/set and observing windows",()=>{
   it("selects real night darkness and handles polar summer and winter",()=>{
     for(const [latitude,dateLabel,hasNight] of [[lat,"2026-10-16",true],[89,"2026-06-21",false],[89,"2026-12-21",true]] as const){const window=visibilityWindow(dateLabel,"20:00","22:00","night","Etc/UTC",latitude,0);expect(window.ok).toBe(true);if(window.ok)expect(window.segments.length>0).toBe(hasNight);}
   });
+  it("uses astronomical dusk and dawn, excluding nights with only nautical twilight",()=>{
+    const window=visibilityWindow("2026-10-16","20:00","22:00","night",zone,lat,lon);
+    expect(window.ok).toBe(true);if(!window.ok)return;
+    expect(window.segments).toHaveLength(1);
+    const observer=new Astro.Observer(lat,lon,0);
+    const sunAltitude=(at:Date)=>{const eq=Astro.Equator(Astro.Body.Sun,at,observer,true,true);return Astro.Horizon(at,observer,eq.ra,eq.dec).altitude;};
+    for(const segment of window.segments){expect(sunAltitude(segment.start)).toBeCloseTo(-18,2);expect(sunAltitude(segment.end)).toBeCloseTo(-18,2);expect(sunAltitude(new Date((+segment.start + +segment.end)/2))).toBeLessThan(-18);}
+    // At 50°N in midsummer the Sun falls below −12° but never reaches −18°.
+    const twilightOnly=visibilityWindow("2026-06-21","20:00","22:00","night","Etc/UTC",50,0);
+    expect(twilightOnly.ok).toBe(true);if(twilightOnly.ok)expect(twilightOnly.segments).toHaveLength(0);
+  });
+
 });
