@@ -1233,3 +1233,11 @@ button:disabled { opacity: .45; cursor: default; }
 .night-altitude-chart svg[role="slider"]:focus-visible { outline:1px solid #b3d5c6; outline-offset:2px; }
 .night-chart-readout { display:block; min-height:30px; margin:2px 0 3px; font-size:10px; line-height:1.5; color:#819fa8; font-variant-numeric:tabular-nums; }
 .night-chart-readout.active { color:#d0e2d3; }
+
+.night-moon-illumination { margin:5px 0 6px; color:#d5bc87; font-size:10px; }
+.night-moon-illumination-label, .night-moon-scale { display:flex; justify-content:space-between; gap:6px; }
+.night-moon-illumination-label strong { font-weight:600; }
+.night-moon-illumination-label strong span { font-weight:400; color:#aebbb1; }
+.night-moon-meter { height:5px; margin:5px 0 4px; border-radius:3px; background:#253943; overflow:hidden; }
+.night-moon-meter > span { display:block; height:100%; background:#e4bd76; border-radius:3px; }
+.night-moon-scale { color:#9caca5; font-size:9px; }
