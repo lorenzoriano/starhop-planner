@@ -330,6 +330,7 @@ export async function loadBinocularTargets(): Promise<BinocularTarget[]> {
 export interface UnifiedTarget {
   id: string;
   name: string;
+  size?:string; // apparent angular diameter, with unit
   displayName: string; // short label for lists
   aliases?: string[];
   mag: number;
@@ -378,6 +379,7 @@ export function buildUnifiedTargets(
       category: messierTypes[m.type] || m.type,
       categoryShort: messierTypesShort[m.type] || m.type,
       source: 'messier',
+      size: m.size?`${m.size}′`:undefined,
       desc: m.size ? `${messierTypes[m.type] || m.type}, ${m.size}'` : messierTypes[m.type] || m.type,
     });
   }
@@ -397,6 +399,7 @@ export function buildUnifiedTargets(
       category: BINOCULAR_CATEGORY_LABELS[t.cat],
       categoryShort: BINOCULAR_CATEGORY_SHORT[t.cat],
       source: 'binocular',
+      size: t.size,
       binoTip: t.binoTip,
       desc: t.desc,
     });

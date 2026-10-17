@@ -1253,3 +1253,20 @@ button:disabled { opacity: .45; cursor: default; }
 .lunar-separation-scale { display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; color:#bdcfc6; font-size:11px; margin-top:14px; }
 .lunar-separation-scale button { border:1px solid #435a60; border-radius:4px; padding:7px 9px; color:#bad0c6; font-size:10px; }
 .lunar-separation-panel .lunar-separation-note { font-size:10px; line-height:1.7; color:#91aab5; margin:8px 0 12px; }
+.moon-target-picker { display:grid; grid-template-columns:1fr 1fr; gap:20px; padding:20px; margin:20px 0; border:1px solid #38505a; border-radius:8px; background:#0d202780; }
+.moon-target-picker .eyebrow { display:flex; align-items:center; gap:7px; }
+.moon-target-picker h2 { font:400 25px var(--font-serif); color:#e1e5d8; margin:9px 0; }
+.moon-target-picker p { color:#95adb5; font-size:11px; line-height:1.7; }
+.moon-target-search label { display:block; font-size:11px; color:#b6cbbf; margin:0 0 8px; }
+.moon-target-search .search-field { width:100%; }
+.moon-target-search input { min-width:0; width:100%; }
+.moon-target-results { margin-top:6px; border:1px solid #304a54; border-radius:5px; overflow:hidden; }
+.moon-target-results button { display:flex; flex-direction:column; gap:3px; width:100%; text-align:left; padding:9px 11px; min-height:44px; border-bottom:1px solid #29414b; }
+.moon-target-results button:hover, .moon-target-results button:focus-visible { background:#adcab31a; }
+.moon-target-results strong { color:#cbded1; font-size:12px; font-weight:500; }
+.moon-target-results span { color:#90a9b2; font-size:10px; }
+.moon-target-results p { padding:10px; }
+.lunar-target-heading { display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between; align-items:center; }
+.lunar-target-heading button { font-size:10px; }
+@media(max-width:650px) { .moon-target-picker { grid-template-columns:1fr; padding:16px; gap:12px; } }
+.binocular-finder-heading { display:flex; flex-wrap:wrap; gap:5px 14px; justify-content:space-between; align-items:baseline; color:#99b1b8; font-size:10px; margin:16px 0 8px; }

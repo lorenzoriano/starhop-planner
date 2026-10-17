@@ -458,6 +458,12 @@ export default function PlannerPage() {
     update({ targetId: id, ...(id !== targetId ? { startStarId:undefined } : {}) });
     if(page==="hop")navigate(pathForPage("hop",id),{replace:true});
   }
+  function checkAgainstMoon(id:string,at?:Date) {
+    firstTarget.current=false;setPlaying(false);
+    update({targetId:id,...(id!==targetId?{startStarId:undefined}:{})});
+    if(at)previewMoment(at,lat,lon,false);
+    setPage("moon");
+  }
   function previewMoment(at:Date,latitude:number,longitude:number,navigate=true) {
     const zone=sessionTimezone({lat:latitude,lon:longitude});
     update({lat:latitude,lon:longitude,date:formatInTimeZone(at,zone,"yyyy-MM-dd"),time:formatInTimeZone(at,zone,"HH:mm"),timeMode:"planned",plannedAt:at.toISOString()});
@@ -1287,7 +1293,7 @@ export default function PlannerPage() {
                         <Eye size={14} />
                         {guideFor(selected).equipment}
                       </p>
-                      <MoonlightCard target={selected} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => setPage("moon")} />
+                      <MoonlightCard target={selected} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => checkAgainstMoon(selected.id)} />
                       <div className="featured-actions">
                         <Button
                           onClick={() => compute()}
@@ -1487,6 +1493,7 @@ export default function PlannerPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
+                  <Button variant="outline" size="sm" disabled={!selected} onClick={()=>checkAgainstMoon(targetId)}><Moon size={14}/> Check against the Moon</Button>
                   <span className="visibility-tag">
                     {selection
                       ? `${Math.round(selection.alt)}° ${compassLabel(selection.az)}`
@@ -1776,7 +1783,7 @@ export default function PlannerPage() {
                         <h2>At the eyepiece</h2>
                       </div>
                       <p>{guideFor(selected).lookFor}</p>
-                      <MoonlightCard target={selected} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => setPage("moon")} />
+                      <MoonlightCard target={selected} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => checkAgainstMoon(selected.id)} />
                       <AltitudeChart
                         target={selected}
                         lat={lat}
@@ -1873,9 +1880,9 @@ export default function PlannerPage() {
             </>
           )}
           {page === "binocular" && (
-            <BinocularGuide saveDestination={activeSession?.name??`${formatInTimeZone(settings.timeMode==="live"?planningShortcut("tonight",lat,lon).date:date,timezone,"MMM d")} observing night`} targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
+            <BinocularGuide onMoon={checkAgainstMoon} saveDestination={activeSession?.name??`${formatInTimeZone(settings.timeMode==="live"?planningShortcut("tonight",lat,lon).date:date,timezone,"MMM d")} observing night`} targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
           )}
-          {page === "moon" && <MoonObservatory locationName={locationLabel} lat={lat} lon={lon} date={date} timezone={timezone} settings={settings} update={update} target={selected} initialFeatureId={lunarSelection} onDate={at => { setPlaying(false); update({ date:formatInTimeZone(at,timezone,"yyyy-MM-dd"), time:formatInTimeZone(at,timezone,"HH:mm"), timeMode:"planned", plannedAt:at.toISOString() }); }} savedIds={savedIds} onSave={toggleSave} />}
+          {page === "moon" && <MoonObservatory targets={catalogs.targets} onTarget={selectTarget} locationName={locationLabel} lat={lat} lon={lon} date={date} timezone={timezone} settings={settings} update={update} target={selected} initialFeatureId={lunarSelection} onDate={at => { setPlaying(false); update({ date:formatInTimeZone(at,timezone,"yyyy-MM-dd"), time:formatInTimeZone(at,timezone,"HH:mm"), timeMode:"planned", plannedAt:at.toISOString() }); }} savedIds={savedIds} onSave={toggleSave} />}
           {page === "image" && (
             <>
               <div className="page-heading">

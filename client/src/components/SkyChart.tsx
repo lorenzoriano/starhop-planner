@@ -1,3 +1,4 @@
+import { useFinderStars } from '@/hooks/use-finder-stars';
 import { orientChartPoint } from '@/lib/observing';
 import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom } from '@/lib/chart-view';
 import { milkyWayPaths as projectMilkyWay } from '@/lib/sky-polygons';
@@ -36,6 +37,8 @@ interface SkyChartProps {
   onFovChange?: (width: number) => void;
   onLimitingMagChange?: (magnitude: number) => void;
   fieldNavigation?: ReactNode;
+  maxCatalogMagnitude?:number;
+  targetDiameter?:number|null;
 }
 
 const CHART_SIZE = 600;
@@ -57,8 +60,9 @@ export function SkyChart({
   milkyWay,
   lat, lon, date,
   overview = false,
-  onSelect, onFovChange, onLimitingMagChange, fieldNavigation,
+  onSelect, onFovChange, onLimitingMagChange, fieldNavigation, maxCatalogMagnitude=8, targetDiameter,
 }: SkyChartProps) {
+  const deepCatalog=useFinderStars(targetNode?.id,limitingMag>8&&!overview);
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredStar, setHoveredStar] = useState<SkyNode | null>(null);
@@ -366,7 +370,8 @@ export function SkyChart({
     if (mag < 5) return 1.05;
     if (mag < 6) return 1.0;
     if (mag < 7) return 0.85;
-    return 0.7;
+    if (mag < 8) return 0.7;
+    return Math.max(0.3,0.68-(mag-8)*0.14);
   };
 
   const bgStarOpacity = (mag: number) => {
@@ -376,7 +381,8 @@ export function SkyChart({
     if (mag < 5) return 0.60;
     if (mag < 6) return 0.65;
     if (mag < 7) return 0.55;
-    return 0.45;
+    if (mag < 8) return 0.45;
+    return Math.max(0.15,0.45-(mag-8)*0.12);
   };
 
   const highlightedIds = useMemo(() => {
@@ -435,20 +441,20 @@ export function SkyChart({
 
   // Background star layer from dense Hipparcos catalog — pure rendering, no routing
   const backgroundStarLayer = useMemo(() => {
-    const result: { x: number; y: number; mag: number; bv: number }[] = [];
-    for (const star of denseStars) {
+    const result: { x: number; y: number; mag: number; bv: number; ra:number; dec:number }[] = [];
+    for (const star of [...denseStars,...deepCatalog.stars]) {
       const [ra, dec, mag, bv] = star;
       if (mag > limitingMag) continue;
       const dist = angularDistance(ra, dec, center.ra, center.dec);
-      if (dist > viewRadius * 1.05) continue;
+      if (dist > viewRadius * 1.8) continue;
       const p = project(ra, dec);
       if (!p) continue;
       const { x, y } = p;
       if (x < -8 || x > CHART_SIZE + 8 || y < -8 || y > CHART_SIZE + 8) continue;
-      result.push({ x, y, mag, bv });
+      result.push({ x, y, mag, bv, ra, dec });
     }
     return result;
-  }, [denseStars, limitingMag, project, viewRadius]);
+  }, [denseStars, deepCatalog.stars, limitingMag, project, viewRadius]);
 
   // ───── Milky Way outline paths (from d3-celestial mw.json) ─────
   // 5 nested polygon layers (ol1–ol5) rendered with additive opacity:
@@ -723,6 +729,13 @@ export function SkyChart({
     });
   }, [currentHop, targetNode, overview, finderReticle, project, fovWidth, fovHeight, fovShape]);
 
+  const targetExtent=useMemo(()=>{
+    if(!targetNode||!targetDiameter||overview)return null;
+    const points=angularRing(targetNode,targetDiameter/2).map(p=>project(p.ra,p.dec));
+    if(points.some(p=>!p))return null;
+    return points.map((p,i)=>`${i?'L':'M'}${p!.x},${p!.y}`).join(' ')+' Z';
+  },[targetNode,targetDiameter,overview,project]);
+
   // SVG shapes for pattern visualization
   const renderPatternShape = useCallback((
     patternType: PatternType,
@@ -885,7 +898,7 @@ export function SkyChart({
         <g clipPath="inset(0)">
           {!starsOnly && milkyWayPaths.map((path, i) => (
             <path key={`mw-${path.id}-${i}`} d={path.d}
-              fill="rgba(170, 190, 255, 0.055)" fillRule="evenodd" stroke="none" />
+              fill={viewRadius<10?"rgba(170, 190, 255, 0.009)":"rgba(170, 190, 255, 0.028)"} fillRule="evenodd" stroke="none" />
           ))}
         </g>
 
@@ -937,6 +950,7 @@ export function SkyChart({
         {/* Dense background star field from Hipparcos catalog */}
         {backgroundStarLayer.map((star, i) => (
           <g key={i}>
+            <title>{`RA ${star.ra.toFixed(4)}° · Dec ${star.dec>=0?"+":""}${star.dec.toFixed(4)}° · catalog magnitude ${star.mag.toFixed(2)}`}</title>
             {!starsOnly && star.mag < 2.5 && (
               <circle cx={star.x} cy={star.y}
                 r={bgStarSize(star.mag) * brightMul * backgroundPointScale * 4 * screenUnit}
@@ -1098,6 +1112,7 @@ export function SkyChart({
           </g>
         )}
 
+        {!starsOnly&&targetExtent&&<path data-target-extent="true" d={targetExtent} fill="none" stroke="#ddbd80" strokeWidth="1" strokeDasharray="2 4" vectorEffect="non-scaling-stroke" opacity=".7" pointerEvents="none"/>}
         {!starsOnly && finderRings.map(ring => <path key={ring.id} data-reticle-diameter={ring.diameter} data-finder-crosshair={finderReticle === 'crosshair' ? true : undefined} d={ring.d} fill="none" stroke="#adc7b6" strokeWidth="1.2" vectorEffect="non-scaling-stroke" opacity=".85" pointerEvents="none"/>)}
 
         {!starsOnly && labels.map((label) => {
@@ -1188,7 +1203,7 @@ export function SkyChart({
           <option value="field">Field only</option><option value="telrad">Telrad · ½° / 2° / 4°</option><option value="rigel">Rigel · ½° / 2°</option><option value="crosshair">Optical finder · crosshair</option>
         </select></label>}
         {onFovChange && <label>Field width <input type="number" aria-label="Chart field of view" min="0.2" max="15" step="0.01" value={fovWidth} onChange={(event) => { const value = Number(event.target.value); if (value >= 0.2 && value <= 15) onFovChange(value); }} />°{fovShape === 'rectangle' && <span> × {fovHeight.toFixed(1)}°</span>}</label>}
-        {onLimitingMagChange && <label>Stars to mag <input type="number" aria-label="Chart limiting magnitude" min="3" max="8" step="0.1" value={Math.min(8, limitingMag)} onChange={(event) => { const value = Number(event.target.value); if (value >= 3 && value <= 8) onLimitingMagChange(value); }} /></label>}
+        {onLimitingMagChange && <label>Stars to mag <input type="number" aria-label="Chart limiting magnitude" min="3" max={maxCatalogMagnitude} step="0.1" value={Math.min(maxCatalogMagnitude, limitingMag)} onChange={(event) => { const value = Number(event.target.value); if (value >= 3 && value <= maxCatalogMagnitude) onLimitingMagChange(value); }} /></label>}
         <button className={starsOnly ? 'active' : ''} aria-pressed={starsOnly} onClick={() => updateDisplay({ starsOnly: !starsOnly })} data-testid="button-stars-only">Stars only</button>
       </div>
       {!overview && finderReticle !== 'field' && !starsOnly && <p className="chart-reticle-note">{finderReticle === 'crosshair' ? 'Crosshair follows your field · Set your finder’s measured width.' : 'Ring diameters in degrees · Field width sets hop spacing.'}</p>}
@@ -1205,7 +1220,7 @@ export function SkyChart({
           <label><input type="checkbox" checked={showLegend} onChange={e => updateDisplay({ showLegend: e.target.checked })} />Legend</label>
         </div>
       </details>
-      <p className="chart-accuracy-note">Ctrl / ⌘ + scroll to zoom · drag to pan. {starsOnly ? 'Catalog stars without labels or guide patterns. Nebulosity is not simulated.' : 'Catalog chart · constellation names in green · star names in white, blue or lilac.'} Star catalog extends to magnitude 8; the view depends on your optics and sky.</p>
+      <p className="chart-accuracy-note">Ctrl / ⌘ + scroll to zoom · drag to pan. {starsOnly ? 'Catalog stars without labels or guide patterns. Nebulosity is not simulated.' : 'Catalog chart · constellation names in green · star names in white, blue or lilac.'} {maxCatalogMagnitude>8?deepCatalog.state==='ready'?'Tycho-2 reference stars to VT 10.5 within 8° of the target; brighter context outside. This chart can show stars fainter than your optics reveal.':deepCatalog.state==='loading'?'Loading the detailed offline finder field…':deepCatalog.state==='error'?'Detailed field unavailable; showing the bright-star catalog to magnitude 8.':'Bright-star catalog to magnitude 8. Increase depth for the detailed finder field.':'Star catalog extends to magnitude 8; the view depends on your optics and sky.'}</p>
       {showLegend && !starsOnly && <div className="absolute top-3 left-3 flex gap-3 rounded border border-[#2a414e] bg-[#0a1721]/90 px-2 py-1.5 text-[9px]">
         {route && <><span className="text-[#38bdf8]">● Anchor</span><span className="text-[#c084fc]">● Pattern</span></>}<span className="text-[#d8bc80]">● Target</span><span className="text-[#a7cfa0]">Constellation</span>
       </div>}

@@ -1,6 +1,7 @@
 import { createMoonSampler } from "@/lib/observing-profile";
 import { NightAltitudeChart } from "./ObservingVisuals";
 import { MoonlightCard } from "./MoonObservatory";
+import { catalogDiameter } from "@/lib/finder-detail";
 import { catalogSearchScore } from "@/lib/catalog-search";
 import { useEffect, useMemo, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
@@ -18,6 +19,7 @@ import { BINOCULAR_BOOKS, BINOCULAR_ENTRIES, FAMILY_LABELS, LEVEL_LABELS, MONTH_
 
 interface Props {
   onInspect?:(id:string)=>void;
+  onMoon:(id:string,at:Date)=>void;
   saveDestination:string;
   skyBrightness?: number;
   targets: UnifiedTarget[]; stars: CatalogStar[]; lat: number; lon: number;
@@ -28,7 +30,9 @@ interface Props {
   onFovChange: (width: number) => void; onLimitingMagChange: (magnitude: number) => void;
 }
 
-export function BinocularGuide({ saveDestination, onInspect, skyBrightness = 21.6, targets, stars, lat, lon, timezone, observingDate, savedIds, loading, onSave, onPlan, constellations, denseStars, milkyWay, fovWidth, fovHeight, fovShape, limitingMag, onFovChange, onLimitingMagChange }: Props) {
+export function BinocularGuide({ saveDestination, onInspect, onMoon, skyBrightness = 21.6, targets, stars, lat, lon, timezone, observingDate, savedIds, loading, onSave, onPlan, constellations, denseStars, milkyWay, fovWidth, fovHeight, fovShape, limitingMag, onFovChange, onLimitingMagChange }: Props) {
+  const [finderDepth,setFinderDepth]=useState(10.5);
+  const openTarget=(id:string)=>{onInspect?.(id);setOpened(id);};
   const currentYear = Number(formatInTimeZone(observingDate, timezone, "yyyy"));
   const [year, setYear] = useState(currentYear);
   const [sampleMode,setSampleMode]=useState<BinocularSampleMode>("dark");
@@ -69,7 +73,7 @@ export function BinocularGuide({ saveDestination, onInspect, skyBrightness = 21.
   const featured = picks.find((p) => p.level === "easy") ?? picks[0];
   const detail = positioned.find((p) => p.targetId === opened);
   const detailAt=detail?timeFor(detail):at;
-  const fieldNodes = useMemo<SkyNode[]>(() => detail ? stars.filter((s) => s.mag <= limitingMag).map((s) => ({ ...s, ...eqToHorizontal(s.ra, s.dec, lat, lon, detailAt), name: s.name || s.bayer || s.id, type: "star" as const })) : [], [stars, limitingMag, detail?.targetId, lat, lon, detailAt]);
+  const fieldNodes = useMemo<SkyNode[]>(() => detail ? stars.filter((s) => s.mag <= finderDepth).map((s) => ({ ...s, ...eqToHorizontal(s.ra, s.dec, lat, lon, detailAt), name: s.name || s.bayer || s.id, type: "star" as const })) : [], [stars, finderDepth, detail?.targetId, lat, lon, detailAt]);
   const fieldTarget: SkyNode | null = detail ? { ...detail.target, alt: detail.alt, az: detail.az, type: detail.target.source === "messier" ? "messier" : "binocular", constellation: detail.target.con } : null;
   const place = `${Math.abs(lat).toFixed(1)}°${lat < 0 ? "S" : "N"} · ${Math.abs(lon).toFixed(1)}°${lon < 0 ? "W" : "E"}`;
   const sampleTime=formatInTimeZone(sampleAt,timezone,"HH:mm");
@@ -125,7 +129,7 @@ export function BinocularGuide({ saveDestination, onInspect, skyBrightness = 21.
             <h2>{featured.name ?? featured.target.name}</h2>
             <p>{featured.impression}</p>
             <div className="binocular-meta"><span><Binoculars size={14} /> {featured.equipment}</span><span>{Math.round(featured.alt)}° {compassLabel(featured.az)} at {formatInTimeZone(timeFor(featured),timezone,"MMM d · HH:mm")}</span></div>
-            <button className="text-action" onClick={() => setOpened(featured.targetId)}>Explore this field <ArrowUpRight size={15} /></button>
+            <button className="text-action" onClick={() => openTarget(featured.targetId)}>Explore this field <ArrowUpRight size={15} /></button>
           </div>
           <div className="binocular-feature-field"><BinocularPhoto id={featured.targetId} name={featured.name ?? featured.target.name} /><span className="binocular-field-caption">DSS2 optical survey · telescope photograph</span></div>
         </section>
@@ -164,7 +168,7 @@ export function BinocularGuide({ saveDestination, onInspect, skyBrightness = 21.
         ) : (
           <div className="binocular-target-grid">
             {picks.slice(0, visibleCount).map((p) => <article className={`binocular-target-card level-${p.level}`} key={p.targetId}>
-              <button className="binocular-target-main" onClick={() => setOpened(p.targetId)} aria-label={`Explore binocular target ${p.name ?? p.target.name}`} data-testid={`binocular-target-${p.targetId}`}>
+              <button className="binocular-target-main" onClick={() => openTarget(p.targetId)} aria-label={`Explore binocular target ${p.name ?? p.target.name}`} data-testid={`binocular-target-${p.targetId}`}>
                 <div className="binocular-target-field"><BinocularPhoto id={p.targetId} name={p.name ?? p.target.name} /><span className="binocular-family-label">{FAMILY_LABELS[p.family]}</span><span className="binocular-photo-label">DSS2 · OPTICAL SURVEY</span></div>
                 <div className="binocular-target-body"><span className="eyebrow">{p.target.id.replace("STAR-", "")} · {getConstellationName(p.target.con)}</span><h3>{p.name ?? p.target.name}</h3><p>{p.impression}</p><div className="binocular-card-position"><span className={p.alt < 15 ? "low" : ""}>{p.neverRises ? "Never rises here" : p.alt < 0 ? `Below horizon at ${positionTime(p)}` : `${Math.round(p.alt)}° ${compassLabel(p.az)} at ${positionTime(p)}`}</span><span>{p.variable ? "Variable star" : `mag ${p.target.mag.toFixed(1)}`}</span></div>{eventTimes(p)}</div>
               </button>
@@ -190,7 +194,8 @@ export function BinocularGuide({ saveDestination, onInspect, skyBrightness = 21.
         <DialogContent className="binocular-detail">
           {detail && <>
             <DialogHeader><span className="eyebrow">{FAMILY_LABELS[detail.family]} · {detail.target.id}</span><DialogTitle>{detail.name ?? detail.target.name}</DialogTitle><DialogDescription>{getConstellationName(detail.target.con)} · {LEVEL_LABELS[detail.level]} · {detail.equipment}</DialogDescription></DialogHeader>
-            <div className="binocular-detail-chart"><SkyChart onSelect={onInspect} key={detail.targetId} nodes={fieldTarget ? [...fieldNodes, fieldTarget] : fieldNodes} constellations={constellations} denseStars={denseStars} milkyWay={milkyWay} route={null} targetNode={fieldTarget} animStep={0} fovWidth={fovWidth} fovHeight={fovHeight} fovShape={fovShape} limitingMag={limitingMag} lat={lat} lon={lon} date={detailAt} onFovChange={onFovChange} onLimitingMagChange={onLimitingMagChange} /></div>
+            <div className="binocular-quick-actions"><Button variant="outline" onClick={()=>{setOpened(null);onMoon(detail.targetId,detailAt);}}>Check against the Moon ↗</Button></div>
+            <div className="binocular-finder-heading"><span className="eyebrow">YOUR FINDER FIELD</span><span>{detail.target.size?`${detail.target.size} across · `:""}mag {detail.target.mag.toFixed(1)} · north up before rotation</span></div><div className="binocular-detail-chart"><SkyChart onSelect={onInspect} key={detail.targetId} nodes={fieldTarget ? [...fieldNodes, fieldTarget] : fieldNodes} constellations={constellations} denseStars={denseStars} milkyWay={milkyWay} route={null} targetNode={fieldTarget} animStep={0} fovWidth={fovWidth} fovHeight={fovHeight} fovShape={fovShape} limitingMag={finderDepth} maxCatalogMagnitude={10.5} targetDiameter={catalogDiameter(detail.target.size)} lat={lat} lon={lon} date={detailAt} onFovChange={onFovChange} onLimitingMagChange={setFinderDepth} /></div>
             <NightAltitudeChart target={detail.target} lat={lat} lon={lon} night={nightWindow} timezone={timezone} skyBrightness={skyBrightness} moonAt={nightMoon}/>
             {eventTimes(detail)}
             <p className="binocular-method-note">Rise / transit / set on {observingDay} · {timezone.replaceAll("_"," ")} · geometric horizon.</p>
@@ -203,7 +208,7 @@ export function BinocularGuide({ saveDestination, onInspect, skyBrightness = 21.
             <p className="binocular-method-note">Targets save to “{saveDestination}”. The hop preview uses the observing time shown below.</p>
             <div className="binocular-detail-actions"><Button disabled={detail.alt < 5} onClick={() => { setOpened(null); onPlan(detail.targetId, detailAt); }}><Navigation size={15} /> Plan binocular hop</Button><button className={`save-button ${savedIds.has(detail.targetId) ? "saved" : ""}`} aria-label={`${savedIds.has(detail.targetId) ? "Remove from" : "Add to"} my night`} onClick={() => onSave(detail.targetId)}>{savedIds.has(detail.targetId) ? <Check size={18} /> : <Plus size={18} />}</button><span>Hop preview: {detailLabel} local</span></div>
             {eqToHorizontal(detail.target.ra, detail.target.dec, lat, lon, observingDate).alt >= 5 && <button className="text-action" onClick={() => { setOpened(null); onPlan(detail.targetId, observingDate); }}>Use my current observing time instead <ArrowUpRight size={13} /></button>}
-            <div className="binocular-detail-sources"><h3><BookOpen size={14} /> Follow the observer’s trail</h3>{detail.references.map((ref) => <a key={ref.url + ref.title} href={ref.url} target="_blank" rel="noreferrer">{ref.title}<ArrowUpRight size={12} /></a>)}<h3>Explore the public databases</h3>{binocularDatabaseResources(detail.target, binocularMedia(detail.targetId)?.fov ?? 2).map((ref) => <a key={ref.url} href={ref.url} target="_blank" rel="noreferrer">{ref.title}<ArrowUpRight size={12} /></a>)}<small>The finder chart uses your configured field of view. Markers show positions. {detail.variable ? "Brightness varies; no current magnitude is predicted." : "Magnitudes are catalog values; sky brightness and steadiness affect the view."}</small></div>
+            <div className="binocular-detail-sources"><h3><BookOpen size={14} /> Follow the observer’s trail</h3>{detail.references.map((ref) => <a key={ref.url + ref.title} href={ref.url} target="_blank" rel="noreferrer">{ref.title}<ArrowUpRight size={12} /></a>)}<h3>Explore the public databases</h3>{binocularDatabaseResources(detail.target, binocularMedia(detail.targetId)?.fov ?? 2).map((ref) => <a key={ref.url} href={ref.url} target="_blank" rel="noreferrer">{ref.title}<ArrowUpRight size={12} /></a>)}<small>The finder chart uses your configured field of view. The fine gold outline marks the catalog diameter when available; it is a locating guide, not a simulated glow. Stars are real catalog positions, not a photographic background. {detail.variable ? "Brightness varies; no current magnitude is predicted." : "Magnitudes are catalog values; sky brightness and steadiness affect the view."}</small></div>
           </>}
         </DialogContent>
       </Dialog>
