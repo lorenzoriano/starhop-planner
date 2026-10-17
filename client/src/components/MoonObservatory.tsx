@@ -80,7 +80,7 @@ function MoonAtlas({ lat, lon, date, settings, update, selectedId, onSelect }: {
     image.src = "./data/moon/lroc-gray-4k.jpg";
     return () => { cancelled = true; };
   }, []);
-  const renderSize=Math.min(1536,Math.ceil(stageWidth*(interacting?1:Math.min(window.devicePixelRatio||1,2))));
+  const renderSize=interacting?Math.min(384,Math.ceil(stageWidth)):Math.min(1024,Math.ceil(stageWidth*Math.min(window.devicePixelRatio||1,2)));
   useEffect(() => {
     const context=canvas.current?.getContext("2d");if(!context||!texture)return;
     const pixels=renderLunarViewport(texture,frame,renderSize,stageWidth,stageScale,radius,pan,preferences.rotation,preferences.mirrored,reference);
