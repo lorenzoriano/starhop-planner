@@ -1241,3 +1241,15 @@ button:disabled { opacity: .45; cursor: default; }
 .night-moon-meter { height:5px; margin:5px 0 4px; border-radius:3px; background:#253943; overflow:hidden; }
 .night-moon-meter > span { display:block; height:100%; background:#e4bd76; border-radius:3px; }
 .night-moon-scale { color:#9caca5; font-size:9px; }
+
+.lunar-viewport-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+.lunar-feature-photo { margin:16px 0; }
+.lunar-feature-photo img { display:block; width:100%; aspect-ratio:8/5; object-fit:cover; border-radius:5px; }
+.lunar-feature-photo figcaption { display:flex; flex-wrap:wrap; gap:4px 10px; justify-content:space-between; margin-top:6px; font-size:9px; color:#9aafb5; }
+.lunar-feature-photo a { color:#b5cdbf; }
+.lunar-target-photo { height:180px; overflow:hidden; border-radius:5px; margin:16px 0 8px; }
+.lunar-feature-thumbnail { display:block; width:calc(100% + 36px); max-width:none; aspect-ratio:8/5; object-fit:cover; margin:-18px -18px 14px; border-radius:7px 7px 0 0; }
+.lunar-card-description { font-size:11px; line-height:1.65; color:#9cb3bd; margin:0 0 14px; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+.lunar-separation-scale { display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between; color:#bdcfc6; font-size:11px; margin-top:14px; }
+.lunar-separation-scale button { border:1px solid #435a60; border-radius:4px; padding:7px 9px; color:#bad0c6; font-size:10px; }
+.lunar-separation-panel .lunar-separation-note { font-size:10px; line-height:1.7; color:#91aab5; margin:8px 0 12px; }
