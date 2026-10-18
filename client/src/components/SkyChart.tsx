@@ -1,3 +1,4 @@
+import { stellarColor,stellarRadius } from '@/lib/stellar-appearance';
 import { useFinderStars } from '@/hooks/use-finder-stars';
 import { orientChartPoint } from '@/lib/observing';
 import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom } from '@/lib/chart-view';
@@ -131,7 +132,7 @@ export function SkyChart({
   const scale = (CHART_SIZE / 2 - CHART_PAD) / planeRadius;
   // Keep wide maps readable without changing which catalog stars are shown.
   const backgroundPointScale = Math.min(1, 12 / (viewRadius / zoom));
-  const catalogPointScale = Math.max(0.25, backgroundPointScale);
+  const catalogPointScale = overview ? 1 : Math.max(0.25, backgroundPointScale);
   const scaleBarDegrees = [0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10].filter((angle) => angle * scale * zoom <= 90).at(-1) ?? 0.05;
   const cx = CHART_SIZE / 2;
   const cy = CHART_SIZE / 2;
@@ -204,9 +205,10 @@ export function SkyChart({
     if (!isDragging.current) return;
     const container = containerRef.current;
     if (!container) return;
-    const rect = container.getBoundingClientRect();
+    const rect = svgRef.current?.getBoundingClientRect();
+    if(!rect)return;
     // Convert pixel movement to SVG coordinate movement
-    const scaleRatio = CHART_SIZE / (rect.width * zoom);
+    const scaleRatio = CHART_SIZE / (Math.min(rect.width,rect.height) * zoom);
     const dx = (e.clientX - dragStart.current.x) * scaleRatio;
     const dy = (e.clientY - dragStart.current.y) * scaleRatio;
     if (Math.hypot(dx, dy) > 2) didDrag.current = true;
@@ -245,10 +247,11 @@ export function SkyChart({
     // touch-action and the native pinch listener prevent browser gestures.
     const container = containerRef.current;
     if (!container) return;
-    const rect = container.getBoundingClientRect();
+    const rect = svgRef.current?.getBoundingClientRect();
+    if(!rect)return;
 
     if (e.touches.length === 1 && isDragging.current) {
-      const scaleRatio = CHART_SIZE / (rect.width * zoom);
+      const scaleRatio = CHART_SIZE / (Math.min(rect.width,rect.height) * zoom);
       const dx = (e.touches[0].clientX - dragStart.current.x) * scaleRatio;
       const dy = (e.touches[0].clientY - dragStart.current.y) * scaleRatio;
       if (Math.hypot(dx, dy) > 2) didDrag.current = true;
@@ -266,7 +269,7 @@ export function SkyChart({
       if (lastPinchCenter.current) {
         const cx = (t1.clientX + t2.clientX) / 2;
         const cy = (t1.clientY + t2.clientY) / 2;
-        const scaleRatio = CHART_SIZE / (rect.width * newZoom);
+        const scaleRatio = CHART_SIZE / (Math.min(rect.width,rect.height) * newZoom);
         const dx = (cx - lastPinchCenter.current.x) * scaleRatio;
         const dy = (cy - lastPinchCenter.current.y) * scaleRatio;
         const clamped = clampPan(panStart.current.x + dx, panStart.current.y + dy, newZoom);
@@ -332,14 +335,6 @@ export function SkyChart({
     return 0.8;
   };
 
-  const starColor = (mag: number) => {
-    if (mag < 1.5) return '#f4f7ff';
-    if (mag < 3.0) return '#d6def6';
-    if (mag < 4.5) return '#9ba9cf';
-    if (mag < 5.5) return '#b7c3d6';
-    return '#a2b2c8';
-  };
-
   // Glow gradient ID from B-V color index for bright star halos
   const bvGlowId = (bv: number) => {
     if (bv <= -0.3) return 'glow-blue';
@@ -349,17 +344,6 @@ export function SkyChart({
     if (bv <= 1.0)  return 'glow-yellow';
     if (bv <= 1.5)  return 'glow-orange';
     return 'glow-red';
-  };
-
-  // Realistic star color from B-V color index (spectral type)
-  const bvColor = (bv: number) => {
-    if (bv <= -0.3) return '#a0b5ff'; // O-type: blue
-    if (bv <= 0.0)  return '#c4d4ff'; // B-type: blue-white
-    if (bv <= 0.3)  return '#e8eeff'; // A/F-type: white
-    if (bv <= 0.6)  return '#fff8f0'; // F/G-type: yellow-white
-    if (bv <= 1.0)  return '#ffddb0'; // G/K-type: yellow-orange
-    if (bv <= 1.5)  return '#ffaa80'; // K-type: orange
-    return '#ff9070';                 // M-type: red-orange
   };
 
   const bgStarSize = (mag: number) => {
@@ -432,7 +416,7 @@ export function SkyChart({
       // Always show highlighted, planets, binoculars
       if (highlightedIds.has(node.id)) return true;
       if (node.type === 'planet') return true;
-      if (node.type === 'binocular') return node.mag <= 6.5;
+      if (node.type === 'binocular'||node.type === 'messier') return true;
 
       // Show all stars up to the user's limiting magnitude
       return node.mag <= limitingMag;
@@ -837,7 +821,7 @@ export function SkyChart({
         width="100%"
         viewBox={`${viewBoxX.toFixed(2)} ${viewBoxY.toFixed(2)} ${viewBoxSize.toFixed(2)} ${viewBoxSize.toFixed(2)}`}
         className="bg-[#0a0c14] rounded-lg cursor-grab active:cursor-grabbing"
-        style={{ aspectRatio: '1/1', maxHeight: '600px', touchAction: 'none' }}
+        style={{ aspectRatio: '1/1', maxHeight: overview?'min(76vh, 820px)':'600px', touchAction: 'none' }}
         role="img"
         aria-label={overview ? "Interactive overhead sky chart" : "Interactive star hopping field chart"}
         data-testid="sky-chart-sky"
@@ -961,7 +945,7 @@ export function SkyChart({
               cx={star.x}
               cy={star.y}
               r={bgStarSize(star.mag) * brightMul * backgroundPointScale * screenUnit}
-              fill={star.mag > 4 ? '#c8d0dc' : starsOnly && star.mag > 3 ? '#dce3e7' : bvColor(star.bv)}
+              fill={stellarColor(undefined,star.bv)}
               opacity={Math.min(0.97, bgStarOpacity(star.mag) * brightMul)}
             />
           </g>
@@ -987,28 +971,22 @@ export function SkyChart({
             onMouseEnter={() => setHoveredStar(star)}
             onMouseLeave={() => setHoveredStar(null)}
           >
+            <title>{star.type==='star'?`${star.name} · catalog V ${star.mag.toFixed(2)}${star.temperature?` · ${Math.round(star.temperature)} K`:''} · RA ${star.ra.toFixed(3)}° · Dec ${star.dec.toFixed(3)}°`:`${star.name} · ${star.category??'Catalog object'} · ${Math.round(star.alt)}° high`}</title>
             {onSelect && <circle cx={point.x} cy={point.y} r={(star.type === "star" ? 5 : 12) * screenUnit} fill="transparent" />}
             {!starsOnly && (isTarget || isAnchor || isPatternAnchor) && (
               <circle cx={point.x} cy={point.y} r={radius * 3.5 * navMul * screenUnit} fill="white" opacity="0.05" />
             )}
+            {!starsOnly && (isAnchor || isPatternAnchor || isGuide) && <circle cx={point.x} cy={point.y} r={(radius+2)*navMul*screenUnit} fill="none" stroke={isAnchor?'#38bdf8':isPatternAnchor?'#c084fc':'#89b9d6'} strokeWidth={0.9*screenUnit} opacity={0.8}/>}
             <circle
               data-chart-star="true"
               cx={point.x}
               cy={point.y}
-              r={(isTarget ? Math.max(radius + 1.5 * navMul, 4.2 * navMul) : isAnchor || isPatternAnchor ? Math.max(radius + 0.8 * navMul, 2.8 * navMul) : isGuide ? radius * navMul : radius * Math.min(1.8, brightMul) * catalogPointScale) * screenUnit}
-              fill={
-                starsOnly ? '#e0e5e9' : isTarget
-                  ? '#f59e0b'
-                  : isAnchor
-                    ? '#38bdf8'
-                    : isPatternAnchor
-                      ? '#c084fc'
-                      : isGuide
-                        ? '#d6e4ff'
-                        : starColor(star.mag)
-              }
+              r={(star.type==='messier'||star.type==='binocular' ? (isTarget?5:overview?1.8:3.3)*navMul : isTarget ? Math.max(radius + 1.5 * navMul, 4.2 * navMul) : isAnchor || isPatternAnchor ? Math.max(radius + 0.8 * navMul, 2.8 * navMul) : isGuide ? radius * navMul : stellarRadius(star.mag) * Math.min(1.8, brightMul) * catalogPointScale) * screenUnit}
+              fill={star.type==='messier'||star.type==='binocular' ? isTarget?'#e4c57c':'#0b1822' : stellarColor(star.temperature,star.bv)}
+              stroke={star.type==='messier'||star.type==='binocular' ? isTarget?'#e4c57c':'#a6cec4':undefined}
+              strokeWidth={(overview && !isTarget ? 0.9 : 1.2)*screenUnit}
               opacity={
-                isTarget || isAnchor || isPatternAnchor || isGuide
+                overview&&!isTarget&&(star.type==='messier'||star.type==='binocular') ? 0.72 : isTarget || isAnchor || isPatternAnchor || isGuide
                   ? 0.98
                   : Math.min(0.95,
                       (star.mag < 2 ? 0.95 : star.mag < 3 ? 0.85 : star.mag < 4.2 ? 0.75 : star.mag < 5.0 ? 0.65 : star.mag < 5.8 ? 0.55 : 0.45)
@@ -1198,6 +1176,7 @@ export function SkyChart({
           <button onClick={() => updateDisplay({ rotation: ((rotation + 90) % 360) as 0 | 90 | 180 | 270 })} data-testid="button-rotate-chart">Rotate · {rotation}°</button>
         </div>
       </div>
+      <details className="chart-optics-details" open={overview?undefined:true}><summary>{overview?'Display, labels & field of view':'Field & display'}</summary>
       <div className="chart-field-controls">
         {!overview && <label>Reticle <select aria-label="Finder reticle" value={finderReticle} onChange={event => updateDisplay({ finderReticle: event.target.value as FinderReticle })}>
           <option value="field">Field only</option><option value="telrad">Telrad · ½° / 2° / 4°</option><option value="rigel">Rigel · ½° / 2°</option><option value="crosshair">Optical finder · crosshair</option>
@@ -1220,7 +1199,8 @@ export function SkyChart({
           <label><input type="checkbox" checked={showLegend} onChange={e => updateDisplay({ showLegend: e.target.checked })} />Legend</label>
         </div>
       </details>
-      <p className="chart-accuracy-note">Ctrl / ⌘ + scroll to zoom · drag to pan. {starsOnly ? 'Catalog stars without labels or guide patterns. Nebulosity is not simulated.' : 'Catalog chart · constellation names in green · star names in white, blue or lilac.'} {maxCatalogMagnitude>8?deepCatalog.state==='ready'?'Tycho-2 reference stars to VT 10.5 within 8° of the target; brighter context outside. This chart can show stars fainter than your optics reveal.':deepCatalog.state==='loading'?'Loading the detailed offline finder field…':deepCatalog.state==='error'?'Detailed field unavailable; showing the bright-star catalog to magnitude 8.':'Bright-star catalog to magnitude 8. Increase depth for the detailed finder field.':'Star catalog extends to magnitude 8; the view depends on your optics and sky.'}</p>
+      </details>
+      <p className={`chart-accuracy-note ${overview?'overview-accuracy-note':''}`}>Ctrl / ⌘ + scroll to zoom · drag to pan. {starsOnly ? 'Catalog stars without labels or guide patterns. Nebulosity is not simulated.' : 'Dot size follows catalog magnitude; hue follows temperature or B−V color where known (neutral otherwise). Sizes are not stellar diameters. Constellation names are green.'} {maxCatalogMagnitude>8?deepCatalog.state==='ready'?'Tycho-2 reference stars to VT 10.5 within 8° of the target; brighter context outside. This chart can show stars fainter than your optics reveal.':deepCatalog.state==='loading'?'Loading the detailed offline finder field…':deepCatalog.state==='error'?'Detailed field unavailable; showing the bright-star catalog to magnitude 8.':'Bright-star catalog to magnitude 8. Increase depth for the detailed finder field.':'Star catalog extends to magnitude 8; the view depends on your optics and sky.'}</p>
       {showLegend && !starsOnly && <div className="absolute top-3 left-3 flex gap-3 rounded border border-[#2a414e] bg-[#0a1721]/90 px-2 py-1.5 text-[9px]">
         {route && <><span className="text-[#38bdf8]">● Anchor</span><span className="text-[#c084fc]">● Pattern</span></>}<span className="text-[#d8bc80]">● Target</span><span className="text-[#a7cfa0]">Constellation</span>
       </div>}

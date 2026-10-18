@@ -1,5 +1,5 @@
-export type Page = "tonight"|"binocular"|"moon"|"hop"|"night"|"image";
-const paths:Record<Page,string>={tonight:"/",binocular:"/binoculars",moon:"/moon",hop:"/hop",night:"/planner",image:"/image"};
+export type Page = "catalog"|"tonight"|"binocular"|"moon"|"hop"|"night"|"image";
+const paths:Record<Page,string>={catalog:"/catalog",tonight:"/",binocular:"/binoculars",moon:"/moon",hop:"/hop",night:"/planner",image:"/image"};
 export function pageForPath(path:string):Page|null {
   const base=path.split("?")[0].replace(/\/$/,"")||"/";
   if(/^\/hop\/[^/]+$/.test(base))return "hop";

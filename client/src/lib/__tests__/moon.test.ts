@@ -90,7 +90,7 @@ describe("offline Moon observatory", () => {
     const f=lunarFeatures.find(f=>f.name==="Mare Crisium")!;
     expect(featureAngularSize(f,moonState(...location,date),lunarFrame(...location,date))).toBeGreaterThan(0);
     const {binocularMagnification,binocularAperture,skyBrightness,...old}=defaultSettings;
-    expect(settingsSchema.parse(old).binocularMagnification).toBe(10);
+    expect(settingsSchema.parse(old).binocularMagnification).toBe(14);
     expect(settingsSchema.parse(old).binocularAperture).toBe(50);
     expect(settingsSchema.parse(old).skyBrightness).toBe(21.6);
   });

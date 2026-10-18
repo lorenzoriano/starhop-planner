@@ -28,24 +28,19 @@ export const settingsSchema = z.object({
   targetId: z.string(),
   startStarId: z.string().regex(/^HR\d+$/).optional(),
   redLight: z.boolean(),
-  binocularMagnification: z.number().min(5).max(40).default(10),
+  binocularMagnification: z.number().min(5).max(40).default(14),
+  binocularFov:z.number().min(.2).max(15).optional(),
   binocularAperture: z.number().min(20).max(150).default(50),
+  binocularStabilized:z.boolean().default(true),
+  binocularTransmission:z.number().min(.3).max(1).default(.86),
+  binocularProfileVersion:z.literal(1).optional(),
   skyBrightness: z.number().min(17).max(22).default(21.6),
 }).transform((settings) => {
   settings={...settings,targetId:canonicalTargetId(settings.targetId)};
-  // Older releases defaulted new installs to binoculars without asking.
-  // Move that implicit choice to a telescope profile once; keep later choices.
-  if (!settings.instrumentSelected && settings.mode === "binocular") {
-    return {
-      ...settings,
-      mode: "telescope" as const,
-      instrumentSelected: false,
-      fov: 5,
-      fovHeight: 5,
-      limitingMag: 8,
-    };
-  }
-  return settings;
+  // The owner explicitly chose the KITE 14×50 as the app's default profile.
+  // Migrate the old implicit / 10×50 default once; retain custom instruments.
+  if(!settings.binocularProfileVersion&&(!settings.instrumentSelected||settings.mode==="binocular"&&settings.binocularMagnification===10&&settings.binocularAperture===50&&settings.fov===7))return {...settings,mode:"binocular" as const,instrumentSelected:true,binocularMagnification:14,binocularAperture:50,binocularFov:3.7,fov:3.7,fovHeight:3.7,shape:"circle" as const,binocularProfileVersion:1 as const};
+  return {...settings,binocularFov:settings.binocularFov??(settings.mode==="binocular"?settings.fov:3.7),binocularProfileVersion:1 as const};
 });
 export type Settings = z.infer<typeof settingsSchema>;
 export const defaultSettings: Settings = {
@@ -54,17 +49,21 @@ export const defaultSettings: Settings = {
   date: formatInTimeZone(new Date(), "America/Los_Angeles", "yyyy-MM-dd"),
   time: formatInTimeZone(new Date(), "America/Los_Angeles", "HH:mm"),
   timeMode: "live",
-  mode: "telescope",
-  instrumentSelected: false,
-  fov: 5,
-  fovHeight: 5,
+  mode: "binocular",
+  instrumentSelected: true,
+  fov: 3.7,
+  fovHeight: 3.7,
   shape: "circle",
   limitingMag: 8,
   difficulty: "beginner",
   targetId: "M31",
   redLight: false,
-  binocularMagnification: 10,
+  binocularMagnification: 14,
   binocularAperture: 50,
+  binocularFov:3.7,
+  binocularStabilized:true,
+  binocularTransmission:.86,
+  binocularProfileVersion:1,
   skyBrightness: 21.6,
 };
 export const nightListSchema = z

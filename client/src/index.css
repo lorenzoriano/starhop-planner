@@ -1270,3 +1270,136 @@ button:disabled { opacity: .45; cursor: default; }
 .lunar-target-heading button { font-size:10px; }
 @media(max-width:650px) { .moon-target-picker { grid-template-columns:1fr; padding:16px; gap:12px; } }
 .binocular-finder-heading { display:flex; flex-wrap:wrap; gap:5px 14px; justify-content:space-between; align-items:baseline; color:#99b1b8; font-size:10px; margin:16px 0 8px; }
+
+/* The sky opens the app; optics and catalog tools stay within easy reach. */
+.sky-workspace { grid-template-columns:minmax(0,1fr); max-width:1660px; }
+.sky-workspace .setup-panel { display:none; }
+.sky-workspace .setup-panel.open { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; border-bottom:1px solid #29404c; }
+.sky-workspace .main-content { width:100%; padding-top:22px; }
+.observatory-shell:has(.sky-workspace) .mobile-setup-toggle { display:inline-flex; }
+.sky-workspace .tonight-hero { grid-template-columns:minmax(0,2.5fr) minmax(310px,1fr); align-items:start; gap:22px; margin:18px 0 30px; }
+.sky-workspace .sky-panel { min-width:0; overflow:hidden; }
+.sky-workspace .sky-panel .panel-heading { padding:19px 24px; }
+.sky-workspace .sky-panel [data-testid="sky-chart-sky"] { display:block; }
+.sky-workspace .sky-caption { padding:12px 20px; flex-wrap:wrap; gap:10px; }
+.sky-workspace .featured-art { aspect-ratio:16/9; }
+.sky-workspace .featured-body { padding:22px; }
+.sky-workspace .featured-body h2 { font-size:31px; line-height:1.15; margin:15px 0 10px; }
+.sky-workspace .featured-body .eyebrow { font-size:9px; }
+.sky-workspace .featured-body .object-story { font-size:13px; line-height:1.65; }
+.sky-workspace .featured-body .target-photo-credit { font-size:10px; }
+.sky-workspace .conditions-strip { margin-top:28px; }
+.chart-optics-details > summary { color:#9eb8bd; font-size:12px; padding:12px 16px; cursor:pointer; border-top:1px solid #29404c; }
+[data-projection="fixed-equatorial"] > .chart-optics-details > summary { display:none; }
+.overview-accuracy-note { font-size:10px; line-height:1.6; margin:10px 18px; max-width:85ch; }
+.binocular-profile { border:1px solid #29404c; background:#0b1921; border-radius:8px; margin:14px 0 20px; font-size:12px; }
+.binocular-profile > summary { padding:13px 16px; display:flex; align-items:center; flex-wrap:wrap; gap:10px; cursor:pointer; color:#b3d1c7; list-style:none; }
+.binocular-profile summary small { color:#8da8b1; }
+.profile-edit { margin-left:auto; font-size:11px; color:#d8bc80; }
+.binocular-profile[open] { padding-bottom:15px; }
+.binocular-profile .profile-fields { display:flex; flex-wrap:wrap; gap:14px; padding:8px 16px; }
+.profile-fields label { flex:1 1 120px; }
+.profile-fields label.profile-check { display:flex; gap:8px; align-items:center; flex:1 1 170px; }
+.profile-fields input[type="checkbox"] { width:auto; min-height:auto; }
+.binocular-profile > p { color:#8da8b1; padding:0 16px; line-height:1.6; font-size:11px; }
+.binocular-profile > a, .binocular-profile > button { display:inline-flex; margin:8px 16px 0; color:#b3d1c7; font-size:11px; text-decoration:underline; text-underline-offset:3px; }
+.profile-fields label, .catalog-filters label { display:flex; flex-direction:column; gap:8px; color:#9cb3bc; font-size:11px; }
+.profile-fields input:not([type="checkbox"]), .profile-fields select, .catalog-filters input, .catalog-filters select { width:100%; min-width:0; min-height:42px; color:#d3dedc; background:#0a151e; border:1px solid #365360; border-radius:5px; padding:10px 12px; font-size:13px; }
+.binocular-assessment { border-top:1px solid #29404c; padding:16px 0; margin-top:16px; color:#a5bfc1; font-size:12px; line-height:1.65; }
+.binocular-assessment .fit-label { display:flex; align-items:center; gap:8px; font-size:12px; font-weight:500; color:#b3d1c7; }
+.binocular-assessment.fit-2 .fit-label, .binocular-assessment.fit-3 .fit-label { color:#d8bc80; }
+.binocular-assessment > p { margin:10px 0; }
+.binocular-assessment > small { display:block; color:#8da8b1; font-size:11px; }
+.binocular-assessment details { margin-top:10px; font-size:11px; color:#8da8b1; }
+.binocular-assessment summary { cursor:pointer; color:#b3d1c7; }
+.binocular-assessment details ul { list-style:disc; padding-left:17px; margin:12px 0; }
+.binocular-assessment details li { margin:7px 0; }
+.binocular-assessment details p { margin:10px 0; }
+.binocular-assessment details a { text-decoration:underline; text-underline-offset:3px; }
+.target-fit { display:block; color:#b3d1c7; font-size:10px; margin:8px 0; }
+.catalog-heading { margin:24px 0; align-items:end; }
+.catalog-heading h1 { font-size:clamp(30px,4vw,44px); }
+.catalog-heading > span { white-space:nowrap; color:#9cb3bc; font-size:13px; }
+.catalog-filters { padding:22px; }
+.catalog-primary-filters { display:grid; grid-template-columns:minmax(200px,2fr) repeat(2,minmax(150px,1fr)); gap:16px; }
+.catalog-primary-filters label > span { display:flex; gap:8px; align-items:center; }
+.catalog-window-filters { display:flex; flex-wrap:wrap; gap:15px; border-top:1px solid #29404c; padding-top:18px; margin-top:20px; }
+.catalog-window-filters > label { flex:1 1 130px; }
+.catalog-window-filters > label:first-child { flex-basis:225px; }
+.catalog-filter-footer { display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-top:20px; }
+.catalog-filter-footer > span { color:#8da8b1; font-size:11px; flex:1 1 300px; }
+.catalog-filter-footer label { flex-direction:row; align-items:center; }
+.catalog-filter-footer select { width:180px; }
+.catalog-filter-help { margin-top:16px; color:#8da8b1; font-size:11px; line-height:1.7; }
+.catalog-filter-help summary { cursor:pointer; }
+.catalog-filter-help p { max-width:100ch; margin-top:12px; }
+.catalog-result-count { color:#9cb3bc; font-size:12px; margin:26px 0 16px; }
+.catalog-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
+.catalog-object { display:flex; flex-direction:column; min-width:0; overflow:hidden; }
+.catalog-object > .target-photo { aspect-ratio:16/8; width:100%; overflow:hidden; }
+.catalog-object-body { padding:20px; flex:1; }
+.catalog-object h2 { font:400 28px/1.2 var(--font-serif); color:#e5e5d9; margin:12px 0; }
+.catalog-object .object-location { font-size:11px; line-height:1.7; }
+.catalog-object-metrics { display:flex; flex-wrap:wrap; gap:8px 15px; font-size:11px; color:#b3d1c7; margin:16px 0 6px; }
+.catalog-match-time { color:#8da8b1; font-size:10px; }
+.catalog-object .binocular-assessment { margin-top:14px; padding-bottom:0; }
+.catalog-object-actions { display:flex; gap:18px; align-items:center; padding:12px 20px; border-top:1px solid #29404c; color:#b3d1c7; font-size:12px; }
+.catalog-object-actions button { min-height:42px; }
+.catalog-object-actions button:last-child { margin-left:auto; min-width:42px; border-left:1px solid #29404c; padding-left:14px; }
+.catalog-object-actions button[aria-pressed="true"] { color:#d8bc80; }
+.binocular-target-bottom > span { line-height:1.5; padding-right:8px; }
+@media(max-width:1150px) {
+  .sky-workspace .tonight-hero { grid-template-columns:minmax(0,1fr); }
+  .sky-workspace .featured-object { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); }
+  .sky-workspace .featured-art { aspect-ratio:auto; height:100%; min-height:250px; }
+  .sky-workspace .featured-art .target-photo { height:100%; }
+  .sky-workspace .featured-art img { height:100%; object-fit:cover; }
+  .catalog-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:700px) {
+  .sky-workspace .main-content { padding:15px 15px 0; }
+  .sky-workspace .tonight-hero { margin-top:15px; gap:18px; }
+  .sky-workspace .sky-panel .panel-heading { padding:16px; }
+  .sky-workspace .featured-object { display:flex; }
+  .sky-workspace .featured-art { aspect-ratio:16/8; min-height:0; height:auto; }
+  .sky-workspace .featured-art .target-photo { height:auto; }
+  .sky-workspace .featured-body { padding:20px; }
+  .sky-workspace .setup-panel.open { display:block; }
+  .catalog-primary-filters { grid-template-columns:1fr; gap:13px; }
+  .catalog-filters { padding:16px; }
+  .catalog-window-filters { gap:14px 12px; }
+  .catalog-window-filters > label { flex-basis:125px; }
+  .catalog-grid { grid-template-columns:1fr; }
+  .catalog-heading { flex-direction:column; align-items:start; gap:14px; }
+  .catalog-object h2 { font-size:27px; }
+  .binocular-profile summary small { flex-basis:100%; padding-left:27px; }
+  .profile-edit { position:absolute; right:15px; top:15px; }
+  .binocular-profile { position:relative; }
+  .binocular-profile > summary { padding-right:85px; }
+  .main-nav { overflow-x:auto; }
+}
+.sky-workspace .sky-panel .panel-heading { padding:17px 22px; min-height:0; }
+.sky-workspace .sky-panel .panel-heading .eyebrow { display:block; margin:0 0 7px; font-size:9px; }
+.sky-workspace .sky-panel h1 { font:400 28px/1.15 var(--font-serif); margin:0; color:#e5e5d9; }
+.planetarium-heading-actions { display:flex; flex-direction:column; align-items:end; gap:10px; }
+.planetarium-heading-actions .text-action { font-size:11px; }
+@media(max-width:700px) {
+  .sky-workspace .sky-panel .panel-heading { padding:16px; gap:12px; }
+  .sky-workspace .sky-panel h1 { font-size:24px; }
+  .sky-workspace .sky-panel .panel-heading .eyebrow { font-size:8px; }
+  .planetarium-heading-actions .live-label { font-size:9px; }
+  .planetarium-heading-actions .text-action { font-size:10px; }
+}
+.catalog-visibility-controls { border-top:1px solid #29404c; margin-top:20px; }
+.catalog-visibility-controls > summary { padding:16px 0 0; color:#b3d1c7; font-size:12px; cursor:pointer; }
+.catalog-visibility-controls > summary span { display:inline-block; margin:5px 0 0 12px; color:#8da8b1; font-size:11px; }
+.catalog-visibility-controls .catalog-window-filters { border-top:0; margin-top:0; }
+@media(max-width:700px) {
+  .catalog-primary-filters { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .catalog-primary-filters .catalog-search { grid-column:1/-1; }
+  .catalog-visibility-controls > summary span { display:block; margin-left:0; line-height:1.7; }
+  .catalog-filters .catalog-filter-footer { gap:10px; }
+  .catalog-filter-footer > span { display:none; }
+  .catalog-filters .catalog-filter-help { font-size:10px; }
+  .catalog-filter-footer select { width:155px; font-size:12px; }
+}

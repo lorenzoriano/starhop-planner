@@ -1,3 +1,7 @@
+import { BinocularAssessment } from "./BinocularAssessment";
+import { binocularAssessment, type BinocularProfile } from "@/lib/binocular-assessment";
+import type { ReactNode } from "react";
+import { moonState } from "@/lib/moon";
 import { createMoonSampler } from "@/lib/observing-profile";
 import { NightAltitudeChart } from "./ObservingVisuals";
 import { MoonlightCard } from "./MoonObservatory";
@@ -18,6 +22,7 @@ import { compassLabel, skyConditions } from "@/lib/observing";
 import { BINOCULAR_BOOKS, BINOCULAR_ENTRIES, FAMILY_LABELS, LEVEL_LABELS, MONTH_NAMES, binocularCollection, binocularEvening, binocularSample, type BinocularSampleMode, type BinocularFamily, type BinocularPick } from "@/lib/binocular-guide";
 
 interface Props {
+  profile:BinocularProfile; profileControls:ReactNode;
   onInspect?:(id:string)=>void;
   onMoon:(id:string,at:Date)=>void;
   saveDestination:string;
@@ -30,7 +35,7 @@ interface Props {
   onFovChange: (width: number) => void; onLimitingMagChange: (magnitude: number) => void;
 }
 
-export function BinocularGuide({ saveDestination, onInspect, onMoon, skyBrightness = 21.6, targets, stars, lat, lon, timezone, observingDate, savedIds, loading, onSave, onPlan, constellations, denseStars, milkyWay, fovWidth, fovHeight, fovShape, limitingMag, onFovChange, onLimitingMagChange }: Props) {
+export function BinocularGuide({ profile, profileControls, saveDestination, onInspect, onMoon, skyBrightness = 21.6, targets, stars, lat, lon, timezone, observingDate, savedIds, loading, onSave, onPlan, constellations, denseStars, milkyWay, fovWidth, fovHeight, fovShape, limitingMag, onFovChange, onLimitingMagChange }: Props) {
   const [finderDepth,setFinderDepth]=useState(10.5);
   const openTarget=(id:string)=>{onInspect?.(id);setOpened(id);};
   const currentYear = Number(formatInTimeZone(observingDate, timezone, "yyyy"));
@@ -98,6 +103,7 @@ export function BinocularGuide({ saveDestination, onInspect, onMoon, skyBrightne
         <div className="binocular-heading-mark" aria-hidden="true"><Binoculars strokeWidth={1} /></div>
       </div>
 
+      {profileControls}
       <section className="binocular-calendar" aria-label="Monthly binocular guide">
         <div className="binocular-calendar-heading">
           <div><span className="eyebrow">TWELVE CHAPTERS, ONE SKY</span><h2>Where will {MONTH_NAMES[month - 1]} take you?</h2></div>
@@ -173,7 +179,7 @@ export function BinocularGuide({ saveDestination, onInspect, onMoon, skyBrightne
                 <div className="binocular-target-body"><span className="eyebrow">{p.target.id.replace("STAR-", "")} · {getConstellationName(p.target.con)}</span><h3>{p.name ?? p.target.name}</h3><p>{p.impression}</p><div className="binocular-card-position"><span className={p.alt < 15 ? "low" : ""}>{p.neverRises ? "Never rises here" : p.alt < 0 ? `Below horizon at ${positionTime(p)}` : `${Math.round(p.alt)}° ${compassLabel(p.az)} at ${positionTime(p)}`}</span><span>{p.variable ? "Variable star" : `mag ${p.target.mag.toFixed(1)}`}</span></div>{eventTimes(p)}</div>
               </button>
               <div className="binocular-card-chart"><NightAltitudeChart target={p.target} lat={lat} lon={lon} night={nightWindow} timezone={timezone} skyBrightness={skyBrightness} moonAt={nightMoon}/></div>
-              <div className="binocular-target-bottom"><span>{LEVEL_LABELS[p.level]}</span><button className={savedIds.has(p.targetId) ? "saved" : ""} onClick={() => onSave(p.targetId)} aria-label={`${savedIds.has(p.targetId) ? "Remove" : "Save"} ${p.name ?? p.target.name}`} aria-pressed={savedIds.has(p.targetId)}>{savedIds.has(p.targetId) ? <Check size={17} /> : <Plus size={17} />}</button></div>
+              <div className="binocular-target-bottom"><span>{binocularAssessment(p.target,profile,{alt:p.alt,moon:nightMoon(timeFor(p)),skyBrightness}).label}</span><button className={savedIds.has(p.targetId) ? "saved" : ""} onClick={() => onSave(p.targetId)} aria-label={`${savedIds.has(p.targetId) ? "Remove" : "Save"} ${p.name ?? p.target.name}`} aria-pressed={savedIds.has(p.targetId)}>{savedIds.has(p.targetId) ? <Check size={17} /> : <Plus size={17} />}</button></div>
             </article>)}
           </div>
         )}
@@ -199,6 +205,7 @@ export function BinocularGuide({ saveDestination, onInspect, onMoon, skyBrightne
             <NightAltitudeChart target={detail.target} lat={lat} lon={lon} night={nightWindow} timezone={timezone} skyBrightness={skyBrightness} moonAt={nightMoon}/>
             {eventTimes(detail)}
             <p className="binocular-method-note">Rise / transit / set on {observingDay} · {timezone.replaceAll("_"," ")} · geometric horizon.</p>
+            <BinocularAssessment target={detail.target} profile={profile} alt={detail.alt} moon={moonState(lat,lon,detailAt)} skyBrightness={skyBrightness}/>
             <MoonlightCard target={detail.target} lat={lat} lon={lon} date={detailAt} skyBrightness={skyBrightness} />
             <div className="binocular-detail-notes"><div><h3>What to look for</h3><p>{detail.impression}</p></div><div><h3>Start here</h3><p>{detail.finding}</p></div></div>
             <BinocularObservations id={detail.targetId} />

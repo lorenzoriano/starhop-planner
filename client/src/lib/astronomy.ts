@@ -21,6 +21,7 @@ export interface Star {
   constellation?: string;
   flamsteed?: number;
   magnitudeNote?: string;
+  temperature?:number;
 }
 
 export interface MessierObject {
@@ -97,6 +98,9 @@ export interface SkyNode {
   bayer?: string;
   flamsteed?: number;
   binocularCategory?: BinocularCategory;
+  temperature?:number;
+  bv?:number;
+  category?:string;
 }
 
 export type ObservingMode = 'telescope' | 'binocular';
@@ -231,6 +235,7 @@ export async function loadStars(): Promise<Star[]> {
     constellation: s.C || undefined,
     flamsteed: s.F ? parseInt(s.F) : undefined,
     magnitudeNote:s.magnitudeNote,
+    temperature:Number.isFinite(Number(s.K))&&Number(s.K)>0?Number(s.K):undefined,
   }));
   return _stars!;
 }
@@ -330,6 +335,8 @@ export async function loadBinocularTargets(): Promise<BinocularTarget[]> {
 export interface UnifiedTarget {
   id: string;
   name: string;
+  sep?:number;
+  mag2?:number;
   size?:string; // apparent angular diameter, with unit
   displayName: string; // short label for lists
   aliases?: string[];
@@ -400,6 +407,8 @@ export function buildUnifiedTargets(
       categoryShort: BINOCULAR_CATEGORY_SHORT[t.cat],
       source: 'binocular',
       size: t.size,
+      sep: typeof t.sep==='number'?t.sep:undefined,
+      mag2:t.mag2,
       binoTip: t.binoTip,
       desc: t.desc,
     });

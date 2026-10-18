@@ -121,6 +121,10 @@ import { MoonObservatory, MoonlightCard, LunarNightItem } from "@/components/Moo
 import { SavedLocations } from "@/components/SavedLocations";
 import { savedLocationsSchema, matchingLocation, type SavedLocation } from "@/lib/saved-locations";
 import { SessionPlanner } from "@/components/SessionPlanner";
+import { CatalogExplorer } from "@/components/CatalogExplorer";
+import { BinocularAssessment, BinocularProfileControls, profileFromSettings } from "@/components/BinocularAssessment";
+import { moonState } from "@/lib/moon";
+import { binocularAssessment } from "@/lib/binocular-assessment";
 import { TargetPhoto, TargetPhotoCredit } from "@/components/TargetPhoto";
 import { emptyPlanner, plannerStoreSchema, makeSession, planningShortcut, sessionTimezone, starPlanningTarget, type PlannerStore, type ObservingSession } from "@/lib/session-planner";
 import { lunarFeatures } from "@/lib/moon";
@@ -163,7 +167,7 @@ export default function PlannerPage() {
   }
   const [inspectedStar,setInspectedStar] = useState<CatalogStar|null>(null);
   const update = (patch: Partial<Settings>) =>
-    setSettings((prev) => ({ ...prev, ...patch }));
+    setSettings((prev) => ({ ...prev, ...patch, ...(patch.fov!==undefined&&(patch.mode??prev.mode)==="binocular"&&patch.binocularFov===undefined?{binocularFov:patch.fov}:{}) }));
   const [location,navigate]=useLocation();
   const page=pageForPath(location)??"tonight";
   function setPage(next:Page,target?:string){navigate(pathForPage(next,target));}
@@ -299,6 +303,8 @@ export default function PlannerPage() {
     () => skyConditions(lat, lon, date),
     [lat, lon, date],
   );
+  const binocularProfile = useMemo(()=>profileFromSettings(settings),[settings.binocularMagnification,settings.binocularAperture,settings.binocularFov,settings.binocularStabilized,settings.binocularTransmission]);
+  const currentMoon = useMemo(()=>moonState(lat,lon,date),[lat,lon,date]);
   const savedIds = new Set(night.map((t) => t.id));
   const observed = night.filter((t) => t.observedAt).length;
   const categories = useMemo(
@@ -358,10 +364,10 @@ export default function PlannerPage() {
     if(!catalogs.targets.length)return;
     const linked=targetFromPath(location);
     if(linked){firstTarget.current=false;if(catalogs.targets.some(t=>t.id===linked)){if(targetId!==linked)update({targetId:linked,startStarId:undefined});}else navigate("/hop",{replace:true});return;}
-    if(firstTarget.current){firstTarget.current=false;const pick=ranked.find(o=>o.alt>=15&&guideFor(o.target).binocular);if(pick)update({targetId:pick.target.id});}
+    if(firstTarget.current){firstTarget.current=false;const pick=ranked.filter(o=>o.alt>=15).map(o=>({...o,fit:binocularAssessment(o.target,binocularProfile,{alt:o.alt,moon:currentMoon,skyBrightness:settings.skyBrightness})})).sort((a,b)=>a.fit.rating-b.fit.rating||b.alt-a.alt)[0];if(pick)update({targetId:pick.target.id});}
   },[catalogs.targets.length,location]);
   const overviewNodes = useMemo<SkyNode[]>(() => {
-    const objects = ranked.filter((o) => o.alt > 15).slice(0, 7);
+    const objects = ranked.filter((o) => o.alt > 0);
     const markers = objects.map((o): SkyNode => ({ ...o.target, alt: o.alt, az: o.az, type: o.target.source === "messier" ? "messier" : "binocular", constellation: o.target.con }));
     if (previewTarget && previewTarget.alt > 0 && !markers.some((o) => o.id === previewTarget.id)) markers.push(previewTarget);
     return [...previewNodes, ...markers];
@@ -487,8 +493,8 @@ export default function PlannerPage() {
     else if(id.startsWith("star:")){setInspectedStar(catalogs.stars.find(s=>`star:${s.id}`===id)??null);setPage("tonight");}
     else {update({targetId:id,...(id !== targetId ? {startStarId:undefined} : {})});setPage("hop",id);}
   }
-  function saveNewSession(items: NightItem[], title: string) {
-    const at = settings.timeMode === "live" ? planningShortcut("tonight", lat, lon).date : date;
+  function saveNewSession(items: NightItem[], title: string, preferredAt?:Date) {
+    const at = preferredAt ?? (settings.timeMode === "live" ? planningShortcut("tonight", lat, lon).date : date);
     const s = makeSession(`${formatInTimeZone(at, timezone, "MMM d")} observing night`, at, lat, lon, items, matchingLocation(savedLocations,lat,lon)?.name??"");
     setPlannerStore(current => ({ ...current, sessions: [...current.sessions, s], activeId: s.id }));
     toast({ title, description: `${s.name}. Open Planner to edit its date, site and viewing sequence.` });
@@ -579,7 +585,7 @@ export default function PlannerPage() {
     );
   }
   function selectInstrument(selectedMode: Settings["mode"]) {
-    const patch = { mode: selectedMode, instrumentSelected: true, fov: selectedMode === "binocular" ? 7 : 5, fovHeight: selectedMode === "binocular" ? 7 : 5, shape: "circle" as const, limitingMag: selectedMode === "binocular" ? 6.5 : 8 };
+    const patch = { mode: selectedMode, instrumentSelected: true, fov: selectedMode === "binocular" ? settings.binocularFov : 5, fovHeight: selectedMode === "binocular" ? settings.binocularFov : 5, shape: "circle" as const, limitingMag: selectedMode === "binocular" ? 6.5 : 8 };
     update(patch);
     return patch;
   }
@@ -806,6 +812,7 @@ export default function PlannerPage() {
             [
               ["tonight", "Tonight", Compass],
               ["night", "Planner", CalendarDays],
+              ["catalog", "Catalog", BookOpen],
               ["binocular", "Binoculars", Binoculars],
               ["moon", "Moon", Moon],
               ["hop", "Star hop", Navigation],
@@ -857,7 +864,7 @@ export default function PlannerPage() {
         </div>
       </header>
 
-      <div className={`workspace-layout ${page === "night" ? "planning-workspace" : ""}`}>
+      <div className={`workspace-layout ${page === "night" ? "planning-workspace" : ""} ${page === "tonight"||page === "catalog" ? "sky-workspace" : ""}`}>
         <aside className={`setup-panel ${setupOpen ? "open" : ""}`}>
           <div className="setup-title">
             <span className="eyebrow">YOUR OBSERVING SETUP</span>
@@ -1160,72 +1167,14 @@ export default function PlannerPage() {
           </section>}
           {page === "tonight" && (
             <>
-              <div className="page-heading">
-                <div>
-                  <p className="eyebrow">LOOK UP. THERE’S A WHOLE UNIVERSE.</p>
-                  <h1>
-                    A little wonder, {formatInTimeZone(date,timezone,"yyyy-MM-dd")===formatInTimeZone(new Date(),timezone,"yyyy-MM-dd")?"tonight":"that night"}<span>.</span>
-                  </h1>
-                  <p>
-                    Find your next faint fuzzy, familiar friend, or first
-                    discovery.
-                  </p>
-                  <button className="text-action binocular-home-link" onClick={() => setPage("binocular")}>
-                    <Binoculars size={14} /> Explore binocular favorites, month by month <ArrowUpRight size={13} />
-                  </button>
-                </div>
-              </div>
-              <div className="conditions-strip">
-                <Condition
-                  icon={<Sparkles />}
-                  label="Sun position at your time"
-                  value={conditions.darkness}
-                  detail={
-                    conditions.isDark
-                      ? "Sun below −18°; clouds and light pollution not measured"
-                      : `Sun altitude ${Math.round(conditions.sunAlt)}°`
-                  }
-                />
-                <Condition
-                  icon={<Moon />}
-                  label={conditions.moonPhase}
-                  value={`${conditions.illumination}% illuminated`}
-                  detail={
-                    conditions.moonAlt > 0
-                      ? `Moon ${Math.round(conditions.moonAlt)}° above horizon`
-                      : "Moon below the horizon"
-                  }
-                />
-                <Condition
-                  icon={<Eye />}
-                  label="Catalog objects above 15°"
-                  value={`${ranked.filter((t) => t.alt >= 15).length} objects`}
-                  detail="Calculated from the included catalogs"
-                />
-                <Condition
-                  icon={<BookOpen />}
-                  label="Your observing list"
-                  value={`${night.length} saved`}
-                  detail={`${observed} observed · saved on this device`}
-                />
-              </div>
-              <div className="data-source-row">
-                <span>Calculated on this device from stored sky catalogs</span>
-                <button className="text-action" onClick={() => setSourcesOpen(true)}>
-                  Where the data comes from
-                </button>
-              </div>
-              {conditions.moonAlt >= 15 && conditions.illumination >= 60 && <button className="moon-tonight-link" onClick={() => setPage("moon")}><Moon size={18} /><span>A bright Moon is up. Explore seas and ray systems, or find a darker window.</span><ArrowUpRight size={15} /></button>}
               <div className="tonight-hero">
                 <section className="panel sky-panel">
                   <div className="panel-heading">
                     <div>
-                      <span className="eyebrow">GET YOUR BEARINGS</span>
-                      <h2>Your sky, overhead</h2>
+                      <span className="eyebrow">YOUR BINOCULAR SKY · {settings.binocularMagnification}×{settings.binocularAperture}</span>
+                      <h1>Your planetarium</h1>
                     </div>
-                    <span className="live-label">
-                      {settings.timeMode === "live" ? "Live sky" : "Planned sky"} · {observingTime}
-                    </span>
+                    <div className="planetarium-heading-actions"><span className="live-label">{settings.timeMode === "live" ? "Live sky" : "Planned sky"} · {observingTime}</span><button className="text-action" onClick={()=>setPage("catalog")}>Browse {catalogs.targets.length || ""} objects <ArrowUpRight size={13}/></button></div>
                   </div>
                   {loading ? (
                     <div className="sky-loading">
@@ -1257,9 +1206,9 @@ export default function PlannerPage() {
                   <div className="sky-caption">
                     <span>
                       <i className="legend-target" />
-                      Deep sky object
+                      Catalog object · tap to explore
                     </span>
-                    <span>Outer ring = horizon · center = zenith</span>
+                    <span>Star size = brightness · hue = catalog color</span>
                   </div>
                 </section>
                 {selected && selection ? (
@@ -1289,10 +1238,7 @@ export default function PlannerPage() {
                       <p className="object-story">{guideFor(selected).story}</p>
                       {!conditions.isDark&&<button className="text-action" onClick={()=>previewMoment(planningShortcut("tonight",lat,lon).date,lat,lon)}>Preview tonight after dark <ArrowUpRight size={13}/></button>}
                       <TargetPhotoCredit target={selected} />
-                      <p className="equipment-tag">
-                        <Eye size={14} />
-                        {guideFor(selected).equipment}
-                      </p>
+                      <BinocularAssessment target={selected} profile={binocularProfile} alt={selection.alt} moon={currentMoon} skyBrightness={settings.skyBrightness}/>
                       <MoonlightCard target={selected} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => checkAgainstMoon(selected.id)} />
                       <div className="featured-actions">
                         <Button
@@ -1339,15 +1285,55 @@ export default function PlannerPage() {
                   </section>
                 )}
               </div>
+              <BinocularProfileControls settings={settings} update={update}/>
+              <div className="conditions-strip">
+                <Condition
+                  icon={<Sparkles />}
+                  label="Sun position at your time"
+                  value={conditions.darkness}
+                  detail={
+                    conditions.isDark
+                      ? "Sun below −18°; clouds and light pollution not measured"
+                      : `Sun altitude ${Math.round(conditions.sunAlt)}°`
+                  }
+                />
+                <Condition
+                  icon={<Moon />}
+                  label={conditions.moonPhase}
+                  value={`${conditions.illumination}% illuminated`}
+                  detail={
+                    conditions.moonAlt > 0
+                      ? `Moon ${Math.round(conditions.moonAlt)}° above horizon`
+                      : "Moon below the horizon"
+                  }
+                />
+                <Condition
+                  icon={<Eye />}
+                  label="Catalog objects above 15°"
+                  value={`${ranked.filter((t) => t.alt >= 15).length} objects`}
+                  detail="Calculated from the included catalogs"
+                />
+                <Condition
+                  icon={<BookOpen />}
+                  label="Your observing list"
+                  value={`${night.length} saved`}
+                  detail={`${observed} observed · saved on this device`}
+                />
+              </div>
+              <div className="data-source-row">
+                <span>Calculated on this device from stored sky catalogs</span>
+                <button className="text-action" onClick={() => setSourcesOpen(true)}>
+                  Where the data comes from
+                </button>
+              </div>
+              {conditions.moonAlt >= 15 && conditions.illumination >= 60 && <button className="moon-tonight-link" onClick={() => setPage("moon")}><Moon size={18} /><span>A bright Moon is up. Explore seas and ray systems, or find a darker window.</span><ArrowUpRight size={15} /></button>}
               <section className="discover-section">
                 <div className="section-heading">
                   <div>
                     <span className="eyebrow">LET CURIOSITY LEAD</span>
                     <h2>What will you find?</h2>
                   </div>
-                  <span className="text-xs text-muted-foreground">
-                    {filtered.length + starHits.length} objects match your setup
-                  </span>
+                  <button className="text-action" onClick={()=>setPage("catalog")}>Full catalog & filters <ArrowUpRight size={14}/></button>
                 </div>
                 <div className="discovery-toolbar">
                   <div className="search-field">
@@ -1414,6 +1400,7 @@ export default function PlannerPage() {
                     <TargetCard
                       key={o.target.id}
                       object={o}
+                      fit={binocularAssessment(o.target,binocularProfile,{alt:o.alt,moon:currentMoon,skyBrightness:settings.skyBrightness}).label}
                       saved={savedIds.has(o.target.id)}
                       selected={targetId === o.target.id}
                       onSelect={() => {
@@ -1783,6 +1770,7 @@ export default function PlannerPage() {
                         <h2>At the eyepiece</h2>
                       </div>
                       <p>{guideFor(selected).lookFor}</p>
+                      <BinocularAssessment target={selected} profile={binocularProfile} alt={selection?.alt??0} moon={currentMoon} skyBrightness={settings.skyBrightness}/>
                       <MoonlightCard target={selected} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => checkAgainstMoon(selected.id)} />
                       <AltitudeChart
                         target={selected}
@@ -1880,8 +1868,9 @@ export default function PlannerPage() {
             </>
           )}
           {page === "binocular" && (
-            <BinocularGuide onMoon={checkAgainstMoon} saveDestination={activeSession?.name??`${formatInTimeZone(settings.timeMode==="live"?planningShortcut("tonight",lat,lon).date:date,timezone,"MMM d")} observing night`} targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
+            <BinocularGuide profile={binocularProfile} profileControls={<BinocularProfileControls settings={settings} update={update}/>} onMoon={checkAgainstMoon} saveDestination={activeSession?.name??`${formatInTimeZone(settings.timeMode==="live"?planningShortcut("tonight",lat,lon).date:date,timezone,"MMM d")} observing night`} targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
           )}
+          {page === "catalog" && <CatalogExplorer targets={catalogs.targets} settings={settings} update={update} date={date} timezone={timezone} locationName={locationLabel} saveDestination={activeSession?`“${activeSession.name}”`:"a new session starting at the first saved card’s time"} savedIds={savedIds} onSave={(id,at)=>{if(!activeSession&&!legacyNight.some(item=>item.id===id))saveNewSession([...legacyNight,{id,addedAt:new Date().toISOString(),notes:""}],"Added to your observing session",at);else toggleSave(id);}} onMoon={checkAgainstMoon} onSky={(id,at)=>{selectTarget(id);previewMoment(at,lat,lon);setPage("tonight");window.scrollTo({top:0,behavior:"smooth"});}}/>}
           {page === "moon" && <MoonObservatory targets={catalogs.targets} onTarget={selectTarget} locationName={locationLabel} lat={lat} lon={lon} date={date} timezone={timezone} settings={settings} update={update} target={selected} initialFeatureId={lunarSelection} onDate={at => { setPlaying(false); update({ date:formatInTimeZone(at,timezone,"yyyy-MM-dd"), time:formatInTimeZone(at,timezone,"HH:mm"), timeMode:"planned", plannedAt:at.toISOString() }); }} savedIds={savedIds} onSave={toggleSave} />}
           {page === "image" && (
             <>
@@ -1920,7 +1909,7 @@ export default function PlannerPage() {
         <DialogContent className="instrument-choice-dialog">
           <DialogHeader><DialogTitle>Choose your instrument</DialogTitle><DialogDescription>Start with a finder field that suits your view. Adjust the field width below the chart to match your optics.</DialogDescription></DialogHeader>
           <div className="instrument-choice-options">
-            <button onClick={() => compute("binocular")}><Binoculars size={25}/><span>Binoculars</span><small>7° starting field · wide views</small></button>
+            <button onClick={() => compute("binocular")}><Binoculars size={25}/><span>Binoculars</span><small>Your binocular field · wide views</small></button>
             <button onClick={() => compute("telescope")}><Telescope size={25}/><span>Small telescope</span><small>5° finder field · then check at low power</small></button>
           </div>
           <p>The hop opens as soon as you choose. Use your actual finder field for the route.</p>
@@ -2033,6 +2022,7 @@ function Condition({
 }
 function TargetCard({
   object,
+  fit,
   saved,
   selected,
   onSelect,
@@ -2040,6 +2030,7 @@ function TargetCard({
   onHop,
 }: {
   object: VisibleTarget;
+  fit: string;
   saved: boolean;
   selected: boolean;
   onSelect: () => void;
@@ -2065,7 +2056,7 @@ function TargetCard({
             {target.id} · {target.categoryShort}
           </span>
           <h3>{target.name}</h3>
-          <p>{getConstellationName(target.con)}</p>
+          <p>{getConstellationName(target.con)}</p><span className="target-fit">{fit}</span>
           <div className={`target-alt ${alt < 15 ? "low" : ""}`}>
             <span className="status-dot" />
             {Math.round(alt)}° {compassLabel(az)}
