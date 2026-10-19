@@ -11,6 +11,8 @@ import {
   Search,
   X,
 } from "lucide-react";
+import type { TrajectoryScope } from "@/lib/season-trajectories";
+import { SeasonTrajectoryClock } from "./SeasonTrajectoryClock";
 import { Calendar } from "./ui/calendar";
 import { Button } from "./ui/button";
 import { ComparisonCharts, SeasonChart } from "./ObjectComparisonCharts";
@@ -106,6 +108,8 @@ export function AstronomicalClock({
     ),
     [minAlt, setMinAlt] = useState(30),
     [minSeparation, setMinSeparation] = useState(30);
+  const [seasonObject, setSeasonObject] = useState(""),
+    [trajectoryScope, setTrajectoryScope] = useState<TrajectoryScope>("dark");
   const [season, setSeason] = useState<ClockSeason | null>(null),
     [progress, setProgress] = useState(0),
     [seasonError, setSeasonError] = useState(""),
@@ -447,7 +451,9 @@ export function AstronomicalClock({
               disabled={ids.includes(selectedId) || ids.length >= CLOCK_LIMIT}
               onClick={() => add(selectedId)}
             >
-              Add {targets.find(target=>target.id===selectedId)?.name??"selected object"}
+              Add{" "}
+              {targets.find((target) => target.id === selectedId)?.name ??
+                "selected object"}
             </button>
           )}
           <button
@@ -664,8 +670,9 @@ export function AstronomicalClock({
             <path
               d={clockCurve(samples, (s) => s.moon)}
               fill="none"
-              stroke="#ecede6"
-              strokeWidth="2"
+              stroke="#c9cdd2"
+              strokeWidth="1.7"
+              strokeDasharray="7 4"
             />
             {chosen.map((t, i) => (
               <path
@@ -673,7 +680,7 @@ export function AstronomicalClock({
                 d={clockCurve(samples, (s) => s.alt[i])}
                 fill="none"
                 stroke={CLOCK_COLORS[i]}
-                strokeWidth={highlight === t.id ? 3.5 : 2.2}
+                strokeWidth={highlight === t.id ? 4 : 2.8}
                 opacity={highlight && highlight !== t.id ? 0.3 : 1}
               />
             ))}
@@ -878,7 +885,8 @@ export function AstronomicalClock({
           <span>
             <strong>Across the seasons</strong>
             <small>
-              Shade the clock across a date interval · compare the best nights
+              Follow one object’s seasonal trajectories · compare observing
+              hours
             </small>
           </span>
           <span>{seasonOpen ? "−" : "+"}</span>
@@ -913,40 +921,7 @@ export function AstronomicalClock({
               >
                 Whole year
               </button>
-              <label>
-                Minimum altitude
-                <select
-                  value={minAlt}
-                  onChange={(e) => setMinAlt(Number(e.target.value))}
-                >
-                  {[0, 15, 30, 40, 50, 60, 70].map((n) => (
-                    <option key={n} value={n}>
-                      {n}°
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                Minimum Moon distance
-                <select
-                  value={minSeparation}
-                  onChange={(e) => setMinSeparation(Number(e.target.value))}
-                >
-                  {[0, 30, 45, 60, 90, 120].map((n) => (
-                    <option key={n} value={n}>
-                      {n === 0 ? "Any distance" : `${n}°`}
-                    </option>
-                  ))}
-                </select>
-              </label>
             </div>
-            <p className="astro-note">
-              Every date, sampled each half hour. Requires Sun ≤ −18°, object ≥{" "}
-              {minAlt}°, and Moon ≥ {minSeparation}° away when above the
-              horizon. A Moon below −1° passes the distance limit. This is
-              geometric availability, not a weather or visibility guarantee.
-              Moon phase is shown for each night.
-            </p>
             {!chosen.length ? (
               <p>Add an object to calculate the interval.</p>
             ) : seasonError ? (
@@ -958,11 +933,74 @@ export function AstronomicalClock({
               </p>
             ) : (
               <>
+                <SeasonTrajectoryClock
+                  objectId={seasonObject}
+                  onObject={setSeasonObject}
+                  scope={trajectoryScope}
+                  onScope={setTrajectoryScope}
+                  season={season}
+                  targets={chosen}
+                  samples={samples}
+                  night={night}
+                  lat={lat}
+                  lon={lon}
+                  timezone={timezone}
+                  minAlt={minAlt}
+                  minSeparation={minSeparation}
+                  onNight={(day) => {
+                    changeNight(day);
+                    document
+                      .querySelector(".astro-timebar")
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                />
+                <div className="season-hours-heading">
+                  <h3>Observing hours & limits</h3>
+                  <p className="astro-note">
+                    These limits apply to the hours graph below, the outer bands
+                    on the daily clock, and the seasonal clock’s “Meets
+                    observing limits” filter.
+                  </p>
+                </div>
+                <div className="astro-season-controls season-hours-controls">
+                  <label>
+                    Minimum altitude
+                    <select
+                      value={minAlt}
+                      onChange={(e) => setMinAlt(Number(e.target.value))}
+                    >
+                      {[0, 15, 30, 40, 50, 60, 70].map((n) => (
+                        <option key={n} value={n}>
+                          {n}°
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label>
+                    Minimum Moon distance
+                    <select
+                      value={minSeparation}
+                      onChange={(e) => setMinSeparation(Number(e.target.value))}
+                    >
+                      {[0, 30, 45, 60, 90, 120].map((n) => (
+                        <option key={n} value={n}>
+                          {n === 0 ? "Any distance" : `${n}°`}
+                        </option>
+                      ))}
+                    </select>
+                  </label>{" "}
+                </div>
                 <p className="astro-note">
-                  Outer clock bands: stronger color = more dates meeting your
-                  limits at that local half hour (0–100%). Night tiles: brighter
-                  color = more qualifying hours (0–12+). Select a tile to visit
-                  that night.
+                  Every date, sampled each half hour. Requires Sun ≤ −18°,
+                  object ≥ {minAlt}°, and Moon ≥ {minSeparation}° away when
+                  above the horizon. A Moon below −1° passes the distance limit.
+                  This is geometric availability, not a weather or visibility
+                  guarantee. Moon phase is shown for each night.
+                </p>
+                <p className="astro-note">
+                  Outer daily-clock bands show how often these limits are met at
+                  each local half hour. Brighter daily tiles mean more
+                  qualifying hours.
                 </p>
                 <SeasonChart
                   season={season}

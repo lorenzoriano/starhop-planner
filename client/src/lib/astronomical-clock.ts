@@ -1,3 +1,4 @@
+import type { SeasonTrajectory } from "./season-trajectories";
 import * as Astro from "astronomy-engine";
 import { formatInTimeZone } from "date-fns-tz";
 import {
@@ -10,15 +11,16 @@ import { resolveLocalMoment } from "./session";
 import { nextLocalDate, targetDayEvents } from "./target-visibility";
 
 export const CLOCK_LIMIT = 8;
+// Saturated object colors stay separate from neutral Moon and amber Sun.
 export const CLOCK_COLORS = [
-  "#a9dfcb",
-  "#90c7ff",
-  "#f5ae90",
-  "#d4b3ff",
-  "#d5df89",
-  "#ef9dcc",
-  "#7dd9e6",
-  "#edc56e",
+  "#53e352",
+  "#ff59ce",
+  "#ff792f",
+  "#459bff",
+  "#ff4b67",
+  "#00c9b7",
+  "#ac77ff",
+  "#ead328",
 ];
 export function comparisonIds(value: unknown): string[] {
   return Array.isArray(value)
@@ -161,7 +163,11 @@ export type SeasonRequest = {
   minSeparation: number;
 };
 export type SeasonDay = { day: string; hours: number[]; lit: number };
-export type ClockSeason = { days: SeasonDay[]; bins: number[][] };
+export type ClockSeason = {
+  days: SeasonDay[];
+  bins: number[][];
+  trajectories: SeasonTrajectory[];
+};
 export function seasonDates(from: string, to: string) {
   const valid = (s: string) =>
     /^\d{4}-\d{2}-\d{2}$/.test(s) &&
@@ -203,42 +209,56 @@ export function clockSeason(
     dates = seasonDates(request.from, request.to);
   const bins = targets.map(() => Array(48).fill(0)),
     totals = Array(48).fill(0),
-    days: SeasonDay[] = [];
+    days: SeasonDay[] = [],
+    trajectories: SeasonTrajectory[] = [];
   for (const day of dates) {
     const { start, end } = clockBounds(day, zone),
       hours = targets.map(() => 0);
+    const track: SeasonTrajectory = {
+      day,
+      hour: [],
+      alt: targets.map(() => []),
+      dark: [],
+      qualified: targets.map(() => []),
+    };
     let lit = 0,
       count = 0;
     for (let ms = +start + 15 * 60000; ms < +end; ms += 30 * 60000) {
       const at = new Date(ms),
         moon = moonState(lat, lon, at),
-        bin = Math.floor(clockHour(at, zone) * 2) % 48;
+        hour = clockHour(at, zone),
+        bin = Math.floor(hour * 2) % 48;
       totals[bin]++;
       lit += moon.illumination;
       count++;
+      track.hour.push(hour);
+      track.dark.push(moon.sunAlt <= -18);
       targets.forEach((t, i) => {
-        if (
-          seasonEligible(
-            eqToHorizontal(t.ra, t.dec, lat, lon, at).alt,
-            moon.sunAlt,
-            moon.alt,
-            angularDistance(t.ra, t.dec, moon.ra, moon.dec),
-            minAlt,
-            minSeparation,
-          )
-        ) {
+        const alt = eqToHorizontal(t.ra, t.dec, lat, lon, at).alt;
+        const qualified = seasonEligible(
+          alt,
+          moon.sunAlt,
+          moon.alt,
+          angularDistance(t.ra, t.dec, moon.ra, moon.dec),
+          minAlt,
+          minSeparation,
+        );
+        track.alt[i].push(alt);
+        track.qualified[i].push(qualified);
+        if (qualified) {
           hours[i] += 0.5;
           bins[i][bin]++;
         }
       });
     }
+    trajectories.push(track);
     days.push({ day, hours, lit: lit / Math.max(1, count) });
     progress?.(days.length, dates.length);
   }
   bins.forEach((row) =>
     row.forEach((value, i) => (row[i] = totals[i] ? value / totals[i] : 0)),
   );
-  return { days, bins };
+  return { days, bins, trajectories };
 }
 
 /** Events in the displayed observing night, including events after midnight. */

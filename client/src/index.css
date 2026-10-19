@@ -2170,3 +2170,274 @@ button:disabled { opacity: .45; cursor: default; }
     font-size: 19px;
   }
 }
+
+/* Seasonal clock: show the distribution of altitude against time, one object at a time. */
+.season-trajectory {
+  margin: 22px 0 28px;
+  padding: 20px;
+  border: 1px solid #314c59;
+  background: #081720;
+  border-radius: 10px;
+}
+.season-trajectory > header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 18px;
+}
+.season-trajectory h3 {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: #d4e0da;
+}
+.season-trajectory > header p {
+  font-size: 12px;
+  color: #92abb6;
+  margin: 6px 0;
+}
+.season-trajectory > header label {
+  max-width: 280px;
+  min-width: 150px;
+}
+.season-trajectory-tools {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 18px 0 8px;
+  flex-wrap: wrap;
+}
+.season-trajectory-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(200px, 0.8fr);
+  gap: 20px;
+  align-items: center;
+}
+.season-trajectory-dial {
+  min-width: 0;
+}
+.season-trajectory-dial svg {
+  width: 100%;
+  display: block;
+  height: auto;
+  touch-action: pan-y;
+  cursor: crosshair;
+}
+.season-trajectory-dial svg:focus-visible {
+  outline: 2px solid #b7d8c6;
+}
+.season-trajectory-reading {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #9db4bd;
+}
+.season-trajectory-reading > strong {
+  font-size: 16px;
+  font-weight: 500;
+}
+.season-trajectory-reading p {
+  margin: 10px 0;
+}
+.season-trajectory-reading b {
+  color: #d0dfd7;
+  font-size: 22px;
+  font-weight: 400;
+}
+.season-trajectory-reading p > span {
+  display: block;
+  color: #b7cbc7;
+  margin-top: 5px;
+}
+.season-trajectory-reading h4 {
+  font-size: 13px;
+  color: #c8d6cf;
+  margin-top: 20px;
+}
+.season-month-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.season-month-key button {
+  font-size: 12px;
+  border: 1px solid #314a58;
+  border-radius: 5px;
+  min-height: 34px;
+  padding: 5px 8px;
+}
+.season-month-key button[aria-pressed="true"] {
+  background: #2b3e48;
+  border-color: #bdd2ce;
+}
+.season-density-key {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  margin: 18px 0;
+  background: #07131e;
+  padding: 10px;
+  border-radius: 6px;
+}
+.season-density-key span {
+  font-size: 10px;
+  text-align: center;
+  color: #adbfca;
+}
+.season-density-key i {
+  display: block;
+  width: 24px;
+  height: 20px;
+  border-radius: 3px;
+  margin-bottom: 7px;
+}
+.season-cell-reading {
+  border-top: 1px solid #314c59;
+  margin-top: 18px;
+  padding-top: 14px;
+}
+.season-cell-reading strong {
+  color: #d7e0d5;
+  font-size: 12px;
+}
+.season-hours-heading {
+  margin: 22px 0 14px;
+}
+.season-hours-heading h3 {
+  font-size: 18px;
+  font-family: var(--font-serif);
+  color: #c5d4ca;
+  font-weight: 400;
+}
+.season-hours-controls {
+  margin-top: 12px;
+}
+.season-trajectory-tools > label {
+  min-width: 185px;
+}
+@media (max-width: 850px) {
+  .season-trajectory-grid {
+    grid-template-columns: 1fr;
+  }
+  .season-trajectory-reading {
+    display: block;
+  }
+  .season-trajectory-reading > strong {
+    font-size: 15px;
+  }
+  .season-trajectory-dial {
+    max-width: 650px;
+    margin: auto;
+    width: 100%;
+  }
+  .season-trajectory-reading h4 {
+    margin-top: 15px;
+  }
+  .season-density-key {
+    max-width: 360px;
+  }
+  .season-trajectory > header {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 700px) {
+  .season-trajectory {
+    padding: 12px;
+    margin-left: -3px;
+    margin-right: -3px;
+  }
+  .season-trajectory h3 {
+    font-size: 23px;
+  }
+  .season-trajectory > header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .season-trajectory > header label {
+    width: 100%;
+    max-width: none;
+  }
+  .season-trajectory-tools {
+    gap: 12px;
+  }
+  .season-trajectory-tools > label {
+    width: 100%;
+  }
+  .season-trajectory-grid {
+    gap: 5px;
+  }
+  .season-trajectory-dial .astro-hour {
+    font-size: 19px;
+  }
+  .season-trajectory-dial .astro-ring-label {
+    font-size: 14px;
+  }
+  .season-month-key button {
+    min-height: 38px;
+  }
+  .season-trajectory-reading p {
+    font-size: 12px;
+  }
+}
+.season-trajectory-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+.season-clock-view {
+  min-width: 0;
+}
+.season-clock-view > h4 {
+  font: 400 19px var(--font-serif);
+  color: #ccdad3;
+  margin: 12px 0 0;
+}
+.season-trajectory-summary {
+  font-size: 13px;
+  color: #9eb4bd;
+  min-width: 0;
+}
+.season-trajectory-summary > strong {
+  font-weight: 500;
+  font-size: 15px;
+}
+.season-trajectory-summary p {
+  margin: 5px 0;
+}
+.season-trajectory-summary b {
+  color: #d4dfd9;
+  font-weight: 400;
+}
+.season-trajectory-summary span {
+  display: block;
+}
+.season-trajectory .season-cell-reading {
+  font-size: 12px;
+  color: #acc1c5;
+  background: #0d202a;
+  padding: 14px;
+  border-radius: 6px;
+}
+.season-clock-view .season-trajectory-reading h4 {
+  margin-top: 0;
+}
+.season-clock-view .season-trajectory-dial {
+  width: 100%;
+}
+@media (max-width: 850px) {
+  .season-trajectory-grid {
+    grid-template-columns: 1fr;
+  }
+  .season-clock-view {
+    border-top: 1px solid #2c4654;
+    padding-top: 10px;
+  }
+  .season-clock-view:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .season-trajectory-tools {
+    align-items: start;
+  }
+}
+.season-trajectory label.season-outline-toggle{display:flex;flex-direction:row;align-items:center;gap:8px;font-size:12px;line-height:1.5;margin:12px 0}.season-outline-toggle input[type=checkbox]{min-height:auto;width:15px;height:15px;accent-color:#aacbb8}

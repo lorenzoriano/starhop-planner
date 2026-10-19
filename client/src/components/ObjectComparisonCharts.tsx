@@ -62,7 +62,8 @@ export function ComparisonCharts({
       </div>
       <p className="astro-note">
         The same objects, colors and cursor as the clock. Hover to inspect; tap
-        to set the app’s time. Moon and Sun altitude are white and dotted gold.
+        to set the app’s time. Object paths are solid colors; Moon altitude is
+        dashed silver and Sun altitude is dotted gold.
       </p>
       {span === "night" && !dark.length ? (
         <p>
@@ -161,8 +162,9 @@ export function ComparisonCharts({
                       <path
                         d={path((s) => s.moon)}
                         fill="none"
-                        stroke="#ecede6"
+                        stroke="#c9cdd2"
                         strokeWidth="1.7"
+                        strokeDasharray="7 4"
                       />
                       <path
                         d={path((s) => s.sun)}
@@ -179,7 +181,7 @@ export function ComparisonCharts({
                       d={path((s) => (kind === 0 ? s.alt[i] : s.separation[i]))}
                       fill="none"
                       stroke={CLOCK_COLORS[i]}
-                      strokeWidth="2.3"
+                      strokeWidth="2.8"
                     />
                   ))}
                   {+at >= start && +at <= end && (
@@ -231,8 +233,8 @@ export function ComparisonCharts({
           </span>
         ))}
         <span>
-          <i style={{ background: "#ecede6" }} />
-          Moon altitude
+          <i style={{ background: "#c9cdd2" }} />
+          Moon altitude · dashed
         </span>
         <span>
           <i style={{ background: "#edc56e" }} />

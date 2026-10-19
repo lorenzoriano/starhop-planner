@@ -50,3 +50,24 @@ For ordinary 14×50 binocular planning, cloud layers, model disagreement, darkne
 - Chromium checked object search, multiple curves, calendar, keyboard stepping, time animation, a full year for two objects, seasonal date jumps and 375 px controls without document overflow or JavaScript errors.
 - Binocular card shortcuts retained the existing comparison set. A Sydney planner draft carried its unsaved site/date to the clock and used Australia/Sydney.
 - After Offline ready, a disconnected reload retained the object set, started a fresh seasonal worker calculation and allowed future-date/keyboard time travel. This verifies the worker asset itself is cached, not just a previously computed in-memory result.
+
+## Seasonal trajectory clocks — October 19 refinement
+
+Compared three real-data prototypes: faint daily ghost trails, altitude/time occupancy cells, and representative paths colored by month. Ghost trails obscure timing when many dates overlap. A full-year density plot with all hours included can also approach a rotationally symmetric band: the object's fixed declination determines its altitude range while sidereal timing moves the peak around the local-time dial. This is expected geometry, not evidence of an object remaining at one height.
+
+The refinement shows **two simultaneous clocks** for one chosen object:
+
+- **Paths colored by month:** one actual sampled observing night near the 15th of each calendar month in the interval. Month labels isolate a path and offer a link to open that date in the daily clock. If the interval clips a month, its nearest available date is used and labeled honestly.
+- **Occupancy:** each local half-hour × 5° altitude cell reports how often samples fall there across the interval. Brightness uses a disclosed nonlinear perceptual scale with a percentage key; zero is invisible. Hover, touch or keyboard inspection gives the time, height band, frequency and real matching dates. The chosen night's finer daily curve can be switched on for comparison; it starts hidden so it does not obscure narrow bands such as Polaris.
+
+Both clocks share the object and time filter: all 24 hours, astronomical darkness (default), or samples meeting the existing observing limits. Neither has Sun/Moon curves; they remain on the daily comparison clock. The hours-per-night chart remains below with its existing altitude and Moon-distance limits. Object and time-filter selections survive recomputing a date interval or changing location.
+
+The worker retains all sampled altitudes independently of visibility thresholds. Occupancy normalizes each local-time column separately; repeated DST hours are averaged within a date, and dates without a skipped local half hour do not contribute a denominator to that column. Fractions describe recurrence of calculated geometry, not weather probabilities or measured detectability. Below-horizon paths are preserved. The dial's angular axis remains clock time, not azimuth.
+
+The object palette now uses saturated green, pink, orange, blue, red, teal, violet and yellow. Objects stay solid across the daily clock and comparison charts; the Moon is neutral silver with long dashes and the Sun has short amber dashes. This provides a shape cue as well as stronger color separation.
+
+### Broader verification
+
+New tests use the Coathanger (summer), M42 (winter), M31 (autumn) and Polaris together over a complete year. They compare evening heights across seasons, check representative samples against the independent coordinate transform, verify normalized occupancy and real matching dates, and exercise repeated/skipped clock hours. Polaris stays near the observer's latitude in San Francisco, remains below the horizon from Sydney, and sits near the rim at 89°N. Polar summer has no astronomical-darkness trajectory while its all-hours geometry remains available. Short intervals and leap day retain real monthly representatives.
+
+The release passes TypeScript, production build and 253 tests across 32 files. Browser verification inspected all four real catalog cases, month isolation/date travel, pointer and keyboard cell inspection, and opening an actual matching date. A Sydney site change retained Polaris and the time filter, correctly moved its complete trajectory below the horizon, and a polar-summer test kept raw geometry while removing false darkness. Both clocks stacked without horizontal overflow at 375 px and recalculated after a disconnected reload.
