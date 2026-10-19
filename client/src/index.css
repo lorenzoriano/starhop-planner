@@ -1492,3 +1492,681 @@ button:disabled { opacity: .45; cursor: default; }
 .stargazing-compare a { display:inline-flex; align-items:center; gap:5px; color:#b1cfc0; }
 .weather-content .text-action { min-height:32px; }
 @media(max-width:700px) { .stargazing-outlook { padding:14px; } .stargazing-factors { grid-template-columns:1fr; gap:13px; } .stargazing-factors > span { display:grid; grid-template-columns:90px 1fr; gap:3px 8px; align-items:baseline; } .stargazing-factors strong { margin:0; } .stargazing-factors small { grid-column:2; } .stargazing-score > strong { font-size:35px; } .stargazing-controls > span { display:none; } }
+
+/* Astronomical clock: shared object colors and a quiet, readable time workspace. */
+.astro-workspace {
+  --clock-border: #294552;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+.astro-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+}
+.astro-heading h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.2;
+  margin: 9px 0;
+}
+.astro-heading h1 span {
+  color: var(--gold);
+}
+.astro-heading p:not(.eyebrow) {
+  font-size: 13px;
+  color: #8da6b3;
+}
+.astro-workspace label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #9bb1bb;
+  font-size: 12px;
+  min-width: 0;
+}
+.astro-workspace input:not([type="range"]),
+.astro-workspace select {
+  background: #0d202b;
+  border: 1px solid #355562;
+  color: #d5e2df;
+  border-radius: 6px;
+  padding: 9px 10px;
+  min-height: 42px;
+  max-width: 100%;
+  font-size: 14px;
+  color-scheme: dark;
+}
+.astro-timebar,
+.astro-objects,
+.astro-readout,
+.astro-comparison {
+  padding: 20px;
+}
+.astro-date-controls {
+  display: flex;
+  align-items: end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.astro-date-controls > .icon-button {
+  margin-bottom: 2px;
+}
+.astro-date-controls .text-action {
+  min-height: 42px;
+}
+.astro-timebar > p {
+  font-size: 12px;
+  color: #8da6b3;
+  margin: 10px 0 0;
+}
+.astro-scrubber {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
+}
+.astro-scrubber span {
+  font-size: 11px;
+  white-space: nowrap;
+  color: #8da6b3;
+}
+.astro-scrubber input {
+  flex: 1;
+  min-width: 40px;
+  accent-color: #b0d5c3;
+}
+.astro-object-tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.astro-object-tools > span {
+  font-size: 12px;
+  color: #8da6b3;
+}
+.astro-object-tools .astro-search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  min-width: 230px;
+  gap: 8px;
+}
+.astro-search input {
+  width: 100%;
+  min-width: 0;
+}
+.astro-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.astro-chips > span {
+  display: flex;
+  align-items: center;
+  border: 1px solid #34505d;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.astro-chips button {
+  padding: 7px 9px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+}
+.astro-chips button.active {
+  background: #27404b;
+}
+.astro-chips button:last-child {
+  border-left: 1px solid #34505d;
+}
+.astro-chips i,
+.astro-readout article i {
+  background: var(--object-color);
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.astro-search-results {
+  margin-top: 12px;
+  border: 1px solid #355562;
+  border-radius: 7px;
+  max-height: 250px;
+  overflow: auto;
+}
+.astro-search-results button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 13px;
+  text-align: left;
+  min-height: 42px;
+  border-bottom: 1px solid #1d3542;
+}
+.astro-search-results button:hover {
+  background: #1a323c;
+}
+.astro-search-results small {
+  margin-left: auto;
+  color: #8da6b3;
+}
+.astro-workspace button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.astro-empty {
+  color: #9bb1bb;
+  font-size: 14px;
+  padding: 12px 0 0;
+}
+.astro-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.8fr);
+  gap: 20px;
+  align-items: start;
+}
+.astro-dial-panel {
+  padding: 15px;
+  min-width: 0;
+}
+.astro-dial-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 10px;
+  color: #8da6b3;
+}
+.astro-dial {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: pan-y;
+  cursor: crosshair;
+  border-radius: 8px;
+}
+.astro-dial:focus-visible,
+.astro-comparison svg:focus-visible {
+  outline: 2px solid #b7d8c6;
+  outline-offset: -2px;
+}
+.astro-ring-label {
+  font-size: 9px;
+  fill: #aec1c9;
+  paint-order: stroke;
+  stroke: #0b1724;
+  stroke-width: 3px;
+}
+.astro-hour {
+  fill: #c1d0d6;
+  font-size: 11px;
+}
+.astro-solar-legend,
+.astro-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 14px;
+  font-size: 10px;
+  color: #9fb4bd;
+}
+.astro-solar-legend span,
+.astro-chart-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.astro-solar-legend i,
+.astro-chart-legend i {
+  display: inline-block;
+  width: 12px;
+  height: 6px;
+  border: 1px solid #5c707d;
+}
+.astro-note {
+  color: #8da6b3;
+  font-size: 11px;
+  line-height: 1.7;
+  margin: 12px 0 0;
+}
+.astro-readout h2 {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  margin: 8px 0 14px;
+}
+.astro-readout h2 small {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: #9bb1bb;
+}
+.astro-context {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  padding-bottom: 16px;
+  color: #b1c4ca;
+}
+.astro-readout article {
+  border-top: 1px solid #294552;
+  padding: 12px 0;
+  box-shadow: inset 0 0 0 0 transparent;
+}
+.astro-readout article.active {
+  border-left: 2px solid var(--object-color);
+  padding-left: 8px;
+}
+.astro-readout article > button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  width: 100%;
+  font-size: 14px;
+  color: #d5e2df;
+}
+.astro-readout article > button strong {
+  margin-left: auto;
+  color: var(--object-color);
+  font-weight: 400;
+  white-space: nowrap;
+}
+.astro-readout article > p {
+  font-size: 11px;
+  color: #9bb1bb;
+  margin: 6px 0 8px;
+}
+.astro-events {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: #8da6b3;
+  font-size: 10px;
+}
+.astro-events span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.astro-events b {
+  font-size: 12px;
+  color: #bdcece;
+  font-weight: 400;
+}
+.astro-chart-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.astro-chart-heading h2 {
+  font-family: var(--font-serif);
+  font-size: 26px;
+}
+.astro-chart-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+.astro-chart-grid > div {
+  min-width: 0;
+}
+.astro-chart-grid h3 {
+  font-size: 12px;
+  color: #b5cbc8;
+  margin-bottom: 5px;
+}
+.astro-chart-grid svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+.astro-chart-grid svg text {
+  fill: #92aab6;
+  font-size: 15px;
+}
+.astro-chart-legend {
+  justify-content: flex-start;
+  margin: 8px 0;
+}
+.astro-season {
+  overflow: hidden;
+}
+.astro-season-toggle {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  gap: 14px;
+  width: 100%;
+  padding: 20px;
+  color: #b8d4cb;
+}
+.astro-season-toggle span:nth-child(2) {
+  flex: 1;
+}
+.astro-season-toggle strong {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 400;
+}
+.astro-season-toggle small {
+  display: block;
+  color: #8da6b3;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.astro-season-body {
+  padding: 0 20px 20px;
+}
+.astro-season-controls {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.astro-season-controls > button {
+  min-height: 42px;
+}
+.astro-season-results {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.astro-season-row > strong {
+  font-size: 12px;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 8px;
+}
+.astro-night-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18px, 1fr));
+  gap: 3px;
+}
+.astro-night-tiles > button {
+  height: 24px;
+  min-width: 18px;
+  border-radius: 3px;
+  color: #07131d;
+  font-size: 9px;
+  font-weight: 600;
+}
+.astro-night-tiles > button:focus-visible {
+  outline: 2px solid white;
+  opacity: 1 !important;
+}
+.astro-explainer {
+  padding: 0 4px;
+  color: #8da6b3;
+  font-size: 12px;
+}
+.astro-explainer summary {
+  cursor: pointer;
+  color: #b1ccc5;
+}
+.astro-explainer p {
+  max-width: 900px;
+  line-height: 1.8;
+  margin: 12px 0;
+}
+.astro-explainer a {
+  color: #b2d2c7;
+  text-decoration: underline;
+}
+.astro-calendar {
+  width: 340px;
+  max-width: calc(100vw - 24px);
+}
+.astro-calendar .rdp {
+  margin: auto;
+}
+.astro-open-action {
+  margin: 10px 0 16px;
+}
+.binocular-target-bottom .binocular-clock-action {
+  border-right: 1px solid #294552;
+  border-left: 0 !important;
+  width: 42px;
+  flex-shrink: 0;
+}
+.binocular-target-bottom:has(.binocular-clock-action) {
+  padding-left: 0;
+  gap: 10px;
+}
+.astro-cursor-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  font-size: 12px;
+  margin: 12px 0;
+}
+.astro-cursor-values strong {
+  font-weight: 400;
+}
+.astro-workspace .text-action {
+  font-size: 12px;
+}
+@media (min-width: 1450px) {
+  .astro-main-grid {
+    grid-template-columns: minmax(0, 1.2fr) minmax(350px, 0.8fr);
+  }
+  .astro-dial-panel {
+    max-width: 850px;
+  }
+}
+@media (max-width: 1000px) {
+  .astro-chart-grid {
+    grid-template-columns: 1fr;
+  }
+  .astro-main-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.75fr);
+  }
+  .astro-readout {
+    padding: 16px;
+  }
+  .astro-hour {
+    font-size: 12px;
+  }
+  .astro-events {
+    gap: 5px;
+  }
+  .astro-events b {
+    font-size: 11px;
+  }
+}
+@media (max-width: 700px) {
+  .astro-main-grid {
+    grid-template-columns: 1fr;
+  }
+  .astro-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .astro-heading > label {
+    width: 100%;
+  }
+  .astro-timebar,
+  .astro-objects,
+  .astro-readout,
+  .astro-comparison {
+    padding: 15px;
+  }
+  .astro-date-controls {
+    gap: 10px;
+  }
+  .astro-date-controls .icon-button {
+    width: 30px;
+  }
+  .astro-date-controls label:first-of-type {
+    flex: 1;
+  }
+  .astro-date-controls label:first-of-type input {
+    width: 100%;
+    min-width: 130px;
+  }
+  .astro-date-controls .text-action {
+    font-size: 12px;
+  }
+  .astro-object-tools {
+    gap: 12px;
+  }
+  .astro-object-tools .astro-search {
+    min-width: 100%;
+    width: 100%;
+  }
+  .astro-dial-panel {
+    padding: 10px;
+  }
+  .astro-dial-caption {
+    font-size: 9px;
+  }
+  .astro-dial {
+    margin: 0;
+  }
+  .astro-hour {
+    font-size: 12px;
+  }
+  .astro-ring-label {
+    font-size: 10px;
+  }
+  .astro-chart-heading {
+    align-items: start;
+  }
+  .astro-chart-heading select {
+    font-size: 12px;
+    max-width: 180px;
+  }
+  .astro-chart-heading h2 {
+    font-size: 23px;
+  }
+  .astro-events {
+    font-size: 11px;
+  }
+  .astro-events b {
+    font-size: 13px;
+  }
+  .astro-season-body {
+    padding: 0 15px 15px;
+  }
+  .astro-season-controls > label {
+    flex: 1;
+    min-width: 120px;
+  }
+  .astro-season-toggle {
+    padding: 15px;
+  }
+  .astro-season-toggle small {
+    font-size: 11px;
+  }
+  .astro-chart-grid svg text {
+    font-size: 18px;
+  }
+  .astro-note {
+    font-size: 11px;
+  }
+}
+.astro-heading p:not(.eyebrow) {
+  color: #8da6b3;
+}
+.astro-readout h2 small {
+  font-family: var(--font-sans);
+}
+@media (max-width: 700px) {
+  .astro-date-controls {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr) 30px 72px;
+    gap: 10px 8px;
+    align-items: end;
+  }
+  .astro-date-controls > label:first-of-type {
+    grid-column: 2;
+    min-width: 0;
+  }
+  .astro-date-controls > label:first-of-type input {
+    min-width: 0;
+    width: 100%;
+    padding: 9px 5px;
+    font-size: 13px;
+  }
+  .astro-date-controls > button:nth-child(4) {
+    grid-column: 4;
+    font-size: 10px;
+    gap: 3px;
+  }
+  .astro-date-controls > label:nth-child(5) {
+    grid-column: 1/3;
+  }
+  .astro-date-controls > button:nth-child(6) {
+    grid-column: 3/5;
+  }
+  .astro-date-controls > button:nth-child(7) {
+    grid-column: 1/3;
+    justify-content: start;
+  }
+  .astro-date-controls > select {
+    grid-column: 3/5;
+    font-size: 11px;
+    padding: 8px 4px;
+  }
+  .astro-hour {
+    font-size: 18px;
+  }
+  .astro-ring-label {
+    font-size: 14px;
+  }
+}
+.astro-year-chart {
+  margin: 20px 0;
+}
+.astro-year-chart h3 {
+  font-size: 13px;
+  color: #b5cbc8;
+}
+.astro-year-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+.astro-year-chart svg text {
+  font-size: 11px;
+  fill: #95adb9;
+}
+.astro-year-chart svg:focus-visible {
+  outline: 2px solid #b7d8c6;
+  outline-offset: -2px;
+}
+.astro-daily-details {
+  margin-top: 14px;
+  font-size: 12px;
+  color: #adc6c1;
+}
+.astro-daily-details > summary {
+  cursor: pointer;
+}
+.astro-daily-details .astro-season-results {
+  margin-bottom: 18px;
+}
+@media (max-width: 700px) {
+  .astro-year-chart svg text {
+    font-size: 19px;
+  }
+}

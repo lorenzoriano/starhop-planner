@@ -6,6 +6,9 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
+import { z } from "zod";
+import { AstronomicalClock } from "@/components/AstronomicalClock";
+import { comparisonIds, CLOCK_LIMIT } from "@/lib/astronomical-clock";
 import tzLookup from "tz-lookup";
 import { useLocation } from "wouter";
 import { pageForPath, pathForPage, targetFromPath, type Page } from "@/lib/navigation";
@@ -160,6 +163,7 @@ export default function PlannerPage() {
     nightListSchema,
   );
   const [plannerStore,setPlannerStore,plannerError] = useLocalState<PlannerStore>("starhop-session-planner-v1",emptyPlanner,plannerStoreSchema);
+  const [compareIds,setCompareIds,compareError]=useLocalState<string[]>("starhop-clock-objects-v1",settings.targetId?[settings.targetId]:[],z.unknown().transform(comparisonIds));
   const [savedLocations,setSavedLocations,locationsError] = useLocalState<SavedLocation[]>("starhop-saved-locations-v1",[],savedLocationsSchema);
   const activeSession = plannerStore.sessions.find(s=>s.id===plannerStore.activeId&&!s.archived);
   const night=activeSession?.items??legacyNight;
@@ -291,6 +295,10 @@ export default function PlannerPage() {
     [catalogs.targets, lat, lon, date, mode],
   );
   const planningTargets = useMemo(()=>[...catalogs.targets,...catalogs.stars.map(starPlanningTarget)],[catalogs.targets,catalogs.stars]);
+  useEffect(()=>{
+    if(loading)return;
+    setCompareIds(current=>{const valid=current.filter(id=>planningTargets.some(target=>target.id===id));return valid.length===current.length?current:valid;});
+  },[loading,planningTargets]);
   const selection = ranked.find((t) => t.target.id === targetId);
   const selectedStart = catalogs.stars.find(star => star.id === settings.startStarId);
   const startOptions = useMemo(() => {
@@ -470,6 +478,13 @@ export default function PlannerPage() {
     update({targetId:id,...(id!==targetId?{startStarId:undefined}:{})});
     if(at)previewMoment(at,lat,lon,false);
     setPage("moon");
+  }
+  function compareObjects(ids:string[],at?:Date,latitude=lat,longitude=lon) {
+    const valid=ids.filter(id=>planningTargets.some(t=>t.id===id));
+    setCompareIds(current=>comparisonIds([...current,...valid]));
+    if(valid.some(id=>!compareIds.includes(id))&&new Set([...compareIds,...valid]).size>CLOCK_LIMIT)toast({title:"Showing the first eight objects",description:"Remove an object in the clock to add another."});
+    if(at)previewMoment(at,latitude,longitude,false);
+    setInspectedStar(null);setPlaying(false);setPage("clock");
   }
   function previewMoment(at:Date,latitude:number,longitude:number,navigate=true) {
     const zone=sessionTimezone({lat:latitude,lon:longitude});
@@ -813,6 +828,7 @@ export default function PlannerPage() {
             [
               ["tonight", "Tonight", Compass],
               ["night", "Planner", CalendarDays],
+              ["clock", "Clock", Clock],
               ["catalog", "Catalog", BookOpen],
               ["binocular", "Binoculars", Binoculars],
               ["moon", "Moon", Moon],
@@ -821,7 +837,7 @@ export default function PlannerPage() {
           ).map(([id, label, Icon]) => (
             <button
               key={id}
-              onClick={() => setPage(id)}
+              onClick={() => {if(id==="clock"&&!compareIds.length&&targetId)compareObjects([targetId]);else setPage(id);}}
               className={page === id ? "active" : ""}
               aria-current={page === id ? "page" : undefined}
               data-testid={`tab-${id}`}
@@ -865,7 +881,7 @@ export default function PlannerPage() {
         </div>
       </header>
 
-      <div className={`workspace-layout ${page === "night" ? "planning-workspace" : ""} ${page === "tonight"||page === "catalog" ? "sky-workspace" : ""}`}>
+      <div className={`workspace-layout ${page === "night" ? "planning-workspace" : ""} ${page === "tonight"||page === "catalog"||page === "clock" ? "sky-workspace" : ""}`}>
         <aside className={`setup-panel ${setupOpen ? "open" : ""}`}>
           <div className="setup-title">
             <span className="eyebrow">YOUR OBSERVING SETUP</span>
@@ -1237,6 +1253,7 @@ export default function PlannerPage() {
                         {Math.round(selection.alt)}°{" "}
                         {compassLabel(selection.az)}
                       </p>
+                      <button className="text-action astro-open-action" onClick={()=>compareObjects([selected.id],date)}><Clock size={15}/> Astronomical clock & compare ↗</button>
                       <SelectedTargetPlanning target={selected} lat={lat} lon={lon} date={date} timezone={timezone} skyBrightness={settings.skyBrightness}/>
                       <p className="object-story">{guideFor(selected).story}</p>
                       {!conditions.isDark&&<button className="text-action" onClick={()=>previewMoment(planningShortcut("tonight",lat,lon).date,lat,lon)}>Preview tonight after dark <ArrowUpRight size={13}/></button>}
@@ -1768,6 +1785,7 @@ export default function PlannerPage() {
                   </section>
                   {selected && (
                     <section className="panel at-the-eyepiece">
+                      <button className="text-action astro-open-action" onClick={()=>compareObjects([selected.id],date)}><Clock size={15}/> Astronomical clock & compare ↗</button>
                       <div className="section-label">
                         <Eye size={15} />
                         <h2>At the eyepiece</h2>
@@ -1863,7 +1881,7 @@ export default function PlannerPage() {
           {page === "night" && (
             <>
               <div className="page-heading night-page-heading"><div><p className="eyebrow">YOUR NEXT NIGHT OUT</p><h1>Plan your night<span>.</span></h1><p>Choose a night. Add targets. Follow the stars.</p></div></div>
-              <SessionPlanner savedLocations={savedLocations} onLocationsChange={setSavedLocations} sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} live={settings.timeMode === "live"}
+              <SessionPlanner onCompare={(ids,at,a,b)=>compareObjects(ids,at,a,b)} savedLocations={savedLocations} onLocationsChange={setSavedLocations} sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} live={settings.timeMode === "live"}
                 onCreate={createSession} onUpdate={updateSession} onSelect={selectSession} onPreview={(at,a,b,stay)=>previewMoment(at,a,b,!stay)} onVisit={visitScheduledTarget} onAdd={toggleSave} onObserved={markObserved}
                 onNotes={(id,notes)=>setNight(current=>current.map(item=>item.id===id?{...item,notes}:item))}
                 actions={<><SkySafariExport items={night} targets={planningTargets} session={activeSession} date={date} lat={lat} lon={lon} skyBrightness={settings.skyBrightness}/><Button variant="outline" onClick={exportNight} disabled={!night.length}><Download size={15}/> Export notes</Button></>}
@@ -1871,9 +1889,10 @@ export default function PlannerPage() {
             </>
           )}
           {page === "binocular" && (
-            <BinocularGuide profile={binocularProfile} profileControls={<BinocularProfileControls settings={settings} update={update}/>} onMoon={checkAgainstMoon} saveDestination={activeSession?.name??`${formatInTimeZone(settings.timeMode==="live"?planningShortcut("tonight",lat,lon).date:date,timezone,"MMM d")} observing night`} targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
+            <BinocularGuide onCompare={(id,at)=>compareObjects([id],at)} profile={binocularProfile} profileControls={<BinocularProfileControls settings={settings} update={update}/>} onMoon={checkAgainstMoon} saveDestination={activeSession?.name??`${formatInTimeZone(settings.timeMode==="live"?planningShortcut("tonight",lat,lon).date:date,timezone,"MMM d")} observing night`} targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
           )}
-          {page === "catalog" && <CatalogExplorer targets={catalogs.targets} settings={settings} update={update} date={date} timezone={timezone} locationName={locationLabel} saveDestination={activeSession?`“${activeSession.name}”`:"a new session starting at the first saved card’s time"} savedIds={savedIds} onSave={(id,at)=>{if(!activeSession&&!legacyNight.some(item=>item.id===id))saveNewSession([...legacyNight,{id,addedAt:new Date().toISOString(),notes:""}],"Added to your observing session",at);else toggleSave(id);}} onMoon={checkAgainstMoon} onSky={(id,at)=>{selectTarget(id);previewMoment(at,lat,lon);setPage("tonight");window.scrollTo({top:0,behavior:"smooth"});}}/>}
+          {page === "catalog" && <CatalogExplorer onCompare={(id,at)=>compareObjects([id],at)} targets={catalogs.targets} settings={settings} update={update} date={date} timezone={timezone} locationName={locationLabel} saveDestination={activeSession?`“${activeSession.name}”`:"a new session starting at the first saved card’s time"} savedIds={savedIds} onSave={(id,at)=>{if(!activeSession&&!legacyNight.some(item=>item.id===id))saveNewSession([...legacyNight,{id,addedAt:new Date().toISOString(),notes:""}],"Added to your observing session",at);else toggleSave(id);}} onMoon={checkAgainstMoon} onSky={(id,at)=>{selectTarget(id);previewMoment(at,lat,lon);setPage("tonight");window.scrollTo({top:0,behavior:"smooth"});}}/>}
+          {page === "clock" && <><AstronomicalClock targets={planningTargets} ids={compareIds} onIds={setCompareIds} selectedId={targetId} sessionIds={night.map(item=>item.id)} lat={lat} lon={lon} date={date} timezone={timezone} locationName={locationLabel} locations={savedLocations} onLocation={(a,b)=>update({lat:a,lon:b,plannedAt:undefined})} onTime={at=>previewMoment(at,lat,lon,false)} onLive={()=>update({timeMode:"live"})} live={settings.timeMode==="live"} skyBrightness={settings.skyBrightness}/>{compareError&&<p role="alert">Your browser could not save the comparison list. Keep this tab open to retain it.</p>}</>}
           {page === "moon" && <MoonObservatory targets={catalogs.targets} onTarget={selectTarget} locationName={locationLabel} lat={lat} lon={lon} date={date} timezone={timezone} settings={settings} update={update} target={selected} initialFeatureId={lunarSelection} onDate={at => { setPlaying(false); update({ date:formatInTimeZone(at,timezone,"yyyy-MM-dd"), time:formatInTimeZone(at,timezone,"HH:mm"), timeMode:"planned", plannedAt:at.toISOString() }); }} savedIds={savedIds} onSave={toggleSave} />}
           {page === "image" && (
             <>
@@ -1907,7 +1926,7 @@ export default function PlannerPage() {
           </footer>
         </main>
       </div>
-      <Dialog open={!!inspectedStar} onOpenChange={open=>{if(!open)setInspectedStar(null);}}><DialogContent className="star-detail-dialog"><DialogHeader><DialogTitle>{inspectedStar?starPlanningTarget(inspectedStar).name:"Star"}</DialogTitle><DialogDescription>Bright Star Catalogue · {formatInTimeZone(date,timezone,"MMM d, yyyy · HH:mm")} local</DialogDescription></DialogHeader>{inspectedStar&&(()=>{const target=starPlanningTarget(inspectedStar);const pos=eqToHorizontal(target.ra,target.dec,lat,lon,date);const node:SkyNode={...inspectedStar,...pos,id:target.id,name:target.name,type:"star"};return <><p className="object-location">Magnitude {target.mag.toFixed(1)} · {Math.round(pos.alt)}° {compassLabel(pos.az)} · {altitudeLabel(pos.alt)}</p><p>{activeSession?`Add to ${activeSession.name}, or remove it from that session.`:"Add this star to an observing session, then open Planner to choose a date and sequence."}</p><Button onClick={()=>toggleSave(target.id)}>{savedIds.has(target.id)?<Check size={14}/>:<Plus size={14}/>} {savedIds.has(target.id)?"Remove from session":"Add to session"}</Button>{selected&&<Button variant="outline" disabled={computing||loading||inspectedStar.mag>Math.min(4.5,limitingMag)||pos.alt<5} onClick={()=>{const id=inspectedStar.id;update({startStarId:id});setInspectedStar(null);void compute(undefined,id);}}>Start hop from this star</Button>}{selected&&<p className="setup-hint">Destination: {selected.name}. Starting references must be above 5° and magnitude {Math.min(4.5,limitingMag).toFixed(1)} or brighter at your observing time.</p>}<SkyChart onSelect={selectTarget} nodes={[...previewNodes.filter(s=>s.id!==inspectedStar.id),node]} constellations={catalogs.constellations} route={null} targetNode={node} animStep={0} fovWidth={fov} fovHeight={shape==="circle"?fov:fovHeight} fovShape={shape} lat={lat} lon={lon} date={date} limitingMag={limitingMag} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} onFovChange={width=>update({fov:width,...(shape==="circle"?{fovHeight:width}:{})})} onLimitingMagChange={value=>update({limitingMag:value})}/><MoonlightCard target={target} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness}/></>;})()}</DialogContent></Dialog>
+      <Dialog open={!!inspectedStar} onOpenChange={open=>{if(!open)setInspectedStar(null);}}><DialogContent className="star-detail-dialog"><DialogHeader><DialogTitle>{inspectedStar?starPlanningTarget(inspectedStar).name:"Star"}</DialogTitle><DialogDescription>Bright Star Catalogue · {formatInTimeZone(date,timezone,"MMM d, yyyy · HH:mm")} local</DialogDescription></DialogHeader>{inspectedStar&&(()=>{const target=starPlanningTarget(inspectedStar);const pos=eqToHorizontal(target.ra,target.dec,lat,lon,date);const node:SkyNode={...inspectedStar,...pos,id:target.id,name:target.name,type:"star"};return <><p className="object-location">Magnitude {target.mag.toFixed(1)} · {Math.round(pos.alt)}° {compassLabel(pos.az)} · {altitudeLabel(pos.alt)}</p><p>{activeSession?`Add to ${activeSession.name}, or remove it from that session.`:"Add this star to an observing session, then open Planner to choose a date and sequence."}</p><Button variant="outline" onClick={()=>compareObjects([target.id],date)}>Astronomical clock & compare ↗</Button><Button onClick={()=>toggleSave(target.id)}>{savedIds.has(target.id)?<Check size={14}/>:<Plus size={14}/>} {savedIds.has(target.id)?"Remove from session":"Add to session"}</Button>{selected&&<Button variant="outline" disabled={computing||loading||inspectedStar.mag>Math.min(4.5,limitingMag)||pos.alt<5} onClick={()=>{const id=inspectedStar.id;update({startStarId:id});setInspectedStar(null);void compute(undefined,id);}}>Start hop from this star</Button>}{selected&&<p className="setup-hint">Destination: {selected.name}. Starting references must be above 5° and magnitude {Math.min(4.5,limitingMag).toFixed(1)} or brighter at your observing time.</p>}<SkyChart onSelect={selectTarget} nodes={[...previewNodes.filter(s=>s.id!==inspectedStar.id),node]} constellations={catalogs.constellations} route={null} targetNode={node} animStep={0} fovWidth={fov} fovHeight={shape==="circle"?fov:fovHeight} fovShape={shape} lat={lat} lon={lon} date={date} limitingMag={limitingMag} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} onFovChange={width=>update({fov:width,...(shape==="circle"?{fovHeight:width}:{})})} onLimitingMagChange={value=>update({limitingMag:value})}/><MoonlightCard target={target} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness}/></>;})()}</DialogContent></Dialog>
       <Dialog open={instrumentOpen} onOpenChange={setInstrumentOpen}>
         <DialogContent className="instrument-choice-dialog">
           <DialogHeader><DialogTitle>Choose your instrument</DialogTitle><DialogDescription>Start with a finder field that suits your view. Adjust the field width below the chart to match your optics.</DialogDescription></DialogHeader>
