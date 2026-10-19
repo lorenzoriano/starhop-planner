@@ -1429,3 +1429,45 @@ button:disabled { opacity: .45; cursor: default; }
 .planetarium-symbol-key .selected-symbol-key { color:#d8bc80; }
 .selected-target-planning .night-altitude-chart { max-width:640px; margin-inline:auto; }
 .sky-workspace .featured-art { max-height:360px; }
+
+/* Location forecasts share the observatory palette; cached data is explicit. */
+.weather-panel { border:1px solid #29434f; border-radius:9px; background:#0b1a23; margin:14px 0 22px; min-width:0; }
+.weather-panel > summary { list-style:none; display:flex; align-items:center; gap:22px; padding:14px 20px; cursor:pointer; }
+.weather-panel > summary::-webkit-details-marker { display:none; }
+.weather-site { display:flex; align-items:center; gap:12px; min-width:0; }
+.weather-site > svg { color:#accfc0; flex-shrink:0; }
+.weather-site strong { color:#c9dcd2; font-size:12px; font-weight:500; }
+.weather-site small { display:block; color:#88a4af; font-size:10px; margin-top:4px; overflow-wrap:anywhere; }
+.weather-glance { margin-left:auto; text-align:right; }
+.weather-glance strong { font-size:12px; font-weight:500; color:#cbd7d1; }
+.weather-good .weather-glance strong { color:#afd9bd; }
+.weather-poor .weather-glance strong { color:#dbc28b; }
+.weather-glance small { display:block; color:#8da7b2; font-size:10px; margin-top:4px; }
+.weather-chevron { color:#8ea9b3; flex-shrink:0; }
+.weather-panel[open] .weather-chevron { transform:rotate(180deg); }
+.weather-content { padding:0 22px 19px; border-top:1px solid #243d49; }
+.weather-update { display:flex; align-items:center; justify-content:space-between; gap:15px; padding:12px 0; color:#91aab5; font-size:10px; }
+.weather-update button { font-size:11px; flex-shrink:0; }
+.weather-update button:disabled { opacity:.5; cursor:default; }
+.weather-message { font-size:12px; line-height:1.8; color:#d3bd8c; margin:10px 0; }
+.weather-chart-heading { display:flex; flex-wrap:wrap; gap:10px 22px; font-size:10px; color:#a6cbdc; padding-top:10px; }
+.weather-chart-heading i { display:inline-block; width:15px; border-top:2px solid; margin-right:6px; vertical-align:middle; }
+.weather-chart-heading > span:nth-child(2) { color:#d9bb7f; }
+.weather-chart-heading > span:nth-child(2) i { border-top-style:dashed; }
+.weather-chart-heading small { margin-left:auto; color:#87a5ae; font-size:10px; }
+.weather-chart { display:block; width:100%; max-width:850px; margin:8px auto 0; touch-action:pan-y; outline-offset:3px; }
+.weather-at { display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; margin:10px 0 18px; }
+.weather-at strong { color:#cedbd3; font-size:12px; font-weight:500; }
+.weather-at button { font-size:11px; }
+.weather-metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px 24px; padding:17px 0; border-top:1px solid #29434e; }
+.weather-metrics > div { display:flex; align-items:flex-start; gap:9px; min-width:0; color:#89a5b1; font-size:11px; }
+.weather-metrics svg { margin-top:2px; flex-shrink:0; color:#a4c6ba; }
+.weather-metrics strong { display:block; font-size:20px; line-height:1.6; color:#d4dfd5; font-weight:400; }
+.weather-metrics small { display:block; font-size:10px; line-height:1.7; overflow-wrap:anywhere; }
+.weather-window { display:flex; align-items:center; gap:12px; margin:6px 0 14px; padding:14px 16px; border-radius:5px; background:#abcdb409; color:#a9ccbb; font-size:12px; }
+.weather-window strong { font-size:12px; font-weight:500; }
+.weather-window small { display:block; color:#8da8b1; font-size:10px; margin-top:5px; }
+.weather-window button { margin-left:auto; font-size:12px; }
+.weather-source,.weather-method { font-size:10px; line-height:1.8; color:#829fab; margin:7px 0 0; }
+.weather-source a { text-decoration:underline; text-underline-offset:3px; color:#a3c6b9; }
+@media(max-width:700px) { .weather-panel > summary { padding:12px 13px; gap:10px; } .weather-site { gap:8px; flex:1; } .weather-site strong,.weather-glance strong { font-size:11px; } .weather-site small,.weather-glance small { font-size:9px; } .weather-glance { max-width:48%; } .weather-content { padding:0 13px 14px; } .weather-metrics { grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 12px; } .weather-chart-heading { gap:8px 15px; } .weather-chart-heading small { margin-left:0; width:100%; } .weather-window { flex-wrap:wrap; padding:12px; } .weather-window > svg { display:none; } }
