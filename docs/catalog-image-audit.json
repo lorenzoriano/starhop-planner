@@ -1,0 +1,2388 @@
+{
+  "reviewDate": "2026-10-18",
+  "surveyFrames": 537,
+  "uniqueReferencedImagesDecoded": 556,
+  "primaryObjects": 297,
+  "primaryPhotographOverrides": 19,
+  "omittedSurveyFrames": 24,
+  "blankOrUndecodable": 0,
+  "visualReview": "All survey contact sheets reviewed. Replacements and expanded bright-source fields were also inspected. Bright stars and compact cores may retain small saturated centers; no missing detail is fabricated.",
+  "primaryImages": [
+    {
+      "id": "STAR-Algol",
+      "path": "data/binocular-images/STAR-Algol-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.068
+    },
+    {
+      "id": "STAR-Mira",
+      "path": "data/binocular-images/STAR-Mira-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0003
+    },
+    {
+      "id": "STAR-Betelgeuse",
+      "path": "data/binocular-images/STAR-Betelgeuse-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1305
+    },
+    {
+      "id": "STAR-Aldebaran",
+      "path": "data/binocular-images/STAR-Aldebaran-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0638
+    },
+    {
+      "id": "STAR-Arcturus",
+      "path": "data/binocular-images/STAR-Arcturus-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 1.4515
+    },
+    {
+      "id": "STAR-Antares",
+      "path": "data/binocular-images/STAR-Antares-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "STAR-Rasalgethi",
+      "path": "data/binocular-images/STAR-Rasalgethi-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0068
+    },
+    {
+      "id": "STAR-MuCep",
+      "path": "data/binocular-images/STAR-MuCep-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0013
+    },
+    {
+      "id": "AST-Coathanger",
+      "path": "data/binocular-images/AST-Coathanger-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "AST-KemblesCascade",
+      "path": "data/binocular-images/AST-KemblesCascade-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "AST-JobsCoffin",
+      "path": "data/binocular-images/AST-JobsCoffin-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0059
+    },
+    {
+      "id": "AST-EngagementRing",
+      "path": "data/binocular-images/AST-EngagementRing-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1012
+    },
+    {
+      "id": "AST-OrionBelt",
+      "path": "data/binocular-images/AST-OrionBelt-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0404
+    },
+    {
+      "id": "M24",
+      "path": "data/binocular-images/M24-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "DS-MizarAlcor",
+      "path": "data/binocular-images/DS-MizarAlcor-featured.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 533,
+      "whitePercent": 1.2729
+    },
+    {
+      "id": "DS-NuDra",
+      "path": "data/binocular-images/DS-NuDra-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0332
+    },
+    {
+      "id": "DS-AlpCap",
+      "path": "data/binocular-images/DS-AlpCap-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.001
+    },
+    {
+      "id": "DS-AlpLib",
+      "path": "data/binocular-images/DS-AlpLib-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.001
+    },
+    {
+      "id": "DS-DoubleDbl",
+      "path": "data/binocular-images/DS-DoubleDbl-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0231
+    },
+    {
+      "id": "DS-56And",
+      "path": "data/binocular-images/DS-56And-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.2598
+    },
+    {
+      "id": "DS-Albireo",
+      "path": "data/binocular-images/DS-Albireo-featured.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 600,
+      "height": 500,
+      "whitePercent": 0.0553
+    },
+    {
+      "id": "M45",
+      "path": "data/binocular-images/M45-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0195
+    },
+    {
+      "id": "AST-Hyades",
+      "path": "data/binocular-images/AST-Hyades-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0163
+    },
+    {
+      "id": "Mel20",
+      "path": "data/binocular-images/Mel20-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0592
+    },
+    {
+      "id": "Mel111",
+      "path": "data/binocular-images/Mel111-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0016
+    },
+    {
+      "id": "NGC869",
+      "path": "data/binocular-images/NGC869-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.013
+    },
+    {
+      "id": "M35",
+      "path": "data/binocular-images/M35-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0492
+    },
+    {
+      "id": "M36",
+      "path": "data/binocular-images/M36-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0329
+    },
+    {
+      "id": "M37",
+      "path": "data/binocular-images/M37-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0586
+    },
+    {
+      "id": "M38",
+      "path": "data/binocular-images/M38-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0892
+    },
+    {
+      "id": "M41",
+      "path": "data/binocular-images/M41-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0062
+    },
+    {
+      "id": "M44",
+      "path": "data/binocular-images/M44-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0003
+    },
+    {
+      "id": "M46",
+      "path": "data/binocular-images/M46-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0208
+    },
+    {
+      "id": "M47",
+      "path": "data/binocular-images/M47-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0169
+    },
+    {
+      "id": "M52",
+      "path": "data/binocular-images/M52-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0638
+    },
+    {
+      "id": "NGC752",
+      "path": "data/binocular-images/NGC752-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0055
+    },
+    {
+      "id": "NGC2244",
+      "path": "data/binocular-images/NGC2244-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0488
+    },
+    {
+      "id": "NGC2264",
+      "path": "data/binocular-images/NGC2264-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0524
+    },
+    {
+      "id": "IC4665",
+      "path": "data/binocular-images/IC4665-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0023
+    },
+    {
+      "id": "IC4756",
+      "path": "data/binocular-images/IC4756-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0075
+    },
+    {
+      "id": "NGC6633",
+      "path": "data/binocular-images/NGC6633-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0492
+    },
+    {
+      "id": "M3",
+      "path": "data/binocular-images/M3-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.7165
+    },
+    {
+      "id": "M5",
+      "path": "data/binocular-images/M5-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 1.0049
+    },
+    {
+      "id": "M13",
+      "path": "data/binocular-images/M13-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 500,
+      "height": 616,
+      "whitePercent": 0.7929
+    },
+    {
+      "id": "M22",
+      "path": "data/binocular-images/M22-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1364
+    },
+    {
+      "id": "M92",
+      "path": "data/binocular-images/M92-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.8649
+    },
+    {
+      "id": "M42",
+      "path": "data/binocular-images/M42-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 960,
+      "whitePercent": 0.0263
+    },
+    {
+      "id": "M8",
+      "path": "data/binocular-images/NGC6530-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 643,
+      "whitePercent": 0.0416
+    },
+    {
+      "id": "M17",
+      "path": "data/binocular-images/M17-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 960,
+      "whitePercent": 0.2408
+    },
+    {
+      "id": "M27",
+      "path": "data/binocular-images/M27-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 959,
+      "whitePercent": 0.0102
+    },
+    {
+      "id": "NGC7000",
+      "path": "data/binocular-images/NGC7000-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0007
+    },
+    {
+      "id": "M31",
+      "path": "data/binocular-images/M31-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.2741
+    },
+    {
+      "id": "M33",
+      "path": "data/binocular-images/M33-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0234
+    },
+    {
+      "id": "M81",
+      "path": "data/binocular-images/M81-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.2972
+    },
+    {
+      "id": "M82",
+      "path": "data/binocular-images/M82-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.2477
+    },
+    {
+      "id": "NGC253",
+      "path": "data/binocular-images/NGC253-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0091
+    },
+    {
+      "id": "IC2602",
+      "path": "data/binocular-images/IC2602-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0042
+    },
+    {
+      "id": "NGC3532",
+      "path": "data/binocular-images/NGC3532-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0085
+    },
+    {
+      "id": "NGC3372",
+      "path": "data/binocular-images/NGC3372-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 952,
+      "whitePercent": 0.3059
+    },
+    {
+      "id": "NGC5139",
+      "path": "data/binocular-images/NGC5139-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0036
+    },
+    {
+      "id": "NGC104",
+      "path": "data/binocular-images/NGC104-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0068
+    },
+    {
+      "id": "M1",
+      "path": "data/binocular-images/M1-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.2913
+    },
+    {
+      "id": "M2",
+      "path": "data/binocular-images/M2-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.6351
+    },
+    {
+      "id": "M4",
+      "path": "data/binocular-images/M4-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0016
+    },
+    {
+      "id": "M6",
+      "path": "data/binocular-images/M6-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0511
+    },
+    {
+      "id": "M7",
+      "path": "data/binocular-images/M7-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 931,
+      "whitePercent": 1.0803
+    },
+    {
+      "id": "M9",
+      "path": "data/binocular-images/M9-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0088
+    },
+    {
+      "id": "M10",
+      "path": "data/binocular-images/M10-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0016
+    },
+    {
+      "id": "M11",
+      "path": "data/binocular-images/M11-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0003
+    },
+    {
+      "id": "M12",
+      "path": "data/binocular-images/M12-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.3239
+    },
+    {
+      "id": "M14",
+      "path": "data/binocular-images/M14-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.002
+    },
+    {
+      "id": "M15",
+      "path": "data/binocular-images/M15-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.5898
+    },
+    {
+      "id": "M16",
+      "path": "data/binocular-images/M16-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 960,
+      "whitePercent": 0.5974
+    },
+    {
+      "id": "M18",
+      "path": "data/binocular-images/M18-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0039
+    },
+    {
+      "id": "M19",
+      "path": "data/binocular-images/M19-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0947
+    },
+    {
+      "id": "M20",
+      "path": "data/binocular-images/M20-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 500,
+      "height": 644,
+      "whitePercent": 0.2494
+    },
+    {
+      "id": "M23",
+      "path": "data/binocular-images/M23-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.042
+    },
+    {
+      "id": "M25",
+      "path": "data/binocular-images/M25-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "M26",
+      "path": "data/binocular-images/M26-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "M28",
+      "path": "data/binocular-images/M28-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0088
+    },
+    {
+      "id": "M29",
+      "path": "data/binocular-images/M29-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0283
+    },
+    {
+      "id": "M30",
+      "path": "data/binocular-images/M30-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "M32",
+      "path": "data/binocular-images/M32-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.2933
+    },
+    {
+      "id": "M34",
+      "path": "data/binocular-images/M34-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0033
+    },
+    {
+      "id": "M39",
+      "path": "data/binocular-images/M39-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0251
+    },
+    {
+      "id": "M40",
+      "path": "data/binocular-images/M40-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0267
+    },
+    {
+      "id": "M48",
+      "path": "data/binocular-images/M48-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0127
+    },
+    {
+      "id": "M49",
+      "path": "data/binocular-images/M49-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1527
+    },
+    {
+      "id": "M50",
+      "path": "data/binocular-images/M50-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0202
+    },
+    {
+      "id": "M51",
+      "path": "data/binocular-images/M51-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.265
+    },
+    {
+      "id": "M53",
+      "path": "data/binocular-images/M53-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.4118
+    },
+    {
+      "id": "M54",
+      "path": "data/binocular-images/M54-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0309
+    },
+    {
+      "id": "M55",
+      "path": "data/binocular-images/M55-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.07
+    },
+    {
+      "id": "M56",
+      "path": "data/binocular-images/M56-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0996
+    },
+    {
+      "id": "M58",
+      "path": "data/binocular-images/M58-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0329
+    },
+    {
+      "id": "M59",
+      "path": "data/binocular-images/M59-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0384
+    },
+    {
+      "id": "M60",
+      "path": "data/binocular-images/M60-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0954
+    },
+    {
+      "id": "M61",
+      "path": "data/binocular-images/M61-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0166
+    },
+    {
+      "id": "M62",
+      "path": "data/binocular-images/M62-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 985,
+      "whitePercent": 0.817
+    },
+    {
+      "id": "M63",
+      "path": "data/binocular-images/M63-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1917
+    },
+    {
+      "id": "M64",
+      "path": "data/binocular-images/M64-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 897,
+      "height": 1065,
+      "whitePercent": 0.0189
+    },
+    {
+      "id": "M65",
+      "path": "data/binocular-images/M65-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0876
+    },
+    {
+      "id": "M66",
+      "path": "data/binocular-images/M66-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1631
+    },
+    {
+      "id": "M67",
+      "path": "data/binocular-images/M67-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0192
+    },
+    {
+      "id": "M68",
+      "path": "data/binocular-images/M68-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0039
+    },
+    {
+      "id": "M69",
+      "path": "data/binocular-images/M69-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0443
+    },
+    {
+      "id": "M70",
+      "path": "data/binocular-images/M70-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1266
+    },
+    {
+      "id": "M71",
+      "path": "data/binocular-images/M71-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0355
+    },
+    {
+      "id": "M72",
+      "path": "data/binocular-images/M72-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0003
+    },
+    {
+      "id": "M75",
+      "path": "data/binocular-images/M75-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0117
+    },
+    {
+      "id": "M77",
+      "path": "data/binocular-images/M77-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0837
+    },
+    {
+      "id": "M78",
+      "path": "data/binocular-images/M78-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.5192
+    },
+    {
+      "id": "M79",
+      "path": "data/binocular-images/M79-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0039
+    },
+    {
+      "id": "M80",
+      "path": "data/binocular-images/M80-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0081
+    },
+    {
+      "id": "M83",
+      "path": "data/binocular-images/M83-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0023
+    },
+    {
+      "id": "M84",
+      "path": "data/binocular-images/M84-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0671
+    },
+    {
+      "id": "M85",
+      "path": "data/binocular-images/M85-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0065
+    },
+    {
+      "id": "M86",
+      "path": "data/binocular-images/M86-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0664
+    },
+    {
+      "id": "M87",
+      "path": "data/binocular-images/M87-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0846
+    },
+    {
+      "id": "M88",
+      "path": "data/binocular-images/M88-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0495
+    },
+    {
+      "id": "M89",
+      "path": "data/binocular-images/M89-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0508
+    },
+    {
+      "id": "M90",
+      "path": "data/binocular-images/M90-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.055
+    },
+    {
+      "id": "M93",
+      "path": "data/binocular-images/M93-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.124
+    },
+    {
+      "id": "M94",
+      "path": "data/binocular-images/M94-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.2367
+    },
+    {
+      "id": "M95",
+      "path": "data/binocular-images/M95-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0068
+    },
+    {
+      "id": "M96",
+      "path": "data/binocular-images/M96-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0264
+    },
+    {
+      "id": "M97",
+      "path": "data/binocular-images/M97-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 797,
+      "height": 579,
+      "whitePercent": 0.0819
+    },
+    {
+      "id": "M99",
+      "path": "data/binocular-images/M99-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.028
+    },
+    {
+      "id": "M100",
+      "path": "data/binocular-images/M100-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.015
+    },
+    {
+      "id": "M101",
+      "path": "data/binocular-images/M101-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0677
+    },
+    {
+      "id": "M102",
+      "path": "data/binocular-images/M102-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0732
+    },
+    {
+      "id": "M103",
+      "path": "data/binocular-images/M103-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0326
+    },
+    {
+      "id": "M104",
+      "path": "data/binocular-images/M104-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0013
+    },
+    {
+      "id": "M105",
+      "path": "data/binocular-images/M105-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0895
+    },
+    {
+      "id": "M106",
+      "path": "data/binocular-images/M106-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1296
+    },
+    {
+      "id": "M107",
+      "path": "data/binocular-images/M107-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0059
+    },
+    {
+      "id": "M108",
+      "path": "data/binocular-images/M108-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 844,
+      "whitePercent": 0.5633
+    },
+    {
+      "id": "M109",
+      "path": "data/binocular-images/M109-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.026
+    },
+    {
+      "id": "M110",
+      "path": "data/binocular-images/M110-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1579
+    },
+    {
+      "id": "M21",
+      "path": "data/binocular-images/M21-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0492
+    },
+    {
+      "id": "NGC129",
+      "path": "data/binocular-images/NGC129-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0264
+    },
+    {
+      "id": "NGC457",
+      "path": "data/binocular-images/NGC457-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.127
+    },
+    {
+      "id": "NGC663",
+      "path": "data/binocular-images/NGC663-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0186
+    },
+    {
+      "id": "Cr463",
+      "path": "data/binocular-images/Cr463-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.002
+    },
+    {
+      "id": "Stock2",
+      "path": "data/binocular-images/Stock2-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0062
+    },
+    {
+      "id": "Mark6",
+      "path": "data/binocular-images/Mark6-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.012
+    },
+    {
+      "id": "Mel15",
+      "path": "data/binocular-images/Mel15-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0296
+    },
+    {
+      "id": "Tr2",
+      "path": "data/binocular-images/Tr2-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0368
+    },
+    {
+      "id": "Tr3",
+      "path": "data/binocular-images/Tr3-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0257
+    },
+    {
+      "id": "Stock23",
+      "path": "data/binocular-images/Stock23-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.026
+    },
+    {
+      "id": "NGC1342",
+      "path": "data/binocular-images/NGC1342-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0413
+    },
+    {
+      "id": "NGC1528",
+      "path": "data/binocular-images/NGC1528-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0436
+    },
+    {
+      "id": "NGC1582",
+      "path": "data/binocular-images/NGC1582-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0029
+    },
+    {
+      "id": "NGC1647",
+      "path": "data/binocular-images/NGC1647-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0033
+    },
+    {
+      "id": "NGC1662",
+      "path": "data/binocular-images/NGC1662-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0273
+    },
+    {
+      "id": "NGC1746",
+      "path": "data/binocular-images/NGC1746-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0033
+    },
+    {
+      "id": "NGC1807",
+      "path": "data/binocular-images/NGC1807-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0094
+    },
+    {
+      "id": "NGC1817",
+      "path": "data/binocular-images/NGC1817-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0078
+    },
+    {
+      "id": "NGC1893",
+      "path": "data/binocular-images/NGC1893-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0114
+    },
+    {
+      "id": "NGC1907",
+      "path": "data/binocular-images/NGC1907-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.042
+    },
+    {
+      "id": "NGC1981",
+      "path": "data/binocular-images/NGC1981-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0026
+    },
+    {
+      "id": "NGC2169",
+      "path": "data/binocular-images/NGC2169-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0361
+    },
+    {
+      "id": "NGC2232",
+      "path": "data/binocular-images/NGC2232-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.071
+    },
+    {
+      "id": "NGC2251",
+      "path": "data/binocular-images/NGC2251-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0303
+    },
+    {
+      "id": "NGC2281",
+      "path": "data/binocular-images/NGC2281-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0322
+    },
+    {
+      "id": "NGC2301",
+      "path": "data/binocular-images/NGC2301-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0485
+    },
+    {
+      "id": "NGC2343",
+      "path": "data/binocular-images/NGC2343-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0078
+    },
+    {
+      "id": "NGC2360",
+      "path": "data/binocular-images/NGC2360-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0736
+    },
+    {
+      "id": "NGC2403",
+      "path": "data/binocular-images/NGC2403-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0023
+    },
+    {
+      "id": "NGC2527",
+      "path": "data/binocular-images/NGC2527-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0573
+    },
+    {
+      "id": "NGC2539",
+      "path": "data/binocular-images/NGC2539-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0244
+    },
+    {
+      "id": "NGC2571",
+      "path": "data/binocular-images/NGC2571-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0251
+    },
+    {
+      "id": "NGC6520",
+      "path": "data/binocular-images/NGC6520-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "NGC6709",
+      "path": "data/binocular-images/NGC6709-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0218
+    },
+    {
+      "id": "NGC6716",
+      "path": "data/binocular-images/NGC6716-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0413
+    },
+    {
+      "id": "NGC6819",
+      "path": "data/binocular-images/NGC6819-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0417
+    },
+    {
+      "id": "NGC6823",
+      "path": "data/binocular-images/NGC6823-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0394
+    },
+    {
+      "id": "NGC6910",
+      "path": "data/binocular-images/NGC6910-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0267
+    },
+    {
+      "id": "NGC6934",
+      "path": "data/binocular-images/NGC6934-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0749
+    },
+    {
+      "id": "NGC6940",
+      "path": "data/binocular-images/NGC6940-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0488
+    },
+    {
+      "id": "NGC7063",
+      "path": "data/binocular-images/NGC7063-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0348
+    },
+    {
+      "id": "NGC7160",
+      "path": "data/binocular-images/NGC7160-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0612
+    },
+    {
+      "id": "NGC7209",
+      "path": "data/binocular-images/NGC7209-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.029
+    },
+    {
+      "id": "NGC7235",
+      "path": "data/binocular-images/NGC7235-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0088
+    },
+    {
+      "id": "NGC7243",
+      "path": "data/binocular-images/NGC7243-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0811
+    },
+    {
+      "id": "NGC7789",
+      "path": "data/binocular-images/NGC7789-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0173
+    },
+    {
+      "id": "SMC",
+      "path": "data/binocular-images/SMC-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "NGC362",
+      "path": "data/binocular-images/NGC362-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0111
+    },
+    {
+      "id": "NGC1851",
+      "path": "data/binocular-images/NGC1851-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0117
+    },
+    {
+      "id": "LMC",
+      "path": "data/binocular-images/LMC-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "NGC2451",
+      "path": "data/binocular-images/NGC2451-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0107
+    },
+    {
+      "id": "NGC2477",
+      "path": "data/binocular-images/NGC2477-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0117
+    },
+    {
+      "id": "NGC2516",
+      "path": "data/binocular-images/NGC2516-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.029
+    },
+    {
+      "id": "NGC2547",
+      "path": "data/binocular-images/NGC2547-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0117
+    },
+    {
+      "id": "NGC2546",
+      "path": "data/binocular-images/NGC2546-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0114
+    },
+    {
+      "id": "IC2391",
+      "path": "data/binocular-images/IC2391-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0114
+    },
+    {
+      "id": "IC2395",
+      "path": "data/binocular-images/IC2395-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0518
+    },
+    {
+      "id": "NGC2808",
+      "path": "data/binocular-images/NGC2808-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.4346
+    },
+    {
+      "id": "NGC2910",
+      "path": "data/binocular-images/NGC2910-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0459
+    },
+    {
+      "id": "NGC3114",
+      "path": "data/binocular-images/NGC3114-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0107
+    },
+    {
+      "id": "NGC3201",
+      "path": "data/binocular-images/NGC3201-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0475
+    },
+    {
+      "id": "NGC3228",
+      "path": "data/binocular-images/NGC3228-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.04
+    },
+    {
+      "id": "NGC3293",
+      "path": "data/binocular-images/NGC3293-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0007
+    },
+    {
+      "id": "NGC3766",
+      "path": "data/binocular-images/NGC3766-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0267
+    },
+    {
+      "id": "NGC4463",
+      "path": "data/binocular-images/NGC4463-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "NGC4609",
+      "path": "data/binocular-images/NGC4609-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0941
+    },
+    {
+      "id": "NGC4755",
+      "path": "data/binocular-images/NGC4755-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1699
+    },
+    {
+      "id": "NGC5128",
+      "path": "data/binocular-images/NGC5128-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0007
+    },
+    {
+      "id": "NGC5316",
+      "path": "data/binocular-images/NGC5316-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0355
+    },
+    {
+      "id": "NGC5460",
+      "path": "data/binocular-images/NGC5460-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0293
+    },
+    {
+      "id": "NGC5617",
+      "path": "data/binocular-images/NGC5617-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0843
+    },
+    {
+      "id": "NGC5662",
+      "path": "data/binocular-images/NGC5662-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0098
+    },
+    {
+      "id": "NGC5822",
+      "path": "data/binocular-images/NGC5822-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0091
+    },
+    {
+      "id": "NGC6025",
+      "path": "data/binocular-images/NGC6025-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0358
+    },
+    {
+      "id": "NGC6067",
+      "path": "data/binocular-images/NGC6067-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0003
+    },
+    {
+      "id": "NGC6087",
+      "path": "data/binocular-images/NGC6087-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0892
+    },
+    {
+      "id": "NGC6124",
+      "path": "data/binocular-images/NGC6124-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0059
+    },
+    {
+      "id": "NGC6134",
+      "path": "data/binocular-images/NGC6134-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "NGC6167",
+      "path": "data/binocular-images/NGC6167-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "NGC6208",
+      "path": "data/binocular-images/NGC6208-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.043
+    },
+    {
+      "id": "NGC6231",
+      "path": "data/binocular-images/NGC6231-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "IC4651",
+      "path": "data/binocular-images/IC4651-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0524
+    },
+    {
+      "id": "NGC6397",
+      "path": "data/binocular-images/NGC6397-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0492
+    },
+    {
+      "id": "NGC6541",
+      "path": "data/binocular-images/NGC6541-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0166
+    },
+    {
+      "id": "NGC6752",
+      "path": "data/binocular-images/NGC6752-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0378
+    },
+    {
+      "id": "STAR-Capella",
+      "path": "data/binocular-images/STAR-Capella-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.9762
+    },
+    {
+      "id": "STAR-Sirius",
+      "path": "data/binocular-images/STAR-Sirius-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 636,
+      "whitePercent": 0.0187
+    },
+    {
+      "id": "STAR-Procyon",
+      "path": "data/binocular-images/STAR-Procyon-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.362
+    },
+    {
+      "id": "STAR-Vega",
+      "path": "data/binocular-images/STAR-Vega-primary.png",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 1042,
+      "whitePercent": 0.0069
+    },
+    {
+      "id": "STAR-Deneb",
+      "path": "data/binocular-images/STAR-Deneb-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1566
+    },
+    {
+      "id": "STAR-Fomalhaut",
+      "path": "data/binocular-images/STAR-Fomalhaut-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0003
+    },
+    {
+      "id": "STAR-Alphard",
+      "path": "data/binocular-images/STAR-Alphard-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0003
+    },
+    {
+      "id": "STAR-LaSuperba",
+      "path": "data/binocular-images/STAR-LaSuperba-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "DS-ThetaTau",
+      "path": "data/binocular-images/DS-ThetaTau-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0413
+    },
+    {
+      "id": "DS-16Dra",
+      "path": "data/binocular-images/DS-16Dra-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.7868
+    },
+    {
+      "id": "DS-39Dra",
+      "path": "data/binocular-images/DS-39Dra-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.4219
+    },
+    {
+      "id": "DS-14Ari",
+      "path": "data/binocular-images/DS-14Ari-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.4512
+    },
+    {
+      "id": "DS-NuGem",
+      "path": "data/binocular-images/DS-NuGem-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.4844
+    },
+    {
+      "id": "AST-FlyingMinnow",
+      "path": "data/binocular-images/AST-FlyingMinnow-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "AST-DavisDog",
+      "path": "data/binocular-images/AST-DavisDog-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "M43",
+      "path": "data/binocular-images/M43-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 466,
+      "height": 353,
+      "whitePercent": 0.2663
+    },
+    {
+      "id": "M57",
+      "path": "data/binocular-images/M57-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1159
+    },
+    {
+      "id": "M73",
+      "path": "data/binocular-images/M73-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "M74",
+      "path": "data/binocular-images/M74-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.002
+    },
+    {
+      "id": "M76",
+      "path": "data/binocular-images/M76-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0853
+    },
+    {
+      "id": "M91",
+      "path": "data/binocular-images/M91-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0257
+    },
+    {
+      "id": "M98",
+      "path": "data/binocular-images/M98-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0023
+    },
+    {
+      "id": "DS-AlmaakDS",
+      "path": "data/binocular-images/DS-AlmaakDS-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.2451
+    },
+    {
+      "id": "DS-61Cyg",
+      "path": "data/binocular-images/DS-61Cyg-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.3454
+    },
+    {
+      "id": "DS-AlpCVn",
+      "path": "data/binocular-images/DS-AlpCVn-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.097
+    },
+    {
+      "id": "DS-DeltaCep",
+      "path": "data/binocular-images/DS-DeltaCep-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.5846
+    },
+    {
+      "id": "DS-IotaCas",
+      "path": "data/binocular-images/DS-IotaCas-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.5579
+    },
+    {
+      "id": "DS-15Mon",
+      "path": "data/binocular-images/DS-15Mon-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.4108
+    },
+    {
+      "id": "DS-BetMon",
+      "path": "data/binocular-images/DS-BetMon-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.041
+    },
+    {
+      "id": "DS-100Her",
+      "path": "data/binocular-images/DS-100Her-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.3919
+    },
+    {
+      "id": "DS-OmSgr",
+      "path": "data/binocular-images/DS-OmSgr-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.3919
+    },
+    {
+      "id": "DS-OmCep",
+      "path": "data/binocular-images/DS-OmCep-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.526
+    },
+    {
+      "id": "DS-GamAri",
+      "path": "data/binocular-images/DS-GamAri-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.2617
+    },
+    {
+      "id": "DS-Winnecke4",
+      "path": "data/binocular-images/DS-Winnecke4-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0267
+    },
+    {
+      "id": "DS-SigCas",
+      "path": "data/binocular-images/DS-SigCas-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.4932
+    },
+    {
+      "id": "DS-EtaCas",
+      "path": "data/binocular-images/DS-EtaCas-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0534
+    },
+    {
+      "id": "DS-PsiDra",
+      "path": "data/binocular-images/DS-PsiDra-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.5345
+    },
+    {
+      "id": "AST-KemblesKite",
+      "path": "data/binocular-images/AST-KemblesKite-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "AST-LittleCassiopeia",
+      "path": "data/binocular-images/AST-LittleCassiopeia-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "AST-NorthernFly",
+      "path": "data/binocular-images/AST-NorthernFly-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "AST-SinOrion",
+      "path": "data/binocular-images/AST-SinOrion-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0843
+    },
+    {
+      "id": "AST-HomePlate",
+      "path": "data/binocular-images/AST-HomePlate-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "AST-LambdaLambda",
+      "path": "data/binocular-images/AST-LambdaLambda-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0016
+    },
+    {
+      "id": "AST-SmileyFace",
+      "path": "data/binocular-images/AST-SmileyFace-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0007
+    },
+    {
+      "id": "AST-QuestionMark",
+      "path": "data/binocular-images/AST-QuestionMark-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "AST-HermansCross",
+      "path": "data/binocular-images/AST-HermansCross-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0003
+    },
+    {
+      "id": "AST-GolfPutter",
+      "path": "data/binocular-images/AST-GolfPutter-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "AST-Pakan3",
+      "path": "data/binocular-images/AST-Pakan3-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "AST-Lucky7",
+      "path": "data/binocular-images/AST-Lucky7-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "NGC884",
+      "path": "data/binocular-images/NGC884-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0641
+    },
+    {
+      "id": "NGC6530",
+      "path": "data/binocular-images/NGC6530-primary.jpg",
+      "sourceKind": "credited optical photograph",
+      "width": 960,
+      "height": 643,
+      "whitePercent": 0.0416
+    },
+    {
+      "id": "NGC6885",
+      "path": "data/binocular-images/NGC6885-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0251
+    },
+    {
+      "id": "NGC1502",
+      "path": "data/binocular-images/NGC1502-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.1299
+    },
+    {
+      "id": "NGC7293",
+      "path": "data/binocular-images/NGC7293-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "NGC2392",
+      "path": "data/binocular-images/NGC2392-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0475
+    },
+    {
+      "id": "NGC2362",
+      "path": "data/binocular-images/NGC2362-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0843
+    },
+    {
+      "id": "NGC6826",
+      "path": "data/binocular-images/NGC6826-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0352
+    },
+    {
+      "id": "NGC6992",
+      "path": "data/binocular-images/NGC6992-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0049
+    },
+    {
+      "id": "NGC6960",
+      "path": "data/binocular-images/NGC6960-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.002
+    },
+    {
+      "id": "NGC2237",
+      "path": "data/binocular-images/NGC2237-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0
+    },
+    {
+      "id": "NGC6888",
+      "path": "data/binocular-images/NGC6888-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0303
+    },
+    {
+      "id": "IC405",
+      "path": "data/binocular-images/IC405-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.015
+    },
+    {
+      "id": "NGC891",
+      "path": "data/binocular-images/NGC891-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0309
+    },
+    {
+      "id": "NGC7009",
+      "path": "data/binocular-images/NGC7009-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0055
+    },
+    {
+      "id": "NGC3242",
+      "path": "data/binocular-images/NGC3242-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0107
+    },
+    {
+      "id": "NGC6543",
+      "path": "data/binocular-images/NGC6543-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0225
+    },
+    {
+      "id": "NGC4565",
+      "path": "data/binocular-images/NGC4565-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0247
+    },
+    {
+      "id": "NGC7662",
+      "path": "data/binocular-images/NGC7662-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.015
+    },
+    {
+      "id": "NGC7331",
+      "path": "data/binocular-images/NGC7331-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0485
+    },
+    {
+      "id": "NGC6802",
+      "path": "data/binocular-images/NGC6802-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0299
+    },
+    {
+      "id": "NGC6871",
+      "path": "data/binocular-images/NGC6871-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0771
+    },
+    {
+      "id": "NGC2158",
+      "path": "data/binocular-images/NGC2158-optical.jpg",
+      "sourceKind": "DSS2 optical field",
+      "width": 640,
+      "height": 480,
+      "whitePercent": 0.0286
+    }
+  ]
+}

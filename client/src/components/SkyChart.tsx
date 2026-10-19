@@ -1,3 +1,5 @@
+import { CatalogSkySymbol } from './CatalogSkySymbol';
+import { isDeepSky, altitudeRingFraction, skyObjectKind } from '@/lib/planetarium';
 import { stellarColor,stellarRadius } from '@/lib/stellar-appearance';
 import { useFinderStars } from '@/hooks/use-finder-stars';
 import { orientChartPoint } from '@/lib/observing';
@@ -6,7 +8,7 @@ import { milkyWayPaths as projectMilkyWay } from '@/lib/sky-polygons';
 import { angularRing, RETICLE_DIAMETERS, type FinderReticle } from '@/lib/finder-view';
 import { boxesOverlap,labelFits,type LabelBox } from '@/lib/chart-labels';
 import { useChartPreferences } from './ChartPreferences';
-import { useMemo, useRef, useState, useCallback, useEffect, useLayoutEffect, type ReactNode } from 'react';
+import { useMemo, useRef, useState, useCallback, useEffect, useLayoutEffect, useId, type ReactNode } from 'react';
 import {
   angularDistance,
   getConstellationName,
@@ -63,6 +65,8 @@ export function SkyChart({
   overview = false,
   onSelect, onFovChange, onLimitingMagChange, fieldNavigation, maxCatalogMagnitude=8, targetDiameter,
 }: SkyChartProps) {
+  const chartId=`sky-${useId().replaceAll(':','')}`;
+  const [showObjects,setShowObjects]=useState(true);
   const deepCatalog=useFinderStars(targetNode?.id,limitingMag>8&&!overview);
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -70,7 +74,9 @@ export function SkyChart({
 
   // Shared display preferences; primary controls remain visible below every chart.
   const { preferences, update: updateDisplay } = useChartPreferences();
-  const { labelSize, starBrightness, navStarSize, showLegend, showGhostCircles, showConstellations, mirrored, rotation, starsOnly, finderReticle } = preferences;
+  const { labelSize, starBrightness, navStarSize, showLegend, showGhostCircles, showConstellations, mirrored, rotation, finderReticle } = preferences;
+
+  const starsOnly=overview?false:preferences.starsOnly;
 
   // Zoom and pan state
   const [zoom, setZoom] = useState(1);
@@ -79,7 +85,7 @@ export function SkyChart({
   const [viewportPixels, setViewportPixels] = useState(CHART_SIZE);
   useLayoutEffect(() => {
     const svg = svgRef.current; if (!svg) return;
-    const measure = () => { const box = svg.getBoundingClientRect(); setViewportPixels(Math.max(1, Math.min(box.width, box.height))); };
+    const measure = () => { const box = svg.getBoundingClientRect(); if(box.width>0&&box.height>0)setViewportPixels(Math.min(box.width,box.height)); };
     measure(); const observer = new ResizeObserver(measure); observer.observe(svg);
     return () => observer.disconnect();
   }, []);
@@ -158,7 +164,7 @@ export function SkyChart({
   const labelViewport={left:viewBoxX+6*screenUnit,top:viewBoxY+6*screenUnit,right:viewBoxX+viewBoxSize-6*screenUnit,bottom:viewBoxY+viewBoxSize-6*screenUnit};
   const labelCircle=overview?{x:cx,y:cy,r:260-3*screenUnit}:undefined;
   const reservedLabels:LabelBox[]=[{left:viewBoxX+viewBoxSize-75*screenUnit,top:viewBoxY,right:viewBoxX+viewBoxSize,bottom:viewBoxY+75*screenUnit}];
-  if(showLegend&&!starsOnly)reservedLabels.push({left:viewBoxX,top:viewBoxY,right:viewBoxX+(route?280:180)*screenUnit,bottom:viewBoxY+42*screenUnit});
+  if(showLegend&&!starsOnly&&!overview)reservedLabels.push({left:viewBoxX,top:viewBoxY,right:viewBoxX+(route?280:180)*screenUnit,bottom:viewBoxY+42*screenUnit});
 
   // Clamp pan so chart doesn't fly offscreen
   const clampPan = useCallback((px: number, py: number, z: number) => {
@@ -413,15 +419,16 @@ export function SkyChart({
       const distFromCenter = angularDistance(node.ra, node.dec, center.ra, center.dec);
       if (distFromCenter > viewRadius) return false;
 
+      if(overview&&!showObjects&&(node.type==='binocular'||node.type==='messier'))return false;
       // Always show highlighted, planets, binoculars
       if (highlightedIds.has(node.id)) return true;
       if (node.type === 'planet') return true;
-      if (node.type === 'binocular'||node.type === 'messier') return true;
+      if (node.type === 'binocular'||node.type === 'messier') return !overview||showObjects;
 
       // Show all stars up to the user's limiting magnitude
       return node.mag <= limitingMag;
     });
-  }, [nodes, mirrored, rotation, center.ra, center.dec, viewRadius, highlightedIds, limitingMag]);
+  }, [nodes, mirrored, rotation, center.ra, center.dec, viewRadius, highlightedIds, limitingMag, overview, showObjects]);
 
   // Background star layer from dense Hipparcos catalog — pure rendering, no routing
   const backgroundStarLayer = useMemo(() => {
@@ -453,7 +460,7 @@ export function SkyChart({
         seg.some(([ra, dec]) => angularDistance(ra, dec, focusPoint.ra, focusPoint.dec) < localRadius * 1.2)
       ) : false;
       const isActiveConstellation = activeConstellationIds.has(constellation.id);
-      const nearFocus = isNearFocus || isActiveConstellation;
+      const nearFocus = overview || isNearFocus || isActiveConstellation;
 
       for (const segment of constellation.points) {
         let d = '';
@@ -505,7 +512,7 @@ export function SkyChart({
         // Serpens has two separate source figures. Reusing its abbreviation
         // as a React key leaves stale labels behind after resize or filtering.
         key: `${constellation.id}-${index}`,
-        nearFocus: isNearFocus || isActive,
+        nearFocus: overview || isNearFocus || isActive,
       });
     }
     return labels;
@@ -566,6 +573,7 @@ export function SkyChart({
 
   // Compact chart labels: constellation abbreviation to save space
   const chartLabel = (star: SkyNode): string => {
+    if(overview&&isDeepSky(star.category)&&star.id!==targetNode?.id)return star.id.startsWith('AST-')?star.name:star.id;
     if (star.name && star.name.length > 2 && !star.name.startsWith('HR') && star.name !== star.bayer) {
       return star.name;
     }
@@ -580,6 +588,7 @@ export function SkyChart({
     const candidates = plottedStars
       .filter(({ star, isAnchor, isTarget, isPatternAnchor, isGuide }) => {
         if (isTarget || isAnchor || isPatternAnchor) return true;
+        if(overview&&isDeepSky(star.category))return true;
         if (isGuide && !!star.name) return true;
         // Bright named stars always get labels
         if (star.mag < 1.1) return true;
@@ -596,8 +605,9 @@ export function SkyChart({
         // Proximity to focus point boosts score for tie-breaking
         const focusBonusA = focusPoint ? Math.max(0, 15 - angularDistance(a.star.ra, a.star.dec, focusPoint.ra, focusPoint.dec)) : 0;
         const focusBonusB = focusPoint ? Math.max(0, 15 - angularDistance(b.star.ra, b.star.dec, focusPoint.ra, focusPoint.dec)) : 0;
-        const scoreA = (a.isTarget ? 100 : 0) + (a.isAnchor ? 70 : 0) + (a.isPatternAnchor ? 45 : 0) + (a.isGuide ? 20 : 0) - a.star.mag * 4 + focusBonusA;
-        const scoreB = (b.isTarget ? 100 : 0) + (b.isAnchor ? 70 : 0) + (b.isPatternAnchor ? 45 : 0) + (b.isGuide ? 20 : 0) - b.star.mag * 4 + focusBonusB;
+        const catalogPriority=(star:SkyNode)=>overview&&isDeepSky(star.category)?skyObjectKind(star.category)==='field'?8:40:0;
+        const scoreA = (a.isTarget ? 100 : 0) + (a.isAnchor ? 70 : 0) + (a.isPatternAnchor ? 45 : 0) + (a.isGuide ? 20 : 0) + catalogPriority(a.star) - a.star.mag * 4 + focusBonusA;
+        const scoreB = (b.isTarget ? 100 : 0) + (b.isAnchor ? 70 : 0) + (b.isPatternAnchor ? 45 : 0) + (b.isGuide ? 20 : 0) + catalogPriority(b.star) - b.star.mag * 4 + focusBonusB;
         return scoreB - scoreA;
       });
 
@@ -624,7 +634,11 @@ export function SkyChart({
     const measure=document.createElement('canvas').getContext('2d');
     const family=getComputedStyle(svgRef.current??document.body).getPropertyValue('--font-sans')||'sans-serif';
     const usedNames = new Set<string>();
+    let catalogLabels=0;
+    const catalogLabelLimit=Math.min(22,(viewportPixels<430?6:12)+Math.floor(Math.max(0,zoom-1)*2));
     for (const candidate of candidates) {
+      const catalogLabel=overview&&!candidate.isTarget&&isDeepSky(candidate.star.category);
+      if(catalogLabel&&catalogLabels>=catalogLabelLimit)continue;
       const text = chartLabel(candidate.star);
       // Skip empty labels (HR-only stars) and deduplicate
       if (!text || usedNames.has(text)) continue;
@@ -661,16 +675,17 @@ export function SkyChart({
             box,leader:nudge?candidate.point:null,
           });
           usedNames.add(text);placed=true;
+          if(catalogLabel)catalogLabels++;
           break;
         }
        }
        if(placed)break;
       }
-      if (accepted.length >= 22) break;
+      if (accepted.length >= (overview&&viewportPixels<430?14:26)) break;
     }
 
     return accepted;
-  }, [plottedStars, activeConstellationIds, focusPoint, localRadius, labelSize, labelUnits, screenUnit, viewBoxX, viewBoxY, viewBoxSize]);
+  }, [plottedStars, activeConstellationIds, focusPoint, localRadius, labelSize, labelUnits, screenUnit, viewBoxX, viewBoxY, viewBoxSize, overview, viewportPixels, zoom]);
 
   const placedConstellationLabels=useMemo(()=>{
     const occupied=[...reservedLabels,...labels.map(label=>label.box)];
@@ -714,11 +729,11 @@ export function SkyChart({
   }, [currentHop, targetNode, overview, finderReticle, project, fovWidth, fovHeight, fovShape]);
 
   const targetExtent=useMemo(()=>{
-    if(!targetNode||!targetDiameter||overview)return null;
+    if(!targetNode||!targetDiameter||(overview&&zoom<3))return null;
     const points=angularRing(targetNode,targetDiameter/2).map(p=>project(p.ra,p.dec));
     if(points.some(p=>!p))return null;
     return points.map((p,i)=>`${i?'L':'M'}${p!.x},${p!.y}`).join(' ')+' Z';
-  },[targetNode,targetDiameter,overview,project]);
+  },[targetNode,targetDiameter,overview,zoom,project]);
 
   // SVG shapes for pattern visualization
   const renderPatternShape = useCallback((
@@ -769,7 +784,7 @@ export function SkyChart({
       }
       case 'arrow': {
         const pts = projected.map(p => `${p.x},${p.y}`).join(' ');
-        return <polyline points={pts} fill="none" stroke={strokeColor} vectorEffect="non-scaling-stroke" strokeWidth={sw} opacity={so} markerEnd="url(#pattern-arrowhead)" strokeLinecap="round" strokeLinejoin="round" />;
+        return <polyline points={pts} fill="none" stroke={strokeColor} vectorEffect="non-scaling-stroke" strokeWidth={sw} opacity={so} markerEnd={`url(#${chartId}-pattern-arrowhead)`} strokeLinecap="round" strokeLinejoin="round" />;
       }
       case 'bracket': {
         if (!fovCenter || projected.length < 2) return null;
@@ -816,6 +831,7 @@ export function SkyChart({
       data-zoom={zoom}
       data-fov-radius={fovRadius}
     >
+      {overview&&<div className="planetarium-guide"><label><input type="checkbox" checked={showObjects} onChange={e=>setShowObjects(e.target.checked)}/>Catalog objects · {nodes.filter(n=>n.type==='messier'||n.type==='binocular').length} above horizon</label><span>Inside circle = above horizon · edge 0° · center 90°</span><div className="planetarium-symbol-key"><span>◌ Cluster</span><span>⬭ Galaxy</span><span>□ Nebula</span><span>◇ Star pattern</span><span className="selected-symbol-key">Gold = selected</span></div></div>}
       <svg
         ref={svgRef}
         width="100%"
@@ -835,19 +851,19 @@ export function SkyChart({
         onTouchEnd={handleTouchEnd}
       >
         <defs>
-          <clipPath id="sky-horizon-clip"><circle cx={cx} cy={cy} r={CHART_SIZE / 2 - CHART_PAD} /></clipPath>
-          <radialGradient id="sky-gradient">
+          <clipPath id={`${chartId}-sky-horizon-clip`}><circle cx={cx} cy={cy} r={CHART_SIZE / 2 - CHART_PAD} /></clipPath>
+          <radialGradient id={`${chartId}-sky-gradient`}>
             <stop offset="0%" stopColor="#0d1020" />
             <stop offset="100%" stopColor="#070910" />
           </radialGradient>
-          <filter id="glow-soft">
+          <filter id={`${chartId}-glow-soft`}>
             <feGaussianBlur stdDeviation={1.2*screenUnit} result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <filter id="glow-strong">
+          <filter id={`${chartId}-glow-strong`}>
             <feGaussianBlur stdDeviation={2.2*screenUnit} result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
@@ -855,15 +871,15 @@ export function SkyChart({
             </feMerge>
           </filter>
           {/* Star glow gradients by spectral type */}
-          <radialGradient id="glow-blue"><stop offset="0%" stopColor="#a0b5ff" stopOpacity="0.4" /><stop offset="100%" stopColor="#a0b5ff" stopOpacity="0" /></radialGradient>
-          <radialGradient id="glow-bluewhite"><stop offset="0%" stopColor="#c4d4ff" stopOpacity="0.35" /><stop offset="100%" stopColor="#c4d4ff" stopOpacity="0" /></radialGradient>
-          <radialGradient id="glow-white"><stop offset="0%" stopColor="#e8eeff" stopOpacity="0.3" /><stop offset="100%" stopColor="#e8eeff" stopOpacity="0" /></radialGradient>
-          <radialGradient id="glow-yellowwhite"><stop offset="0%" stopColor="#fff8f0" stopOpacity="0.3" /><stop offset="100%" stopColor="#fff8f0" stopOpacity="0" /></radialGradient>
-          <radialGradient id="glow-yellow"><stop offset="0%" stopColor="#ffddb0" stopOpacity="0.25" /><stop offset="100%" stopColor="#ffddb0" stopOpacity="0" /></radialGradient>
-          <radialGradient id="glow-orange"><stop offset="0%" stopColor="#ffaa80" stopOpacity="0.25" /><stop offset="100%" stopColor="#ffaa80" stopOpacity="0" /></radialGradient>
-          <radialGradient id="glow-red"><stop offset="0%" stopColor="#ff9070" stopOpacity="0.25" /><stop offset="100%" stopColor="#ff9070" stopOpacity="0" /></radialGradient>
+          <radialGradient id={`${chartId}-glow-blue`}><stop offset="0%" stopColor="#a0b5ff" stopOpacity="0.4" /><stop offset="100%" stopColor="#a0b5ff" stopOpacity="0" /></radialGradient>
+          <radialGradient id={`${chartId}-glow-bluewhite`}><stop offset="0%" stopColor="#c4d4ff" stopOpacity="0.35" /><stop offset="100%" stopColor="#c4d4ff" stopOpacity="0" /></radialGradient>
+          <radialGradient id={`${chartId}-glow-white`}><stop offset="0%" stopColor="#e8eeff" stopOpacity="0.3" /><stop offset="100%" stopColor="#e8eeff" stopOpacity="0" /></radialGradient>
+          <radialGradient id={`${chartId}-glow-yellowwhite`}><stop offset="0%" stopColor="#fff8f0" stopOpacity="0.3" /><stop offset="100%" stopColor="#fff8f0" stopOpacity="0" /></radialGradient>
+          <radialGradient id={`${chartId}-glow-yellow`}><stop offset="0%" stopColor="#ffddb0" stopOpacity="0.25" /><stop offset="100%" stopColor="#ffddb0" stopOpacity="0" /></radialGradient>
+          <radialGradient id={`${chartId}-glow-orange`}><stop offset="0%" stopColor="#ffaa80" stopOpacity="0.25" /><stop offset="100%" stopColor="#ffaa80" stopOpacity="0" /></radialGradient>
+          <radialGradient id={`${chartId}-glow-red`}><stop offset="0%" stopColor="#ff9070" stopOpacity="0.25" /><stop offset="100%" stopColor="#ff9070" stopOpacity="0" /></radialGradient>
           <marker
-            id="pattern-arrowhead"
+            id={`${chartId}-pattern-arrowhead`}
             markerWidth="6"
             markerHeight="4"
             refX="5"
@@ -874,9 +890,9 @@ export function SkyChart({
           </marker>
         </defs>
 
-        <rect width={CHART_SIZE} height={CHART_SIZE} fill="url(#sky-gradient)" rx="8" />
+        <rect width={CHART_SIZE} height={CHART_SIZE} fill={`url(#${chartId}-sky-gradient)`} rx="8" />
 
-        <g clipPath={overview ? "url(#sky-horizon-clip)" : undefined}>
+        <g clipPath={overview ? `url(#${chartId}-sky-horizon-clip)` : undefined}>
 
         {/* Milky Way band — 5 nested polygon layers with additive opacity */}
         <g clipPath="inset(0)">
@@ -886,7 +902,8 @@ export function SkyChart({
           ))}
         </g>
 
-        {!starsOnly && [5, 10, 20].filter((r) => r < viewRadius).map((r) => (
+        {overview&&[30,60].map(alt=><g key={alt} pointerEvents="none"><circle cx={cx} cy={cy} r={260*altitudeRingFraction(alt)} fill="none" stroke="#56736e" strokeWidth=".7" vectorEffect="non-scaling-stroke" strokeDasharray="3 6" opacity=".55"/><text x={cx+4*screenUnit} y={cy+260*altitudeRingFraction(alt)-4*screenUnit} fontSize={9*screenUnit} fill="#9bb7ae">{alt}° altitude</text></g>)}
+        {!starsOnly && !overview && [5, 10, 20].filter((r) => r < viewRadius).map((r) => (
           <circle
             key={r}
             cx={cx}
@@ -903,6 +920,7 @@ export function SkyChart({
           <path
             key={`${path.id}-${index}`}
             d={path.d}
+            data-constellation-path={path.id}
             stroke={path.nearFocus ? '#5a8abf' : '#3a5580'}
             vectorEffect="non-scaling-stroke" strokeWidth={path.nearFocus ? 1.4 : 0.9}
             fill="none"
@@ -938,7 +956,7 @@ export function SkyChart({
             {!starsOnly && star.mag < 2.5 && (
               <circle cx={star.x} cy={star.y}
                 r={bgStarSize(star.mag) * brightMul * backgroundPointScale * 4 * screenUnit}
-                fill={`url(#${bvGlowId(star.bv)})`} />
+                fill={`url(#${chartId}-${bvGlowId(star.bv)})`} />
             )}
             <circle
               data-background-star="true"
@@ -959,20 +977,24 @@ export function SkyChart({
         {/* Active pattern shape visualization */}
         {!starsOnly && patternShapeSvg}
 
-        {plottedStars.filter(({ star }) => !starsOnly || star.type === 'star' || star.type === 'planet').slice().sort((a,b) => Number(a.isTarget)-Number(b.isTarget) || b.star.mag-a.star.mag).map(({ star, point, radius, isAnchor, isTarget, isPatternAnchor, isGuide }) => (
+        {plottedStars.filter(({ star }) => !starsOnly || star.type === 'star' || star.type === 'planet').slice().sort((a,b) => Number(a.isTarget)-Number(b.isTarget) || Number(a.star.type!=='star')-Number(b.star.type!=='star') || b.star.mag-a.star.mag).map(({ star, point, radius, isAnchor, isTarget, isPatternAnchor, isGuide }) => (
           <g
             key={star.id}
             data-star-id={star.id}
+            data-sky-object={star.type==='messier'||star.type==='binocular'?star.id:undefined}
             role={onSelect ? 'button' : undefined}
             tabIndex={onSelect ? 0 : undefined}
             aria-label={onSelect ? `Select ${star.name}` : undefined}
             onClick={() => { if (!didDrag.current) onSelect?.(star.id); }}
             onKeyDown={(event) => { if (onSelect && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onSelect(star.id); } }}
+            onFocus={()=>setHoveredStar(star)}
+            onBlur={()=>setHoveredStar(null)}
             onMouseEnter={() => setHoveredStar(star)}
             onMouseLeave={() => setHoveredStar(null)}
           >
             <title>{star.type==='star'?`${star.name} · catalog V ${star.mag.toFixed(2)}${star.temperature?` · ${Math.round(star.temperature)} K`:''} · RA ${star.ra.toFixed(3)}° · Dec ${star.dec.toFixed(3)}°`:`${star.name} · ${star.category??'Catalog object'} · ${Math.round(star.alt)}° high`}</title>
             {onSelect && <circle cx={point.x} cy={point.y} r={(star.type === "star" ? 5 : 12) * screenUnit} fill="transparent" />}
+            {star.type==='messier'||star.type==='binocular'?<g transform={`translate(${point.x} ${point.y}) scale(${screenUnit*Math.min(1.3,Math.max(.8,navMul))*(overview&&!isTarget?Math.min(1,(viewportPixels<430?.7:.9)+(zoom-1)*.1):1)})`}><CatalogSkySymbol category={star.category} selected={isTarget}/></g>:<>
             {!starsOnly && (isTarget || isAnchor || isPatternAnchor) && (
               <circle cx={point.x} cy={point.y} r={radius * 3.5 * navMul * screenUnit} fill="white" opacity="0.05" />
             )}
@@ -981,20 +1003,20 @@ export function SkyChart({
               data-chart-star="true"
               cx={point.x}
               cy={point.y}
-              r={(star.type==='messier'||star.type==='binocular' ? (isTarget?5:overview?1.8:3.3)*navMul : isTarget ? Math.max(radius + 1.5 * navMul, 4.2 * navMul) : isAnchor || isPatternAnchor ? Math.max(radius + 0.8 * navMul, 2.8 * navMul) : isGuide ? radius * navMul : stellarRadius(star.mag) * Math.min(1.8, brightMul) * catalogPointScale) * screenUnit}
-              fill={star.type==='messier'||star.type==='binocular' ? isTarget?'#e4c57c':'#0b1822' : stellarColor(star.temperature,star.bv)}
-              stroke={star.type==='messier'||star.type==='binocular' ? isTarget?'#e4c57c':'#a6cec4':undefined}
+              r={(isTarget ? Math.max(radius + 1.5 * navMul, 4.2 * navMul) : isAnchor || isPatternAnchor ? Math.max(radius + 0.8 * navMul, 2.8 * navMul) : isGuide ? radius * navMul : stellarRadius(star.mag) * Math.min(1.8, brightMul) * catalogPointScale) * screenUnit}
+              fill={stellarColor(star.temperature,star.bv)}
               strokeWidth={(overview && !isTarget ? 0.9 : 1.2)*screenUnit}
               opacity={
-                overview&&!isTarget&&(star.type==='messier'||star.type==='binocular') ? 0.72 : isTarget || isAnchor || isPatternAnchor || isGuide
+                isTarget || isAnchor || isPatternAnchor || isGuide
                   ? 0.98
                   : Math.min(0.95,
                       (star.mag < 2 ? 0.95 : star.mag < 3 ? 0.85 : star.mag < 4.2 ? 0.75 : star.mag < 5.0 ? 0.65 : star.mag < 5.8 ? 0.55 : 0.45)
                       * brightMul
                     )
               }
-              filter={starsOnly ? undefined : isTarget ? 'url(#glow-strong)' : star.mag < 1.2 || isAnchor || isPatternAnchor ? 'url(#glow-soft)' : undefined}
+              filter={starsOnly ? undefined : isTarget ? `url(#${chartId}-glow-strong)` : star.mag < 1.2 || isAnchor || isPatternAnchor ? `url(#${chartId}-glow-soft)` : undefined}
             />
+            </>}
           </g>
         ))}
 
@@ -1045,7 +1067,7 @@ export function SkyChart({
                 r={(active ? 4.3 : 2.6) * navMul * screenUnit}
                 fill={index === 0 ? '#38bdf8' : index === route.hops.length - 1 ? '#f59e0b' : '#6366f1'}
                 opacity={active ? 1 : 0.7}
-                filter={active ? 'url(#glow-soft)' : undefined}
+                filter={active ? `url(#${chartId}-glow-soft)` : undefined}
               />
               <text
                 x={point.x}
@@ -1062,7 +1084,7 @@ export function SkyChart({
           );
         })}
 
-        {fovCenter && (
+        {fovCenter && (!overview||zoom>=3&&showObjects) && (
           <g>
             {fovShape === 'circle' ? (
               <circle
@@ -1113,7 +1135,7 @@ export function SkyChart({
                 x={label.x}
                 y={label.y}
                 textAnchor={label.anchor}
-                fill={label.isTarget ? '#ffd089' : label.isAnchor ? '#7dd3fc' : label.isPatternAnchor ? '#ddb8ff' : '#d6deef'}
+                fill={label.isTarget ? '#ffd089' : label.isAnchor ? '#7dd3fc' : label.isPatternAnchor ? '#ddb8ff' : overview&&isDeepSky(label.star.category)?'#b3dbcd':'#d6deef'}
                 fontSize={labelUnits}
                 fontWeight={label.isTarget || label.isAnchor ? '700' : '500'}
                 fontFamily="var(--font-sans)"
@@ -1167,7 +1189,7 @@ export function SkyChart({
         <div className="chart-toolbar-group" data-testid="zoom-controls">
           <button aria-label="Zoom in" title="Zoom in" data-testid="button-zoom-in" onClick={() => setZoom(z => Math.min(MAX_ZOOM, z * 1.2))}>+</button>
           <button aria-label="Zoom out" title="Zoom out" data-testid="button-zoom-out" onClick={() => { const z = Math.max(MIN_ZOOM, zoom / 1.2); setZoom(z); setPanX(px => clampPan(px, 0, z).x); setPanY(py => clampPan(0, py, z).y); }}>−</button>
-          <button onClick={handleResetView} data-testid="button-zoom-reset">Reset {zoom !== 1 ? `${zoom.toFixed(1)}×` : ''}</button>
+          <button onClick={handleResetView} data-testid="button-zoom-reset">{overview?'Whole sky':`Reset ${zoom!==1?`${zoom.toFixed(1)}×`:''}`}</button>
           <button disabled={!fovCenter} onClick={() => { const z = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, fieldViewZoom(viewRadius, fovWidth, fovShape === "rectangle" ? fovHeight : fovWidth, 220))); setZoom(z); const p = clampPan(cx - (fovCenter?.x ?? cx), cy - (fovCenter?.y ?? cy), z); setPanX(p.x); setPanY(p.y); }} data-testid="button-fit-field">Fit field</button>
           {route && <button onClick={() => { setZoom(1); setPanX(0); setPanY(0); }} data-testid="button-route-overview">Route overview</button>}
         </div>
@@ -1201,8 +1223,8 @@ export function SkyChart({
       </details>
       </details>
       <p className={`chart-accuracy-note ${overview?'overview-accuracy-note':''}`}>Ctrl / ⌘ + scroll to zoom · drag to pan. {starsOnly ? 'Catalog stars without labels or guide patterns. Nebulosity is not simulated.' : 'Dot size follows catalog magnitude; hue follows temperature or B−V color where known (neutral otherwise). Sizes are not stellar diameters. Constellation names are green.'} {maxCatalogMagnitude>8?deepCatalog.state==='ready'?'Tycho-2 reference stars to VT 10.5 within 8° of the target; brighter context outside. This chart can show stars fainter than your optics reveal.':deepCatalog.state==='loading'?'Loading the detailed offline finder field…':deepCatalog.state==='error'?'Detailed field unavailable; showing the bright-star catalog to magnitude 8.':'Bright-star catalog to magnitude 8. Increase depth for the detailed finder field.':'Star catalog extends to magnitude 8; the view depends on your optics and sky.'}</p>
-      {showLegend && !starsOnly && <div className="absolute top-3 left-3 flex gap-3 rounded border border-[#2a414e] bg-[#0a1721]/90 px-2 py-1.5 text-[9px]">
-        {route && <><span className="text-[#38bdf8]">● Anchor</span><span className="text-[#c084fc]">● Pattern</span></>}<span className="text-[#d8bc80]">● Target</span><span className="text-[#a7cfa0]">Constellation</span>
+      {showLegend && !starsOnly && !overview && <div className="absolute top-3 left-3 flex gap-3 rounded border border-[#2a414e] bg-[#0a1721]/90 px-2 py-1.5 text-[9px]">
+        {route && <><span className="text-[#38bdf8]">● Anchor</span><span className="text-[#c084fc]">● Pattern</span></>}<span className="text-[#d8bc80]">● Selected</span><span className="text-[#a7cfa0]">Constellation</span>
       </div>}
       {!overview&&<svg className="absolute top-3 right-3 pointer-events-none" width="60" height="60" viewBox="0 0 60 60" aria-label={`Chart orientation, ${mirrored ? 'mirrored, ' : ''}rotated ${rotation} degrees`}>
         {([{ label: 'N', point: { x: 0, y: -16 } }, { label: 'E', point: { x: -16, y: 0 } }]).map(({ label, point }) => {

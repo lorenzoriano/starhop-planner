@@ -1,5 +1,5 @@
 import { Binoculars } from 'lucide-react';
-import { binocularAssessment, profileName, KITE_SOURCE, VISIBILITY_SOURCE, NELM_SOURCE, type BinocularProfile } from '@/lib/binocular-assessment';
+import { binocularAssessment, profileName, KITE_SOURCE, type BinocularProfile } from '@/lib/binocular-assessment';
 import type { UnifiedTarget } from '@/lib/astronomy';
 import type { MoonState } from '@/lib/moon';
 import type { Settings } from '@/lib/session';
@@ -27,6 +27,6 @@ export function BinocularAssessment({target,profile,alt,moon,skyBrightness,compa
     <span className="fit-label"><Binoculars size={14}/>{result.label}</span>
     <p>{result.view}</p>
     <small>{profileName(profile)} · {result.availability}</small>
-    <details><summary>Why this recommendation</summary><ul>{result.reasons.map(reason=><li key={reason}>{reason}</li>)}</ul><p>Visual guidance is an estimate, not a promise of detection. The model uses catalog magnitude, apparent size, observing notes, a 6 mm eye pupil and estimated Moon sky glow. Compact cores and individual stars can differ greatly from an object’s average brightness. Weather, eyesight and local obstructions are not measured.</p><p>Estimated stellar limit ≈{result.pointLimit.toFixed(1)} mag; exit pupil {result.exitPupil.toFixed(2)} mm. Brightness and contrast rules are conservative heuristics, not a full human-vision threshold simulation.</p><a href={VISIBILITY_SOURCE} target="_blank" rel="noreferrer">Visual contrast research ↗</a> · <a href={NELM_SOURCE} target="_blank" rel="noreferrer">Sky brightness relation ↗</a></details>
+    <details><summary>Why this recommendation</summary><ul>{result.reasons.map(reason=><li key={reason}>{reason}</li>)}</ul><p>Visual guidance is an estimate, not a promise of detection. The model uses catalog magnitude, apparent size, observing notes, a 6 mm eye pupil and estimated Moon sky glow. Compact cores and individual stars can differ greatly from an object’s average brightness. Weather, eyesight and local obstructions are not measured.</p><p>Estimated stellar limit ≈{result.pointLimit.toFixed(1)} mag; exit pupil {result.exitPupil.toFixed(2)} mm. Brightness and contrast rules are conservative heuristics, not a full human-vision threshold simulation.</p></details>
   </section>;
 }

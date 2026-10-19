@@ -12,7 +12,7 @@ import { formatInTimeZone } from "date-fns-tz";
 import { ArrowUpRight, Binoculars, BookOpen, Check, Clock, Eye, MapPin, Navigation, Plus, Search, Star, WifiOff, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { BinocularImages, BinocularPhoto } from "./BinocularImages";
-import { binocularDatabaseResources, binocularMedia } from "@/lib/binocular-media";
+import { binocularDatabaseResources, binocularMedia, opticalPhotoCaption } from "@/lib/binocular-media";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
 import { eqToHorizontal, getConstellationName, type SkyNode, type ConstellationLine, type DenseStar, type MilkyWayFeature, type Star as CatalogStar, type UnifiedTarget } from "@/lib/astronomy";
 import { SkyChart } from "./SkyChart";
@@ -137,7 +137,7 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
             <div className="binocular-meta"><span><Binoculars size={14} /> {featured.equipment}</span><span>{Math.round(featured.alt)}° {compassLabel(featured.az)} at {formatInTimeZone(timeFor(featured),timezone,"MMM d · HH:mm")}</span></div>
             <button className="text-action" onClick={() => openTarget(featured.targetId)}>Explore this field <ArrowUpRight size={15} /></button>
           </div>
-          <div className="binocular-feature-field"><BinocularPhoto id={featured.targetId} name={featured.name ?? featured.target.name} /><span className="binocular-field-caption">DSS2 optical survey · telescope photograph</span></div>
+          <div className="binocular-feature-field"><BinocularPhoto id={featured.targetId} name={featured.name ?? featured.target.name} /><span className="binocular-field-caption">{opticalPhotoCaption(featured.targetId)}</span></div>
         </section>
       )}
       {visibilityMode==="time" && !conditions.isDark && !loading && <p className="twilight-note binocular-twilight">At the chosen time, the Sun is {Math.round(conditions.sunAlt)}° high. Select “During the night” or a later time for a darker sky; an object’s altitude alone does not mean it is observable.</p>}
@@ -175,7 +175,7 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
           <div className="binocular-target-grid">
             {picks.slice(0, visibleCount).map((p) => <article className={`binocular-target-card level-${p.level}`} key={p.targetId}>
               <button className="binocular-target-main" onClick={() => openTarget(p.targetId)} aria-label={`Explore binocular target ${p.name ?? p.target.name}`} data-testid={`binocular-target-${p.targetId}`}>
-                <div className="binocular-target-field"><BinocularPhoto id={p.targetId} name={p.name ?? p.target.name} /><span className="binocular-family-label">{FAMILY_LABELS[p.family]}</span><span className="binocular-photo-label">DSS2 · OPTICAL SURVEY</span></div>
+                <div className="binocular-target-field"><BinocularPhoto id={p.targetId} name={p.name ?? p.target.name} /><span className="binocular-family-label">{FAMILY_LABELS[p.family]}</span><span className="binocular-photo-label">{opticalPhotoCaption(p.targetId)}</span></div>
                 <div className="binocular-target-body"><span className="eyebrow">{p.target.id.replace("STAR-", "")} · {getConstellationName(p.target.con)}</span><h3>{p.name ?? p.target.name}</h3><p>{p.impression}</p><div className="binocular-card-position"><span className={p.alt < 15 ? "low" : ""}>{p.neverRises ? "Never rises here" : p.alt < 0 ? `Below horizon at ${positionTime(p)}` : `${Math.round(p.alt)}° ${compassLabel(p.az)} at ${positionTime(p)}`}</span><span>{p.variable ? "Variable star" : `mag ${p.target.mag.toFixed(1)}`}</span></div>{eventTimes(p)}</div>
               </button>
               <div className="binocular-card-chart"><NightAltitudeChart target={p.target} lat={lat} lon={lon} night={nightWindow} timezone={timezone} skyBrightness={skyBrightness} moonAt={nightMoon}/></div>
@@ -184,7 +184,7 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
           </div>
         )}
         {picks.length > visibleCount && <button className="load-more" onClick={() => setVisibleCount(visibleCount + 12)}>More fields to discover <ArrowUpRight size={14} /></button>}
-        <p className="binocular-collection-note"><WifiOff size={14} /> Every target has optical and infrared survey images, a finder chart, and sources. Images travel offline once “Offline ready” appears; external databases need a connection.</p>
+        <p className="binocular-collection-note"><WifiOff size={14} /> Targets have audited optical images, finder charts and sources. Infrared views are included where useful; damaged scan frames are omitted. Images travel offline once “Offline ready” appears; external databases need a connection.</p>
         <p className="binocular-method-note">Small binoculars shows targets selected for instruments up to 50 mm. Turn it off to include the mounted 80 mm collection. Targets can be useful in several months; monthly counts reflect your location and filters.</p>
       </section>
 
@@ -210,7 +210,7 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
             <div className="binocular-detail-notes"><div><h3>What to look for</h3><p>{detail.impression}</p></div><div><h3>Start here</h3><p>{detail.finding}</p></div></div>
             <BinocularObservations id={detail.targetId} />
             {detailAt<observingDate&&<p className="binocular-method-note">This is a past observing time. Choose a future date to plan a new visit.</p>}
-            <details className="binocular-reference-photos"><summary>Reference photographs · optical, infrared & telescope views</summary><BinocularImages key={detail.targetId} id={detail.targetId} name={detail.name ?? detail.target.name} /></details>
+            <details className="binocular-reference-photos"><summary>Reference photographs & source images</summary><BinocularImages key={detail.targetId} id={detail.targetId} name={detail.name ?? detail.target.name} /></details>
             <div className="binocular-year-path"><span className="eyebrow">A YEAR IN YOUR SKY · {sampleMode==="dark"?"AFTER DARK":"21:00"} ON THE 15TH</span><div className="binocular-altitude-months">{detail.monthlyAltitudes.map((alt, i) => <button key={i} className={month === i + 1 ? "active" : ""} onClick={() => selectMonth(i + 1)} aria-label={`${MONTH_NAMES[i]}, altitude ${Math.round(alt)} degrees at ${monthlyTimes[i]}`} aria-pressed={month === i + 1}><span className="binocular-altitude-bar"><i style={{ height: `${Math.max(3, Math.max(0, alt) / 90 * 100)}%` }} className={alt < 15 ? "low" : ""} /></span><small>{MONTH_NAMES[i].slice(0, 3)}</small></button>)}</div><p>{detail.neverRises ? "This target never rises at your latitude. Change your observing location to explore its southern sky." : `${detailLabel}: ${Math.round(detail.alt)}° ${compassLabel(detail.az)}. ${detail.alt < 15 ? "This is low or below the horizon; try another month or time." : "Aim for higher altitude and an unobstructed view."}`}</p></div>
             <p className="binocular-method-note">Targets save to “{saveDestination}”. The hop preview uses the observing time shown below.</p>
             <div className="binocular-detail-actions"><Button disabled={detail.alt < 5} onClick={() => { setOpened(null); onPlan(detail.targetId, detailAt); }}><Navigation size={15} /> Plan binocular hop</Button><button className={`save-button ${savedIds.has(detail.targetId) ? "saved" : ""}`} aria-label={`${savedIds.has(detail.targetId) ? "Remove from" : "Add to"} my night`} onClick={() => onSave(detail.targetId)}>{savedIds.has(detail.targetId) ? <Check size={18} /> : <Plus size={18} />}</button><span>Hop preview: {detailLabel} local</span></div>

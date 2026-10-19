@@ -105,10 +105,10 @@ export function AltitudeChart({
 
 export interface NightChartProps {
   target:UnifiedTarget;lat:number;lon:number;night:VisibilityWindow;timezone:string;
-  skyBrightness?:number;moonAt?:(date:Date)=>MoonState;range?:{start:Date;end:Date};
+  selectedAt?:Date;showContext?:boolean;span?:"night"|"day";skyBrightness?:number;moonAt?:(date:Date)=>MoonState;range?:{start:Date;end:Date};
 }
 /** Shared night chart: target altitude, angular Moon distance and modeled glow. */
-export function NightAltitudeChart({target,lat,lon,night,timezone,skyBrightness=21.6,moonAt,range}:NightChartProps) {
+export function NightAltitudeChart({target,lat,lon,night,timezone,skyBrightness=21.6,moonAt,range,showContext=false,span="night",selectedAt}:NightChartProps) {
   const clipId=`night-altitude-${useId().replaceAll(":","")}`;
   const localMoon=useMemo(()=>createMoonSampler(lat,lon),[lat,lon,night]);
   const segments=useMemo(()=>observationProfile(target,lat,lon,night,skyBrightness,moonAt??localMoon),[target.ra,target.dec,lat,lon,night,skyBrightness,moonAt,localMoon]);
@@ -120,20 +120,22 @@ export function NightAltitudeChart({target,lat,lon,night,timezone,skyBrightness=
   if(!segments.length)return <p className="night-altitude-unavailable">No astronomical darkness on this night.</p>;
   const start=segments[0].start,end=segments[segments.length-1].end;
   const x=(date:Date)=>28+(+date-+start)/(+end-+start)*266;
-  const y=(alt:number)=>76-alt/90*64;
+  const minimumAltitude=showContext?(span==='day'?-90:-30):0;
+  const y=(alt:number)=>76-(alt-minimumAltitude)/(90-minimumAltitude)*64;
+  const sy=(separation:number)=>76-separation/180*64;
   const isNextDay=(date:Date)=>formatInTimeZone(date,timezone,"yyyy-MM-dd")!==formatInTimeZone(night.start,timezone,"yyyy-MM-dd");
   const time=(date:Date)=>`${formatInTimeZone(date,timezone,"HH:mm")}${isNextDay(date)?" +1d":""}`;
   const startLabel=+start===+night.start?"Start":"Dusk",endLabel=+end===+night.end?"End":"Dawn";
   const samples=segments.flatMap(segment=>segment.samples),below=samples.every(sample=>sample.alt<0);
-  const best=suggestedObservation(samples,target,range);
+  const best=suggestedObservation(samples.filter(s=>s.moon.sunAlt<=-18),target,range);
   const middle=new Date((+start+ +end)/2),phaseSample=samples.reduce((a,b)=>Math.abs(+a.date-+middle)<Math.abs(+b.date-+middle)?a:b);
   const shownMoon=inspected??phaseSample;
   const illumination=Math.round(shownMoon.moon.illumination*100);
   const selectFraction=(fraction:number)=>{const date=profileCursorDate(night,fraction);if(date)setCursor(previous=>previous?.key===profileKey&&+previous.date===+date?previous:{key:profileKey,date});};
   const selectPointer=(event:React.PointerEvent<SVGSVGElement>)=>{const box=event.currentTarget.getBoundingClientRect();selectFraction(((event.clientX-box.left)/box.width*330-28)/266);};
-  const readout=inspected?`${time(inspected.date)} · Altitude ${inspected.alt.toFixed(1)}° · Moon distance ${inspected.separation.toFixed(1)}°`:"Hover or touch for time, altitude & Moon distance";
+  const readout=inspected?`${time(inspected.date)} · Altitude ${inspected.alt.toFixed(1)}° · Moon distance ${inspected.separation.toFixed(1)}°${showContext?` · Moon ${inspected.moon.alt.toFixed(1)}° high · Sun ${inspected.moon.sunAlt.toFixed(1)}° high`:""}`:"Hover or touch for time, altitude & Moon distance";
   return <div className="night-altitude-chart">
-    <div className="night-altitude-heading"><span className="night-altitude-key">Altitude °</span><span className="night-moon-key">Moon distance °</span></div>
+    <div className="night-altitude-heading"><span className="night-altitude-key">Altitude °</span><span className="night-moon-key">Moon distance °</span>{showContext&&<><span className="context-moon-key">Moon altitude °</span><span className="context-sun-key">Sun altitude °</span></>}</div>
     <svg viewBox="0 0 330 106" role="slider" tabIndex={0} aria-valuemin={0} aria-valuemax={Math.round((+end-+start)/60000)} aria-valuenow={Math.round((+(cursorDate??best?.date??start)-+start)/60000)} aria-valuetext={inspected?readout:undefined} aria-describedby={`${clipId}-help`}
       onPointerMove={selectPointer}
       onPointerDown={event=>{event.currentTarget.focus({preventScroll:true});event.currentTarget.setPointerCapture(event.pointerId);selectPointer(event);}}
@@ -142,24 +144,28 @@ export function NightAltitudeChart({target,lat,lon,night,timezone,skyBrightness=
       onFocus={()=>{if(!cursorDate)selectFraction((+(best?.date??middle)-+start)/(+end-+start));}}
       onBlur={()=>setCursor(null)}
       onKeyDown={event=>{if(!["ArrowLeft","ArrowRight","Home","End","Escape"].includes(event.key))return;event.preventDefault();event.stopPropagation();if(event.key==="Escape"){setCursor(null);event.currentTarget.blur();return;}selectFraction(event.key==="Home"?0:event.key==="End"?1:((Math.floor(+(cursorDate??best?.date??middle)/60000)*60000-+start)+(event.key==="ArrowLeft"?-1:1)*(event.shiftKey?15:1)*60000)/(+end-+start));}}
-      aria-label={`Altitude and angular distance from the Moon for ${target.name} during astronomical darkness, ${formatInTimeZone(night.start,timezone,"MMM d, yyyy")}, from ${startLabel.toLowerCase()} ${time(start)} to ${endLabel.toLowerCase()} ${time(end)}. Solid mint: altitude, left axis 0–90 degrees. Dashed gold: Moon separation, right axis 0–180 degrees. More gold shading means stronger estimated moonlight. Times in ${timezone}.`}>
+      aria-label={`Altitude and angular distance from the Moon for ${target.name} during ${span==="day"?"the selected local day":"astronomical darkness"}, ${formatInTimeZone(night.start,timezone,"MMM d, yyyy")}, from ${startLabel.toLowerCase()} ${time(start)} to ${endLabel.toLowerCase()} ${time(end)}. Solid mint: altitude, left axis ${showContext?span==='day'?"−90–90":"−30–90":"0–90"} degrees. ${showContext?"Thin gold: Moon altitude. Peach: Sun altitude. ":""}Dashed gold: Moon separation, right axis 0–180 degrees. More gold shading means stronger estimated moonlight. Times in ${timezone}.`}>
       <defs><clipPath id={clipId}><rect x="28" y="11" width="266" height="65"/></clipPath></defs>
-      <g clipPath={`url(#${clipId})`}>{segments.map(segment=>segment.samples.slice(0,-1).map((sample,i)=>{const next=segment.samples[i+1];return <rect key={+sample.date} x={x(sample.date)} y="12" width={x(next.date)-x(sample.date)+.2} height="64" className="night-moon-shading" fill="#e4bd76" opacity={.5*Math.sqrt(Math.min(1,Math.max(0,sample.moonlight)/3))}/>;}))}</g>
-      {[0,30,60,90].map(alt=><g key={alt}><line x1="28" x2="294" y1={y(alt)} y2={y(alt)} stroke={alt===0?"#56716f":"#29434e"} strokeDasharray={alt===0?undefined:"3 4"}/><text x="1" y={y(alt)+3} fontSize="9" fill="#96afb6">{alt}°</text><text x="299" y={y(alt)+3} fontSize="9" fill="#d2b77e">{alt*2}°</text></g>)}
-      <g clipPath={`url(#${clipId})`}>{segments.map((segment,i)=>{const path=segment.samples.map((sample,j)=>`${j?"L":"M"}${x(sample.date).toFixed(2)},${y(sample.alt).toFixed(2)}`).join(" ");const moonPath=segment.samples.map((sample,j)=>`${j?"L":"M"}${x(sample.date).toFixed(2)},${y(sample.separation/2).toFixed(2)}`).join(" ");return <g key={i}><path className="target-altitude-line" d={path} stroke="#a2d5c5" strokeWidth="2" fill="none"/><path className="moon-separation-line" d={moonPath} stroke="#e3c17f" strokeWidth="1.8" strokeDasharray="4 3" fill="none"/></g>;})}</g>
-      {inspected&&<g className="night-chart-cursor" pointerEvents="none"><line x1={x(inspected.date)} x2={x(inspected.date)} y1="12" y2="76" stroke="#e1ede5" strokeWidth="1" strokeDasharray="2 3"/><g clipPath={`url(#${clipId})`}>{inspected.alt>=0&&<circle cx={x(inspected.date)} cy={y(inspected.alt)} r="3" fill="#a2d5c5" stroke="#0c1c27" strokeWidth="1"/>}<circle cx={x(inspected.date)} cy={y(inspected.separation/2)} r="3" fill="#e3c17f" stroke="#0c1c27" strokeWidth="1"/></g></g>}
-      {below&&<text x="161" y="44" textAnchor="middle" fill="#c3d0c4" fontSize="11">Below horizon all night</text>}
+      <g clipPath={`url(#${clipId})`}>{segments.map(segment=>segment.samples.slice(0,-1).map((sample,i)=>{const next=segment.samples[i+1];return <rect key={+sample.date} x={x(sample.date)} y="12" width={x(next.date)-x(sample.date)+.2} height="64" className="night-moon-shading" fill="#e4bd76" opacity={sample.moon.sunAlt>-18?0:.5*Math.sqrt(Math.min(1,Math.max(0,sample.moonlight)/3))}/>;}))}</g>
+      {span==='day'&&<g clipPath={`url(#${clipId})`}>{segments.flatMap(segment=>segment.samples.slice(0,-1).map((sample,i)=>sample.moon.sunAlt<=-18?<rect key={+sample.date} x={x(sample.date)} y="12" width={x(segment.samples[i+1].date)-x(sample.date)+.2} height="64" fill="#adc7c5" opacity=".09"/>:null))}</g>}
+      {(showContext?span==='day'?[-90,-45,0,45,90]:[-30,0,30,60,90]:[0,30,60,90]).map(alt=><g key={alt}><line x1="28" x2="294" y1={y(alt)} y2={y(alt)} stroke={alt===0?"#56716f":"#29434e"} strokeDasharray={alt===0?undefined:"3 4"}/><text x="1" y={y(alt)+3} fontSize="9" fill="#96afb6">{alt}°</text></g>)}
+      {[0,60,120,180].map(distance=><text key={distance} x="299" y={sy(distance)+3} fontSize="9" fill="#d2b77e">{distance}°</text>)}
+      <g clipPath={`url(#${clipId})`}>{segments.map((segment,i)=>{const path=segment.samples.map((sample,j)=>`${j?"L":"M"}${x(sample.date).toFixed(2)},${y(sample.alt).toFixed(2)}`).join(" ");const moonPath=segment.samples.map((sample,j)=>`${j?"L":"M"}${x(sample.date).toFixed(2)},${sy(sample.separation).toFixed(2)}`).join(" ");return <g key={i}>{showContext&&<><path className="context-moon-altitude" d={segment.samples.map((sample,j)=>`${j?'L':'M'}${x(sample.date).toFixed(2)},${y(sample.moon.alt).toFixed(2)}`).join(' ')} fill="none" stroke="#d1b77d" strokeWidth="1" opacity=".8"/><path className="context-sun-altitude" d={segment.samples.map((sample,j)=>`${j?'L':'M'}${x(sample.date).toFixed(2)},${y(sample.moon.sunAlt).toFixed(2)}`).join(' ')} fill="none" stroke="#dc9d84" strokeWidth="1.2"/></>}
+      <path className="target-altitude-line" d={path} stroke="#a2d5c5" strokeWidth="2" fill="none"/><path className="moon-separation-line" d={moonPath} stroke="#e3c17f" strokeWidth="1.8" strokeDasharray="4 3" fill="none"/></g>;})}</g>
+      {selectedAt&&selectedAt>=start&&selectedAt<=end&&<g className="night-selected-time" pointerEvents="none"><line x1={x(selectedAt)} x2={x(selectedAt)} y1="12" y2="76" stroke="#d3ddd5" strokeWidth=".8" strokeDasharray="1 4"/><title>Selected observing time {time(selectedAt)}</title></g>}
+      {inspected&&<g className="night-chart-cursor" pointerEvents="none"><line x1={x(inspected.date)} x2={x(inspected.date)} y1="12" y2="76" stroke="#e1ede5" strokeWidth="1" strokeDasharray="2 3"/><g clipPath={`url(#${clipId})`}>{inspected.alt>=minimumAltitude&&<circle cx={x(inspected.date)} cy={y(inspected.alt)} r="3" fill="#a2d5c5" stroke="#0c1c27" strokeWidth="1"/>}<circle cx={x(inspected.date)} cy={sy(inspected.separation)} r="3" fill="#e3c17f" stroke="#0c1c27" strokeWidth="1"/></g></g>}
+      {below&&<text x="161" y="44" textAnchor="middle" fill="#c3d0c4" fontSize="11">Below horizon all {span==='day'?'day':'night'}</text>}
       <text x="28" y="96" textAnchor="start" fill="#a0b5bb" fontSize="9">{startLabel} {time(start)}</text><text x="161" y="96" textAnchor="middle" fill="#829ea8" fontSize="9">{time(middle)}</text><text x="294" y="96" textAnchor="end" fill="#a0b5bb" fontSize="9">{endLabel} {time(end)}</text>
     </svg>
     <span id={`${clipId}-help`} className="sr-only">Hover, tap or drag horizontally to inspect. Arrow keys move one minute; Shift plus arrow moves fifteen minutes; Home and End select dusk and dawn.</span>
     <output className={`night-chart-readout ${inspected?"active":""}`} aria-live="polite">{readout}</output>
-    <p className="night-moon-explanation">Night {formatInTimeZone(night.start,timezone,"MMM d, yyyy")}</p>
+    <p className="night-moon-explanation">{span==='day'?'Day':'Night'} {formatInTimeZone(night.start,timezone,"MMM d, yyyy")}</p>
     <div className="night-moon-illumination">
       <div className="night-moon-illumination-label"><span>Moon illumination</span><strong>{illumination}% <span>· {shownMoon.moon.alt<=-shownMoon.moon.diameter/2?"Moon down":"above horizon"}</span></strong></div>
       <div className="night-moon-meter" role="meter" aria-label={`Moon illumination at ${time(shownMoon.date)}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={illumination} aria-valuetext={`${illumination}% illuminated; 0% new Moon, 100% full Moon`}><span style={{width:`${illumination}%`}}/></div>
       <div className="night-moon-scale"><span>0% · New Moon</span><span>100% · Full Moon</span></div>
     </div>
-    <p className="night-moon-explanation">Gold shading = estimated sky glow; none when Moon is down</p>
+    <p className="night-moon-explanation">Gold shading = estimated moonlight in darkness; none when Moon is down{span==='day'?'. Cool shading = astronomical darkness.':''}</p>
     <p className="night-observation-suggestion">{best?<>Suggested{range?" in session":""}: {time(best.date)} · {Math.round(best.alt)}° high · {Math.round(best.separation)}° from Moon <span>· {best.moon.alt<=-best.moon.diameter/2?"Moon down":`Moon ${Math.round(best.moon.alt)}° high · ≈${best.moonlight.toFixed(1)} mag sky glow`}</span></>:range?"No usable dark slot in this session.":"No dark window above 15° for this target."}</p>
   </div>;
 }

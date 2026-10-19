@@ -1403,3 +1403,29 @@ button:disabled { opacity: .45; cursor: default; }
   .catalog-filters .catalog-filter-help { font-size:10px; }
   .catalog-filter-footer select { width:155px; font-size:12px; }
 }
+/* Readable all-sky layers and a shared selected-object forecast. */
+.planetarium-guide { display:flex; flex-wrap:wrap; gap:9px 20px; padding:12px 18px; color:#a9c2bc; font-size:11px; border-top:1px solid #29404c; background:#0b1921; }
+.planetarium-guide label { display:flex; align-items:center; gap:8px; cursor:pointer; }
+.planetarium-guide > span { color:#91aca9; }
+.planetarium-symbol-key { display:flex; flex-wrap:wrap; gap:20px; width:100%; color:#b3dbcd; font-size:10px; }
+.selected-object-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.selected-object-heading button { min-width:32px; min-height:32px; justify-content:center; }
+.selection-context { font-size:10px; color:#8da8b1; margin:2px 0 15px; line-height:1.6; }
+.selected-target-planning { border-top:1px solid #29404c; border-bottom:1px solid #29404c; padding:16px 0; margin:18px 0; }
+.selected-planning-heading { display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center; color:#b3cec5; font-size:11px; }
+.selected-planning-heading select { color:#cadbd5; background:#0b1921; border:1px solid #365360; border-radius:4px; padding:7px; font-size:11px; }
+.selected-target-planning .night-altitude-heading { flex-wrap:wrap; gap:8px 15px; font-size:10px; }
+.context-moon-key { color:#d1b77d; }
+.context-sun-key { color:#dc9d84; }
+.context-moon-key::before, .context-sun-key::before { content:''; display:inline-block; width:13px; border-top:1px solid; margin-right:6px; vertical-align:middle; }
+.selected-graph-zone { font-size:10px; color:#8da8b1; margin:12px 0 0; }
+.sky-workspace .featured-object { display:flex; flex-direction:column; }
+.sky-workspace .featured-art { aspect-ratio:4/3; height:auto; min-height:0; border-right:0; }
+.sky-workspace .featured-art .target-photo { height:100%; }
+.sky-workspace .featured-art img { height:100%; width:100%; object-fit:contain; }
+@media(max-width:700px) { .planetarium-guide { padding:10px 13px; font-size:10px; gap:8px; } .planetarium-symbol-key { gap:14px; } }
+.target-photo-caption, .binocular-photo-label { max-width:calc(100% - 20px); line-height:1.5; overflow-wrap:anywhere; }
+
+.planetarium-symbol-key .selected-symbol-key { color:#d8bc80; }
+.selected-target-planning .night-altitude-chart { max-width:640px; margin-inline:auto; }
+.sky-workspace .featured-art { max-height:360px; }

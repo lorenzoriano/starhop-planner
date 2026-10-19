@@ -56,7 +56,7 @@ export const defaultSettings: Settings = {
   shape: "circle",
   limitingMag: 8,
   difficulty: "beginner",
-  targetId: "M31",
+  targetId: "",
   redLight: false,
   binocularMagnification: 14,
   binocularAperture: 50,

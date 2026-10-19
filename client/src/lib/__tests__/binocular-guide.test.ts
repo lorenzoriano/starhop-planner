@@ -4,7 +4,7 @@ import { resolve } from "path";
 import { formatInTimeZone } from "date-fns-tz";
 import { buildUnifiedTargets, loadBinocularTargets, loadMessier, planRoutes, type UnifiedTarget } from "../astronomy";
 import { BINOCULAR_ENTRIES, binocularCollection, binocularEvening } from "../binocular-guide";
-import { binocularMedia, binocularDatabaseResources, binocularFeaturedImage } from "../binocular-media";
+import { binocularMedia, binocularDatabaseResources, binocularFeaturedImage, primaryOpticalImage } from "../binocular-media";
 
 vi.stubGlobal("fetch", async (input: string) => new Response(readFileSync(resolve(__dirname, "../../../public", input.replace(/^\.\//, "")), "utf8"), { status: 200 }));
 afterAll(() => vi.unstubAllGlobals());
@@ -73,6 +73,19 @@ describe("monthly binocular guide", () => {
       expect(bytes.subarray(0,3).toString("hex")).toBe("ffd8ff");
       expect(bytes.length).toBeGreaterThan(1000);
     }
+  });
+  it("uses audited primary photos with attribution and omits damaged gallery frames",()=>{
+    for(const target of targets){
+      const image=primaryOpticalImage(target.id)!;
+      expect(image,target.id).toBeDefined();expect(image.credit.length,target.id).toBeGreaterThan(0);expect(image.note.length,target.id).toBeGreaterThan(20);
+      expect(new URL(image.url).protocol).toBe("https:");expect(new URL(image.policy).protocol).toBe("https:");
+      const bytes=readFileSync(resolve(__dirname,"../../../public",image.path));expect(["ffd8ff","89504e"],target.id).toContain(bytes.subarray(0,3).toString("hex"));
+    }
+    expect(primaryOpticalImage("STAR-Vega")!.path).toContain("primary");expect(primaryOpticalImage("STAR-Sirius")!.credit).toBe("Mellostorm");
+    expect(primaryOpticalImage("M97")!.kind).toBe("portrait");
+    expect(binocularMedia("STAR-Antares")!.images.find(image=>image.variant==="infrared")!.display).toBe(false);
+    expect(binocularMedia("M43")!.images.find(image=>image.variant==="optical")!.display).toBe(false);
+    expect(binocularMedia("STAR-Arcturus")!.fov).toBe(3.7);
   });
   it("retains individual attribution and licenses for the resolved-star photographs", () => {
     for (const id of ["DS-Albireo", "DS-MizarAlcor", "STAR-Betelgeuse", "STAR-Sirius"]) {

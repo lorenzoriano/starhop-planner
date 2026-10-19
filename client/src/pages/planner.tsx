@@ -114,6 +114,8 @@ import { HopFieldNavigation, HopViewDirection } from "@/components/HopFieldNavig
 import { EyepieceCalculator } from "@/components/EyepieceCalculator";
 import { NavigationStarResults, type NavigationStarHit } from "@/components/NavigationStarResults";
 import { SkySafariExport } from "@/components/SkySafariExport";
+import { catalogDiameter } from "@/lib/finder-detail";
+import { SelectedTargetPlanning } from "@/components/SelectedTargetPlanning";
 import { AltitudeChart } from "@/components/ObservingVisuals";
 import { ImageFallback } from "@/components/ImageFallback";
 import { BinocularGuide } from "@/components/BinocularGuide";
@@ -145,7 +147,6 @@ const EMPTY_CATALOGS: Catalogs = {
 };
 
 export default function PlannerPage() {
-  const firstTarget=useRef((()=>{try{return !localStorage.getItem("starhop-settings-v2");}catch{return false;}})());
   const { toast } = useToast();
   const [settings, setSettings, settingsError] = useLocalState<Settings>(
     "starhop-settings-v2",
@@ -363,8 +364,8 @@ export default function PlannerPage() {
   useEffect(()=>{
     if(!catalogs.targets.length)return;
     const linked=targetFromPath(location);
-    if(linked){firstTarget.current=false;if(catalogs.targets.some(t=>t.id===linked)){if(targetId!==linked)update({targetId:linked,startStarId:undefined});}else navigate("/hop",{replace:true});return;}
-    if(firstTarget.current){firstTarget.current=false;const pick=ranked.filter(o=>o.alt>=15).map(o=>({...o,fit:binocularAssessment(o.target,binocularProfile,{alt:o.alt,moon:currentMoon,skyBrightness:settings.skyBrightness})})).sort((a,b)=>a.fit.rating-b.fit.rating||b.alt-a.alt)[0];if(pick)update({targetId:pick.target.id});}
+    if(linked){if(catalogs.targets.some(t=>t.id===linked)){if(targetId!==linked)update({targetId:linked,startStarId:undefined});}else navigate("/hop",{replace:true});return;}
+
   },[catalogs.targets.length,location]);
   const overviewNodes = useMemo<SkyNode[]>(() => {
     const objects = ranked.filter((o) => o.alt > 0);
@@ -457,7 +458,6 @@ export default function PlannerPage() {
   }, [playing, route, speed]);
 
   function selectTarget(id: string) {
-    firstTarget.current=false;
     if(id.startsWith("star:")){setInspectedStar(catalogs.stars.find(s=>`star:${s.id}`===id)??null);return;}
     const star=catalogs.stars.find(s=>s.id===id);
     if(star&&!catalogs.targets.some(t=>t.id===id)){setInspectedStar(star);return;}
@@ -465,7 +465,7 @@ export default function PlannerPage() {
     if(page==="hop")navigate(pathForPage("hop",id),{replace:true});
   }
   function checkAgainstMoon(id:string,at?:Date) {
-    firstTarget.current=false;setPlaying(false);
+    setPlaying(false);
     update({targetId:id,...(id!==targetId?{startStarId:undefined}:{})});
     if(at)previewMoment(at,lat,lon,false);
     setPage("moon");
@@ -1184,6 +1184,7 @@ export default function PlannerPage() {
                   ) : (
                     <SkyChart
                       overview
+                      targetDiameter={catalogDiameter(selected?.size)}
                       nodes={overviewNodes}
                       constellations={catalogs.constellations}
                       denseStars={catalogs.dense}
@@ -1205,8 +1206,7 @@ export default function PlannerPage() {
                   )}
                   <div className="sky-caption">
                     <span>
-                      <i className="legend-target" />
-                      Catalog object · tap to explore
+                      Click a labeled symbol to select its object
                     </span>
                     <span>Star size = brightness · hue = catalog color</span>
                   </div>
@@ -1215,7 +1215,7 @@ export default function PlannerPage() {
                   <section className="panel featured-object" ref={featuredObjectRef}>
                     <div className="featured-art">
                       <TargetPhoto target={selected} />
-                      <span className="art-badge">IN FOCUS</span>
+                      <span className="art-badge">SELECTED · {selected.id}</span>
                     </div>
                     <div className="featured-body">
                       <div className="flex items-center justify-between gap-2">
@@ -1228,13 +1228,14 @@ export default function PlannerPage() {
                           {altitudeLabel(selection.alt)}
                         </span>
                       </div>
-                      <h2>{selected.name}</h2>
+                      <div className="selected-object-heading"><h2>{selected.name}</h2><button className="text-action" aria-label="Clear selected object" onClick={()=>update({targetId:"",startStarId:undefined})}><X size={15}/></button></div><p className="selection-context">Saved selection on this device · choose another symbol to change it</p>
                       <p className="object-location">
                         {getConstellationName(selected.con)}
                         <span>·</span>
                         {Math.round(selection.alt)}°{" "}
                         {compassLabel(selection.az)}
                       </p>
+                      <SelectedTargetPlanning target={selected} lat={lat} lon={lon} date={date} timezone={timezone} skyBrightness={settings.skyBrightness}/>
                       <p className="object-story">{guideFor(selected).story}</p>
                       {!conditions.isDark&&<button className="text-action" onClick={()=>previewMoment(planningShortcut("tonight",lat,lon).date,lat,lon)}>Preview tonight after dark <ArrowUpRight size={13}/></button>}
                       <TargetPhotoCredit target={selected} />
@@ -1280,8 +1281,8 @@ export default function PlannerPage() {
                     <h2>
                       {loading
                         ? "Gathering a little starlight…"
-                        : "Choose an object below"}
-                    </h2>
+                        : "Choose an object in the sky"}
+                    </h2><p>Clusters, galaxies and nebulae have distinct symbols. Select one to see its photo, observing graph and binocular guidance.</p><button className="text-action" onClick={()=>setPage("catalog")}>Browse the full catalog <ArrowUpRight size={13}/></button>
                   </section>
                 )}
               </div>

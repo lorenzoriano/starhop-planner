@@ -12,6 +12,13 @@ describe("night Moon observation profiles",()=>{
     for(const sample of profile.flatMap(s=>s.samples)){expect(sample.separation).toBeCloseTo(angularDistance(target.ra,target.dec,sample.moon.ra,sample.moon.dec),10);expect(sample.separation).toBeGreaterThanOrEqual(0);expect(sample.separation).toBeLessThanOrEqual(180);expect(sample.moon.illumination).toBeGreaterThanOrEqual(0);expect(sample.moon.illumination).toBeLessThanOrEqual(1);expect(moonAt(sample.date)).toBe(sample.moon);if(sample.moon.alt<=-sample.moon.diameter/2)expect(sample.moonlight).toBe(0);}
     expect(profile.flatMap(s=>s.samples).some(s=>s.moonlight>0)).toBe(true);
   });
+  it("provides a whole selected day with real Sun and Moon heights across daylight-saving changes",()=>{
+    const day=visibilityWindow("2026-11-01","00:00","00:00","range",zone,lat,lon);expect(day.ok).toBe(true);
+    if(day.ok)expect(+day.end-+day.start).toBe(25*3600000);
+    const samples=observationProfile(target,lat,lon,day,21.6).flatMap(segment=>segment.samples);
+    expect(samples.some(s=>s.moon.sunAlt>0)).toBe(true);expect(samples.some(s=>s.moon.sunAlt<-18)).toBe(true);
+    for(const s of samples){expect(Number.isFinite(s.moon.alt)).toBe(true);expect(Number.isFinite(s.moon.sunAlt)).toBe(true);}
+  });
   it("accounts for phase brightness and a Moon below the horizon in the shading",()=>{
     const night=visibilityWindow("2026-10-24","12:00","12:00","night",zone,lat,lon),base=moonState(lat,lon,new Date("2026-10-25T04:00Z"));
     const full=observationProfile(target,lat,lon,night,21.6,()=>({...base,alt:45,phaseAngle:0}));

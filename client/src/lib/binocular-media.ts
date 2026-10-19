@@ -3,11 +3,11 @@ import featured from "./binocular-featured-images.json";
 import type { UnifiedTarget } from "./astronomy";
 
 export type SurveyBand = "optical" | "infrared";
-export interface SurveyImage { variant: SurveyBand; path: string; url: string; }
+export interface SurveyImage { variant: SurveyBand; path: string; url: string; display?:boolean; qualityNote?:string; }
 export interface TargetMedia { ra: number; dec: number; fov: number; images: SurveyImage[]; }
 const images = manifest as Record<string, TargetMedia>;
 export function binocularMedia(targetId: string): TargetMedia | undefined { return images[targetId]; }
-interface FeaturedImage { title: string; path: string; source: string; licenseName: string; licenseUrl: string; credit: string; note: string; }
+interface FeaturedImage { title: string; path: string; source: string; licenseName: string; licenseUrl: string; credit: string; note: string; useAsPrimary?:boolean; shortCredit?:string; width?:number; height?:number; }
 export function binocularFeaturedImage(targetId: string): FeaturedImage | undefined { return (featured as Record<string, FeaturedImage>)[targetId]; }
 export const SURVEY_CREDITS = {
   optical: { title: "DSS2 · optical", credit: "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS", policy: "https://archive.stsci.edu/publishing/data-use", note: "Historical optical survey photographs. Plate seams, glare and saturated stars may be visible. Educational, noncommercial use; survey copyrights retained." },
@@ -25,3 +25,13 @@ export function binocularDatabaseResources(target: UnifiedTarget, fov: number) {
     { title: "Aladin · explore the survey sky", url: `https://aladin.cds.unistra.fr/AladinLite/?target=${encodeURIComponent(coordinate)}&fov=${fov}&survey=P%2FDSS2%2Fcolor` },
   ];
 }
+
+/** One audited optical image and truthful attribution for every discovery surface. */
+export function primaryOpticalImage(id:string) {
+  const portrait=binocularFeaturedImage(id);
+  if(portrait?.useAsPrimary)return {path:portrait.path,url:portrait.source,credit:portrait.credit,shortCredit:portrait.shortCredit??portrait.credit,licenseName:portrait.licenseName,policy:portrait.licenseUrl,note:portrait.note,title:portrait.title,caption:`${portrait.shortCredit??portrait.credit} · ${portrait.licenseName}`,width:portrait.width??640,height:portrait.height??480,kind:'portrait' as const};
+  const media=binocularMedia(id),image=media?.images.find(i=>i.variant==='optical'&&i.display!==false);
+  if(!media||!image)return undefined;
+  return {path:image.path,url:image.url,credit:SURVEY_CREDITS.optical.credit,shortCredit:'DSS2 / CDS',licenseName:'Survey photograph',policy:SURVEY_CREDITS.optical.policy,note:`${media.fov.toFixed(1)}° optical field. Telescope survey exposure; binoculars show less detail and color.`,title:'DSS2 optical survey photograph',caption:'DSS2 · OPTICAL SURVEY',width:640,height:480,kind:'survey' as const};
+}
+export const opticalPhotoCaption=(id:string)=>primaryOpticalImage(id)?.caption??'Optical photograph';
