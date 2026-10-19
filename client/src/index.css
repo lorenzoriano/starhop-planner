@@ -1471,3 +1471,24 @@ button:disabled { opacity: .45; cursor: default; }
 .weather-source,.weather-method { font-size:10px; line-height:1.8; color:#829fab; margin:7px 0 0; }
 .weather-source a { text-decoration:underline; text-underline-offset:3px; color:#a3c6b9; }
 @media(max-width:700px) { .weather-panel > summary { padding:12px 13px; gap:10px; } .weather-site { gap:8px; flex:1; } .weather-site strong,.weather-glance strong { font-size:11px; } .weather-site small,.weather-glance small { font-size:9px; } .weather-glance { max-width:48%; } .weather-content { padding:0 13px 14px; } .weather-metrics { grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 12px; } .weather-chart-heading { gap:8px 15px; } .weather-chart-heading small { margin-left:0; width:100%; } .weather-window { flex-wrap:wrap; padding:12px; } .weather-window > svg { display:none; } }
+
+.stargazing-controls { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin:12px 0; color:#8caab4; font-size:11px; }
+.stargazing-controls label { display:flex; align-items:center; gap:10px; }
+.stargazing-controls select { color:#c9ded1; background:#10232d; border:1px solid #375361; border-radius:4px; padding:7px 10px; font-size:12px; }
+.stargazing-outlook { padding:17px 20px; border:1px solid #345346; border-radius:7px; background:#9dc5ac08; margin:14px 0 18px; }
+.stargazing-outlook.outlook-poor { border-color:#655a3f; background:#d9bb7f07; }
+.stargazing-score { display:flex; align-items:center; gap:16px; color:#c6dfcc; }
+.outlook-poor .stargazing-score { color:#dcc38c; }
+.stargazing-score > strong { font:400 40px/1.1 var(--font-serif); }
+.stargazing-score > strong small { font:400 12px var(--font-sans); color:#89a5ae; margin-left:4px; }
+.stargazing-score > span { font-size:15px; }
+.stargazing-score > span small { display:block; font-size:10px; color:#8fa9b1; margin-top:4px; }
+.stargazing-outlook > p { font-size:11px; color:#b7c9bc; margin:13px 0; line-height:1.8; }
+.stargazing-factors { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; border-top:1px solid #29434b; padding-top:12px; font-size:10px; color:#8eaab4; }
+.stargazing-factors strong { display:block; font-weight:500; color:#c4d9cd; font-size:12px; margin:5px 0; }
+.stargazing-factors small { display:block; font-size:10px; line-height:1.7; }
+.stargazing-model-status { color:#9aabb9; font-size:10px; line-height:1.8; margin:12px 0; }
+.stargazing-compare { display:flex; flex-wrap:wrap; gap:10px 20px; font-size:11px; color:#8da5af; padding:12px 0; border-top:1px solid #263f4a; }
+.stargazing-compare a { display:inline-flex; align-items:center; gap:5px; color:#b1cfc0; }
+.weather-content .text-action { min-height:32px; }
+@media(max-width:700px) { .stargazing-outlook { padding:14px; } .stargazing-factors { grid-template-columns:1fr; gap:13px; } .stargazing-factors > span { display:grid; grid-template-columns:90px 1fr; gap:3px 8px; align-items:baseline; } .stargazing-factors strong { margin:0; } .stargazing-factors small { grid-column:2; } .stargazing-score > strong { font-size:35px; } .stargazing-controls > span { display:none; } }

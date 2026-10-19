@@ -61,7 +61,7 @@ export function weatherVerdict(hour:Pick<WeatherHour,'cloud'|'rain'|'rainChance'
   if(hour.cloud===null)return {label:'Cloud forecast unavailable',tone:'unknown'};
   return hour.cloud<=20?{label:'Mostly clear',tone:'good'}:hour.cloud<=50?{label:'Some cloud',tone:'mixed'}:hour.cloud<=80?{label:'Mostly cloudy',tone:'poor'}:{label:'Overcast',tone:'poor'};
 }
-export function observingWeather(forecast:WeatherForecast,date:Date,timezone:string,now=Date.now()) {
+export function observingWeather(forecast:WeatherForecast,date:Date,timezone:string,now=Date.now(),rank?:(hours:WeatherHour[])=>number) {
   const day=formatInTimeZone(date,timezone,'yyyy-MM-dd');
   const night=visibilityWindow(day,'12:00','12:00','night',timezone,forecast.lat,forecast.lon);
   if(!night.ok)return {hours:[] as WeatherHour[],night,best:null,partial:false};
@@ -72,7 +72,8 @@ export function observingWeather(forecast:WeatherForecast,date:Date,timezone:str
     const a=dark[i],b=dark[i+1],pair=[a,b];
     if(a.time<now||b.time-a.time!==WEATHER_HOUR||pair.some(h=>h.cloud===null||h.cloud>50||h.rain===null||h.rain>=.1||h.rainChance===null||h.rainChance>=30||h.wind===null||h.wind>=25||h.gust===null||h.gust>=40||h.visibility===null||h.visibility<10000))continue;
     const cloud=meanWeather(pair,'cloud')!,wind=meanWeather(pair,'wind')!;
-    const score=cloud+wind*.6+pair.reduce((n,h)=>n+(h.temp!==null&&h.dew!==null&&h.temp-h.dew<=2?10:0),0);
+    const score=rank?rank(pair):cloud+wind*.6+pair.reduce((n,h)=>n+(h.temp!==null&&h.dew!==null&&h.temp-h.dew<=2?10:0),0);
+    if(!Number.isFinite(score))continue;
     if(!best||score<best.score)best={start:a.time,end:b.time+WEATHER_HOUR,cloud,wind,score};
   }
   const partial=forecast.hours[0].time>+night.start||forecast.hours.at(-1)!.time+WEATHER_HOUR<+night.end;

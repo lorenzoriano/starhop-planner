@@ -1166,7 +1166,7 @@ export default function PlannerPage() {
             <div><Clock size={14} /><span><strong>{settings.timeMode === "live" ? "Live sky" : "Viewing planned sky"}</strong> · {dateLabel} · {observingTime}<small>{timezone.replaceAll("_", " ")} (UTC{formatInTimeZone(date,timezone,"xxx")}) · {locationLabel}</small>{activeSession&&<small className="session-list-context">Targets saved to “{activeSession.name}”</small>}</span></div>
             <div className="session-time-actions"><button className="text-action" onClick={()=>setPage("night")}><CalendarDays size={13}/>{activeSession ? `Planner · ${night.length} ${night.length===1?"object":"objects"}` : "Open planner"}</button><details><summary>Plan a time</summary><div><label>Date<input aria-label="Session date" type="date" value={observingDate} onChange={e => { if (e.target.value && Number.isFinite(new Date(e.target.value).getTime())) planLocalTime(e.target.value, observingTime); }} /></label><label>Time<input aria-label="Session time" type="time" value={observingTime} onChange={e => { if (e.target.value) planLocalTime(observingDate, e.target.value); }} /></label><small>Local time at your observing location.</small></div></details><button className="text-action" onClick={useNow}>{settings.timeMode === "live" ? "Refresh now" : "Use current time"}</button></div>
           </section>}
-          {page !== "night" && <WeatherPanel lat={lat} lon={lon} date={date} timezone={timezone} locationName={locationLabel} onTime={at=>previewMoment(at,lat,lon)}/>}
+          {page !== "night" && <WeatherPanel lat={lat} lon={lon} date={date} timezone={timezone} skyBrightness={settings.skyBrightness} locationName={locationLabel} onTime={at=>previewMoment(at,lat,lon)}/>}
           {page === "tonight" && (
             <>
               <div className="tonight-hero">
@@ -1296,7 +1296,7 @@ export default function PlannerPage() {
                   value={conditions.darkness}
                   detail={
                     conditions.isDark
-                      ? "Sun below −18°; see Observing weather for the cloud forecast"
+                      ? "Sun below −18°; see Stargazing forecast for the observing outlook"
                       : `Sun altitude ${Math.round(conditions.sunAlt)}°`
                   }
                 />

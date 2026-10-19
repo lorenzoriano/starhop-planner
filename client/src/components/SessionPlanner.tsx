@@ -129,7 +129,7 @@ export function SessionPlanner({savedLocations,onLocationsChange,sessions,active
 
     </section>
 
-    {resolved.ok&&<WeatherPanel lat={resolved.value.lat} lon={resolved.value.lon} date={new Date(resolved.value.startAt)} timezone={formZone} locationName={resolved.value.locationName||matchingLocation(savedLocations,resolved.value.lat,resolved.value.lon)?.name||`${resolved.value.lat.toFixed(2)}°, ${resolved.value.lon.toFixed(2)}°`} onTime={at=>patch({date:formatInTimeZone(at,formZone,"yyyy-MM-dd"),time:formatInTimeZone(at,formZone,"HH:mm")})}/>}
+    {resolved.ok&&<WeatherPanel lat={resolved.value.lat} lon={resolved.value.lon} date={new Date(resolved.value.startAt)} timezone={formZone} skyBrightness={skyBrightness} locationName={resolved.value.locationName||matchingLocation(savedLocations,resolved.value.lat,resolved.value.lon)?.name||`${resolved.value.lat.toFixed(2)}°, ${resolved.value.lon.toFixed(2)}°`} onTime={at=>patch({date:formatInTimeZone(at,formZone,"yyyy-MM-dd"),time:formatInTimeZone(at,formZone,"HH:mm")})}/>}
 
     <section className="panel planner-target-board" aria-label="Targets and viewing sequence">
       <label className="planner-target-search">Add targets<input ref={search} aria-label="Add target to session" placeholder="Search M31, a star, cluster, double star…" value={query} onChange={event=>setQuery(event.target.value)} onKeyDown={event=>{if(event.key==="Enter"&&!event.nativeEvent.isComposing&&matches[0]){event.preventDefault();add(matches[0]);}}}/></label>
