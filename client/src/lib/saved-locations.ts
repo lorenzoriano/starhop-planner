@@ -6,6 +6,14 @@ export const savedLocationSchema = z.object({
 });
 export const savedLocationsSchema = z.array(savedLocationSchema).max(50);
 export type SavedLocation = z.infer<typeof savedLocationSchema>;
+/** Decimal degrees in latitude, longitude order; never guess or swap axes. */
+export function parseCoordinatePair(input:string):{lat:number;lon:number}|null {
+  const number='[+-]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)';
+  const match=input.trim().replaceAll('−','-').match(new RegExp(`^(${number})(?:\\s*[,;]\\s*|\\s+)(${number})$`));
+  if(!match)return null;
+  const lat=Number(match[1]),lon=Number(match[2]);
+  return Number.isFinite(lat)&&Number.isFinite(lon)&&Math.abs(lat)<=90&&Math.abs(lon)<=180?{lat,lon}:null;
+}
 export function matchingLocation(locations:SavedLocation[],lat:number,lon:number) {
   return locations.find(site=>Math.abs(site.lat-lat)<1e-6&&Math.abs(site.lon-lon)<1e-6);
 }

@@ -1,0 +1,9 @@
+
+.coordinate-pair-input {margin:14px 0;min-width:0;}
+.coordinate-pair-input>label {display:block;font-size:13px;color:#bed1ca;margin-bottom:6px;}
+.coordinate-pair-row {display:flex;flex-wrap:wrap;gap:8px;}
+.coordinate-pair-row>input {flex:1;min-width:180px;width:100%;padding:10px 12px;border:1px solid #3b5663;border-radius:6px;background:#10232d;color:#d6e2da;font-size:16px;}
+.coordinate-pair-input>p {font-size:12px;line-height:1.5;color:#9fb8be;margin-top:6px;}
+.coordinate-pair-row>button {width:auto;margin:0;padding:10px 12px;}
+.coordinate-pair-row>button:disabled {opacity:.45;cursor:not-allowed;}
+.coordinate-pair-row>input[aria-invalid="true"] {border-color:#d99d87;}

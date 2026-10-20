@@ -5,6 +5,7 @@ import tzLookup from 'tz-lookup';
 import { resolveLocalMoment } from '@/lib/session';
 import type { SavedLocation } from '@/lib/saved-locations';
 import { SavedLocations } from './SavedLocations';
+import { CoordinatePairInput } from './CoordinatePairInput';
 import { Calendar } from './ui/calendar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
 
@@ -54,7 +55,7 @@ export function ObservingContextProvider({ children, date, timezone, lat, lon, l
       <DialogContent className="context-dialog"><DialogHeader><DialogTitle>Choose observing location</DialogTitle><DialogDescription>Charts and forecasts use this site. Saved locations also work offline.</DialogDescription></DialogHeader>
         <SavedLocations context="Sky" locations={locations} lat={latitude.trim()?Number(latitude):NaN} lon={longitude.trim()?Number(longitude):NaN} name={name} onChange={onLocations} onSelect={selectSite} />
         <div className="context-presets">{[{name:'San Francisco',lat:37.77,lon:-122.42},{name:'London',lat:51.5,lon:-.12},{name:'Sydney',lat:-33.87,lon:151.21}].map(site => <button key={site.name} onClick={() => selectSite(site)}>{site.name}</button>)}</div>
-        <form onSubmit={e => { e.preventDefault(); applySite(); }}><div className="context-fields"><label>Latitude<input aria-label="Choose latitude" type="number" min={-90} max={90} step="any" required value={latitude} onChange={e => { setLatitude(e.target.value); setName(''); }} /></label><label>Longitude<input aria-label="Choose longitude" type="number" min={-180} max={180} step="any" required value={longitude} onChange={e => { setLongitude(e.target.value); setName(''); }} /></label></div><p className="astro-note">{name && `${name} · `}{siteZone.replaceAll('_',' ')}</p>{error && <p role="alert">{error}</p>}<button type="submit" className="context-apply">Use this location</button></form>
+        <form onSubmit={e => { e.preventDefault(); applySite(); }}><CoordinatePairInput onParsed={(a,b)=>{setLatitude(String(a));setLongitude(String(b));setName('');setError('');}}/><div className="context-fields"><label>Latitude<input aria-label="Choose latitude" type="number" min={-90} max={90} step="any" required value={latitude} onChange={e => { setLatitude(e.target.value); setName(''); }} /></label><label>Longitude<input aria-label="Choose longitude" type="number" min={-180} max={180} step="any" required value={longitude} onChange={e => { setLongitude(e.target.value); setName(''); }} /></label></div><p className="astro-note">{name && `${name} · `}{siteZone.replaceAll('_',' ')}</p>{error && <p role="alert">{error}</p>}<button type="submit" className="context-apply">Use this location</button></form>
       </DialogContent>
     </Dialog>
   </Context.Provider>;

@@ -1,3 +1,4 @@
+import {CoordinatePairInput} from "@/components/CoordinatePairInput";
 import {CatalogCombobox} from "@/components/CatalogCombobox";
 import { UpcomingNights } from "@/components/UpcomingNights";
 import { OfflineControls } from "@/components/OfflineControls";
@@ -926,6 +927,7 @@ export default function PlannerPage() {
             </div>
             <p className="location-name">{locationLabel}</p>
             <SavedLocations context="Sky" locations={savedLocations} lat={lat} lon={lon} onChange={setSavedLocations} onSelect={site=>update({lat:site.lat,lon:site.lon})}/>
+            <CoordinatePairInput onUse={(a,b)=>update({lat:a,lon:b,plannedAt:undefined})}/>
             <div className="grid grid-cols-2 gap-2 mt-3">
               <CoordinateInput
                 label="Latitude"

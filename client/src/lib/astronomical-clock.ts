@@ -8,18 +8,18 @@ import {
 } from "./astronomy";
 import { moonState, scatteredMoonlight } from "./moon";
 import { resolveLocalMoment } from "./session";
-import { nextLocalDate, targetDayEvents } from "./target-visibility";
+import { nextLocalDate, targetIntervalEvents } from "./target-visibility";
 
 export const CLOCK_LIMIT = 8;
 // Saturated object colors stay separate from neutral Moon and amber Sun.
 export const CLOCK_COLORS = [
   "#53e352",
-  "#ff59ce",
+  "#df9dff",
   "#ff792f",
-  "#459bff",
-  "#ff4b67",
-  "#00c9b7",
-  "#ac77ff",
+  "#4a9dff",
+  "#ff4755",
+  "#21e6d0",
+  "#bba174",
   "#ead328",
 ];
 export function comparisonIds(value: unknown): string[] {
@@ -163,7 +163,7 @@ export type SeasonRequest = {
   minSeparation: number;
   skyBrightness?: number;
 };
-export type SeasonDay = { day: string; hours: number[]; available: number[]; contrast: number[]; lit: number };
+export type SeasonDay = { day: string; hours: number[]; available: number[]; contrast: number[]; moonFree:number[]; lit: number };
 export type ClockSeason = {
   days: SeasonDay[];
   bins: number[][];
@@ -214,7 +214,7 @@ export function clockSeason(
     trajectories: SeasonTrajectory[] = [];
   for (const day of dates) {
     const { start, end } = clockBounds(day, zone),
-      hours = targets.map(() => 0), available = targets.map(() => 0), contrast = targets.map(() => 0);
+      hours = targets.map(() => 0), available = targets.map(() => 0), contrast = targets.map(() => 0), moonFree=targets.map(()=>0);
     const track: SeasonTrajectory = {
       day,
       ms: [],
@@ -241,6 +241,7 @@ export function clockSeason(
         const separation = angularDistance(t.ra, t.dec, moon.ra, moon.dec);
         if (moon.sunAlt <= -18 && alt >= minAlt) {
           available[i] += .5;
+          if(moon.alt<=-1)moonFree[i]+=.5;
           const glow = scatteredMoonlight(moon, alt, separation, request.skyBrightness ?? 21.6).brightening;
           // Relative diffuse-object contrast against the added sky background.
           contrast[i] += .5 * 10 ** (-.4 * glow);
@@ -262,7 +263,7 @@ export function clockSeason(
       });
     }
     trajectories.push(track);
-    days.push({ day, hours, available, contrast, lit: lit / Math.max(1, count) });
+    days.push({ day, hours, available, contrast, moonFree, lit: lit / Math.max(1, count) });
     progress?.(days.length, dates.length);
   }
   bins.forEach((row) =>
@@ -279,27 +280,8 @@ export function clockTargetEvents(
   day: string,
   zone: string,
 ) {
-  const bounds = clockBounds(day, zone),
-    first = targetDayEvents(
-      target.ra,
-      target.dec,
-      lat,
-      lon,
-      bounds.start,
-      zone,
-    ),
-    second = targetDayEvents(target.ra, target.dec, lat, lon, bounds.end, zone);
-  const event = (key: "rise" | "transit" | "set") =>
-    [first[key], second[key]].find(
-      (at) => at && at >= bounds.start && at < bounds.end,
-    ) ?? null;
-  return {
-    rise: event("rise"),
-    transit: event("transit"),
-    set: event("set"),
-    alwaysUp: first.alwaysUp,
-    neverUp: first.neverUp,
-  };
+  const bounds=clockBounds(day,zone);
+  return targetIntervalEvents(target.ra,target.dec,lat,lon,bounds.start,bounds.end);
 }
 export function clockMoonEvents(
   lat: number,

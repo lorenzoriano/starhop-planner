@@ -21,16 +21,19 @@ function hourAngleEvents(ra:number,lon:number,angle:number,start:Date,end:Date,d
   }
   return events.sort((a,b)=>a.getTime()-b.getTime());
 }
-export function targetDayEvents(ra:number,dec:number,lat:number,lon:number,date:Date,timezone:string) {
-  const label=formatInTimeZone(date,timezone,"yyyy-MM-dd");
-  const start=fromZonedTime(`${label}T00:00:00`,timezone),end=fromZonedTime(`${nextLocalDate(label)}T00:00:00`,timezone);
+/** Search the requested interval itself: a civil date can contain two sidereal events. */
+export function targetIntervalEvents(ra:number,dec:number,lat:number,lon:number,start:Date,end:Date) {
   const currentDec=equatorialOfDate(ra,dec,new Date((+start+ +end)/2)).dec;
   const center=Math.sin(lat*rad)*Math.sin(currentDec*rad),amplitude=Math.cos(lat*rad)*Math.cos(currentDec*rad);
   const alwaysUp=center-amplitude>0,neverUp=center+amplitude<=0;
   const angle=Math.acos(Math.max(-1,Math.min(1,-center/amplitude)))/rad;
   const crosses=!alwaysUp&&!neverUp&&amplitude>1e-12;
-  return {start,end,alwaysUp,neverUp,rise:crosses?hourAngleEvents(ra,lon,-angle,start,end,dec)[0]??null:null,
-    transit:hourAngleEvents(ra,lon,0,start,end,dec)[0]??null,set:crosses?hourAngleEvents(ra,lon,angle,start,end,dec)[0]??null:null};
+  const events={rise:crosses?hourAngleEvents(ra,lon,-angle,start,end,dec):[],transit:hourAngleEvents(ra,lon,0,start,end,dec),set:crosses?hourAngleEvents(ra,lon,angle,start,end,dec):[]};
+  return {start,end,alwaysUp,neverUp,events,rise:events.rise[0]??null,transit:events.transit[0]??null,set:events.set[0]??null};
+}
+export function targetDayEvents(ra:number,dec:number,lat:number,lon:number,date:Date,timezone:string) {
+  const label=formatInTimeZone(date,timezone,"yyyy-MM-dd");
+  return targetIntervalEvents(ra,dec,lat,lon,fromZonedTime(`${label}T00:00:00`,timezone),fromZonedTime(`${nextLocalDate(label)}T00:00:00`,timezone));
 }
 export type VisibilityMode="time"|"night"|"range";
 export type VisibilityWindow={ok:true;start:Date;end:Date;segments:{start:Date;end:Date}[]}|{ok:false;error:string};
