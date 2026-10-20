@@ -4,7 +4,7 @@ import * as Astro from "astronomy-engine";
 import { formatInTimeZone } from "date-fns-tz";
 import { Moon, ArrowUpRight, Binoculars, Check, Plus, Search, ChevronRight, Compass, X, Circle, CheckCircle2 } from "lucide-react";
 import { useChartPreferences } from "./ChartPreferences";
-import { compassLabel, altitudeLabel } from "@/lib/observing";
+import { compassLabel } from "@/lib/observing";
 import { eqToHorizontal, angularDistance, type UnifiedTarget } from "@/lib/astronomy";
 import { moonState, moonDay, lunarFeatures, lunarFrame, projectLunarFeature, featureAngularSize, binocularResolution, scatteredMoonlight, targetMoonlight, MOONLIGHT_SOURCE, type LunarFeature } from "@/lib/moon";
 import { moonFreeTargetWindows, upcomingNights } from "@/lib/upcoming-nights";
@@ -14,12 +14,19 @@ import { renderLunarViewport, separationScale } from "@/lib/lunar-renderer";
 import { MoonTargetPicker } from "./MoonTargetPicker";
 import { TargetPhoto, TargetPhotoCredit } from "./TargetPhoto";
 import type { Settings, NightItem } from "@/lib/session";
+import { AltitudeStatus, ExplainedStatus } from "./ExplainedStatus";
 
 export function MoonlightCard({ target, lat, lon, date, skyBrightness = 21.6, onMoon }: { target: UnifiedTarget; lat: number; lon: number; date: Date; skyBrightness?: number; onMoon?: () => void }) {
   const impact = useMemo(() => targetMoonlight(target, lat, lon, date, skyBrightness), [target, lat, lon, date, skyBrightness]);
+  const moonlightLabel=impact.targetAlt<=0?"Target below horizon":impact.level;
   return <section className="moonlight-card" aria-label={`Moonlight for ${target.name}`} data-testid="moonlight-card">
-    <p className="moonlight-at-time">At chosen time · <ContextDateButton value={date}/></p><div className="moonlight-heading"><Moon size={14} /><strong>{impact.targetAlt <= 0 ? "Target below horizon" : impact.level}</strong><span>{Math.round(impact.separation)}° from Moon</span></div>
-    <p className={`moonlight-target-position ${impact.targetAlt < 15 ? "low" : ""}`}>Target {Math.round(impact.targetAlt)}° {compassLabel(impact.targetAz)} · {altitudeLabel(impact.targetAlt)}</p><p>{impact.advice}</p><p className="moonlight-target-brightness">Catalog magnitude {target.mag.toFixed(1)}{/double/i.test(target.category) ? " · component brightness can differ" : target.category==="Star" ? " · stellar brightness can vary" : " · integrated light; faint detail can be much harder"}.</p>
+    <p className="moonlight-at-time">At chosen time · <ContextDateButton value={date}/></p><div className="moonlight-heading"><Moon size={14} /><ExplainedStatus label={moonlightLabel} explanation={<>
+      <p>{impact.advice}</p>
+      <p>The Moon is {(impact.moon.illumination*100).toFixed(0)}% illuminated, {impact.moon.alt.toFixed(1)}° high and {impact.separation.toFixed(1)}° from this object. {impact.targetAlt<=0?'The object is below the horizon, so a sky-glow estimate cannot describe an observable view.':impact.moon.alt<=-impact.moon.diameter/2?'The entire lunar disk is below the flat horizon; the model adds no lunar sky glow.':`The model estimates ${impact.brightening.toFixed(1)} magnitudes of added sky brightness here.`}</p>
+      <p>With the Moon up, the labels use added sky brightness: below 0.3 mag is little moonlight; 0.3–1 is some moonlight; 1–2 is brightened sky; 2 or more is strong moonlight. Higher values reduce the contrast of faint detail.</p>
+      <p>{impact.reliable?'This assumes clear air and your selected moonless sky brightness; clouds and local lighting are not measured.':'The estimate is less dependable in twilight, near the horizon or at extreme angular separations.'}</p>
+    </>}><strong>{moonlightLabel}</strong></ExplainedStatus><span>{Math.round(impact.separation)}° from Moon</span></div>
+    <p className={`moonlight-target-position ${impact.targetAlt < 15 ? "low" : ""}`}>Target {Math.round(impact.targetAlt)}° {compassLabel(impact.targetAz)} · <AltitudeStatus alt={impact.targetAlt} sunAlt={impact.moon.sunAlt}/></p><p>{impact.advice}</p><p className="moonlight-target-brightness">Catalog magnitude {target.mag.toFixed(1)}{/double/i.test(target.category) ? " · component brightness can differ" : target.category==="Star" ? " · stellar brightness can vary" : " · integrated light; faint detail can be much harder"}.</p>
     <div className="moonlight-numbers"><span>{Math.round(impact.moon.illumination*100)}% lit · Moon {Math.round(impact.moon.alt)}° {compassLabel(impact.moon.az)}</span>
       {impact.targetAlt > 0 && impact.moon.alt > -impact.moon.diameter/2 && impact.moon.sunAlt <= -18 && <span>≈ {impact.brightening.toFixed(1)} mag brighter sky</span>}</div>
     <details><summary>How this estimate works</summary><p>Angular separation is measured on the sky: 180° puts the Moon opposite the target. The <a href={MOONLIGHT_SOURCE} target="_blank" rel="noreferrer">Krisciunas–Schaefer model</a> estimates extra sky glow from lunar phase, height and separation. Assumes a {skyBrightness.toFixed(1)} mag/arcsec² moonless zenith sky and clear-air extinction of 0.172 mag/airmass. It does not predict a percentage chance of seeing this object.</p><p>{impact.reliable ? "Even under clear skies this is an estimate; haze, local lighting and the object's surface brightness affect visibility." : "Outside the model's usual observing range: low altitude, twilight or extreme separation makes the estimate less dependable."} Lunar eclipses and local obstructions are not included.</p></details>

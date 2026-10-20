@@ -39,3 +39,11 @@ This pass uses the latest reopening comments as its acceptance criteria. It supe
 - Site sky references are observer assumptions, not measured or geocoded light-pollution values. Previously explicit custom settings are preserved and can be confirmed for a site.
 - Copies reset observation records. Moving the whole night is explicit; Undo removes the logged observation while preserving subsequent notes.
 - The long-term wishlist and proposed five-tab redesign are not part of the accepted reopening scope. Saved nights and explicit duplicate/carryover cover the current list-planning workflow.
+
+## Browser feedback after 6343d77
+
+- Removed sticky positioning from the saving/location strip so it scrolls away instead of obscuring the planetarium.
+- Added hover, focus and tap explanations for selected-object altitude ratings, binocular recommendations, availability and Moonlight ratings. Explanations use the current geometry/model values and distinguish altitude from daylight visibility.
+- Replaced the fixed, stretched night-chart viewBox with a measured responsive plot. Axis text uses uniform scaling; time labels flow as three HTML groups. Scoped chart SVG styles to avoid resizing the nested calendar icon.
+- Verified the production build at 393, 710, 775 and 1440 px with M31 on January 31, 2027, San Francisco. Equal SVG horizontal/vertical scale, no page overflow or time-label overlap, normal 13 px calendar icon, correct pointer and Home/End keyboard inspection after resizing. Status help works on hover, keyboard focus, tap, click-to-pin and Escape. Inspected chart and mobile popover screenshots; no browser errors.
+- Validation: 306 tests passed; TypeScript check and production build passed.

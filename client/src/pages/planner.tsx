@@ -1,3 +1,4 @@
+import {AltitudeStatus} from "@/components/ExplainedStatus";
 import { getSiteSkyBrightness, suggestedSiteSkyBrightness } from "@/lib/site-sky-brightness";
 import { AppTextSizeControl } from "@/components/AppTextSizeControl";
 import { targetDesignation } from "@/lib/catalog-presentation";
@@ -1319,11 +1320,7 @@ export default function PlannerPage() {
                         <span className="eyebrow">
                           {targetDesignation(selected)} · {selected.category.toUpperCase()}
                         </span>
-                        <span
-                          className={`visibility-tag ${selection.alt < 15 ? "low" : ""}`}
-                        >
-                          {altitudeLabel(selection.alt)}
-                        </span>
+                        <AltitudeStatus alt={selection.alt} sunAlt={conditions.sunAlt}/>
                       </div>
                       <div className="selected-object-heading"><h2>{selected.name}</h2><button className="text-action" aria-label="Clear selected object" onClick={()=>update({targetId:"",startStarId:undefined})}><X size={15}/></button></div><p className="selection-context">Selected object · choose another symbol to change it</p>
                       <p className="object-location">

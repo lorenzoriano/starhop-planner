@@ -91,10 +91,10 @@
 .planner-row-actions { min-width: 0; }
 .planner-row-copy strong,
 .planner-row-copy span { overflow-wrap: anywhere; }
-.night-altitude-chart svg,
+.night-altitude-chart > svg,
 .lunar-altitude-chart,
 .lunar-separation-panel > svg { display: block; width: 100%; }
-.night-altitude-chart svg { min-height: 170px; }
+.night-altitude-chart > svg { min-height: 170px; }
 
 /* Keep the seven primary destinations available on narrow screens. */
 .app-header { min-width: 0; }
@@ -325,7 +325,7 @@
 .night-altitude-chart .night-observation-suggestion,
 .night-altitude-chart .night-moon-explanation,
 .night-altitude-chart .night-moon-scale { font-size: 12px; line-height: 1.55; }
-.night-altitude-chart svg { display: block; width: 100%; min-height: 0; height: 170px; }
+.night-altitude-chart > svg { display: block; width: 100%; min-height: 0; height: 190px; }
 .night-altitude-chart .night-chart-readout.active { color: #e0eee6; }
 
 .observatory-shell button:disabled,
@@ -343,7 +343,7 @@
   .session-timebar > div:first-child { width: auto; flex: 1 1 100%; }
   .session-time-actions { gap: 6px; }
   .main-nav { mask-image: linear-gradient(90deg, #000 0, #000 94%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, #000 0, #000 94%, transparent 100%); }
-  .night-altitude-chart svg { height: 170px; }
+  .night-altitude-chart > svg { height: 190px; }
 }
 
 /* Final interaction and legibility floors for visible controls and captions. */
@@ -392,7 +392,7 @@
   font-size: 12px !important;
 }
 .altitude-chart svg text { font-size: 12px !important; }
-.night-altitude-chart svg text { font-size: 15px !important; }
+.night-altitude-chart > svg text { font-size: 12px !important; }
 .lunar-altitude-chart svg text,
 .lunar-separation-chart svg text,
 .moon-chart svg text { font-size: 15px !important; }
@@ -437,8 +437,8 @@
 .observatory-shell .binocular-profile-summary { font-size: max(12px, 1em) !important; }
 .observatory-shell .planner-preview-label { font-size: 12px !important; }
 .observatory-shell .text-xs { font-size: max(12px, .75rem) !important; }
-/* Shared night context remains visible while browsing long collections. */
-.saving-context{position:sticky;top:90px;z-index:8;display:flex;flex-wrap:wrap;align-items:center;gap:4px 7px;background:#0b1b24f5;padding:5px 12px;border-bottom:1px solid #2c454f;font-size:12px;line-height:1.5;margin:-8px 0 12px}
+/* Shared night context scrolls with the page instead of covering the sky. */
+.saving-context{position:static;display:flex;flex-wrap:wrap;align-items:center;gap:4px 7px;background:#0b1b24f5;padding:5px 12px;border-bottom:1px solid #2c454f;font-size:12px;line-height:1.5;margin:-8px 0 12px}
 .saving-context .context-edit{min-height:32px}
 .target-best-nights{font-size:12px;border-bottom:1px solid #304752;padding:8px 0}
 .target-best-nights summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:#b7d2ca}
@@ -456,7 +456,7 @@
  .session-timebar>div:first-child>span{font-size:0!important}
  .session-timebar .context-edit{font-size:12px!important}
  .session-time-actions{display:none!important}
- .saving-context{top:98px;gap:3px;padding:3px 8px;font-size:12px}
+ .saving-context{gap:3px;padding:3px 8px;font-size:12px}
  .saving-context .context-edit{font-size:12px}
  .hop-page-heading h1{font-size:24px!important}
  .target-best-nights{font-size:12px}
@@ -481,3 +481,11 @@
 /* The large setting also reaches legacy pixel-based body and control text. */
 :root[data-text-size="large"] .main-content :is(p,button,input,select,textarea,label,output,summary){font-size:18px!important;line-height:1.5}
 :root[data-text-size="large"] .main-content :is(small,.eyebrow,.setup-hint,.selection-context){font-size:14px!important;line-height:1.5}
+
+/* Time labels use normal text flow, independent of plot aspect ratio. */
+.night-chart-time-axis { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:4px; margin:0 0 7px; font-size:12px; line-height:1.5; color:#a0b5bb; }
+.night-chart-time-axis > div { min-width:0; }
+.night-chart-time-axis > div:nth-child(2) { text-align:center; }
+.night-chart-time-axis > div:last-child { text-align:right; }
+.night-chart-time-axis span,.night-chart-time-axis time { display:block; }
+.night-chart-time-axis span { color:#829ea8; }

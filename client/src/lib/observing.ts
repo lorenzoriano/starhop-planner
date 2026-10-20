@@ -126,6 +126,14 @@ export function altitudeLabel(alt: number): string {
         ? "Good view"
         : "Well placed";
 }
+/** Explain the exact altitude bands used by every position badge. */
+export function altitudeExplanation(alt:number):string {
+  const position=`At ${alt.toFixed(1)}° altitude`;
+  if(alt<0)return `${position}, the object is below the horizon (0°) and cannot be seen from this site at the chosen time.`;
+  if(alt<20)return `${position}, the object is in the 0°–20° low-altitude band. More atmosphere, haze and nearby obstructions can reduce the view; wait for it to climb if possible.`;
+  if(alt<40)return `${position}, the object is in the 20°–40° band. It is clear of the lowest part of the sky, though a higher view usually gives better contrast.`;
+  return `${position}, the object is at least 40° above the horizon. It is high enough to avoid much of the low-altitude haze; 90° is directly overhead.`;
+}
 export function skyConditions(lat: number, lon: number, date: Date) {
   const observer = new Astro.Observer(lat, lon, 0);
   const sun = Astro.Equator(Astro.Body.Sun, date, observer, true, true);
