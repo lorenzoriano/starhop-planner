@@ -1,6 +1,7 @@
 import * as Astro from "astronomy-engine";
 import { fromZonedTime, formatInTimeZone } from "date-fns-tz";
 import { angularDistance, eqToHorizontal, type UnifiedTarget } from "./astronomy";
+import { clockBounds, clockNightDate } from "./astronomical-clock";
 import features from "./lunar-features.json";
 
 export const lunarFeatures = features;
@@ -23,7 +24,7 @@ export function moonState(lat: number, lon: number, date: Date) {
   const solarEq = Astro.Equator(Astro.Body.Sun, date, observer, true, true);
   const sunAlt = Astro.Horizon(date, observer, solarEq.ra, solarEq.dec).altitude;
   const phase = Astro.MoonPhase(date);
-  const phaseName = phase < 22.5 || phase >= 337.5 ? "New Moon" : phase < 67.5 ? "Waxing crescent" : phase < 112.5 ? "First quarter" : phase < 157.5 ? "Waxing gibbous" : phase < 202.5 ? "Full Moon" : phase < 247.5 ? "Waning gibbous" : phase < 292.5 ? "Last quarter" : "Waning crescent";
+  const phaseName = phase < 12 || phase >= 348 ? "New Moon" : phase < 84 ? "Waxing crescent" : phase <= 96 ? "First quarter" : phase < 168 ? "Waxing gibbous" : phase <= 192 ? "Full Moon" : phase < 264 ? "Waning gibbous" : phase <= 276 ? "Last quarter" : "Waning crescent";
   const distanceKm = eq.dist * Astro.KM_PER_AU;
   return { alt: horizon.altitude, az: horizon.azimuth, ra: eqJ.ra * 15, dec: eqJ.dec,
     illumination: light.phase_fraction, phaseAngle: light.phase_angle, phase, phaseName,
@@ -84,7 +85,7 @@ export function lunarDayBounds(date: Date, timezone: string) {
 }
 export function moonDay(lat: number, lon: number, date: Date, timezone: string) {
   const observer = new Astro.Observer(lat, lon, 0);
-  const { start, end } = lunarDayBounds(date, timezone);
+  const { start, end } = clockBounds(clockNightDate(date,timezone),timezone);
   const duration = (end.getTime() - start.getTime()) / 86_400_000;
   const rise = Astro.SearchRiseSet(Astro.Body.Moon, observer, 1, start, duration);
   const set = Astro.SearchRiseSet(Astro.Body.Moon, observer, -1, start, duration);
@@ -96,12 +97,12 @@ export function moonDay(lat: number, lon: number, date: Date, timezone: string) 
     const at = new Date(start.getTime() + (end.getTime() - start.getTime()) * i / 96);
     return { date: at, ...moonState(lat, lon, at) };
   });
-  const futureEnd=new Date(date.getTime()+86_400_000);
-  const crossings=[date,futureEnd];
+  const futureEnd=end;
+  const crossings=[start,futureEnd];
   for(const direction of [-1,1] as const){
-    const solar=Astro.SearchAltitude(Astro.Body.Sun,observer,direction,date,1,-18)?.date;
-    const lunar=Astro.SearchRiseSet(Astro.Body.Moon,observer,direction,date,1)?.date;
-    for(const crossing of [solar,lunar])if(crossing&&crossing>date&&crossing<futureEnd)crossings.push(crossing);
+    const solar=Astro.SearchAltitude(Astro.Body.Sun,observer,direction,start,duration,-18)?.date;
+    const lunar=Astro.SearchRiseSet(Astro.Body.Moon,observer,direction,start,duration)?.date;
+    for(const crossing of [solar,lunar])if(crossing&&crossing>start&&crossing<futureEnd)crossings.push(crossing);
   }
   crossings.sort((a,b)=>a.getTime()-b.getTime());
   const windows: { start: Date; end: Date }[] = [];

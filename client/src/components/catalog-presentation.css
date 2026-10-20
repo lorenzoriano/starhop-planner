@@ -1,0 +1,40 @@
+.catalog-object-photo-open {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.catalog-object-photo-open .target-photo { width: 100%; }
+.catalog-object-title-open {
+  padding: 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+}
+.catalog-object-title-open:hover,
+.catalog-object-title-open:focus-visible { color: #c7ddce; text-decoration: underline; }
+.catalog-object-photo-open:focus-visible { outline: 2px solid #c7ddce; outline-offset: -3px; }
+.catalog-object-actions .add-to-night-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 108px;
+  padding-left: 12px;
+  white-space: nowrap;
+}
+.catalog-object-actions .add-to-night-button span { font-size: 11px; }
+.binocular-profile-summary { color: #b6cbbf; font-size: 11px; }
+.binocular-compact-curve { display: block; }
+.binocular-card-chart details > summary { padding: 6px 0; color: #a6c0b7; font-size: 11px; cursor: pointer; }
+.binocular-detail-actions .save-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 12px; white-space: nowrap; }
+.binocular-detail-actions .save-button span { font-size: 12px; }
+.catalog-grid .catalog-object[style*="grid-template-columns"] .catalog-object-body { padding: 12px; }

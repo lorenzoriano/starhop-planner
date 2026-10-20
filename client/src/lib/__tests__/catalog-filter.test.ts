@@ -1,3 +1,4 @@
+import { equatorialOfDate } from "../fixed-equatorial";
 import { describe,it,expect } from 'vitest';
 import { SiderealTime } from 'astronomy-engine';
 import { catalogMatches,hoursFromTransit, type CatalogConstraints } from '../catalog-filter';
@@ -7,16 +8,16 @@ import { moonState } from '../moon';
 import type { UnifiedTarget } from '../astronomy';
 import { pageForPath,pathForPage } from '../navigation';
 const lat=37.77,lon=-122.42,start=new Date('2026-10-25T03:00Z'),end=new Date('2026-10-25T05:00Z');
-const ra=(SiderealTime(start)*15+lon+360)%360;
-const target:UnifiedTarget={id:'test',name:'Test field',displayName:'Test field',category:'Open Cluster',categoryShort:'Open Cl.',mag:5,ra,dec:lat,con:'Cyg',source:'binocular',size:'30′'};
+const zenith=equatorialOfDate((SiderealTime(start)*15+lon+360)%360,lat,start,true),ra=zenith.ra;
+const target:UnifiedTarget={id:'test',name:'Test field',displayName:'Test field',category:'Open Cluster',categoryShort:'Open Cl.',mag:5,ra,dec:zenith.dec,con:'Cyg',source:'binocular',size:'30′'};
 const range={ok:true as const,start,end,segments:[{start,end}]};
 const any:CatalogConstraints={minAltitude:-90,minMoonDistance:0,transitHours:null,maxRating:3};
 describe('whole-catalog planning filters',()=>{
   it('finds the exact culmination and wraps transit across zero RA',()=>{
     const row=catalogMatches(target,lat,lon,range,{...any,minAltitude:89},KITE_14X50,21.6)!;
     expect(row.alt).toBeCloseTo(90,3);expect(+row.at).toBeCloseTo(+start,-3);
-    expect(hoursFromTransit(ra+360,lon,start)).toBeCloseTo(0,6);
-    expect(hoursFromTransit(ra+180,lon,start)).toBeCloseTo(12,6);
+    expect(hoursFromTransit(ra+360,lon,start,zenith.dec)).toBeCloseTo(0,6);
+    const opposite=equatorialOfDate((SiderealTime(start)*15+lon+180+360)%360,lat,start,true);expect(hoursFromTransit(opposite.ra,lon,start,opposite.dec)).toBeCloseTo(12,6);
   });
   it('requires altitude and Moon-distance constraints to hold at the same time',()=>{
     // Artificial lunar path separates the two constraints: far from Moon only after the target falls low.

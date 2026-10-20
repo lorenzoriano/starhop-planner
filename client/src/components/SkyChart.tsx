@@ -1,3 +1,4 @@
+import { OpticalProfiles } from "./OpticalProfiles";
 import { CatalogSkySymbol } from './CatalogSkySymbol';
 import { isDeepSky, altitudeRingFraction, skyObjectKind } from '@/lib/planetarium';
 import { stellarColor,stellarRadius } from '@/lib/stellar-appearance';
@@ -49,6 +50,21 @@ const CHART_PAD = 40;
 const MIN_ZOOM = 0.5;
 const MAX_ZOOM = 200;
 
+function isBatchedStar(item:{star:SkyNode;isAnchor:boolean;isTarget:boolean;isPatternAnchor:boolean;isGuide:boolean}) {
+  return item.star.type==='star'&&item.star.mag>3&&!item.isAnchor&&!item.isTarget&&!item.isPatternAnchor&&!item.isGuide;
+}
+/** Share geometry for faint catalog stars; no thousands of hidden buttons or title nodes. */
+function BatchedStarLayer({points,bounds}:{points:Array<{x:number;y:number;r:number;color:string;opacity:number}>;bounds:{left:number;top:number;right:number;bottom:number}}) {
+  const groups=new Map<string,{color:string;opacity:number;d:string}>();
+  for(const point of points){
+    if(point.x+point.r<bounds.left||point.x-point.r>bounds.right||point.y+point.r<bounds.top||point.y-point.r>bounds.bottom)continue;
+    const opacity=Math.round(point.opacity*5)/5,key=`${point.color}/${opacity}`,group=groups.get(key)??{color:point.color,opacity,d:''};
+    const {x,y,r}=point;group.d+=`M${x-r},${y}a${r},${r} 0 1 0 ${2*r},0a${r},${r} 0 1 0 ${-2*r},0`;
+    groups.set(key,group);
+  }
+  return <g aria-hidden="true" pointerEvents="none" data-batched-stars={points.length}>{Array.from(groups,([key,group])=><path key={key} fill={group.color} opacity={group.opacity} d={group.d}/>)}</g>;
+}
+
 export function SkyChart({
   nodes,
   constellations,
@@ -74,8 +90,10 @@ export function SkyChart({
 
   // Shared display preferences; primary controls remain visible below every chart.
   const { preferences, update: updateDisplay } = useChartPreferences();
-  const { labelSize, starBrightness, navStarSize, showLegend, showGhostCircles, showConstellations, mirrored, rotation, finderReticle } = preferences;
+  const { labelSize, starBrightness, navStarSize, showLegend, showGhostCircles, showConstellations, finderReticle } = preferences;
 
+  const mirrored=overview?false:preferences.mirrored;
+  const rotation=overview?0:preferences.rotation;
   const starsOnly=overview?false:preferences.starsOnly;
 
   // Zoom and pan state
@@ -144,13 +162,15 @@ export function SkyChart({
   const cy = CHART_SIZE / 2;
   const fovRadius = 2 * Math.tan(fovWidth * Math.PI / 720) * 180 / Math.PI * scale;
 
+  // The planetarium stops at a useful optical field instead of a 200× empty catalog crop.
+  const zoomLimit=overview?Math.min(MAX_ZOOM,Math.max(12,fieldViewZoom(viewRadius,fovWidth,fovShape==="rectangle"?fovHeight:fovWidth,220))):MAX_ZOOM;
   const initialZoom = overview || !route ? 1 : fieldViewZoom(viewRadius, fovWidth, fovShape === "rectangle" ? fovHeight : fovWidth);
   const screenUnit = CHART_SIZE / viewportPixels / zoom;
   const labelUnits = labelSize * screenUnit;
-  // Field changes reset the camera. Advancing a hop preserves zoom and orientation.
+  // Each hop frames its active field; orientation remains fixed across the route.
   useLayoutEffect(() => {
     setZoom(initialZoom); setPanX(0); setPanY(0);
-  }, [viewRadius, route?.id, overview, fovWidth, fovHeight, fovShape]);
+  }, [viewRadius, route?.id, animStep, overview, fovWidth, fovHeight, fovShape]);
   const handleResetView = useCallback(() => {
     setZoom(initialZoom); setPanX(0); setPanY(0);
   }, [initialZoom]);
@@ -180,16 +200,16 @@ export function SkyChart({
   // ───── Mouse wheel zoom ─────
   const handleWheel = useCallback((e: React.WheelEvent) => {
     if(!e.ctrlKey&&!e.metaKey)return;
-    if((e.deltaY>0&&zoom<=MIN_ZOOM)||(e.deltaY<0&&zoom>=MAX_ZOOM))return;
+    if((e.deltaY>0&&zoom<=MIN_ZOOM)||(e.deltaY<0&&zoom>=zoomLimit))return;
     e.stopPropagation();
     setZoom((prev) => {
-      const next = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, prev * (e.deltaY>0?1/1.2:1.2)));
+      const next = Math.max(MIN_ZOOM, Math.min(zoomLimit, prev * (e.deltaY>0?1/1.2:1.2)));
       // Adjust pan to stay clamped
       setPanX((px) => clampPan(px, 0, next).x);
       setPanY((py) => clampPan(0, py, next).y);
       return next;
     });
-  }, [clampPan,zoom]);
+  }, [clampPan,zoom,zoomLimit]);
 
   // ───── Pointer (mouse/single-touch) drag ─────
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
@@ -221,7 +241,7 @@ export function SkyChart({
     const clamped = clampPan(panStart.current.x + dx, panStart.current.y + dy, zoom);
     setPanX(clamped.x);
     setPanY(clamped.y);
-  }, [zoom, clampPan]);
+  }, [zoom, clampPan,zoomLimit]);
 
   const handlePointerUp = useCallback(() => {
     isDragging.current = false;
@@ -269,7 +289,7 @@ export function SkyChart({
       const t2 = e.touches[1];
       const dist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
       const scale = dist / lastPinchDist.current;
-      const newZoom = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, pinchStartZoom.current * scale));
+      const newZoom = Math.max(MIN_ZOOM, Math.min(zoomLimit, pinchStartZoom.current * scale));
       setZoom(newZoom);
       // Also track pan movement during pinch
       if (lastPinchCenter.current) {
@@ -283,7 +303,7 @@ export function SkyChart({
         setPanY(clamped.y);
       }
     }
-  }, [zoom, clampPan]);
+  }, [zoom, clampPan,zoomLimit]);
 
   const handleTouchEnd = useCallback((e: React.TouchEvent) => {
     if (e.touches.length < 2) {
@@ -812,7 +832,7 @@ export function SkyChart({
   const ghostPatternShapes = useMemo(() => {
     if (!route) return null;
     return route.hops
-      .filter((_, index) => index !== animStep && index > animStep)
+      .filter((_, index) => index === animStep+1)
       .map((hop, i) => (
         <g key={`ghost-pattern-${i}`}>
           {renderPatternShape(hop.patternType, hop.patternAnchors, 0.12)}
@@ -833,13 +853,29 @@ export function SkyChart({
     >
       {overview&&<div className="planetarium-guide"><label><input type="checkbox" checked={showObjects} onChange={e=>setShowObjects(e.target.checked)}/>Catalog objects · {nodes.filter(n=>n.type==='messier'||n.type==='binocular').length} above horizon</label><span>Inside circle = above horizon · edge 0° · center 90°</span><div className="planetarium-symbol-key"><span>◌ Cluster</span><span>⬭ Galaxy</span><span>□ Nebula</span><span>◇ Star pattern</span><span className="selected-symbol-key">Gold = selected</span></div></div>}
       <svg
+        onClick={event=>{
+          if(!onSelect||didDrag.current||(event.target as Element).closest('[data-star-id],[role="button"]'))return;
+          const matrix=event.currentTarget.getScreenCTM();if(!matrix)return;
+          const cursor=event.currentTarget.createSVGPoint();cursor.x=event.clientX;cursor.y=event.clientY;
+          const point=cursor.matrixTransform(matrix.inverse());
+          let distance=7*screenUnit,nearest:SkyNode|null=null;
+          for(const item of plottedStars){if(!isBatchedStar(item))continue;const d=Math.hypot(item.point.x-point.x,item.point.y-point.y);if(d<distance){distance=d;nearest=item.star;}}
+          if(nearest)onSelect(nearest.id);
+        }}
+        tabIndex={onSelect?0:undefined}
+        onKeyDown={event=>{
+          if(!onSelect)return;
+          const choices=labels.filter(item=>item.x>=viewBoxX&&item.x<=viewBoxX+viewBoxSize&&item.y>=viewBoxY&&item.y<=viewBoxY+viewBoxSize);
+          if(event.key==='Enter'&&hoveredStar){event.preventDefault();onSelect(hoveredStar.id);}
+          if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key)&&choices.length){event.preventDefault();const i=choices.findIndex(item=>item.star.id===hoveredStar?.id);setHoveredStar(choices[(i+(event.key==='ArrowLeft'||event.key==='ArrowUp'?-1:1)+choices.length)%choices.length].star);}
+        }}
         ref={svgRef}
         width="100%"
         viewBox={`${viewBoxX.toFixed(2)} ${viewBoxY.toFixed(2)} ${viewBoxSize.toFixed(2)} ${viewBoxSize.toFixed(2)}`}
         className="bg-[#0a0c14] rounded-lg cursor-grab active:cursor-grabbing"
         style={{ aspectRatio: '1/1', maxHeight: overview?'min(76vh, 820px)':'600px', touchAction: 'none' }}
-        role="img"
-        aria-label={overview ? "Interactive overhead sky chart" : "Interactive star hopping field chart"}
+        role="group"
+        aria-label={overview ? "Interactive overhead sky chart. Arrow keys inspect labeled objects; Enter selects." : "Interactive star hopping field chart. Arrow keys inspect labeled objects; Enter selects."}
         data-testid="sky-chart-sky"
         onWheel={handleWheel}
         onPointerDown={handlePointerDown}
@@ -921,10 +957,10 @@ export function SkyChart({
             key={`${path.id}-${index}`}
             d={path.d}
             data-constellation-path={path.id}
-            stroke={path.nearFocus ? '#5a8abf' : '#3a5580'}
-            vectorEffect="non-scaling-stroke" strokeWidth={path.nearFocus ? 1.4 : 0.9}
+            stroke={overview?'#5a8abf':path.nearFocus ? '#456383' : '#31465e'}
+            vectorEffect="non-scaling-stroke" strokeWidth={overview?1.4:path.nearFocus ? 1 : 0.7}
             fill="none"
-            opacity={path.nearFocus ? 0.8 : 0.45}
+            opacity={overview?.8:path.nearFocus ? .55 : .3}
             strokeLinecap="round"
           />
         ))}
@@ -950,40 +986,24 @@ export function SkyChart({
         ))}
 
         {/* Dense background star field from Hipparcos catalog */}
-        {backgroundStarLayer.map((star, i) => (
-          <g key={i}>
-            <title>{`RA ${star.ra.toFixed(4)}° · Dec ${star.dec>=0?"+":""}${star.dec.toFixed(4)}° · catalog magnitude ${star.mag.toFixed(2)}`}</title>
-            {!starsOnly && star.mag < 2.5 && (
-              <circle cx={star.x} cy={star.y}
-                r={bgStarSize(star.mag) * brightMul * backgroundPointScale * 4 * screenUnit}
-                fill={`url(#${chartId}-${bvGlowId(star.bv)})`} />
-            )}
-            <circle
-              data-background-star="true"
-              cx={star.x}
-              cy={star.y}
-              r={bgStarSize(star.mag) * brightMul * backgroundPointScale * screenUnit}
-              fill={stellarColor(undefined,star.bv)}
-              opacity={Math.min(0.97, bgStarOpacity(star.mag) * brightMul)}
-            />
-          </g>
-        ))}
+        <BatchedStarLayer points={backgroundStarLayer.map(star=>({x:star.x,y:star.y,r:Math.max(.55,bgStarSize(star.mag)*brightMul*backgroundPointScale)*screenUnit,color:stellarColor(undefined,star.bv),opacity:Math.min(.97,bgStarOpacity(star.mag)*brightMul)}))} bounds={{left:viewBoxX,top:viewBoxY,right:viewBoxX+viewBoxSize,bottom:viewBoxY+viewBoxSize}} />
+        <BatchedStarLayer points={plottedStars.filter(item=>isBatchedStar(item)).map(({star,point})=>({x:point.x,y:point.y,r:Math.max(.65,stellarRadius(star.mag)*Math.min(1.8,brightMul)*catalogPointScale)*screenUnit,color:stellarColor(star.temperature,star.bv),opacity:Math.min(.95,.6*brightMul)}))} bounds={{left:viewBoxX,top:viewBoxY,right:viewBoxX+viewBoxSize,bottom:viewBoxY+viewBoxSize}} />
 
-        {!starsOnly && routePath && <path d={routePath} stroke="#315e86" vectorEffect="non-scaling-stroke" strokeWidth="1.2" fill="none" opacity="0.26" strokeDasharray="5 4" />}
-        {!starsOnly && routeProgressPath && <path d={routeProgressPath} stroke="#4fc3ff" vectorEffect="non-scaling-stroke" strokeWidth="1.8" fill="none" opacity="0.88" />}
+        {!starsOnly && routePath && <path d={routePath} stroke="#ad8f58" vectorEffect="non-scaling-stroke" strokeWidth="1.2" fill="none" opacity="0.26" strokeDasharray="5 4" />}
+        {!starsOnly && routeProgressPath && <path d={routeProgressPath} stroke="#e4ba72" vectorEffect="non-scaling-stroke" strokeWidth="1.8" fill="none" opacity="0.88" />}
 
         {/* Ghost pattern shapes for upcoming hops */}
         {!starsOnly && ghostPatternShapes}
         {/* Active pattern shape visualization */}
         {!starsOnly && patternShapeSvg}
 
-        {plottedStars.filter(({ star }) => !starsOnly || star.type === 'star' || star.type === 'planet').slice().sort((a,b) => Number(a.isTarget)-Number(b.isTarget) || Number(a.star.type!=='star')-Number(b.star.type!=='star') || b.star.mag-a.star.mag).map(({ star, point, radius, isAnchor, isTarget, isPatternAnchor, isGuide }) => (
+        {plottedStars.filter(item => !isBatchedStar(item)&&(!starsOnly || item.isTarget || item.star.type === 'star' || item.star.type === 'planet')).slice().sort((a,b) => Number(a.isTarget)-Number(b.isTarget) || Number(a.star.type!=='star')-Number(b.star.type!=='star') || b.star.mag-a.star.mag).map(({ star, point, radius, isAnchor, isTarget, isPatternAnchor, isGuide }) => (
           <g
             key={star.id}
             data-star-id={star.id}
             data-sky-object={star.type==='messier'||star.type==='binocular'?star.id:undefined}
             role={onSelect ? 'button' : undefined}
-            tabIndex={onSelect ? 0 : undefined}
+            tabIndex={undefined}
             aria-label={onSelect ? `Select ${star.name}` : undefined}
             onClick={() => { if (!didDrag.current) onSelect?.(star.id); }}
             onKeyDown={(event) => { if (onSelect && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); onSelect(star.id); } }}
@@ -1003,7 +1023,7 @@ export function SkyChart({
               data-chart-star="true"
               cx={point.x}
               cy={point.y}
-              r={(isTarget ? Math.max(radius + 1.5 * navMul, 4.2 * navMul) : isAnchor || isPatternAnchor ? Math.max(radius + 0.8 * navMul, 2.8 * navMul) : isGuide ? radius * navMul : stellarRadius(star.mag) * Math.min(1.8, brightMul) * catalogPointScale) * screenUnit}
+              r={(isTarget ? Math.max(radius + 1.5 * navMul, 4.2 * navMul) : isAnchor || isPatternAnchor ? Math.max(radius + 0.8 * navMul, 2.8 * navMul) : isGuide ? radius * navMul : Math.max(.65,stellarRadius(star.mag) * Math.min(1.8, brightMul) * catalogPointScale)) * screenUnit}
               fill={stellarColor(star.temperature,star.bv)}
               strokeWidth={(overview && !isTarget ? 0.9 : 1.2)*screenUnit}
               opacity={
@@ -1022,7 +1042,7 @@ export function SkyChart({
 
         {!starsOnly && showGhostCircles && route && route.hops
           .map((hop, index) => ({ hop, index }))
-          .filter(({ index }) => index > animStep)
+          .filter(({ index }) => index === animStep+1)
           .map(({ hop, index }) => {
             const pt = project(hop.center.ra, hop.center.dec);
             if (!pt) return null;
@@ -1120,7 +1140,7 @@ export function SkyChart({
           if (!text) return null;
           const pad = Math.max(screenUnit, labelUnits * 0.4);
           return (
-            <g key={`${label.star.id}-label`} pointerEvents={onSelect ? "auto" : "none"} role={onSelect ? "button" : undefined} tabIndex={onSelect ? 0 : undefined} aria-label={onSelect ? `Select ${chartLabel(label.star)}` : undefined} onClick={() => { if(!didDrag.current)onSelect?.(label.star.id); }} onKeyDown={event => {if(onSelect&&(event.key==="Enter"||event.key===" ")){event.preventDefault();onSelect(label.star.id);}}}>
+            <g key={`${label.star.id}-label`} pointerEvents={onSelect ? "auto" : "none"} role={onSelect ? "button" : undefined} tabIndex={undefined} aria-label={onSelect ? `Select ${chartLabel(label.star)}` : undefined} onClick={() => { if(!didDrag.current)onSelect?.(label.star.id); }} onKeyDown={event => {if(onSelect&&(event.key==="Enter"||event.key===" ")){event.preventDefault();onSelect(label.star.id);}}}>
               {label.leader&&<line x1={label.leader.x} y1={label.leader.y} x2={label.x} y2={label.y} stroke="#78929e" strokeWidth={.7} vectorEffect="non-scaling-stroke" opacity={.6}/>}
               <rect
                 x={label.anchor === 'start' ? label.x - pad : label.anchor === 'middle' ? label.x-label.width/2-pad : label.x - label.width - pad}
@@ -1173,7 +1193,7 @@ export function SkyChart({
 
         {/* Legend moved to HTML overlay */}
 
-        {!overview && <g transform={`translate(${viewBoxX + viewBoxSize - 120 / zoom}, ${viewBoxY + viewBoxSize - 20 / zoom})`}>
+        {(!overview||zoom>1) && <g transform={`translate(${viewBoxX + viewBoxSize - 120 / zoom}, ${viewBoxY + viewBoxSize - 20 / zoom})`}>
           <line x1="0" y1="0" x2={scaleBarDegrees * scale} y2="0" stroke="#8797a5" vectorEffect="non-scaling-stroke" strokeWidth={1} />
           <line x1="0" y1={-3 / zoom} x2="0" y2={3 / zoom} stroke="#8797a5" vectorEffect="non-scaling-stroke" strokeWidth={1} />
           <line x1={scaleBarDegrees * scale} y1={-3 / zoom} x2={scaleBarDegrees * scale} y2={3 / zoom} stroke="#8797a5" vectorEffect="non-scaling-stroke" strokeWidth={1} />
@@ -1187,15 +1207,15 @@ export function SkyChart({
 
       <div className="chart-toolbar">
         <div className="chart-toolbar-group" data-testid="zoom-controls">
-          <button aria-label="Zoom in" title="Zoom in" data-testid="button-zoom-in" onClick={() => setZoom(z => Math.min(MAX_ZOOM, z * 1.2))}>+</button>
+          <button aria-label="Zoom in" title="Zoom in" data-testid="button-zoom-in" onClick={() => setZoom(z => Math.min(zoomLimit, z * 1.2))}>+</button>
           <button aria-label="Zoom out" title="Zoom out" data-testid="button-zoom-out" onClick={() => { const z = Math.max(MIN_ZOOM, zoom / 1.2); setZoom(z); setPanX(px => clampPan(px, 0, z).x); setPanY(py => clampPan(0, py, z).y); }}>−</button>
           <button onClick={handleResetView} data-testid="button-zoom-reset">{overview?'Whole sky':`Reset ${zoom!==1?`${zoom.toFixed(1)}×`:''}`}</button>
-          <button disabled={!fovCenter} onClick={() => { const z = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, fieldViewZoom(viewRadius, fovWidth, fovShape === "rectangle" ? fovHeight : fovWidth, 220))); setZoom(z); const p = clampPan(cx - (fovCenter?.x ?? cx), cy - (fovCenter?.y ?? cy), z); setPanX(p.x); setPanY(p.y); }} data-testid="button-fit-field">Fit field</button>
+          <button disabled={!fovCenter} onClick={() => { const z = Math.max(MIN_ZOOM, Math.min(zoomLimit, fieldViewZoom(viewRadius, fovWidth, fovShape === "rectangle" ? fovHeight : fovWidth, 220))); setZoom(z); const p = clampPan(cx - (fovCenter?.x ?? cx), cy - (fovCenter?.y ?? cy), z); setPanX(p.x); setPanY(p.y); }} data-testid="button-fit-field">Fit field</button>
           {route && <button onClick={() => { setZoom(1); setPanX(0); setPanY(0); }} data-testid="button-route-overview">Route overview</button>}
         </div>
         <div className="chart-toolbar-group">
-          <button className={mirrored ? 'active' : ''} aria-pressed={mirrored} onClick={() => updateDisplay({ mirrored: !mirrored })} data-testid="button-mirror-chart">Mirror</button>
-          <button onClick={() => updateDisplay({ rotation: ((rotation + 90) % 360) as 0 | 90 | 180 | 270 })} data-testid="button-rotate-chart">Rotate · {rotation}°</button>
+          {!overview&&<><button className={mirrored ? 'active' : ''} aria-pressed={mirrored} onClick={() => updateDisplay({ mirrored: !mirrored })} data-testid="button-mirror-chart">Mirror</button>
+          <button onClick={() => updateDisplay({ rotation: ((rotation + 90) % 360) as 0 | 90 | 180 | 270 })} data-testid="button-rotate-chart">Rotate · {rotation}°</button></>}
         </div>
       </div>
       <details className="chart-optics-details" open={overview?undefined:true}><summary>{overview?'Display, labels & field of view':'Field & display'}</summary>
@@ -1222,6 +1242,7 @@ export function SkyChart({
         </div>
       </details>
       </details>
+      {!overview&&<details className="optical-profile-disclosure"><summary>Finder and eyepiece profiles</summary><OpticalProfiles onApply={profile=>{updateDisplay({mirrored:profile.mirrored,rotation:profile.rotation,finderReticle:profile.reticle});if(profile.fov>=.2&&profile.fov<=15)onFovChange?.(profile.fov);}}/></details>}
       <p className={`chart-accuracy-note ${overview?'overview-accuracy-note':''}`}>Ctrl / ⌘ + scroll to zoom · drag to pan. {starsOnly ? 'Catalog stars without labels or guide patterns. Nebulosity is not simulated.' : 'Dot size follows catalog magnitude; hue follows temperature or B−V color where known (neutral otherwise). Sizes are not stellar diameters. Constellation names are green.'} {maxCatalogMagnitude>8?deepCatalog.state==='ready'?'Tycho-2 reference stars to VT 10.5 within 8° of the target; brighter context outside. This chart can show stars fainter than your optics reveal.':deepCatalog.state==='loading'?'Loading the detailed offline finder field…':deepCatalog.state==='error'?'Detailed field unavailable; showing the bright-star catalog to magnitude 8.':'Bright-star catalog to magnitude 8. Increase depth for the detailed finder field.':'Star catalog extends to magnitude 8; the view depends on your optics and sky.'}</p>
       {showLegend && !starsOnly && !overview && <div className="absolute top-3 left-3 flex gap-3 rounded border border-[#2a414e] bg-[#0a1721]/90 px-2 py-1.5 text-[9px]">
         {route && <><span className="text-[#38bdf8]">● Anchor</span><span className="text-[#c084fc]">● Pattern</span></>}<span className="text-[#d8bc80]">● Selected</span><span className="text-[#a7cfa0]">Constellation</span>

@@ -69,9 +69,10 @@ export function ComparisonCharts({
         </select>
       </div>
       <p className="astro-note">
-        The same objects, colors and cursor as the clock. Hover to inspect; tap
-        to lock the app’s time; tap again to unlock. Object paths are solid colors; Moon altitude is
-        dashed silver and Sun altitude is dotted gold. {locked && "Time is locked; pointer movement will not change it."}
+        The same objects, colors and cursor as the clock. Hover to inspect; click
+        to pin the displayed time; click again or press Escape to unlock. Object
+        paths are solid colors; Moon altitude is dashed silver and Sun altitude
+        is dotted gold. {locked && "Time is pinned; pointer movement will not change it."}
       </p>
       {span === "night" && !dark.length ? (
         <p>
@@ -109,8 +110,8 @@ export function ComparisonCharts({
                     timezone,
                     "MMM d HH:mm xxx",
                   )}
-                  onPointerMove={(e) => onCursor(point(e))}
-                  onPointerLeave={() => onCursor(null)}
+                  onPointerMove={(e) => { if (!locked) onCursor(point(e)); }}
+                  onPointerLeave={() => { if (!locked) onCursor(null); }}
                   onClick={(e) => onTime(new Date(point(e)))}
                   onKeyDown={(e) => {
                     if(e.key === "Escape") { onUnlock(); return; }
@@ -306,7 +307,7 @@ export function SeasonChart({
   return (
     <div className="astro-year-chart">
       <div className="astro-chart-heading"><h3>{metric === 'contrast' ? 'Diffuse-contrast index through the night' : metric === 'available' ? 'Dark hours above your altitude limit' : 'Hours meeting strict limits'}</h3><select aria-label="Seasonal hours metric" value={metric} onChange={e=>setMetric(e.target.value as typeof metric)}><option value="contrast">Diffuse contrast × hours</option><option value="available">Altitude & darkness only</option><option value="hours">Strict Moon-distance cutoff</option></select></div>
-      <p className="astro-note">{metric === 'contrast' ? 'For faint extended detail: 1 h under a sky twice as bright contributes 0.5 contrast-hours. Uses lunar phase, height and separation continuously. This index is not the time a bright star or cluster remains visible; choose altitude & darkness for actual geometric hours.' : metric === 'available' ? 'Geometric time in astronomical darkness above the chosen altitude. Moonlight does not reduce this total.' : 'Exact half-hour samples passing your altitude and Moon-distance thresholds. Abrupt drops are possible when the Moon crosses the distance limit, even at a faint phase.'}</p>
+      <p className="astro-note">{metric === 'contrast' ? 'For faint extended detail: 1 h under a sky twice as bright contributes 0.5 contrast-hours. Uses lunar phase, height and separation continuously. This index is not the time a bright star or cluster remains visible; choose altitude & darkness for actual geometric hours.' : metric === 'available' ? 'Geometric time in astronomical darkness above the chosen altitude. Moonlight does not reduce this total.' : 'Colored solid lines show the exact half-hour samples passing the hard Moon-distance cutoff; abrupt drops are intentional when the Moon crosses that limit, even at a faint phase. Gray dashed lines show the same target’s hours above the altitude limit in darkness without the Moon cutoff, so the lost time stays visible.'}</p>
       <svg
         viewBox="0 0 752 215"
         role="slider"
@@ -315,7 +316,7 @@ export function SeasonChart({
         aria-valuemin={0}
         aria-valuemax={season.days.length - 1}
         aria-valuenow={index}
-        aria-valuetext={`${day.day}: ${targets.map((t, i) => `${t.name} ${day[metric][i].toFixed(1)} hours`).join(", ")}`}
+        aria-valuetext={`${day.day}: ${targets.map((t, i) => `${t.name} ${day[metric][i].toFixed(1)} ${metric === "contrast" ? "contrast-hours" : "hours"}${metric === "hours" ? ` strict; ${day.available[i].toFixed(1)} altitude-and-darkness hours without the Moon cutoff` : ""}`).join(", ")}`}
         onPointerMove={(e) => setHover(pick(e))}
         onPointerLeave={() => setHover(null)}
         onClick={(e) => onNight(season.days[pick(e)].day)}
@@ -367,6 +368,19 @@ export function SeasonChart({
             {format(new Date(`${d.day}T12:00:00`), "MMM")}
           </text>
         ))}
+        {metric === "hours" && targets.map((t, i) => (
+          <path
+            key={`geometric-${t.id}`}
+            d={season.days
+              .map((d, n) => `${n ? "L" : "M"}${x(n)},${y(d.available[i])}`)
+              .join(" ")}
+            fill="none"
+            stroke="#aab6b7"
+            strokeWidth="2"
+            strokeDasharray="6 4"
+            opacity=".9"
+          />
+        ))}
         {targets.map((t, i) => (
           <path
             key={t.id}
@@ -394,9 +408,11 @@ export function SeasonChart({
         {targets.map((t, i) => (
           <span key={t.id} style={{ color: CLOCK_COLORS[i] }}>
             {t.name} · {day[metric][i].toFixed(1)} {metric==='contrast'?'contrast-h':'h'}
+            {metric === "hours" && ` strict · ${day.available[i].toFixed(1)} h geometric`}
           </span>
         ))}
       </div>
+      {metric === "hours" && <p className="astro-note">Gray dashed: altitude and darkness hours without the Moon-distance restriction. Colored solid: hours passing the strict Moon-distance cutoff. The difference is time excluded by that cutoff, not time below the horizon.</p>}
       <p className="astro-note">
         Hover or touch to inspect a date. Tap to open that night in the clock.
         Colors match the objects above.

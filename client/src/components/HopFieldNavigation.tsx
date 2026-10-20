@@ -23,8 +23,8 @@ export function HopFieldNavigation({ route, step, observed, onPrevious, onNext }
       </div>
       <div className="chart-hop-actions">
         <button className="icon-button" disabled={step === 0} aria-label="Previous field on chart" onClick={onPrevious}><SkipBack size={16}/></button>
-        <Button onClick={onNext} aria-label={last ? (observed ? "Mark unseen on chart" : "I found it on chart") : "Next field on chart"}>
-          {last ? <><Check size={16}/>{observed ? "Mark unseen" : "I found it!"}</> : <>Next <ChevronRight size={16}/></>}
+        <Button onClick={onNext} aria-label={last ? (observed ? "Log another observation on chart" : "I found it on chart") : "Next field on chart"}>
+          {last ? <><Check size={16}/>{observed ? "Log again" : "I found it!"}</> : <>Next <ChevronRight size={16}/></>}
         </Button>
       </div>
     </div>

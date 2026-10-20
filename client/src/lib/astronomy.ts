@@ -1,3 +1,4 @@
+import { equatorialOfDate } from "./fixed-equatorial";
 /**
  * Core astronomy engine for StarHop Planner.
  * Handles coordinate transforms, star catalog loading,
@@ -149,6 +150,9 @@ export interface ObservingParams {
   difficulty?: DifficultyLevel;
   algorithm?: CostStrategyId;
   startStarId?: string;
+  /** Internal continuation from a required field star, already reached in the preceding leg. */
+  startIsWaypoint?:boolean;
+  waypointIds?: string[];
 }
 
 // ─── Parsing Utilities ────────────────────────────────────────
@@ -436,9 +440,9 @@ export function majorStarNamesFor(id: string) { return Object.keys(MAJOR_STAR_NA
 export function eqToHorizontal(
   ra: number, dec: number, lat: number, lon: number, date: Date
 ): { alt: number; az: number } {
+  ({ra,dec}=equatorialOfDate(ra,dec,date));
   const time = Astro.MakeTime(date);
-  const observer = new Astro.Observer(lat, lon, 0);
-  // Use the sidereal time approach
+  // Geometric altitude, matching event searches; local refraction/terrain are not measured.
   const gast = Astro.SiderealTime(time);
   const lst = gast * 15 + lon; // local sidereal time in degrees
   let ha = lst - ra; // hour angle in degrees
@@ -1394,51 +1398,12 @@ function dijkstra(
 
 // Find candidate start anchors
 function findAnchors(nodes: SkyNode[], targetNode: SkyNode, count: number, params: ObservingParams): SkyNode[] {
-  if (params.startStarId) return nodes.filter(node => node.id === params.startStarId && node.type === 'star' && node.mag <= 4.5 && node.alt >= 5);
-  const profile = observingProfile(params);
-  // Prefer bright, named, high-altitude stars and planets that are reasonably close.
-  const candidates = nodes.filter(n =>
-    n.id !== targetNode.id &&
-    n.mag < profile.anchorMagLimit &&
-    n.alt > 15 &&
-    (n.type==='planet'||!!n.bayer||!!n.flamsteed|| (!!n.name&&!n.name.startsWith('HR'))) &&
-    (n.type === 'star' || n.type === 'planet')
-  );
-
-  const nearCandidates = nodes.filter(n =>
-    n.id !== targetNode.id &&
-    n.mag < profile.anchorMagLimit + 1 &&
-    n.mag >= profile.anchorMagLimit &&
-    n.alt > 15 &&
-    n.name && n.name.length > 2 &&
-    (n.type === 'star' || n.type === 'planet') &&
-    angularDistance(n.ra, n.dec, targetNode.ra, targetNode.dec) < profile.targetAnchorDistance
-  );
-  candidates.push(...nearCandidates);
-
-  // Sort: prefer closer to target, brighter, higher altitude
-  const targetDist = (n: SkyNode) => angularDistance(n.ra, n.dec, targetNode.ra, targetNode.dec);
-  candidates.sort((a, b) => {
-    // Ideal anchor is moderate distance from the target, bright, and high.
-    const distA = targetDist(a);
-    const distB = targetDist(b);
-    const idealDistance = profile.mode === 'binocular' ? 16 : 20;
-    const scoreA = a.mag * (profile.mode === 'binocular' ? 2.6 : 2) + Math.abs(distA - idealDistance) / (profile.mode === 'binocular' ? 4 : 5) - a.alt / 20;
-    const scoreB = b.mag * (profile.mode === 'binocular' ? 2.6 : 2) + Math.abs(distB - idealDistance) / (profile.mode === 'binocular' ? 4 : 5) - b.alt / 20;
-    return scoreA - scoreB;
-  });
-
-  // Take diverse set (spread around target)
-  const selected: SkyNode[] = [];
-  for (const c of candidates) {
-    if (selected.length >= count * 3) break;
-    const tooClose = selected.some(s =>
-      angularDistance(s.ra, s.dec, c.ra, c.dec) < 15
-    );
-    if (!tooClose) selected.push(c);
-  }
-
-  return selected.slice(0, count * 2);
+  if (params.startStarId) return nodes.filter(node => node.id === params.startStarId && node.type === 'star' && node.mag <= (params.startIsWaypoint?params.limitingMag:4.5) && node.alt >= 5);
+  const candidates=nodes.filter(n=>n.id!==targetNode.id&&n.type==='star'&&n.mag<=4.5&&n.alt>=15&&(!!n.name||!!n.bayer||!!n.flamsteed));
+  candidates.sort((a,b)=>angularDistance(a.ra,a.dec,targetNode.ra,targetNode.dec)-angularDistance(b.ra,b.dec,targetNode.ra,targetNode.dec)||a.mag-b.mag);
+  const selected:SkyNode[]=[];
+  for(const candidate of candidates){if(selected.some(s=>angularDistance(s.ra,s.dec,candidate.ra,candidate.dec)<.05))continue;selected.push(candidate);if(selected.length>=count*2)break;}
+  return selected;
 }
 
 // Generate hop instructions
@@ -1733,7 +1698,30 @@ export function buildKnownRoute(entry: KnownRouteEntry, nodes: SkyNode[], target
   return { id: 'route-expert', score: scoreRoute(hops, params), startAnchor: waypoints[0], target, hops, isExpertRoute: true, expertSource: entry.source };
 }
 
-export async function planRoutes(params: ObservingParams): Promise<{
+export async function planRoutes(params:ObservingParams):Promise<Awaited<ReturnType<typeof planRoutesInternal>>&{warning?:string}> {
+  const via=Array.from(new Set(params.waypointIds??[])).filter(id=>id!==params.targetId&&id!==params.startStarId).slice(0,8);
+  if(via.length){
+    let anchor=params.startStarId,combined:Route|null=null,last:Awaited<ReturnType<typeof planRoutesInternal>>|null=null;
+    for(const id of [...via,params.targetId]){
+      const leg=await planRoutes({...params,targetId:id,startStarId:anchor,startIsWaypoint:!!combined,waypointIds:[]});
+      if(!leg.routes.length)return {...leg,routes:[],warning:`Cannot connect the required waypoint ${id}. Choose a visible guide star or remove that waypoint.`};
+      const best=leg.routes[0];
+      if(id!==params.targetId)best.hops.at(-1)!.instruction=`Required reference: ${best.target.name}. Confirm this field before continuing to the final destination.`;
+      const previous:Route|null=combined;
+      combined=previous?{...(previous as Route),target:best.target,hops:[...(previous as Route).hops,...best.hops.slice(1)],score:Math.min((previous as Route).score,best.score)}:{...best,id:'route-custom-waypoints'};
+      anchor=best.target.id;last=leg;
+    }
+    return {...last!,routes:[combined!]};
+  }
+  const result=await planRoutesInternal(params);
+  if(params.difficulty==='beginner'&&!result.routes.length&&!result.belowHorizon&&!result.anchorUnavailable){
+    const relaxed=await planRoutesInternal({...params,difficulty:'intermediate'});
+    if(relaxed.routes.length)return {...relaxed,warning:'Guided short hops could not connect this field. Showing a Balanced route with longer hops; the starting star is unchanged.'};
+  }
+  return result;
+}
+
+async function planRoutesInternal(params: ObservingParams): Promise<{
   routes: Route[];
   nodes: SkyNode[];
   targetNode: SkyNode | null;

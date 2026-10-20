@@ -17,10 +17,21 @@ import { binocularDatabaseResources, binocularMedia, opticalPhotoCaption } from 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
 import { eqToHorizontal, getConstellationName, type SkyNode, type ConstellationLine, type DenseStar, type MilkyWayFeature, type Star as CatalogStar, type UnifiedTarget } from "@/lib/astronomy";
 import { SkyChart } from "./SkyChart";
-import { targetDayEvents, targetWindow, visibilityWindow, type VisibilityMode } from "@/lib/target-visibility";
+import { nightAltitudeSamples, targetDayEvents, targetWindow, visibilityWindow, type VisibilityMode } from "@/lib/target-visibility";
 import { BinocularObservations } from "./BinocularObservations";
 import { compassLabel, skyConditions } from "@/lib/observing";
-import { BINOCULAR_BOOKS, BINOCULAR_ENTRIES, FAMILY_LABELS, LEVEL_LABELS, MONTH_NAMES, binocularCollection, binocularEvening, binocularSample, type BinocularSampleMode, type BinocularFamily, type BinocularPick } from "@/lib/binocular-guide";
+import { angularSizeLabel, meanSurfaceBrightnessLabel, targetDesignation } from "@/lib/catalog-presentation";
+import { resolveLocalMoment } from "@/lib/session";
+import { BINOCULAR_BOOKS, BINOCULAR_ENTRIES, FAMILY_LABELS, LEVEL_LABELS, MONTH_NAMES, binocularCollection, binocularSample, type BinocularSampleMode, type BinocularFamily, type BinocularPick } from "@/lib/binocular-guide";
+import "./catalog-presentation.css";
+
+function CompactNightCurve({target,lat,lon,night}:{target:UnifiedTarget;lat:number;lon:number;night:ReturnType<typeof visibilityWindow>}) {
+  const samples=useMemo(()=>nightAltitudeSamples(target.ra,target.dec,lat,lon,night).flatMap(segment=>segment.samples),[target.ra,target.dec,lat,lon,night]);
+  if(samples.length<2)return <p className="binocular-method-note">No dark window for a night curve.</p>;
+  const first=+samples[0].date,last=+samples[samples.length-1].date;
+  const points=samples.map((sample,index)=>`${index?"L":"M"}${12+(+sample.date-first)/(last-first)*276},${48-Math.max(0,Math.min(90,sample.alt))/90*40}`).join(" ");
+  return <svg className="binocular-compact-curve" style={{width:"100%",height:56}} viewBox="0 0 300 56" role="img" aria-label={`Compact altitude curve for ${target.name} during astronomical darkness`}><line x1="12" x2="288" y1="48" y2="48" stroke="#38535a"/><path d={points} fill="none" stroke="#a2d5c5" strokeWidth="2"/><text x="12" y="55" fill="#91a9b0" fontSize="8">Dusk</text><text x="288" y="55" textAnchor="end" fill="#91a9b0" fontSize="8">Dawn</text></svg>;
+}
 
 interface Props {
   profile:BinocularProfile; profileControls:ReactNode;
@@ -31,7 +42,7 @@ interface Props {
   skyBrightness?: number;
   targets: UnifiedTarget[]; stars: CatalogStar[]; lat: number; lon: number;
   timezone: string; observingDate: Date; savedIds: Set<string>; loading: boolean;
-  onSave: (id: string) => void; onPlan: (id: string, at: Date) => void;
+  onSave: (id: string, at?: Date) => void; onPlan: (id: string, at: Date) => void;
   constellations: ConstellationLine[]; denseStars: DenseStar[]; milkyWay: MilkyWayFeature[];
   fovWidth: number; fovHeight: number; fovShape: "circle" | "rectangle"; limitingMag: number;
   onFovChange: (width: number) => void; onLimitingMagChange: (magnitude: number) => void;
@@ -46,9 +57,13 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
   const [month, setMonth] = useState(Number(formatInTimeZone(observingDate, timezone, "M")));
   const [family, setFamily] = useState<BinocularFamily | "all">("all");
   const [level, setLevel] = useState("all");
-  const [smallOnly, setSmallOnly] = useState(true);
+  const [includeLargeTargets, setIncludeLargeTargets] = useState<boolean | null>(null);
+  const showLargeTargets=includeLargeTargets??profile.aperture>=80;
+  const [sort,setSort]=useState("altitude");
+  const [view,setView]=useState<"cards"|"list">("cards");
   const [query, setQuery] = useState("");
   const [visibilityMode,setVisibilityMode]=useState<VisibilityMode>("time");
+  useEffect(()=>{if(visibilityMode==="night")setSort("time");},[visibilityMode]);
   const [chosenDate,setChosenDate]=useState<string|null>(null),[chosenTime,setChosenTime]=useState<string|null>(null);
   const currentMonth=Number(formatInTimeZone(observingDate,timezone,"M"));
   useEffect(()=>{if(chosenDate===null){setYear(currentYear);setMonth(currentMonth);}},[chosenDate,currentYear,currentMonth]);
@@ -63,7 +78,29 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
   const [seasonalOnly, setSeasonalOnly] = useState(true);
   const [opened, setOpened] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(12);
-  const collection = useMemo(() => binocularCollection(targets, lat, lon, year, month, timezone,sampleMode), [targets, lat, lon, year, month, timezone,sampleMode]);
+  const monthEveningSamples=useMemo(()=>MONTH_NAMES.map((_,index)=>{
+    const monthDate=`${year}-${String(index+1).padStart(2,"0")}-15`;
+    const night=visibilityWindow(monthDate,"12:00","12:00","night",timezone,lat,lon);
+    const nextDate=new Date(`${monthDate}T12:00:00Z`);nextDate.setUTCDate(nextDate.getUTCDate()+1);
+    const midnight=resolveLocalMoment(nextDate.toISOString().slice(0,10),"00:00",timezone);
+    const dates:Date[]=[];
+    if(night.ok&&night.segments.length&&midnight){
+      const start=night.segments[0].start,end=new Date(Math.min(+night.segments[0].end,+midnight));
+      if(end>start)for(let time=+start;time<+end;time+=30*60_000)dates.push(new Date(time));
+      if(end>start)dates.push(end);
+    }
+    if(!dates.length){const start=resolveLocalMoment(monthDate,"18:00",timezone);if(start&&midnight)for(let time=+start;time<+midnight;time+=30*60_000)dates.push(new Date(time));}
+    return dates;
+  }),[year,lat,lon,timezone]);
+  const collection = useMemo(() => {
+    const picks=binocularCollection(targets,lat,lon,year,month,timezone,sampleMode);
+    if(sampleMode==="fixed")return picks;
+    return picks.map(p=>{
+    const monthlyAltitudes=monthEveningSamples.map((samples,index)=>samples.length?Math.max(...samples.map(date=>eqToHorizontal(p.target.ra,p.target.dec,lat,lon,date).alt)):p.monthlyAltitudes[index]);
+    const peak=Math.max(...monthlyAltitudes),bestMonths=monthlyAltitudes.flatMap((alt,index)=>alt>=Math.min(40,peak-18)?[index+1]:[]);
+    return {...p,monthlyAltitudes,bestMonths};
+  });
+  }, [targets,lat,lon,year,month,timezone,sampleMode,monthEveningSamples]);
   const at=window.ok?window.start:observingDate;
   const sampleAt=useMemo(()=>binocularSample(year,month,lat,lon,timezone,sampleMode),[year,month,lat,lon,timezone,sampleMode]);
   const windows=useMemo(()=>new Map(collection.map(p=>[p.targetId,window.ok?targetWindow(p.target.ra,p.target.dec,lat,lon,window):null])),[collection,window,lat,lon]);
@@ -73,10 +110,20 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
   const conditions = useMemo(() => skyConditions(lat, lon, at), [lat, lon, at]);
   const sampleConditions=useMemo(()=>skyConditions(lat,lon,sampleAt),[lat,lon,sampleAt]);
   const matches = (pick: BinocularPick) => (family === "all" || pick.family === family)
-    && (!smallOnly || (pick.minAperture ?? 50) <= 50)
+    && (showLargeTargets || (pick.minAperture ?? 50) <= 50)
     && (level === "all" || pick.level === level)
     && Number.isFinite(catalogSearchScore(pick.target,query,`${pick.name??""} ${getConstellationName(pick.target.con)}`));
-  const picks = positioned.filter(p=>matches(p)&&window.ok&&validAltitude&&(throughout&&visibilityMode==="range"?(windows.get(p.targetId)?.min??-Infinity):(windows.get(p.targetId)?.max??-Infinity))>=altitude&&(!seasonalOnly||p.bestMonths.includes(month))).sort((a,b)=>catalogSearchScore(a.target,query,getConstellationName(a.target.con))-catalogSearchScore(b.target,query,getConstellationName(b.target.con))||b.alt-a.alt);
+  const picks = positioned.filter(p=>matches(p)&&window.ok&&validAltitude&&(throughout&&visibilityMode==="range"?(windows.get(p.targetId)?.min??-Infinity):(windows.get(p.targetId)?.max??-Infinity))>=altitude&&(!seasonalOnly||p.bestMonths.includes(month))).sort((a,b)=>{
+    const relevance=catalogSearchScore(a.target,query,getConstellationName(a.target.con))-catalogSearchScore(b.target,query,getConstellationName(b.target.con));
+    if(relevance)return relevance;
+    if(sort==="time")return timeFor(a).getTime()-timeFor(b).getTime();
+    if(sort==="moon"){
+      const left=binocularAssessment(a.target,profile,{alt:a.alt,moon:nightMoon(timeFor(a)),skyBrightness}),right=binocularAssessment(b.target,profile,{alt:b.alt,moon:nightMoon(timeFor(b)),skyBrightness});
+      return left.rating-right.rating||left.glow-right.glow||(right.contrast??0)-(left.contrast??0);
+    }
+    if(sort==="rating")return binocularAssessment(a.target,profile,{alt:a.alt,moon:nightMoon(timeFor(a)),skyBrightness}).rating-binocularAssessment(b.target,profile,{alt:b.alt,moon:nightMoon(timeFor(b)),skyBrightness}).rating||b.alt-a.alt;
+    return b.alt-a.alt;
+  });
   const featured = picks.find((p) => p.level === "easy") ?? picks[0];
   const detail = positioned.find((p) => p.targetId === opened);
   const detailAt=detail?timeFor(detail):at;
@@ -84,15 +131,14 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
   const fieldTarget: SkyNode | null = detail ? { ...detail.target, alt: detail.alt, az: detail.az, type: detail.target.source === "messier" ? "messier" : "binocular", constellation: detail.target.con } : null;
   const place = `${Math.abs(lat).toFixed(1)}°${lat < 0 ? "S" : "N"} · ${Math.abs(lon).toFixed(1)}°${lon < 0 ? "W" : "E"}`;
   const sampleTime=formatInTimeZone(sampleAt,timezone,"HH:mm");
-  const monthlyTimes=MONTH_NAMES.map((_,i)=>formatInTimeZone(binocularSample(year,i+1,lat,lon,timezone,sampleMode),timezone,"HH:mm"));
   const sampleLabel = formatInTimeZone(sampleAt, timezone, "MMM d, yyyy · HH:mm");
   const detailLabel=formatInTimeZone(detailAt,timezone,"MMM d, yyyy · HH:mm");
   const events=useMemo(()=>new Map([...picks.slice(0,visibleCount),...(detail?[detail]:[])].map(p=>[p.targetId,targetDayEvents(p.target.ra,p.target.dec,lat,lon,at,timezone)])),[picks.map(p=>p.targetId).join(","),visibleCount,detail?.targetId,lat,lon,at.getTime(),timezone]);
   const eventTimes=(p:BinocularPick)=>{const day=events.get(p.targetId);return day?<div className="binocular-event-times" aria-label={`Rise transit and set for ${p.name??p.target.name}`}><span>Rise<strong>{day.alwaysUp?"Always up":day.neverUp?"Never rises":day.rise?formatInTimeZone(day.rise,timezone,"HH:mm"):"None today"}</strong></span><span>Transit<strong>{day.transit?formatInTimeZone(day.transit,timezone,"HH:mm"):"None today"}</strong></span><span>Set<strong>{day.alwaysUp?"Always up":day.neverUp?"Never rises":day.set?formatInTimeZone(day.set,timezone,"HH:mm"):"None today"}</strong></span></div>:null;};
   const years = Array.from(new Set([currentYear - 1, currentYear, currentYear + 1, year])).sort();
-  const selectMonth = (value:number,nextYear=year,nextSample=sampleMode) => { const sample=binocularSample(nextYear,value,lat,lon,timezone,nextSample);setMonth(value);setYear(nextYear);setChosenDate(formatInTimeZone(sample,timezone,"yyyy-MM-dd"));setChosenTime(formatInTimeZone(sample,timezone,"HH:mm"));setVisibilityMode("time");setSeasonalOnly(true);setVisibleCount(12); };
+  const selectMonth = (value:number,nextYear=year,nextSample=sampleMode,target?:UnifiedTarget) => { const candidates=nextSample==="dark"&&target&&nextYear===year?monthEveningSamples[value-1]:[];const sample=candidates.length?candidates.reduce((best,date)=>eqToHorizontal(target!.ra,target!.dec,lat,lon,date).alt>eqToHorizontal(target!.ra,target!.dec,lat,lon,best).alt?date:best):binocularSample(nextYear,value,lat,lon,timezone,nextSample);setMonth(value);setYear(nextYear);setChosenDate(formatInTimeZone(sample,timezone,"yyyy-MM-dd"));setChosenTime(formatInTimeZone(sample,timezone,"HH:mm"));setVisibilityMode("time");setSeasonalOnly(true);setVisibleCount(12); };
   const changeDay=(value:string)=>{setChosenDate(value);if(/^\d{4}-\d{2}-\d{2}$/.test(value)){setYear(Number(value.slice(0,4)));setMonth(Number(value.slice(5,7)));}setVisibleCount(12);};
-  const reset = () => { setFamily("all"); setLevel("all"); setQuery(""); setSmallOnly(false); setMinAltitude("");setVisibilityMode("time"); setSeasonalOnly(false); setVisibleCount(12); };
+  const reset = () => { setFamily("all"); setLevel("all"); setQuery(""); setIncludeLargeTargets(null); setMinAltitude("");setVisibilityMode("time"); setSeasonalOnly(false); setVisibleCount(12); };
 
   return (
     <ObservingContextScope date={at} timezone={timezone} lat={lat} lon={lon} onTime={value=>{setChosenDate(formatInTimeZone(value,timezone,"yyyy-MM-dd"));setChosenTime(formatInTimeZone(value,timezone,"HH:mm"));}}><div className="binocular-guide" data-testid="binocular-guide">
@@ -109,7 +155,7 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
       <section className="binocular-calendar" aria-label="Monthly binocular guide">
         <div className="binocular-calendar-heading">
           <div><span className="eyebrow">TWELVE CHAPTERS, ONE SKY</span><h2>Where will {MONTH_NAMES[month - 1]} take you?</h2></div>
-          <div className="binocular-sample-settings"><label className="binocular-year">Sample sky<select aria-label="Binocular sample time" value={sampleMode} onChange={e=>{const value=e.target.value as BinocularSampleMode;setSampleMode(value);selectMonth(month,year,value);}}><option value="dark">After astronomical dusk</option><option value="fixed">21:00 reference</option></select></label>
+          <div className="binocular-sample-settings"><label className="binocular-year">Monthly pick method<select aria-label="Binocular sample time" value={sampleMode} onChange={e=>{const value=e.target.value as BinocularSampleMode;setSampleMode(value);selectMonth(month,year,value);}}><option value="dark">Best altitude in evening window</option><option value="fixed">21:00 reference</option></select></label>
           <label className="binocular-year">Planning year
             <select value={year} onChange={(e) => selectMonth(month,Number(e.target.value))} aria-label="Binocular planning year">
               {years.map((y) => <option key={y} value={y}>{y}</option>)}
@@ -118,7 +164,7 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
         </div>
         <div className="binocular-months" role="group" aria-label="Choose a month">
           {MONTH_NAMES.map((name, i) => {
-            const count = collection.filter((p) => (!smallOnly || (p.minAperture ?? 50) <= 50) && p.bestMonths.includes(i + 1) && p.monthlyAltitudes[i] >= 15).length;
+            const count = collection.filter((p) => (showLargeTargets || (p.minAperture ?? 50) <= 50) && p.bestMonths.includes(i + 1) && p.monthlyAltitudes[i] >= 15).length;
             return <button key={name} className={month === i + 1 ? "active" : ""} aria-pressed={month === i + 1} onClick={() => selectMonth(i + 1)} data-testid={`binocular-month-${i + 1}`}>
               <span>{String(i + 1).padStart(2, "0")}</span><strong>{name.slice(0, 3)}</strong><small>{loading ? "…" : `${count} picks`}</small>
             </button>;
@@ -127,7 +173,7 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
         <div className="binocular-calendar-context">
           <span><MapPin size={13} /> {place}</span><span><Clock size={13} /> {sampleLabel} local</span><span>Monthly reference · {sampleConditions.darkness}</span>
         </div>
-        <p className="binocular-method-note">Monthly picks use {sampleMode==="dark"?"15 minutes after astronomical dusk":"21:00"} on the 15th at your location. If astronomical night never occurs, the sample stays at {sampleTime} and is labeled twilight. Check your actual observing time before heading out; weather and local obstructions are not included.</p>
+        <p className="binocular-method-note">Monthly picks in evening-window mode use each target’s highest sampled altitude from astronomical dusk to local midnight, at 30-minute intervals. If astronomical night does not occur, the guide samples 18:00 to midnight local time. The 21:00 option is a single reference time. Check your actual observing time before heading out; weather and local obstructions are not included.</p>
       </section>
 
       {featured && (
@@ -152,9 +198,11 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
         </div>
         <div className="binocular-toolbar">
           <label className="binocular-search"><Search size={15} /><input aria-label="Search binocular targets" placeholder="A name, constellation, or catalog number…" value={query} onChange={(e) => { setQuery(e.target.value); setVisibleCount(12); }} />{query && <button onClick={() => setQuery("")} aria-label="Clear binocular search"><X size={14} /></button>}</label>
-          <select aria-label="Binocular observing difficulty" value={level} onChange={(e) => { setLevel(e.target.value); if (e.target.value === "large") setSmallOnly(false); setVisibleCount(12); }}><option value="all">All observing levels</option>{Object.entries(LEVEL_LABELS).map(([key, name]) => <option key={key} value={key}>{name}</option>)}</select>
-          <button className={`filter-toggle ${smallOnly ? "active" : ""}`} aria-pressed={smallOnly} onClick={() => { if (!smallOnly && level === "large") setLevel("all"); setSmallOnly(!smallOnly); setVisibleCount(12); }}><Binoculars size={14} /> Small binoculars</button>
+          <select aria-label="Binocular observing difficulty" value={level} onChange={(e) => { setLevel(e.target.value); if (e.target.value === "large") setIncludeLargeTargets(true); setVisibleCount(12); }}><option value="all">All observing levels</option>{Object.entries(LEVEL_LABELS).map(([key, name]) => <option key={key} value={key}>{name}</option>)}</select>
+          <span className="binocular-profile-summary">Showing targets for your {profile.aperture} mm binoculars</span><button className={`filter-toggle ${showLargeTargets ? "active" : ""}`} aria-pressed={showLargeTargets} onClick={() => { setIncludeLargeTargets(!showLargeTargets); setVisibleCount(12); }}><Binoculars size={14} /> {showLargeTargets?"Hide 80 mm targets":"Include 80 mm targets"}</button>
           <button className={`filter-toggle ${seasonalOnly ? "active" : ""}`} aria-pressed={seasonalOnly} onClick={() => setSeasonalOnly(!seasonalOnly)}><Clock size={14} /> Monthly picks</button>
+          <label>Sort<select aria-label="Sort binocular targets" value={sort} onChange={event=>setSort(event.target.value)}><option value="time">Best time</option><option value="moon">Moon-friendly</option><option value="rating">Best rating</option><option value="altitude">Highest altitude</option></select></label>
+          <div role="group" aria-label="Binocular target layout"><button aria-pressed={view==="cards"} onClick={()=>setView("cards")}>Cards</button><button aria-pressed={view==="list"} onClick={()=>setView("list")}>List</button></div>
         </div>
 
         <div className="binocular-visibility" aria-label="Binocular visibility filters">
@@ -174,14 +222,14 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
         {loading ? <div className="panel empty-state"><Binoculars size={28} /><p>Opening the binocular field guide…</p></div> : !picks.length ? (
           <div className="panel empty-state"><Star size={28} /><h3>A different window may open the sky.</h3><p>No targets match these filters at this site. Try a lower altitude, another time window or a different date. Monthly picks can also narrow the results.</p><Button variant="outline" onClick={reset}>Browse all binocular targets</Button></div>
         ) : (
-          <div className="binocular-target-grid">
-            {picks.slice(0, visibleCount).map((p) => <article className={`binocular-target-card level-${p.level}`} key={p.targetId}>
+          <div className="binocular-target-grid" style={view==="list"?{display:"grid",gridTemplateColumns:"1fr"}:undefined}>
+            {picks.slice(0, visibleCount).map((p) => <article className={`binocular-target-card level-${p.level}`} key={p.targetId} style={view==="list"?{display:"grid",gridTemplateColumns:"minmax(0,1fr) auto",alignItems:"center"}:undefined}>
               <button className="binocular-target-main" onClick={() => openTarget(p.targetId)} aria-label={`Explore binocular target ${p.name ?? p.target.name}`} data-testid={`binocular-target-${p.targetId}`}>
-                <div className="binocular-target-field"><BinocularPhoto id={p.targetId} name={p.name ?? p.target.name} /><span className="binocular-family-label">{FAMILY_LABELS[p.family]}</span><span className="binocular-photo-label">{opticalPhotoCaption(p.targetId)}</span></div>
-                <div className="binocular-target-body"><span className="eyebrow">{p.target.id.replace("STAR-", "")} · {getConstellationName(p.target.con)}</span><h3>{p.name ?? p.target.name}</h3><p>{p.impression}</p><div className="binocular-card-position"><span className={p.alt < 15 ? "low" : ""}>{p.neverRises ? "Never rises here" : p.alt < 0 ? `Below horizon at ${positionTime(p)}` : `${Math.round(p.alt)}° ${compassLabel(p.az)} at ${positionTime(p)}`}</span><span>{p.variable ? "Variable star" : `mag ${p.target.mag.toFixed(1)}`}</span></div>{eventTimes(p)}</div>
+                {view==="cards"&&<div className="binocular-target-field"><BinocularPhoto id={p.targetId} name={p.name ?? p.target.name} /><span className="binocular-family-label">{FAMILY_LABELS[p.family]}</span><span className="binocular-photo-label">{opticalPhotoCaption(p.targetId)}</span></div>}
+                <div className="binocular-target-body"><span className="eyebrow">{[targetDesignation(p.target),getConstellationName(p.target.con)].filter(Boolean).join(" · ")}</span><h3>{p.name ?? p.target.name}</h3>{view==="cards"&&<p>{p.impression}</p>}<div className="binocular-card-position"><span className={p.alt < 15 ? "low" : ""}>{p.neverRises ? "Never rises here" : p.alt < 0 ? `Below horizon at ${positionTime(p)}` : `${Math.round(p.alt)}° ${compassLabel(p.az)} at ${positionTime(p)}`}</span><span>{p.variable ? "Variable star" : `mag ${p.target.mag.toFixed(1)}`}{angularSizeLabel(p.target.size)?` · ${angularSizeLabel(p.target.size)} across`:""}</span></div>{view==="cards"&&eventTimes(p)}{meanSurfaceBrightnessLabel(p.target)&&<small>{meanSurfaceBrightnessLabel(p.target)}</small>}</div>
               </button>
-              <div className="binocular-card-chart"><NightAltitudeChart target={p.target} lat={lat} lon={lon} night={nightWindow} timezone={timezone} skyBrightness={skyBrightness} moonAt={nightMoon}/></div>
-              <div className="binocular-target-bottom"><button className="binocular-clock-action" aria-label={`Compare ${p.name??p.target.name} in astronomical clock`} onClick={()=>onCompare(p.targetId,timeFor(p))}><Clock size={15}/></button><span>{binocularAssessment(p.target,profile,{alt:p.alt,moon:nightMoon(timeFor(p)),skyBrightness}).label}</span><button className={savedIds.has(p.targetId) ? "saved" : ""} onClick={() => onSave(p.targetId)} aria-label={`${savedIds.has(p.targetId) ? "Remove" : "Save"} ${p.name ?? p.target.name}`} aria-pressed={savedIds.has(p.targetId)}>{savedIds.has(p.targetId) ? <Check size={17} /> : <Plus size={17} />}</button></div>
+              {view==="cards"&&<div className="binocular-card-chart"><CompactNightCurve target={p.target} lat={lat} lon={lon} night={nightWindow}/><details><summary>Expand altitude & Moon graph</summary><NightAltitudeChart target={p.target} lat={lat} lon={lon} night={nightWindow} timezone={timezone} skyBrightness={skyBrightness} moonAt={nightMoon}/></details></div>}
+              <div className="binocular-target-bottom"><button className="binocular-clock-action" aria-label={`Compare ${p.name??p.target.name} in astronomical clock`} onClick={()=>onCompare(p.targetId,timeFor(p))}><Clock size={15}/></button><span>{binocularAssessment(p.target,profile,{alt:p.alt,moon:nightMoon(timeFor(p)),skyBrightness}).label}</span><button className={savedIds.has(p.targetId) ? "saved" : ""} onClick={() => onSave(p.targetId,timeFor(p))} aria-label={`${savedIds.has(p.targetId) ? "Remove" : "Save"} ${p.name ?? p.target.name}`} aria-pressed={savedIds.has(p.targetId)}>{savedIds.has(p.targetId) ? <Check size={17} /> : <Plus size={17} />}</button></div>
             </article>)}
           </div>
         )}
@@ -194,16 +242,16 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
         <details><summary><BookOpen size={14}/> Books & sources <span>{BINOCULAR_BOOKS.length} references</span></summary>
           <p className="binocular-books-intro">An original selection informed by published guides and public author notes. Each target links to its evidence.</p>
           <ul>{BINOCULAR_BOOKS.map(book=><li key={book.author}><a href={book.url} target="_blank" rel="noreferrer">{book.title} <ArrowUpRight size={12}/></a><span>{book.author}</span></li>)}</ul>
-        <details className="binocular-provenance"><summary>About the selection and the month-by-month calendar</summary><p>We checked target names against O’Meara’s publisher index and supplemented them with Harrington’s binocular tours, Tonkin’s BinocularSky notes, and the Astronomical League’s small-binocular, 80 mm, deep-sky and southern-sky programs. The collection is not a reproduction of a book’s complete observing list. StarHop’s short notes and finder maps are original.</p><p>For each target, StarHop computes altitude at {sampleTime} local time on the 15th of each month. Monthly picks are above 40° or within 18° of that target’s highest sampled evening altitude; the adjustable altitude filter checks your actual selected date or time window. Month labels stay in calendar order in both hemispheres: latitude changes altitude and horizon access, rather than reversing the sky’s calendar. This is a planning guide, not a visibility or weather guarantee. Variable-star brightness and eclipse times are not forecast.</p><p>Images are archived optical DSS2 and near-infrared 2MASS mosaics, served by <a href="https://alasky.cds.unistra.fr/hips-image-services/hips2fits" target="_blank" rel="noreferrer">CDS HiPS2FITS</a>. Each target provides credits, source cutouts, and use policies. They show telescope survey data, not a binocular view.</p><p>Inspired by the <a href="https://www.cloudynights.com/forums/topic/858306-best-binocular-targets-book/" target="_blank" rel="noreferrer">Cloudy Nights discussion of binocular observing books</a>.</p></details>
+        <details className="binocular-provenance"><summary>About the selection and the month-by-month calendar</summary><p>We checked target names against O’Meara’s publisher index and supplemented them with Harrington’s binocular tours, Tonkin’s BinocularSky notes, and the Astronomical League’s small-binocular, 80 mm, deep-sky and southern-sky programs. The collection is not a reproduction of a book’s complete observing list. StarHop’s short notes and finder maps are original.</p><p>In evening-window mode, StarHop samples each target’s altitude every 30 minutes from astronomical dusk to local midnight, then includes months above 40° or within 18° of that target’s sampled peak. If astronomical darkness does not occur, it samples 18:00 to midnight. The 21:00 mode uses one reference time. The adjustable altitude filter checks your selected date or time window. Month labels stay in calendar order in both hemispheres: latitude changes altitude and horizon access, rather than reversing the sky’s calendar. This is a planning guide, not a visibility or weather guarantee. Variable-star brightness and eclipse times are not forecast.</p><p>Images are archived optical DSS2 and near-infrared 2MASS mosaics, served by <a href="https://alasky.cds.unistra.fr/hips-image-services/hips2fits" target="_blank" rel="noreferrer">CDS HiPS2FITS</a>. Each target provides credits, source cutouts, and use policies. They show telescope survey data, not a binocular view.</p><p>Inspired by the <a href="https://www.cloudynights.com/forums/topic/858306-best-binocular-targets-book/" target="_blank" rel="noreferrer">Cloudy Nights discussion of binocular observing books</a>.</p></details>
         </details>
       </section>
 
       <Dialog open={Boolean(detail)} onOpenChange={(open) => { if (!open) setOpened(null); }}>
         <DialogContent className="binocular-detail">
           {detail && <>
-            <DialogHeader><span className="eyebrow">{FAMILY_LABELS[detail.family]} · {detail.target.id}</span><DialogTitle>{detail.name ?? detail.target.name}</DialogTitle><DialogDescription>{getConstellationName(detail.target.con)} · {LEVEL_LABELS[detail.level]} · {detail.equipment}</DialogDescription></DialogHeader>
+            <DialogHeader><span className="eyebrow">{[FAMILY_LABELS[detail.family],targetDesignation(detail.target)].filter(Boolean).join(" · ")}</span><DialogTitle>{detail.name ?? detail.target.name}</DialogTitle><DialogDescription>{getConstellationName(detail.target.con)} · {LEVEL_LABELS[detail.level]} · {detail.equipment}</DialogDescription></DialogHeader>
             <div className="binocular-quick-actions"><Button variant="outline" onClick={()=>{setOpened(null);onCompare(detail.targetId,detailAt);}}>Astronomical clock & compare ↗</Button><Button variant="outline" onClick={()=>{setOpened(null);onMoon(detail.targetId,detailAt);}}>Check against the Moon ↗</Button></div>
-            <div className="binocular-finder-heading"><span className="eyebrow">YOUR FINDER FIELD</span><span>{detail.target.size?`${detail.target.size} across · `:""}mag {detail.target.mag.toFixed(1)} · north up before rotation</span></div><div className="binocular-detail-chart"><SkyChart onSelect={onInspect} key={detail.targetId} nodes={fieldTarget ? [...fieldNodes, fieldTarget] : fieldNodes} constellations={constellations} denseStars={denseStars} milkyWay={milkyWay} route={null} targetNode={fieldTarget} animStep={0} fovWidth={fovWidth} fovHeight={fovHeight} fovShape={fovShape} limitingMag={finderDepth} maxCatalogMagnitude={10.5} targetDiameter={catalogDiameter(detail.target.size)} lat={lat} lon={lon} date={detailAt} onFovChange={onFovChange} onLimitingMagChange={setFinderDepth} /></div>
+            <div className="binocular-finder-heading"><span className="eyebrow">YOUR FINDER FIELD</span><span>{angularSizeLabel(detail.target.size)?`${angularSizeLabel(detail.target.size)} across · `:""}mag {detail.target.mag.toFixed(1)} · north up before rotation</span></div><div className="binocular-detail-chart"><SkyChart onSelect={onInspect} key={detail.targetId} nodes={fieldTarget ? [...fieldNodes, fieldTarget] : fieldNodes} constellations={constellations} denseStars={denseStars} milkyWay={milkyWay} route={null} targetNode={fieldTarget} animStep={0} fovWidth={fovWidth} fovHeight={fovHeight} fovShape={fovShape} limitingMag={finderDepth} maxCatalogMagnitude={10.5} targetDiameter={catalogDiameter(detail.target.size)} lat={lat} lon={lon} date={detailAt} onFovChange={onFovChange} onLimitingMagChange={setFinderDepth} /></div>
             <ObservingContextScope date={detailAt} timezone={timezone} lat={lat} lon={lon} onTime={value=>{setChosenDate(formatInTimeZone(value,timezone,"yyyy-MM-dd"));setChosenTime(formatInTimeZone(value,timezone,"HH:mm"));}}><NightAltitudeChart target={detail.target} lat={lat} lon={lon} night={nightWindow} timezone={timezone} selectedAt={detailAt} skyBrightness={skyBrightness} moonAt={nightMoon}/></ObservingContextScope>
             {eventTimes(detail)}
             <p className="binocular-method-note">Rise / transit / set on <ContextDateButton value={detailAt} timezone={timezone} onChange={value=>{setChosenDate(formatInTimeZone(value,timezone,"yyyy-MM-dd"));setChosenTime(formatInTimeZone(value,timezone,"HH:mm"));}}>{observingDay}</ContextDateButton> · {timezone.replaceAll("_"," ")} · geometric horizon.</p>
@@ -213,9 +261,9 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
             <BinocularObservations id={detail.targetId} />
             {detailAt<observingDate&&<p className="binocular-method-note">This is a past observing time. Choose a future date to plan a new visit.</p>}
             <details className="binocular-reference-photos"><summary>Reference photographs & source images</summary><BinocularImages key={detail.targetId} id={detail.targetId} name={detail.name ?? detail.target.name} /></details>
-            <div className="binocular-year-path"><span className="eyebrow">A YEAR IN YOUR SKY · {sampleMode==="dark"?"AFTER DARK":"21:00"} ON THE 15TH</span><div className="binocular-altitude-months">{detail.monthlyAltitudes.map((alt, i) => <button key={i} className={month === i + 1 ? "active" : ""} onClick={() => selectMonth(i + 1)} aria-label={`${MONTH_NAMES[i]}, altitude ${Math.round(alt)} degrees at ${monthlyTimes[i]}`} aria-pressed={month === i + 1}><span className="binocular-altitude-bar"><i style={{ height: `${Math.max(3, Math.max(0, alt) / 90 * 100)}%` }} className={alt < 15 ? "low" : ""} /></span><small>{MONTH_NAMES[i].slice(0, 3)}</small></button>)}</div><p>{detail.neverRises ? "This target never rises at your latitude. Change your observing location to explore its southern sky." : `${detailLabel}: ${Math.round(detail.alt)}° ${compassLabel(detail.az)}. ${detail.alt < 15 ? "This is low or below the horizon; try another month or time." : "Aim for higher altitude and an unobstructed view."}`}</p></div>
+            <div className="binocular-year-path"><span className="eyebrow">A YEAR IN YOUR SKY · {sampleMode==="dark"?"EVENING WINDOW PEAK":"21:00"} ON THE 15TH</span><div className="binocular-altitude-months">{detail.monthlyAltitudes.map((alt, i) => <button key={i} className={month === i + 1 ? "active" : ""} onClick={() => selectMonth(i + 1,year,sampleMode,detail.target)} aria-label={`${MONTH_NAMES[i]}, peak evening altitude ${Math.round(alt)} degrees`} aria-pressed={month === i + 1}><span className="binocular-altitude-bar"><i style={{ height: `${Math.max(3, Math.max(0, alt) / 90 * 100)}%` }} className={alt < 15 ? "low" : ""} /></span><small>{MONTH_NAMES[i].slice(0, 3)}</small></button>)}</div><p>{detail.neverRises ? "This target never rises at your latitude. Change your observing location to explore its southern sky." : `${detailLabel}: ${Math.round(detail.alt)}° ${compassLabel(detail.az)}. ${detail.alt < 15 ? "This is low or below the horizon; try another month or time." : "Aim for higher altitude and an unobstructed view."}`}</p></div>
             <p className="binocular-method-note">Targets save to “{saveDestination}”. The hop preview uses the observing time shown below.</p>
-            <div className="binocular-detail-actions"><Button disabled={detail.alt < 5} onClick={() => { setOpened(null); onPlan(detail.targetId, detailAt); }}><Navigation size={15} /> Plan binocular hop</Button><button className={`save-button ${savedIds.has(detail.targetId) ? "saved" : ""}`} aria-label={`${savedIds.has(detail.targetId) ? "Remove from" : "Add to"} my night`} onClick={() => onSave(detail.targetId)}>{savedIds.has(detail.targetId) ? <Check size={18} /> : <Plus size={18} />}</button><span>Hop preview: {detailLabel} local</span></div>
+            <div className="binocular-detail-actions"><Button disabled={detail.alt < 5} onClick={() => { setOpened(null); onPlan(detail.targetId, detailAt); }}><Navigation size={15} /> Plan binocular hop</Button><button className={`save-button ${savedIds.has(detail.targetId) ? "saved" : ""}`} aria-label={savedIds.has(detail.targetId) ? "Remove from night" : "Add to night"} onClick={() => onSave(detail.targetId,detailAt)}>{savedIds.has(detail.targetId) ? <Check size={18} /> : <Plus size={18} />}<span>{savedIds.has(detail.targetId)?"Remove from night":"Add to night"}</span></button><span>Hop preview: {detailLabel} local</span></div>
             {eqToHorizontal(detail.target.ra, detail.target.dec, lat, lon, observingDate).alt >= 5 && <button className="text-action" onClick={() => { setOpened(null); onPlan(detail.targetId, observingDate); }}>Use my current observing time instead <ArrowUpRight size={13} /></button>}
             <div className="binocular-detail-sources"><h3><BookOpen size={14} /> Follow the observer’s trail</h3>{detail.references.map((ref) => <a key={ref.url + ref.title} href={ref.url} target="_blank" rel="noreferrer">{ref.title}<ArrowUpRight size={12} /></a>)}<h3>Explore the public databases</h3>{binocularDatabaseResources(detail.target, binocularMedia(detail.targetId)?.fov ?? 2).map((ref) => <a key={ref.url} href={ref.url} target="_blank" rel="noreferrer">{ref.title}<ArrowUpRight size={12} /></a>)}<small>The finder chart uses your configured field of view. The fine gold outline marks the catalog diameter when available; it is a locating guide, not a simulated glow. Stars are real catalog positions, not a photographic background. {detail.variable ? "Brightness varies; no current magnitude is predicted." : "Magnitudes are catalog values; sky brightness and steadiness affect the view."}</small></div>
           </>}

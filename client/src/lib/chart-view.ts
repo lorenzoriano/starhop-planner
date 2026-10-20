@@ -1,3 +1,4 @@
+import { equatorialOfDate } from "./fixed-equatorial";
 import * as Astro from "astronomy-engine";
 import { stereographicProject } from "./astronomy";
 
@@ -16,7 +17,7 @@ export function chartFrame(points: EquatorialPoint[]): EquatorialPoint {
   return { ra: (Math.atan2(y, x) / radians + 360) % 360, dec: Math.atan2(z, Math.hypot(x, y)) / radians };
 }
 export function skyZenith(lat: number, lon: number, date: Date): EquatorialPoint {
-  return { ra: ((Astro.SiderealTime(date) * 15 + lon) % 360 + 360) % 360, dec: lat };
+  return equatorialOfDate(((Astro.SiderealTime(date)*15+lon)%360+360)%360,lat,date,true);
 }
 /** Move the viewport on a fixed plane. Following a hop never turns the sky. */
 export function projectChartPoint(point: EquatorialPoint, frame: EquatorialPoint, focus: EquatorialPoint, scale: number) {

@@ -1,3 +1,4 @@
+import { equatorialOfDate } from "../fixed-equatorial";
 import { describe,it,expect } from 'vitest';
 import { skyObjectKind,altitudeRingFraction,isDeepSky } from '../planetarium';
 import { eqToHorizontal,stereographicProject } from '../astronomy';
@@ -7,9 +8,9 @@ describe('planetarium horizon and object semantics',()=>{
   it('maps altitude rings to the same stereographic geometry as the actual sky',()=>{
     const date=new Date('2026-10-25T03:45Z'),zenith=skyZenith(0,0,date);
     for(const alt of [0,30,60,90]){
-      const star={ra:zenith.ra,dec:90-alt};
+      const star=equatorialOfDate(equatorialOfDate(zenith.ra,zenith.dec,date).ra,90-alt,date,true);
       const p=stereographicProject(star.ra,star.dec,zenith.ra,zenith.dec,1)!;
-      const horizon=stereographicProject(zenith.ra,90,zenith.ra,0,1)!;
+      const horizonPoint=equatorialOfDate(0,90,date,true);const horizon=stereographicProject(horizonPoint.ra,horizonPoint.dec,zenith.ra,zenith.dec,1)!;
       expect(eqToHorizontal(star.ra,star.dec,0,0,date).alt).toBeCloseTo(alt,1);
       expect(Math.hypot(p.x,p.y)/Math.hypot(horizon.x,horizon.y)).toBeCloseTo(altitudeRingFraction(alt),8);
     }

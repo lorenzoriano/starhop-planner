@@ -27,6 +27,7 @@ export const settingsSchema = z.object({
   difficulty: z.enum(["beginner", "intermediate", "expert"]),
   targetId: z.string(),
   startStarId: z.string().regex(/^HR\d+$/).optional(),
+  waypointIds:z.array(z.string().regex(/^HR\d+$/)).max(8).optional(),
   redLight: z.boolean(),
   binocularMagnification: z.number().min(5).max(40).default(14),
   binocularFov:z.number().min(.2).max(15).optional(),
@@ -72,6 +73,7 @@ export const nightListSchema = z
       id: z.string(),
       addedAt: z.string().datetime(),
       observedAt: z.string().datetime().optional(),
+      observations:z.array(z.object({at:z.string().datetime(),notes:z.string().default(""),instrument:z.string().optional()})).max(2000).optional(),
       notes: z.string(),
     }),
   )
@@ -81,6 +83,7 @@ export const nightListSchema = z
       const id=canonicalTargetId(item.id),previous=merged.get(id);
       if(!previous){merged.set(id,{...item,id});continue;}
       merged.set(id,{...previous,addedAt:previous.addedAt<item.addedAt?previous.addedAt:item.addedAt,
+        observations:Array.from(new Map([...(previous.observations??[]),...(item.observations??[])].map(entry=>[`${entry.at}/${entry.notes}`,entry])).values()),
         notes:previous.notes&&item.notes&&previous.notes!==item.notes?`${previous.notes}\n\n${item.notes}`:previous.notes||item.notes,
         observedAt:previous.observedAt&&item.observedAt?(previous.observedAt>item.observedAt?previous.observedAt:item.observedAt):previous.observedAt??item.observedAt});
     }

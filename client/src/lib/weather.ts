@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { formatInTimeZone } from 'date-fns-tz';
+import { clockNightDate } from './astronomical-clock';
 import { visibilityWindow } from './target-visibility';
 
 export const WEATHER_HOUR=3600000;
@@ -62,7 +63,7 @@ export function weatherVerdict(hour:Pick<WeatherHour,'cloud'|'rain'|'rainChance'
   return hour.cloud<=20?{label:'Mostly clear',tone:'good'}:hour.cloud<=50?{label:'Some cloud',tone:'mixed'}:hour.cloud<=80?{label:'Mostly cloudy',tone:'poor'}:{label:'Overcast',tone:'poor'};
 }
 export function observingWeather(forecast:WeatherForecast,date:Date,timezone:string,now=Date.now(),rank?:(hours:WeatherHour[])=>number) {
-  const day=formatInTimeZone(date,timezone,'yyyy-MM-dd');
+  const day=clockNightDate(date,timezone);
   const night=visibilityWindow(day,'12:00','12:00','night',timezone,forecast.lat,forecast.lon);
   if(!night.ok)return {hours:[] as WeatherHour[],night,best:null,partial:false};
   const hours=forecast.hours.filter(h=>h.time<+night.end&&h.time+WEATHER_HOUR>+night.start);
@@ -77,5 +78,6 @@ export function observingWeather(forecast:WeatherForecast,date:Date,timezone:str
     if(!best||score<best.score)best={start:a.time,end:b.time+WEATHER_HOUR,cloud,wind,score};
   }
   const partial=forecast.hours[0].time>+night.start||forecast.hours.at(-1)!.time+WEATHER_HOUR<+night.end;
-  return {hours,night,best,partial};
+  const darkCovered=night.segments.length>0&&night.segments.every(segment=>forecast.hours[0].time<=+segment.start&&forecast.hours.at(-1)!.time+WEATHER_HOUR>=+segment.end);
+  return {hours,night,best,partial,darkCovered};
 }

@@ -52,10 +52,13 @@ async function buildAll() {
   const files = (await filesIn("dist/public"))
     .filter((p) => !p.endsWith("/sw.js"))
     .sort();
+  const sizes:Record<string,number>={};
   const hash = createHash("sha256");
   for (const file of files) {
     hash.update(file);
-    hash.update(await readFile(file));
+    const bytes=await readFile(file);
+    sizes[`./${file.slice("dist/public/".length)}`]=bytes.byteLength;
+    hash.update(bytes);
   }
   const build = hash.digest("hex").slice(0, 16);
   // The page can distinguish its own assets from a still-active older worker.
@@ -65,6 +68,7 @@ async function buildAll() {
     "dist/public/offline-assets.json",
     JSON.stringify({
       build,
+      sizes,
       files: files.map((p) => `./${p.slice("dist/public/".length)}`),
     }),
   );

@@ -7,8 +7,6 @@ import {
   ChevronRight,
   Play,
   Pause,
-  Plus,
-  Search,
   X,
 } from "lucide-react";
 import type { TrajectoryScope } from "@/lib/season-trajectories";
@@ -16,7 +14,7 @@ import { SeasonTrajectoryClock } from "./SeasonTrajectoryClock";
 import { Button } from "./ui/button";
 import { ComparisonCharts, SeasonChart } from "./ObjectComparisonCharts";
 import { type UnifiedTarget } from "@/lib/astronomy";
-import { catalogSearchScore } from "@/lib/catalog-search";
+import { CatalogCombobox } from "./CatalogCombobox";
 import { observationAt, createMoonSampler } from "@/lib/observing-profile";
 import { resolveLocalMoment } from "@/lib/session";
 import { type SavedLocation } from "@/lib/saved-locations";
@@ -91,6 +89,8 @@ export function AstronomicalClock({
   const [query, setQuery] = useState(""),
     [cursor, setCursor] = useState<number | null>(null),
     [highlight, setHighlight] = useState<string | null>(null);
+  const [travelPreview, setTravelPreview] = useState<Date | null>(null),
+    [travelEnd, setTravelEnd] = useState<Date | null>(null);
   const [running, setRunning] = useState(false),
     [travelStep, setTravelStep] = useState<"hour" | "night">("hour");
   const [seasonOpen, setSeasonOpen] = useState(false),
@@ -113,35 +113,28 @@ export function AstronomicalClock({
         .filter((t): t is UnifiedTarget => !!t),
     [ids, targets],
   );
-  const night = clockNightDate(date, timezone),
+  const clockDate = travelPreview ?? date;
+  const night = clockNightDate(clockDate, timezone),
     bounds = useMemo(() => clockBounds(night, timezone), [night, timezone]);
   const samples = useMemo(
     () => clockSamples(chosen, lat, lon, night, timezone),
     [chosen, lat, lon, night, timezone],
   );
   const moonAt = useMemo(() => createMoonSampler(lat, lon), [lat, lon, night]);
-  useEffect(() => setCursor(null), [+date, lat, lon]);
+  useEffect(() => setCursor(null), [+clockDate, lat, lon]);
   useEffect(() => {
-    if (!running) return;
+    if (!running || !travelPreview || !travelEnd) return;
     const timer = window.setTimeout(() => {
-      if (travelStep === "hour") onTime(new Date(+date + 3600000));
-      else {
-        const nextDay = shiftClockDate(
-            formatInTimeZone(date, timezone, "yyyy-MM-dd"),
-            1,
-          ),
-          next = resolveLocalMoment(
-            nextDay,
-            formatInTimeZone(date, timezone, "HH:mm"),
-            timezone,
-          );
-        if (next) onTime(next);
-        else setRunning(false);
-      }
+      const next =
+        travelStep === "hour"
+          ? new Date(Math.min(+travelEnd, +travelPreview + 3600000))
+          : new Date(Math.min(+travelEnd, +travelPreview + 86400000));
+      setTravelPreview(next);
+      if (+next >= +travelEnd) setRunning(false);
     }, 900);
     return () => window.clearTimeout(timer);
-  }, [running, travelStep, +date, timezone]);
-  const at = new Date(cursor ?? +date),
+  }, [running, travelStep, travelPreview ? +travelPreview : null, travelEnd ? +travelEnd : null]);
+  const at = new Date(cursor ?? +clockDate),
     moon = moonAt(at),
     hour = clockHour(at, timezone);
   const observations = chosen.map((target) =>
@@ -163,27 +156,15 @@ export function AstronomicalClock({
     highlight === "moon"
       ? lunarEvents
       : events[chosen.findIndex((t) => t.id === highlight)];
-  const results = useMemo(
-    () =>
-      query.trim()
-        ? targets
-            .map((t) => ({ t, score: catalogSearchScore(t, query) }))
-            .filter((r) => Number.isFinite(r.score))
-            .sort((a, b) => a.score - b.score || a.t.mag - b.t.mag)
-            .slice(0, 15)
-            .map((r) => r.t)
-        : [],
-    [targets, query],
-  );
   const add = (id: string) => {
     if (!ids.includes(id) && ids.length < CLOCK_LIMIT) onIds([...ids, id]);
   };
   const changeNight = (day: string) => {
-    const time = formatInTimeZone(date, timezone, "HH:mm"),
+    const time = formatInTimeZone(clockDate, timezone, "HH:mm"),
       civil = Number(time.slice(0, 2)) < 12 ? shiftClockDate(day, 1) : day;
     const next = resolveLocalMoment(civil, time, timezone);
     if (next) {
-      onTime(next);
+      setDisplayedTime(next);
       setTimeError("");
     } else
       setTimeError(
@@ -195,12 +176,39 @@ export function AstronomicalClock({
       Number(time.slice(0, 2)) < 12 ? shiftClockDate(night, 1) : night;
     const next = resolveLocalMoment(civil, time, timezone);
     if (next) {
-      onTime(next);
+      setDisplayedTime(next);
       setTimeError("");
     } else
       setTimeError(
         "That local time is skipped by a clock change. Choose another time.",
       );
+  };
+  const commitTime = (next: Date) => {
+    setRunning(false);
+    setTravelPreview(null);
+    setTravelEnd(null);
+    onTime(next);
+  };
+  const setDisplayedTime = (next: Date) => {
+    setRunning(false);
+    if (travelPreview) {
+      setTravelPreview(next);
+      setTravelEnd(clockBounds(clockNightDate(next, timezone), timezone).end);
+    } else {
+      onTime(next);
+    }
+  };
+  const startTravel = () => {
+    if (running) {
+      setRunning(false);
+      return;
+    }
+    const start = travelPreview ?? date;
+    setLocked(false);
+    setCursor(null);
+    setTravelPreview(start);
+    setTravelEnd(bounds.end);
+    setRunning(true);
   };
   const request = useMemo<SeasonRequest>(
     () => ({
@@ -272,7 +280,7 @@ export function AstronomicalClock({
   };
   const toggleTime = (ms: number) => {
     if (locked) { setLocked(false); setCursor(null); }
-    else { onTime(new Date(ms)); setCursor(null); setLocked(true); setRunning(false); }
+    else { setDisplayedTime(new Date(ms)); setCursor(null); setLocked(true); }
   };
   const keyboard = (event: React.KeyboardEvent<SVGSVGElement>) => {
     if (event.key === "Escape") { setLocked(false); setCursor(null); return; }
@@ -292,7 +300,7 @@ export function AstronomicalClock({
                 ),
               );
       setCursor(next);
-      onTime(new Date(next));
+      setDisplayedTime(new Date(next));
     }
   };
   const label = (at: Date) =>
@@ -302,7 +310,7 @@ export function AstronomicalClock({
       <header className="astro-heading">
         <div>
           <p className="eyebrow">FOLLOW YOUR OBJECTS THROUGH THE NIGHT</p>
-          <ContextDateButton value={date} timezone={timezone}/>
+          <ContextDateButton value={clockDate} timezone={timezone}/>
           <h1>
             Astronomical clock<span>.</span>
           </h1>
@@ -369,13 +377,13 @@ export function AstronomicalClock({
           >
             <ChevronRight size={18} />
           </button>
-          <ContextDateButton value={date} timezone={timezone} onChange={onTime}>Calendar & time</ContextDateButton>
+          <ContextDateButton value={clockDate} timezone={timezone} onChange={setDisplayedTime}>Calendar & time</ContextDateButton>
           <label>
             Local time
             <input
               type="time"
               aria-label="Clock local time"
-              value={formatInTimeZone(date, timezone, "HH:mm")}
+              value={formatInTimeZone(clockDate, timezone, "HH:mm")}
               onChange={(e) => {
                 if (e.target.value) setLocalTime(e.target.value);
               }}
@@ -387,6 +395,8 @@ export function AstronomicalClock({
               setRunning(false);
               setLocked(false);
               setCursor(null);
+              setTravelPreview(null);
+              setTravelEnd(null);
               onLive();
             }}
           >
@@ -395,7 +405,7 @@ export function AstronomicalClock({
           <button
             className="text-action"
             aria-label={running ? "Pause time travel" : "Animate time travel"}
-            onClick={() => {setLocked(false);setCursor(null);setRunning(!running);}}
+            onClick={startTravel}
           >
             {running ? <Pause size={15} /> : <Play size={15} />}{" "}
             {running ? "Pause" : "Travel"}
@@ -419,32 +429,40 @@ export function AstronomicalClock({
             step={60000}
             value={Math.max(
               +bounds.start,
-              Math.min(+bounds.end - 60000, +date),
+              Math.min(+bounds.end - 60000, +clockDate),
             )}
-            onChange={(e) => onTime(new Date(Number(e.target.value)))}
+            onChange={(e) => setDisplayedTime(new Date(Number(e.target.value)))}
           />
           <span>Noon +1d</span>
         </div>
         <p>
-          {live ? "Live sky" : "Time travel"} · {label(date)} · noon {night} →
+          {live && !travelPreview ? "Live sky" : "Time travel"} · {label(clockDate)} · noon {night} →
           noon {shiftClockDate(night, 1)}
           {+bounds.end - +bounds.start !== 86400000
             ? " · clock-change night"
             : ""}
         </p>
+        {travelPreview && (
+          <div className="astro-travel-preview" role="group" aria-label="Time travel preview">
+            <span>Preview only · your saved plan has not changed.</span>
+            <Button variant="outline" onClick={() => commitTime(travelPreview)}>Keep time</Button>
+            <Button variant="ghost" onClick={() => { setRunning(false); setTravelPreview(null); setTravelEnd(null); setCursor(null); }}>Restore saved time</Button>
+          </div>
+        )}
         {timeError && <p role="alert">{timeError}</p>}
       </section>
       <section className="panel astro-objects" aria-label="Objects to compare">
         <div className="astro-object-tools">
-          <label className="astro-search">
-            <Search size={16} />
-            <input
-              aria-label="Find objects for the clock"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Add objects, stars, catalog numbers…"
-            />
-          </label>
+          <CatalogCombobox
+            className="astro-search flex-wrap"
+            targets={targets}
+            query={query}
+            onQuery={setQuery}
+            label="Find objects for the clock"
+            placeholder="Add objects, stars, catalog numbers…"
+            savedIds={new Set(ids)}
+            onSelect={(target) => { add(target.id); setQuery(""); }}
+          />
           {selectedId && (
             <button
               className="text-action"
@@ -480,31 +498,6 @@ export function AstronomicalClock({
             {chosen.length}/{CLOCK_LIMIT}
           </span>
         </div>
-        {query.trim() && (
-          <div
-            className="astro-search-results"
-            aria-label="Clock object search results"
-          >
-            {results.length ? (
-              results.map((t) => (
-                <button
-                  key={t.id}
-                  disabled={ids.includes(t.id) || ids.length >= CLOCK_LIMIT}
-                  onClick={() => {
-                    add(t.id);
-                    setQuery("");
-                  }}
-                >
-                  <Plus size={14} />
-                  <span>{t.displayName || t.name}</span>
-                  <small>{ids.includes(t.id) ? "Added" : t.id}</small>
-                </button>
-              ))
-            ) : (
-              <p>No matching objects.</p>
-            )}
-          </div>
-        )}
         <p className="astro-note">Compared objects · add or remove objects here to build a comparison. Opening the clock from an object starts with that object alone.</p>
         <div className="astro-chips">
           {chosen.map((t, i) => (
@@ -875,7 +868,7 @@ export function AstronomicalClock({
         values={observations}
         onCursor={ms=>{if(!locked)setCursor(ms);}}
         onTime={at=>toggleTime(+at)}
-        onAdjustTime={at=>{setLocked(true);setCursor(null);onTime(at);}}
+        onAdjustTime={at=>{setLocked(true);setCursor(null);setDisplayedTime(at);}}
         locked={locked}
         onUnlock={()=>{setLocked(false);setCursor(null);}}
       />

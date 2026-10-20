@@ -1,3 +1,4 @@
+import { equatorialOfDate } from "./fixed-equatorial";
 import { SiderealTime } from 'astronomy-engine';
 import { angularDistance, eqToHorizontal, type UnifiedTarget } from './astronomy';
 import { binocularAssessment, type BinocularProfile } from './binocular-assessment';
@@ -5,7 +6,8 @@ import { createMoonSampler } from './observing-profile';
 import { nightAltitudeSamples, type VisibilityWindow } from './target-visibility';
 
 export interface CatalogConstraints { minAltitude:number; minMoonDistance:number; transitHours:number|null; maxRating:number; }
-export function hoursFromTransit(ra:number,lon:number,date:Date) {
+export function hoursFromTransit(ra:number,lon:number,date:Date,dec=0) {
+  ra=equatorialOfDate(ra,dec,date).ra;
   const angle=((SiderealTime(date)*15+lon-ra+180)%360+360)%360-180;
   return Math.abs(angle)/15;
 }
@@ -20,7 +22,7 @@ export function catalogMatches(target:UnifiedTarget,lat:number,lon:number,window
   let best:ReturnType<typeof evaluate>|null=null;
   function evaluate(at:Date) {
     const {alt,az}=eqToHorizontal(target.ra,target.dec,lat,lon,at),moon=moonAt(at),separation=angularDistance(target.ra,target.dec,moon.ra,moon.dec);
-    const transitDistance=hoursFromTransit(target.ra,lon,at),assessment=binocularAssessment(target,profile,{alt,moon,skyBrightness});
+    const transitDistance=hoursFromTransit(target.ra,lon,at,target.dec),assessment=binocularAssessment(target,profile,{alt,moon,skyBrightness});
     return {target,at,alt,az,moon,separation,transitDistance,assessment,score:alt-assessment.glow*(/galaxy|nebula/i.test(target.category)?14:6)};
   }
   for(const at of candidates){

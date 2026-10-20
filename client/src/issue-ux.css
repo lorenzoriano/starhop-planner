@@ -1,0 +1,290 @@
+/* Focused interaction and responsive fixes for the observing UI. Import this
+   after index.css so these rules refine the existing visual system. */
+
+:root {
+  --touch-target: 44px;
+  --chart-silver: #aeb4be;
+  --chart-moon-shading: rgb(174 180 190 / 22%);
+  --chart-moon-glare: rgb(174 180 190 / 28%);
+}
+
+/* Keep small explanatory text readable without changing SVG data labels. */
+.sky-caption,
+.chart-footnote,
+.target-photo-caption,
+.lunar-view-caption,
+.lunar-chart-context,
+.lunar-chart-axis-title,
+.lunar-chart-legend,
+.night-chart-readout,
+.night-moon-explanation,
+.night-moon-scale,
+.night-observation-suggestion,
+.night-altitude-heading,
+.chart-readability-controls label,
+.chart-toolbar button,
+.chart-toolbar select {
+  font-size: max(12px, 1em);
+}
+
+/* The Moon remains a neutral silver curve; darkness and glare use restrained
+   gray fills so the plotted data stays visible on the navy chart. */
+.lunar-chart-legend .moon-line { border-color: var(--chart-silver); }
+.lunar-chart-legend .moon-glare {
+  background: var(--chart-moon-glare);
+  border-color: rgb(174 180 190 / 48%);
+}
+.lunar-planning .lunar-altitude-chart > path:not([stroke-dasharray]) {
+  stroke: var(--chart-silver);
+  stroke-dasharray: 10 4;
+}
+.lunar-chart-legend .moon-line { border-top-style: dashed; }
+.lunar-chart-legend .target-line { border-top-style: dotted; }
+.lunar-chart-legend .legend-shading {
+  background: rgb(174 180 190 / 13%);
+  border-color: rgb(174 180 190 / 32%);
+}
+.lunar-chart-legend .moon-glare {
+  background: var(--chart-moon-glare);
+  border-color: rgb(174 180 190 / 48%);
+}
+.lunar-planning .lunar-altitude-chart { min-height: 230px; }
+.lunar-separation-panel > svg { min-height: 170px; }
+.lunar-separation-panel .legend-shading.moon-glare { background: var(--chart-moon-glare); }
+.night-altitude-chart .moon-separation-line {
+  stroke: var(--chart-silver);
+  stroke-dasharray: 8 4;
+}
+.night-altitude-chart .night-moon-shading { fill: #aeb4be; }
+.night-altitude-chart .context-sun-altitude { stroke-dasharray: 1 3; }
+.night-altitude-chart .context-moon-altitude { stroke: #929ba8; stroke-dasharray: 8 4; }
+
+/* Avoid planner and comparison grids forcing the whole viewport wider. */
+.main-content,
+.workspace-layout,
+.planner-workbench,
+.planner-command,
+.planner-target-board,
+.planner-calendar-layout,
+.planner-sessions,
+.lunar-workspace,
+.lunar-planning,
+.lunar-separation-panel,
+.night-altitude-chart,
+.astro-workspace,
+.season-trajectory-grid {
+  min-width: 0;
+}
+.planner-calendar-layout,
+.planner-sessions,
+.planner-target-board,
+.lunar-workspace,
+.hop-layout,
+.tonight-hero,
+.object-grid,
+.lunar-feature-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+.planner-calendar-dialog .planner-calendar-layout { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); }
+.planner-row-main,
+.planner-row-copy,
+.planner-row-actions { min-width: 0; }
+.planner-row-copy strong,
+.planner-row-copy span { overflow-wrap: anywhere; }
+.night-altitude-chart svg,
+.lunar-altitude-chart,
+.lunar-separation-panel > svg { display: block; width: 100%; }
+.night-altitude-chart svg { min-height: 170px; }
+
+/* Keep the seven primary destinations available on narrow screens. */
+.app-header { min-width: 0; }
+.main-nav { min-width: 0; flex: 1 1 auto; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-width: thin; }
+.main-nav > :is(button,a) { flex: 0 0 auto; white-space: nowrap; }
+.brand,
+.header-actions { flex-shrink: 0; }
+
+/* Sticky action areas remain in reach while long dialogs scroll. */
+.planner-calendar-dialog .planner-calendar-actions,
+[role="dialog"] [data-slot="dialog-footer"],
+[role="dialog"] .dialog-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background: #0d1b26;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  box-shadow: 0 -10px 18px #0d1b26;
+}
+
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    height: auto;
+    min-height: 58px;
+    padding: 6px 10px;
+    gap: 8px;
+    flex-wrap: nowrap;
+    background: #07141deF;
+    backdrop-filter: blur(12px);
+  }
+  .brand-title { font-size: 21px; }
+  .brand-subtitle { display: none; }
+  .brand { gap: 7px; }
+  .main-nav {
+    order: 3;
+    flex: 1 1 100%;
+    width: 100%;
+    height: 46px;
+    margin: 0 -10px -6px;
+    padding: 0 8px;
+    border-top: 1px solid #29404c80;
+    scroll-snap-type: x proximity;
+  }
+  .app-header { flex-wrap: wrap; }
+  .main-nav > :is(button,a) {
+    height: 44px;
+    min-width: 62px;
+    padding: 0 9px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+  .main-nav > :is(button,a).active:after { left: 8px; right: 8px; }
+  .header-actions { margin-left: auto; gap: 7px; }
+  .header-actions .icon-button,
+  .mobile-setup-toggle { width: 44px; height: 44px; min-width: 44px; }
+  .offline-pill { width: 36px; height: 36px; padding: 8px; justify-content: center; }
+  .offline-pill > span:last-child { display: none; }
+
+  .main-content { padding: 18px 14px 0; }
+  .page-heading { gap: 10px; margin-bottom: 16px; }
+  .page-heading h1 { font-size: clamp(27px, 8vw, 36px); line-height: 1.12; margin-top: 4px; }
+  .page-heading p:not(.eyebrow) { margin-top: 5px; }
+  .date-stamp strong { font-size: 17px; margin: 2px 0; }
+  .date-stamp > span { font-size: 10px; }
+  .session-timebar { margin-bottom: 14px; }
+  .session-timebar > div:first-child { align-items: flex-start; }
+  .session-time-actions { flex-wrap: wrap; }
+  .conditions-strip { gap: 14px 10px; }
+  .sky-overview { min-height: 240px; }
+  .sky-caption { margin: 0 12px; flex-wrap: wrap; line-height: 1.45; }
+  .panel-heading { padding-left: 16px; padding-right: 16px; }
+
+  button,
+  a,
+  summary,
+  input[type="checkbox"],
+  input[type="radio"] { touch-action: manipulation; }
+  button,
+  select,
+  input:not([type="checkbox"]):not([type="radio"]),
+  summary { min-height: var(--touch-target); }
+  .text-action,
+  .filter-toggle,
+  .moon-view-tabs button,
+  .chart-toolbar button,
+  .chart-toolbar select,
+  .planner-calendar-actions button,
+  .lunar-event-actions button,
+  .lunar-dark-windows button,
+  .target-card-actions button,
+  .session-time-actions > button,
+  .session-time-actions summary { min-height: var(--touch-target); }
+  .icon-button,
+  .save-button { min-width: var(--touch-target); min-height: var(--touch-target); }
+  .target-card-actions > button:last-child { width: 44px; }
+  .chart-toolbar { gap: 7px; }
+  .chart-toolbar-group { flex-wrap: wrap; }
+  .chart-toolbar button,
+  .chart-toolbar select { padding: 7px 9px; }
+
+  .planner-workbench,
+  .planner-calendar-layout,
+  .planner-target-board,
+  .planner-sessions,
+  .lunar-workspace,
+  .hop-layout,
+  .tonight-hero,
+  .object-grid,
+  .lunar-feature-grid { grid-template-columns: minmax(0, 1fr); }
+  .planner-workbench,
+  .planner-command,
+  .planner-target-board,
+  .planner-active,
+  .planner-row,
+  .planner-calendar-dialog,
+  .lunar-planning,
+  .lunar-separation-panel { max-width: 100%; }
+  .planner-row-main { align-items: flex-start; flex-wrap: wrap; }
+  .planner-row-actions { flex-wrap: nowrap; }
+  .planner-calendar-dialog { width: calc(100vw - 20px); max-height: 90dvh; overflow: auto; }
+  .lunar-planning .lunar-altitude-chart { min-height: 210px; }
+  .lunar-separation-panel > svg { min-height: 160px; }
+  .lunar-timeline input { min-height: 44px; }
+}
+
+/* Night vision uses a red-only conversion and lower display luminance. */
+.night-vision-interface[data-night-vision="on"] {
+  filter: url(#starhop-pure-red-night-vision) brightness(.62);
+}
+.night-vision-definitions {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+/* The filter covers both the app and portaled dialogs with red-only output. */
+.red-light #root {filter:none;}
+.red-light [role="dialog"],.red-light [data-radix-popper-content-wrapper] {filter:url(#starhop-pure-red-night-vision) brightness(.62);}
+.skip-link {position:fixed;top:4px;left:4px;transform:translateY(-150%);z-index:1000;background:#152b36;padding:12px;color:#d5e8de;}
+.skip-link:focus {transform:none;}
+.upcoming-nights-disclosure,.offline-asset-controls {padding:18px;margin-top:24px;}
+.upcoming-nights-strip {display:grid;grid-template-columns:repeat(7,minmax(145px,1fr));overflow:auto;gap:10px;padding:12px 0;}
+.upcoming-night {display:grid;text-align:left;gap:8px;border:1px solid #34535a;border-radius:8px;padding:12px;background:#0b202b;font-size:13px;}
+.upcoming-night.is-selected {border-color:#a8cdbd;}
+.upcoming-night small {font-size:12px;}
+.upcoming-nights-heading {display:flex;justify-content:space-between;gap:12px;}
+.upcoming-nights-heading span {display:block;color:#97adb5;}
+.upcoming-best-list {display:flex;flex-wrap:wrap;gap:12px;margin:12px 0;}
+.upcoming-best-list button {display:grid;gap:6px;padding:12px;border:1px solid #34535a;border-radius:8px;text-align:left;}
+.route-waypoints {display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:12px 0;}
+.route-waypoints button {border:1px solid #3e5866;border-radius:6px;padding:8px;}
+.route-waypoints small {flex-basis:100%;}
+.optical-profile-disclosure {padding:12px 16px;}
+
+.observing-setup-dialog {position:fixed;left:auto;right:0;top:0;transform:none;max-width:440px;width:min(100vw,440px);height:100dvh;max-height:100dvh;border-radius:0;overflow:auto;display:block;}
+.observing-setup-dialog .setup-panel.open {display:block;position:static;width:auto;padding:12px 0;border:0;}
+.mobile-setup-toggle {display:flex !important;}
+.workspace-layout {grid-template-columns:minmax(0,1fr);}
+
+.observing-setup-dialog {translate:none !important;transform:none !important;left:auto !important;top:0 !important;right:0 !important;max-width:440px !important;}
+
+.chart-hop-navigation {display:block;padding:12px;border-top:1px solid #2b4654;}
+.chart-hop-actions {display:flex;gap:10px;align-items:center;}
+.chart-hop-heading {display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;}
+
+@media(max-width:760px) {
+  .main-content p,.object-story,.setup-hint,.chart-accuracy-note,.planner-method p,.lunar-feature-detail>p {font-size:16px;line-height:1.65;}
+  .session-timebar {font-size:12px;gap:4px;padding:10px 12px;}
+  .session-timebar small,.session-timebar .text-action,.session-timebar .context-edit {font-size:12px;}
+  .session-timebar > div:first-child {width:100%;gap:8px;}
+  .session-timebar > div:first-child >span {display:block;min-width:0;}
+  .session-time-actions {gap:12px;}
+  .weather-panel summary,.weather-panel summary small,.weather-panel summary span {font-size:12px;}
+  .main-nav {justify-content:flex-start;}
+  .main-nav > :is(button,a) {font-size:12px;}
+  .eyebrow,.object-location,.selection-context,.chart-footnote,.sky-caption {font-size:12px;}
+}
+
+.tonight-verdict {display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;margin:0 0 18px;padding:12px 16px;border:1px solid #2e4854;border-radius:8px;font-size:13px;color:#a4bcbf;}
+.tonight-verdict strong {color:#c6dfcd;}
+.tonight-search {flex:1;min-width:220px;position:relative;}
+.tonight-search input {width:100%;border:1px solid #3a5665;border-radius:6px;padding:10px;background:#0c202b;}
+.tonight-search >label {font-size:12px;}
+.tonight-search .moon-target-results {position:absolute;top:100%;left:0;right:0;z-index:10;background:#0b1e29;border:1px solid #3a5665;}
