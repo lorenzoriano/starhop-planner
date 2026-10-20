@@ -49,6 +49,30 @@ describe("seasonal altitude and time distribution", () => {
       ),
     ).toBe(true);
   });
+  it("keeps continuous Moon contrast separate from a hard separation cutoff for every seasonal target", () => {
+    let rejectedButUseful = 0;
+    for (const day of year.days) day.available.forEach((available, i) => {
+      expect(day.contrast[i]).toBeGreaterThanOrEqual(0);
+      expect(day.contrast[i]).toBeLessThanOrEqual(available + 1e-9);
+      expect(day.hours[i]).toBeLessThanOrEqual(available);
+      if (available === 0) expect(day.contrast[i]).toBe(0);
+      if (day.hours[i] === 0 && day.contrast[i] > .1) rejectedButUseful++;
+    });
+    // These dates previously fell to zero solely because of a distance threshold.
+    expect(rejectedButUseful).toBeGreaterThan(0);
+    targets.forEach((_,i)=>expect(year.days.some(day=>day.available[i]>0)).toBe(true));
+  });
+  it("retains real instants for seasonal cursor readouts, including the next civil day", () => {
+    for(const track of year.trajectories.filter(t=>['2026-03-07','2026-10-31','2026-10-15'].includes(t.day))) {
+      expect(track.ms).toHaveLength(track.hour.length);
+      track.ms!.forEach((ms,i)=>{
+        if(i) expect(ms-track.ms![i-1]).toBe(30*60000);
+        const position=eqToHorizontal(targets[2].ra,targets[2].dec,site.lat,site.lon,new Date(ms));
+        expect(position.alt).toBeCloseTo(track.alt[2][i],8);
+      });
+    }
+    expect(densityOpacity(.05)).toBeCloseTo(.05,8);
+  });
   it("places Polaris in a narrow band near latitude, never at the zenith", () => {
     const alts = year.trajectories.flatMap((t) => t.alt[3]);
     expect(Math.min(...alts)).toBeGreaterThan(36);

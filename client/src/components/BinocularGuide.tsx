@@ -1,3 +1,4 @@
+import { ContextDateButton, ContextLocationButton, ObservingContextScope } from "./ObservingContext";
 import { BinocularAssessment } from "./BinocularAssessment";
 import { binocularAssessment, type BinocularProfile } from "@/lib/binocular-assessment";
 import type { ReactNode } from "react";
@@ -94,7 +95,7 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
   const reset = () => { setFamily("all"); setLevel("all"); setQuery(""); setSmallOnly(false); setMinAltitude("");setVisibilityMode("time"); setSeasonalOnly(false); setVisibleCount(12); };
 
   return (
-    <div className="binocular-guide" data-testid="binocular-guide">
+    <ObservingContextScope date={at} timezone={timezone} lat={lat} lon={lon} onTime={value=>{setChosenDate(formatInTimeZone(value,timezone,"yyyy-MM-dd"));setChosenTime(formatInTimeZone(value,timezone,"HH:mm"));}}><div className="binocular-guide" data-testid="binocular-guide">
       <div className="page-heading binocular-heading">
         <div>
           <p className="eyebrow">THE BINOCULAR OBSERVATORY</p>
@@ -165,7 +166,7 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
             <label>Minimum altitude · °<input aria-label="Minimum target altitude" placeholder="Any" type="number" min="0" max="90" step="1" value={minAltitude} onChange={e=>{setMinAltitude(e.target.value);setVisibleCount(12);}}/></label>
             {visibilityMode==="range"&&<label>Above the limit<select aria-label="Altitude window rule" value={throughout?"all":"any"} onChange={e=>setThroughout(e.target.value==="all")}><option value="any">At any point</option><option value="all">Whole range</option></select></label>}
           </div>
-          <div className="binocular-visibility-context"><p>{window.ok?visibilityMode==="time"?`${formatInTimeZone(at,timezone,"MMM d, yyyy · HH:mm")} · ${timezone.replaceAll("_"," ")}`:visibilityMode==="night"?`Astronomical night of ${observingDay} · Sun below −18° · ${window.segments.length?window.segments.map(s=>`${formatInTimeZone(s.start,timezone,"MMM d HH:mm")}–${formatInTimeZone(s.end,timezone,"MMM d HH:mm")}`).join("; "):"No astronomical darkness at this site"}`:`${observingDay} · ${rangeStart}–${until}${until<=rangeStart?" (+1 day)":""} · ${timezone.replaceAll("_"," ")}`:window.error}</p><button className="text-action" onClick={()=>{setChosenDate(null);setChosenTime(null);setYear(currentYear);setMonth(Number(formatInTimeZone(observingDate,timezone,"M")));setVisibilityMode("time");setSeasonalOnly(false);}}>Use observing time</button></div>
+          <div className="binocular-visibility-context"><div className="context-actions"><ContextDateButton value={at} timezone={timezone} onChange={value=>{setChosenDate(formatInTimeZone(value,timezone,"yyyy-MM-dd"));setChosenTime(formatInTimeZone(value,timezone,"HH:mm"));}}/><ContextLocationButton/></div><p>{window.ok?visibilityMode==="time"?`${formatInTimeZone(at,timezone,"MMM d, yyyy · HH:mm")} · ${timezone.replaceAll("_"," ")}`:visibilityMode==="night"?`Astronomical night of ${observingDay} · Sun below −18° · ${window.segments.length?window.segments.map(s=>`${formatInTimeZone(s.start,timezone,"MMM d HH:mm")}–${formatInTimeZone(s.end,timezone,"MMM d HH:mm")}`).join("; "):"No astronomical darkness at this site"}`:`${observingDay} · ${rangeStart}–${until}${until<=rangeStart?" (+1 day)":""} · ${timezone.replaceAll("_"," ")}`:window.error}</p><button className="text-action" onClick={()=>{setChosenDate(null);setChosenTime(null);setYear(currentYear);setMonth(Number(formatInTimeZone(observingDate,timezone,"M")));setVisibilityMode("time");setSeasonalOnly(false);}}>Use observing time</button></div>
           {!validAltitude&&<p role="alert">Choose an altitude from 0° to 90°.</p>}
           <details className="binocular-timing-notes"><summary>Times & visibility explained</summary><p className="binocular-method-note">Rise, upper transit and set are for {observingDay}, local time at {place}. Transit is the highest crossing. Flat horizon, no refraction or terrain; clear the altitude limit to browse all fields. Night graphs overlay altitude (solid mint, left axis) and Moon separation (dashed gold, right axis; 180° is opposite the Moon). Gold shading estimates extra sky glow using lunar phase, height and distance from the target; it disappears when the Moon is down. Suggested times balance altitude against modeled moonlight, with stronger penalties for diffuse objects. They are guidance, not visibility guarantees; haze, local lighting and low altitudes affect the estimate. {visibilityMode==="time"?"Altitude alone does not guarantee a dark sky.":visibilityMode==="range"?"Cards show each target’s highest altitude in the range; a range ending before it starts continues into the next day. Altitude alone does not guarantee darkness.":"Cards show the highest altitude between astronomical dusk and dawn; moonlight, clouds and obstructions can still affect visibility."}</p></details>
         </div>
@@ -203,9 +204,9 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
             <DialogHeader><span className="eyebrow">{FAMILY_LABELS[detail.family]} · {detail.target.id}</span><DialogTitle>{detail.name ?? detail.target.name}</DialogTitle><DialogDescription>{getConstellationName(detail.target.con)} · {LEVEL_LABELS[detail.level]} · {detail.equipment}</DialogDescription></DialogHeader>
             <div className="binocular-quick-actions"><Button variant="outline" onClick={()=>{setOpened(null);onCompare(detail.targetId,detailAt);}}>Astronomical clock & compare ↗</Button><Button variant="outline" onClick={()=>{setOpened(null);onMoon(detail.targetId,detailAt);}}>Check against the Moon ↗</Button></div>
             <div className="binocular-finder-heading"><span className="eyebrow">YOUR FINDER FIELD</span><span>{detail.target.size?`${detail.target.size} across · `:""}mag {detail.target.mag.toFixed(1)} · north up before rotation</span></div><div className="binocular-detail-chart"><SkyChart onSelect={onInspect} key={detail.targetId} nodes={fieldTarget ? [...fieldNodes, fieldTarget] : fieldNodes} constellations={constellations} denseStars={denseStars} milkyWay={milkyWay} route={null} targetNode={fieldTarget} animStep={0} fovWidth={fovWidth} fovHeight={fovHeight} fovShape={fovShape} limitingMag={finderDepth} maxCatalogMagnitude={10.5} targetDiameter={catalogDiameter(detail.target.size)} lat={lat} lon={lon} date={detailAt} onFovChange={onFovChange} onLimitingMagChange={setFinderDepth} /></div>
-            <NightAltitudeChart target={detail.target} lat={lat} lon={lon} night={nightWindow} timezone={timezone} skyBrightness={skyBrightness} moonAt={nightMoon}/>
+            <ObservingContextScope date={detailAt} timezone={timezone} lat={lat} lon={lon} onTime={value=>{setChosenDate(formatInTimeZone(value,timezone,"yyyy-MM-dd"));setChosenTime(formatInTimeZone(value,timezone,"HH:mm"));}}><NightAltitudeChart target={detail.target} lat={lat} lon={lon} night={nightWindow} timezone={timezone} selectedAt={detailAt} skyBrightness={skyBrightness} moonAt={nightMoon}/></ObservingContextScope>
             {eventTimes(detail)}
-            <p className="binocular-method-note">Rise / transit / set on {observingDay} · {timezone.replaceAll("_"," ")} · geometric horizon.</p>
+            <p className="binocular-method-note">Rise / transit / set on <ContextDateButton value={detailAt} timezone={timezone} onChange={value=>{setChosenDate(formatInTimeZone(value,timezone,"yyyy-MM-dd"));setChosenTime(formatInTimeZone(value,timezone,"HH:mm"));}}>{observingDay}</ContextDateButton> · {timezone.replaceAll("_"," ")} · geometric horizon.</p>
             <BinocularAssessment target={detail.target} profile={profile} alt={detail.alt} moon={moonState(lat,lon,detailAt)} skyBrightness={skyBrightness}/>
             <MoonlightCard target={detail.target} lat={lat} lon={lon} date={detailAt} skyBrightness={skyBrightness} />
             <div className="binocular-detail-notes"><div><h3>What to look for</h3><p>{detail.impression}</p></div><div><h3>Start here</h3><p>{detail.finding}</p></div></div>
@@ -220,6 +221,6 @@ export function BinocularGuide({ profile, profileControls, saveDestination, onIn
           </>}
         </DialogContent>
       </Dialog>
-    </div>
+    </div></ObservingContextScope>
   );
 }

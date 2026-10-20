@@ -2441,3 +2441,40 @@ button:disabled { opacity: .45; cursor: default; }
   }
 }
 .season-trajectory label.season-outline-toggle{display:flex;flex-direction:row;align-items:center;gap:8px;font-size:12px;line-height:1.5;margin:12px 0}.season-outline-toggle input[type=checkbox]{min-height:auto;width:15px;height:15px;accent-color:#aacbb8}
+
+/* Editable observing context is available on every workspace and object graph. */
+.context-edit { display:inline-flex; align-items:center; gap:6px; font:inherit; color:inherit; border:0; background:transparent; padding:3px 2px; border-radius:4px; text-align:left; vertical-align:baseline; cursor:pointer; }
+.context-edit:hover { color:#b9d8cc; background:#a3c8bf10; }
+.context-edit:focus-visible { outline:2px solid #a3c8bf; outline-offset:3px; }
+.context-edit svg { flex-shrink:0; opacity:.75; }
+.context-dialog { max-height:90dvh; overflow:auto; max-width:470px; }
+.context-dialog .rdp { margin:0 auto; width:max-content; }
+.context-fields { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:12px 0; }
+.context-fields label { display:grid; gap:6px; color:#afc2c6; font-size:13px; }
+.context-fields input { width:100%; padding:10px; background:#10232e; border:1px solid #385968; border-radius:6px; color:#e2e5de; color-scheme:dark; }
+.context-apply { width:100%; padding:11px 16px; border-radius:6px; background:#a3c8bf; color:#10232e; font-weight:600; margin-top:10px; }
+.context-presets { display:flex; flex-wrap:wrap; gap:10px; font-size:13px; }
+.context-presets button { border:1px solid #385968; padding:7px 10px; border-radius:5px; }
+.night-altitude-heading .night-moon-key,.context-moon-key,.night-moon-explanation,.night-moon-illumination { color:#a4abb6; }
+.night-moon-meter > span { background:#aaa; }
+.astro-time-lock { font-size:11px; }
+.astro-time-lock[aria-pressed=true] { color:#efaa82; }
+.context-actions { display:flex; gap:12px; flex-wrap:wrap; }
+.season-altitude-calendar { min-width:0; }
+.season-altitude-calendar svg { display:block; width:100%; cursor:crosshair; }
+.season-altitude-calendar svg text { font-size:11px; fill:#97aeb7; }
+.season-altitude-key { display:flex; justify-content:space-between; gap:5px; color:#a5b9bf; font-size:11px; }
+.season-altitude-key span { display:grid; gap:6px; }
+.season-altitude-key i { width:30px; height:10px; border-radius:2px; }
+.season-calendar-reading,.season-month-readout { min-height:85px; padding:10px 0; color:#b6c8c9; font-size:12px; line-height:1.7; }
+.season-density-detail { margin:25px 0; border-top:1px solid #294450; padding-top:20px; }
+.season-density-detail summary { cursor:pointer; color:#9eb7bd; }
+.season-density-detail .season-trajectory-dial { max-width:620px; margin:auto; }
+.season-trajectory-grid { grid-template-columns:1fr 1fr; align-items:start; }
+@media(max-width:1000px) { .season-trajectory-grid { grid-template-columns:1fr; } }
+.lunar-chart-legend .moon-line { border-color:#adb1b8; }
+.lunar-chart-legend .moon-glare { background:#aaaaaa40; border-color:#aaaaaa70; }
+/* Chart SVG rules must not enlarge the inline calendar/map icons. */
+.context-edit svg { width:13px; height:13px; flex:0 0 13px; }
+.context-fields { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.context-fields input { min-width:0; }

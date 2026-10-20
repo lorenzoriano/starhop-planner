@@ -1,3 +1,5 @@
+import { resolveLocalMoment } from "@/lib/session";
+import { ContextDateButton } from "./ObservingContext";
 import { useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
 import { format } from "date-fns";
@@ -18,6 +20,9 @@ export function ComparisonCharts({
   values,
   onCursor,
   onTime,
+  locked,
+  onUnlock,
+  onAdjustTime,
 }: {
   samples: ClockSample[];
   targets: UnifiedTarget[];
@@ -26,6 +31,9 @@ export function ComparisonCharts({
   values: { alt: number; separation: number }[];
   onCursor: (ms: number | null) => void;
   onTime: (at: Date) => void;
+  locked: boolean;
+  onUnlock: () => void;
+  onAdjustTime: (at: Date) => void;
 }) {
   const [span, setSpan] = useState<"night" | "day">("night");
   const dark = samples.filter((s) => s.sun <= -18 + 0.0001),
@@ -62,8 +70,8 @@ export function ComparisonCharts({
       </div>
       <p className="astro-note">
         The same objects, colors and cursor as the clock. Hover to inspect; tap
-        to set the app’s time. Object paths are solid colors; Moon altitude is
-        dashed silver and Sun altitude is dotted gold.
+        to lock the app’s time; tap again to unlock. Object paths are solid colors; Moon altitude is
+        dashed silver and Sun altitude is dotted gold. {locked && "Time is locked; pointer movement will not change it."}
       </p>
       {span === "night" && !dark.length ? (
         <p>
@@ -105,9 +113,10 @@ export function ComparisonCharts({
                   onPointerLeave={() => onCursor(null)}
                   onClick={(e) => onTime(new Date(point(e)))}
                   onKeyDown={(e) => {
+                    if(e.key === "Escape") { onUnlock(); return; }
                     if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
                       e.preventDefault();
-                      onTime(
+                      onAdjustTime(
                         new Date(
                           Math.max(
                             start,
@@ -128,7 +137,7 @@ export function ComparisonCharts({
                       y="24"
                       width={Math.max(0, x(visible[i + 1].ms) - x(s.ms) + 0.5)}
                       height="160"
-                      fill={s.sun > -18 ? solarColor(s.sun) : "#d9b968"}
+                      fill={s.sun > -18 ? solarColor(s.sun) : "#aaaaaa"}
                       opacity={
                         s.sun > -18
                           ? 0.24
@@ -162,7 +171,7 @@ export function ComparisonCharts({
                       <path
                         d={path((s) => s.moon)}
                         fill="none"
-                        stroke="#c9cdd2"
+                        stroke="#adb1b8"
                         strokeWidth="1.7"
                         strokeDasharray="7 4"
                       />
@@ -233,7 +242,7 @@ export function ComparisonCharts({
           </span>
         ))}
         <span>
-          <i style={{ background: "#c9cdd2" }} />
+          <i style={{ background: "#adb1b8" }} />
           Moon altitude · dashed
         </span>
         <span>
@@ -243,7 +252,7 @@ export function ComparisonCharts({
       </div>
       <p className="astro-note">
         Below −30° is clipped in the altitude chart; use the dial for the full
-        range. Gold shading during darkness follows Moon illumination only when
+        range. Gray shading during darkness follows Moon illumination only when
         the Moon is up; it is not an object-specific brightness estimate. Exact
         time, altitude and Moon distance appear in the readout above.
       </p>
@@ -257,12 +266,15 @@ export function SeasonChart({
   targets,
   night,
   onNight,
+  timezone,
 }: {
   season: ClockSeason;
   targets: UnifiedTarget[];
   night: string;
   onNight: (day: string) => void;
+  timezone: string;
 }) {
+  const [metric, setMetric] = useState<"available"|"contrast"|"hours">("available");
   const [hover, setHover] = useState<number | null>(null);
   const index = Math.max(
       0,
@@ -272,7 +284,7 @@ export function SeasonChart({
       ),
     ),
     day = season.days[index];
-  const max = Math.max(12, ...season.days.flatMap((d) => d.hours)),
+  const max = Math.max(12, ...season.days.flatMap((d) => d.available)),
     x = (i: number) => 46 + (i / Math.max(1, season.days.length - 1)) * 660,
     y = (hours: number) => 175 - (hours / max) * 145;
   const monthTicks = season.days
@@ -293,7 +305,8 @@ export function SeasonChart({
   };
   return (
     <div className="astro-year-chart">
-      <h3>Qualifying hours per observing night</h3>
+      <div className="astro-chart-heading"><h3>{metric === 'contrast' ? 'Diffuse-contrast index through the night' : metric === 'available' ? 'Dark hours above your altitude limit' : 'Hours meeting strict limits'}</h3><select aria-label="Seasonal hours metric" value={metric} onChange={e=>setMetric(e.target.value as typeof metric)}><option value="contrast">Diffuse contrast × hours</option><option value="available">Altitude & darkness only</option><option value="hours">Strict Moon-distance cutoff</option></select></div>
+      <p className="astro-note">{metric === 'contrast' ? 'For faint extended detail: 1 h under a sky twice as bright contributes 0.5 contrast-hours. Uses lunar phase, height and separation continuously. This index is not the time a bright star or cluster remains visible; choose altitude & darkness for actual geometric hours.' : metric === 'available' ? 'Geometric time in astronomical darkness above the chosen altitude. Moonlight does not reduce this total.' : 'Exact half-hour samples passing your altitude and Moon-distance thresholds. Abrupt drops are possible when the Moon crosses the distance limit, even at a faint phase.'}</p>
       <svg
         viewBox="0 0 752 215"
         role="slider"
@@ -302,7 +315,7 @@ export function SeasonChart({
         aria-valuemin={0}
         aria-valuemax={season.days.length - 1}
         aria-valuenow={index}
-        aria-valuetext={`${day.day}: ${targets.map((t, i) => `${t.name} ${day.hours[i].toFixed(1)} hours`).join(", ")}`}
+        aria-valuetext={`${day.day}: ${targets.map((t, i) => `${t.name} ${day[metric][i].toFixed(1)} hours`).join(", ")}`}
         onPointerMove={(e) => setHover(pick(e))}
         onPointerLeave={() => setHover(null)}
         onClick={(e) => onNight(season.days[pick(e)].day)}
@@ -358,7 +371,7 @@ export function SeasonChart({
           <path
             key={t.id}
             d={season.days
-              .map((d, n) => `${n ? "L" : "M"}${x(n)},${y(d.hours[i])}`)
+              .map((d, n) => `${n ? "L" : "M"}${x(n)},${y(d[metric][i])}`)
               .join(" ")}
             fill="none"
             stroke={CLOCK_COLORS[i]}
@@ -376,11 +389,11 @@ export function SeasonChart({
       </svg>
       <div className="astro-cursor-values">
         <strong>
-          {day.day} · Moon {Math.round(day.lit * 100)}% lit
+          <ContextDateButton value={resolveLocalMoment(day.day,"20:00",timezone)!}>{day.day}</ContextDateButton> · Moon {Math.round(day.lit * 100)}% lit
         </strong>
         {targets.map((t, i) => (
           <span key={t.id} style={{ color: CLOCK_COLORS[i] }}>
-            {t.name} · {day.hours[i].toFixed(1)} h
+            {t.name} · {day[metric][i].toFixed(1)} {metric==='contrast'?'contrast-h':'h'}
           </span>
         ))}
       </div>

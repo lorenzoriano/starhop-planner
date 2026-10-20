@@ -1,6 +1,7 @@
 /** Seasonal altitude data retains geometry independently of observing thresholds. */
 export type SeasonTrajectory = {
   day: string;
+  ms?: number[];
   hour: number[];
   alt: number[][];
   dark: boolean[];
@@ -9,19 +10,10 @@ export type SeasonTrajectory = {
 export type TrajectoryScope = "all" | "dark" | "qualified";
 export const ALTITUDE_BANDS = 36; // five degrees, −90..90
 export const TIME_BANDS = 48; // local half hours
+// Ordered hue wheel with alternating lightness: adjacent months remain identifiable.
 export const MONTH_COLORS = [
-  "#738bff",
-  "#ad7ef8",
-  "#de70d0",
-  "#f2738d",
-  "#fb985a",
-  "#e6bf47",
-  "#b5d453",
-  "#6bd589",
-  "#43cabc",
-  "#4ab6e0",
-  "#6b9def",
-  "#888ee9",
+  "#ff6b8b", "#f5a34d", "#e7d65b", "#9acb48", "#36db82", "#39c9b8",
+  "#4ed5f4", "#518eff", "#9c89ff", "#c75fe8", "#ef83d8", "#db4d63",
 ];
 export const altitudeBand = (alt: number) =>
   Math.max(0, Math.min(ALTITUDE_BANDS - 1, Math.floor((alt + 90) / 5)));
@@ -96,9 +88,9 @@ export function monthlyTrajectories(tracks: SeasonTrajectory[]) {
     ),
   );
 }
-/** Perceptual scale, with explicit percentage legend; zero remains invisible. */
+/** Linear recurrence scale: rare positions must not appear nearly permanent. */
 export const densityOpacity = (fraction: number) =>
-  fraction > 0 ? Math.pow(Math.min(1, fraction), 0.3) : 0;
+  fraction > 0 ? Math.min(1, fraction) : 0;
 export function trajectorySector(
   hour: number,
   until: number,

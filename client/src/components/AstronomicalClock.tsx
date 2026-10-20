@@ -1,6 +1,6 @@
+import { ContextDateButton, ContextLocationButton } from "./ObservingContext";
 import { useEffect, useMemo, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
-import { format } from "date-fns";
 import {
   CalendarDays,
   ChevronLeft,
@@ -13,16 +13,8 @@ import {
 } from "lucide-react";
 import type { TrajectoryScope } from "@/lib/season-trajectories";
 import { SeasonTrajectoryClock } from "./SeasonTrajectoryClock";
-import { Calendar } from "./ui/calendar";
 import { Button } from "./ui/button";
 import { ComparisonCharts, SeasonChart } from "./ObjectComparisonCharts";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "./ui/dialog";
 import { type UnifiedTarget } from "@/lib/astronomy";
 import { catalogSearchScore } from "@/lib/catalog-search";
 import { observationAt, createMoonSampler } from "@/lib/observing-profile";
@@ -95,8 +87,8 @@ export function AstronomicalClock({
   live,
   skyBrightness,
 }: Props) {
+  const [locked, setLocked] = useState(false);
   const [query, setQuery] = useState(""),
-    [calendar, setCalendar] = useState(false),
     [cursor, setCursor] = useState<number | null>(null),
     [highlight, setHighlight] = useState<string | null>(null);
   const [running, setRunning] = useState(false),
@@ -220,8 +212,9 @@ export function AstronomicalClock({
       to,
       minAlt,
       minSeparation,
+      skyBrightness,
     }),
-    [chosen, lat, lon, timezone, from, to, minAlt, minSeparation],
+    [chosen, lat, lon, timezone, from, to, minAlt, minSeparation, skyBrightness],
   );
   useEffect(() => {
     setSeason(null);
@@ -274,10 +267,16 @@ export function AstronomicalClock({
           : best,
       samples[0],
     );
-    setCursor(nearest.ms);
+    if (!locked) setCursor(nearest.ms);
     return nearest.ms;
   };
+  const toggleTime = (ms: number) => {
+    if (locked) { setLocked(false); setCursor(null); }
+    else { onTime(new Date(ms)); setCursor(null); setLocked(true); setRunning(false); }
+  };
   const keyboard = (event: React.KeyboardEvent<SVGSVGElement>) => {
+    if (event.key === "Escape") { setLocked(false); setCursor(null); return; }
+    if (event.key === "Enter" || event.key === " ") { event.preventDefault(); toggleTime(+at); return; }
     if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
       event.preventDefault();
       const next =
@@ -303,11 +302,12 @@ export function AstronomicalClock({
       <header className="astro-heading">
         <div>
           <p className="eyebrow">FOLLOW YOUR OBJECTS THROUGH THE NIGHT</p>
+          <ContextDateButton value={date} timezone={timezone}/>
           <h1>
             Astronomical clock<span>.</span>
           </h1>
           <p>
-            {locationName} · {timezone.replaceAll("_", " ")} · calculated on
+            <ContextLocationButton>{locationName}</ContextLocationButton> · {timezone.replaceAll("_", " ")} · calculated on
             your device
           </p>
         </div>
@@ -369,9 +369,7 @@ export function AstronomicalClock({
           >
             <ChevronRight size={18} />
           </button>
-          <button className="text-action" onClick={() => setCalendar(true)}>
-            <CalendarDays size={17} /> Calendar
-          </button>
+          <ContextDateButton value={date} timezone={timezone} onChange={onTime}>Calendar & time</ContextDateButton>
           <label>
             Local time
             <input
@@ -387,6 +385,8 @@ export function AstronomicalClock({
             variant="outline"
             onClick={() => {
               setRunning(false);
+              setLocked(false);
+              setCursor(null);
               onLive();
             }}
           >
@@ -395,7 +395,7 @@ export function AstronomicalClock({
           <button
             className="text-action"
             aria-label={running ? "Pause time travel" : "Animate time travel"}
-            onClick={() => setRunning(!running)}
+            onClick={() => {setLocked(false);setCursor(null);setRunning(!running);}}
           >
             {running ? <Pause size={15} /> : <Play size={15} />}{" "}
             {running ? "Pause" : "Travel"}
@@ -505,6 +505,7 @@ export function AstronomicalClock({
             )}
           </div>
         )}
+        <p className="astro-note">Compared objects · add or remove objects here to build a comparison. Opening the clock from an object starts with that object alone.</p>
         <div className="astro-chips">
           {chosen.map((t, i) => (
             <span
@@ -548,7 +549,7 @@ export function AstronomicalClock({
         >
           <div className="astro-dial-caption">
             <span>Midnight at top · noon at bottom</span>
-            <span>Hover to inspect · tap to set time</span>
+            <button className="text-action astro-time-lock" aria-pressed={locked} onClick={()=>{if(locked){setLocked(false);setCursor(null);}else toggleTime(+at);}}>{locked?"Time locked · unlock":"Hover to inspect · tap to lock time"}</button>
           </div>
           <svg
             className="astro-dial"
@@ -561,10 +562,10 @@ export function AstronomicalClock({
             aria-valuetext={label(at)}
             tabIndex={0}
             onPointerMove={pointer}
-            onPointerLeave={() => setCursor(null)}
+            onPointerLeave={() => { if (!locked) setCursor(null); }}
             onClick={(event) => {
               const ms = pointer(event);
-              onTime(new Date(ms));
+              toggleTime(ms);
             }}
             onKeyDown={keyboard}
           >
@@ -670,7 +671,7 @@ export function AstronomicalClock({
             <path
               d={clockCurve(samples, (s) => s.moon)}
               fill="none"
-              stroke="#c9cdd2"
+              stroke="#adb1b8"
               strokeWidth="1.7"
               strokeDasharray="7 4"
             />
@@ -770,7 +771,7 @@ export function AstronomicalClock({
           aria-label="Compared objects at clock time"
         >
           <p className="eyebrow">
-            {cursor === null ? "CHOSEN TIME" : "CURSOR TIME"}
+            {locked ? "LOCKED TIME" : cursor === null ? "CHOSEN TIME" : "CURSOR TIME"}
           </p>
           <h2>
             {formatInTimeZone(at, timezone, "HH:mm")}{" "}
@@ -860,7 +861,7 @@ export function AstronomicalClock({
             );
           })}
           <p className="astro-note">
-            Rise, transit and set cover this observing night, noon {night} to
+            Rise, transit and set cover this observing night, noon <ContextDateButton>{night}</ContextDateButton> to
             the following noon. +1d means after midnight. Moon glow is a
             clear-air estimate.
           </p>
@@ -872,8 +873,11 @@ export function AstronomicalClock({
         at={at}
         timezone={timezone}
         values={observations}
-        onCursor={setCursor}
-        onTime={onTime}
+        onCursor={ms=>{if(!locked)setCursor(ms);}}
+        onTime={at=>toggleTime(+at)}
+        onAdjustTime={at=>{setLocked(true);setCursor(null);onTime(at);}}
+        locked={locked}
+        onUnlock={()=>{setLocked(false);setCursor(null);}}
       />
       <section className="panel astro-season">
         <button
@@ -934,6 +938,7 @@ export function AstronomicalClock({
             ) : (
               <>
                 <SeasonTrajectoryClock
+                  onTime={onTime}
                   objectId={seasonObject}
                   onObject={setSeasonObject}
                   scope={trajectoryScope}
@@ -957,7 +962,7 @@ export function AstronomicalClock({
                 <div className="season-hours-heading">
                   <h3>Observing hours & limits</h3>
                   <p className="astro-note">
-                    These limits apply to the hours graph below, the outer bands
+                    Altitude limits apply to all hours metrics below. The Moon-distance cutoff applies to the strict metric, the outer bands
                     on the daily clock, and the seasonal clock’s “Meets
                     observing limits” filter.
                   </p>
@@ -994,7 +999,7 @@ export function AstronomicalClock({
                   Every date, sampled each half hour. Requires Sun ≤ −18°,
                   object ≥ {minAlt}°, and Moon ≥ {minSeparation}° away when
                   above the horizon. A Moon below −1° passes the distance limit.
-                  This is geometric availability, not a weather or visibility
+                  These are the strict limits; Moon-weighted contrast uses continuous sky glow instead of a distance cutoff. This is not a weather or visibility
                   guarantee. Moon phase is shown for each night.
                 </p>
                 <p className="astro-note">
@@ -1002,7 +1007,7 @@ export function AstronomicalClock({
                   each local half hour. Brighter daily tiles mean more
                   qualifying hours.
                 </p>
-                <SeasonChart
+                <SeasonChart timezone={timezone}
                   season={season}
                   targets={chosen}
                   night={night}
@@ -1088,27 +1093,6 @@ export function AstronomicalClock({
           Compare this location in Astrospheric ↗
         </a>
       </details>
-      <Dialog open={calendar} onOpenChange={setCalendar}>
-        <DialogContent className="astro-calendar">
-          <DialogHeader>
-            <DialogTitle>Choose an observing night</DialogTitle>
-            <DialogDescription>
-              Local noon on the chosen date through the following noon.
-            </DialogDescription>
-          </DialogHeader>
-          <Calendar
-            mode="single"
-            selected={new Date(`${night}T12:00:00`)}
-            defaultMonth={new Date(`${night}T12:00:00`)}
-            onSelect={(day) => {
-              if (day) {
-                changeNight(format(day, "yyyy-MM-dd"));
-                setCalendar(false);
-              }
-            }}
-          />
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

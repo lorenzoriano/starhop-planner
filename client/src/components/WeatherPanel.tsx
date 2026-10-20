@@ -1,3 +1,4 @@
+import { ContextDateButton, ContextLocationButton } from "./ObservingContext";
 import { useMemo,useState,useId } from 'react';
 import { formatInTimeZone } from 'date-fns-tz';
 import { CloudMoon,Cloud,CloudRain,ArrowUpRight,ChevronDown,RefreshCw,Wind,Droplets,Eye,Thermometer } from 'lucide-react';
@@ -40,7 +41,7 @@ export function WeatherPanel({lat,lon,date,timezone,locationName,onTime,skyBrigh
   const cacheLabel=!weather.online?age==='expired'?'Offline · expired forecast':age==='stale'?'Offline · older forecast':'Offline · saved forecast':weather.loading?'Updating…':age==='expired'?'Expired forecast':age==='stale'?'Older forecast':forecast?'Cached on this device':'Forecast';
   return <details className={`weather-panel weather-${verdict.tone}`} data-testid="weather-panel">
     <summary><span className="weather-site"><Icon size={19}/><span><strong>Stargazing forecast</strong><small>{locationName}</small></span></span><span className="weather-glance"><strong>{forecast?verdict.label:weather.loading?'Fetching forecast…':weather.online?weather.error?'Weather unavailable':'Local forecast':'No saved forecast'}</strong><small>{cloud!==null?`${Math.round(cloud)}% cloud · `:''}Night {formatInTimeZone(date,timezone,'MMM d')}{age==='stale'||age==='expired'||!weather.online?` · ${cacheLabel}`:''}</small></span><ChevronDown className="weather-chevron" size={16}/></summary>
-    <div className="weather-content">
+    <div className="weather-content"><div className="context-actions"><ContextDateButton value={date} timezone={timezone} onChange={onTime}/><ContextLocationButton>{locationName}</ContextLocationButton></div>
       <div className="weather-update"><span>{forecast?`${cacheLabel} · Retrieved ${time(forecast.fetchedAt,'MMM d, HH:mm')}`:weather.online?'Connect once at each location to keep a forecast offline.':'This location has no saved forecast. Connect to fetch one.'}</span><button className="text-action" disabled={!weather.online||weather.loading} onClick={()=>{weather.refresh();setModelRevision(n=>n+1);}} aria-label="Refresh weather"><RefreshCw size={12} className={weather.loading?'animate-spin':''}/>{weather.loading?'Updating':'Refresh'}</button></div>
       {weather.error&&<p className="weather-message" role="status">{weather.error}{forecast?' Showing the last successful report.':''}</p>}
       {!weather.saved&&<p className="weather-message">Device storage is full or unavailable. This report will not survive closing the app.</p>}

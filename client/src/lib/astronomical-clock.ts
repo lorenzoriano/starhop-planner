@@ -6,7 +6,7 @@ import {
   eqToHorizontal,
   type UnifiedTarget,
 } from "./astronomy";
-import { moonState } from "./moon";
+import { moonState, scatteredMoonlight } from "./moon";
 import { resolveLocalMoment } from "./session";
 import { nextLocalDate, targetDayEvents } from "./target-visibility";
 
@@ -161,8 +161,9 @@ export type SeasonRequest = {
   to: string;
   minAlt: number;
   minSeparation: number;
+  skyBrightness?: number;
 };
-export type SeasonDay = { day: string; hours: number[]; lit: number };
+export type SeasonDay = { day: string; hours: number[]; available: number[]; contrast: number[]; lit: number };
 export type ClockSeason = {
   days: SeasonDay[];
   bins: number[][];
@@ -213,9 +214,10 @@ export function clockSeason(
     trajectories: SeasonTrajectory[] = [];
   for (const day of dates) {
     const { start, end } = clockBounds(day, zone),
-      hours = targets.map(() => 0);
+      hours = targets.map(() => 0), available = targets.map(() => 0), contrast = targets.map(() => 0);
     const track: SeasonTrajectory = {
       day,
+      ms: [],
       hour: [],
       alt: targets.map(() => []),
       dark: [],
@@ -231,10 +233,18 @@ export function clockSeason(
       totals[bin]++;
       lit += moon.illumination;
       count++;
+      track.ms!.push(ms);
       track.hour.push(hour);
       track.dark.push(moon.sunAlt <= -18);
       targets.forEach((t, i) => {
         const alt = eqToHorizontal(t.ra, t.dec, lat, lon, at).alt;
+        const separation = angularDistance(t.ra, t.dec, moon.ra, moon.dec);
+        if (moon.sunAlt <= -18 && alt >= minAlt) {
+          available[i] += .5;
+          const glow = scatteredMoonlight(moon, alt, separation, request.skyBrightness ?? 21.6).brightening;
+          // Relative diffuse-object contrast against the added sky background.
+          contrast[i] += .5 * 10 ** (-.4 * glow);
+        }
         const qualified = seasonEligible(
           alt,
           moon.sunAlt,
@@ -252,7 +262,7 @@ export function clockSeason(
       });
     }
     trajectories.push(track);
-    days.push({ day, hours, lit: lit / Math.max(1, count) });
+    days.push({ day, hours, available, contrast, lit: lit / Math.max(1, count) });
     progress?.(days.length, dates.length);
   }
   bins.forEach((row) =>

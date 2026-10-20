@@ -1,3 +1,4 @@
+import { ObservingContextProvider, ContextDateButton, ContextLocationButton } from "@/components/ObservingContext";
 import {
   useState,
   useCallback,
@@ -481,8 +482,8 @@ export default function PlannerPage() {
   }
   function compareObjects(ids:string[],at?:Date,latitude=lat,longitude=lon) {
     const valid=ids.filter(id=>planningTargets.some(t=>t.id===id));
-    setCompareIds(current=>comparisonIds([...current,...valid]));
-    if(valid.some(id=>!compareIds.includes(id))&&new Set([...compareIds,...valid]).size>CLOCK_LIMIT)toast({title:"Showing the first eight objects",description:"Remove an object in the clock to add another."});
+    setCompareIds(comparisonIds(valid));
+    if(new Set(valid).size>CLOCK_LIMIT)toast({title:"Showing the first eight objects",description:"Remove an object in the clock to add another."});
     if(at)previewMoment(at,latitude,longitude,false);
     setInspectedStar(null);setPlaying(false);setPage("clock");
   }
@@ -790,9 +791,8 @@ export default function PlannerPage() {
 
   const dateLabel = formatInTimeZone(date, timezone, "EEE, MMM d, yyyy");
   const locationLabel = matchingLocation(savedLocations,lat,lon)?.name ??
-    (lat === 37.77 && lon === -122.42
-      ? "San Francisco · default location"
-      : `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? "N" : "S"} · ${Math.abs(lon).toFixed(2)}°${lon >= 0 ? "E" : "W"}`);
+    ([{name:"San Francisco",lat:37.77,lon:-122.42},{name:"London",lat:51.5,lon:-.12},{name:"Sydney",lat:-33.87,lon:151.21}].find(site=>Math.abs(site.lat-lat)<1e-6&&Math.abs(site.lon-lon)<1e-6)?.name ??
+    `${Math.abs(lat).toFixed(2)}°${lat >= 0 ? "N" : "S"} · ${Math.abs(lon).toFixed(2)}°${lon >= 0 ? "E" : "W"}`);
   const offlineLabel =
     offline.state === "ready"
       ? offline.online
@@ -805,6 +805,7 @@ export default function PlannerPage() {
           : "Offline · not prepared";
 
   return (
+    <ObservingContextProvider date={date} timezone={timezone} lat={lat} lon={lon} locationName={locationLabel} locations={savedLocations} onLocations={setSavedLocations} onTime={at=>previewMoment(at,lat,lon,false)} onLocation={(a,b)=>update({lat:a,lon:b,plannedAt:undefined})}>
     <div className="observatory-shell">
       <header className="app-header">
         <a
@@ -837,7 +838,7 @@ export default function PlannerPage() {
           ).map(([id, label, Icon]) => (
             <button
               key={id}
-              onClick={() => {if(id==="clock"&&!compareIds.length&&targetId)compareObjects([targetId]);else setPage(id);}}
+              onClick={() => {if(id==="clock"&&page!=="clock"&&targetId)compareObjects([targetId]);else setPage(id);}}
               className={page === id ? "active" : ""}
               aria-current={page === id ? "page" : undefined}
               data-testid={`tab-${id}`}
@@ -1179,10 +1180,10 @@ export default function PlannerPage() {
             </div>
           )}
           {page !== "night" && <section className={`session-timebar ${settings.timeMode === "planned" ? "planned" : ""}`} aria-label="Observing time" data-testid="session-timebar">
-            <div><Clock size={14} /><span><strong>{settings.timeMode === "live" ? "Live sky" : "Viewing planned sky"}</strong> · {dateLabel} · {observingTime}<small>{timezone.replaceAll("_", " ")} (UTC{formatInTimeZone(date,timezone,"xxx")}) · {locationLabel}</small>{activeSession&&<small className="session-list-context">Targets saved to “{activeSession.name}”</small>}</span></div>
-            <div className="session-time-actions"><button className="text-action" onClick={()=>setPage("night")}><CalendarDays size={13}/>{activeSession ? `Planner · ${night.length} ${night.length===1?"object":"objects"}` : "Open planner"}</button><details><summary>Plan a time</summary><div><label>Date<input aria-label="Session date" type="date" value={observingDate} onChange={e => { if (e.target.value && Number.isFinite(new Date(e.target.value).getTime())) planLocalTime(e.target.value, observingTime); }} /></label><label>Time<input aria-label="Session time" type="time" value={observingTime} onChange={e => { if (e.target.value) planLocalTime(observingDate, e.target.value); }} /></label><small>Local time at your observing location.</small></div></details><button className="text-action" onClick={useNow}>{settings.timeMode === "live" ? "Refresh now" : "Use current time"}</button></div>
+            <div><Clock size={14} /><span><strong>{settings.timeMode === "live" ? "Live sky" : "Viewing planned sky"}</strong> · <ContextDateButton>{dateLabel} · {observingTime}</ContextDateButton><small>{timezone.replaceAll("_", " ")} (UTC{formatInTimeZone(date,timezone,"xxx")}) · <ContextLocationButton>{locationLabel}</ContextLocationButton></small>{activeSession&&<small className="session-list-context">Targets saved to “{activeSession.name}”</small>}</span></div>
+            <div className="session-time-actions"><button className="text-action" onClick={()=>setPage("night")}><CalendarDays size={13}/>{activeSession ? `Planner · ${night.length} ${night.length===1?"object":"objects"}` : "Open planner"}</button><ContextDateButton>Plan a time</ContextDateButton><button className="text-action" onClick={useNow}>{settings.timeMode === "live" ? "Refresh now" : "Use current time"}</button></div>
           </section>}
-          {page !== "night" && <WeatherPanel lat={lat} lon={lon} date={date} timezone={timezone} skyBrightness={settings.skyBrightness} locationName={locationLabel} onTime={at=>previewMoment(at,lat,lon)}/>}
+          {page !== "night" && <WeatherPanel lat={lat} lon={lon} date={date} timezone={timezone} skyBrightness={settings.skyBrightness} locationName={locationLabel} onTime={at=>previewMoment(at,lat,lon,false)}/>}
           {page === "tonight" && (
             <>
               <div className="tonight-hero">
@@ -2017,6 +2018,7 @@ export default function PlannerPage() {
         </DialogContent>
       </Dialog>
     </div>
+    </ObservingContextProvider>
   );
 }
 

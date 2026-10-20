@@ -1,3 +1,5 @@
+import { ContextDateButton, ContextLocationButton } from "./ObservingContext";
+import { resolveLocalMoment } from "@/lib/session";
 import { useEffect, useMemo, useState } from 'react';
 import { formatInTimeZone } from 'date-fns-tz';
 import { Check, Plus, Search } from 'lucide-react';
@@ -14,9 +16,9 @@ export function CatalogExplorer({targets,settings,update,date,timezone,locationN
   const [showVisibility,setShowVisibility]=useState(()=>globalThis.innerWidth>700);
   useEffect(()=>{const media=globalThis.matchMedia('(min-width:701px)');const resize=()=>setShowVisibility(media.matches);media.addEventListener('change',resize);return()=>media.removeEventListener('change',resize);},[]);
   const [query,setQuery]=useState(''),[type,setType]=useState('all'),[mode,setMode]=useState<VisibilityMode>('time');
-  const [chosenDay,setDay]=useState<string|null>(null),[from,setFrom]=useState('20:00'),[until,setUntil]=useState('22:00');
+  const [chosenDay,setDay]=useState<string|null>(null),[chosenTime,setTime]=useState<string|null>(null),[from,setFrom]=useState('20:00'),[until,setUntil]=useState('22:00');
   const [altitude,setAltitude]=useState('-90'),[separation,setSeparation]=useState('0'),[transit,setTransit]=useState('any'),[fit,setFit]=useState('3'),[sort,setSort]=useState('fit'),[count,setCount]=useState(24);
-  const day=chosenDay??formatInTimeZone(date,timezone,'yyyy-MM-dd'),time=formatInTimeZone(date,timezone,'HH:mm');
+  const day=chosenDay??formatInTimeZone(date,timezone,'yyyy-MM-dd'),time=chosenTime??formatInTimeZone(date,timezone,'HH:mm');
   const profile=useMemo(()=>profileFromSettings(settings),[settings.binocularMagnification,settings.binocularAperture,settings.binocularFov,settings.binocularStabilized,settings.binocularTransmission]);
   const window=useMemo(()=>visibilityWindow(day,mode==='range'?from:time,until,mode,timezone,settings.lat,settings.lon),[day,time,from,until,mode,timezone,settings.lat,settings.lon]);
   const types=useMemo(()=>Array.from(new Set(targets.map(t=>t.category))).filter(t=>t!=='Galaxy').sort(),[targets]);
@@ -31,7 +33,7 @@ export function CatalogExplorer({targets,settings,update,date,timezone,locationN
   },[targets,type,query,window,altitude,separation,transit,fit,profile,settings.lat,settings.lon,settings.skyBrightness,sort,valid]);
   const reset=()=>{setQuery('');setType('all');setMode('time');setDay(null);setAltitude('-90');setSeparation('0');setTransit('any');setFit('3');setCount(24);};
   return <div className="catalog-explorer" data-testid="catalog-explorer">
-    <header className="page-heading catalog-heading"><div><p className="eyebrow">THE WHOLE OBSERVING CATALOG</p><h1>Find your kind of sky<span>.</span></h1><p>{targets.length} objects · {locationName} · {timezone.replaceAll('_',' ')}</p></div><span>{rows.length} matches</span></header>
+    <header className="page-heading catalog-heading"><div><p className="eyebrow">THE WHOLE OBSERVING CATALOG</p><h1>Find your kind of sky<span>.</span></h1><p>{targets.length} objects · <ContextLocationButton>{locationName}</ContextLocationButton> · {timezone.replaceAll('_',' ')}</p></div><span>{rows.length} matches<br/><ContextDateButton value={resolveLocalMoment(day,time,timezone)??date} timezone={timezone} onChange={at=>{setDay(formatInTimeZone(at,timezone,"yyyy-MM-dd"));setTime(formatInTimeZone(at,timezone,"HH:mm"));}}/></span></header>
     <BinocularProfileControls settings={settings} update={update}/>
     <section className="catalog-filters panel" aria-label="Catalog filters">
       <div className="catalog-primary-filters"><label className="catalog-search"><span><Search size={14}/>Search the catalog</span><input aria-label="Search whole catalog" placeholder="Name, designation, constellation…" value={query} onChange={e=>{setQuery(e.target.value);setCount(24);}}/></label><label>Object type<select aria-label="Catalog object type" value={type} onChange={e=>setType(e.target.value)}><option value="all">All object types</option><option value="galaxies">All galaxies</option><option value="nebulae">All nebulae & remnants</option><option value="clusters">All star clusters</option>{types.map(t=><option key={t}>{t}</option>)}</select></label><label>Binocular suitability<select aria-label="Binocular suitability" value={fit} onChange={e=>setFit(e.target.value)}><option value="3">All targets</option><option value="0">Excellent</option><option value="1">Excellent + worthwhile</option><option value="2">Include challenging</option></select></label></div>

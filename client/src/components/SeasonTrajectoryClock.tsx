@@ -1,3 +1,7 @@
+import { SeasonAltitudeCalendar, trajectoryMoment } from "./SeasonAltitudeCalendar";
+import { observationAt } from "@/lib/observing-profile";
+import { formatInTimeZone } from "date-fns-tz";
+import { ContextDateButton } from "./ObservingContext";
 import { useMemo, useState } from "react";
 import { format } from "date-fns";
 import type { UnifiedTarget } from "@/lib/astronomy";
@@ -38,6 +42,7 @@ type Props = {
   scope: TrajectoryScope;
   onScope: (scope: TrajectoryScope) => void;
   onNight: (day: string) => void;
+  onTime: (at: Date) => void;
 };
 const dateLabel = (day: string) =>
   format(new Date(`${day}T12:00:00`), "MMM d, yyyy");
@@ -77,7 +82,9 @@ export function SeasonTrajectoryClock({
   scope,
   onScope,
   onNight,
+  onTime,
 }: Props) {
+  const [monthPoint, setMonthPoint] = useState<{day:string;sample:number}|null>(null);
   const [showOutline, setShowOutline] = useState(false);
   const [focusDay, setFocusDay] = useState<string | null>(null),
     [cell, setCell] = useState<{ time: number; alt: number } | null>(null);
@@ -204,23 +211,43 @@ export function SeasonTrajectoryClock({
         : "";
     })
     .join(" ");
+  const monthTrack = representatives.find(t=>t.day===monthPoint?.day), monthSample=monthTrack&&monthPoint?Math.min(monthPoint.sample,monthTrack.hour.length-1):0, monthAt=monthTrack?trajectoryMoment(monthTrack,monthSample,timezone):null;
+  const monthValue=monthAt?observationAt(target,lat,lon,monthAt,21.6):null;
+  const monthPointer=(event:React.MouseEvent<SVGSVGElement>)=>{
+    const rect=event.currentTarget.getBoundingClientRect(), x=(event.clientX-rect.left)/rect.width*640,y=(event.clientY-rect.top)/rect.height*640;
+    const candidates=representatives.filter(t=>!focused||t.day===focused.day).flatMap(t=>t.hour.flatMap((h,i)=>{if(!trajectoryIncluded(t,i,index,scope))return [];const p=clockPoint(h,t.alt[index][i]);return [{day:t.day,sample:i,distance:Math.hypot(p.x-x,p.y-y)}];}));
+    const nearest=candidates.reduce<typeof candidates[number]|null>((best,p)=>!best||p.distance<best.distance?p:best,null);
+    if(nearest && nearest.distance<=28){setMonthPoint(nearest);return nearest;}
+    setMonthPoint(null);return null;
+  };
+  const monthKeyboard=(event:React.KeyboardEvent<SVGSVGElement>)=>{
+    if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Enter','Escape'].includes(event.key))return;event.preventDefault();
+    if(event.key==='Escape'){setMonthPoint(null);return;}
+    if(event.key==='Enter'){if(monthAt)onTime(monthAt);return;}
+    const tracks=focused?[focused]:representatives, current=Math.max(0,tracks.findIndex(t=>t.day===monthPoint?.day));
+    const next=tracks[(current+(event.key==='ArrowDown'?1:event.key==='ArrowUp'?-1:0)+tracks.length)%tracks.length];
+    let sample=Math.max(0,Math.min(next.hour.length-1,(monthPoint?.sample??20)+(event.key==='ArrowRight'?1:event.key==='ArrowLeft'?-1:0)));
+    const candidates=next.hour.map((_,i)=>i).filter(i=>trajectoryIncluded(next,i,index,scope));
+    if(candidates.length){sample=candidates.reduce((best,i)=>Math.abs(i-sample)<Math.abs(best-sample)?i:best,candidates[0]);setMonthPoint({day:next.day,sample});}
+  };
   const dial = (mode: "months" | "density") => (
     <svg
       viewBox="0 0 640 640"
       role="slider"
       tabIndex={0}
-      aria-label={`${mode === "months" ? "Month paths" : "Occupancy shading"}: seasonal altitude and time for ${target.name}. Left/right choose a half hour, up/down choose a five degree altitude band. Enter visits a matching date.`}
+      aria-label={mode === "months" ? `Month paths for ${target.name}. Left/right choose time; up/down choose a month. Enter opens that moment.` : `Occupancy shading for ${target.name}. Left/right choose a half hour, up/down choose a five degree altitude band. Enter visits a matching date.`}
       aria-valuemin={0}
-      aria-valuemax={TIME_BANDS * ALTITUDE_BANDS - 1}
-      aria-valuenow={cell ? cell.time * 36 + cell.alt : 42 * 36 + 24}
+      aria-valuemax={mode==="months"?(monthTrack?.hour.length??48)-1:TIME_BANDS * ALTITUDE_BANDS - 1}
+      aria-valuenow={mode==="months"?monthPoint?.sample??0:cell ? cell.time * 36 + cell.alt : 42 * 36 + 24}
       aria-valuetext={
-        cell
+        mode==="months" ? monthAt&&monthValue?`${formatInTimeZone(monthAt,timezone,"MMM d HH:mm")}: ${monthValue.alt.toFixed(1)} degrees high, ${monthValue.separation.toFixed(1)} degrees from Moon`:"Hover a path, or use arrow keys to choose a month and time." : cell
           ? `${timeLabel(cell.time)}, ${cell.alt * 5 - 90} to ${cell.alt * 5 - 85} degrees, ${(density[cell.time][cell.alt] * 100).toFixed(1)} percent frequency`
           : "Choose an altitude and time to inspect recurrence."
       }
-      onPointerMove={pointer}
-      onPointerDown={pointer}
-      onKeyDown={keyboard}
+      onPointerMove={mode==='months'?monthPointer:pointer}
+      onClick={mode==='months'?event=>{const p=monthPointer(event);const t=representatives.find(t=>t.day===p?.day);if(t&&p)onTime(trajectoryMoment(t,p.sample,timezone));}:undefined}
+      onPointerDown={mode==='density'?pointer:undefined}
+      onKeyDown={mode==='months'?monthKeyboard:keyboard}
     >
       <title>
         {target.name}: seasonal trajectories from {season.days[0].day} through{" "}
@@ -228,7 +255,7 @@ export function SeasonTrajectoryClock({
         azimuth. Inner horizon ring is zero degrees.
       </title>
       <circle cx="320" cy="320" r="254" fill="#07131e" />
-      {density.flatMap((row, time) =>
+      {mode === "density" && density.flatMap((row, time) =>
         row.map(
           (fraction, band) =>
             fraction > 0 && (
@@ -242,7 +269,7 @@ export function SeasonTrajectoryClock({
                 )}
                 fill={color}
                 opacity={
-                  densityOpacity(fraction) * (mode === "months" ? 0.2 : 1)
+                  densityOpacity(fraction)
                 }
               />
             ),
@@ -313,7 +340,7 @@ export function SeasonTrajectoryClock({
           <path d={chosenPath} fill="none" stroke={color} strokeWidth="1.8" />
         </>
       )}
-      {cell && (
+      {mode === "density" && cell && (
         <path
           d={trajectorySector(
             cell.time / 2,
@@ -326,6 +353,7 @@ export function SeasonTrajectoryClock({
           strokeWidth="1.5"
         />
       )}
+      {mode === 'months' && monthTrack && monthPoint && (()=>{const p=clockPoint(monthTrack.hour[monthSample],monthTrack.alt[index][monthSample]);return <circle className="season-month-point" cx={p.x} cy={p.y} r="5" fill={MONTH_COLORS[Number(monthTrack.day.slice(5,7))-1]} stroke="#111c28" strokeWidth="2" pointerEvents="none"/>;})()}
     </svg>
   );
   return (
@@ -337,7 +365,7 @@ export function SeasonTrajectoryClock({
         <div>
           <h3>One object, across the seasons</h3>
           <p>
-            Two clocks: seasonal timing and occupancy · no Moon or Sun curves
+            Monthly paths and a night-by-night altitude calendar
           </p>
         </div>
         <label>
@@ -347,6 +375,7 @@ export function SeasonTrajectoryClock({
             value={target.id}
             onChange={(e) => {
               onObject(e.target.value);
+              setMonthPoint(null);
               setFocusDay(null);
               setCell(null);
             }}
@@ -378,12 +407,13 @@ export function SeasonTrajectoryClock({
           </p>
         </div>
         <label>
-          Show times in both clocks
+          Show times in both views
           <select
             aria-label="Seasonal trajectory time filter"
             value={scope}
             onChange={(e) => {
               onScope(e.target.value as TrajectoryScope);
+              setMonthPoint(null);
               setCell(null);
             }}
           >
@@ -399,9 +429,10 @@ export function SeasonTrajectoryClock({
           <div className="season-trajectory-dial">{dial("months")}</div>
           <div className="season-trajectory-reading">
             <h4>Follow the months</h4>
+            <div className="season-month-readout" aria-live="polite">{monthValue&&monthAt?<><ContextDateButton value={monthAt} timezone={timezone} onChange={onTime}>{formatInTimeZone(monthAt,timezone,'MMM d, yyyy · HH:mm')}</ContextDateButton><p>{monthValue.alt.toFixed(1)}° high · {monthValue.alt>0?'Above horizon':'Below horizon'} · {monthValue.moon.sunAlt<=-18?'Astronomical darkness':'Twilight / daylight'} · {monthValue.separation.toFixed(1)}° from Moon · Moon {Math.round(monthValue.moon.illumination*100)}% lit</p></>:<p>Hover a monthly path to see its date, time and visibility.</p>}</div>
             <p>
               One representative night near the 15th of each month. Select a
-              label to isolate that path.
+              label to isolate that path. Hover a path to inspect an actual position; tap to open that moment.
             </p>
             <div className="season-month-key">
               {representatives.map((track) => (
@@ -431,62 +462,11 @@ export function SeasonTrajectoryClock({
             )}
           </div>
         </div>
-        <div className="season-clock-view" data-season-view="density">
-          <h4>Occupancy · altitude × time</h4>
-          <div className="season-trajectory-dial">{dial("density")}</div>
-          <div className="season-trajectory-reading">
-            <h4>How often is it here?</h4>
-            <p>
-              Brighter shading means more sampled dates put the object in that
-              altitude band at that local time.
-            </p>
-            <div className="season-density-key">
-              {[0, 0.01, 0.05, 0.2, 0.5, 1].map((f) => (
-                <span key={f}>
-                  <i
-                    style={{ background: color, opacity: densityOpacity(f) }}
-                  />
-                  {f * 100}%
-                </span>
-              ))}
-            </div>
-            <label className="season-outline-toggle">
-              <input
-                type="checkbox"
-                checked={showOutline}
-                onChange={(event) => setShowOutline(event.target.checked)}
-              />{" "}
-              Show chosen night · {dateLabel(night)}
-            </label>
-            <p>Hover or touch the grid to find matching dates.</p>
-          </div>
-        </div>
+        <SeasonAltitudeCalendar tracks={season.trajectories} object={index} target={target} scope={scope} lat={lat} lon={lon} timezone={timezone} onTime={onTime}/>
       </div>
-      {cell && (
-        <div className="season-cell-reading">
-          <strong>
-            {timeLabel(cell.time)}–{timeLabel((cell.time + 1) % 48)} ·{" "}
-            {cell.alt * 5 - 90}° to {cell.alt * 5 - 85}°
-          </strong>
-          <p>
-            {(density[cell.time][cell.alt] * 100).toFixed(1)}% frequency ·{" "}
-            {dates.length} matching dates
-          </p>
-          {dates.length > 0 ? (
-            <>
-              <p>
-                Examples: {dateLabel(dates[0])}
-                {dates.length > 1 ? ` · ${dateLabel(dates.at(-1)!)}` : ""}
-              </p>
-              <button className="text-action" onClick={() => onNight(dates[0])}>
-                Open first matching night ↗
-              </button>
-            </>
-          ) : (
-            <p>No sampled dates in this cell with the current time filter.</p>
-          )}
-        </div>
-      )}
+      <details className="season-density-detail"><summary>Advanced: recurrence in altitude bands</summary><p className="astro-note">This combines all dates into one clock. A filled region means the object passed through there on some dates, not that it is always visible. Linear brightness shows the fraction of dates in each 5° band; use the calendar above to find specific nights.</p><div className="season-trajectory-dial">{dial("density")}</div><div className="season-density-key">{[0,.05,.2,.5,1].map(f=><span key={f}><i style={{background:color,opacity:densityOpacity(f)}}/>{f*100}% of dates</span>)}</div><label><input type="checkbox" checked={showOutline} onChange={e=>setShowOutline(e.target.checked)}/> Show chosen night · {dateLabel(night)}</label>
+      {cell&&<div className="season-cell-reading"><strong>{timeLabel(cell.time)} · {cell.alt*5-90}° to {cell.alt*5-85}°</strong><p>{(density[cell.time][cell.alt]*100).toFixed(1)}% of dates · {dates.length} matching nights out of {season.days.length}</p>{dates[0]&&<button className="text-action" onClick={()=>onNight(dates[0])}>Open {dateLabel(dates[0])} ↗</button>}</div>}
+      </details>
       {noPaths && (
         <p role="status">
           No paths match this time filter. Choose all 24 hours to see the full
