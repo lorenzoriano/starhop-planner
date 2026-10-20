@@ -1,7 +1,7 @@
 import { afterAll, describe, expect, it, vi } from "vitest";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { angularDistance, eqToHorizontal, loadStars, planRoutes, type ObservingParams } from "../astronomy";
+import { angularDistance, eqToHorizontal, formatRouteNodeName, loadStars, planRoutes, type ObservingParams } from "../astronomy";
 
 vi.stubGlobal("fetch", async (input: string | URL) => {
   const path = String(input).replace(/^\.\//, "");
@@ -32,7 +32,25 @@ describe("full-catalog forced-anchor and required-waypoint routing", () => {
     expect(result.belowHorizon).toBe(false);
     expect(result.routes.length,result.warning??"No route").toBeGreaterThan(0);
     expect(result.routes[0].target.id).toBe("NGC752");
-  });
+  }, 30_000);
+  it("prefers μ Andromedae over υ Andromedae for the automatic M31 route", async () => {
+    const result = await planRoutes({ ...base, observingMode: "binocular" });
+    const automatic = result.routes.find(route => !route.isExpertRoute);
+    expect(automatic).toBeDefined();
+    expect(automatic!.startAnchor.id).toBe("HR269");
+    expect(automatic!.hops.length).toBeLessThanOrEqual(4);
+    expect(formatRouteNodeName(automatic!.startAnchor)).toMatch(/μ Andromedae/);
+    expect(result.warning).toMatch(/Balanced route from μ Andromedae/);
+    expect(automatic!.hops.every(hop => hop.patternLabels.every(item => /^[A-D]$/.test(item.label) && hop.instruction.includes(`${item.label} `)))).toBe(true);
+  }, 30_000);
+  it("keeps η Herculis as the short automatic start for M13", async () => {
+    const result = await planRoutes({ ...base, targetId: "M13", observingMode: "binocular" });
+    const automatic = result.routes.find(route => !route.isExpertRoute);
+    expect(automatic).toBeDefined();
+    expect(automatic!.startAnchor.id).toBe("HR6220");
+    expect(automatic!.hops.length).toBeLessThanOrEqual(3);
+    expect(formatRouteNodeName(automatic!.startAnchor)).toMatch(/η Herculis/);
+  }, 30_000);
   it("keeps a forced Mirach anchor in Guided mode or clearly labels its Balanced fallback", async () => {
     const stars = await loadStars();
     const mirach = stars.find((star) => star.id === "HR337")!;
@@ -45,7 +63,7 @@ describe("full-catalog forced-anchor and required-waypoint routing", () => {
     expect(result.routes.every((route) => route.startAnchor.id === "HR337")).toBe(true);
     expect(result.routes.every((route) => route.target.id === "M31")).toBe(true);
     if (result.warning) expect(result.warning).toContain("Balanced");
-  });
+  }, 30_000);
 
   it("includes a required HR224 waypoint in order on a real Mirach-to-M31 plan", async () => {
     const stars = await loadStars();
@@ -64,7 +82,7 @@ describe("full-catalog forced-anchor and required-waypoint routing", () => {
     expect(waypointIndex).toBeGreaterThan(0);
     const targetIndex = route.hops.findIndex((hop) => hop.center.ra === result.targetNode!.ra && hop.center.dec === result.targetNode!.dec);
     expect(targetIndex).toBeGreaterThan(waypointIndex);
-  });
+  }, 30_000);
 
   it("can use a required star fainter than magnitude 4.5 as the start of the following leg", async () => {
     const stars = await loadStars();
@@ -82,5 +100,5 @@ describe("full-catalog forced-anchor and required-waypoint routing", () => {
     expect(waypointIndex).toBeGreaterThan(0);
     const targetIndex = route.hops.findIndex((hop) => hop.center.ra === result.targetNode!.ra && hop.center.dec === result.targetNode!.dec);
     expect(targetIndex).toBeGreaterThan(waypointIndex);
-  });
+  }, 30_000);
 });

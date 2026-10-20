@@ -35,7 +35,7 @@ export const settingsSchema = z.object({
   binocularStabilized:z.boolean().default(true),
   binocularTransmission:z.number().min(.3).max(1).default(.86),
   binocularProfileVersion:z.literal(1).optional(),
-  skyBrightness: z.number().min(17).max(22).default(21.6),
+  skyBrightness: z.number().min(17).max(22).default(19.0),
 }).transform((settings) => {
   settings={...settings,targetId:canonicalTargetId(settings.targetId)};
   // The owner explicitly chose the KITE 14×50 as the app's default profile.
@@ -65,7 +65,7 @@ export const defaultSettings: Settings = {
   binocularStabilized:true,
   binocularTransmission:.86,
   binocularProfileVersion:1,
-  skyBrightness: 21.6,
+  skyBrightness: 19.0,
 };
 export const nightListSchema = z
   .array(

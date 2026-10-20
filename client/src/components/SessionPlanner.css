@@ -1,0 +1,87 @@
+.planner-night-timeline {
+  margin: 16px 0 18px;
+  padding: 14px 16px;
+  border: 1px solid #38534f;
+  border-radius: 9px;
+  background: #101f28;
+  overflow: hidden;
+}
+.planner-night-timeline h3 { margin: 0; color: #d3e2d6; font-size: 14px; font-weight: 600; }
+.planner-night-timeline > p { margin: 4px 0 10px; color: #a7bdba; font-size: 12px; line-height: 1.45; }
+.planner-night-timeline > div:first-of-type { max-width: 100%; }
+.planner-night-timeline svg { display: block; overflow: visible; }
+.planner-timeline-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px 14px;
+  margin-top: 10px;
+  color: #c2d0cd;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.planner-timeline-legend > span { display: inline-flex; align-items: center; gap: 5px; }
+.planner-legend-dark::before, .planner-legend-moon::before, .planner-legend-slot::before {
+  content: "";
+  width: 12px;
+  height: 9px;
+  border: 1px solid #a9c9b0;
+  border-radius: 2px;
+  background: rgba(159,199,168,.27);
+}
+.planner-legend-moon::before { border-color: #ddc98e; background: rgba(213,187,130,.35); }
+.planner-legend-slot::before { border-color: #d2e2c9; background: #c4d8be; }
+.planner-legend-target { color: #d2e0db; max-width: 100%; overflow-wrap: anywhere; }
+.planner-legend-target i { width: 14px; height: 2px; border-radius: 2px; }
+.planner-date-control { display: flex; align-items: stretch; gap: 5px; }
+.planner-date-control > input { min-width: 0; flex: 1; }
+.planner-calendar-trigger {
+  display: grid;
+  width: 44px;
+  min-width: 44px;
+  place-items: center;
+  border: 1px solid #38534f;
+  border-radius: 6px;
+  color: #c4d8be;
+  background: #172a32;
+}
+.planner-calendar-trigger:hover { border-color: #82a88f; background: #20373d; }
+.planner-date-calendar { width: min(92vw, 390px); max-height: min(82vh, 700px); overflow-y: auto; }
+.planner-date-calendar .observing-calendar-day { min-height: 48px; }
+.planner-preview-label {
+  margin: 12px 0 0;
+  padding: 8px 12px;
+  border: 1px solid #53634b;
+  border-radius: 7px 7px 0 0;
+  color: #e2d6ad;
+  background: #302c1c;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.planner-preview-label + .weather-panel { margin-top: 0; }
+.planner-archive-undo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 8px 11px;
+  border: 1px solid #52674c;
+  border-radius: 7px;
+  color: #e1dfc9;
+  background: #293021;
+  font-size: 12px;
+}
+.planner-archive-undo .text-action { flex: 0 0 auto; color: #d3e8c4; }
+.planner-unavailable-action { display: flex; justify-content: flex-end; margin: 2px 8px 7px 32px; }
+.planner-unavailable-action .text-action { color: #a9d3b1; font-size: 12px; }
+.planner-carryover-dialog { max-width: 450px; }
+.planner-carryover-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 9px; margin-top: 18px; }
+.planner-carryover-actions button { min-height: 44px; }
+@media (max-width: 600px) {
+  .planner-night-timeline { padding: 11px 10px; }
+  .planner-timeline-legend { gap: 7px 10px; }
+  .planner-archive-undo { align-items: flex-start; }
+  .planner-date-calendar { max-width: calc(100vw - 24px); }
+  .planner-date-calendar .observing-calendar-day { min-height: 42px; }
+}

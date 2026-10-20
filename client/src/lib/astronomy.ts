@@ -118,6 +118,7 @@ export interface HopStep {
   patternConfidence: number;
   patternScore: number;
   patternAnchors: SkyNode[];
+  patternLabels: { label: string; star: SkyNode }[];
   direction: string;
   distanceDeg: number;
   instruction: string;
@@ -1397,13 +1398,38 @@ function dijkstra(
 }
 
 // Find candidate start anchors
+const CLASSIC_START_STAR_IDS: Record<string, string[]> = {
+  M31: ['HR269'], // μ Andromedae: the short route into the galaxy's field
+  M13: ['HR6220'], // η Herculis: on the western side of the Keystone
+};
+
 function findAnchors(nodes: SkyNode[], targetNode: SkyNode, count: number, params: ObservingParams): SkyNode[] {
   if (params.startStarId) return nodes.filter(node => node.id === params.startStarId && node.type === 'star' && node.mag <= (params.startIsWaypoint?params.limitingMag:4.5) && node.alt >= 5);
   const candidates=nodes.filter(n=>n.id!==targetNode.id&&n.type==='star'&&n.mag<=4.5&&n.alt>=15&&(!!n.name||!!n.bayer||!!n.flamsteed));
   candidates.sort((a,b)=>angularDistance(a.ra,a.dec,targetNode.ra,targetNode.dec)-angularDistance(b.ra,b.dec,targetNode.ra,targetNode.dec)||a.mag-b.mag);
+  const byId = new Map(candidates.map(candidate => [candidate.id, candidate]));
+  const preferred = (CLASSIC_START_STAR_IDS[targetNode.id] ?? []).flatMap(id => {
+    const node = byId.get(id);
+    return node ? [node] : [];
+  });
   const selected:SkyNode[]=[];
-  for(const candidate of candidates){if(selected.some(s=>angularDistance(s.ra,s.dec,candidate.ra,candidate.dec)<.05))continue;selected.push(candidate);if(selected.length>=count*2)break;}
+  for(const candidate of [...preferred, ...candidates]){
+    if(selected.some(s=>s.id===candidate.id||angularDistance(s.ra,s.dec,candidate.ra,candidate.dec)<.05))continue;
+    selected.push(candidate);
+    if(selected.length>=count*2)break;
+  }
   return selected;
+}
+
+/** A short, human-readable designation for route chips and field instructions. */
+export function formatRouteNodeName(node: SkyNode): string {
+  const properName = node.name && node.name.length > 2 && !/^HR\s*\d+$/i.test(node.name) && node.name !== node.bayer;
+  if (properName) return node.name;
+  if (node.bayer && node.constellation) return `${node.bayer} ${getConstellationGenitive(node.constellation)}`;
+  if (node.flamsteed && node.constellation) return `${node.flamsteed} ${getConstellationGenitive(node.constellation)}`;
+  if (node.name && !/^HR\s*\d+$/i.test(node.name)) return node.name;
+  if (node.name && node.constellation) return `${node.name.replace(/^HR\s*(\d+)$/i, 'HR $1')} in ${getConstellationName(node.constellation)}`;
+  return node.name?.replace(/^HR\s*(\d+)$/i, 'HR $1') ?? node.id;
 }
 
 // Generate hop instructions
@@ -1457,21 +1483,9 @@ function generateHopSteps(
 
     // Instruction text
     // Better display name
-    const displayName = (n: SkyNode) => {
-      const hasProperName = n.name && n.name.length > 2 && !n.name.startsWith('HR')
-        && n.name !== n.bayer;
-      if (hasProperName) {
-        if (n.type === 'binocular' && n.bayer && n.constellation) {
-          return `${n.name} (${n.bayer} ${n.constellation})`;
-        }
-        return n.name;
-      }
-      if (n.bayer && n.constellation) return `${n.bayer} ${getConstellationGenitive(n.constellation)}`;
-      if (n.flamsteed && n.constellation) return `${n.flamsteed} ${getConstellationGenitive(n.constellation)}`;
-      if (n.constellation) return patternLabel(n,node);
-      if (n.name && !n.name.startsWith('HR')) return n.name;
-      return `a mag-${n.mag.toFixed(1)} star`;
-    };
+    const displayName = (n: SkyNode) => formatRouteNodeName(n) || (n.constellation ? patternLabel(n,node) : `a mag-${n.mag.toFixed(1)} star`);
+    const patternLabels = patternAnalysis.type === 'field' ? [] : patternAnalysis.anchors.slice(0, 4).map((star, index) => ({ label: String.fromCharCode(65 + index), star }));
+    const namedPattern = patternLabels.map(({ label, star }) => `${label} ${displayName(star)}`).join(' · ');
 
     let instruction = '';
     if (i === 0) {
@@ -1479,8 +1493,7 @@ function generateHopSteps(
       instruction = `Start at ${dn}${node.constellation ? ` in ${getConstellationName(node.constellation)}` : ''}.`;
       if (node.type === 'planet') instruction = `Start at the planet ${node.name} and confirm its position against the surrounding stars.`;
       if (patternAnalysis.type !== 'field' && patternAnalysis.anchors.length > 0) {
-        const optics = profile.mode === 'binocular' ? 'binoculars' : 'your telescope';
-        instruction += ` In ${optics}, confirm the ${patternAnalysis.type} pattern anchored by ${patternAnalysis.anchors.map(displayName).join(patternAnalysis.anchors.length > 2 ? ', ' : ' and ')}.`;
+        instruction += ` Confirm the ${patternAnalysis.type} pattern: ${namedPattern}.`;
       }
     } else if (i === path.length - 1) {
       const dn = displayName(node);
@@ -1490,7 +1503,7 @@ function generateHopSteps(
         instruction = `Move ${dir} (${hopDistLabel}) to bring ${dn} into view.`;
       }
       if (patternAnalysis.type !== 'field') {
-        instruction += ` The target should sit in ${/^[aeiou]/.test(patternAnalysis.type)?'an':'a'} ${patternAnalysis.type} pattern with ${patternAnalysis.anchors.map(displayName).join(patternAnalysis.anchors.length > 2 ? ', ' : ' and ')}.`;
+        instruction += ` Confirm the ${patternAnalysis.type}: ${namedPattern}.`;
       }
     } else {
       const dn = displayName(node);
@@ -1505,7 +1518,7 @@ function generateHopSteps(
         instruction += ` Keep ${displayName(guide)} in view as a guide, to the ${guideDir}.`;
       }
       if (patternAnalysis.type !== 'field') {
-        instruction += ` Look for the ${patternAnalysis.type} pattern formed by ${patternAnalysis.anchors.map(displayName).join(patternAnalysis.anchors.length > 2 ? ', ' : ' and ')}.`;
+        instruction += ` Confirm the ${patternAnalysis.type}: ${namedPattern}.`;
       }
     }
 
@@ -1517,6 +1530,7 @@ function generateHopSteps(
       patternConfidence: patternAnalysis.confidence,
       patternScore: Math.round(patternAnalysis.score),
       patternAnchors: patternAnalysis.anchors,
+      patternLabels,
       direction: dir,
       distanceDeg: dist,
       instruction,
@@ -1565,14 +1579,15 @@ function scoreRoute(hops: HopStep[], params: ObservingParams): number {
   const numHops = hops.length;
   if (profile.mode === 'binocular') {
     if (numHops <= 3) score += 6;
-    else if (numHops <= 5) score += 2;
-    else if (numHops <= 6) score -= 4;
-    else score -= 12 + (numHops - 6) * 8;
+    else if (numHops <= 4) score += 2;
+    else if (numHops <= 5) score -= 2;
+    else if (numHops <= 6) score -= 8;
+    else score -= 18 + (numHops - 6) * 10;
   } else {
     if (numHops <= 3) score += 5;
-    else if (numHops <= 5) score += 0;
-    else if (numHops <= 7) score -= (numHops - 5) * 4;
-    else score -= 15 + (numHops - 7) * 6;
+    else if (numHops <= 4) score += 1;
+    else if (numHops <= 6) score -= (numHops - 4) * 4;
+    else score -= 20 + (numHops - 6) * 7;
   }
 
   for (let i = 1; i < hops.length; i++) {
@@ -1580,9 +1595,14 @@ function scoreRoute(hops: HopStep[], params: ObservingParams): number {
     const fovRatio = hop.distanceDeg / Math.max(params.fovWidth, 0.25);
 
     // Score based on FOV overlap quality
-    if (fovRatio <= 0.7) {
-      // Excellent overlap (30%+ overlap) — reward
-      score += 3;
+    if (fovRatio < 0.25) {
+      // A tiny slide can look like progress while barely changing the view.
+      score -= 4;
+    } else if (fovRatio < 0.35) {
+      score -= 1;
+    } else if (fovRatio <= 0.7) {
+      // Reward useful overlap without making tiny hops artificially attractive.
+      score += 2;
     } else if (fovRatio <= 0.85) {
       // Good overlap (15-30%) — small reward
       score += 1;
@@ -1714,6 +1734,18 @@ export async function planRoutes(params:ObservingParams):Promise<Awaited<ReturnT
     return {...last!,routes:[combined!]};
   }
   const result=await planRoutesInternal(params);
+  if(params.difficulty==='beginner'&&!params.startStarId){
+    const preferredAnchorId=CLASSIC_START_STAR_IDS[params.targetId]?.[0];
+    if(preferredAnchorId&&!result.routes.some(route=>!route.isExpertRoute&&route.startAnchor.id===preferredAnchorId)){
+      const relaxed=await planRoutesInternal({...params,difficulty:'intermediate',startStarId:preferredAnchorId});
+      const classicRoutes=relaxed.routes.filter(route=>!route.isExpertRoute&&route.startAnchor.id===preferredAnchorId);
+      if(classicRoutes.length){
+        const routes=[...classicRoutes,...result.routes.filter(route=>route.startAnchor.id!==preferredAnchorId)].slice(0,params.numRoutes);
+        const label=formatRouteNodeName(classicRoutes[0].startAnchor);
+        return {...result,routes,warning:`Guided could not connect ${label} with short hops. Showing a Balanced route from ${label}.`};
+      }
+    }
+  }
   if(params.difficulty==='beginner'&&!result.routes.length&&!result.belowHorizon&&!result.anchorUnavailable){
     const relaxed=await planRoutesInternal({...params,difficulty:'intermediate'});
     if(relaxed.routes.length)return {...relaxed,warning:'Guided short hops could not connect this field. Showing a Balanced route with longer hops; the starting star is unchanged.'};

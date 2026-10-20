@@ -1,0 +1,58 @@
+/* Shared lunar and forecast cues for compact date pickers. */
+.observing-calendar { color:#b7c9c8; font-size:11px; }
+.observing-calendar-header { display:grid; grid-template-columns:36px 1fr 36px; align-items:center; text-align:center; padding:6px 8px 12px; color:#e0d8bf; }
+.observing-calendar-header button { display:grid; place-items:center; min-height:34px; border:1px solid #314852; border-radius:5px; background:#0b1822; color:#bfd2cd; }
+.observing-calendar-grid { display:grid; gap:3px; }
+.observing-calendar-week { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:3px; }
+.observing-calendar-weekday { display:grid; place-items:center; min-height:25px; color:#829ba6; font-size:10px; }
+.observing-calendar-day { position:relative; min-width:0; min-height:58px; display:grid; grid-template-rows:auto 1fr auto; justify-items:center; align-items:center; gap:1px; padding:4px 2px; border:1px solid transparent; border-radius:5px; background:#0b1822; color:#d0ded8; cursor:pointer; }
+.observing-calendar-day:hover,.observing-calendar-day:focus-visible { border-color:#819a87; outline:none; }
+.observing-calendar-day.selected { border-color:#d7c180; background:#d7c18017; }
+.observing-calendar-day.outside-month { opacity:.43; }
+.observing-calendar-date { font-size:10px; line-height:1; }
+.observing-calendar-phase { font-size:15px; line-height:1.1; }
+.observing-calendar-day small { min-height:10px; color:#98b5a7; font:9px/1 var(--font-mono); }
+.observing-calendar-saved-dot { position:absolute; top:4px; right:5px; width:5px; height:5px; border-radius:50%; background:#d8bd77; box-shadow:0 0 0 2px #d8bd7722; }
+.observing-calendar-hint,.observing-calendar-legend { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:10px 2px 0; color:#879fa8; font-size:9px; line-height:1.5; }
+.observing-calendar-hint svg { color:#d9c587; flex:none; }
+.observing-calendar-legend i { width:6px; height:6px; border-radius:50%; background:#d8bd77; }
+.observing-calendar-legend span { flex-basis:100%; }
+
+.upcoming-nights { display:grid; gap:14px; padding:16px; border:1px solid #344a52; border-radius:8px; background:#0a1720; color:#b8cbca; }
+.upcoming-nights-heading { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+.upcoming-nights-heading > div { display:grid; gap:4px; }
+.upcoming-nights-heading strong { color:#e0d7bc; font-family:var(--font-serif); font-size:20px; font-weight:400; }
+.upcoming-nights-heading span,.upcoming-nights-heading small { color:#91a7ad; font-size:10px; }
+.upcoming-nights-strip { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:8px; overflow-x:auto; }
+.upcoming-night { display:grid; align-content:start; gap:7px; min-width:118px; min-height:135px; padding:11px; border:1px solid #31464e; border-radius:6px; background:#0d1d27; color:#a8bdc0; text-align:left; font-size:10px; line-height:1.45; cursor:pointer; }
+.upcoming-night:hover,.upcoming-night:focus-visible { border-color:#9db79e; outline:none; }
+.upcoming-night.is-selected { border-color:#d4bd7f; background:#d4bd7f10; }
+.upcoming-night strong { color:#e3dbc5; font-size:12px; }
+.upcoming-night-moon { color:#d7c58f; }
+.upcoming-night small { color:#89a39e; font-size:9px; }
+.upcoming-best { display:grid; gap:8px; padding-top:12px; border-top:1px solid #2c424a; }
+.upcoming-best > strong { color:#d3dece; font-size:11px; font-weight:500; }
+.upcoming-best-list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; }
+.upcoming-best-list button { display:grid; gap:5px; padding:9px; border:1px solid #2d444b; border-radius:5px; background:#0c1b24; color:#9db3b2; text-align:left; font-size:9px; }
+.upcoming-best-list button span:first-child { color:#d9d3bc; font-size:10px; }
+.upcoming-best-empty,.upcoming-best > small { color:#829aa1; font-size:9px; line-height:1.5; }
+.lunar-next-nights { padding:16px; margin-bottom:20px; }
+.lunar-next-heading { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:0 0 12px; }
+.lunar-next-heading h2 { margin:5px 0 0; color:#e0d8bf; font:400 20px/1.25 var(--font-serif); }
+.lunar-next-heading > span { color:#91a8ac; font-size:10px; }
+.lunar-next-nights .upcoming-nights { padding:0; border:0; background:transparent; }
+.lunar-next-nights .upcoming-nights-heading { display:none; }
+.lunar-next-window { color:#e0c77e!important; border-color:#a58d5655!important; }
+
+.lunar-view-caption { padding:5px 8px; border:1px solid #a9bac455; border-radius:4px; background:#06111bd9; color:#c0d1cd; text-shadow:0 1px 3px #000; }
+@media (max-width:760px) {
+  .upcoming-nights { padding:12px; }
+  .upcoming-nights-strip { grid-template-columns:repeat(7,minmax(118px,1fr)); }
+  .upcoming-best-list { grid-template-columns:1fr; }
+  .lunar-next-heading { align-items:flex-start; flex-direction:column; }
+  .observing-calendar-day { min-height:52px; }
+}
+.lunar-altitude-chart,.lunar-separation-chart { display:block; width:100%; height:auto; margin:0; }
+.lunar-new-moon-action { display:grid; justify-items:end; gap:6px; color:#91a8ac; font-size:10px; }
+.lunar-new-moon-action button { display:flex; align-items:center; gap:6px; padding:7px 10px; border:1px solid #c8b17466; border-radius:5px; background:#d8c27f12; color:#e1ca86; font-size:10px; }
+@media (max-width:760px) { .lunar-new-moon-action { justify-items:start; } }

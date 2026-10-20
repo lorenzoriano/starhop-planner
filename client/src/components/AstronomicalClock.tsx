@@ -1,5 +1,6 @@
 import { ContextDateButton, ContextLocationButton } from "./ObservingContext";
-import { useEffect, useMemo, useState } from "react";
+import "./ClockUX.css";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
 import {
   CalendarDays,
@@ -85,6 +86,8 @@ export function AstronomicalClock({
   live,
   skyBrightness,
 }: Props) {
+  const dialRef = useRef<SVGSVGElement>(null);
+  const [dialTextScale, setDialTextScale] = useState(1);
   const [locked, setLocked] = useState(false);
   const [query, setQuery] = useState(""),
     [cursor, setCursor] = useState<number | null>(null),
@@ -113,6 +116,18 @@ export function AstronomicalClock({
         .filter((t): t is UnifiedTarget => !!t),
     [ids, targets],
   );
+  useEffect(() => {
+    const svg = dialRef.current;
+    if (!svg || typeof ResizeObserver === "undefined") return;
+    const resize = () => {
+      const width = svg.getBoundingClientRect().width;
+      if (width > 0) setDialTextScale(Math.max(1, Math.min(2.6, 640 / width)));
+    };
+    const observer = new ResizeObserver(resize);
+    resize();
+    observer.observe(svg);
+    return () => observer.disconnect();
+  }, []);
   const clockDate = travelPreview ?? date;
   const night = clockNightDate(clockDate, timezone),
     bounds = useMemo(() => clockBounds(night, timezone), [night, timezone]);
@@ -400,7 +415,7 @@ export function AstronomicalClock({
               onLive();
             }}
           >
-            Now
+            {live && !travelPreview ? "Now" : "Use current time"}
           </Button>
           <button
             className="text-action"
@@ -492,13 +507,13 @@ export function AstronomicalClock({
               )
             }
           >
-            Add session objects
+            Compare night’s objects
           </button>
           <span>
             {chosen.length}/{CLOCK_LIMIT}
           </span>
         </div>
-        <p className="astro-note">Compared objects · add or remove objects here to build a comparison. Opening the clock from an object starts with that object alone.</p>
+        <p className="astro-note">Clock comparison · Add catalog objects or objects from this night to the comparison. This does not change the saved night’s target list.</p>
         <div className="astro-chips">
           {chosen.map((t, i) => (
             <span
@@ -510,6 +525,10 @@ export function AstronomicalClock({
               <button
                 className={highlight === t.id ? "active" : ""}
                 onClick={() => setHighlight(highlight === t.id ? null : t.id)}
+                onPointerEnter={() => setHighlight(t.id)}
+                onPointerLeave={() => setHighlight(null)}
+                onFocus={() => setHighlight(t.id)}
+                onBlur={() => setHighlight(null)}
               >
                 <i />
                 {t.displayName || t.name}
@@ -545,7 +564,9 @@ export function AstronomicalClock({
             <button className="text-action astro-time-lock" aria-pressed={locked} onClick={()=>{if(locked){setLocked(false);setCursor(null);}else toggleTime(+at);}}>{locked?"Time locked · unlock":"Hover to inspect · tap to lock time"}</button>
           </div>
           <svg
+            ref={dialRef}
             className="astro-dial"
+            style={{ "--dial-text-scale": dialTextScale } as React.CSSProperties}
             viewBox="0 0 640 640"
             role="slider"
             aria-label="Astronomical clock time. Arrow keys move ten minutes; Home and End move to the observing night bounds."
@@ -578,7 +599,7 @@ export function AstronomicalClock({
                       254,
                     )}
                     fill={solarColor(s.sun)}
-                    opacity=".8"
+                    opacity=".38"
                   />
                 )
               );
@@ -624,11 +645,14 @@ export function AstronomicalClock({
                     textAnchor="middle"
                     className="astro-hour"
                   >
-                    {h === 0
-                      ? "00 · Midnight"
-                      : h === 12
-                        ? "12 · Noon"
-                        : String(h).padStart(2, "0")}
+                    {h === 0 || h === 12 ? (
+                      <>
+                        <tspan>{String(h).padStart(2, "0")}</tspan>
+                        <tspan className="astro-hour-long">
+                          {h === 0 ? " · Midnight" : " · Noon"}
+                        </tspan>
+                      </>
+                    ) : String(h).padStart(2, "0")}
                   </text>
                 </g>
               );
@@ -642,7 +666,8 @@ export function AstronomicalClock({
                         key={`${i}-${b}`}
                         d={wedge(b / 2, b / 2 + 0.49, 312 - i * 2, 310 - i * 2)}
                         fill={CLOCK_COLORS[i]}
-                        opacity={0.12 + 0.88 * fraction}
+                        opacity={(0.12 + 0.88 * fraction) *
+                          (highlight && highlight !== chosen[i]?.id ? 0.15 : 1)}
                       >
                         <title>
                           {chosen[i].name} ·{" "}
@@ -676,6 +701,13 @@ export function AstronomicalClock({
                 stroke={CLOCK_COLORS[i]}
                 strokeWidth={highlight === t.id ? 4 : 2.8}
                 opacity={highlight && highlight !== t.id ? 0.3 : 1}
+                tabIndex={0}
+                role="img"
+                aria-label={`${t.name} altitude path`}
+                onPointerEnter={() => setHighlight(t.id)}
+                onPointerLeave={() => setHighlight(null)}
+                onFocus={() => setHighlight(t.id)}
+                onBlur={() => setHighlight(null)}
               />
             ))}
             {highlightedEvents &&
@@ -756,7 +788,9 @@ export function AstronomicalClock({
             Radius shows altitude, not sky direction. Inside the horizon ring =
             below the horizon. Tap an object chip or the Moon to mark rise,
             transit and set. Twilight boundaries use Sun 0°, −6°, −12° and −18°;
-            flat horizon, no terrain.
+            flat horizon, no terrain. Outer seasonal bands show the share of
+            sampled dates when each object meets its altitude, darkness and Moon
+            distance limits at that local half hour.
           </p>
         </section>
         <section
@@ -812,6 +846,10 @@ export function AstronomicalClock({
               >
                 <button
                   onClick={() => setHighlight(highlight === t.id ? null : t.id)}
+                  onPointerEnter={() => setHighlight(t.id)}
+                  onPointerLeave={() => setHighlight(null)}
+                  onFocus={() => setHighlight(t.id)}
+                  onBlur={() => setHighlight(null)}
                 >
                   <i />
                   {t.displayName || t.name}

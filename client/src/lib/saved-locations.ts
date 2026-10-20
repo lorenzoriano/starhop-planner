@@ -26,3 +26,10 @@ export function saveObservingLocation(locations:SavedLocation[],name:string,lat:
   const location=parsed.data;
   return {ok:true as const,location,locations:previous?locations.map(site=>site.id===previous.id?location:site):[...locations,location]};
 }
+
+/** Known preset and saved-site names share one coordinate match rule. */
+export function knownLocationName(locations:SavedLocation[],lat:number,lon:number) {
+  return matchingLocation(locations,lat,lon)?.name??[
+    {name:"San Francisco",lat:37.77,lon:-122.42},{name:"London",lat:51.5,lon:-.12},{name:"Sydney",lat:-33.87,lon:151.21},
+  ].find(site=>Math.abs(site.lat-lat)<1e-6&&Math.abs(site.lon-lon)<1e-6)?.name;
+}

@@ -15,6 +15,7 @@ export function MoonTargetPicker({ targets, target, onSelect }: { targets: Unifi
       onQuery={setQuery}
       onSelect={choose}
       label="Change comparison object"
+      lunarHintAction={<a href="#lunar-landmarks" onClick={event => { event.preventDefault(); document.getElementById("lunar-landmarks")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Browse lunar landmarks</a>}
     />
   </section>;
 }

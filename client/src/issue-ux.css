@@ -162,7 +162,7 @@
   .page-heading h1 { font-size: clamp(27px, 8vw, 36px); line-height: 1.12; margin-top: 4px; }
   .page-heading p:not(.eyebrow) { margin-top: 5px; }
   .date-stamp strong { font-size: 17px; margin: 2px 0; }
-  .date-stamp > span { font-size: 10px; }
+  .date-stamp > span { font-size:12px; }
   .session-timebar { margin-bottom: 14px; }
   .session-timebar > div:first-child { align-items: flex-start; }
   .session-time-actions { flex-wrap: wrap; }
@@ -288,3 +288,196 @@
 .tonight-search input {width:100%;border:1px solid #3a5665;border-radius:6px;padding:10px;background:#0c202b;}
 .tonight-search >label {font-size:12px;}
 .tonight-search .moon-target-results {position:absolute;top:100%;left:0;right:0;z-index:10;background:#0b1e29;border:1px solid #3a5665;}
+
+
+/* Minimums apply to rendered copy as well as dormant component styles. */
+.observatory-shell :is(small, .text-\[6px\], .text-\[7px\], .text-\[8px\], .text-\[9px\], .text-\[10px\], .text-\[11px\]),
+.observatory-shell :is(.art-badge, .brand-subtitle, .date-stamp small, .date-stamp > span, .date-stamp .text-action, .target-alt, .target-card .eyebrow, .equipment-tag, .chart-footnote, .chart-accuracy-note, .session-timebar small, .eyebrow, .selection-context) {
+  font-size: 12px !important;
+}
+
+.observatory-shell button { min-width: 44px; }
+.observatory-shell .chart-toolbar button,
+.observatory-shell .chart-toolbar select,
+.observatory-shell .astro-date-controls > button,
+.observatory-shell .astro-season-controls > button,
+.observatory-shell .astro-chips button,
+.observatory-shell .season-month-key button,
+.observatory-shell [data-testid="zoom-controls"] button { min-width: 44px; }
+.season-outline-toggle { min-height: 44px; align-items: center; }
+.season-outline-toggle input[type="checkbox"] { flex: 0 0 16px; width: 16px; height: 16px; min-height: 16px; }
+
+.main-nav {
+  mask-image: linear-gradient(90deg, #000 0, #000 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0, #000 92%, transparent 100%);
+}
+.session-timebar { min-height: 0; }
+.night-altitude-heading { color: #b6d9cc; font-size: 12px; flex-wrap: wrap; gap: 8px 14px; }
+.night-altitude-heading .night-moon-key { color: #c6cbd5; }
+.night-altitude-heading .night-moon-key::before { border-top-style: dashed; }
+.night-altitude-heading .context-moon-key { color: #8dc8e8; }
+.night-altitude-heading .context-moon-key::before { content: ""; display: inline-block; width: 12px; border-top: 2px dashed currentColor; margin-right: 5px; vertical-align: middle; }
+.night-altitude-heading .context-sun-key { color: #e8a787; }
+.night-altitude-heading .context-sun-key::before { content: ""; display: inline-block; width: 12px; border-top: 2px dotted currentColor; margin-right: 5px; vertical-align: middle; }
+.night-altitude-chart .context-moon-altitude { stroke: #8dc8e8; }
+.night-altitude-chart .context-sun-altitude { stroke: #e8a787; }
+.night-altitude-chart .night-chart-readout,
+.night-altitude-chart .night-observation-suggestion,
+.night-altitude-chart .night-moon-explanation,
+.night-altitude-chart .night-moon-scale { font-size: 12px; line-height: 1.55; }
+.night-altitude-chart svg { display: block; width: 100%; min-height: 0; height: 170px; }
+.night-altitude-chart .night-chart-readout.active { color: #e0eee6; }
+
+.observatory-shell button:disabled,
+.observatory-shell [aria-disabled="true"] { opacity: 1; color: #b6c2c2; border-color: #64767b; background-color: #1a2a31; }
+.text-size-control { display: flex; align-items: center; gap: 10px; color: #b7c9c8; font-size: 12px; }
+.text-size-control > div { display: flex; gap: 4px; }
+.text-size-control button { min-width: 44px; min-height: 44px; border: 1px solid #48616a; border-radius: 6px; color: #c7d8d2; background: #10232d; }
+.text-size-control button[aria-pressed="true"] { border-color: #a3c8bf; color: #10232d; background: #a3c8bf; font-weight: 700; }
+:root[data-text-size="small"] { font-size: 87.5%; }
+:root[data-text-size="medium"] { font-size: 100%; }
+:root[data-text-size="large"] { font-size: 112.5%; }
+
+@media (max-width: 760px) {
+  .session-timebar { padding: 8px 10px; gap: 5px; margin-bottom: 12px; }
+  .session-timebar > div:first-child { width: auto; flex: 1 1 100%; }
+  .session-time-actions { gap: 6px; }
+  .main-nav { mask-image: linear-gradient(90deg, #000 0, #000 94%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, #000 0, #000 94%, transparent 100%); }
+  .night-altitude-chart svg { height: 170px; }
+}
+
+/* Final interaction and legibility floors for visible controls and captions. */
+.observatory-shell button,
+.observatory-shell select,
+.observatory-shell summary,
+.observatory-shell [role="button"] {
+  min-width: 44px !important;
+  min-height: 44px !important;
+}
+.observatory-shell a.text-action,
+.observatory-shell .context-edit {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.observatory-shell label:has(input[type="checkbox"]),
+.observatory-shell label:has(input[type="radio"]) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.observatory-shell label :is(input[type="checkbox"], input[type="radio"]) {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  min-height: 16px !important;
+}
+.observatory-shell :is(small, .art-badge, .brand-subtitle, .date-stamp small,
+  .date-stamp > span, .date-stamp .text-action, .target-alt, .equipment-tag,
+  .chart-footnote, .chart-accuracy-note, .session-timebar small, .eyebrow,
+  .selection-context, .upcoming-night, .upcoming-night small,
+  .upcoming-nights-heading span, .upcoming-best-list, .route-waypoints small,
+  .tonight-verdict, .tonight-search > label, .weather-panel summary,
+  .weather-panel summary small, .weather-panel summary span,
+  .binocular-compact-curve text, .night-altitude-heading, .night-chart-readout,
+  .night-observation-suggestion, .night-moon-explanation, .night-moon-scale) {
+  font-size: max(12px, 1em) !important;
+}
+.observatory-shell [class~="text-[6px]"],
+.observatory-shell [class~="text-[7px]"],
+.observatory-shell [class~="text-[8px]"],
+.observatory-shell [class~="text-[9px]"],
+.observatory-shell [class~="text-[10px]"],
+.observatory-shell [class~="text-[11px]"] {
+  font-size: 12px !important;
+}
+.altitude-chart svg text { font-size: 12px !important; }
+.night-altitude-chart svg text { font-size: 15px !important; }
+.lunar-altitude-chart svg text,
+.lunar-separation-chart svg text,
+.moon-chart svg text { font-size: 15px !important; }
+@media (max-width: 760px) {
+  .observatory-shell .main-content p,
+  .observatory-shell .object-story,
+  .observatory-shell .setup-hint,
+  .observatory-shell .planner-method p,
+  .observatory-shell .lunar-feature-detail > p {
+    font-size: 16px !important;
+    line-height: 1.55;
+  }
+  .observatory-shell .session-timebar { gap: 4px; padding: 6px 8px; margin-bottom: 10px; }
+  .observatory-shell .session-timebar > div:first-child { flex: 1 1 100%; }
+  .observatory-shell .session-time-actions { gap: 4px; }
+  .observatory-shell .main-nav > :is(button, a) { white-space: nowrap; flex-shrink: 0; }
+  .observatory-shell .binocular-compact-curve text { font-size: 13px !important; }
+}
+.observatory-shell .upcoming-best-list > button,
+.observatory-shell .upcoming-best-list > button *,
+.observatory-shell .upcoming-night,
+.observatory-shell .upcoming-night * { font-size: 12px !important; }
+.lunar-altitude-chart text,
+.lunar-separation-chart text { font-size: 15px !important; }
+.observatory-shell .brand { min-width: 44px; min-height: 44px; }
+.observatory-shell a.text-action,
+.observatory-shell .context-edit { min-width: 44px; }
+@media (max-width: 760px) {
+  .observatory-shell :is(.stargazing-compare, .weather-source, .lunar-feature-photo, .lunar-sources) a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+.observatory-shell label,
+.observatory-shell .upcoming-nights-disclosure strong { font-size: max(12px, 1em) !important; }
+.observatory-shell button > span,
+.observatory-shell summary,
+.observatory-shell .upcoming-best > strong,
+.observatory-shell .lunar-new-moon-action > span { font-size: max(12px, 1em) !important; }
+.observatory-shell .binocular-new-moon-action > span,
+.observatory-shell .binocular-profile-summary { font-size: max(12px, 1em) !important; }
+.observatory-shell .planner-preview-label { font-size: 12px !important; }
+.observatory-shell .text-xs { font-size: max(12px, .75rem) !important; }
+/* Shared night context remains visible while browsing long collections. */
+.saving-context{position:sticky;top:90px;z-index:8;display:flex;flex-wrap:wrap;align-items:center;gap:4px 7px;background:#0b1b24f5;padding:5px 12px;border-bottom:1px solid #2c454f;font-size:12px;line-height:1.5;margin:-8px 0 12px}
+.saving-context .context-edit{min-height:32px}
+.target-best-nights{font-size:12px;border-bottom:1px solid #304752;padding:8px 0}
+.target-best-nights summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:#b7d2ca}
+.target-best-nights>div{display:grid;gap:3px}
+.target-best-nights small{color:#9ab1bc}
+.featured-actions .save-button{width:auto;padding:10px 13px;display:inline-flex;gap:7px;align-items:center;min-height:44px}
+.hop-page-heading{margin:8px 0 12px!important}.hop-page-heading h1{font-size:27px!important}.hop-page-heading>div>p{display:none}
+.route-start-choice input{min-width:0;max-width:100%;border:1px solid #45616c;border-radius:5px;padding:8px;margin:4px 0;background:#10232d}
+.route-start-choice label{display:grid}
+.featured-art{align-self:start;max-height:430px!important;min-height:0!important}
+.featured-art .target-photo{max-height:430px!important}
+@media(max-width:760px){
+ .session-timebar{display:block!important;padding:5px 8px!important;margin-bottom:8px!important}
+ .session-timebar>div:first-child>svg,.session-timebar>div:first-child strong,.session-timebar small{display:none!important}
+ .session-timebar>div:first-child>span{font-size:0!important}
+ .session-timebar .context-edit{font-size:12px!important}
+ .session-time-actions{display:none!important}
+ .saving-context{top:98px;gap:3px;padding:3px 8px;font-size:12px}
+ .saving-context .context-edit{font-size:12px}
+ .hop-page-heading h1{font-size:24px!important}
+ .target-best-nights{font-size:12px}
+ .target-best-nights p{font-size:16px}
+}
+.header-actions .offline-pill{min-width:44px;min-height:44px}
+@media(max-width:760px){.header-actions .offline-pill>span:last-child{display:inline!important;font-size:12px;max-width:72px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.header-actions .offline-pill{display:flex;gap:5px;padding:6px}.app-header{grid-template-columns:1fr auto!important}}
+.selected-moon-more>summary{display:flex;align-items:center;min-height:44px;cursor:pointer;color:#b2c6cf;font-size:12px}
+.moonlight-at-time{font-size:12px;color:#a6bfc5;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.weather-overview+.weather-panel:not([open]){margin:0;padding:0;border:0}.weather-overview+.weather-panel:not([open])>summary{display:none}
+@media(max-width:700px){
+ .weather-overview .weather-overview-heading .eyebrow,.weather-overview .weather-overview-cache{display:none}
+ .weather-overview .weather-overview-heading small{display:none}
+ .weather-overview .weather-overview-heading strong{font-size:18px}
+ .weather-overview .weather-overview-dark{gap:2px 6px}
+ .weather-overview .weather-overview-dark strong{font-size:12px}
+ .weather-overview .weather-overview-actions button{font-size:12px}
+ .weather-overview{padding:8px 10px!important;gap:3px!important}
+}
+.route-settings>summary{min-height:44px;display:flex;align-items:center;font-size:12px;color:#aac3c8;cursor:pointer}
+@media(max-width:760px){.planetarium-heading-actions .live-label{display:none}.sky-panel>.panel-heading{padding:12px;gap:8px}.sky-panel>.panel-heading .eyebrow{font-size:12px;letter-spacing:.06em}.sky-panel>.panel-heading h1{font-size:24px}.planetarium-heading-actions{justify-content:center}.planetarium-guide{padding:10px 12px!important;gap:5px!important}}
+/* The large setting also reaches legacy pixel-based body and control text. */
+:root[data-text-size="large"] .main-content :is(p,button,input,select,textarea,label,output,summary){font-size:18px!important;line-height:1.5}
+:root[data-text-size="large"] .main-content :is(small,.eyebrow,.setup-hint,.selection-context){font-size:14px!important;line-height:1.5}

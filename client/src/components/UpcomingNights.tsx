@@ -5,6 +5,7 @@ import { formatInTimeZone } from "date-fns-tz";
 import type { UnifiedTarget } from "@/lib/astronomy";
 import { bestUpcomingNights, upcomingNightDateLabel, upcomingNights, type UpcomingNight } from "@/lib/upcoming-nights";
 import { clockNightDate } from "@/lib/astronomical-clock";
+import "./ObservingCalendar.css";
 
 const glyphs = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"];
 const glyph = (phase: number) => glyphs[Math.round(phase / 45) % 8];
@@ -27,15 +28,15 @@ export function UpcomingNights({ lat, lon, timezone, date, onDate, targets = [],
   const nights = useMemo(() => upcomingNights({ lat, lon, timezone, date, days: 7, targets, selected }), [lat, lon, timezone, +date, targets, selected]);
   const best = useMemo(() => bestUpcomingNights({ lat, lon, timezone, date, targets, selected }), [lat, lon, timezone, +date, targets, selected]);
   const selectedDate = clockNightDate(date, timezone);
-  const choose = (night: UpcomingNight) => onDate(night.start);
+  const choose = (night: UpcomingNight) => onDate(night.chooseAt);
 
   return <section className="upcoming-nights" aria-label="Upcoming observing nights">
-    <div className="upcoming-nights-heading"><div><strong>Next nights</strong><span>Moon-free astronomical darkness · forecast when available</span></div><small>Next 7 nights</small></div>
+    <div className="upcoming-nights-heading"><div><strong>Next nights</strong><span>Compare moon-free dark time, target altitude and available forecast</span></div><small>Next 7 nights</small></div>
     <div className="upcoming-nights-strip">
       {nights.map((night) => {
         const targetCount = targets.length ? `${night.feasibleTargetCount} of ${targets.length} targets well placed` : null;
         const selectedResult = night.selectedTarget;
-        return <button type="button" key={night.date} className={`upcoming-night${night.date === selectedDate ? " is-selected" : ""}`} aria-pressed={night.date === selectedDate} onClick={() => choose(night)}>
+        return <button type="button" key={night.date} className={`upcoming-night${night.date === selectedDate ? " is-selected" : ""}`} aria-label={`${upcomingNightDateLabel(night, timezone)}. Open at ${clock(night.chooseAt, timezone)}, during darkness`} aria-pressed={night.date === selectedDate} onClick={() => choose(night)}>
           <strong>{upcomingNightDateLabel(night, timezone)}</strong>
           <span className="upcoming-night-moon"><span aria-hidden="true">{glyph(night.moonPhase)}</span> {night.moonLabel} · {Math.round(night.moonIllumination * 100)}%</span>
           <span>{duration(night.moonFreeDarkHours)} moon-free dark</span>

@@ -1908,8 +1908,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A small Cyg star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Cyg to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 7063 is a compact open cluster in Cygnus, cataloged at 7′ across and magnitude 7.0.",
+    "finding": "Center the 7′ catalog position in Cygnus; its compact size makes accurate field matching useful.",
     "minAperture": 50,
     "references": [
       {
@@ -1940,8 +1940,8 @@
     "family": "cluster",
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
-    "impression": "A broad Lac star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Lac to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 7209 is a broader open cluster in Lacerta, cataloged at 25′ across and magnitude 7.7.",
+    "finding": "Use the Lacerta finder field to center the 25′ catalog position and compare its wider extent with the surrounding field.",
     "minAperture": 50,
     "references": [
       {

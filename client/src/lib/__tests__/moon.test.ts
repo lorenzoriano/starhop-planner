@@ -92,7 +92,8 @@ describe("offline Moon observatory", () => {
     const {binocularMagnification,binocularAperture,skyBrightness,...old}=defaultSettings;
     expect(settingsSchema.parse(old).binocularMagnification).toBe(14);
     expect(settingsSchema.parse(old).binocularAperture).toBe(50);
-    expect(settingsSchema.parse(old).skyBrightness).toBe(21.6);
+    expect(settingsSchema.parse(old).skyBrightness).toBe(19);
+    expect(settingsSchema.parse({...old,skyBrightness:21.2}).skyBrightness).toBe(21.2);
   });
   it("rejects a nonexistent local observing time at the daylight-saving jump", () => {
     expect(resolveLocalMoment("2026-03-08","02:30","America/Los_Angeles")).toBeNull();

@@ -23,3 +23,25 @@ export function resolveSessionDraft(draft:SessionDraft,previous?:ObservingSessio
 export function reuseNightItems(items:NightItem[],keepRecords:boolean,now=new Date()):NightItem[] {
   return items.map(item=>keepRecords?{...item}:{id:item.id,addedAt:now.toISOString(),notes:""});
 }
+
+/** A saved session belongs to the local observing date that starts at noon. */
+export function observingNightDate(at:Date,zone:string):string {
+  const local=formatInTimeZone(at,zone,"yyyy-MM-dd HH:mm");
+  const [day,time]=local.split(" ");
+  if(time<"12:00") {
+    const [year,month,date]=day.split("-").map(Number);
+    return new Date(Date.UTC(year,month-1,date-1,12)).toISOString().slice(0,10);
+  }
+  return day;
+}
+
+export function sameObservingNight(session:Pick<ObservingSession,"startAt"|"lat"|"lon">,at:Date,lat:number,lon:number):boolean {
+  return Math.abs(session.lat-lat)<.0001&&Math.abs(session.lon-lon)<.0001&&
+    observingNightDate(new Date(session.startAt),tzLookup(session.lat,session.lon))===
+    observingNightDate(at,tzLookup(lat,lon));
+}
+
+/** Duplicate records get fresh notes and observation state; the source is immutable. */
+export function duplicateNightItems(items:NightItem[],now=new Date()):NightItem[] {
+  return reuseNightItems(items,false,now);
+}

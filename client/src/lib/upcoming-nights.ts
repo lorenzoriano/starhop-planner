@@ -31,11 +31,13 @@ export interface UpcomingNight {
   moonIllumination: number;
   moonLabel: string;
   moonFreeDarkHours: number;
+  moonFreeWindows: { start: Date; end: Date }[];
   darkHours: number;
   targets: UpcomingTargetResult[];
   feasibleTargetCount: number;
   selectedTarget: UpcomingTargetResult | null;
   geometryScore: number;
+  chooseAt: Date;
 }
 
 export interface UpcomingNightsOptions {
@@ -110,6 +112,9 @@ export function upcomingNights(options: UpcomingNightsOptions): UpcomingNight[] 
     const targetResults = targets.map((target) => targetHours(target, lat, lon, moonFree));
     const feasibleTargetCount = targetResults.filter((target) => target.goodAltitudeHours >= 1).length;
     const selectedTarget = selected ? targetHours(selected, lat, lon, moonFree) : null;
+    const chooseAt = selectedTarget?.bestAt
+      ?? (moonFree.length ? new Date((+moonFree[0].start + +moonFree[0].end) / 2)
+        : dark.length ? new Date((+dark[0].start + +dark[0].end) / 2) : bounds.start);
     // Geometric rank rewards moon-free darkness and the selected target's useful altitude.
     // Weather is intentionally not part of this score; unavailable weather stays unknown in the UI.
     const geometryScore = selectedTarget
@@ -121,16 +126,63 @@ export function upcomingNights(options: UpcomingNightsOptions): UpcomingNight[] 
       end: bounds.end,
       moonPhase: phase,
       moonIllumination: moon.illumination,
-      moonLabel: phaseLabel(phase),
+      moonLabel: moon.phaseName,
       moonFreeDarkHours: moonFree.reduce((sum, s) => sum + (+s.end - +s.start) / 3_600_000, 0),
+      moonFreeWindows: moonFree,
       darkHours: dark.reduce((sum, s) => sum + (+s.end - +s.start) / 3_600_000, 0),
       targets: targetResults,
       feasibleTargetCount,
       selectedTarget,
       geometryScore,
+      chooseAt,
     });
   }
   return nights;
+}
+
+export interface MoonFreeTargetWindow {
+  date: string;
+  start: Date;
+  end: Date;
+  moonPhase: number;
+  moonIllumination: number;
+  moonLabel: string;
+  targetAltitude: number;
+}
+
+/** Search complete observing nights and intersect moon-free darkness with a real altitude threshold. */
+export function moonFreeTargetWindows({
+  lat, lon, timezone, date, target, days = 30, minAltitude = 15,
+}: UpcomingNightsOptions & { target: UnifiedTarget; minAltitude?: 15 | 30 }): MoonFreeTargetWindow[] {
+  const nights = upcomingNights({ lat, lon, timezone, date, days: Math.min(30, Math.max(1, days)) });
+  const result: MoonFreeTargetWindow[] = [];
+  const altitudeAt = (at: Date) => eqToHorizontal(target.ra, target.dec, lat, lon, at).alt;
+  const crossing = (a: Date, b: Date, aAbove: boolean) => {
+    let lo = +a, hi = +b;
+    while (hi - lo > 1000) {
+      const mid = (lo + hi) / 2;
+      if ((altitudeAt(new Date(mid)) >= minAltitude) === aAbove) lo = mid;
+      else hi = mid;
+    }
+    return new Date((lo + hi) / 2);
+  };
+  for (const night of nights) {
+    for (const dark of night.moonFreeWindows) {
+      const window = { ok: true as const, start: dark.start, end: dark.end, segments: [dark] };
+      const peak = targetWindow(target.ra, target.dec, lat, lon, window);
+      if (peak.max < minAltitude) continue;
+      const above: { start: Date; end: Date }[] = [{
+        start: altitudeAt(dark.start) >= minAltitude ? dark.start : crossing(dark.start, peak.bestAt, false),
+        end: altitudeAt(dark.end) >= minAltitude ? dark.end : crossing(peak.bestAt, dark.end, true),
+      }];
+      for (const window of above) if (+window.end > +window.start) result.push({
+          date: night.date, ...window, moonPhase: night.moonPhase,
+          moonIllumination: night.moonIllumination, moonLabel: night.moonLabel,
+          targetAltitude: minAltitude,
+        });
+    }
+  }
+  return result;
 }
 
 export function bestUpcomingNights(options: Omit<UpcomingNightsOptions, "days">): UpcomingNight[] {

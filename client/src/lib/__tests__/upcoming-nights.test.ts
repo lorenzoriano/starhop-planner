@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { bestUpcomingNights, upcomingNights } from "../upcoming-nights";
-import type { UnifiedTarget } from "../astronomy";
+import { bestUpcomingNights, moonFreeTargetWindows, upcomingNights } from "../upcoming-nights";
+import { eqToHorizontal, type UnifiedTarget } from "../astronomy";
+import { moonState } from "../moon";
 
 const sanFrancisco = { lat: 37.77, lon: -122.42, timezone: "America/Los_Angeles" };
 const m31: UnifiedTarget = {
@@ -38,10 +39,18 @@ describe("upcoming observing nights", () => {
       expect(night.moonFreeDarkHours).toBeLessThanOrEqual(night.darkHours + 1e-8);
       expect(night.selectedTarget?.id).toBe("M31");
       expect(night.selectedTarget?.goodAltitudeHours).toBeGreaterThanOrEqual(0);
+      const chosenMoon = moonState(sanFrancisco.lat, sanFrancisco.lon, night.chooseAt);
+      if (night.moonFreeWindows.length) {
+        expect(night.chooseAt.getTime()).toBeGreaterThanOrEqual(+night.moonFreeWindows[0].start);
+        expect(night.chooseAt.getTime()).toBeLessThanOrEqual(+night.moonFreeWindows.at(-1)!.end);
+        expect(chosenMoon.sunAlt).toBeLessThanOrEqual(-18);
+        expect(chosenMoon.alt).toBeLessThan(0);
+      }
       if (night.selectedTarget?.bestAt) {
         expect(+night.selectedTarget.bestAt).toBeGreaterThanOrEqual(+night.start);
         expect(+night.selectedTarget.bestAt).toBeLessThan(+night.end);
         expect(night.selectedTarget.goodAltitudeHours).toBeGreaterThan(0);
+        expect(eqToHorizontal(m31.ra, m31.dec, sanFrancisco.lat, sanFrancisco.lon, night.chooseAt).alt).toBeGreaterThanOrEqual(30);
       }
     }
 
@@ -52,5 +61,24 @@ describe("upcoming observing nights", () => {
       [...best.map((night) => night.geometryScore)].sort((a, b) => b - a),
     );
     expect(new Set(best.map((night) => night.date)).size).toBe(3);
+    expect(nights.every(night => night.chooseAt.getTime() >= night.start.getTime() && night.chooseAt.getTime() < night.end.getTime())).toBe(true);
+  });
+
+  it("finds stable target-aware moon-free windows across the next 30 observing nights", () => {
+    const windows = moonFreeTargetWindows({
+      ...sanFrancisco,
+      date: new Date("2026-10-25T04:30:00Z"),
+      target: m31,
+      days: 30,
+      minAltitude: 15,
+    });
+    expect(windows.length).toBeGreaterThan(0);
+    const first = windows[0];
+    const middle = new Date((+first.start + +first.end) / 2);
+    const moon = moonState(sanFrancisco.lat, sanFrancisco.lon, middle);
+    expect(moon.sunAlt).toBeLessThanOrEqual(-18);
+    expect(moon.alt).toBeLessThan(0);
+    expect(eqToHorizontal(m31.ra, m31.dec, sanFrancisco.lat, sanFrancisco.lon, middle).alt).toBeGreaterThanOrEqual(15);
+    expect(first.end.getTime()).toBeGreaterThan(first.start.getTime());
   });
 });

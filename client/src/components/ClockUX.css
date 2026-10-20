@@ -1,0 +1,31 @@
+.astro-cursor-values button,
+.astro-chart-legend button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.astro-dial .astro-hour,
+.astro-dial .astro-ring-label {
+  font-size: calc(12px * var(--dial-text-scale, 1));
+}
+
+@media (max-width: 600px) {
+  .astro-dial .astro-hour-long {
+    display: none;
+  }
+}
+
+.astro-cursor-values button:focus-visible,
+.astro-chart-legend button:focus-visible,
+.astro-comparison path[tabindex]:focus-visible,
+.astro-year-chart path[tabindex]:focus-visible {
+  outline: 2px solid #d5e1d9;
+  outline-offset: 3px;
+}

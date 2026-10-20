@@ -38,3 +38,48 @@
 .binocular-detail-actions .save-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 0 12px; white-space: nowrap; }
 .binocular-detail-actions .save-button span { font-size: 12px; }
 .catalog-grid .catalog-object[style*="grid-template-columns"] .catalog-object-body { padding: 12px; }
+.catalog-combobox { display:grid; gap:6px; min-width:0; position:relative; }
+.catalog-combobox > label { display:block; color:#9cb3bc; font-size:11px; }
+.catalog-combobox > input { width:100%; min-width:0; min-height:42px; padding:10px 12px; color:#d3dedc; background:#0a151e; border:1px solid #365360; border-radius:5px; font-size:13px; }
+.catalog-combobox > input:focus { outline:2px solid #9bcbbb; outline-offset:1px; }
+.binocular-toolbar .binocular-search { flex:1 1 100%; }
+.binocular-toolbar .binocular-search > input { min-height:41px; }
+.catalog-search-status { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin:8px 0; color:#a7bdbe; font-size:11px; }
+.binocular-profile-details { margin:4px 0 18px; }
+.binocular-profile-details > summary { cursor:pointer; color:#b6cbbf; font-size:11px; padding:9px 0; }
+.binocular-profile-details[open] > summary { margin-bottom:8px; }
+
+/* Keep the monthly controls within narrow phone viewports. */
+@media (max-width: 560px) {
+  .binocular-calendar-heading { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; gap: 12px; }
+  .binocular-calendar-heading > div,
+  .binocular-sample-settings,
+  .binocular-sample-settings label,
+  .binocular-sample-settings select { width: 100%; min-width: 0; max-width: 100%; }
+  .binocular-sample-settings { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .binocular-months button { gap: 3px; padding-inline: 1px; }
+  .binocular-months small { font-size: 7px; line-height: 1.2; }
+}
+.binocular-new-moon-action { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:8px 0; color:#d5c48f; font-size:11px; }
+.binocular-new-moon-action button { min-height:38px; }
+.binocular-method-details { margin:8px 0 14px; color:#91aab2; font-size:10px; }
+.binocular-method-details summary,
+.binocular-detail-more > summary { cursor:pointer; color:#a8c2b4; }
+.binocular-method-details .binocular-method-note { margin:8px 0 0; }
+.binocular-detail { scroll-padding-top:78px; }
+.binocular-detail-sticky-actions { position:sticky; top:-1px; z-index:4; margin:-10px -4px 0; padding:8px 4px; border-bottom:1px solid #344b4d; background:#101e27f5; }
+.binocular-quick-actions { display:flex; flex-wrap:wrap; gap:7px; }
+.binocular-quick-actions > button { min-height:38px; padding:0 10px; font-size:11px; }
+.binocular-detail-impression { color:#a8bdc1; font-size:12px; line-height:1.65; margin:0; }
+.binocular-detail-more { border-top:1px solid #304851; padding-top:8px; }
+.binocular-detail-notes { grid-template-columns:1fr; }
+.binocular-detail-sources { margin-bottom:10px; }
+.binocular-detail-actions { display:none; }
+@media (max-width: 560px) {
+  .binocular-detail { width:calc(100% - 20px); max-height:94dvh; padding:16px; gap:12px; }
+  .binocular-detail h2 { font-size:27px; }
+  .binocular-detail-sticky-actions { margin-inline:-3px; }
+  .binocular-quick-actions { gap:5px; }
+  .binocular-quick-actions > button { flex:1 1 calc(50% - 5px); font-size:10px; padding-inline:6px; }
+  .binocular-new-moon-action { align-items:flex-start; flex-direction:column; }
+}

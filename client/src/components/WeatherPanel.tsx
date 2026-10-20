@@ -10,10 +10,14 @@ import { modelAt,modelAge,modelAgreement,type ForecastModels } from '@/lib/forec
 import { stargazingHours,type StargazingProfile } from '@/lib/stargazing-forecast';
 import { useWeather } from '@/hooks/use-weather';
 import { forecastAge,meanWeather,observingWeather,weatherVerdict,WEATHER_HOUR,type WeatherHour } from '@/lib/weather';
-import { moonState } from '@/lib/moon';
+import { moonDay,moonState } from '@/lib/moon';
+import { clockNightDate } from '@/lib/astronomical-clock';
+import { visibilityWindow } from '@/lib/target-visibility';
+import './WeatherOverview.css';
 
 const value=(n:number|null|undefined,suffix='',digits=0)=>n==null?'Unavailable':`${n.toFixed(digits)}${suffix}`;
-export function WeatherPanel({lat,lon,date,timezone,locationName,onTime,skyBrightness=21.6}:{lat:number;lon:number;date:Date;timezone:string;locationName:string;skyBrightness?:number;onTime?:(at:Date)=>void}) {
+export function WeatherPanel({lat,lon,date,timezone,locationName,onTime,skyBrightness=21.6,overview=false,onPlanNight}:{lat:number;lon:number;date:Date;timezone:string;locationName:string;skyBrightness?:number;onTime?:(at:Date)=>void;overview?:boolean;onPlanNight?:(at:Date)=>void}) {
+  const mobile=useIsMobile();
   const weather=useWeather(lat,lon),forecast=weather.forecast;
   const [profile,setProfile]=useLocalState<StargazingProfile>('starhop-stargazing-profile-v1','binocular',z.enum(['binocular','deep-sky','lunar']));
   const [modelRevision,setModelRevision]=useState(0);
@@ -24,6 +28,10 @@ export function WeatherPanel({lat,lon,date,timezone,locationName,onTime,skyBrigh
     const values=pair.map(h=>outlooks.find(o=>o.time===h.time)?.score);
     return values.every((v):v is number=>v!==null&&v!==undefined)?100-values.reduce((a,b)=>a+b,0)/values.length:Infinity;
   }):null,[forecast,+date,timezone,weather.now,outlooks]);
+  const nightDate=clockNightDate(date,timezone);
+  const astronomicalNight=useMemo(()=>visibilityWindow(nightDate,'12:00','12:00','night',timezone,lat,lon),[nightDate,timezone,lat,lon]);
+  const chosenMoon=useMemo(()=>moonState(lat,lon,date),[lat,lon,+date]);
+  const lunarEvents=useMemo(()=>moonDay(lat,lon,date,timezone),[lat,lon,+date,timezone]);
   const [inspected,setInspected]=useState<{key:string;time:number}|null>(null);
   const profileKey=`${forecast?.key}:${report?.night.ok?+report.night.start:''}`;
   const hours=report?.hours??[];
@@ -39,8 +47,19 @@ export function WeatherPanel({lat,lon,date,timezone,locationName,onTime,skyBrigh
   const verdict=cloud===null?{label:hours.length?'Hourly forecast':'Outside forecast range',tone:'unknown'}:weatherVerdict({cloud,rain:darkHours.every(h=>h.rain!==null)?Math.max(...darkHours.map(h=>h.rain!)):null,rainChance:darkHours.every(h=>h.rainChance!==null)?Math.max(...darkHours.map(h=>h.rainChance!)):null,visibility:darkHours.every(h=>h.visibility!==null)?Math.min(...darkHours.map(h=>h.visibility!)):null});
   const Icon=verdict.tone==='good'?CloudMoon:verdict.label==='Rain or snow likely'?CloudRain:Cloud;
   const time=(ms:number,pattern='HH:mm')=>formatInTimeZone(ms,timezone,pattern);
+  const darkSegments=astronomicalNight.ok?astronomicalNight.segments:[];
+  const dusk=darkSegments[0]?.start??null,dawn=darkSegments.at(-1)?.end??null;
+  const planAt=report?.best?new Date(report.best.start):dusk?new Date(+dusk+15*60_000):null;
+  const overviewForecast=!forecast?(weather.loading?'Fetching forecast…':weather.online?'Forecast unavailable':'No saved forecast'):!report?'Forecast unavailable':!report.darkCovered?'Forecast does not cover all dark hours':cloud===null?'Cloud forecast unavailable':verdict.label;
+  const overviewWindow=!astronomicalNight.ok||!darkSegments.length?'No astronomical darkness on this night':report?.best?`Best covered 2-hour window · ${time(report.best.start,'HH:mm')}–${time(report.best.end,time(report.best.start,'yyyy-MM-dd')===time(report.best.end,'yyyy-MM-dd')?'HH:mm':'MMM d, HH:mm')}`:report?.darkCovered?'No qualifying 2-hour window in the covered forecast':'Not enough forecast coverage to judge a 2-hour window';
+  const moonEvent=(at:Date|null)=>at?time(+at,time(+at,'yyyy-MM-dd')===nightDate?'HH:mm':'MMM d, HH:mm'):'None this night';
   const cacheLabel=!weather.online?age==='expired'?'Offline · expired forecast':age==='stale'?'Offline · older forecast':'Offline · saved forecast':weather.loading?'Updating…':age==='expired'?'Expired forecast':age==='stale'?'Older forecast':forecast?'Cached on this device':'Forecast';
-  return <details className={`weather-panel weather-${verdict.tone}`} data-testid="weather-panel">
+  return <>{overview&&<section className={`weather-overview weather-overview-${report?.darkCovered&&cloud!==null?verdict.tone:'unknown'}`} aria-label="Observing night weather and sky conditions">
+    <div className="weather-overview-heading"><div><span className="eyebrow">OBSERVING NIGHT · {formatInTimeZone(astronomicalNight.ok?astronomicalNight.start:date,timezone,'EEE, MMM d')} <span className="weather-overview-location">· {locationName}</span></span><strong>{overviewForecast}</strong><small>{!report?.darkCovered&&report?.best?'Some forecasted hours are available; the full night is not covered.':cloud!==null&&report?.darkCovered?`Night average: ${Math.round(cloud)}% cloud`:weather.error||'Missing forecast data remains unknown.'}</small></div><span className="weather-overview-cache">{cacheLabel}</span></div>
+    <div className="weather-overview-dark"><span>Astronomical darkness</span><strong>{dusk&&dawn?`${time(+dusk,'HH:mm')} – ${time(+dawn,time(+dusk,'yyyy-MM-dd')===time(+dawn,'yyyy-MM-dd')?'HH:mm':'MMM d, HH:mm')}`:'No dusk or dawn this night'}</strong></div>
+    {mobile?<details className="weather-overview-more"><summary>Moon {Math.round(chosenMoon.illumination*100)}% · {chosenMoon.alt>0?`${Math.round(chosenMoon.alt)}° high`:"below horizon"} · forecast window</summary><div className="weather-overview-facts"><div><span>Moonrise · moonset</span><strong>{moonEvent(lunarEvents.rise)} · {moonEvent(lunarEvents.set)}</strong><small>At chosen time: Moon {Math.round(chosenMoon.illumination*100)}% lit · {chosenMoon.alt>0?`${Math.round(chosenMoon.alt)}° high`:"below horizon"}</small></div><div><span>Forecast window</span><strong>{overviewWindow}</strong><small>{report?.best?`${Math.round(report.best.cloud)}% average cloud · ${Math.round(report.best.wind)} km/h wind`:overviewWindow.includes('Not enough')?'Uncovered hours are not treated as poor conditions':'Based on the available forecast'}</small></div></div></details>:<div className="weather-overview-facts"><div><span>Moonrise · moonset</span><strong>{moonEvent(lunarEvents.rise)} · {moonEvent(lunarEvents.set)}</strong><small>At chosen time: Moon {Math.round(chosenMoon.illumination*100)}% lit · {chosenMoon.alt>0?`${Math.round(chosenMoon.alt)}° high`:"below horizon"}</small></div><div><span>Forecast window</span><strong>{overviewWindow}</strong><small>{report?.best?`${Math.round(report.best.cloud)}% average cloud · ${Math.round(report.best.wind)} km/h wind`:overviewWindow.includes('Not enough')?'Uncovered hours are not treated as poor conditions':'Based on the available forecast'}</small></div></div>}
+    <div className="weather-overview-actions">{onPlanNight&&<button type="button" disabled={!planAt} onClick={()=>planAt&&onPlanNight(planAt)}>{planAt?'Plan this night':'No dark window to plan'}</button>}{onTime&&<button type="button" className="weather-overview-details" onClick={()=>{const panel=document.querySelector<HTMLDetailsElement>('[data-testid="weather-panel"]');if(panel)panel.open=true;panel?.scrollIntoView({behavior:'smooth',block:'center'});}}>Hourly forecast <ArrowUpRight size={13}/></button>}</div>
+  </section>}<details className={`weather-panel weather-${verdict.tone}`} data-testid="weather-panel">
     <summary><span className="weather-site"><Icon size={19}/><span><strong>Stargazing forecast</strong><small>{locationName}</small></span></span><span className="weather-glance"><strong>{forecast?verdict.label:weather.loading?'Fetching forecast…':weather.online?weather.error?'Weather unavailable':'Local forecast':'No saved forecast'}</strong><small>{cloud!==null?`Night average: ${Math.round(cloud)}% cloud · `:''}Night {report?.night.ok?formatInTimeZone(report.night.start,timezone,'MMM d'):formatInTimeZone(date,timezone,'MMM d')}{age==='stale'||age==='expired'||!weather.online?` · ${cacheLabel}`:''}</small></span><ChevronDown className="weather-chevron" size={16}/></summary>
     <div className="weather-content"><div className="context-actions"><ContextDateButton value={date} timezone={timezone} onChange={onTime}/><ContextLocationButton>{locationName}</ContextLocationButton></div>
       <div className="weather-update"><span>{forecast?`${cacheLabel} · Retrieved ${time(forecast.fetchedAt,'MMM d, HH:mm')}`:weather.online?'Connect once at each location to keep a forecast offline.':'This location has no saved forecast. Connect to fetch one.'}</span><button className="text-action" disabled={!weather.online||weather.loading} onClick={()=>{weather.refresh();setModelRevision(n=>n+1);}} aria-label="Refresh weather"><RefreshCw size={12} className={weather.loading?'animate-spin':''}/>{weather.loading?'Updating':'Refresh'}</button></div>
@@ -76,7 +95,7 @@ export function WeatherPanel({lat,lon,date,timezone,locationName,onTime,skyBrigh
       <p className="weather-source">Forecast: <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a> · Times in {timezone.replaceAll('_',' ')}.</p>
       <p className="weather-method">The outlook combines cloud, dew, wind, haze risk, astronomical darkness and modeled Moon sky glow and your assumed moonless sky brightness. Binocular and faint-object profiles respond differently to moonlight; Moon/planet work does not get a Moon penalty. Jet-stream wind is a rough steadiness indicator, not a seeing measurement in arcseconds. Weather visibility is horizontal distance, not astronomical transparency. Object altitude and Moon distance remain on each object’s graph.</p>
     </div>
-  </details>;
+  </details></>;
 }
 function WeatherChart({hours,timezone,lat,lon,dark,selected,onInspect,models}:{models?:ForecastModels;hours:WeatherHour[];timezone:string;lat:number;lon:number;dark:{start:Date;end:Date}[];selected:WeatherHour;onInspect:(time:number)=>void}) {
   const mobile=useIsMobile(),width=mobile?360:850,left=38,right=width-14,plot=right-left;

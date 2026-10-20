@@ -1,6 +1,6 @@
-import { useId, useMemo, useState } from "react";
+import { useId, useMemo, useState, type ReactNode } from "react";
 import { getConstellationName, type UnifiedTarget } from "@/lib/astronomy";
-import { catalogSearchScore, lunarSearchHint, unsupportedPlanetMessage } from "@/lib/catalog-search";
+import { catalogSearchDiagnostics, catalogSearchScore, deduplicateCatalogMatches, lunarSearchHint } from "@/lib/catalog-search";
 
 type CatalogComboboxProps = {
   targets: UnifiedTarget[];
@@ -11,27 +11,27 @@ type CatalogComboboxProps = {
   label?: string;
   placeholder?: string;
   className?: string;
+  lunarHintAction?: ReactNode;
 };
 
 function visibleCatalogId(target: UnifiedTarget) {
   return /^(?:M\d+|NGC\s*\d+|IC\s*\d+|HR\s*\d+)$/i.test(target.id) ? target.id : undefined;
 }
 
-export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, label = "Search catalog", placeholder = "Name, constellation or catalog number…", className = "" }: CatalogComboboxProps) {
+export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, label = "Search catalog", placeholder = "Name, constellation or catalog number…", className = "", lunarHintAction }: CatalogComboboxProps) {
   const generatedId = useId().replace(/:/g, "");
   const inputId = `catalog-combobox-${generatedId}`;
   const listId = `${inputId}-listbox`;
   const [activeIndex, setActiveIndex] = useState(0);
   const [status, setStatus] = useState("");
   const results = useMemo(() => query.trim()
-    ? targets.map(target => ({ target, score: catalogSearchScore(target, query, getConstellationName(target.con)) }))
+    ? deduplicateCatalogMatches(targets.map(target => ({ target, score: catalogSearchScore(target, query, getConstellationName(target.con)) }))
       .filter(result => Number.isFinite(result.score))
-      .sort((a, b) => a.score - b.score || a.target.name.localeCompare(b.target.name))
-      .slice(0, 7)
+      .sort((a, b) => a.score - b.score || a.target.name.localeCompare(b.target.name))).slice(0, 7)
     : [], [targets, query]);
-  const planetMessage = unsupportedPlanetMessage(query);
+  const diagnostics = useMemo(() => query.trim() ? catalogSearchDiagnostics(query, targets) : null, [query, targets]);
   const moonHint = lunarSearchHint(query);
-  const noResults = planetMessage ?? moonHint ?? "No matching objects. Try a catalog number or another name.";
+  const noResults = !query.trim() || results.length ? "" : diagnostics?.message ?? "No catalog matches.";
   const shownActiveIndex = results.length ? Math.min(activeIndex, results.length - 1) : -1;
 
   const select = (target: UnifiedTarget) => {
@@ -82,8 +82,8 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
             <span>{[catalogId, target.categoryShort, getConstellationName(target.con), isSaved ? "Saved" : ""].filter(Boolean).join(" · ")}</span>
           </button>
         </li>;
-      }) : <li role="option" aria-selected="false"><span>{noResults}</span></li>}
+      }) : <li role="option" aria-selected="false"><span>{noResults}</span>{moonHint && lunarHintAction}</li>}
     </ul>}
-    <div className="sr-only" role="status" aria-live="polite">{status}</div>
+    {status && <p className="catalog-combobox-status" role="status" aria-live="polite">{status}</p>}
   </div>;
 }

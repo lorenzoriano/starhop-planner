@@ -1,0 +1,23 @@
+.chart-touch-instructions { display:none; }
+.chart-setup-summary { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 14px; color:#9bb1b7; background:#0c1a25; border-top:1px solid #263b49; font-size:11px; }
+.chart-setup-summary button { flex:0 0 auto; min-height:36px; padding:6px 11px; border:1px solid #496458; border-radius:5px; color:#c6dec9; background:#10222c; }
+.sky-chart-root:fullscreen { width:100vw; height:100vh; overflow:auto; padding:12px; background:#07111a; }
+.sky-chart-root:fullscreen [data-testid="sky-chart-sky"] { width:100%; height:calc(100vh - 205px)!important; max-height:none!important; aspect-ratio:auto!important; }
+.sky-chart-root:fullscreen .chart-toolbar { position:sticky; top:0; z-index:5; }
+.sky-chart-root:fullscreen .chart-optics-details,
+.sky-chart-root:fullscreen .chart-setup-summary,
+.sky-chart-root:fullscreen .chart-accuracy-note { max-width:1400px; margin-inline:auto; }
+@media (hover:none), (pointer:coarse) {
+  .chart-pointer-instructions { display:none; }
+  .chart-touch-instructions { display:inline; }
+}
+@media (max-width:600px) {
+  .chart-setup-summary { align-items:flex-start; flex-direction:column; gap:6px; }
+  .chart-setup-summary button { width:100%; }
+  .sky-chart-root:fullscreen { padding:5px; }
+  .sky-chart-root:fullscreen [data-testid="sky-chart-sky"] { height:calc(100vh - 230px)!important; }
+}
+.planetarium-symbol-key>span{display:inline-flex;align-items:center;gap:5px;font-size:12px}
+.planetarium-symbol-key svg{flex:none;width:22px;height:22px;display:inline-block}
+.stars-only-indicator{position:absolute;top:8px;left:8px;padding:6px 9px;background:#0b1824e8;border:1px solid #4a6372;border-radius:4px;font-size:12px;color:#bfd2d4;pointer-events:none}
+.chart-setup-summary{font-size:12px}.chart-setup-summary button{min-height:44px;min-width:44px}
