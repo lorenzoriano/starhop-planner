@@ -1,6 +1,6 @@
 // The build generates an asset manifest and inserts a content-based version.
 const PREFIX = `starhop-${encodeURIComponent(new URL(self.registration.scope).pathname)}-`;
-const CACHE = `${PREFIX}38a1b65812b78fb6`;
+const CACHE = `${PREFIX}cd7fd8a3cbd21c1a`;
 const urlFor = (path) => new URL(path, self.registration.scope).href;
 
 // Sky catalogs and the app shell are small enough to prepare automatically.
