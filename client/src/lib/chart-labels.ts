@@ -34,3 +34,10 @@ export function labelPointLookup(points:readonly LabelPoint[],cellSize:number){
     return found;
   };
 }
+
+/** Every catalog marker, including double stars, reserves space for its glyph. */
+export function constellationSymbolBox(star:{type:string;mag:number},point:{x:number;y:number},unit:number,selected=false):LabelBox|null {
+  if(star.type==='star'&&star.mag>3)return null;
+  const radius=(selected?12:6)*unit;
+  return {left:point.x-radius,right:point.x+radius,top:point.y-radius,bottom:point.y+radius};
+}

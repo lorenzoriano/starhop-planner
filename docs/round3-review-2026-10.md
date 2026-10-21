@@ -13,7 +13,7 @@
 
 ## Automated checks
 
-TypeScript, the full 343-test / 49-file suite, and production build passed. Regression coverage includes geometric label ownership, exact weather-ranking inputs, the short Lagoon window, peak-window selection, default-sky M31 ranking, finder geometry, browsing dates, graph Moon-down behavior and scheduled-time consistency.
+TypeScript, the full 346-test / 49-file suite, and production build passed. Regression coverage includes geometric label ownership, exact weather-ranking inputs, the short Lagoon window, peak-window selection, default-sky M31 ranking, finder geometry, browsing dates, graph Moon-down behavior and scheduled-time consistency.
 
 ## Browser acceptance harness
 
@@ -24,3 +24,13 @@ Use `BASE_URL` for root, regression, binocular, charts, ranking, season and sky 
 For public Pages verification the transport fetches the actual public assets with TLS-verifying curl, renders them at their original public URLs, and compares deployed JavaScript/CSS bytes to `dist/public`. It does not disable certificate checks. Set `STARHOP_DIST` if the tested build is elsewhere. Weather ranking uses a documented deterministic saved forecast fixture; it does not claim a live provider supplied those test predictions.
 
 Issue replies and tracking issue #49 record per-item public verification and any deliberately declined behavior. They are authoritative for deployment status; local checks alone are not grounds to close an issue.
+
+## Public verification follow-up
+
+The first public replay used release `b4651e7` and verified the deployed assets against the tested build. It caught one additional overlap: Draco against the mag-5.5 double-star marker 16 Draconis. The follow-up reserves every catalog symbol, including double stars and the full selected-object ring. Its browser preservation check compares actual rendered bounds. The public transport now rejects unknown asset names as well as differing bytes, so a cached old HTML page cannot be mistaken for the tested release.
+
+A separate quiet public search run measured zero typing long tasks at 1× and 4× CPU in all seven search boxes and zero pan long tasks at 1×. The combined functional workflow also produced background tasks; timing claims therefore use the dedicated observer's explicit measurement window after the view settles.
+
+The preservation replay also found that Moon “Next window” could select an expired pre-dawn interval. Future-window selection now removes expired intervals and clips ongoing ones before applying the 30-minute minimum; the regression uses M31 at Nov 9, 04:00 in San Francisco. Touch instructions use the same input-aware wording as the finder.
+
+Suggestion ordering also keeps context around large clusters: clusters filling more than 70% of the optical field receive less framing credit. Bright stellar patterns can use the full field as their own guides. The real-default Nov 8 regression explicitly requires the Pleiades to remain second and M31 to stay in the top ten.

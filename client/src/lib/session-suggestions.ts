@@ -30,7 +30,10 @@ export function sessionBinocularSuggestions(session:ObservingSession, targets:Un
       const dimensions=assessment.dimensions;
       // Patterns large enough to inspect at this power, within one field, are
       // more rewarding than a tiny unresolved glow with the same coarse rating.
-      const visualScale=dimensions?Math.min(1,dimensions.major*profile.magnification/360)/Math.max(1,dimensions.major/(profile.fov*60)):0;
+      const framing=dimensions&&/cluster/i.test(target.category)?Math.min(1,profile.fov*60*.7/dimensions.major):1;
+      // Clusters need surrounding field to show their boundary; bright stellar
+      // patterns can use the full field because the pattern supplies its guides.
+      const visualScale=dimensions?framing*Math.min(1,dimensions.major*profile.magnification/360)/Math.max(1,dimensions.major/(profile.fov*60)):0;
       const pick:SessionSuggestion={target,at,alt,fit:assessment.rating,curated,dark:moon.sunAlt<=-18,visualScale,brightnessMargin:assessment.pointLimit-target.mag,glow:assessment.glow};
       if(!best||compare(pick,best)<0)best=pick;
     }

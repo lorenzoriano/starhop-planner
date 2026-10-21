@@ -27,7 +27,7 @@ describe('session binocular suggestions',()=>{
   expect(index).toBeGreaterThanOrEqual(0);
   expect(index).toBeLessThan(10);
   expect(picks[index].fit).toBeLessThanOrEqual(1);
-  expect(picks.findIndex(p=>p.target.id==='M45')).toBeLessThan(10);
+  expect(picks.findIndex(p=>p.target.id==='M45')).toBe(1);
  });
  it('does not offer deep-sky objects in daylight or objects already on the list',()=>{
   const session={...makeSession('Day',new Date('2026-11-09T20:00:00Z'),37.77,-122.42),durationMinutes:60};

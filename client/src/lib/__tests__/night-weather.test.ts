@@ -1,6 +1,6 @@
 import {describe,it,expect} from 'vitest';
 import {nightWeather,rankWeatherNights} from '../night-weather';
-import {upcomingNights,nearestMoonFreeTargetTime,moonFreeTargetWindows} from '../upcoming-nights';
+import {upcomingNights,nearestMoonFreeTargetTime,remainingMoonFreeWindows,moonFreeTargetWindows} from '../upcoming-nights';
 import {WEATHER_HOUR,weatherLocation,type WeatherForecast} from '../weather';
 import {moonState} from '../moon';
 import {eqToHorizontal,type UnifiedTarget} from '../astronomy';
@@ -62,4 +62,14 @@ describe('weather-aware upcoming nights',()=>{
   expect(+at-+from).toBeLessThan(86400000);
   const moon=moonState(site.lat,site.lon,at);expect(moon.alt).toBeLessThan(0);expect(moon.sunAlt).toBeLessThan(-18);expect(eqToHorizontal(target.ra,target.dec,site.lat,site.lon,at).alt).toBeGreaterThan(15);
  });
+ it('the Moon next-window action cannot return an expired pre-dawn M31 window',()=>{
+  const date=new Date('2026-11-09T12:00:00Z'),m31={...target,id:'M31',ra:10.6847,dec:41.269};
+  const raw=moonFreeTargetWindows({...site,date,target:m31,minAltitude:30});
+  expect(raw.some(window=>+window.end<+date)).toBe(true);
+  const remaining=remainingMoonFreeWindows(raw,date);
+  expect(remaining.length).toBeGreaterThan(0);
+  expect(remaining.every(window=>+window.start>=+date&&+window.end-+window.start>=30*60000)).toBe(true);
+  expect((+remaining[0].start+ +remaining[0].end)/2).toBeGreaterThan(+date);
+ });
+
 });
