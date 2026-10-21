@@ -204,9 +204,17 @@ export function searchCatalog(targets: readonly UnifiedTarget[], query: string, 
   const cacheKey=`${limit}:${q}`;
   const cached=cache.get(cacheKey);
   if(cached)return cached;
-  const matches=deduplicateCatalogMatches(targets.map(target=>({target,score:catalogSearchScore(target,query)}))
+  const ranked=targets.map(target=>({target,score:catalogSearchScore(target,query)}))
     .filter(match=>Number.isFinite(match.score))
-    .sort((a,b)=>a.score-b.score||a.target.name.localeCompare(b.target.name)),limit);
+    .sort((a,b)=>a.score-b.score||a.target.name.localeCompare(b.target.name));
+  // An exact name or identifier is an unambiguous request. Keep copies/aliases
+  // of that identity, but do not pad it with unrelated fuzzy suggestions.
+  // A literal partial name (e.g. Mizar in “Mizar & Alcor”) also takes
+  // precedence over spelling corrections; constellation matches remain valid.
+  const best=ranked[0]?.score??Infinity;
+  const relevant=best<=1?ranked.filter(match=>match.score<=1)
+    :best<=4?ranked.filter(match=>match.score<=5):ranked;
+  const matches=deduplicateCatalogMatches(relevant,limit);
   if(cache.size>=8)cache.delete(cache.keys().next().value!);
   cache.set(cacheKey,matches);
   return matches;
@@ -217,6 +225,7 @@ export function catalogSearchDiagnosticsFromMatches(
   query: string,
   matches: CatalogSearchMatch[],
   visibleTargets?: readonly UnifiedTarget[],
+  hiddenReason?: (target: UnifiedTarget) => string | undefined,
 ): CatalogSearchDiagnostics {
   if(!query.trim())return {kind:"no-match",matches:[],visibleMatches:[],message:"Enter a name or catalog designation to search."};
   const visibleIds=visibleTargets?new Set(visibleTargets.map(target=>target.id)):null;
@@ -225,7 +234,12 @@ export function catalogSearchDiagnosticsFromMatches(
   const relevant=matches[0]?.score<=1?matches.filter(match=>match.score<=1):matches;
   const visibleMatches=visibleIds?relevant.filter(match=>visibleIds.has(match.target.id)):relevant;
   if(visibleMatches.length)return {kind:"matches",matches,visibleMatches,message:`${visibleMatches.length} matching ${visibleMatches.length===1?"object":"objects"}.`};
-  if(matches.length)return {kind:"filtered",matches,visibleMatches,message:`${matches[0].target.name} matches your search but is hidden by the current filters.`};
+  if(matches.length){
+    const reason=hiddenReason?.(matches[0].target);
+    return {kind:"filtered",matches,visibleMatches,message:reason
+      ? `${matches[0].target.name} was found. ${reason}`
+      : `${matches[0].target.name} matches your search but is hidden by the current filters.`};
+  }
   const planet=unsupportedPlanetMessage(query);
   if(planet)return {kind:"unsupported-planet",matches,visibleMatches,message:planet};
   const lunar=lunarSearchHint(query);
@@ -234,8 +248,8 @@ export function catalogSearchDiagnosticsFromMatches(
 }
 
 /** Search the full collection and explain whether active filters hid a match. */
-export function catalogSearchDiagnostics(query: string, allTargets: readonly UnifiedTarget[], visibleTargets?: readonly UnifiedTarget[]): CatalogSearchDiagnostics {
-  return catalogSearchDiagnosticsFromMatches(query,searchCatalog(allTargets,query),visibleTargets);
+export function catalogSearchDiagnostics(query: string, allTargets: readonly UnifiedTarget[], visibleTargets?: readonly UnifiedTarget[], hiddenReason?: (target: UnifiedTarget) => string | undefined): CatalogSearchDiagnostics {
+  return catalogSearchDiagnosticsFromMatches(query,searchCatalog(allTargets,query),visibleTargets,hiddenReason);
 }
 
 /** Message shown when a user searches for a planet that the deep-sky catalog does not contain. */

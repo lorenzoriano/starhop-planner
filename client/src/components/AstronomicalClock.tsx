@@ -451,8 +451,8 @@ export function AstronomicalClock({
           <span>Noon +1d</span>
         </div>
         <p>
-          {live && !travelPreview ? "Live sky" : "Time travel"} · {label(clockDate)} · noon {night} →
-          noon {shiftClockDate(night, 1)}
+          {live && !travelPreview ? "Live sky" : "Time travel"} · {label(clockDate)} · noon {formatInTimeZone(resolveLocalMoment(night,"12:00",timezone)!,timezone,"MMM d")} →
+          noon {formatInTimeZone(resolveLocalMoment(shiftClockDate(night,1),"12:00",timezone)!,timezone,"MMM d")}
           {+bounds.end - +bounds.start !== 86400000
             ? " · clock-change night"
             : ""}
@@ -561,7 +561,7 @@ export function AstronomicalClock({
         >
           <div className="astro-dial-caption">
             <span>Midnight at top · noon at bottom</span>
-            <button className="text-action astro-time-lock" aria-pressed={locked} onClick={()=>{if(locked){setLocked(false);setCursor(null);}else toggleTime(+at);}}>{locked?"Time locked · unlock":"Hover to inspect · tap to lock time"}</button>
+            <button className="text-action astro-time-lock" aria-pressed={locked} onClick={()=>{if(locked){setLocked(false);setCursor(null);}else toggleTime(+at);}}>{locked?"Time locked · unlock":"Inspect by pointer or touch · tap to lock time"}</button>
           </div>
           <svg
             ref={dialRef}
@@ -584,7 +584,7 @@ export function AstronomicalClock({
             onKeyDown={keyboard}
           >
             <title>
-              24-hour object altitude clock for {night}, {locationName}. Center
+              24-hour object altitude clock for {formatInTimeZone(resolveLocalMoment(night,"12:00",timezone)!,timezone,"MMM d, yyyy")}, {locationName}. Center
               −90°, horizon ring 0°, outer ring 90°. All times local.
             </title>
             {samples.slice(0, -1).map((s, i) => {
@@ -618,7 +618,7 @@ export function AstronomicalClock({
                 />
                 <text
                   x="325"
-                  y={320 - ((alt + 90) / 180) * 254 - 5}
+                  y={320 - ((alt + 90) / 180) * 254 + (alt===90?16:-5)}
                   className="astro-ring-label"
                 >
                   {alt === 0 ? "0° · HORIZON" : `${alt}°`}
@@ -689,7 +689,7 @@ export function AstronomicalClock({
             <path
               d={clockCurve(samples, (s) => s.moon)}
               fill="none"
-              stroke="#a4a8ad"
+              stroke="var(--chart-silver, #aeb4be)"
               strokeWidth="1.7"
               strokeDasharray="10 3 2 3"
             />
@@ -766,7 +766,7 @@ export function AstronomicalClock({
               cx={clockPoint(hour, moon.alt).x}
               cy={clockPoint(hour, moon.alt).y}
               r="4"
-              fill="#ecede6"
+              fill="var(--chart-silver, #aeb4be)"
             />
             <circle cx="320" cy="320" r="3" fill="#d9c792" />
           </svg>
@@ -809,7 +809,7 @@ export function AstronomicalClock({
               className="text-action"
               onClick={() => setHighlight(highlight === "moon" ? null : "moon")}
             >
-              ☾ Moon <strong>{rounded(moon.alt)}</strong> ·{" "}
+              ☾ Moon <strong>{rounded(Math.abs(moon.alt))} {moon.alt<0?"below horizon":"high"}</strong> ·{" "}
               {Math.round(moon.illumination * 100)}% lit
             </button>
             <div className="astro-events">
@@ -853,7 +853,7 @@ export function AstronomicalClock({
                 >
                   <i />
                   {t.displayName || t.name}
-                  <strong>{rounded(o.alt)}</strong>
+                  <strong>{rounded(Math.abs(o.alt))} {o.alt<0?"below horizon":"high"}</strong>
                 </button>
                 <p>
                   {rounded(o.separation)} from Moon ·{" "}
@@ -892,7 +892,7 @@ export function AstronomicalClock({
             );
           })}
           <p className="astro-note">
-            Rise, transit and set cover this observing night, noon <ContextDateButton>{night}</ContextDateButton> to
+            Rise, transit and set cover this observing night, noon <ContextDateButton value={resolveLocalMoment(night,"12:00",timezone)!} timezone={timezone}>{formatInTimeZone(resolveLocalMoment(night,"12:00",timezone)!,timezone,"MMM d")}</ContextDateButton> to
             the following noon. +1d means after midnight. Moon glow is a
             clear-air estimate.
           </p>
@@ -1061,8 +1061,8 @@ export function AstronomicalClock({
                           {season.days.map((d) => (
                             <button
                               key={d.day}
-                              aria-label={`${t.name}, ${d.day}: ${d.hours[i].toFixed(1)} qualifying hours, Moon ${Math.round(d.lit * 100)} percent lit`}
-                              title={`${d.day} · ${d.hours[i].toFixed(1)} h · Moon ${Math.round(d.lit * 100)}% lit`}
+                              aria-label={`${t.name}, ${formatInTimeZone(resolveLocalMoment(d.day,"12:00",timezone)!,timezone,"MMM d, yyyy")}: ${d.hours[i].toFixed(1)} qualifying hours, Moon ${Math.round(d.lit * 100)} percent lit`}
+                              title={`${formatInTimeZone(resolveLocalMoment(d.day,"12:00",timezone)!,timezone,"MMM d, yyyy")} · ${d.hours[i].toFixed(1)} h · Moon ${Math.round(d.lit * 100)}% lit`}
                               onClick={() => {
                                 changeNight(d.day);
                                 document
@@ -1091,7 +1091,7 @@ export function AstronomicalClock({
                   </div>
                 </details>
                 <p className="astro-note">
-                  {from} → {to} · {season.days.length} nights · month numbers
+                  {formatInTimeZone(resolveLocalMoment(from,"12:00",timezone)!,timezone,"MMM d, yyyy")} → {formatInTimeZone(resolveLocalMoment(to,"12:00",timezone)!,timezone,"MMM d, yyyy")} · {season.days.length} nights · month numbers
                   mark the first of each month. Half-hour sampling makes totals
                   approximate; DST nights use their actual elapsed hours.
                 </p>

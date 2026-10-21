@@ -24,9 +24,16 @@ export function nightWeather(night:UpcomingNight,forecast:WeatherForecast|undefi
   return {available:true,score,cloud,label:`Weather ${score}/100 · ${Math.round(cloud)}% cloud`,reason:`Dark-hour average · ${rain?'precipitation likely · ':''}${state.online?'saved forecast':'offline cache'}${age==='stale'?' · older report':''}`,};
 }
 
-/** Forecast-covered choices come first; unknown nights retain a separate geometric rank. */
+/** Unknown weather is neutral. Forecast quality adjusts geometric merit rather than
+ * granting every covered night priority over the rest of the month. */
 export function rankWeatherNights(nights:UpcomingNight[],reports:Map<string,NightWeather>):UpcomingNight[] {
   const maximum=Math.max(1,...nights.map(night=>night.geometryScore));
-  const merit=(night:UpcomingNight)=>.65*(reports.get(night.date)?.score??0)+.35*night.geometryScore/maximum*100;
-  return [...nights].sort((a,b)=>Number(reports.get(b.date)?.available??false)-Number(reports.get(a.date)?.available??false)||((reports.get(a.date)?.available&&reports.get(b.date)?.available)?merit(b)-merit(a):b.geometryScore-a.geometryScore)||a.date.localeCompare(b.date));
+  const merit=(night:UpcomingNight)=>{
+    const score=reports.get(night.date)?.score;
+    const geometry=night.geometryScore/maximum*100;
+    // Do not turn missing forecasts into a prediction of either clear or cloudy skies.
+    return geometry+(score==null?0:(score-50)*.8);
+  };
+  const poorForecast=(night:UpcomingNight)=>{const score=reports.get(night.date)?.score;return score!=null&&score<=10;};
+  return [...nights].sort((a,b)=>Number(poorForecast(a))-Number(poorForecast(b))||Number(b.moonFreeDarkHours>=1)-Number(a.moonFreeDarkHours>=1)||merit(b)-merit(a)||a.date.localeCompare(b.date));
 }

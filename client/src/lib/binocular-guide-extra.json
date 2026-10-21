@@ -5,7 +5,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "The Crab is a faint remnant of an exploded star. Seek a small haze; filament detail is beyond this view.",
-    "finding": "Locate the Tau field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M1 lies 1.1° north-west of Tien Kwan (magnitude 3.0), in Taurus.",
     "minAperture": 50,
     "references": [
       {
@@ -21,7 +21,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A compact globular glow offers a satisfying contrast with the wider star fields of Aquarius.",
-    "finding": "Locate the Aqr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M2 lies 4.8° north of Sadalsuud (magnitude 2.9), in Aquarius.",
     "minAperture": 50,
     "references": [
       {
@@ -37,7 +37,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A diffuse globular beside Antares. Sky transparency and its low southern altitude matter more than its total magnitude.",
-    "finding": "Locate the Sco field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M4 lies 1.1° south-east of Al Niyat (magnitude 2.9), in Scorpius.",
     "minAperture": 50,
     "references": [
       {
@@ -53,7 +53,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "Frame the Butterfly Cluster as a small gathering of bright stars above Scorpius’s tail.",
-    "finding": "Locate the Sco field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M6 lies 5.1° north of Shaula (magnitude 1.6), in Scorpius.",
     "minAperture": 50,
     "references": [
       {
@@ -69,7 +69,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "A broad, bright cluster rewards a wide field. Try tracing pairs and chains among its scattered members.",
-    "finding": "Locate the Sco field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M7 lies 4.7° north-east of Shaula (magnitude 1.6), in Scorpius.",
     "minAperture": 50,
     "references": [
       {
@@ -85,7 +85,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "This small globular is a demanding haze in Ophiuchus. Confirm the field before claiming a detection.",
-    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M9 lies 2.6° north of ξ Ophiuchi (magnitude 4.4), in Ophiuchus.",
     "minAperture": 50,
     "references": [
       {
@@ -101,7 +101,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "Compare this globular’s round glow with nearby M12 during the same observing session.",
-    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M10 lies 8.1° north-east of ζ Ophiuchi (magnitude 2.6), in Ophiuchus.",
     "minAperture": 50,
     "references": [
       {
@@ -117,7 +117,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "A compact, rich cluster can look more like mist than a flock of resolved stars at low power.",
-    "finding": "Locate the Sct field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M11 lies 1.8° south-east of β Scuti (magnitude 4.2), in Scutum.",
     "minAperture": 50,
     "references": [
       {
@@ -133,7 +133,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A softer globular glow than nearby M10 makes an interesting comparison under the same sky.",
-    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M12 lies 5.7° south-east of Marfik (λ Ophiuchi) (magnitude 3.8), in Ophiuchus.",
     "minAperture": 50,
     "references": [
       {
@@ -149,7 +149,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A faint, concentrated globular rewards patient field matching and a stable view.",
-    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M14 lies 6.5° south-west of γ Ophiuchi (magnitude 3.8), in Ophiuchus.",
     "minAperture": 50,
     "references": [
       {
@@ -165,7 +165,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A dense globular can resemble a fuzzy star. Look for its surrounding haze once the field is secure.",
-    "finding": "Locate the Peg field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M15 lies 4.2° north-west of Enif (magnitude 2.4), in Pegasus.",
     "minAperture": 50,
     "references": [
       {
@@ -181,7 +181,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "The Eagle’s star cluster is the modest binocular goal. Its famous pillars are not visible in ordinary binoculars.",
-    "finding": "Locate the Ser field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M16 lies 6.3° south-east of Sinistra (magnitude 3.3), in Serpens.",
     "minAperture": 50,
     "references": [
       {
@@ -197,7 +197,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "A small sprinkling of cluster stars sits between grander Sagittarius fields. Compare its scale with M24.",
-    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M18 lies 4.2° north of μ Sagittarii (magnitude 3.9), in Sagittarius.",
     "minAperture": 50,
     "references": [
       {
@@ -213,7 +213,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A modest globular glow in a busy southern field. Choose a high, transparent observing window.",
-    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M19 lies 4.6° west of θ Ophiuchi (magnitude 3.3), in Ophiuchus.",
     "minAperture": 50,
     "references": [
       {
@@ -229,7 +229,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "The Trifid is a difficult nebulous glow. Its photographic colors and dark lanes are not a low-power expectation.",
-    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M20 lies 3.3° south-west of μ Sagittarii (magnitude 3.9), in Sagittarius.",
     "minAperture": 80,
     "references": [
       {
@@ -245,7 +245,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "A generous scattering of stars suits a slow binocular sweep through Sagittarius.",
-    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M23 lies 4.5° north-west of μ Sagittarii (magnitude 3.9), in Sagittarius.",
     "minAperture": 50,
     "references": [
       {
@@ -261,7 +261,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "A loose, bright cluster provides a stellar contrast with the denser background of the nearby star cloud.",
-    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M25 lies 4.6° north-east of μ Sagittarii (magnitude 3.9), in Sagittarius.",
     "minAperture": 50,
     "references": [
       {
@@ -277,7 +277,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A little unresolved cluster in Scutum. Use the field pattern to separate its haze from neighboring stars.",
-    "finding": "Locate the Sct field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M26 lies 2.7° south-east of α Scuti (magnitude 3.9), in Scutum.",
     "minAperture": 50,
     "references": [
       {
@@ -293,7 +293,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A compact globular near the Teapot’s lid. Compare its small glow with the much broader M22.",
-    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M28 lies 1.0° north-west of Kaus Borealis (magnitude 2.8), in Sagittarius.",
     "minAperture": 50,
     "references": [
       {
@@ -309,7 +309,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "A small knot of stars sits in Cygnus’s rich background. Look for the group, not a dramatic isolated cluster.",
-    "finding": "Locate the Cyg field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M29 lies 1.8° south of Sadr (magnitude 2.2), in Cygnus.",
     "minAperture": 50,
     "references": [
       {
@@ -325,7 +325,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A concentrated globular in Capricornus. A steady view helps distinguish it from a nearby star.",
-    "finding": "Locate the Cap field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M30 lies 3.3° east of ζ Capricorni (magnitude 3.7), in Capricornus.",
     "minAperture": 50,
     "references": [
       {
@@ -341,7 +341,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "Andromeda’s compact companion can masquerade as a star. A careful, supported view is needed to establish its haze.",
-    "finding": "Locate the And field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M32 lies 3.6° north-west of μ Andromedae (magnitude 3.9), in Andromeda.",
     "minAperture": 50,
     "references": [
       {
@@ -357,7 +357,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "A spacious Perseus cluster with a handful of brighter members. Try sketching the strongest pairs.",
-    "finding": "Locate the Per field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M34 lies 5.2° north-west of Algol (magnitude 2.1), in Perseus.",
     "minAperture": 50,
     "references": [
       {
@@ -373,7 +373,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "A broad, loose group in Cygnus. Low magnification keeps the cluster distinct from its busy surroundings.",
-    "finding": "Locate the Cyg field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M39 lies 2.6° west of π² Cygni (magnitude 4.2), in Cygnus.",
     "minAperture": 50,
     "references": [
       {
@@ -389,7 +389,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "An optical double cataloged by Messier. The binocular goal is the two stars, rather than a nebulous object.",
-    "finding": "Locate the UMa field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M40 lies 1.4° north-east of Megrez (magnitude 3.3), in Ursa Major. Identify its two stars rather than searching for a nebula.",
     "minAperture": 50,
     "references": [
       {
@@ -405,7 +405,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "A loose cluster in Hydra. Sweep gently and compare the concentration with the surrounding stars.",
-    "finding": "Locate the Hya field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M48 lies 3.1° south-east of ζ Monocerotis (magnitude 4.3), in Hydra.",
     "minAperture": 50,
     "references": [
       {
@@ -421,7 +421,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A small oval glow in Virgo. Dark skies and a confirmed finder field are essential.",
-    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M49 lies 6.1° east of ο Virginis (magnitude 4.1), in Virgo.",
     "minAperture": 50,
     "references": [
       {
@@ -437,7 +437,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "A compact open cluster in Monoceros. Look for a small grainy glow among the surrounding Milky Way stars.",
-    "finding": "Locate the Mon field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M50 lies 4.3° north-east of θ Canis Majoris (magnitude 4.1), in Monoceros.",
     "minAperture": 50,
     "references": [
       {
@@ -453,7 +453,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A faint patch near the Big Dipper. Detecting the galaxy is the goal; spiral arms need a much larger view.",
-    "finding": "Locate the CVn field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M51 lies 3.6° south-west of Alkaid (magnitude 1.9), in Canes Venatici.",
     "minAperture": 50,
     "references": [
       {
@@ -469,7 +469,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A small globular near Alpha Comae Berenices. Check for an extended glow rather than a pinpoint.",
-    "finding": "Locate the Com field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M53 lies 7.7° north of Vindemiatrix (magnitude 2.8), in Coma Berenices.",
     "minAperture": 50,
     "references": [
       {
@@ -485,7 +485,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "This distant globular is a tiny haze against Sagittarius. Higher altitude and support improve the chance of detection.",
-    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M54 lies 1.7° west of Ascella (magnitude 2.6), in Sagittarius.",
     "minAperture": 50,
     "references": [
       {
@@ -501,7 +501,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A broad, diffuse globular with a low surface brightness. An open southern horizon and a dark sky help.",
-    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M55 lies 6.0° north-west of θ¹ Sagittarii (magnitude 4.4), in Sagittarius.",
     "minAperture": 50,
     "references": [
       {
@@ -517,7 +517,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A faint globular in a rich Lyra field. Verify its position before looking for the subtle nonstellar glow.",
-    "finding": "Locate the Lyr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M56 lies 3.8° north-west of Albireo (magnitude 3.1), in Lyra.",
     "minAperture": 50,
     "references": [
       {
@@ -533,7 +533,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A small Virgo galaxy is an advanced binocular detection. Expect a faint haze without visible spiral structure.",
-    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M58 lies 6.1° west of Vindemiatrix (magnitude 2.8), in Virgo.",
     "minAperture": 80,
     "references": [
       {
@@ -549,7 +549,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A challenging little glow in Virgo’s galaxy country. A detailed finder field is more useful than a sweeping search.",
-    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M59 lies 5.0° west of Vindemiatrix (magnitude 2.8), in Virgo.",
     "minAperture": 80,
     "references": [
       {
@@ -565,7 +565,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "Look for a concentrated galaxy glow in Virgo. Nearby galaxies make careful identification especially important.",
-    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M60 lies 4.6° west of Vindemiatrix (magnitude 2.8), in Virgo.",
     "minAperture": 80,
     "references": [
       {
@@ -581,7 +581,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A faint Virgo spiral is a detection project for mounted large binoculars, rather than a detailed visual subject.",
-    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M61 lies 5.2° north of Zaniah (magnitude 3.9), in Virgo.",
     "minAperture": 80,
     "references": [
       {
@@ -597,7 +597,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A southern globular offers a compact haze. Wait for it to climb clear of the murky horizon.",
-    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M62 lies 4.8° north-east of ε Scorpii (magnitude 2.3), in Ophiuchus.",
     "minAperture": 50,
     "references": [
       {
@@ -613,7 +613,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "The Sunflower Galaxy’s binocular signature is a faint elongated glow; its namesake texture is not visible.",
-    "finding": "Locate the CVn field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M63 lies 5.3° north-east of α² Canum Venaticorum (magnitude 2.9), in Canes Venatici.",
     "minAperture": 50,
     "references": [
       {
@@ -629,7 +629,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "Look for the galaxy’s concentrated center. The famous dark eye needs a larger, more detailed view.",
-    "finding": "Locate the Com field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M64 lies 7.1° south-west of β Comae Berenices (magnitude 4.3), in Coma Berenices.",
     "minAperture": 50,
     "references": [
       {
@@ -645,7 +645,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "One member of Leo’s galaxy trio. Seek a small elongated haze with a stable view and a dark sky.",
-    "finding": "Locate the Leo field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M65 lies 2.6° south-east of Chertan (magnitude 3.3), in Leo.",
     "minAperture": 50,
     "references": [
       {
@@ -661,7 +661,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "Compare its oval glow with nearby M65. Binoculars can frame the neighborhood even when details remain elusive.",
-    "finding": "Locate the Leo field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M66 lies 2.6° north of ι Leonis (magnitude 3.9), in Leo.",
     "minAperture": 50,
     "references": [
       {
@@ -677,7 +677,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "An old open cluster appears softer and less obvious than the Beehive. Compare the two in one evening.",
-    "finding": "Locate the Cnc field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M67 lies 2.0° west of Acubens (magnitude 4.2), in Cancer.",
     "minAperture": 50,
     "references": [
       {
@@ -693,7 +693,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A faint southern globular needs good transparency. Use the marked stars to verify its small glow.",
-    "finding": "Locate the Hya field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M68 lies 3.5° south of Kraz (magnitude 2.6), in Hydra.",
     "minAperture": 50,
     "references": [
       {
@@ -709,7 +709,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A small, concentrated globular in the southern Teapot is a challenge for mounted large binoculars.",
-    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M69 lies 2.5° north-east of Kaus Australis (magnitude 1.9), in Sagittarius.",
     "minAperture": 80,
     "references": [
       {
@@ -725,7 +725,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A tiny globular glow sits near M69. Compare both only after confirming their separate finder positions.",
-    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M70 lies 4.5° north-east of Kaus Australis (magnitude 1.9), in Sagittarius.",
     "minAperture": 80,
     "references": [
       {
@@ -741,7 +741,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A subtle cluster haze in Sagitta can blend into the Milky Way. Spend time on the exact marked field.",
-    "finding": "Locate the Sge field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M71 lies 1.4° south-west of γ Sagittae (magnitude 3.5), in Sagitta.",
     "minAperture": 50,
     "references": [
       {
@@ -757,7 +757,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A faint globular in Aquarius offers an advanced detection project under a transparent dark sky.",
-    "finding": "Locate the Aqr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M72 lies 3.4° south-east of Albali (magnitude 3.8), in Aquarius.",
     "minAperture": 80,
     "references": [
       {
@@ -773,7 +773,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A distant globular looks nearly stellar at low power. A stable, larger binocular view helps reveal its haze.",
-    "finding": "Locate the Sgr field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M75 lies 8.0° south-west of Dabih (magnitude 3.1), in Sagittarius.",
     "minAperture": 50,
     "references": [
       {
@@ -789,7 +789,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A compact galaxy in Cetus. Seek its bright center; its faint outer structure is a much harder visual goal.",
-    "finding": "Locate the Cet field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M77 lies 0.9° south-east of δ Ceti (magnitude 4.1), in Cetus.",
     "minAperture": 80,
     "references": [
       {
@@ -805,7 +805,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A small reflection-nebula glow in Orion. Dark skies help distinguish real haze from glare or misted optics.",
-    "finding": "Locate the Ori field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M78 lies 2.5° north-east of Alnitak (ζ Orionis) (magnitude 4.2), in Orion.",
     "minAperture": 50,
     "references": [
       {
@@ -821,7 +821,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A small winter globular in Lepus makes a change from Orion’s brilliant clusters and nebulae.",
-    "finding": "Locate the Lep field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M79 lies 3.9° south of Nihal (magnitude 2.8), in Lepus.",
     "minAperture": 50,
     "references": [
       {
@@ -837,7 +837,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A concentrated globular near Scorpius’s head. Expect a tiny glow, rather than resolved stars.",
-    "finding": "Locate the Sco field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M80 lies 2.8° north of Al Niyat (magnitude 2.9), in Scorpius.",
     "minAperture": 50,
     "references": [
       {
@@ -853,7 +853,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A face-on southern galaxy has a diffuse glow. Its low surface brightness demands a clear, dark sky.",
-    "finding": "Locate the Hya field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M83 lies 7.2° south-west of π Hydrae (magnitude 3.3), in Hydra.",
     "minAperture": 50,
     "references": [
       {
@@ -869,7 +869,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A small Virgo galaxy near M86. Use the surrounding field to keep their identities separate.",
-    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M84 lies 6.4° north-east of ο Virginis (magnitude 4.1), in Virgo.",
     "minAperture": 80,
     "references": [
       {
@@ -885,7 +885,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A concentrated galaxy glow near Coma Berenices. Confirm the field before searching with averted vision.",
-    "finding": "Locate the Com field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M85 lies 9.5° north-east of Denebola (magnitude 2.1), in Coma Berenices.",
     "minAperture": 80,
     "references": [
       {
@@ -901,7 +901,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "Frame this galaxy with M84 for an advanced Virgo comparison. Expect faint smudges rather than photographic detail.",
-    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M86 lies 6.7° north-east of ο Virginis (magnitude 4.1), in Virgo.",
     "minAperture": 80,
     "references": [
       {
@@ -917,7 +917,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A compact glow marks this enormous Virgo galaxy. Its jet is not visible in binoculars.",
-    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M87 lies 7.3° north-east of ο Virginis (magnitude 4.1), in Virgo.",
     "minAperture": 80,
     "references": [
       {
@@ -933,7 +933,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "An elongated galaxy in the Virgo region. Its low-power view is subtle and needs well-supported large binoculars.",
-    "finding": "Locate the Com field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M88 lies 8.1° north-west of Vindemiatrix (magnitude 2.8), in Coma Berenices.",
     "minAperture": 80,
     "references": [
       {
@@ -949,7 +949,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A small rounded galaxy glow is an advanced field-identification exercise in Virgo.",
-    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M89 lies 6.7° west of Vindemiatrix (magnitude 2.8), in Virgo.",
     "minAperture": 80,
     "references": [
       {
@@ -965,7 +965,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "This Virgo galaxy is a difficult binocular detection. Look for a low-contrast elongated haze.",
-    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M90 lies 6.6° west of Vindemiatrix (magnitude 2.8), in Virgo.",
     "minAperture": 80,
     "references": [
       {
@@ -981,7 +981,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "A small, bright Puppis cluster rewards a slow sweep. Look for its strongest stars first.",
-    "finding": "Locate the Pup field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M93 lies 1.5° north-west of Azmidiske (magnitude 3.3), in Puppis.",
     "minAperture": 50,
     "references": [
       {
@@ -997,7 +997,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A galaxy with a concentrated core in Canes Venatici. Seek a small round glow rather than its faint outer disk.",
-    "finding": "Locate the CVn field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M94 lies 3.0° north of α² Canum Venaticorum (magnitude 2.9), in Canes Venatici.",
     "minAperture": 50,
     "references": [
       {
@@ -1013,7 +1013,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A faint Leo galaxy is a supported large-binocular challenge. Separate it carefully from the neighboring M96 field.",
-    "finding": "Locate the Leo field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M95 lies 3.6° north-east of ρ Leonis (magnitude 3.9), in Leo.",
     "minAperture": 80,
     "references": [
       {
@@ -1029,7 +1029,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A low-contrast oval in Leo. Compare its position with M95 and M105 before recording a detection.",
-    "finding": "Locate the Leo field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M96 lies 4.3° north-east of ρ Leonis (magnitude 3.9), in Leo.",
     "minAperture": 80,
     "references": [
       {
@@ -1045,7 +1045,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "The Owl Nebula is a faint, diffuse patch near the Big Dipper. Its eyes are not a binocular expectation.",
-    "finding": "Locate the UMa field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M97 lies 2.3° south-east of Merak (magnitude 2.4), in Ursa Major.",
     "minAperture": 50,
     "references": [
       {
@@ -1061,7 +1061,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A low-surface-brightness spiral offers a difficult galaxy detection in Coma Berenices.",
-    "finding": "Locate the Com field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M99 lies 6.6° north-east of ο Virginis (magnitude 4.1), in Coma Berenices.",
     "minAperture": 80,
     "references": [
       {
@@ -1077,7 +1077,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A diffuse galaxy glow in the Virgo region needs a dark sky and large, supported binoculars.",
-    "finding": "Locate the Com field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M100 lies 8.3° east of Denebola (magnitude 2.1), in Coma Berenices.",
     "minAperture": 80,
     "references": [
       {
@@ -1093,7 +1093,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "A large face-on galaxy can hide despite its total magnitude. Search for a broad, very low-contrast patch.",
-    "finding": "Locate the UMa field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M101 lies 4.1° north-west of Asellus Primus (magnitude 4.0), in Ursa Major.",
     "minAperture": 50,
     "references": [
       {
@@ -1109,7 +1109,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "The usual M102 identification, NGC 5866, is an elongated galaxy glow. Messier’s historical identification is disputed.",
-    "finding": "Locate the Dra field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M102 lies 4.0° south-west of Edasich (magnitude 3.3), in Draco.",
     "minAperture": 80,
     "references": [
       {
@@ -1125,7 +1125,7 @@
     "level": "easy",
     "equipment": "7×35 / 10×50",
     "impression": "A small Cassiopeia cluster can appear as a modest knot. Confirm the group rather than expecting a large swarm.",
-    "finding": "Locate the Cas field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M103 lies 1.0° north-east of Ruchbah (magnitude 2.7), in Cassiopeia.",
     "minAperture": 50,
     "references": [
       {
@@ -1141,7 +1141,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "The Sombrero’s binocular signature is a small elongated glow. Its dark lane requires greater magnification.",
-    "finding": "Locate the Vir field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M104 lies 5.0° north-east of η Corvi (magnitude 4.3), in Virgo.",
     "minAperture": 50,
     "references": [
       {
@@ -1157,7 +1157,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A concentrated Leo galaxy glow shares a field with fainter companions. Establish its position before comparing them.",
-    "finding": "Locate the Leo field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M105 lies 4.9° north-east of ρ Leonis (magnitude 3.9), in Leo.",
     "minAperture": 80,
     "references": [
       {
@@ -1173,7 +1173,7 @@
     "level": "challenge",
     "equipment": "7×50 / 10×50; dark sky",
     "impression": "An elongated galaxy in Canes Venatici. Support and dark skies help bring out its faint extent.",
-    "finding": "Locate the CVn field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M106 lies 5.6° east of Al Kaphrah (magnitude 3.7), in Canes Venatici.",
     "minAperture": 50,
     "references": [
       {
@@ -1189,7 +1189,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A faint globular in Ophiuchus needs a careful field match and large, mounted binoculars.",
-    "finding": "Locate the Oph field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M107 lies 2.7° south-west of ζ Ophiuchi (magnitude 2.6), in Ophiuchus.",
     "minAperture": 80,
     "references": [
       {
@@ -1205,7 +1205,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A low-contrast, elongated galaxy near the Big Dipper is an advanced binocular catch.",
-    "finding": "Locate the UMa field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M108 lies 1.5° south-east of Merak (magnitude 2.4), in Ursa Major.",
     "minAperture": 80,
     "references": [
       {
@@ -1221,7 +1221,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "A faint galaxy close to a bright Big Dipper star can be lost in glare. Keep the finder field steady.",
-    "finding": "Locate the UMa field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M109 lies 0.6° south-east of Phecda (magnitude 2.4), in Ursa Major.",
     "minAperture": 80,
     "references": [
       {
@@ -1237,7 +1237,7 @@
     "level": "large",
     "equipment": "Mounted 80 mm binoculars; dark sky",
     "impression": "Andromeda’s diffuse companion is harder than its total magnitude suggests. Seek a faint oval beyond M31’s main glow.",
-    "finding": "Locate the And field using the finder map, then compare the marked position with the surrounding stars.",
+    "finding": "M110 lies 4.5° north-west of μ Andromedae (magnitude 3.9), in Andromeda.",
     "minAperture": 80,
     "references": [
       {
@@ -1253,7 +1253,7 @@
     "level": "dark",
     "equipment": "10×50",
     "impression": "A small star gathering beside the Trifid field. Seek the cluster without requiring its neighboring nebulosity.",
-    "finding": "Compare its marked field with M20 in Sagittarius.",
+    "finding": "M21 lies 2.6° south-west of μ Sagittarii (magnitude 3.9), in Sagittarius.",
     "minAperture": 50,
     "references": [
       {
@@ -1269,7 +1269,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "This broad Cassiopeia cluster is a low-power field target: look for a gentle increase in star density, not a tight knot.",
-    "finding": "Use Caph (magnitude 2.3) as a reference: NGC 129 lies 2.8° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Center NGC 129 in the Cassiopeia chart and scan across its full extent. A wide field helps distinguish the cluster from the surrounding Milky Way stars.",
+    "finding": "NGC 129 lies 2.7° south of κ Cassiopeiae (magnitude 4.2), in Cassiopeia.",
     "minAperture": 50,
     "references": [
       {
@@ -1285,7 +1285,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "A bright stellar pair anchors the Owl or ET cluster. Its little outline becomes clearer with support.",
-    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 457 lies 2.1° south-west of Ruchbah (magnitude 2.7), in Cassiopeia.",
     "minAperture": 50,
     "references": [
       {
@@ -1301,7 +1301,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "A small grainy Cassiopeia cluster invites comparison with neighboring M103.",
-    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 663 lies 2.6° south-west of Segin (magnitude 3.4), in Cassiopeia.",
     "minAperture": 50,
     "references": [
       {
@@ -1317,7 +1317,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50",
     "impression": "A broad Cassiopeia cluster rewards a wide field and patient tracing of its brighter stars.",
-    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "Cr 463 lies 8.3° north of Segin (magnitude 3.4), in Cassiopeia.",
     "minAperture": 50,
     "references": [
       {
@@ -1333,7 +1333,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50",
     "impression": "The large Muscleman cluster invites a wide-field sketch. Trace the bright stellar limbs beside the Double Cluster.",
-    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "Stock 2 lies 5.0° south-east of Segin (magnitude 3.4), in Cassiopeia.",
     "minAperture": 50,
     "references": [
       {
@@ -1349,7 +1349,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "Markarian 6 is a small Cassiopeia cluster; at 14×50, the useful goal is a subtle concentration rather than resolved detail.",
-    "finding": "Use Segin (magnitude 3.4) as a reference: Mark 6 lies 5.1° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Use the chart to place Markarian 6, then hold the view steady and check for a compact patch against the surrounding stars.",
+    "finding": "Mark 6 lies 5.1° south-east of Segin (magnitude 3.4), in Cassiopeia.",
     "minAperture": 50,
     "references": [
       {
@@ -1365,7 +1365,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "The Heart Nebula’s central cluster is the binocular goal. Do not expect the surrounding photographic nebulosity.",
-    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "Mel 15 lies 4.9° east of Segin (magnitude 3.4), in Cassiopeia.",
     "minAperture": 50,
     "references": [
       {
@@ -1381,7 +1381,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50",
     "impression": "Trumpler 2 is a loose Perseus cluster suited to binoculars. Pick out its brighter stars first, then take in the wider scattering.",
-    "finding": "Use Mirfak (magnitude 1.8) as a reference: Tr 2 lies 9.3° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Find Trumpler 2 on the Perseus chart and keep the full group in view; its loose outline is easier to appreciate at low power.",
+    "finding": "Tr 2 lies 1.9° west of Miram (magnitude 3.8), in Perseus.",
     "minAperture": 50,
     "references": [
       {
@@ -1397,7 +1397,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "Trumpler 3 is a wide Cassiopeia field with a modest stellar concentration. Expect the surrounding stars to remain part of the view.",
-    "finding": "Use Segin (magnitude 3.4) as a reference: Tr 3 lies 8.6° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Center the charted Trumpler 3 field and compare the cluster's broad spread with the background, rather than searching for a compact glow.",
+    "finding": "Tr 3 lies 7.8° north of Miram (magnitude 3.8), in Cassiopeia.",
     "minAperture": 50,
     "references": [
       {
@@ -1413,7 +1413,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "A small gathering at the Camelopardalis border offers a compact contrast with Kemble’s long star chain.",
-    "finding": "Use the finder map in Cam to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "Stock 23 lies 5.3° north-east of Miram (magnitude 3.8), in Camelopardalis.",
     "minAperture": 50,
     "references": [
       {
@@ -1429,7 +1429,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "NGC 1342 is a small Perseus open cluster. In ordinary binoculars, look for a handful of stars standing out from the field rather than fine structure.",
-    "finding": "Use Gorgonea Tertia (magnitude 3.4) as a reference: NGC 1342 lies 5.4° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Place NGC 1342 from the Perseus chart and compare the compact grouping with nearby field stars; a steady view helps at 10×.",
+    "finding": "NGC 1342 lies 5.4° east of Gorgonea Tertia (magnitude 3.4), in Perseus.",
     "minAperture": 50,
     "references": [
       {
@@ -1445,7 +1445,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "A modest Perseus cluster offers a small stellar concentration in a busy winter field.",
-    "finding": "Use the finder map in Per to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 1528 lies 1.6° north-east of λ Persei (magnitude 4.3), in Perseus.",
     "minAperture": 50,
     "references": [
       {
@@ -1461,7 +1461,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "NGC 1582 is a broad Perseus cluster, so the binocular view is a loose pattern spread across the field rather than a bright central knot.",
-    "finding": "Use Haldus (magnitude 3.0) as a reference: NGC 1582 lies 5.4° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Center the charted NGC 1582 position and let the wider pattern emerge; avoid narrowing the field before taking in its extent.",
+    "finding": "NGC 1582 lies 5.4° west of Haldus (magnitude 3.0), in Perseus.",
     "minAperture": 50,
     "references": [
       {
@@ -1477,7 +1477,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "A faint cluster near Aldebaran provides a good contrast with the bright, sprawling Hyades.",
-    "finding": "Use the finder map in Tau to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 1647 lies 3.5° north-east of Aldebaran (magnitude 0.8), in Taurus.",
     "minAperture": 50,
     "references": [
       {
@@ -1493,7 +1493,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "A compact Orion cluster is the goal. Its playful spacecraft outline may need greater magnification.",
-    "finding": "Use the finder map in Ori to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 1662 lies 2.1° north of π² Orionis (magnitude 4.4), in Orion.",
     "minAperture": 50,
     "references": [
       {
@@ -1509,7 +1509,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "A broad Taurus star grouping is an enjoyable field even though its historical cluster designation is debated.",
-    "finding": "Use the finder map in Tau to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 1746 lies 5.0° east of τ Tauri (magnitude 4.3), in Taurus.",
     "minAperture": 50,
     "references": [
       {
@@ -1525,7 +1525,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "A small gathering near NGC 1817. Compare their separate finder positions before deciding which patch you have found.",
-    "finding": "Use the finder map in Tau to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 1807 lies 4.6° north-east of ο² Orionis (magnitude 4.1), in Taurus.",
     "minAperture": 50,
     "references": [
       {
@@ -1541,7 +1541,7 @@
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
     "impression": "A faint cluster near NGC 1807 rewards a dark, supported view. Look for a weak concentration of stars.",
-    "finding": "Use the finder map in Tau to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 1817 lies 5.0° north-east of ο² Orionis (magnitude 4.1), in Taurus.",
     "minAperture": 50,
     "references": [
       {
@@ -1557,7 +1557,7 @@
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
     "impression": "NGC 1893 is the open cluster in the IC 410 region. With 14×50 binoculars, make the cluster itself the goal; the surrounding nebula is not a realistic expectation.",
-    "finding": "Use Elnath (magnitude 1.6) as a reference: NGC 1893 lies 4.9° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Use the Auriga chart to identify NGC 1893 among the winter Milky Way stars, and look for the stellar grouping rather than nebulous detail.",
+    "finding": "NGC 1893 lies 4.9° north of Elnath (magnitude 1.6), in Auriga.",
     "minAperture": 50,
     "references": [
       {
@@ -1573,7 +1573,7 @@
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
     "impression": "A tiny cluster beside M38 is an advanced catch. Find M38 first, then look for the small secondary haze.",
-    "finding": "Use the finder map in Aur to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 1907 lies 6.0° south-west of ν Aurigae (magnitude 4.0), in Auriga.",
     "minAperture": 50,
     "references": [
       {
@@ -1589,7 +1589,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50",
     "impression": "Orion’s Sword contains this bright stellar gathering above the nebula. Enjoy the stars as a separate stop.",
-    "finding": "Use the finder map in Ori to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 1981 lies 1.5° north of Nair Al Saif (magnitude 2.8), in Orion.",
     "minAperture": 50,
     "references": [
       {
@@ -1605,7 +1605,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50",
     "impression": "A compact open cluster in Orion. Binoculars locate its glow; a telescope reveals the digit-shaped stellar pattern.",
-    "finding": "Use the finder map in Ori to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 2169 lies 0.8° south of ν Orionis (magnitude 4.4), in Orion.",
     "minAperture": 50,
     "references": [
       {
@@ -1621,7 +1621,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50",
     "impression": "A loose Monoceros cluster makes a stellar stop away from Orion’s bright nebula.",
-    "finding": "Use the finder map in Mon to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 2232 lies 3.5° north-east of γ Monocerotis (magnitude 4.0), in Monoceros.",
     "minAperture": 50,
     "references": [
       {
@@ -1637,7 +1637,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "NGC 2251 is a modest Monoceros cluster in a star-rich region. Expect a restrained grouping, not a showpiece detached from its background.",
-    "finding": "Use Alzir (magnitude 3.4) as a reference: NGC 2251 lies 5.2° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Center NGC 2251 on the Monoceros chart and compare the marked group with the surrounding Milky Way field before moving on.",
+    "finding": "NGC 2251 lies 4.6° north-east of ε Monocerotis (magnitude 4.4), in Monoceros.",
     "minAperture": 50,
     "references": [
       {
@@ -1653,7 +1653,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50",
     "impression": "A modest Auriga cluster offers a quiet alternative to the familiar Messier trio.",
-    "finding": "Use the finder map in Aur to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 2281 lies 7.1° north of θ Geminorum (magnitude 3.6), in Auriga.",
     "minAperture": 50,
     "references": [
       {
@@ -1668,8 +1668,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A small concentration in Monoceros rewards a stable view. Compare the brightest members with the surrounding field.",
-    "finding": "Use the finder map in Mon to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 2301 in Monoceros is cataloged at magnitude 6.0 over 12 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 2301 lies 5.1° west of δ Monocerotis (magnitude 4.2), in Monoceros.",
     "minAperture": 50,
     "references": [
       {
@@ -1685,7 +1685,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "NGC 2343 is a small Monoceros open cluster. The binocular target is its compact star grouping, with no expectation of resolving every member.",
-    "finding": "Use Sirius (magnitude -1.5) as a reference: NGC 2343 lies 8.3° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Use the Monoceros chart to center NGC 2343, then look for a small enhancement in the star field at the marked position.",
+    "finding": "NGC 2343 lies 3.7° east of θ Canis Majoris (magnitude 4.1), in Monoceros.",
     "minAperture": 50,
     "references": [
       {
@@ -1701,7 +1701,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "Caroline’s Cluster is a modest soft glow in Canis Major. A dark sky makes its rich background easier to notice.",
-    "finding": "Use the finder map in CMa to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 2360 lies 3.4° east of Muliphein (magnitude 4.1), in Canis Major.",
     "minAperture": 50,
     "references": [
       {
@@ -1717,7 +1717,7 @@
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
     "impression": "A diffuse northern galaxy is a challenge in ordinary binoculars. Seek a low-contrast oval rather than visible arms.",
-    "finding": "Use the finder map in Cam to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 2403 lies 7.7° north-west of Muscida (magnitude 3.4), in Camelopardalis.",
     "minAperture": 50,
     "references": [
       {
@@ -1733,7 +1733,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "NGC 2527 is a broad Puppis cluster. Give it room in the binocular field and look for a loose gathering rather than a concentrated patch.",
-    "finding": "Use Tureis (magnitude 2.8) as a reference: NGC 2527 lies 4.0° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Locate NGC 2527 in Puppis with the chart, then sweep slowly across the broad field to judge its outline against the background.",
+    "finding": "NGC 2527 lies 3.9° south-east of ο Puppis (magnitude 4.5), in Puppis.",
     "minAperture": 50,
     "references": [
       {
@@ -1749,7 +1749,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "NGC 2539 is a broad open cluster in Puppis. Its binocular appeal is the wider star pattern, not a small unresolved glow.",
-    "finding": "Use Tureis (magnitude 2.8) as a reference: NGC 2539 lies 11.5° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Center the charted position in Puppis and take in the surrounding stars with it; a wide view is more useful than increasing magnification.",
+    "finding": "NGC 2539 lies 0.2° north-west of 19 Puppis (magnitude 4.7), in Puppis. Keep this reference at the cluster’s south-eastern edge while matching the faint grouping.",
     "minAperture": 50,
     "references": [
       {
@@ -1765,7 +1765,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "NGC 2571 is a smaller Puppis cluster. Look for a limited concentration within the much broader star field of the constellation.",
-    "finding": "Use Tureis (magnitude 2.8) as a reference: NGC 2571 lies 6.0° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Use the Puppis chart to place NGC 2571 precisely, then check whether the marked patch looks more concentrated than its immediate surroundings.",
+    "finding": "NGC 2571 lies 6.0° south-east of Tureis (magnitude 2.8), in Puppis.",
     "minAperture": 50,
     "references": [
       {
@@ -1781,7 +1781,7 @@
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
     "impression": "A tiny stellar cluster beside dark cloud Barnard86. The cluster is the modest goal; the dark cloud needs excellent skies.",
-    "finding": "Use the finder map in Sgr to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 6520 lies 2.6° north of Alnasl (magnitude 3.0), in Sagittarius.",
     "minAperture": 50,
     "references": [
       {
@@ -1797,7 +1797,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "NGC 6709 is an open cluster in Aquila. Look for a group of stars with a shared concentration, then compare its scale with the surrounding field.",
-    "finding": "Use Deneb el Okab (magnitude 3.0) as a reference: NGC 6709 lies 4.9° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Find NGC 6709 on the Aquila chart and inspect the whole cluster at once; the nearby star field is part of the binocular view.",
+    "finding": "NGC 6709 lies 4.9° south-west of Deneb el Okab (magnitude 3.0), in Aquila.",
     "minAperture": 50,
     "references": [
       {
@@ -1813,7 +1813,7 @@
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
     "impression": "NGC 6716 is a small Sagittarius cluster and a subtle target at 14×50. Aim to recognize a faint grouping, not to resolve it into a rich star field.",
-    "finding": "Use Albaldah (magnitude 2.9) as a reference: NGC 6716 lies 3.7° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Use the Sagittarius chart to verify the exact NGC 6716 field; this compact target is easy to confuse with unrelated Milky Way stars.",
+    "finding": "NGC 6716 lies 1.4° north-west of ξ² Sagittarii (magnitude 3.5), in Sagittarius.",
     "minAperture": 50,
     "references": [
       {
@@ -1829,7 +1829,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "A compact cluster in Cygnus can blend into the Milky Way. Support the binoculars and check the exact field.",
-    "finding": "Use the finder map in Cyg to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 6819 lies 5.0° south of Al Fawaris (magnitude 2.9), in Cygnus.",
     "minAperture": 50,
     "references": [
       {
@@ -1845,7 +1845,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "NGC 6823 is the star cluster in the Sh 2-86 region. In 14×50 binoculars, concentrate on the stars; do not expect the surrounding emission nebula.",
-    "finding": "Use Albireo (magnitude 3.1) as a reference: NGC 6823 lies 5.4° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Center NGC 6823 from the Vulpecula chart and look for the cluster's stellar concentration, keeping nebular structure out of the expected view.",
+    "finding": "NGC 6823 lies 3.6° east of Lucida Anseris (magnitude 4.4), in Vulpecula.",
     "minAperture": 50,
     "references": [
       {
@@ -1861,7 +1861,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "NGC 6910 is the compact open cluster near Gamma Cygni (Sadr). In binoculars, look for its small knot of stars against the rich Cygnus Milky Way.",
-    "finding": "Use Sadr (magnitude 2.2) as a reference: NGC 6910 lies 0.6° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Start at Sadr and use the Cygnus chart to move to NGC 6910. Its position close to the bright star makes accurate centering important.",
+    "finding": "NGC 6910 lies 0.6° north of Sadr (magnitude 2.2), in Cygnus. Sadr and the cluster fit together in any field wider than their 0.6° separation.",
     "minAperture": 50,
     "references": [
       {
@@ -1877,7 +1877,7 @@
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
     "impression": "A faint globular in Delphinus is a demanding binocular haze. Careful field matching matters more than a quick sweep.",
-    "finding": "Use the finder map in Del to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 6934 lies 3.9° south of Deneb Dulfim (magnitude 4.0), in Delphinus.",
     "minAperture": 50,
     "references": [
       {
@@ -1893,7 +1893,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "A broad, rich cluster in Vulpecula turns a slow sweep into a rewarding stellar field.",
-    "finding": "Use the finder map in Vul to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 6940 lies 6.2° south-west of ε Cygni (magnitude 2.5), in Vulpecula.",
     "minAperture": 50,
     "references": [
       {
@@ -1909,7 +1909,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "NGC 7063 is a compact open cluster in Cygnus, cataloged at 7′ across and magnitude 7.0.",
-    "finding": "Center the 7′ catalog position in Cygnus; its compact size makes accurate field matching useful.",
+    "finding": "NGC 7063 lies 2.1° north-east of υ Cygni (magnitude 4.4), in Cygnus.",
     "minAperture": 50,
     "references": [
       {
@@ -1925,7 +1925,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "NGC 7160 is a compact Cepheus open cluster. At 14×50, look for a small stellar grouping rather than a broad, detached cluster shape.",
-    "finding": "Use Alderamin (magnitude 2.4) as a reference: NGC 7160 lies 4.0° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Place NGC 7160 with the Cepheus chart and check the compact patch carefully; its modest scale makes the finder field useful.",
+    "finding": "NGC 7160 lies 1.8° north-east of ν Cephei (magnitude 4.3), in Cepheus.",
     "minAperture": 50,
     "references": [
       {
@@ -1941,7 +1941,7 @@
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
     "impression": "NGC 7209 is a broader open cluster in Lacerta, cataloged at 25′ across and magnitude 7.7.",
-    "finding": "Use the Lacerta finder field to center the 25′ catalog position and compare its wider extent with the surrounding field.",
+    "finding": "NGC 7209 lies 4.2° south-east of π² Cygni (magnitude 4.2), in Lacerta.",
     "minAperture": 50,
     "references": [
       {
@@ -1957,7 +1957,7 @@
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
     "impression": "NGC 7235 is a small open cluster in Cepheus. Treat it as a faint stellar grouping in the surrounding Milky Way, not as a prominent standalone patch.",
-    "finding": "Use Alderamin (magnitude 2.4) as a reference: NGC 7235 lies 8.6° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Use the Cepheus chart to pin down NGC 7235 and compare the marked position with adjacent stars; a careful field match is the main challenge.",
+    "finding": "NGC 7235 lies 0.4° north-west of ε Cephei (magnitude 4.2), in Cepheus.",
     "minAperture": 50,
     "references": [
       {
@@ -1973,7 +1973,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "A loose Lacerta cluster rewards a wide field and a slow comparison with its surrounding stars.",
-    "finding": "Use the finder map in Lac to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 7243 lies 2.6° west of α Lacertae (magnitude 3.8), in Lacerta.",
     "minAperture": 50,
     "references": [
       {
@@ -1989,7 +1989,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50",
     "impression": "Caroline’s Rose is a rich but faint cluster. Binoculars reveal a misty patch; the intricate rose needs more power.",
-    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "finding": "NGC 7789 lies 2.9° south-west of Caph (magnitude 2.3), in Cassiopeia.",
     "minAperture": 50,
     "references": [
       {
@@ -2005,7 +2005,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
     "impression": "A wide, irregular galaxy patch rewards a dark southern sky. Frame it separately from nearby 47 Tucanae.",
-    "finding": "Check that this Tuc field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "finding": "SMC lies 4.7° north-east of β Hydri (magnitude 2.8), in Tucana.",
     "minAperture": 50,
     "references": [
       {
@@ -2020,8 +2020,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A globular glow in Tuc rewards a careful sweep. Look for a small rounded haze without expecting resolved stars.",
-    "finding": "Check that this Tuc field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 362 in Tucana is cataloged at magnitude 6.6 over 12.9 arcminutes. Its combined light forms a small unresolved haze; individual stars require a telescope.",
+    "finding": "NGC 362 lies 6.9° north-east of β Hydri (magnitude 2.8), in Tucana.",
     "minAperture": 50,
     "references": [
       {
@@ -2036,8 +2036,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A globular glow in Col rewards a careful sweep. Look for a small rounded haze without expecting resolved stars.",
-    "finding": "Check that this Col field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 1851 in Columba is cataloged at magnitude 7.2 over 11.0 arcminutes. Its combined light forms a small unresolved haze; individual stars require a telescope.",
+    "finding": "NGC 1851 lies 5.7° south-west of ε Columbae (magnitude 3.9), in Columba.",
     "minAperture": 50,
     "references": [
       {
@@ -2053,7 +2053,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
     "impression": "This nearby galaxy is a whole binocular landscape. Sweep across its broad bar and brighter stellar patches.",
-    "finding": "Check that this Dor field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "finding": "LMC lies 4.5° south-west of δ Doradus (magnitude 4.3), in Dorado.",
     "minAperture": 50,
     "references": [
       {
@@ -2069,7 +2069,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
     "impression": "A bright, loose Puppis field surrounds a warm-colored star. Two line-of-sight cluster populations share this direction.",
-    "finding": "Check that this Pup field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "finding": "NGC 2451 lies 4.1° north-west of Naos (magnitude 2.2), in Puppis.",
     "minAperture": 50,
     "references": [
       {
@@ -2085,7 +2085,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
     "impression": "A rich, compact cluster appears softer than nearby NGC 2451. Compare both through the same binoculars.",
-    "finding": "Check that this Pup field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "finding": "NGC 2477 lies 2.6° north-west of Naos (magnitude 2.2), in Puppis.",
     "minAperture": 50,
     "references": [
       {
@@ -2101,7 +2101,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
     "impression": "The Southern Beehive offers a rich gathering in Carina. Support helps show the fainter members.",
-    "finding": "Check that this Car field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "finding": "NGC 2516 lies 3.3° south-west of Avior (magnitude 1.9), in Carina.",
     "minAperture": 50,
     "references": [
       {
@@ -2116,8 +2116,8 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Vel rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Vel field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 2547 in Vela is cataloged at magnitude 4.7 over 20.0 arcminutes. At 14× its catalog diameter spans about 4.7° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 2547 lies 1.9° south of γ¹ Velorum (magnitude 4.3), in Vela.",
     "minAperture": 50,
     "references": [
       {
@@ -2132,8 +2132,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Pup rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Pup field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 2546 in Puppis is cataloged at magnitude 6.3 over 40.0 arcminutes. At 14× its catalog diameter spans about 9.3° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 2546 lies 2.9° north-east of Naos (magnitude 2.2), in Puppis.",
     "minAperture": 50,
     "references": [
       {
@@ -2149,7 +2149,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
     "impression": "A spacious stellar gathering around Omicron Velorum is a pleasing low-power southern field.",
-    "finding": "Check that this Vel field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "finding": "IC 2391 lies 1.8° north of δ Velorum (magnitude 2.0), in Vela.",
     "minAperture": 50,
     "references": [
       {
@@ -2164,8 +2164,8 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Vel rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Vel field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "IC 2395 in Vela is cataloged at magnitude 4.6 over 7.0 arcminutes. At 14× its catalog diameter spans about 1.6° to the eye; a compact patch needs a steady field match.",
+    "finding": "IC 2395 lies 5.4° east of γ² Velorum (magnitude 1.8), in Vela.",
     "minAperture": 50,
     "references": [
       {
@@ -2180,8 +2180,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A globular glow in Car rewards a careful sweep. Look for a small rounded haze without expecting resolved stars.",
-    "finding": "Check that this Car field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 2808 in Carina is cataloged at magnitude 6.3 over 13.8 arcminutes. Its combined light forms a small unresolved haze; individual stars require a telescope.",
+    "finding": "NGC 2808 lies 1.8° north-east of α Volantis (magnitude 4.0), in Carina.",
     "minAperture": 50,
     "references": [
       {
@@ -2196,8 +2196,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Vel rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Vel field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 2910 in Vela is cataloged at magnitude 7.2 over 5.0 arcminutes. At 14× its catalog diameter spans about 1.2° to the eye; a compact patch needs a steady field match.",
+    "finding": "NGC 2910 lies 2.4° north-east of κ Velorum (magnitude 2.5), in Vela.",
     "minAperture": 50,
     "references": [
       {
@@ -2212,8 +2212,8 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Car rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Car field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 3114 in Carina is cataloged at magnitude 4.2 over 35.0 arcminutes. At 14× its catalog diameter spans about 8.2° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 3114 lies 5.3° north of υ Carinae (magnitude 3.0), in Carina.",
     "minAperture": 50,
     "references": [
       {
@@ -2228,8 +2228,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A globular glow in Vel rewards a careful sweep. Look for a small rounded haze without expecting resolved stars.",
-    "finding": "Check that this Vel field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 3201 in Vela is cataloged at magnitude 6.7 over 18.0 arcminutes. Its combined light forms a small unresolved haze; individual stars require a telescope.",
+    "finding": "NGC 3201 lies 5.7° north-west of μ Velorum (magnitude 2.7), in Vela.",
     "minAperture": 50,
     "references": [
       {
@@ -2244,8 +2244,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Vel rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Vel field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 3228 in Vela is cataloged at magnitude 6.0 over 18.0 arcminutes. At 14× its catalog diameter spans about 4.2° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 3228 lies 4.6° south-west of μ Velorum (magnitude 2.7), in Vela.",
     "minAperture": 50,
     "references": [
       {
@@ -2260,8 +2260,8 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Car rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Car field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 3293 in Carina is cataloged at magnitude 4.7 over 5.0 arcminutes. At 14× its catalog diameter spans about 1.2° to the eye; a compact patch needs a steady field match.",
+    "finding": "NGC 3293 lies 6.2° north of θ Carinae (magnitude 2.8), in Carina.",
     "minAperture": 50,
     "references": [
       {
@@ -2276,8 +2276,8 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Cen rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Cen field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 3766 in Centaurus is cataloged at magnitude 5.3 over 12.0 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 3766 lies 1.4° north of λ Centauri (magnitude 3.1), in Centaurus.",
     "minAperture": 50,
     "references": [
       {
@@ -2292,8 +2292,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Mus rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Mus field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 4463 in Musca is cataloged at magnitude 7.2 over 5.0 arcminutes. At 14× its catalog diameter spans about 1.2° to the eye; a compact patch needs a steady field match.",
+    "finding": "NGC 4463 lies 1.5° south-east of ζ Crucis (magnitude 4.0), in Musca.",
     "minAperture": 50,
     "references": [
       {
@@ -2308,8 +2308,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Cru rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Cru field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 4609 in Crux is cataloged at magnitude 6.9 over 5.0 arcminutes. At 14× its catalog diameter spans about 1.2° to the eye; a compact patch needs a steady field match.",
+    "finding": "NGC 4609 lies 1.8° east of α² Crucis (magnitude 1.7), in Crux.",
     "minAperture": 50,
     "references": [
       {
@@ -2325,7 +2325,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
     "impression": "A bright knot near the Southern Cross marks the Jewel Box. Its jewel-like color detail is easier in a telescope.",
-    "finding": "Check that this Cru field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "finding": "NGC 4755 lies 1.0° south-east of Mimosa (magnitude 1.2), in Crux.",
     "minAperture": 50,
     "references": [
       {
@@ -2341,7 +2341,7 @@
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
     "impression": "Centaurus A is a compact galaxy glow in binoculars. The famous dust lane is a much harder, higher-power goal.",
-    "finding": "Check that this Cen field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "finding": "NGC 5128 lies 4.5° west of μ Centauri (magnitude 3.0), in Centaurus.",
     "minAperture": 50,
     "references": [
       {
@@ -2356,8 +2356,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Cen rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Cen field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 5316 in Centaurus is cataloged at magnitude 6.0 over 13.0 arcminutes. At 14× its catalog diameter spans about 3.0° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 5316 lies 1.9° south-west of Hadar (magnitude 0.6), in Centaurus.",
     "minAperture": 50,
     "references": [
       {
@@ -2372,8 +2372,8 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Cen rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Cen field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 5460 in Centaurus is cataloged at magnitude 5.6 over 25.0 arcminutes. At 14× its catalog diameter spans about 5.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 5460 lies 2.3° south-east of ζ Centauri (magnitude 2.5), in Centaurus.",
     "minAperture": 50,
     "references": [
       {
@@ -2388,8 +2388,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Cen rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Cen field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 5617 in Centaurus is cataloged at magnitude 6.3 over 10.0 arcminutes. At 14× its catalog diameter spans about 2.3° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 5617 lies 1.2° west of Rigil Kentaurus (magnitude -0.0), in Centaurus.",
     "minAperture": 50,
     "references": [
       {
@@ -2404,8 +2404,8 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Cen rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Cen field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 5662 in Centaurus is cataloged at magnitude 5.5 over 12.0 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 5662 lies 4.3° north of Rigil Kentaurus (magnitude -0.0), in Centaurus.",
     "minAperture": 50,
     "references": [
       {
@@ -2420,8 +2420,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Lup rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Lup field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 5822 in Lupus is cataloged at magnitude 6.5 over 39.0 arcminutes. At 14× its catalog diameter spans about 9.1° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 5822 lies 2.5° south-west of ζ Lupi (magnitude 3.4), in Lupus.",
     "minAperture": 50,
     "references": [
       {
@@ -2436,8 +2436,8 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in TrA rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this TrA field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 6025 in Triangulum Australe is cataloged at magnitude 5.1 over 12.0 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 6025 lies 3.1° north of Betria (magnitude 2.9), in Triangulum Australe.",
     "minAperture": 50,
     "references": [
       {
@@ -2452,8 +2452,8 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Nor rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Nor field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 6067 in Norma is cataloged at magnitude 5.6 over 12.0 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 6067 lies 4.2° south of γ² Normae (magnitude 4.0), in Norma.",
     "minAperture": 50,
     "references": [
       {
@@ -2468,8 +2468,8 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Nor rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Nor field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 6087 in Norma is cataloged at magnitude 5.4 over 12.0 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 6087 lies 4.2° west of η Arae (magnitude 3.8), in Norma.",
     "minAperture": 50,
     "references": [
       {
@@ -2484,8 +2484,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Sco rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Sco field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 6124 in Scorpius is cataloged at magnitude 5.8 over 40.0 arcminutes. At 14× its catalog diameter spans about 9.3° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 6124 lies 5.4° south-east of θ Lupi (magnitude 4.2), in Scorpius.",
     "minAperture": 50,
     "references": [
       {
@@ -2500,8 +2500,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Nor rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Nor field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 6134 in Norma is cataloged at magnitude 7.2 over 6.0 arcminutes. At 14× its catalog diameter spans about 1.4° to the eye; a compact patch needs a steady field match.",
+    "finding": "NGC 6134 lies 1.6° south of ε Normae (magnitude 4.5), in Norma.",
     "minAperture": 50,
     "references": [
       {
@@ -2516,8 +2516,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Nor rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Nor field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 6167 in Norma is cataloged at magnitude 6.7 over 7.0 arcminutes. At 14× its catalog diameter spans about 1.6° to the eye; a compact patch needs a steady field match.",
+    "finding": "NGC 6167 lies 2.4° south-east of ε Normae (magnitude 4.5), in Norma.",
     "minAperture": 50,
     "references": [
       {
@@ -2532,8 +2532,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Ara rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Ara field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 6208 in Ara is cataloged at magnitude 7.2 over 15.0 arcminutes. At 14× its catalog diameter spans about 3.5° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "NGC 6208 lies 1.6° south-west of ε¹ Arae (magnitude 4.1), in Ara.",
     "minAperture": 50,
     "references": [
       {
@@ -2549,7 +2549,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
     "impression": "A bright cluster above Scorpius’s tail anchors a richly starred Milky Way sweep.",
-    "finding": "Check that this Sco field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "finding": "NGC 6231 lies 0.6° north of ζ² Scorpii (magnitude 3.6), in Scorpius.",
     "minAperture": 50,
     "references": [
       {
@@ -2564,8 +2564,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A southern star cluster in Ara rewards a careful sweep. Identify the brightest members first, then compare the group with its surrounding field.",
-    "finding": "Check that this Ara field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "IC 4651 in Ara is cataloged at magnitude 6.9 over 12.0 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "finding": "IC 4651 lies 1.2° west of α Arae (magnitude 3.0), in Ara.",
     "minAperture": 50,
     "references": [
       {
@@ -2581,7 +2581,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
     "impression": "A broad southern globular glow invites comparison with Omega Centauri. Individual stars are a telescope reward.",
-    "finding": "Check that this Ara field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "finding": "NGC 6397 lies 2.9° north-east of β Arae (magnitude 2.9), in Ara.",
     "minAperture": 50,
     "references": [
       {
@@ -2596,8 +2596,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "A globular glow in CrA rewards a careful sweep. Look for a small rounded haze without expecting resolved stars.",
-    "finding": "Check that this CrA field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "impression": "NGC 6541 in Corona Australis is cataloged at magnitude 6.1 over 13.0 arcminutes. Its combined light forms a small unresolved haze; individual stars require a telescope.",
+    "finding": "NGC 6541 lies 4.1° north-west of α Telescopii (magnitude 3.5), in Corona Australis.",
     "minAperture": 50,
     "references": [
       {
@@ -2613,7 +2613,7 @@
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
     "impression": "A bright globular in Pavo offers an easy southern haze, distinct from the surrounding point-like stars.",
-    "finding": "Check that this Pav field rises at your latitude. Follow the finder chart with an open view toward the target.",
+    "finding": "NGC 6752 lies 3.2° north-east of λ Pavonis (magnitude 4.2), in Pavo.",
     "minAperture": 50,
     "references": [
       {

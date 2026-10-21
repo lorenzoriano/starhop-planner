@@ -35,7 +35,7 @@ export function OfflineControls({
     <section className="offline-asset-controls" aria-labelledby="offline-assets-heading">
       <div className="offline-asset-summary">
         <div>
-          <h3 id="offline-assets-heading">Offline storage</h3>
+          <h2 id="offline-assets-heading">Offline storage</h2>
           <p>
             {state === "ready"
               ? `Sky catalogs are ready · ${allAssets.cachedFiles}/${allAssets.totalFiles} files${storedBytes ? ` · ${storedBytes} stored` : ""}${totalBytes ? ` of ${totalBytes}` : ""}.`

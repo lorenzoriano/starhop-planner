@@ -819,22 +819,12 @@ function fitCircularArc(
 
 // Compact label for pattern descriptions (no access to full constellation name map here)
 function patternLabel(n: SkyNode,reference?:SkyNode): string {
-  const hasProperName = n.name && n.name.length > 2 && !n.name.startsWith('HR')
-    && n.name !== n.bayer;
-  if (hasProperName) return n.name;
-  if (n.bayer && n.constellation) return `${n.bayer} ${n.constellation}`;
-  if (n.flamsteed && n.constellation) return `${n.flamsteed} ${n.constellation}`;
-  if(reference&&angularDistance(n.ra,n.dec,reference.ra,reference.dec)>.1){
-    const bearing=directionAngle(reference.ra,reference.dec,n.ra,n.dec);
-    const dir=['N','NE','E','SE','S','SW','W','NW'][Math.round(bearing/45)%8];
-    return `a mag-${n.mag.toFixed(1)} star ${angularDistance(n.ra,n.dec,reference.ra,reference.dec).toFixed(1)}° ${dir} of center`;
-  }
-  if (n.constellation) return `a mag-${n.mag.toFixed(1)} star`;
-  if (n.name && !n.name.startsWith('HR')) return n.name;
-  return `a mag-${n.mag.toFixed(1)} star`;
+  // The chart badges, instructions and confirmation text must use one designation.
+  return formatRouteNodeName(n);
 }
 
 export function inferPattern(center: SkyNode, visible: SkyNode[]): PatternAnalysis {
+  visible = visible.filter(star => star.type === 'star');
   const describeStar=(star:SkyNode)=>patternLabel(star,center);
   if (visible.length === 0) {
     return {
@@ -1449,6 +1439,7 @@ function generateHopSteps(
     // Find visible guide stars in FOV at this position
     const visible = allNodes.filter(n =>
       n.id !== node.id &&
+      n.type === 'star' &&
       n.mag < params.limitingMag &&
       fitsInFov(node.ra, node.dec, n.ra, n.dec, params.fovWidth, params.fovHeight, params.fovShape)
     ).sort((a, b) => a.mag - b.mag).slice(0, 6);

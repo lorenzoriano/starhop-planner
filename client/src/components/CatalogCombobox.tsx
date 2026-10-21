@@ -12,13 +12,16 @@ type CatalogComboboxProps = {
   placeholder?: string;
   className?: string;
   lunarHintAction?: ReactNode;
+  /** Called on each edit, before the debounced parent search updates. */
+  onTyping?: () => void;
+  announceSelection?: boolean;
 };
 
 function visibleCatalogId(target: UnifiedTarget) {
   return /^(?:M\d+|NGC\s*\d+|IC\s*\d+|HR\s*\d+)$/i.test(target.id) ? target.id : undefined;
 }
 
-export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, label = "Search catalog", placeholder = "Name, constellation or catalog number…", className = "", lunarHintAction }: CatalogComboboxProps) {
+export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, label = "Search catalog", placeholder = "Name, constellation or catalog number…", className = "", lunarHintAction, onTyping, announceSelection = true }: CatalogComboboxProps) {
   const generatedId = useId().replace(/:/g, "");
   const inputId = `catalog-combobox-${generatedId}`;
   const listId = `${inputId}-listbox`;
@@ -46,6 +49,7 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
     timer=setTimeout(prepare,0);
     return ()=>clearTimeout(timer);
   },[targets]);
+  useEffect(()=>setStatus(""),[query,savedIds]);
   const matches=useMemo(()=>searchCatalog(targets,query,7),[targets,query]);
   const pending=draft!==query;
   const results=pending?[]:matches;
@@ -56,8 +60,10 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
   const shownActiveIndex = results.length ? Math.min(activeIndex, results.length - 1) : -1;
 
   const select = (target: UnifiedTarget) => {
-    if (savedIds?.has(target.id)) setStatus(`${target.name} is already in your saved targets.`);
-    else setStatus(`${target.name} selected.`);
+    if (announceSelection) {
+      if (savedIds?.has(target.id)) setStatus(`${target.name} is already in your saved targets.`);
+      else setStatus(`${target.name} selected.`);
+    }
     onSelect(target);
   };
 
@@ -72,14 +78,21 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
       aria-activedescendant={shownActiveIndex >= 0 ? `${listId}-option-${shownActiveIndex}` : undefined}
       value={draft}
       placeholder={placeholder}
-      onChange={event => { setDraft(event.target.value); setActiveIndex(0); setStatus(""); }}
+      onChange={event => { setDraft(event.target.value); setActiveIndex(0); setStatus(""); onTyping?.(); }}
       onKeyDown={event => {
         if (event.key === "ArrowDown" && results.length) {
           event.preventDefault(); setActiveIndex(index => (index + 1) % results.length);
         } else if (event.key === "ArrowUp" && results.length) {
           event.preventDefault(); setActiveIndex(index => (index - 1 + results.length) % results.length);
-        } else if (event.key === "Enter" && shownActiveIndex >= 0) {
-          event.preventDefault(); select(results[shownActiveIndex].target);
+        } else if (event.key === "Enter") {
+          event.preventDefault();
+          // Enter commits the text the user can see, even inside the debounce
+          // interval. Never select an option from the previous query.
+          const fresh = pending ? searchCatalog(targets, draft, 7) : results;
+          if (pending) { emittedQuery.current=draft; onQueryRef.current(draft); }
+          const match=fresh[Math.min(activeIndex, fresh.length-1)];
+          if (match) select(match.target);
+          else setStatus(catalogSearchDiagnosticsFromMatches(draft, fresh).message);
         } else if (event.key === "Escape") {
           clearQuery();
         }

@@ -29,7 +29,7 @@
   border-radius: 2px;
   background: rgba(159,199,168,.27);
 }
-.planner-legend-moon::before { border-color: #ddc98e; background: rgba(213,187,130,.35); }
+.planner-legend-moon::before { border-color: #b1b7c4; background: rgba(177,183,196,.25); }
 .planner-legend-slot::before { border-color: #d2e2c9; background: #c4d8be; }
 .planner-legend-target { color: #d2e0db; max-width: 100%; overflow-wrap: anywhere; }
 .planner-legend-target i { width: 14px; height: 2px; border-radius: 2px; }
@@ -95,3 +95,28 @@
   .session-planner .planner-night-switch > button { min-width:0; min-height:44px; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:4px; white-space:normal; font-size:12px; }
   .session-planner .planner-night-switch .planner-workspace-menu { margin:0; }
 }
+
+/* Native date/time inputs have intrinsic minimum widths on phones. Give date
+   and its calendar their own row; never let either cover the time control. */
+.session-planner .planner-time-fields { display:grid; grid-template-columns:minmax(230px,1.5fr) minmax(145px,1fr) minmax(105px,.7fr) auto; }
+.session-planner .planner-time-fields > label { width:auto; min-width:0; }
+.session-planner .planner-date-control { min-width:0; width:100%; }
+.session-planner .planner-date-control > input { width:0; min-width:0; max-width:100%; flex:1 1 0; }
+.session-planner .planner-time-fields input { box-sizing:border-box; max-width:100%; min-width:0; }
+.session-planner .planner-night-switch svg,
+.session-planner .planner-quick-nights svg { flex:0 0 15px; width:15px; height:15px; }
+.session-planner .planner-night-switch .planner-workspace-menu { white-space:nowrap; flex-wrap:nowrap; }
+.planner-night-timeline h2 { margin:0; color:#d3e2d6; font-size:14px; font-weight:600; }
+.planner-sequence-heading h2 { margin:0; font-size:inherit; }
+@media (max-width:760px) {
+  .session-planner .planner-time-fields { grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+  .session-planner .planner-time-fields > label:first-child { grid-column:1 / -1; }
+  .session-planner .planner-time-fields > button { grid-column:1 / -1; }
+  .session-planner .planner-night-switch { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .session-planner .planner-night-switch .planner-workspace-menu { grid-column:1 / -1; }
+  .session-planner .planner-night-switch > button { flex-wrap:nowrap; white-space:nowrap; }
+  .session-planner .planner-quick-nights { display:grid; grid-template-columns:1fr; gap:4px; }
+  .session-planner .planner-quick-nights button { width:100%; min-height:44px; white-space:nowrap; }
+}
+/* Override the legacy percentage widths on individual native-input labels. */
+.session-planner .planner-time-fields > label:nth-child(n) { width:auto; min-width:0; }

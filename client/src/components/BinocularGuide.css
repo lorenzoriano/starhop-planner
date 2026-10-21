@@ -1,0 +1,22 @@
+.binocular-feature-preview, .binocular-filter-details, .binocular-month-settings { min-width:0; }
+.binocular-feature-preview > summary, .binocular-filter-details > summary, .binocular-month-settings > summary,
+.binocular-detail-more details > summary { cursor:pointer; min-height:44px; padding:10px 0; color:#acc9c7; }
+.binocular-feature-preview { margin:8px 0 16px; }
+.binocular-filter-details { margin-bottom:16px; border-block:1px solid #304b57; }
+.binocular-filter-details[open] > summary { margin-bottom:12px; }
+.binocular-detail-conditions, .binocular-year-details, .binocular-sources-details { border-top:1px solid #304851; }
+.binocular-detail-chart { max-height:540px; overflow:auto; }
+@media(max-width:760px) {
+ .observatory-shell .binocular-guide .binocular-calendar-heading { display:grid; grid-template-columns:minmax(0,1fr); align-items:start; gap:8px; }
+ .observatory-shell .binocular-guide .binocular-calendar-heading h2 { max-width:none; }
+ .observatory-shell .binocular-guide .binocular-sample-settings { display:grid; grid-template-columns:minmax(0,1fr); width:100%; }
+ .observatory-shell .binocular-guide .binocular-sample-settings label, .observatory-shell .binocular-guide .binocular-sample-settings select { width:100%; min-width:0; max-width:100%; }
+ .observatory-shell .binocular-guide .binocular-calendar-context { gap:6px; padding:8px 0; }
+ .observatory-shell .binocular-guide .binocular-calendar-context > span { flex-basis:100%; }
+ .observatory-shell .binocular-guide .binocular-months button { padding:5px 2px; gap:2px; }
+ .observatory-shell .binocular-guide .binocular-months small { font-size:12px; }
+ .observatory-shell .binocular-guide .binocular-calendar-heading { margin-bottom:10px; }
+ .observatory-shell .binocular-guide .binocular-calendar { padding-top:14px; }
+ .observatory-shell .binocular-guide .section-heading { align-items:start; gap:5px; flex-direction:column; }
+ .binocular-detail-chart { max-height:450px; }
+}

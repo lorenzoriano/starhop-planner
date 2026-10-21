@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import { formatInTimeZone } from "date-fns-tz";
-import { buildUnifiedTargets, loadBinocularTargets, loadMessier, planRoutes, type UnifiedTarget } from "../astronomy";
+import { buildUnifiedTargets, loadBinocularTargets, loadMessier, loadStars, getConstellationGenitive, planRoutes, type UnifiedTarget } from "../astronomy";
 import { BINOCULAR_ENTRIES, binocularCollection, binocularEvening } from "../binocular-guide";
 import { binocularMedia, binocularDatabaseResources, binocularFeaturedImage, primaryOpticalImage } from "../binocular-media";
 
@@ -34,6 +34,32 @@ describe("monthly binocular guide", () => {
     expect(entries.every((entry) => !/invites a careful field comparison|Use the finder map in .* to match the marked position/i.test(`${entry.impression} ${entry.finding}`))).toBe(true);
     expect(BINOCULAR_ENTRIES.find((entry) => entry.targetId === "NGC6910")!.finding).toContain("Sadr");
     expect(BINOCULAR_ENTRIES.find((entry) => entry.targetId === "NGC7235")!.finding).toContain("Cepheus");
+  });
+  it("has no remaining generic finder or southern-cluster templates",()=>{
+    for(const entry of BINOCULAR_ENTRIES){
+      expect(`${entry.impression} ${entry.finding}`,entry.targetId).not.toMatch(/Locate the .* field using the finder map|Use the finder map in .* to match|A southern star cluster in |Match the intervening stars on the finder chart|A globular glow in [A-Z][a-z]{2} rewards/);
+    }
+    expect(BINOCULAR_ENTRIES.find(e=>e.targetId==="NGC6910")!.finding).toContain("fit together");
+    expect(BINOCULAR_ENTRIES.find(e=>e.targetId==="Tr2")!.finding).toContain("1.9° west of Miram");
+    expect(BINOCULAR_ENTRIES.find(e=>e.targetId==="NGC2539")!.finding).toContain("0.2° north-west of 19 Puppis");
+  });
+  it("checks every rewritten finder distance and direction against the actual BSC positions",async()=>{
+    const stars=await loadStars();let checked=0;
+    const directions=["north","north-east","east","south-east","south","south-west","west","north-west"];
+    for(const pick of north(10)){
+      const match=pick.finding.match(/lies ([\d.]+)° (north-east|south-east|south-west|north-west|north|east|south|west) of (.*?) \(magnitude ([−\d.-]+)\)/);
+      if(!match)continue;
+      const ref=stars.find(star=>(star.name===match[3]||`${star.name} (${star.bayer} ${getConstellationGenitive(star.constellation??"")})`===match[3]||`${star.bayer||star.flamsteed} ${getConstellationGenitive(star.constellation??"")}`===match[3])&&Math.abs(Number(match[4])-star.mag)<=.051);
+      expect(ref,pick.targetId).toBeDefined();
+      const rad=Math.PI/180,r1=ref!.ra*rad,d1=ref!.dec*rad,r2=pick.target.ra*rad,d2=pick.target.dec*rad;
+      const separation=Math.acos(Math.min(1,Math.max(-1,Math.sin(d1)*Math.sin(d2)+Math.cos(d1)*Math.cos(d2)*Math.cos(r2-r1))))/rad;
+      expect(Math.abs(Number(match[1])-separation),pick.targetId).toBeLessThanOrEqual(.051);
+      const angle=(Math.atan2(Math.sin(r2-r1)*Math.cos(d2),Math.cos(d1)*Math.sin(d2)-Math.sin(d1)*Math.cos(d2)*Math.cos(r2-r1))/rad+360)%360;
+      expect(match[2],pick.targetId).toBe(directions[Math.floor((angle+22.5)/45)%8]);
+      expect(Math.abs(Number(match[4])-ref!.mag),pick.targetId).toBeLessThanOrEqual(.051);
+      checked++;
+    }
+    expect(checked).toBeGreaterThanOrEqual(164);
   });
   it("bundles two credited, decoded survey cutouts at the actual coordinates of every guide target", () => {
     for (const pick of north(10)) {

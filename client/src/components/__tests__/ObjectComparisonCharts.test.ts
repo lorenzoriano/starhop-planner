@@ -38,6 +38,9 @@ describe("clock comparison chart", () => {
     expect(html).toContain("19:00");
     expect(html).toContain("Dawn · 21:00");
     expect(html).not.toContain("19:50");
+    expect(html).toContain('stroke-dasharray="10 3 2 3"');
+    expect(html).toContain('width="28" height="8"');
+    expect(html).not.toContain("Moon altitude · long/short dashes");
   });
 
   it("defaults the seasonal chart to the actual Moon-free hours series", () => {
@@ -66,6 +69,8 @@ describe("clock comparison chart", () => {
     expect(html).toContain(`stroke="${CLOCK_COLORS[0]}"`);
     expect(html).toContain("M31 · 2.5 h");
     expect(html).toContain('y="');
+    expect(html).toContain("Jan 1, 2026");
+    expect(html).not.toContain(">2026-01-01</button>");
   });
 
   it("assigns a distinct color to each monthly trajectory", () => {

@@ -41,6 +41,11 @@ export function makeSession(name:string,start:Date,lat:number,lon:number,items:N
 
 type Candidate = { id:string;name:string;date:Date;alt:number;az:number;separation:number|null;moonlight:number;lunar:boolean;usable:boolean;score:number;minimum:number;darkEnough:boolean };
 export type SequenceStep = { id:string; name:string; date:Date|null; alt:number; az:number; separation:number|null; moonlight:number; reason:string; lunar:boolean };
+/** Keep the legend, colour assignment and numbered slots in scheduled order. */
+export function sessionTimelineItems(items:NightItem[],steps:SequenceStep[]):NightItem[] {
+  const scheduled=steps.filter(step=>step.date).slice().sort((a,b)=>+a.date!-+b.date!).map(step=>items.find(item=>item.id===step.id)).filter((item):item is NightItem=>!!item);
+  return [...scheduled,...items.filter(item=>!scheduled.some(placed=>placed.id===item.id))];
+}
 export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[],skyBrightness=21.6):SequenceStep[] {
   const start=new Date(session.startAt),end=new Date(start.getTime()+session.durationMinutes*60_000);
   const remaining=session.items.filter(i=>!i.observedAt).map(i=>i.id);

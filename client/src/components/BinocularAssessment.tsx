@@ -23,6 +23,11 @@ export function BinocularProfileControls({settings,update}:{settings:Settings;up
     <button className="text-action" onClick={()=>update({mode:'binocular',instrumentSelected:true,binocularMagnification:14,binocularAperture:50,binocularStabilized:true,binocularTransmission:.86,binocularFov:3.7,fov:3.7,fovHeight:3.7,shape:'circle',binocularProfileVersion:1})}>Use KITE APC 14×50 ED defaults</button><a href={KITE_SOURCE} target="_blank" rel="noreferrer">Manufacturer specifications ↗</a>
   </details>;
 }
+/** Read-only outside the single setup drawer. */
+export function BinocularProfileSummary({settings,onEditSetup}:{settings:Settings;onEditSetup:()=>void}) {
+ const p=profileFromSettings(settings);
+ return <div className="binocular-profile-summary"><Binoculars size={18}/><span>{profileName(p)} · {p.fov.toFixed(1)}° field · {p.stabilized?'stabilized':'supported / handheld'}</span><button className="text-action" type="button" onClick={onEditSetup}>Edit setup</button></div>;
+}
 export function BinocularAssessment({target,profile,alt,moon,skyBrightness,compact=false}:{target:UnifiedTarget;profile:BinocularProfile;alt:number;moon:MoonState;skyBrightness:number;compact?:boolean}) {
   const result=binocularAssessment(target,profile,{alt,moon,skyBrightness});
   const availabilityExplanation=alt<=0

@@ -73,8 +73,8 @@ export function ComparisonCharts({
         </select>
       </div>
       <p className="astro-note">
-        The same objects, colors and cursor as the clock. Hover to inspect; click
-        to pin the displayed time; click again or press Escape to unlock. Object
+        The same objects, colors and cursor as the clock. Hover, tap or drag to inspect; tap
+        to pin the displayed time; tap again or press Escape to unlock. Object
         paths are solid colors; Moon altitude uses long-and-short gray dashes and Sun altitude
         uses peach dots. {locked && "Time is pinned; pointer movement will not change it."}
       </p>
@@ -186,7 +186,7 @@ export function ComparisonCharts({
                       <path
                         d={path((s) => s.moon)}
                         fill="none"
-                        stroke="#a4a8ad"
+                        stroke="var(--chart-silver, #aeb4be)"
                         strokeWidth="1.7"
                         strokeDasharray="10 3 2 3"
                       />
@@ -250,17 +250,17 @@ export function ComparisonCharts({
           <button key={t.id} type="button"
             onPointerEnter={() => setHighlight(t.id)} onPointerLeave={() => setHighlight(null)}
             onFocus={() => setHighlight(t.id)} onBlur={() => setHighlight(null)}>
-            <i style={{ background: CLOCK_COLORS[i] }} />
+            <svg aria-hidden="true" width="28" height="8" viewBox="0 0 28 8"><path d="M0 4H28" stroke={CLOCK_COLORS[i]} strokeWidth="2"/></svg>
             {t.displayName || t.name}
           </button>
         ))}
         <span>
-          <i style={{ background: "#a4a8ad" }} />
-          Moon altitude · long/short dashes
+          <svg aria-hidden="true" width="28" height="8" viewBox="0 0 28 8"><path d="M0 4H28" stroke="var(--chart-silver, #aeb4be)" strokeWidth="2" strokeDasharray="10 3 2 3"/></svg>
+          Moon altitude
         </span>
         <span>
-          <i style={{ background: "#d7a28b" }} />
-          Sun altitude · dotted
+          <svg aria-hidden="true" width="28" height="8" viewBox="0 0 28 8"><path d="M0 4H28" stroke="#d7a28b" strokeWidth="2" strokeDasharray="2 5"/></svg>
+          Sun altitude
         </span>
       </div>
       <p className="astro-note">
@@ -295,7 +295,7 @@ export function SeasonChart({
   const selectedIndex = Math.max(0, season.days.findIndex((d) => d.day === night));
   const index = Math.max(0, Math.min(season.days.length - 1, hover ?? selectedIndex));
   const day = season.days[index];
-  const max = Math.max(12, ...season.days.flatMap((d) => [...d.moonFree, ...d.available, ...d.hours])),
+  const max = Math.max(12, ...season.days.flatMap((d) => d[metric])),
     x = (i: number) => left + (i / Math.max(1, season.days.length - 1)) * plotWidth,
     y = (hours: number) => 175 - (hours / max) * 145;
   const monthTicks = season.days
@@ -329,7 +329,7 @@ export function SeasonChart({
         aria-valuemin={0}
         aria-valuemax={season.days.length - 1}
         aria-valuenow={index}
-        aria-valuetext={`${hover === null ? "Chosen night" : `Hover date ${day.day}; chosen night ${season.days[selectedIndex].day}`}: ${targets.map((t, i) => `${t.name} ${day[metric][i].toFixed(1)} ${metric === "contrast" ? "contrast-hours" : "hours"}${metric === "hours" ? ` strict; ${day.available[i].toFixed(1)} altitude-and-darkness hours without the Moon cutoff` : ""}`).join(", ")}`}
+        aria-valuetext={`${hover === null ? "Chosen night" : `Inspected date ${format(new Date(`${day.day}T12:00:00`),"MMM d, yyyy")}; chosen night ${format(new Date(`${season.days[selectedIndex].day}T12:00:00`),"MMM d, yyyy")}`}: ${targets.map((t, i) => `${t.name} ${day[metric][i].toFixed(1)} ${metric === "contrast" ? "contrast-hours" : "hours"}${metric === "hours" ? ` strict; ${day.available[i].toFixed(1)} altitude-and-darkness hours without the Moon cutoff` : ""}`).join(", ")}`}
         onPointerMove={(e) => setHover(pick(e))}
         onPointerLeave={() => setHover(null)}
         onClick={(e) => onNight(season.days[pick(e)].day)}
@@ -367,7 +367,7 @@ export function SeasonChart({
               strokeDasharray="2 5"
             />
             <text x={left-8} y={y(max * f) + 4} textAnchor="end" style={{fontSize:12}}>
-              {(max * f).toFixed(0)}h
+              {(max * f).toFixed(0)}{metric === "contrast" ? " c·h" : "h"}
             </text>
           </g>
         ))}
@@ -435,7 +435,7 @@ export function SeasonChart({
       </svg>
       <div className="astro-cursor-values">
         <strong>
-          <span>{hover === null ? "Chosen night" : "Hover date"} · </span><ContextDateButton value={resolveLocalMoment(day.day,"20:00",timezone)!}>{day.day}</ContextDateButton> · Moon {Math.round(day.lit * 100)}% lit
+          <span>{hover === null ? "Chosen night" : "Hover date"} · </span><ContextDateButton value={resolveLocalMoment(day.day,"20:00",timezone)!}>{formatInTimeZone(resolveLocalMoment(day.day,"20:00",timezone)!,timezone,"MMM d, yyyy")}</ContextDateButton> · Moon {Math.round(day.lit * 100)}% lit
         </strong>
         {targets.map((t, i) => (
           <button key={t.id} type="button" style={{ color: CLOCK_COLORS[i] }}
