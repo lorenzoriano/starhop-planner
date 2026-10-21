@@ -1,6 +1,7 @@
 import { resolveLocalMoment } from "@/lib/session";
 import { ContextDateButton } from "./ObservingContext";
 import { useState } from "react";
+import { useSvgWidth } from "@/hooks/use-svg-width";
 import { formatInTimeZone } from "date-fns-tz";
 import { format } from "date-fns";
 import type { UnifiedTarget } from "@/lib/astronomy";
@@ -35,6 +36,8 @@ export function ComparisonCharts({
   onUnlock: () => void;
   onAdjustTime: (at: Date) => void;
 }) {
+  const {ref:plotRef,width}=useSvgWidth(752);
+  const left=44,right=width-16,plotWidth=right-left;
   const [span, setSpan] = useState<"night" | "day">("night");
   const [highlight, setHighlight] = useState<string | null>(null);
   const dark = samples.filter((s) => s.sun <= -18 + 0.0001),
@@ -44,12 +47,12 @@ export function ComparisonCharts({
         ? dark[dark.length - 1].ms
         : samples[samples.length - 1].ms;
   const visible = samples.filter((s) => s.ms >= start && s.ms <= end),
-    x = (ms: number) => 46 + ((ms - start) / (end - start || 1)) * 660;
+    x = (ms: number) => left + ((ms - start) / (end - start || 1)) * plotWidth;
   const point = (event: React.MouseEvent<SVGSVGElement>) => {
     const r = event.currentTarget.getBoundingClientRect(),
       fraction = Math.max(
         0,
-        Math.min(1, (((event.clientX - r.left) / r.width) * 752 - 46) / 660),
+        Math.min(1, (((event.clientX - r.left) / r.width) * width - left) / plotWidth),
       );
     return Math.round((start + (end - start) * fraction) / 60000) * 60000;
   };
@@ -72,8 +75,8 @@ export function ComparisonCharts({
       <p className="astro-note">
         The same objects, colors and cursor as the clock. Hover to inspect; click
         to pin the displayed time; click again or press Escape to unlock. Object
-        paths are solid colors; Moon altitude is dashed silver and Sun altitude
-        is dotted gold. {locked && "Time is pinned; pointer movement will not change it."}
+        paths are solid colors; Moon altitude uses long-and-short gray dashes and Sun altitude
+        uses peach dots. {locked && "Time is pinned; pointer movement will not change it."}
       </p>
       {span === "night" && !dark.length ? (
         <p>
@@ -98,12 +101,18 @@ export function ComparisonCharts({
               ticks = kind === 0 ? [-30, 0, 30, 60, 90] : [0, 60, 120, 180],
               hourTicks = visible.filter((s) =>
                 formatInTimeZone(new Date(s.ms), timezone, "mm") === "00",
-              );
+              ).filter((s, i, all) => {
+                const minimumGap=66;
+                const stride=Math.max(1,Math.ceil(all.length/Math.max(1,plotWidth/minimumGap)));
+                return i%stride===0&&x(s.ms)-left>=minimumGap&&right-x(s.ms)>=minimumGap;
+              });
             return (
               <div key={name}>
                 <h3>{name} · degrees</h3>
                 <svg
-                  viewBox="0 0 752 226"
+                  ref={kind===0?plotRef:undefined}
+                  viewBox={`0 0 ${width} 230`}
+                  style={{height:230}}
                   role="slider"
                   tabIndex={0}
                   aria-label={`${name} for ${targets.map((t) => t.name).join(", ") || "Moon and Sun"}. Arrow keys move ten minutes.`}
@@ -157,8 +166,8 @@ export function ComparisonCharts({
                     return (
                       <g key={v}>
                         <line
-                          x1="46"
-                          x2="706"
+                          x1={left}
+                          x2={right}
                           y1={y(v)}
                           y2={y(v)}
                           stroke={kind === 0 && v === 0 ? "#d5e1d9" : "#7692a3"}
@@ -166,7 +175,7 @@ export function ComparisonCharts({
                           strokeDasharray={kind === 0 && v === 0 ? undefined : "3 5"}
                           strokeWidth={kind === 0 && v === 0 ? "2" : "1"}
                         />
-                        <text x="36" y={y(v) + 4} textAnchor="end">
+                        <text x={left-8} y={y(v) + 4} textAnchor="end" style={{fontSize:12}}>
                           {v}°
                         </text>
                       </g>
@@ -177,15 +186,15 @@ export function ComparisonCharts({
                       <path
                         d={path((s) => s.moon)}
                         fill="none"
-                        stroke="#adb1b8"
+                        stroke="#a4a8ad"
                         strokeWidth="1.7"
-                        strokeDasharray="7 4"
+                        strokeDasharray="10 3 2 3"
                       />
                       <path
                         d={path((s) => s.sun)}
                         fill="none"
-                        stroke="#edc56e"
-                        strokeDasharray="3 5"
+                        stroke="#d7a28b"
+                        strokeDasharray="2 5"
                         strokeWidth="1.7"
                       />
                     </>
@@ -217,20 +226,8 @@ export function ComparisonCharts({
                       strokeDasharray="2 3"
                     />
                   )}
-                  {[
-                    { ms: start, label: `${span === "night" ? "Dusk" : "Start"} · ${formatInTimeZone(new Date(start), timezone, "HH:mm")}` },
-                    ...hourTicks.filter((s) => s.ms > start && s.ms < end).map((s) => ({ ms: s.ms, label: formatInTimeZone(new Date(s.ms), timezone, "HH:mm") })),
-                    { ms: end, label: `${span === "night" ? "Dawn" : "End"} · ${formatInTimeZone(new Date(end), timezone, "HH:mm")}` },
-                  ].map(({ ms, label }, i, ticks) => (
-                    <text
-                      key={ms}
-                      x={x(ms)}
-                      y="211"
-                      textAnchor={i === 0 ? "start" : i === ticks.length - 1 ? "end" : "middle"}
-                    >
-                      {label}
-                    </text>
-                  ))}
+                  {hourTicks.map(s=><text key={s.ms} x={x(s.ms)} y="211" textAnchor="middle" style={{fontSize:12}}>{formatInTimeZone(new Date(s.ms), timezone, "HH:mm")}</text>)}
+                  {[{ms:start,label:span==='night'?'Dusk':'Start'}, {ms:end,label:span==='night'?'Dawn':'End'}].map(({ms,label},i)=><text key={`${i}-${ms}`} aria-label={`${label} · ${formatInTimeZone(new Date(ms),timezone,"HH:mm")}`} x={x(ms)} y="207" textAnchor={i===0?'start':'end'} style={{fontSize:12}}><tspan x={x(ms)}>{label}</tspan><tspan x={x(ms)} dy="16">{formatInTimeZone(new Date(ms),timezone,'HH:mm')}</tspan></text>)}
                 </svg>
               </div>
             );
@@ -243,7 +240,7 @@ export function ComparisonCharts({
           <button key={t.id} type="button" style={{ color: CLOCK_COLORS[i] }}
             onPointerEnter={() => setHighlight(t.id)} onPointerLeave={() => setHighlight(null)}
             onFocus={() => setHighlight(t.id)} onBlur={() => setHighlight(null)}>
-            {t.name} · {rounded(values[i].alt)} high ·{" "}
+            {t.name} · {values[i].alt<0?`${rounded(Math.abs(values[i].alt))} below horizon`:`${rounded(values[i].alt)} high`} ·{" "}
             {rounded(values[i].separation)} from Moon
           </button>
         ))}
@@ -258,12 +255,12 @@ export function ComparisonCharts({
           </button>
         ))}
         <span>
-          <i style={{ background: "#adb1b8" }} />
-          Moon altitude · dashed
+          <i style={{ background: "#a4a8ad" }} />
+          Moon altitude · long/short dashes
         </span>
         <span>
-          <i style={{ background: "#edc56e" }} />
-          Sun altitude
+          <i style={{ background: "#d7a28b" }} />
+          Sun altitude · dotted
         </span>
       </div>
       <p className="astro-note">
@@ -290,6 +287,8 @@ export function SeasonChart({
   onNight: (day: string) => void;
   timezone: string;
 }) {
+  const {ref:yearRef,width}=useSvgWidth(752);
+  const left=44,right=width-16,plotWidth=right-left;
   const [metric, setMetric] = useState<"moonFree" | "available" | "contrast" | "hours">("moonFree");
   const [hover, setHover] = useState<number | null>(null);
   const [highlight, setHighlight] = useState<string | null>(null);
@@ -297,11 +296,12 @@ export function SeasonChart({
   const index = Math.max(0, Math.min(season.days.length - 1, hover ?? selectedIndex));
   const day = season.days[index];
   const max = Math.max(12, ...season.days.flatMap((d) => [...d.moonFree, ...d.available, ...d.hours])),
-    x = (i: number) => 46 + (i / Math.max(1, season.days.length - 1)) * 660,
+    x = (i: number) => left + (i / Math.max(1, season.days.length - 1)) * plotWidth,
     y = (hours: number) => 175 - (hours / max) * 145;
   const monthTicks = season.days
     .map((d, i) => ({ d, i }))
-    .filter(({ d, i }) => i === 0 || d.day.slice(8) === "01");
+    .filter(({ d, i }) => i === 0 || d.day.slice(8) === "01")
+    .filter(({i},n,all)=>n===0||((n%Math.max(1,Math.ceil(all.length/Math.max(1,plotWidth/45)))===0)&&x(i)-left>=35&&right-x(i)>=15));
   const pick = (e: React.MouseEvent<SVGSVGElement>) => {
     const r = e.currentTarget.getBoundingClientRect();
     return Math.max(
@@ -309,7 +309,7 @@ export function SeasonChart({
       Math.min(
         season.days.length - 1,
         Math.round(
-          ((((e.clientX - r.left) / r.width) * 752 - 46) / 660) *
+          ((((e.clientX - r.left) / r.width) * width - left) / plotWidth) *
             (season.days.length - 1),
         ),
       ),
@@ -320,7 +320,9 @@ export function SeasonChart({
       <div className="astro-chart-heading"><h3>{metric === "moonFree" ? "Moon-free dark hours" : metric === 'contrast' ? 'Diffuse-contrast index' : metric === 'available' ? 'Dark hours above your altitude limit' : 'Hours meeting strict limits'}</h3><select aria-label="Seasonal hours metric" value={metric} onChange={e=>setMetric(e.target.value as typeof metric)}><option value="moonFree">Moon-free dark hours</option><optgroup label="Advanced metrics"><option value="available">Altitude and darkness only</option><option value="hours">Strict Moon-distance cutoff</option><option value="contrast">Diffuse-contrast index</option></optgroup></select></div>
       <p className="astro-note">{metric === "moonFree" ? "Estimated time in astronomical darkness when the Moon is below the horizon and the target is above your altitude limit. Integrated from half-hour samples; Moon-up time is excluded." : metric === 'contrast' ? 'For faint extended detail: 1 h under a sky twice as bright contributes 0.5 contrast-hours. Uses lunar phase, height and separation continuously. This index is not actual observing time.' : metric === 'available' ? 'Geometric time in astronomical darkness above the chosen altitude. Moonlight does not reduce this total.' : 'Colored solid lines show half-hour samples passing the hard Moon-distance cutoff. Gray dashed lines show altitude-and-darkness hours without that cutoff.'}</p>
       <svg
-        viewBox="0 0 752 215"
+        ref={yearRef}
+        viewBox={`0 0 ${width} 215`}
+        style={{height:215}}
         role="slider"
         aria-label="Seasonal object availability. Arrow keys choose a night; Enter opens it in the clock."
         tabIndex={0}
@@ -357,14 +359,14 @@ export function SeasonChart({
         {[0, 0.5, 1].map((f) => (
           <g key={f}>
             <line
-              x1="46"
-              x2="706"
+              x1={left}
+              x2={right}
               y1={y(max * f)}
               y2={y(max * f)}
               stroke="#486575"
-              strokeDasharray="3 5"
+              strokeDasharray="2 5"
             />
-            <text x="36" y={y(max * f) + 4} textAnchor="end">
+            <text x={left-8} y={y(max * f) + 4} textAnchor="end" style={{fontSize:12}}>
               {(max * f).toFixed(0)}h
             </text>
           </g>
@@ -374,6 +376,7 @@ export function SeasonChart({
             key={d.day}
             x={x(i)}
             y="201"
+            style={{fontSize:12}}
             textAnchor={i === 0 ? "start" : "middle"}
           >
             {format(new Date(`${d.day}T12:00:00`), "MMM")}
@@ -425,7 +428,7 @@ export function SeasonChart({
             x2={x(hover)}
             y1="24"
             y2="180"
-            stroke="#edc56e"
+            stroke="#d7a28b"
             strokeDasharray="3 4"
           />
         )}

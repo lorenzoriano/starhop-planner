@@ -1,6 +1,6 @@
-import { useId, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { getConstellationName, type UnifiedTarget } from "@/lib/astronomy";
-import { catalogSearchDiagnostics, catalogSearchScore, deduplicateCatalogMatches, lunarSearchHint } from "@/lib/catalog-search";
+import { catalogSearchDiagnosticsFromMatches, prepareCatalogSearch, searchCatalog, lunarSearchHint } from "@/lib/catalog-search";
 
 type CatalogComboboxProps = {
   targets: UnifiedTarget[];
@@ -24,14 +24,35 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
   const listId = `${inputId}-listbox`;
   const [activeIndex, setActiveIndex] = useState(0);
   const [status, setStatus] = useState("");
-  const results = useMemo(() => query.trim()
-    ? deduplicateCatalogMatches(targets.map(target => ({ target, score: catalogSearchScore(target, query, getConstellationName(target.con)) }))
-      .filter(result => Number.isFinite(result.score))
-      .sort((a, b) => a.score - b.score || a.target.name.localeCompare(b.target.name))).slice(0, 7)
-    : [], [targets, query]);
-  const diagnostics = useMemo(() => query.trim() ? catalogSearchDiagnostics(query, targets) : null, [query, targets]);
-  const moonHint = lunarSearchHint(query);
-  const noResults = !query.trim() || results.length ? "" : diagnostics?.message ?? "No catalog matches.";
+  // Input stays local while typing. Committing once after a pause also avoids
+  // rebuilding the planetarium / Planner / Clock for every individual key.
+  const [draft,setDraft]=useState(query);
+  const emittedQuery=useRef(query),onQueryRef=useRef(onQuery);
+  onQueryRef.current=onQuery;
+  useEffect(()=>{
+    if(query!==emittedQuery.current){emittedQuery.current=query;setDraft(query);}
+  },[query]);
+  useEffect(()=>{
+    if(draft===query)return;
+    const timer=setTimeout(()=>{emittedQuery.current=draft;onQueryRef.current(draft);},140);
+    return ()=>clearTimeout(timer);
+  },[draft,query]);
+  // Warm normalized rows in small tasks after paint, rather than doing a large
+  // one-off normalization pass on the first search keystroke.
+  useEffect(()=>{
+    let index=0;
+    let timer:ReturnType<typeof setTimeout>;
+    const prepare=()=>{prepareCatalogSearch(targets.slice(index,index+150));index+=150;if(index<targets.length)timer=setTimeout(prepare,0);};
+    timer=setTimeout(prepare,0);
+    return ()=>clearTimeout(timer);
+  },[targets]);
+  const matches=useMemo(()=>searchCatalog(targets,query,7),[targets,query]);
+  const pending=draft!==query;
+  const results=pending?[]:matches;
+  const diagnostics=useMemo(()=>catalogSearchDiagnosticsFromMatches(query,matches),[query,matches]);
+  const moonHint=lunarSearchHint(draft);
+  const noResults=pending?"Searching…":!draft.trim()||results.length?"":diagnostics.message;
+  const clearQuery=()=>{setDraft("");emittedQuery.current="";onQueryRef.current("");setActiveIndex(0);setStatus("");};
   const shownActiveIndex = results.length ? Math.min(activeIndex, results.length - 1) : -1;
 
   const select = (target: UnifiedTarget) => {
@@ -46,12 +67,12 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
       id={inputId}
       role="combobox"
       aria-autocomplete="list"
-      aria-expanded={Boolean(query.trim())}
+      aria-expanded={Boolean(draft.trim())}
       aria-controls={listId}
       aria-activedescendant={shownActiveIndex >= 0 ? `${listId}-option-${shownActiveIndex}` : undefined}
-      value={query}
+      value={draft}
       placeholder={placeholder}
-      onChange={event => { onQuery(event.target.value); setActiveIndex(0); setStatus(""); }}
+      onChange={event => { setDraft(event.target.value); setActiveIndex(0); setStatus(""); }}
       onKeyDown={event => {
         if (event.key === "ArrowDown" && results.length) {
           event.preventDefault(); setActiveIndex(index => (index + 1) % results.length);
@@ -60,11 +81,11 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
         } else if (event.key === "Enter" && shownActiveIndex >= 0) {
           event.preventDefault(); select(results[shownActiveIndex].target);
         } else if (event.key === "Escape") {
-          onQuery(""); setActiveIndex(0); setStatus("");
+          clearQuery();
         }
       }}
     />
-    {query.trim() && <ul id={listId} className="moon-target-results" role="listbox" aria-label="Matching catalog objects">
+    {draft.trim() && <ul id={listId} className="moon-target-results" role="listbox" aria-label="Matching catalog objects" aria-busy={pending}>
       {results.length ? results.map(({ target }, index) => {
         const catalogId = visibleCatalogId(target);
         const isSaved = savedIds?.has(target.id) ?? false;
@@ -82,8 +103,25 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
             <span>{[catalogId, target.categoryShort, getConstellationName(target.con), isSaved ? "Saved" : ""].filter(Boolean).join(" · ")}</span>
           </button>
         </li>;
-      }) : <li role="option" aria-selected="false"><span>{noResults}</span>{moonHint && lunarHintAction}</li>}
+      }) : <li role="option" aria-selected="false"><span>{noResults}</span>{!pending && moonHint && (lunarHintAction??<a href="#/moon" onClick={navigateToLunarLandmarks}>Browse lunar landmarks</a>)}</li>}
     </ul>}
     {status && <p className="catalog-combobox-status" role="status" aria-live="polite">{status}</p>}
   </div>;
+}
+
+/** Hash routing uses the first fragment, so scroll after the Moon page mounts. */
+function navigateToLunarLandmarks(event: React.MouseEvent<HTMLAnchorElement>) {
+  if(event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+  event.preventDefault();
+  const reveal=()=>{
+    const landmarks=document.getElementById("lunar-landmarks");
+    if(!landmarks)return false;
+    landmarks.scrollIntoView({behavior:"smooth",block:"start"});
+    return true;
+  };
+  if(reveal())return;
+  const observer=new MutationObserver(()=>{if(reveal()){observer.disconnect();clearTimeout(timeout);}});
+  observer.observe(document.body,{childList:true,subtree:true});
+  const timeout=setTimeout(()=>observer.disconnect(),5000);
+  window.location.hash="/moon";
 }

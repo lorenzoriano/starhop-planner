@@ -1268,8 +1268,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A broad Cas star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "This broad Cassiopeia cluster is a low-power field target: look for a gentle increase in star density, not a tight knot.",
+    "finding": "Use Caph (magnitude 2.3) as a reference: NGC 129 lies 2.8° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Center NGC 129 in the Cassiopeia chart and scan across its full extent. A wide field helps distinguish the cluster from the surrounding Milky Way stars.",
     "minAperture": 50,
     "references": [
       {
@@ -1348,8 +1348,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A small Cas star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "Markarian 6 is a small Cassiopeia cluster; at 14×50, the useful goal is a subtle concentration rather than resolved detail.",
+    "finding": "Use Segin (magnitude 3.4) as a reference: Mark 6 lies 5.1° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Use the chart to place Markarian 6, then hold the view steady and check for a compact patch against the surrounding stars.",
     "minAperture": 50,
     "references": [
       {
@@ -1380,8 +1380,8 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50",
-    "impression": "A broad Per star cluster invites a careful field comparison. Trace its brighter stars before exploring the surrounding background.",
-    "finding": "Use the finder map in Per to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "Trumpler 2 is a loose Perseus cluster suited to binoculars. Pick out its brighter stars first, then take in the wider scattering.",
+    "finding": "Use Mirfak (magnitude 1.8) as a reference: Tr 2 lies 9.3° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Find Trumpler 2 on the Perseus chart and keep the full group in view; its loose outline is easier to appreciate at low power.",
     "minAperture": 50,
     "references": [
       {
@@ -1396,8 +1396,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A broad Cas star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Cas to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "Trumpler 3 is a wide Cassiopeia field with a modest stellar concentration. Expect the surrounding stars to remain part of the view.",
+    "finding": "Use Segin (magnitude 3.4) as a reference: Tr 3 lies 8.6° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Center the charted Trumpler 3 field and compare the cluster's broad spread with the background, rather than searching for a compact glow.",
     "minAperture": 50,
     "references": [
       {
@@ -1428,8 +1428,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A small Per star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Per to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 1342 is a small Perseus open cluster. In ordinary binoculars, look for a handful of stars standing out from the field rather than fine structure.",
+    "finding": "Use Gorgonea Tertia (magnitude 3.4) as a reference: NGC 1342 lies 5.4° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Place NGC 1342 from the Perseus chart and compare the compact grouping with nearby field stars; a steady view helps at 10×.",
     "minAperture": 50,
     "references": [
       {
@@ -1460,8 +1460,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A broad Per star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Per to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 1582 is a broad Perseus cluster, so the binocular view is a loose pattern spread across the field rather than a bright central knot.",
+    "finding": "Use Haldus (magnitude 3.0) as a reference: NGC 1582 lies 5.4° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Center the charted NGC 1582 position and let the wider pattern emerge; avoid narrowing the field before taking in its extent.",
     "minAperture": 50,
     "references": [
       {
@@ -1556,8 +1556,8 @@
     "family": "cluster",
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
-    "impression": "A small Aur star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Aur to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 1893 is the open cluster in the IC 410 region. With 14×50 binoculars, make the cluster itself the goal; the surrounding nebula is not a realistic expectation.",
+    "finding": "Use Elnath (magnitude 1.6) as a reference: NGC 1893 lies 4.9° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Use the Auriga chart to identify NGC 1893 among the winter Milky Way stars, and look for the stellar grouping rather than nebulous detail.",
     "minAperture": 50,
     "references": [
       {
@@ -1636,8 +1636,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A small Mon star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Mon to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 2251 is a modest Monoceros cluster in a star-rich region. Expect a restrained grouping, not a showpiece detached from its background.",
+    "finding": "Use Alzir (magnitude 3.4) as a reference: NGC 2251 lies 5.2° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Center NGC 2251 on the Monoceros chart and compare the marked group with the surrounding Milky Way field before moving on.",
     "minAperture": 50,
     "references": [
       {
@@ -1684,8 +1684,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A small Mon star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Mon to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 2343 is a small Monoceros open cluster. The binocular target is its compact star grouping, with no expectation of resolving every member.",
+    "finding": "Use Sirius (magnitude -1.5) as a reference: NGC 2343 lies 8.3° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Use the Monoceros chart to center NGC 2343, then look for a small enhancement in the star field at the marked position.",
     "minAperture": 50,
     "references": [
       {
@@ -1732,8 +1732,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A broad Pup star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Pup to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 2527 is a broad Puppis cluster. Give it room in the binocular field and look for a loose gathering rather than a concentrated patch.",
+    "finding": "Use Tureis (magnitude 2.8) as a reference: NGC 2527 lies 4.0° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Locate NGC 2527 in Puppis with the chart, then sweep slowly across the broad field to judge its outline against the background.",
     "minAperture": 50,
     "references": [
       {
@@ -1748,8 +1748,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A broad Pup star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Pup to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 2539 is a broad open cluster in Puppis. Its binocular appeal is the wider star pattern, not a small unresolved glow.",
+    "finding": "Use Tureis (magnitude 2.8) as a reference: NGC 2539 lies 11.5° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Center the charted position in Puppis and take in the surrounding stars with it; a wide view is more useful than increasing magnification.",
     "minAperture": 50,
     "references": [
       {
@@ -1764,8 +1764,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A small Pup star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Pup to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 2571 is a smaller Puppis cluster. Look for a limited concentration within the much broader star field of the constellation.",
+    "finding": "Use Tureis (magnitude 2.8) as a reference: NGC 2571 lies 6.0° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Use the Puppis chart to place NGC 2571 precisely, then check whether the marked patch looks more concentrated than its immediate surroundings.",
     "minAperture": 50,
     "references": [
       {
@@ -1796,8 +1796,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A small Aql star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Aql to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 6709 is an open cluster in Aquila. Look for a group of stars with a shared concentration, then compare its scale with the surrounding field.",
+    "finding": "Use Deneb el Okab (magnitude 3.0) as a reference: NGC 6709 lies 4.9° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Find NGC 6709 on the Aquila chart and inspect the whole cluster at once; the nearby star field is part of the binocular view.",
     "minAperture": 50,
     "references": [
       {
@@ -1812,8 +1812,8 @@
     "family": "cluster",
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
-    "impression": "A small Sgr star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Sgr to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 6716 is a small Sagittarius cluster and a subtle target at 14×50. Aim to recognize a faint grouping, not to resolve it into a rich star field.",
+    "finding": "Use Albaldah (magnitude 2.9) as a reference: NGC 6716 lies 3.7° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Use the Sagittarius chart to verify the exact NGC 6716 field; this compact target is easy to confuse with unrelated Milky Way stars.",
     "minAperture": 50,
     "references": [
       {
@@ -1844,8 +1844,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A small Vul star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Vul to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 6823 is the star cluster in the Sh 2-86 region. In 14×50 binoculars, concentrate on the stars; do not expect the surrounding emission nebula.",
+    "finding": "Use Albireo (magnitude 3.1) as a reference: NGC 6823 lies 5.4° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Center NGC 6823 from the Vulpecula chart and look for the cluster's stellar concentration, keeping nebular structure out of the expected view.",
     "minAperture": 50,
     "references": [
       {
@@ -1860,8 +1860,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A small Cyg star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Cyg to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 6910 is the compact open cluster near Gamma Cygni (Sadr). In binoculars, look for its small knot of stars against the rich Cygnus Milky Way.",
+    "finding": "Use Sadr (magnitude 2.2) as a reference: NGC 6910 lies 0.6° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Start at Sadr and use the Cygnus chart to move to NGC 6910. Its position close to the bright star makes accurate centering important.",
     "minAperture": 50,
     "references": [
       {
@@ -1924,8 +1924,8 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "A small Cep star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Cep to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 7160 is a compact Cepheus open cluster. At 14×50, look for a small stellar grouping rather than a broad, detached cluster shape.",
+    "finding": "Use Alderamin (magnitude 2.4) as a reference: NGC 7160 lies 4.0° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Place NGC 7160 with the Cepheus chart and check the compact patch carefully; its modest scale makes the finder field useful.",
     "minAperture": 50,
     "references": [
       {
@@ -1956,8 +1956,8 @@
     "family": "cluster",
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
-    "impression": "A small Cep star cluster invites a careful field comparison. Look for a faint concentration before trying to pick out individual members.",
-    "finding": "Use the finder map in Cep to match the marked position. Compare the concentration with the neighboring field.",
+    "impression": "NGC 7235 is a small open cluster in Cepheus. Treat it as a faint stellar grouping in the surrounding Milky Way, not as a prominent standalone patch.",
+    "finding": "Use Alderamin (magnitude 2.4) as a reference: NGC 7235 lies 8.6° away on the sky. Match the intervening stars on the finder chart; the reference need not fit in the same binocular field. Use the Cepheus chart to pin down NGC 7235 and compare the marked position with adjacent stars; a careful field match is the main challenge.",
     "minAperture": 50,
     "references": [
       {

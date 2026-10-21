@@ -1,3 +1,4 @@
+import { useSvgWidth } from "@/hooks/use-svg-width";
 import { SeasonAltitudeCalendar, trajectoryMoment } from "./SeasonAltitudeCalendar";
 import { observationAt } from "@/lib/observing-profile";
 import { formatInTimeZone } from "date-fns-tz";
@@ -87,6 +88,7 @@ export function SeasonTrajectoryClock({
   onNight,
   onTime,
 }: Props) {
+  const {ref:monthDialRef,width:dialWidth}=useSvgWidth(640);
   const [monthPoint, setMonthPoint] = useState<{day:string;sample:number}|null>(null);
   const [showOutline, setShowOutline] = useState(false);
   const [focusDay, setFocusDay] = useState<string | null>(null),
@@ -234,6 +236,7 @@ export function SeasonTrajectoryClock({
   };
   const dial = (mode: "months" | "density") => (
     <svg
+      ref={mode==="months"?monthDialRef:undefined}
       viewBox="0 0 640 640"
       role="slider"
       tabIndex={0}
@@ -291,6 +294,7 @@ export function SeasonTrajectoryClock({
             x="325"
             y={315 - ((alt + 90) / 180) * 254}
             className="astro-ring-label"
+            style={{fontSize:12*640/dialWidth}}
           >
             {alt === 0 ? "0° · HORIZON" : `${alt}°`}
           </text>
@@ -315,6 +319,7 @@ export function SeasonTrajectoryClock({
               y={324 + Math.sin(a) * 280}
               textAnchor="middle"
               className="astro-hour"
+              style={{fontSize:12*640/dialWidth}}
             >
               {hour === 0
                 ? "00 · Midnight"

@@ -1,0 +1,9 @@
+.status-help-trigger{display:inline-flex;align-items:center;gap:6px;max-width:100%;min-height:44px;cursor:help;font:inherit;text-align:inherit;color:inherit;vertical-align:middle}
+.status-help-trigger:not(.visibility-tag){padding:0;background:transparent;border:0}
+.status-help-trigger>svg{flex:0 0 13px;width:13px;height:13px;opacity:.8}
+.status-help-trigger:focus-visible{outline:2px solid #a3c8bf;outline-offset:3px;border-radius:4px}
+.status-help-content{width:min(340px,calc(100vw - 24px));max-height:min(70vh,500px);overflow:auto;background:#10232e;border:1px solid #57727a;color:#c6d7d4;font-size:14px;line-height:1.6}
+.status-help-content>strong{color:#e0e7d5;font-size:16px;font-weight:600}
+.status-help-content p{margin:8px 0 0;font-size:14px}
+.status-help-content ul{margin:8px 0 0;padding-left:18px}
+@media(max-width:700px){.status-help-content,.status-help-content p{font-size:16px}}

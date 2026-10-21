@@ -1,5 +1,5 @@
 import { describe,it,expect } from "vitest";
-import { sessionDraft,resolveSessionDraft,reuseNightItems,duplicateNightItems,sameObservingNight,observingNightDate } from "../session-draft";
+import { sessionDraft,resolveSessionDraft,reuseNightItems,duplicateNightItems,sameObservingNight,observingNightDate,sessionDraftAt } from "../session-draft";
 import type { ObservingSession } from "../session-planner";
 const source:ObservingSession={id:"existing",name:"Autumn night",startAt:"2026-10-15T03:30:00.000Z",lat:37.77,lon:-122.42,locationName:"Garden",durationMinutes:61,minutesPerTarget:15,items:[{id:"M31",addedAt:"2026-10-10T01:00:00.000Z",notes:"Keep my sketch",observedAt:"2026-10-11T02:00:00.000Z"}],archived:false,createdAt:"2026-10-10T00:00:00.000Z"};
 describe("inline session composition",()=>{
@@ -33,4 +33,12 @@ describe("inline session composition",()=>{
     expect(observingNightDate(new Date("2026-10-26T07:30:00.000Z"),"America/Los_Angeles")).toBe("2026-10-25");
     expect(sameObservingNight(beforeMidnight,afterMidnight,37.8,-122.42)).toBe(false);
   });
+});
+
+it("moving a generated night follows the new evening while preserving personal names and notes",()=>{
+ const at=new Date("2026-11-16T10:00:00Z"),zone="America/Los_Angeles";
+ const generated=sessionDraft({...source,name:"Oct 14 observing night"});
+ expect(sessionDraftAt(generated,at,zone)).toMatchObject({name:"Nov 15 observing night",date:"2026-11-16",time:"02:00"});
+ expect(sessionDraftAt(sessionDraft(source),at,zone).name).toBe("Autumn night");
+ expect(source.items[0].notes).toBe("Keep my sketch");
 });

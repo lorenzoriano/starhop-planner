@@ -1,4 +1,4 @@
-import type { UnifiedTarget } from "./astronomy";
+import { getConstellationName, type UnifiedTarget } from "./astronomy";
 import { normalizeStellarWords } from "./stellar-search";
 
 const commonAliases: Record<string, string[]> = {
@@ -44,49 +44,84 @@ function editDistanceAtMostTwo(a: string, b: string) {
   return previous[b.length] <= 2 ? previous[b.length] : Infinity;
 }
 
-function aliasesFor(target: UnifiedTarget) {
-  return [...(target.aliases ?? []), ...(commonAliases[target.id] ?? [])].map(normalizedSearch);
+type SearchQuery = { text: string; tokens: string[] };
+type SearchDocument = {
+  ids: string[]; names: string[]; aliases: string[]; identity: string[];
+  context: string; targetTokens: Set<string>; identityTokens: string[];
+  scores: Map<string, number>;
+};
+const documents = new WeakMap<UnifiedTarget, Map<string, SearchDocument>>();
+const queries = new Map<string, SearchQuery>();
+function tokens(value: string) { return value.split(/[^a-z0-9α-ω]+/i).filter(Boolean); }
+function searchQuery(query: string): SearchQuery {
+  let cached=queries.get(query);
+  if(cached)return cached;
+  const text=normalizedSearch(query);
+  cached={text,tokens:tokens(text)};
+  if(queries.size>=64)queries.delete(queries.keys().next().value!);
+  queries.set(query,cached);
+  return cached;
+}
+function searchDocument(target: UnifiedTarget, extra = ""): SearchDocument {
+  // Catalog rows are immutable. Normalize each row/context once, rather than
+  // rebuilding aliases and fuzzy token lists for every character and sort call.
+  const constellation=getConstellationName(target.con);
+  const contextExtra=extra===constellation?"":extra;
+  let variants=documents.get(target);
+  if(!variants){variants=new Map();documents.set(target,variants);}
+  const cached=variants.get(contextExtra);
+  if(cached)return cached;
+  const ids=[target.id,...(target.aliases??[])].map(normalizedSearch);
+  const names=[target.name,target.displayName].map(normalizedSearch);
+  const aliases=[...(target.aliases??[]),...(commonAliases[target.id]??[])].map(normalizedSearch);
+  const identity=[...ids,...names,...aliases];
+  const context=normalizedSearch(`${target.category} ${constellation} ${contextExtra}`);
+  const document={ids,names,aliases,identity,context,
+    targetTokens:new Set(tokens([...identity,context].join(" "))),
+    identityTokens:Array.from(new Set(tokens((target.category==="Star"?names:identity).join(" ")))),scores:new Map<string,number>()};
+  variants.set(contextExtra,document);
+  return document;
 }
 
-/** Exact catalog identifiers win; fuzzy spelling is kept below names and aliases. */
+/** Optional idle-time preparation for a collection that will be searched soon. */
+export function prepareCatalogSearch(targets: readonly UnifiedTarget[]) {
+  for(const target of targets)searchDocument(target);
+}
+
+/** Exact identifiers win; cached normalized rows keep repeated filtering cheap. */
 export function catalogSearchScore(target: UnifiedTarget, query: string, extra = "") {
-  const q = normalizedSearch(query);
-  if (!q) return 0;
-  const id = normalizedSearch(target.id);
-  const ids = [id, ...(target.aliases ?? []).map(normalizedSearch)];
-  const names = [target.name, target.displayName].map(normalizedSearch);
-  const aliases = aliasesFor(target);
-
-  if (ids.includes(q)) return 0;
-  // A bare planet name is an exact request for a planet, so avoid returning a
-  // deep-sky object whose name merely begins with that word.
-  if (planets.has(q)) return Infinity;
-  if (names.includes(q) || aliases.includes(q)) return 1;
-  if (ids.some(value => value.startsWith(q))) return 2;
-  if ([...names, ...aliases].some(value => value.startsWith(q))) return 3;
-
-  const identity = [...ids, ...names, ...aliases];
-  const haystack = [...identity, normalizedSearch(`${target.category} ${extra}`)];
-  if (identity.some(value => value.includes(q))) return 4;
-  if (haystack.some(value => value.includes(q))) return 5;
-
-  const queryTokens = q.split(/[^a-z0-9α-ω]+/i).filter(Boolean);
-  const targetTokens = Array.from(new Set(haystack.join(" ").split(/[^a-z0-9α-ω]+/i).filter(Boolean)));
-  // Stellar aliases include expanded constellation genitives (for example,
-  // `10 Andromedae`). Fuzzy matching those makes a misspelled object name
-  // return every star in that constellation. Keep stellar typo matching on
-  // the displayed name; exact aliases and designations still work above.
-  const fuzzyIdentity = target.category === "Star" ? names : identity;
-  const identityTokens = Array.from(new Set(fuzzyIdentity.join(" ").split(/[^a-z0-9α-ω]+/i).filter(Boolean)));
-  if (queryTokens.length) {
-    const distances = queryTokens.map(token => Math.min(...identityTokens.map(candidate =>
-      token === candidate ? 0 : token.length >= 5 && candidate.length >= 5 ? editDistanceAtMostTwo(token, candidate) : Infinity)));
-    if (distances.every(Number.isFinite)) return 5 + distances.reduce((sum, value) => sum + value, 0) / 100;
+  const parsed=searchQuery(query),q=parsed.text;
+  if(!q)return 0;
+  const document=searchDocument(target,extra),cached=document.scores.get(q);
+  if(cached!==undefined)return cached;
+  const {ids,names,aliases,identity,context,targetTokens,identityTokens}=document;
+  let score=Infinity;
+  if(ids.includes(q))score=0;
+  else if(planets.has(q))score=Infinity;
+  else if(names.includes(q)||aliases.includes(q))score=1;
+  else if(ids.some(value=>value.startsWith(q)))score=2;
+  else if([...names,...aliases].some(value=>value.startsWith(q)))score=3;
+  else if(identity.some(value=>value.includes(q)))score=4;
+  else if(context.includes(q))score=5;
+  else if(parsed.tokens.length){
+    // Stellar typo matching deliberately excludes constellation aliases.
+    let distance=0;
+    for(const token of parsed.tokens){
+      let best=Infinity;
+      for(const candidate of identityTokens){
+        const value=token===candidate?0:token.length>=5&&candidate.length>=5?editDistanceAtMostTwo(token,candidate):Infinity;
+        if(value<best)best=value;
+        if(best===0)break;
+      }
+      if(!Number.isFinite(best)){distance=Infinity;break;}
+      distance+=best;
+    }
+    if(Number.isFinite(distance))score=5+distance/100;
+    else if(parsed.tokens.every(token=>targetTokens.has(token)))score=6;
   }
-  // Constellation context may help an exact search, but should not turn a typo
-  // for an object name into a list of unrelated stars in that constellation.
-  if (queryTokens.length && queryTokens.every(token => targetTokens.some(candidate => token === candidate))) return 6;
-  return Infinity;
+  if(document.scores.size>=16)document.scores.delete(document.scores.keys().next().value!);
+  document.scores.set(q,score);
+  return score;
 }
 
 export type CatalogSearchMatch = { target: UnifiedTarget; score: number };
@@ -128,7 +163,7 @@ function neighboringMatches<T>(buckets: Map<string, T[]>, vector: SkyVector, cel
 }
 
 /** Collapse multiple catalog rows that describe the same physical target. */
-export function deduplicateCatalogMatches(matches: readonly CatalogSearchMatch[]) {
+export function deduplicateCatalogMatches(matches: readonly CatalogSearchMatch[], limit = Infinity) {
   const unique: CatalogSearchMatch[] = [];
   type IndexedMatch = { vector: SkyVector; match: CatalogSearchMatch };
   const stars = new Map<string, Map<string, IndexedMatch[]>>();
@@ -151,6 +186,7 @@ export function deduplicateCatalogMatches(matches: readonly CatalogSearchMatch[]
       && (other.match.target.aliases ?? []).some(alias => aliases.has(alias)));
     if (!duplicateStar && !duplicateCatalogObject) {
       unique.push(match);
+      if(unique.length>=limit)break;
       currentBucket.push({ vector, match });
       categoryBuckets.set(bucketKey, currentBucket);
     }
@@ -158,27 +194,48 @@ export function deduplicateCatalogMatches(matches: readonly CatalogSearchMatch[]
   return unique;
 }
 
-/** Search the full collection and explain whether active filters hid a match. */
-export function catalogSearchDiagnostics(
+const rankedCollections = new WeakMap<readonly UnifiedTarget[], Map<string, CatalogSearchMatch[]>>();
+/** One ranked, deduplicated search shared by suggestions and diagnostics. */
+export function searchCatalog(targets: readonly UnifiedTarget[], query: string, limit = Infinity): CatalogSearchMatch[] {
+  const q=searchQuery(query).text;
+  if(!q)return [];
+  let cache=rankedCollections.get(targets);
+  if(!cache){cache=new Map();rankedCollections.set(targets,cache);}
+  const cacheKey=`${limit}:${q}`;
+  const cached=cache.get(cacheKey);
+  if(cached)return cached;
+  const matches=deduplicateCatalogMatches(targets.map(target=>({target,score:catalogSearchScore(target,query)}))
+    .filter(match=>Number.isFinite(match.score))
+    .sort((a,b)=>a.score-b.score||a.target.name.localeCompare(b.target.name)),limit);
+  if(cache.size>=8)cache.delete(cache.keys().next().value!);
+  cache.set(cacheKey,matches);
+  return matches;
+}
+
+/** Explain the same scored results without searching the collection again. */
+export function catalogSearchDiagnosticsFromMatches(
   query: string,
-  allTargets: readonly UnifiedTarget[],
-  visibleTargets: readonly UnifiedTarget[] = allTargets,
+  matches: CatalogSearchMatch[],
+  visibleTargets?: readonly UnifiedTarget[],
 ): CatalogSearchDiagnostics {
-  const q = query.trim();
-  if (!q) return { kind: "no-match", matches: [], visibleMatches: [], message: "Enter a name or catalog designation to search." };
-  const ranked = (targets: readonly UnifiedTarget[]) => deduplicateCatalogMatches(targets
-    .map(target => ({ target, score: catalogSearchScore(target, query) }))
-    .filter(match => Number.isFinite(match.score))
-    .sort((a, b) => a.score - b.score || a.target.name.localeCompare(b.target.name)));
-  const matches = ranked(allTargets);
-  const visibleMatches = ranked(visibleTargets);
-  if (visibleMatches.length) return { kind: "matches", matches, visibleMatches, message: `${visibleMatches.length} matching ${visibleMatches.length === 1 ? "object" : "objects"}.` };
-  if (matches.length) return { kind: "filtered", matches, visibleMatches, message: `${matches[0].target.name} matches your search but is hidden by the current filters.` };
-  const planet = unsupportedPlanetMessage(query);
-  if (planet) return { kind: "unsupported-planet", matches, visibleMatches, message: planet };
-  const lunar = lunarSearchHint(query);
-  if (lunar) return { kind: "lunar", matches, visibleMatches, message: lunar };
-  return { kind: "no-match", matches, visibleMatches, message: `No catalog object matches “${query.trim()}”. Try another name or designation.` };
+  if(!query.trim())return {kind:"no-match",matches:[],visibleMatches:[],message:"Enter a name or catalog designation to search."};
+  const visibleIds=visibleTargets?new Set(visibleTargets.map(target=>target.id)):null;
+  // Exact names/identifiers hidden by a filter must not be masked by weaker
+  // constellation/category matches that happen to remain visible.
+  const relevant=matches[0]?.score<=1?matches.filter(match=>match.score<=1):matches;
+  const visibleMatches=visibleIds?relevant.filter(match=>visibleIds.has(match.target.id)):relevant;
+  if(visibleMatches.length)return {kind:"matches",matches,visibleMatches,message:`${visibleMatches.length} matching ${visibleMatches.length===1?"object":"objects"}.`};
+  if(matches.length)return {kind:"filtered",matches,visibleMatches,message:`${matches[0].target.name} matches your search but is hidden by the current filters.`};
+  const planet=unsupportedPlanetMessage(query);
+  if(planet)return {kind:"unsupported-planet",matches,visibleMatches,message:planet};
+  const lunar=lunarSearchHint(query);
+  if(lunar)return {kind:"lunar",matches,visibleMatches,message:lunar};
+  return {kind:"no-match",matches,visibleMatches,message:`No catalog object matches “${query.trim()}”. Try another name or designation.`};
+}
+
+/** Search the full collection and explain whether active filters hid a match. */
+export function catalogSearchDiagnostics(query: string, allTargets: readonly UnifiedTarget[], visibleTargets?: readonly UnifiedTarget[]): CatalogSearchDiagnostics {
+  return catalogSearchDiagnosticsFromMatches(query,searchCatalog(allTargets,query),visibleTargets);
 }
 
 /** Message shown when a user searches for a planet that the deep-sky catalog does not contain. */

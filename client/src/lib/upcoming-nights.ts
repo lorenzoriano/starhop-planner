@@ -33,6 +33,7 @@ export interface UpcomingNight {
   moonFreeDarkHours: number;
   moonFreeWindows: { start: Date; end: Date }[];
   darkHours: number;
+  darkWindows: { start: Date; end: Date }[];
   targets: UpcomingTargetResult[];
   feasibleTargetCount: number;
   selectedTarget: UpcomingTargetResult | null;
@@ -129,6 +130,7 @@ export function upcomingNights(options: UpcomingNightsOptions): UpcomingNight[] 
       moonLabel: moon.phaseName,
       moonFreeDarkHours: moonFree.reduce((sum, s) => sum + (+s.end - +s.start) / 3_600_000, 0),
       moonFreeWindows: moonFree,
+      darkWindows: dark,
       darkHours: dark.reduce((sum, s) => sum + (+s.end - +s.start) / 3_600_000, 0),
       targets: targetResults,
       feasibleTargetCount,
@@ -194,4 +196,12 @@ export function bestUpcomingNights(options: Omit<UpcomingNightsOptions, "days">)
 
 export function upcomingNightDateLabel(night: UpcomingNight, timezone: string) {
   return formatInTimeZone(night.start, timezone, "EEE, MMM d");
+}
+
+/** Choose the nearest usable window, not the highest-ranked night later in the month. */
+export function nearestMoonFreeTargetTime(options:UpcomingNightsOptions&{target:UnifiedTarget;minAltitude?:15|30}):Date|null {
+  const window=moonFreeTargetWindows(options).find(window=>+window.end>+options.date);
+  if(!window)return null;
+  const start=Math.max(+window.start,+options.date);
+  return new Date((start+ +window.end)/2);
 }
