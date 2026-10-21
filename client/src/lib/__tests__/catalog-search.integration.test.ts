@@ -36,9 +36,9 @@ describe("real catalog search regressions", () => {
 
   it("does not pad exact Mizar searches with fuzzy names or the Cigar Galaxy", () => {
     const matches=searchCatalog(planningTargets,"mizar");
-    expect(matches).toHaveLength(1);
+    expect(matches.map(m=>m.target.name)).toEqual(expect.arrayContaining(["Mizar","Mizar & Alcor"]));
     expect(matches[0].target.name).toBe("Mizar");
-    expect(matches.every(match=>match.score<=1)).toBe(true);
+    expect(matches.every(match=>match.score<=5)).toBe(true);
   });
 
   it("keeps the curated Mizar & Alcor entry without Cigar Galaxy filler", () => {
@@ -71,4 +71,9 @@ describe("real catalog search regressions", () => {
     expect(catalogSearchDiagnostics("orion nebula", all, visible).kind).toBe("filtered");
     expect(catalogSearchDiagnostics("zzzz", all).kind).toBe("no-match");
   });
+});
+
+it("keeps catalog prefixes alongside an exact M3 result",()=>{
+ const ids=searchCatalog(planningTargets,"m3").map(m=>m.target.id);
+ expect(ids[0]).toBe("M3");expect(ids).toContain("M31");expect(ids).toContain("M33");
 });

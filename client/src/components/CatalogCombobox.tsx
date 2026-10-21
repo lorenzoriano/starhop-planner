@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { getConstellationName, type UnifiedTarget } from "@/lib/astronomy";
 import { catalogSearchDiagnosticsFromMatches, prepareCatalogSearch, searchCatalog, lunarSearchHint } from "@/lib/catalog-search";
+import { formatCatalogDesignation } from "@/lib/catalog-presentation";
 
 type CatalogComboboxProps = {
   targets: UnifiedTarget[];
@@ -18,7 +19,7 @@ type CatalogComboboxProps = {
 };
 
 function visibleCatalogId(target: UnifiedTarget) {
-  return /^(?:M\d+|NGC\s*\d+|IC\s*\d+|HR\s*\d+)$/i.test(target.id) ? target.id : undefined;
+  return /^(?:M\d+|NGC\s*\d+|IC\s*\d+|HR\s*\d+)$/i.test(target.id) ? formatCatalogDesignation(target.id) : undefined;
 }
 
 export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, label = "Search catalog", placeholder = "Name, constellation or catalog number…", className = "", lunarHintAction, onTyping, announceSelection = true }: CatalogComboboxProps) {
@@ -26,6 +27,7 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
   const inputId = `catalog-combobox-${generatedId}`;
   const listId = `${inputId}-listbox`;
   const [activeIndex, setActiveIndex] = useState(0);
+  const [listDismissed, setListDismissed] = useState(false);
   const [status, setStatus] = useState("");
   // Input stays local while typing. Committing once after a pause also avoids
   // rebuilding the planetarium / Planner / Clock for every individual key.
@@ -56,8 +58,8 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
   const diagnostics=useMemo(()=>catalogSearchDiagnosticsFromMatches(query,matches),[query,matches]);
   const moonHint=lunarSearchHint(draft);
   const noResults=pending?"Searching…":!draft.trim()||results.length?"":diagnostics.message;
-  const clearQuery=()=>{setDraft("");emittedQuery.current="";onQueryRef.current("");setActiveIndex(0);setStatus("");};
-  const shownActiveIndex = results.length ? Math.min(activeIndex, results.length - 1) : -1;
+  const listOpen = Boolean(draft.trim()) && !listDismissed;
+  const shownActiveIndex = listOpen && results.length ? Math.min(activeIndex, results.length - 1) : -1;
 
   const select = (target: UnifiedTarget) => {
     if (announceSelection) {
@@ -73,17 +75,18 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
       id={inputId}
       role="combobox"
       aria-autocomplete="list"
-      aria-expanded={Boolean(draft.trim())}
+      aria-expanded={listOpen}
       aria-controls={listId}
       aria-activedescendant={shownActiveIndex >= 0 ? `${listId}-option-${shownActiveIndex}` : undefined}
       value={draft}
       placeholder={placeholder}
-      onChange={event => { setDraft(event.target.value); setActiveIndex(0); setStatus(""); onTyping?.(); }}
+      onFocus={() => setListDismissed(false)}
+      onChange={event => { setDraft(event.target.value); setListDismissed(false); setActiveIndex(0); setStatus(""); onTyping?.(); }}
       onKeyDown={event => {
         if (event.key === "ArrowDown" && results.length) {
-          event.preventDefault(); setActiveIndex(index => (index + 1) % results.length);
+          event.preventDefault(); setListDismissed(false); setActiveIndex(index => listDismissed ? 0 : (index + 1) % results.length);
         } else if (event.key === "ArrowUp" && results.length) {
-          event.preventDefault(); setActiveIndex(index => (index - 1 + results.length) % results.length);
+          event.preventDefault(); setListDismissed(false); setActiveIndex(index => listDismissed ? results.length - 1 : (index - 1 + results.length) % results.length);
         } else if (event.key === "Enter") {
           event.preventDefault();
           // Enter commits the text the user can see, even inside the debounce
@@ -94,11 +97,11 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
           if (match) select(match.target);
           else setStatus(catalogSearchDiagnosticsFromMatches(draft, fresh).message);
         } else if (event.key === "Escape") {
-          clearQuery();
+          event.preventDefault(); setListDismissed(true); setActiveIndex(0); setStatus("");
         }
       }}
     />
-    {draft.trim() && <ul id={listId} className="moon-target-results" role="listbox" aria-label="Matching catalog objects" aria-busy={pending}>
+    {listOpen && <ul id={listId} className="moon-target-results" role="listbox" aria-label="Matching catalog objects" aria-busy={pending}>
       {results.length ? results.map(({ target }, index) => {
         const catalogId = visibleCatalogId(target);
         const isSaved = savedIds?.has(target.id) ?? false;

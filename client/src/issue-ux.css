@@ -573,8 +573,14 @@
 @media(min-width:1101px){.hop-layout .route-chart-panel [data-testid="sky-chart-sky"]{height:min(65vh,600px)!important;max-height:600px!important}}
 .hop-window-threshold{display:block;flex-basis:100%;font-size:12px;color:#99b1b7;line-height:1.35}
 @media(min-width:1101px){.hop-layout .route-chart-panel [data-testid="sky-chart-sky"]{height:min(60vh,600px)!important}}
+@media(min-width:1101px){.hop-layout{grid-template-columns:minmax(560px,1.7fr) minmax(300px,1fr)!important}.hop-layout .route-chart-panel{min-width:0}}
 .lunar-altitude-chart text,.lunar-separation-chart text{font-size:max(15px,.9375rem)!important}
 .planner-night-timeline svg text{font-size:var(--chart-label-size)!important}
+/* The native date field has its own picker icon; the adjacent button opens the
+   app calendar and is the single calendar affordance for this control. */
+.session-planner .planner-date-control input[type="date"]::-webkit-calendar-picker-indicator{display:none}
+.planner-row-actions .text-action{white-space:nowrap}
+.binocular-quick-actions button{white-space:nowrap}
 .planetarium-figures{font-size:12px;line-height:1.5;color:#9bb99f;max-width:90ch}.planetarium-figures strong{font-weight:500}
 /* HTML axes and legends follow the same physical type scale as SVG labels. */
 .observatory-shell :is(.night-chart-time-axis,.night-altitude-heading,.astro-chart-legend,.astro-solar-legend,.night-chart-readout,.night-moon-scale){font-size:var(--chart-label-size)!important}
