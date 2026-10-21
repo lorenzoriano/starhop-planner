@@ -245,7 +245,7 @@ export function SeasonTrajectoryClock({
       aria-valuemax={mode==="months"?(monthTrack?.hour.length??48)-1:TIME_BANDS * ALTITUDE_BANDS - 1}
       aria-valuenow={mode==="months"?monthPoint?.sample??0:cell ? cell.time * 36 + cell.alt : 42 * 36 + 24}
       aria-valuetext={
-        mode==="months" ? monthAt&&monthValue?`${formatInTimeZone(monthAt,timezone,"MMM d HH:mm")}: ${monthValue.alt.toFixed(1)} degrees high, ${monthValue.alt>=0?"above the horizon":"below the horizon"}, ${monthValue.separation.toFixed(1)} degrees from Moon`:"Hover a path, or use arrow keys to choose a month and time." : cell
+        mode==="months" ? monthAt&&monthValue?`${formatInTimeZone(monthAt,timezone,"MMM d HH:mm")}: ${Math.abs(monthValue.alt).toFixed(1)} degrees ${monthValue.alt>=0?"above the horizon":"below the horizon"}, ${monthValue.separation.toFixed(1)} degrees from Moon`:"Inspect a path by pointer or touch, or use arrow keys to choose a month and time." : cell
           ? `${timeLabel(cell.time)}, ${cell.alt * 5 - 90} to ${cell.alt * 5 - 85} degrees, ${(density[cell.time][cell.alt] * 100).toFixed(1)} percent frequency`
           : "Choose an altitude and time to inspect recurrence."
       }
@@ -255,8 +255,8 @@ export function SeasonTrajectoryClock({
       onKeyDown={mode==='months'?monthKeyboard:keyboard}
     >
       <title>
-        {target.name}: seasonal trajectories from {season.days[0].day} through{" "}
-        {season.days.at(-1)!.day}. Angle is local time; radius is altitude, not
+        {target.name}: seasonal trajectories from {dateLabel(season.days[0].day)} through{" "}
+        {dateLabel(season.days.at(-1)!.day)}. Angle is local time; radius is altitude, not
         azimuth. Inner horizon ring is zero degrees.
       </title>
       <circle cx="320" cy="320" r="254" fill="#07131e" />
@@ -294,7 +294,7 @@ export function SeasonTrajectoryClock({
             x="325"
             y={315 - ((alt + 90) / 180) * 254}
             className="astro-ring-label"
-            style={{fontSize:12*640/dialWidth}}
+            style={{fontSize:`calc(var(--chart-label-size, 12px) * ${640/dialWidth})`}}
           >
             {alt === 0 ? "0° · HORIZON" : `${alt}°`}
           </text>
@@ -319,7 +319,7 @@ export function SeasonTrajectoryClock({
               y={324 + Math.sin(a) * 280}
               textAnchor="middle"
               className="astro-hour"
-              style={{fontSize:12*640/dialWidth}}
+              style={{fontSize:`calc(var(--chart-label-size, 12px) * ${640/dialWidth})`}}
             >
               {hour === 0
                 ? "00 · Midnight"
@@ -436,7 +436,7 @@ export function SeasonTrajectoryClock({
           <div className="season-trajectory-dial">{dial("months")}</div>
           <div className="season-trajectory-reading">
             <h4>Follow the months</h4>
-            <div className="season-month-readout" aria-live="polite">{monthValue&&monthAt&&monthTrack?<><ContextDateButton value={monthAt} timezone={timezone} onChange={onTime}>{formatInTimeZone(monthAt,timezone,'MMM d, yyyy · HH:mm')}</ContextDateButton><p>{monthValue.alt.toFixed(1)}° high · {monthValue.alt>=0?'Above horizon':'Below horizon'} · {monthValue.moon.sunAlt<=-18?'Astronomical darkness':'Twilight / daylight'} · {trajectoryIncluded(monthTrack,monthSample,index,scope)?'Included by current time filter':'Outside current time filter'} · {monthValue.separation.toFixed(1)}° from Moon · Moon {Math.round(monthValue.moon.illumination*100)}% lit</p></>:<p>Hover a monthly path to see its exact sampled time, altitude and visibility.</p>}</div>
+            <div className="season-month-readout" aria-live="polite">{monthValue&&monthAt&&monthTrack?<><ContextDateButton value={monthAt} timezone={timezone} onChange={onTime}>{formatInTimeZone(monthAt,timezone,'MMM d, yyyy · HH:mm')}</ContextDateButton><p>{Math.abs(monthValue.alt).toFixed(1)}° {monthValue.alt>=0?'high':'below horizon'} · {monthValue.moon.sunAlt<=-18?'Astronomical darkness':'Twilight / daylight'} · {trajectoryIncluded(monthTrack,monthSample,index,scope)?'Included by current time filter':'Outside current time filter'} · {monthValue.separation.toFixed(1)}° from Moon · Moon {Math.round(monthValue.moon.illumination*100)}% lit</p></>:<p>Inspect a monthly path by pointer or touch to see its exact sampled time, altitude and visibility.</p>}</div>
             <p>
               One representative night near the 15th of each month. Select a
               label to isolate that path. Hover a path to inspect an actual position; tap to open that moment.

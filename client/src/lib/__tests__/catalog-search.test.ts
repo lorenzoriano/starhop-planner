@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { UnifiedTarget } from "../astronomy";
-import { catalogSearchScore, deduplicateCatalogMatches, lunarSearchHint, unsupportedPlanetMessage } from "../catalog-search";
+import { catalogSearchScore, searchCatalog, deduplicateCatalogMatches, lunarSearchHint, unsupportedPlanetMessage } from "../catalog-search";
 
 const target = (id: string, name: string, category = "Open Cluster", aliases: string[] = []): UnifiedTarget => ({
   id, name, displayName: `${id} — ${name}`, aliases, mag: 5, ra: 0, dec: 0,
@@ -60,4 +60,16 @@ describe("catalogSearchScore", () => {
 it("keeps distinct neighboring stars while collapsing copies of one named star",()=>{
  const a=target("star:1","Alpha","Star"),b={...target("star:2","Beta","Star"),ra:.001},copy={...a,id:"STAR-Alpha",ra:.0001};
  expect(deduplicateCatalogMatches([a,b,copy].map(target=>({target,score:1}))).map(match=>match.target.id)).toEqual(["star:1","star:2"]);
+});
+
+it("does not pad a literal partial name with unrelated fuzzy suggestions",()=>{
+ const mizar=target("DBL-Mizar","Mizar & Alcor","Double Star");
+ const cigar=target("M82","Cigar Galaxy","Galaxy");
+ expect(searchCatalog([mizar,cigar],"mizar").map(match=>match.target.id)).toEqual(["DBL-Mizar"]);
+});
+
+it("preserves constellation matches alongside literal names",()=>{
+ const nebula={...target("M42","Orion Nebula","Nebula"),con:"Ori"};
+ const star={...target("ref-betelgeuse","Betelgeuse","Star"),con:"Ori"};
+ expect(searchCatalog([nebula,star],"orion").map(match=>match.target.id)).toEqual(["M42","ref-betelgeuse"]);
 });

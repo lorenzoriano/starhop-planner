@@ -8,11 +8,12 @@ import { orientChartPoint } from '@/lib/observing';
 import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom } from '@/lib/chart-view';
 import { milkyWayPaths as projectMilkyWay } from '@/lib/sky-polygons';
 import { angularRing, RETICLE_DIAMETERS, type FinderReticle } from '@/lib/finder-view';
-import { boxesOverlap,labelFits,type LabelBox } from '@/lib/chart-labels';
+import { boxesOverlap,labelFits,labelBelongsToPoint,labelPointLookup,type LabelBox } from '@/lib/chart-labels';
 import { useChartPreferences } from './ChartPreferences';
 import { memo, useMemo, useRef, useState, useCallback, useEffect, useLayoutEffect, useId, type ReactNode } from 'react';
 import {
   angularDistance,
+  eqToHorizontal,
   getConstellationName,
   type Route,
   type SkyNode,
@@ -202,6 +203,9 @@ export function SkyChart({
   const labelCircle=overview?{x:cx,y:cy,r:260-3*screenUnit}:undefined;
   const reservedLabels:LabelBox[]=[{left:viewBoxX+viewBoxWidth-75*screenUnit,top:viewBoxY,right:viewBoxX+viewBoxWidth,bottom:viewBoxY+75*screenUnit}];
   if(showLegend&&!starsOnly&&!overview)reservedLabels.push({left:viewBoxX,top:viewBoxY,right:viewBoxX+(route?280:180)*screenUnit,bottom:viewBoxY+42*screenUnit});
+
+  // Ring captions are labels too: reserve them before placing names.
+  if(overview)for(const altitude of [30,60]){const y=cy+260*altitudeRingFraction(altitude)-4*screenUnit;reservedLabels.push({left:cx+2*screenUnit,right:cx+83*screenUnit,top:y-13*screenUnit,bottom:y+3*screenUnit});}
 
   // Clamp pan so chart doesn't fly offscreen
   const clampPan = useCallback((px: number, py: number, z: number) => {
@@ -527,7 +531,7 @@ export function SkyChart({
   // ───── Constellation name labels at centroid of visible constellations ─────
   const constellationLabels = useMemo(() => {
     if (!showConstellations) return [];
-    const labels: { x: number; y: number; name: string; key: string; nearFocus: boolean }[] = [];
+    const labels: { x: number; y: number; name: string; key: string; nearFocus: boolean; prominence:number }[] = [];
     for (let index=0;index<constellations.length;index++) {
       const constellation=constellations[index];
       // Compute centroid of all vertices
@@ -556,6 +560,7 @@ export function SkyChart({
         // as a React key leaves stale labels behind after resize or filtering.
         key: `${constellation.id}-${index}`,
         nearFocus: overview || isNearFocus || isActive,
+        prominence: ['Ori','Tau','Per','Cas','And','Peg','Cyg','Aur','Gem','UMa','UMi','Sco','Sgr','Leo','Cma'].includes(constellation.id)?100:0,
       });
     }
     return labels;
@@ -628,7 +633,7 @@ export function SkyChart({
 
   type PlacedSkyLabel={star:SkyNode;x:number;y:number;anchor:'start'|'end'|'middle';width:number;isAnchor:boolean;isTarget:boolean;isPatternAnchor:boolean;box:LabelBox;leader:{x:number;y:number}|null};
   const labelCache=useRef<PlacedSkyLabel[]>([]);
-  const constellationCache=useRef<typeof constellationLabels>([]);
+  const constellationCache=useRef<Array<typeof constellationLabels[number]&{box:LabelBox}>>([]);
   const labels = useMemo(() => {
     if(isDragging.current)return labelCache.current;
     if (labelSize === 0) return [];
@@ -652,18 +657,22 @@ export function SkyChart({
         // Proximity to focus point boosts score for tie-breaking
         const focusBonusA = focusPoint ? Math.max(0, 15 - angularDistance(a.star.ra, a.star.dec, focusPoint.ra, focusPoint.dec)) : 0;
         const focusBonusB = focusPoint ? Math.max(0, 15 - angularDistance(b.star.ra, b.star.dec, focusPoint.ra, focusPoint.dec)) : 0;
-        const catalogPriority=(star:SkyNode)=>overview?(star.type==='star'&&star.mag<=2.5?65:isDeepSky(star.category)?skyObjectKind(star.category)==='field'?8:25:0):0;
+        const catalogPriority=(star:SkyNode)=>overview?(star.type==='star'&&star.mag<=2.5?65+(['Deneb','Polaris','Fomalhaut','Schedar','Caph'].includes(chartLabel(star))?15:0):isDeepSky(star.category)?(/^M\d+$/.test(star.id)?74:skyObjectKind(star.category)==='field'?8:25):0):0;
         const scoreA = (a.isTarget ? 100 : 0) + (a.isAnchor ? 70 : 0) + (a.isPatternAnchor ? 45 : 0) + (a.isGuide ? 20 : 0) + catalogPriority(a.star) - a.star.mag * 4 + focusBonusA;
         const scoreB = (b.isTarget ? 100 : 0) + (b.isAnchor ? 70 : 0) + (b.isPatternAnchor ? 45 : 0) + (b.isGuide ? 20 : 0) + catalogPriority(b.star) - b.star.mag * 4 + focusBonusB;
         return scoreB - scoreA;
       });
 
-    const placements = [
-      { dx: 10, dy: -10, anchor: 'start' as const },
-      { dx: 10, dy: 14, anchor: 'start' as const },
-      { dx: -10, dy: -10, anchor: 'end' as const },
-      { dx: -10, dy: 14, anchor: 'end' as const },
-    ];
+    // Keep the nearest text edge within one line height of its own point.
+    // Centered positions are allowed, but never a distant inward nudge.
+    const plateOffset=Math.max(1,labelUnits/screenUnit*.4);
+    const placements = [...[4,8,0,12,6,10,2,1,3,5,7,9,11,13,-1].flatMap(dy=>[
+      {dx:plateOffset,dy,anchor:'start' as const},
+      {dx:-plateOffset,dy,anchor:'end' as const},
+    ]),{dx:0,dy:13,anchor:'middle' as const},{dx:0,dy:-1,anchor:'middle' as const}];
+    const pointSymbols=plottedStars.map(item=>({id:item.star.id,...item.point,occludable:isBatchedStar(item)||(isDeepSky(item.star.category)&&item.star.mag>6&&!item.isTarget&&!item.isAnchor)}));
+    pointSymbols.push(...backgroundStarLayer.filter(point=>point.mag>3).map((point,index)=>({id:`background-${index}`,x:point.x,y:point.y,occludable:true})));
+    const nearbyPoints=labelPointLookup(pointSymbols,24*screenUnit);
 
     const accepted: Array<{
       star: SkyNode;
@@ -692,26 +701,19 @@ export function SkyChart({
       const lPad = Math.max(screenUnit, labelUnits * 0.4);
       if(measure)measure.font=`${candidate.isTarget||candidate.isAnchor?'700':'500'} ${labelUnits}px ${family}`;
       const width = Math.max(labelUnits * 2, measure?.measureText(text).width??text.length*labelUnits*.63);
-      const priorityStar=overview&&candidate.star.type==='star'&&candidate.star.mag<=2.5;
-      const extraPlacements=priorityStar?[24,36,48].flatMap(radius=>Array.from({length:8},(_,i)=>{const angle=i*Math.PI/4,dx=Math.cos(angle)*radius,dy=Math.sin(angle)*radius;return {dx,dy,anchor:dx>4?'start' as const:dx< -4?'end' as const:'middle' as const};})):[];
-      const options=candidate.isTarget||candidate.isAnchor||priorityStar
-        ? [...placements,{dx:0,dy:-16,anchor:'middle' as const},{dx:0,dy:22,anchor:'middle' as const},...extraPlacements]
-        : placements;
-      const inward=overview&&(candidate.isTarget||candidate.isAnchor||candidate.star.type==='star'&&candidate.star.mag<=2.5)?[0,12,24,48,72]:[0];
-      let placed=false;
-      for(const nudge of inward){
-       const length=Math.hypot(cx-candidate.point.x,cy-candidate.point.y)||1;
-       for (const placement of options) {
-        const x = candidate.point.x + placement.dx * screenUnit+(cx-candidate.point.x)/length*nudge*screenUnit;
-        const y = candidate.point.y + placement.dy * screenUnit+(cy-candidate.point.y)/length*nudge*screenUnit;
+      const owner={id:candidate.star.id,...candidate.point};
+      for (const placement of placements) {
+        const x = candidate.point.x + placement.dx * screenUnit;
+        const y = candidate.point.y + placement.dy * screenUnit;
         const left = placement.anchor === 'start' ? x - lPad : placement.anchor === 'middle' ? x-width/2-lPad : x - width - lPad;
         const right = placement.anchor === 'start' ? x + width + lPad : placement.anchor === 'middle' ? x+width/2+lPad : x + lPad;
-        const top = y - labelUnits - lPad;
-        const bottom = y + lPad;
+        const verticalPad=Math.max(screenUnit,labelUnits*.08);
+        const top = y - labelUnits - verticalPad;
+        const bottom = y + verticalPad;
         const box={left,right,top,bottom};
         const overlaps = accepted.some(label=>boxesOverlap(box,label.box));
         const outOfBounds=!labelFits(box,labelViewport,labelCircle)||reservedLabels.some(area=>boxesOverlap(box,area));
-        if (!overlaps && !outOfBounds) {
+        if (!overlaps && !outOfBounds && labelBelongsToPoint(box,owner,nearbyPoints(box,labelUnits),labelUnits)) {
           accepted.push({
             star: candidate.star,
             x,
@@ -721,48 +723,51 @@ export function SkyChart({
             isAnchor: candidate.isAnchor,
             isTarget: candidate.isTarget,
             isPatternAnchor: candidate.isPatternAnchor,
-            box,leader:nudge||placement.dx===0||Math.abs(placement.dx)>20||Math.abs(placement.dy)>22?candidate.point:null,
+            box,leader:candidate.point,
           });
-          usedNames.add(text);placed=true;
+          usedNames.add(text);
           if(catalogLabel)catalogLabels++;
           break;
         }
-       }
-       if(placed)break;
       }
       if (accepted.length >= (overview?(viewportPixels<430?22:48):26)) break;
     }
 
     labelCache.current=accepted;
     return accepted;
-  }, [dragVersion,plottedStars, activeConstellationIds, focusPoint, localRadius, labelSize, labelUnits, screenUnit, viewBoxX, viewBoxY, viewBoxWidth, viewBoxHeight, overview, viewportPixels, zoom]);
+  }, [dragVersion,plottedStars,backgroundStarLayer, activeConstellationIds, focusPoint, localRadius, labelSize, labelUnits, screenUnit, viewBoxX, viewBoxY, viewBoxWidth, viewBoxHeight, overview, viewportPixels, zoom]);
 
   const placedConstellationLabels=useMemo(()=>{
     if(isDragging.current)return constellationCache.current;
-    const occupied=[...reservedLabels,...labels.map(label=>label.box)];
-    const accepted:typeof constellationLabels=[];
+    const occupied=[...reservedLabels,...labels.filter(label=>label.isTarget||label.star.type==='star'&&label.star.mag<=2.5||['M31','M45'].includes(label.star.id)).map(label=>label.box),...plottedStars.filter(item=>isDeepSky(item.star.category)||item.star.mag<=3).map(item=>({left:item.point.x-6*screenUnit,right:item.point.x+6*screenUnit,top:item.point.y-6*screenUnit,bottom:item.point.y+6*screenUnit}))];
+    const accepted:Array<typeof constellationLabels[number]&{box:LabelBox}>=[];
     const font=Math.max(12,labelSize*.85)*screenUnit;
     // Uppercase names vary considerably in width (e.g. SERPENS). Measure
     // the same font as the SVG so collision bounds match the visible text.
     const measure=document.createElement('canvas').getContext('2d');
     if(measure)measure.font=`500 ${font}px ${getComputedStyle(svgRef.current??document.body).getPropertyValue('--font-sans')||'sans-serif'}`;
-    for(const label of constellationLabels.slice().sort((a,b)=>Number(b.nearFocus)-Number(a.nearFocus)||Math.hypot(a.x-cx,a.y-cy)-Math.hypot(b.x-cx,b.y-cy))){
+    for(const label of constellationLabels.slice().sort((a,b)=>b.prominence-a.prominence||Number(b.nearFocus)-Number(a.nearFocus)||Math.hypot(a.x-cx,a.y-cy)-Math.hypot(b.x-cx,b.y-cy))){
       const text=label.name.toUpperCase();
       const metrics=measure?.measureText(text);
-      const width=(metrics?.width??text.length*font*.8)+text.length*1.5*screenUnit;
+      const width=(metrics?.width??text.length*font*.8)+text.length*.6*screenUnit;
       const ascent=Math.max(font,metrics?.fontBoundingBoxAscent??font);
       const descent=Math.max(font*.3,metrics?.fontBoundingBoxDescent??font*.3);
-      for(const dy of [0,-14,14]){
-        const y=label.y+dy*screenUnit;
-        const box={left:label.x-width/2,right:label.x+width/2,top:y-ascent,bottom:y+descent};
+      const options=[{dx:0,dy:0},...[16,32,48,64,80,96,112].flatMap(radius=>Array.from({length:8},(_,i)=>({dx:Math.cos(i*Math.PI/4)*radius,dy:Math.sin(i*Math.PI/4)*radius})))];
+      for(const option of options){
+        const x=label.x+option.dx*screenUnit,y=label.y+option.dy*screenUnit;
+        const box={left:x-width/2,right:x+width/2,top:y-ascent,bottom:y+descent};
         if(!labelFits(box,labelViewport,labelCircle)||occupied.some(area=>boxesOverlap(box,area,3*screenUnit)))continue;
-        occupied.push(box);accepted.push({...label,y});break;
+        occupied.push(box);accepted.push({...label,x,y,box});break;
       }
       if(overview&&accepted.length>=(viewportPixels<430?12:22))break;
     }
     constellationCache.current=accepted;
     return accepted;
-  },[dragVersion,constellationLabels,labels,labelSize,screenUnit,viewBoxX,viewBoxY,viewBoxWidth,viewBoxHeight,viewportPixels,showLegend,starsOnly]);
+  },[dragVersion,constellationLabels,labels,plottedStars,labelSize,screenUnit,viewBoxX,viewBoxY,viewBoxWidth,viewBoxHeight,viewportPixels,showLegend,starsOnly]);
+
+  const prominentFigures=useMemo(()=>overview?constellations.filter(c=>['Ori','Tau','Per','Cas','And','Peg','Cyg','Aur','Gem'].includes(c.id)&&c.points.flat().some(([ra,dec])=>eqToHorizontal(ra,dec,lat,lon,date).alt>0)).map(c=>getConstellationName(c.id)):[],[overview,constellations,lat,lon,date]);
+
+  const visibleLabels=labels.filter(label=>(!starsOnly||label.isTarget)&&!placedConstellationLabels.some(constellation=>boxesOverlap(label.box,constellation.box)));
 
   const fovCenter = currentHop ? project(currentHop.center.ra, currentHop.center.dec) : targetNode ? project(targetNode.ra, targetNode.dec) : null;
   const finderRings = useMemo<Array<{ id: string; diameter?: number; d: string }>>(() => {
@@ -901,7 +906,7 @@ export function SkyChart({
         tabIndex={onSelect?0:undefined}
         onKeyDown={event=>{
           if(!onSelect)return;
-          const choices=labels.filter(item=>item.x>=viewBoxX&&item.x<=viewBoxX+viewBoxWidth&&item.y>=viewBoxY&&item.y<=viewBoxY+viewBoxHeight);
+          const choices=visibleLabels.filter(item=>item.x>=viewBoxX&&item.x<=viewBoxX+viewBoxWidth&&item.y>=viewBoxY&&item.y<=viewBoxY+viewBoxHeight);
           if(event.key==='Enter'&&hoveredStar){event.preventDefault();onSelect(hoveredStar.id);}
           if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key)&&choices.length){event.preventDefault();const i=choices.findIndex(item=>item.star.id===hoveredStar?.id);setHoveredStar(choices[(i+(event.key==='ArrowLeft'||event.key==='ArrowUp'?-1:1)+choices.length)%choices.length].star);}
         }}
@@ -1014,7 +1019,7 @@ export function SkyChart({
             data-chart-label="constellation"
             fontFamily="var(--font-sans)"
             fontWeight="500"
-            letterSpacing={1.5*screenUnit}
+            letterSpacing={.6*screenUnit}
             pointerEvents="none"
           >
             {label.name.toUpperCase()}
@@ -1180,21 +1185,26 @@ export function SkyChart({
         {!starsOnly&&targetExtent&&<path data-target-extent="true" d={targetExtent} fill="none" stroke="#ddbd80" strokeWidth="1" strokeDasharray="2 4" vectorEffect="non-scaling-stroke" opacity=".7" pointerEvents="none"/>}
         {!starsOnly && finderRings.map(ring => <path key={ring.id} data-reticle-diameter={ring.diameter} data-finder-crosshair={activeFinderReticle === 'crosshair' ? true : undefined} d={ring.d} fill="none" stroke="#adc7b6" strokeWidth="1.2" vectorEffect="non-scaling-stroke" opacity=".85" pointerEvents="none"/>)}
 
-        {labels.filter(label=>!starsOnly||label.isTarget).map((label) => {
+        {visibleLabels.map((label) => {
           const text = chartLabel(label.star);
           if (!text) return null;
           const pad = Math.max(screenUnit, labelUnits * 0.4);
           return (
-            <g key={`${label.star.id}-label`} pointerEvents={onSelect ? "auto" : "none"} role={onSelect ? "button" : undefined} tabIndex={undefined} aria-label={onSelect ? `Select ${chartLabel(label.star)}` : undefined} onClick={() => { if(!didDrag.current)onSelect?.(label.star.id); }} onKeyDown={event => {if(onSelect&&(event.key==="Enter"||event.key===" ")){event.preventDefault();onSelect(label.star.id);}}}>
-              {label.leader&&<line x1={label.leader.x} y1={label.leader.y} x2={label.x} y2={label.y} stroke="#78929e" strokeWidth={.7} vectorEffect="non-scaling-stroke" opacity={.6}/>}
+            <g data-label-owner={label.star.id} key={`${label.star.id}-label`} pointerEvents={onSelect ? "auto" : "none"} role={onSelect ? "button" : undefined} tabIndex={undefined} aria-label={onSelect ? `Select ${chartLabel(label.star)}` : undefined} onClick={() => { if(!didDrag.current)onSelect?.(label.star.id); }} onKeyDown={event => {if(onSelect&&(event.key==="Enter"||event.key===" ")){event.preventDefault();onSelect(label.star.id);}}}>
+              {label.leader&&<line x1={label.leader.x} y1={label.leader.y} x2={Math.max(label.box.left,Math.min(label.box.right,label.leader.x))} y2={Math.max(label.box.top,Math.min(label.box.bottom,label.leader.y))} stroke="currentColor" className="sky-label-leader" strokeWidth={1.2} vectorEffect="non-scaling-stroke" opacity={.95}/>}
               <rect
-                x={label.anchor === 'start' ? label.x - pad : label.anchor === 'middle' ? label.x-label.width/2-pad : label.x - label.width - pad}
-                y={label.y - labelUnits - pad * 0.5}
-                width={label.width + pad * 2}
-                height={labelUnits + pad * 2}
+                x={label.box.left}
+                y={label.box.top}
+                width={label.box.right-label.box.left}
+                height={label.box.bottom-label.box.top}
                 rx={Math.min(4*screenUnit, labelUnits * 0.5)}
-                fill="rgba(8, 10, 18, 0.78)"
+                fill="#080a12"
               />
+              {/* Keep the owning point visible where the opaque name plate
+                  meets it; this is the same catalog position, never a proxy. */}
+              {(label.star.type==='messier'||label.star.type==='binocular')&&isDeepSky(label.star.category)
+                ? <g pointerEvents="none" transform={`translate(${label.leader!.x} ${label.leader!.y}) scale(${screenUnit*Math.min(1.3,Math.max(.8,navMul))*(overview&&!label.isTarget?Math.min(1,(viewportPixels<430?.7:.9)+(zoom-1)*.1):1)})`}><CatalogSkySymbol category={label.star.category} selected={label.isTarget}/></g>
+                : <circle pointerEvents="none" cx={label.leader!.x} cy={label.leader!.y} r={Math.max(.65,stellarRadius(label.star.mag)*Math.min(1.8,brightMul)*catalogPointScale)*screenUnit} fill={stellarColor(label.star.temperature,label.star.bv)} opacity={.95}/>}
               <text
                 data-chart-label="star"
                 x={label.x}
@@ -1248,7 +1258,7 @@ export function SkyChart({
 
       </svg>
 
-      {overview&&<div className="planetarium-guide"><label><input type="checkbox" checked={showObjects} onChange={e=>setShowObjects(e.target.checked)}/>Catalog objects · {nodes.filter(n=>n.type==='messier'||n.type==='binocular').length} above horizon</label><span>Inside circle = above horizon · edge 0° · center 90°</span><div className="planetarium-symbol-key">{[{category:"Open Cluster",name:"Open cluster"},{category:"Globular Cluster",name:"Globular cluster"},{category:"Galaxy",name:"Galaxy"},{category:"Emission Nebula",name:"Nebula"},{category:"Asterism",name:"Star pattern"}].map(kind=><span key={kind.name}><svg width="22" height="22" viewBox="-11 -11 22 22" aria-hidden="true"><CatalogSkySymbol category={kind.category}/></svg>{kind.name}</span>)}<span className="selected-symbol-key">Gold = selected</span></div></div>}
+      {overview&&<div className="planetarium-guide"><label><input type="checkbox" checked={showObjects} onChange={e=>setShowObjects(e.target.checked)}/>Catalog objects · {nodes.filter(n=>n.type==='messier'||n.type==='binocular').length} above horizon</label><span>Inside circle = above horizon · edge 0° · center 90°</span><div className="planetarium-symbol-key">{[{category:"Open Cluster",name:"Open cluster"},{category:"Globular Cluster",name:"Globular cluster"},{category:"Galaxy",name:"Galaxy"},{category:"Emission Nebula",name:"Nebula"},{category:"Asterism",name:"Star pattern"}].map(kind=><span key={kind.name}><svg width="22" height="22" viewBox="-11 -11 22 22" aria-hidden="true"><CatalogSkySymbol category={kind.category}/></svg>{kind.name}</span>)}<span className="selected-symbol-key">Gold = selected</span></div>{showConstellations&&prominentFigures.length>0&&<p className="planetarium-figures"><strong>Prominent figures above the horizon:</strong> {prominentFigures.join(' · ')}. Names on the map use available space around stars and object symbols.</p>}</div>}
       {starsOnly&&<div className="stars-only-indicator" role="status">Stars only · destination marker retained</div>}
       {fieldNavigation}
 
@@ -1289,7 +1299,7 @@ export function SkyChart({
         </div>
       </details>
       </details>
-      {!overview&&!isBinocular&&<details className="optical-profile-disclosure"><summary>Finder and eyepiece profiles</summary><OpticalProfiles onApply={profile=>{updateDisplay({mirrored:profile.mirrored,rotation:profile.rotation,finderReticle:profile.reticle});if(profile.fov>=.2&&profile.fov<=15)onFovChange?.(profile.fov);}}/></details>}
+      {!overview&&!isBinocular&&<details className="optical-profile-disclosure"><summary>Finder orientation profiles</summary><p>Navigation field width is edited in observing setup.</p><OpticalProfiles onApply={profile=>{updateDisplay({mirrored:profile.mirrored,rotation:profile.rotation,finderReticle:profile.reticle});}}/></details>}
       <p className={`chart-accuracy-note ${overview?'overview-accuracy-note':''}`}><span className="chart-pointer-instructions">Ctrl / ⌘ + scroll to zoom · drag to pan · click a labeled symbol to inspect. </span><span className="chart-touch-instructions">Pinch to zoom · drag to pan · tap a labeled symbol to inspect. </span>{starsOnly ? 'Catalog stars without labels or guide patterns. Nebulosity is not simulated.' : 'Dot size follows catalog magnitude; hue follows temperature or B−V color where known (neutral otherwise). Sizes are not stellar diameters. Constellation names are green.'} {maxCatalogMagnitude>8?deepCatalog.state==='ready'?'Tycho-2 reference stars to VT 10.5 within 8° of the target; brighter context outside. This chart can show stars fainter than your optics reveal.':deepCatalog.state==='loading'?'Loading the detailed offline finder field…':deepCatalog.state==='error'?'Detailed field unavailable; showing the bright-star catalog to magnitude 8.':'Bright-star catalog to magnitude 8. Increase depth for the detailed finder field.':'Star catalog extends to magnitude 8; the view depends on your optics and sky.'}</p>
       {showLegend && !starsOnly && !overview && <div className="absolute top-3 left-3 flex gap-3 rounded border border-[#2a414e] bg-[#0a1721]/90 px-2 py-1.5 text-[9px]">
         {route && <><span className="text-[#38bdf8]">● Anchor</span><span className="text-[#c084fc]">● Pattern</span></>}<span className="text-[#d8bc80]">● Selected</span><span className="text-[#a7cfa0]">Constellation</span>

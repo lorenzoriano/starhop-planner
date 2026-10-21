@@ -9,7 +9,7 @@ export type SessionSuggestion = {
 };
 
 /** Rank the visual reward for normal binoculars; altitude breaks otherwise equal fits. */
-export function sessionBinocularSuggestions(session:ObservingSession, targets:UnifiedTarget[], profile:BinocularProfile, skyBrightness=21.6, moonAt=(at:Date)=>moonState(session.lat,session.lon,at)):SessionSuggestion[] {
+export function sessionBinocularSuggestions(session:ObservingSession, targets:UnifiedTarget[], profile:BinocularProfile, skyBrightness=19.0, moonAt=(at:Date)=>moonState(session.lat,session.lon,at)):SessionSuggestion[] {
   const start=+new Date(session.startAt),end=start+session.durationMinutes*60_000;
   const samples:Array<{at:Date;moon:ReturnType<typeof moonState>}>=[];
   for(let ms=start;ms<=end;ms+=15*60_000){const at=new Date(ms);samples.push({at,moon:moonAt(at)});}

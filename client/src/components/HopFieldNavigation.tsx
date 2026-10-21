@@ -2,7 +2,7 @@ import { Check, ChevronRight, SkipBack } from "lucide-react";
 import { Button } from "./ui/button";
 import { useChartPreferences } from "./ChartPreferences";
 import { chartHopDirection } from "@/lib/finder-view";
-import type { Route } from "@/lib/astronomy";
+import { formatRouteNodeName, type Route } from "@/lib/astronomy";
 
 export function HopViewDirection({ route, step }: { route: Route; step: number }) {
   const { preferences } = useChartPreferences();
@@ -18,7 +18,7 @@ export function HopFieldNavigation({ route, step, observed, onPrevious, onNext }
   return <div className="chart-hop-navigation" role="group" aria-label="Field navigation beside the chart">
     <div className="chart-hop-heading">
       <div><span className="eyebrow">FIELD {step + 1} OF {route.hops.length}</span>
-        <p>{step === 0 ? `Start at ${route.startAnchor.name}` : `Sky: ${hop.distanceDeg.toFixed(1)}° ${hop.direction}`}</p>
+        <p>{step === 0 ? `Start at ${formatRouteNodeName(route.startAnchor)}` : `Sky: ${hop.distanceDeg.toFixed(1)}° ${hop.direction}`}</p>
         <HopViewDirection route={route} step={step}/>
       </div>
       <div className="chart-hop-actions">

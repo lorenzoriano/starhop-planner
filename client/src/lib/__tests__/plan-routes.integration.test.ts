@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, afterAll } from "vitest";
 import { readFileSync } from "fs";
 import { resolve } from "path";
-import { planRoutes, loadStars, type ObservingParams } from "../astronomy";
+import { planRoutes, loadStars, formatRouteNodeName, type ObservingParams } from "../astronomy";
 import { starPlanningTarget } from "../session-planner";
 import { catalogSearchScore } from "../catalog-search";
 
@@ -52,6 +52,18 @@ describe("full catalog route planning", () => {
       ),
     ).toBe(true);
   });
+  it("uses the same star designations in badges and confirmation text, without galaxy guide stars", async () => {
+    for(const targetId of ["M31","M42"]){
+      const result=await planRoutes({...params,targetId,date:new Date("2026-11-09T06:00:00Z"),fovWidth:3.7,fovHeight:3.7});
+      expect(result.routes.length).toBeGreaterThan(0);
+      for(const route of result.routes)for(const hop of route.hops){
+        expect(hop.patternAnchors.every(star=>star.type==='star')).toBe(true);
+        expect(hop.pattern).not.toMatch(/Andromeda Galaxy.*guide star/);
+        expect(hop.instruction).not.toMatch(/Keep Andromeda Galaxy in view as a guide/);
+        for(const anchor of hop.patternAnchors)expect(hop.pattern).toContain(formatRouteNodeName(anchor));
+      }
+    }
+  }, 30_000);
   it("returns no route for a real target below the horizon", async () => {
     const result = await planRoutes({ ...params, lat: 70, targetId: "M7" });
     expect(result.belowHorizon).toBe(true);
@@ -65,7 +77,7 @@ describe("full catalog route planning", () => {
       expect(route.target.id).toBe("M31");
       for (const hop of route.hops.slice(1)) expect(hop.distanceDeg).toBeLessThanOrEqual(7*.7+1e-6);
     }
-  });
+  }, 30_000);
   it("does not silently fall back when a forced star is faint, below the horizon or absent", async () => {
     for (const startStarId of ["HR5958", "HR4730", "HR999999"]) {
       const result = await planRoutes({ ...params, startStarId });

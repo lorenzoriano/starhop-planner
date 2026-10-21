@@ -5,17 +5,17 @@ import { formatInTimeZone } from 'date-fns-tz';
 import { Check, Plus } from 'lucide-react';
 import type { Settings } from '@/lib/session';
 import { getConstellationName, type UnifiedTarget } from '@/lib/astronomy';
-import { catalogSearchDiagnostics, catalogSearchScore } from '@/lib/catalog-search';
+import { catalogSearchDiagnostics, catalogSearchScore, searchCatalog } from '@/lib/catalog-search';
 import { angularSizeLabel, meanSurfaceBrightnessLabel, targetDesignation } from '@/lib/catalog-presentation';
 import { catalogMatches } from '@/lib/catalog-filter';
 import { visibilityWindow, type VisibilityMode } from '@/lib/target-visibility';
 import { createMoonSampler } from '@/lib/observing-profile';
 import { TargetPhoto } from './TargetPhoto';
-import { BinocularAssessment, BinocularProfileControls, profileFromSettings } from './BinocularAssessment';
+import { BinocularAssessment, BinocularProfileSummary, profileFromSettings } from './BinocularAssessment';
 import { CatalogCombobox } from './CatalogCombobox';
 import './catalog-presentation.css';
 
-export function CatalogExplorer({targets,settings,update,date,timezone,locationName,saveDestination,savedIds,onSave,onSky,onMoon,onCompare}:{targets:UnifiedTarget[];settings:Settings;update:(patch:Partial<Settings>)=>void;date:Date;timezone:string;locationName:string;saveDestination:string;savedIds:Set<string>;onSave:(id:string,at:Date)=>void;onSky:(id:string,at:Date)=>void;onMoon:(id:string,at:Date)=>void;onCompare:(id:string,at:Date)=>void}) {
+export function CatalogExplorer({targets,settings,update,date,timezone,locationName,saveDestination,savedIds,onSave,onSky,onMoon,onCompare,onEditSetup}:{onEditSetup:()=>void;targets:UnifiedTarget[];settings:Settings;update:(patch:Partial<Settings>)=>void;date:Date;timezone:string;locationName:string;saveDestination:string;savedIds:Set<string>;onSave:(id:string,at:Date)=>void;onSky:(id:string,at:Date)=>void;onMoon:(id:string,at:Date)=>void;onCompare:(id:string,at:Date)=>void}) {
   const [showVisibility,setShowVisibility]=useState(()=>globalThis.innerWidth>700);
   useEffect(()=>{const media=globalThis.matchMedia('(min-width:701px)');const resize=()=>setShowVisibility(media.matches);media.addEventListener('change',resize);return()=>media.removeEventListener('change',resize);},[]);
   const [query,setQuery]=useState(''),[type,setType]=useState('all'),[mode,setMode]=useState<VisibilityMode>('time');
@@ -26,20 +26,21 @@ export function CatalogExplorer({targets,settings,update,date,timezone,locationN
   const window=useMemo(()=>visibilityWindow(day,mode==='range'?from:time,until,mode,timezone,settings.lat,settings.lon),[day,time,from,until,mode,timezone,settings.lat,settings.lon]);
   const types=useMemo(()=>Array.from(new Set(targets.map(t=>t.category))).filter(t=>t!=='Galaxy').sort(),[targets]);
   const valid=altitude!==''&&separation!==''&&Number(altitude)>=-90&&Number(altitude)<=90&&Number(separation)>=0&&Number(separation)<=180;
+  const queryIds=useMemo(()=>query.trim()?new Set(searchCatalog(targets,query).map(match=>match.target.id)):null,[targets,query]);
   const rows=useMemo(()=>{
     if(!valid)return [];
     const moonAt=createMoonSampler(settings.lat,settings.lon);
-    return targets.filter(t=>(type==='all'||t.category===type||type==='galaxies'&&/galaxy/i.test(t.category)||type==='nebulae'&&/nebula|remnant/i.test(t.category)||type==='clusters'&&/cluster/i.test(t.category))&&Number.isFinite(catalogSearchScore(t,query,getConstellationName(t.con)))).flatMap(target=>{
+    return targets.filter(t=>(type==='all'||t.category===type||type==='galaxies'&&/galaxy/i.test(t.category)||type==='nebulae'&&/nebula|remnant/i.test(t.category)||type==='clusters'&&/cluster/i.test(t.category))&&(!queryIds||queryIds.has(t.id))).flatMap(target=>{
       const row=catalogMatches(target,settings.lat,settings.lon,window,{minAltitude:Number(altitude),minMoonDistance:Number(separation),transitHours:transit==='any'?null:Number(transit),maxRating:Number(fit)},profile,settings.skyBrightness,moonAt);
       return row?[row]:[];
     }).sort((a,b)=>catalogSearchScore(a.target,query)-catalogSearchScore(b.target,query)||(sort==='name'?a.target.name.localeCompare(b.target.name):sort==='altitude'?b.alt-a.alt:sort==='moon'?a.assessment.rating-b.assessment.rating||b.separation-a.separation:sort==='time'?a.at.getTime()-b.at.getTime():a.assessment.rating-b.assessment.rating||b.score-a.score));
-  },[targets,type,query,window,altitude,separation,transit,fit,profile,settings.lat,settings.lon,settings.skyBrightness,sort,valid]);
+  },[targets,type,query,queryIds,window,altitude,separation,transit,fit,profile,settings.lat,settings.lon,settings.skyBrightness,sort,valid]);
   const searchStatus=catalogSearchDiagnostics(query,targets,rows.map(row=>row.target));
   const reset=()=>{setQuery('');setType('all');setMode('time');setDay(null);setAltitude('-90');setSeparation('0');setTransit('any');setFit('3');setCount(24);};
   const revealSearchMatch=()=>{setType('all');setAltitude('-90');setSeparation('0');setTransit('any');setFit('3');setCount(24);};
   return <div className="catalog-explorer" data-testid="catalog-explorer">
     <header className="page-heading catalog-heading"><div><p className="eyebrow">THE WHOLE OBSERVING CATALOG</p><h1>Find your kind of sky<span>.</span></h1><p>{targets.length} objects · <ContextLocationButton>{locationName}</ContextLocationButton> · {timezone.replaceAll('_',' ')}</p></div><span>{rows.length} {rows.length===1?'match':'matches'}<br/><ContextDateButton value={resolveLocalMoment(day,time,timezone)??date} timezone={timezone} onChange={at=>{setDay(formatInTimeZone(at,timezone,"yyyy-MM-dd"));setTime(formatInTimeZone(at,timezone,"HH:mm"));}}/></span></header>
-    <BinocularProfileControls settings={settings} update={update}/>
+    <BinocularProfileSummary settings={settings} onEditSetup={onEditSetup}/>
     <section className="catalog-filters panel" aria-label="Catalog filters">
       <div className="catalog-primary-filters"><CatalogCombobox className="catalog-search" targets={targets} query={query} onQuery={value=>{setQuery(value);setCount(24);}} onSelect={target=>onSky(target.id,resolveLocalMoment(day,time,timezone)??date)} label="Search the catalog" placeholder="Name, designation, constellation…"/><label>Object type<select aria-label="Catalog object type" value={type} onChange={e=>setType(e.target.value)}><option value="all">All object types</option><option value="galaxies">All galaxies</option><option value="nebulae">All nebulae & remnants</option><option value="clusters">All star clusters</option>{types.map(t=><option key={t}>{t}</option>)}</select></label><label>Binocular suitability<select aria-label="Binocular suitability" value={fit} onChange={e=>setFit(e.target.value)}><option value="3">All targets</option><option value="0">Excellent</option><option value="1">Excellent + worthwhile</option><option value="2">Include challenging</option></select></label></div>
       <details className="catalog-visibility-controls" open={showVisibility} onToggle={e=>setShowVisibility(e.currentTarget.open)}><summary>Visibility & observing window<span>{mode==='time'?`At ${time}`:mode==='night'?'Astronomical darkness':`${from}–${until}`} · {Number(altitude)===-90?'any altitude':`above ${altitude}°`}{Number(separation)>0?` · Moon ≥${separation}°`:''}{transit!=='any'?` · transit ±${transit} h`:''}</span></summary>

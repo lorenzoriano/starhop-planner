@@ -62,6 +62,10 @@ export function binocularAssessment(target:UnifiedTarget,p:BinocularProfile,cont
       view=rating===3?'Enjoy the primary star and surrounding field; splitting this pair is a telescope task.':rating===2?'Try separating the pair with stabilization engaged and careful focus; the split is not assured.':entry?.impression??'A separated pair of stars; compare their brightness and colors.';
     }else{rating=Math.max(rating,2);reasons.push('Component separation is missing, so a reliable split recommendation is unavailable.');}
   }
+  // A whole-disk average badly underestimates centrally concentrated bright
+  // galaxies. This predicts seeing the central glow, not the low-contrast disk.
+  const brightGalaxyCore=category.includes('galaxy')&&dims&&dims.major>=60&&target.mag<=4.5&&pointLimit-target.mag>=3&&effectiveSky>=18.5;
+  if(brightGalaxyCore){rating=0;reasons.push('Its bright central glow is a rewarding binocular target even under a suburban sky. The outer disk is much fainter than the core and needs darker skies.');}
   if(['M31','M42','M45','NGC869','AST-Coathanger'].includes(target.id)&&sky>=20.5&&glow<.5){rating=0;if(target.id==='M31')reasons.push('The bright central glow is easier than the whole-disk average; its outer disk still needs dark skies.');}
   if(diffuse&&glow>=1){rating=Math.max(rating,2);reasons.push(`Moonlight adds ≈${glow.toFixed(1)} mag of sky glow here; look again after moonset or under a darker Moon.`);}
   if(alt>0&&alt<20){rating=Math.max(rating,2);reasons.push('Low altitude adds extinction and haze. Wait for it to climb if possible.');}

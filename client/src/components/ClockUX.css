@@ -13,7 +13,7 @@
 
 .astro-dial .astro-hour,
 .astro-dial .astro-ring-label {
-  font-size: calc(12px * var(--dial-text-scale, 1));
+  font-size: calc(var(--chart-label-size, 12px) * var(--dial-text-scale, 1));
 }
 
 @media (max-width: 600px) {

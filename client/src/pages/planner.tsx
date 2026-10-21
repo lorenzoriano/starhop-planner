@@ -26,7 +26,7 @@ import { clockNightDate, comparisonIds, CLOCK_LIMIT } from "@/lib/astronomical-c
 import tzLookup from "tz-lookup";
 import { useLocation } from "wouter";
 import { pageForPath, pathForPage, targetFromPath, type Page } from "@/lib/navigation";
-import { catalogSearchScore } from "@/lib/catalog-search";
+import { catalogSearchScore, catalogSearchDiagnostics, searchCatalog } from "@/lib/catalog-search";
 import { readHopProgress, writeHopProgress, routeFingerprint, matchingRouteIndex } from "@/lib/hop-progress";
 import { fromZonedTime, formatInTimeZone } from "date-fns-tz";
 import { Button } from "@/components/ui/button";
@@ -142,7 +142,7 @@ import { SavedLocations } from "@/components/SavedLocations";
 import { savedLocationsSchema, matchingLocation, knownLocationName, type SavedLocation } from "@/lib/saved-locations";
 import { SessionPlanner } from "@/components/SessionPlanner";
 import { CatalogExplorer } from "@/components/CatalogExplorer";
-import { BinocularAssessment, BinocularProfileControls, profileFromSettings } from "@/components/BinocularAssessment";
+import { BinocularAssessment, BinocularProfileControls, BinocularProfileSummary, profileFromSettings } from "@/components/BinocularAssessment";
 import { moonState } from "@/lib/moon";
 import { binocularAssessment } from "@/lib/binocular-assessment";
 import { TargetPhoto, TargetPhotoCredit } from "@/components/TargetPhoto";
@@ -332,7 +332,7 @@ export default function PlannerPage() {
       .map(star => ({ star, ...eqToHorizontal(star.ra,star.dec,lat,lon,date), distance:angularDistance(star.ra,star.dec,selected.ra,selected.dec) }))
       .filter(star => star.alt >= 15).sort((a,b) => a.distance-b.distance || a.star.mag-b.star.mag).slice(0,80);
     if (selectedStart && !nearby.some(option => option.star.id === selectedStart.id)) nearby.unshift({ star:selectedStart, ...eqToHorizontal(selectedStart.ra,selectedStart.dec,lat,lon,date), distance:angularDistance(selectedStart.ra,selectedStart.dec,selected.ra,selected.dec) });
-    return nearby;
+    return nearby.filter(option=>!nearby.some(other=>other.star.id!==option.star.id&&other.star.mag<option.star.mag&&angularDistance(option.star.ra,option.star.dec,other.star.ra,other.star.dec)<.05));
   }, [selected, catalogs.stars, selectedStart, limitingMag, lat, lon, date]);
   const conditions = useMemo(
     () => skyConditions(lat, lon, date),
@@ -351,6 +351,7 @@ export default function PlannerPage() {
       Array.from(new Set(catalogs.targets.map((t) => t.categoryShort))).sort(),
     [catalogs.targets],
   );
+  const queryMatches=useMemo(()=>query.trim()?new Set(searchCatalog(planningTargets,query).map(match=>match.target.id)):null,[planningTargets,query]);
   const filtered = useMemo(
     () =>
       ranked.filter(
@@ -358,22 +359,22 @@ export default function PlannerPage() {
           (!visibleOnly || o.alt >= 15) &&
           (!friendlyOnly || guideFor(o.target).binocular) &&
           (category === "all" || o.target.categoryShort === category) &&
-          Number.isFinite(catalogSearchScore(o.target,query,getConstellationName(o.target.con))),
+          (!queryMatches||queryMatches.has(o.target.id)),
       ).sort((a,b)=>catalogSearchScore(a.target,query,getConstellationName(a.target.con))-catalogSearchScore(b.target,query,getConstellationName(b.target.con))),
-    [ranked, visibleOnly, friendlyOnly, category, query],
+    [ranked, visibleOnly, friendlyOnly, category, query,queryMatches],
   );
   const starSearchTargets = useMemo(() => {const indexed=new Map(planningTargets.map(target=>[target.id,target]));return catalogs.stars.map(star=>({star,target:indexed.get(`star:${star.id}`)!}));}, [catalogs.stars,planningTargets]);
   const starHits = useMemo<NavigationStarHit[]>(() => {
     if (!query.trim() || (category !== "all" && category !== "Star")) return [];
     return starSearchTargets.flatMap(({star,target}) => {
       const score = catalogSearchScore(target, query, getConstellationName(target.con));
-      if (!Number.isFinite(score) || (friendlyOnly && star.mag > 6.5)) return [];
+      if (!Number.isFinite(score) || (queryMatches&&!queryMatches.has(target.id)) || (friendlyOnly && star.mag > 6.5)) return [];
       const pos = eqToHorizontal(star.ra, star.dec, lat, lon, date);
       if (visibleOnly && pos.alt < 15) return [];
       if (filtered.some(object => /star/i.test(object.target.category) && angularDistance(star.ra, star.dec, object.target.ra, object.target.dec) < .02)) return [];
       return [{ star, name:target.name, ...pos, score }];
     }).sort((a,b) => a.score-b.score || a.star.mag-b.star.mag || b.alt-a.alt);
-  }, [starSearchTargets, query, category, friendlyOnly, visibleOnly, lat, lon, date, filtered]);
+  }, [starSearchTargets, query, category, friendlyOnly, visibleOnly, lat, lon, date, filtered,queryMatches]);
   const previewNodes = useMemo<SkyNode[]>(
     () =>
       catalogs.stars
@@ -777,7 +778,7 @@ export default function PlannerPage() {
         toast({
           title: "No suitable window found",
           description:
-            `No Moon-free dark window above 15° in the next 30 nights. ${90-Math.abs(lat-selected.dec)<15?"This object never reaches 15° at this latitude.":"Try a later season or use the clock to inspect nights with moonlight."}`,
+            `No Moon-free dark window above 15° for at least 30 minutes in the next 30 nights. ${90-Math.abs(lat-selected.dec)<15?"This object never reaches 15° at this latitude.":"Try a later season or use the clock to inspect nights with moonlight."}`,
         });
     } catch {
       toast({
@@ -942,7 +943,7 @@ export default function PlannerPage() {
             data-testid="offline-indicator"
           >
             <span className="status-dot" />
-            <span>{offlineLabel}</span>
+            <span>{offline.state==="preparing"?"Preparing…":offline.state==="ready"&&!offline.online?"Offline mode":!offline.online?"Offline setup":offlineLabel}</span>
           </button>
           <button
             className={`icon-button red-toggle ${settings.redLight ? "active" : ""}`}
@@ -1077,6 +1078,7 @@ export default function PlannerPage() {
                 Choose binoculars or a telescope for this session. StarHop will match the hop distances and guidance to your instrument.
               </p>
             )}
+            {mode === "binocular" && <BinocularProfileControls settings={settings} update={update}/>}
             <div className="flex justify-between mb-3">
               <Label className="field-label">Navigation field</Label>
               <span className="text-xs text-primary font-mono">
@@ -1302,7 +1304,7 @@ export default function PlannerPage() {
                   )}
                   <div className="sky-caption">
                     <span>
-                      Click a labeled symbol to select its object
+                      Tap or click a labeled symbol to select its object
                     </span>
                     <span>Star size = brightness · hue = catalog color</span>
                   </div>
@@ -1375,7 +1377,7 @@ export default function PlannerPage() {
                 )}
               </div>
               <details open className="panel upcoming-nights-disclosure"><summary>Compare upcoming nights · Moon-free darkness</summary><UpcomingNights lat={lat} lon={lon} timezone={timezone} date={date} selected={selected} targets={planningTargets.filter(target=>night.some(item=>item.id===target.id))} onDate={at=>previewMoment(at,lat,lon,false)}/></details>
-              <BinocularProfileControls settings={settings} update={update}/>
+              <BinocularProfileSummary settings={settings} onEditSetup={()=>setSetupOpen(true)}/>
               <div className="data-source-row">
                 <span>Calculated on this device from stored sky catalogs</span>
                 <button className="text-action" onClick={() => setSourcesOpen(true)}>
@@ -1459,21 +1461,17 @@ export default function PlannerPage() {
                 {!loading && !filtered.length && !starHits.length && (
                   <div className="panel empty-state">
                     <Search size={28} />
-                    <h3>No objects in this view</h3>
-                    <p>
-                      Try another time, turn off “Above 15°”, or broaden your
-                      search.
-                    </p>
+                    <h3>{query.trim()?"Search results outside this view":"No objects in this view"}</h3>
+                    <p>{catalogSearchDiagnostics(query,planningTargets,[...filtered.map(o=>o.target),...starHits.map(o=>starPlanningTarget(o.star))],target=>{const alt=eqToHorizontal(target.ra,target.dec,lat,lon,date).alt;return visibleOnly&&alt<15?`${target.name} is ${Math.round(alt)}° ${alt<0?'below the horizon':'high'}, below the Above 15° limit.`:category!=='all'?`Hidden by the ${category} object-type filter.`:friendlyOnly?'Hidden by Binocular picks.':undefined;}).message||'Try another time or broaden your filters.'}</p>
                     <Button
                       variant="outline"
                       onClick={() => {
-                        setQuery("");
                         setCategory("all");
                         setVisibleOnly(false);
                         setFriendlyOnly(false);
                       }}
                     >
-                      Browse the full catalog
+                      {query.trim()?"Show anyway":"Browse the full catalog"}
                     </Button>
                   </div>
                 )}
@@ -1529,6 +1527,7 @@ export default function PlannerPage() {
                   <Button
                     variant="outline"
                     size="sm"
+                    title="Find a Moon-free navigation window of at least 30 minutes above 15°; 30° or higher is preferred for detail."
                     onClick={bestTime}
                     disabled={findingTime || computing || !selected}
                   >
@@ -1539,6 +1538,7 @@ export default function PlannerPage() {
                     )}
                     Find a Moon-free night
                   </Button>
+
                   <Button
                     onClick={() => compute()}
                     disabled={computing || loading || !selected}
@@ -1559,7 +1559,7 @@ export default function PlannerPage() {
                   </Button>
                 </div>
               </div>
-              {selected&&<TargetNightSuggestions target={selected} lat={lat} lon={lon} timezone={timezone} date={date} onDate={at=>previewMoment(at,lat,lon,false)}/>}
+
               {selection && selection.alt < 15 && (
                 <div className="notice warning">
                   <AlertTriangle size={16} />
@@ -1584,7 +1584,7 @@ export default function PlannerPage() {
                   </span>
                 </div>
               )}
-              <details className="route-settings hop-preflight"><summary>Starting star & required guide stars</summary>              <div className="route-start-choice"><label>Starting star <input aria-label="Filter starting stars" placeholder="Filter by name or constellation" value={startQuery} onChange={e=>setStartQuery(e.target.value)}/><select aria-label="Starting star" value={settings.startStarId ?? ""} onChange={event => update({ startStarId:event.target.value || undefined })}>
+              <details className="route-settings hop-preflight"><summary>Route setup · minimum 15°, preferred 30°</summary><small className="hop-window-threshold">Moon-free navigation windows last at least 30 minutes above 15°. Aim for 30° or higher for the best detail.</small>              <div className="route-start-choice"><label>Starting star <input aria-label="Filter starting stars" placeholder="Filter by name or constellation" value={startQuery} onChange={e=>setStartQuery(e.target.value)}/><select aria-label="Starting star" value={settings.startStarId ?? ""} onChange={event => update({ startStarId:event.target.value || undefined })}>
                 <option value="">Automatic starting stars</option>
                 {startOptions.filter(({star})=>`${starPlanningTarget(star).name} ${getConstellationName(star.constellation??"")}`.toLowerCase().includes(startQuery.toLowerCase())).map(({star,alt}) => <option key={star.id} value={star.id}>{starPlanningTarget(star).name} · mag {star.mag.toFixed(1)} · {Math.round(alt)}° high</option>)}
               </select></label><small>Choose a visible reference and replan. Your field and guide-star limit still apply.</small></div>
@@ -1621,6 +1621,7 @@ export default function PlannerPage() {
                 </div>
               )}
               <div className="hop-layout">
+                {selected&&<div className="hop-best-nights"><TargetNightSuggestions target={selected} lat={lat} lon={lon} timezone={timezone} date={date} onDate={at=>previewMoment(at,lat,lon,false)}/></div>}
                 <section className="panel route-chart-panel">
                   <div className="panel-heading">
                     <div>
@@ -1917,9 +1918,9 @@ export default function PlannerPage() {
             </>
           )}
           {page === "binocular" && (
-            <BinocularGuide isSavedAt={(id,at)=>plannerStore.sessions.some(session=>!session.archived&&Math.abs(session.lat-lat)<.001&&Math.abs(session.lon-lon)<.001&&clockNightDate(new Date(session.startAt),timezone)===clockNightDate(at,timezone)&&session.items.some(item=>item.id===id))} live={settings.timeMode==="live"} onDate={at=>previewMoment(at,lat,lon,false)} onEditSetup={()=>setSetupOpen(true)} onCompare={(id,at)=>compareObjects([id],at)} profile={binocularProfile} profileControls={<BinocularProfileControls settings={settings} update={update}/>} onMoon={checkAgainstMoon} saveDestination={saveDestination} targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={(id,at)=>{if(at)previewMoment(at,lat,lon,false);toggleSave(id,at);}} onPlan={planBinocularHop} />
+            <BinocularGuide locationName={locationLabel} isSavedAt={(id,at)=>plannerStore.sessions.some(session=>!session.archived&&Math.abs(session.lat-lat)<.001&&Math.abs(session.lon-lon)<.001&&clockNightDate(new Date(session.startAt),timezone)===clockNightDate(at,timezone)&&session.items.some(item=>item.id===id))} live={settings.timeMode==="live"} onDate={at=>previewMoment(at,lat,lon,false)} onEditSetup={()=>setSetupOpen(true)} onCompare={(id,at)=>compareObjects([id],at)} profile={binocularProfile} profileControls={<BinocularProfileSummary settings={settings} onEditSetup={()=>setSetupOpen(true)}/>} onMoon={checkAgainstMoon} saveDestination={saveDestination} targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
           )}
-          {page === "catalog" && <CatalogExplorer onCompare={(id,at)=>compareObjects([id],at)} targets={catalogs.targets} settings={settings} update={update} date={date} timezone={timezone} locationName={locationLabel} saveDestination={saveDestination} savedIds={savedIds} onSave={toggleSave} onMoon={checkAgainstMoon} onSky={(id,at)=>{selectTarget(id);previewMoment(at,lat,lon);setPage("tonight");window.scrollTo({top:0,behavior:"smooth"});}}/>}
+          {page === "catalog" && <CatalogExplorer onEditSetup={()=>setSetupOpen(true)} onCompare={(id,at)=>compareObjects([id],at)} targets={catalogs.targets} settings={settings} update={update} date={date} timezone={timezone} locationName={locationLabel} saveDestination={saveDestination} savedIds={savedIds} onSave={toggleSave} onMoon={checkAgainstMoon} onSky={(id,at)=>{selectTarget(id);previewMoment(at,lat,lon);setPage("tonight");window.scrollTo({top:0,behavior:"smooth"});}}/>}
           {page === "clock" && <><AstronomicalClock targets={planningTargets} ids={compareIds} onIds={setCompareIds} selectedId={targetId} sessionIds={night.map(item=>item.id)} lat={lat} lon={lon} date={date} timezone={timezone} locationName={locationLabel} locations={savedLocations} onLocation={(a,b)=>requestSiteChange(a,b)} onTime={at=>previewMoment(at,lat,lon,false)} onLive={()=>update({timeMode:"live"})} live={settings.timeMode==="live"} skyBrightness={settings.skyBrightness}/>{compareError&&<p role="alert">Your browser could not save the comparison list. Keep this tab open to retain it.</p>}</>}
           {page === "moon" && <MoonObservatory targets={catalogs.targets} onTarget={selectTarget} locationName={locationLabel} lat={lat} lon={lon} date={date} timezone={timezone} settings={settings} update={update} target={selected} initialFeatureId={lunarSelection} onDate={at => { setPlaying(false); update({ date:formatInTimeZone(at,timezone,"yyyy-MM-dd"), time:formatInTimeZone(at,timezone,"HH:mm"), timeMode:"planned", plannedAt:at.toISOString() }); }} savedIds={savedIds} onSave={toggleSave} />}
           {page === "image" && (

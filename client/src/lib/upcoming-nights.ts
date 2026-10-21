@@ -154,8 +154,8 @@ export interface MoonFreeTargetWindow {
 
 /** Search complete observing nights and intersect moon-free darkness with a real altitude threshold. */
 export function moonFreeTargetWindows({
-  lat, lon, timezone, date, target, days = 30, minAltitude = 15,
-}: UpcomingNightsOptions & { target: UnifiedTarget; minAltitude?: 15 | 30 }): MoonFreeTargetWindow[] {
+  lat, lon, timezone, date, target, days = 30, minAltitude = 15, minDurationMinutes = 30,
+}: UpcomingNightsOptions & { target: UnifiedTarget; minAltitude?: 15 | 30; minDurationMinutes?: number }): MoonFreeTargetWindow[] {
   const nights = upcomingNights({ lat, lon, timezone, date, days: Math.min(30, Math.max(1, days)) });
   const result: MoonFreeTargetWindow[] = [];
   const altitudeAt = (at: Date) => eqToHorizontal(target.ra, target.dec, lat, lon, at).alt;
@@ -177,7 +177,7 @@ export function moonFreeTargetWindows({
         start: altitudeAt(dark.start) >= minAltitude ? dark.start : crossing(dark.start, peak.bestAt, false),
         end: altitudeAt(dark.end) >= minAltitude ? dark.end : crossing(peak.bestAt, dark.end, true),
       }];
-      for (const window of above) if (+window.end > +window.start) result.push({
+      for (const window of above) if (+window.end - +window.start >= minDurationMinutes * 60_000) result.push({
           date: night.date, ...window, moonPhase: night.moonPhase,
           moonIllumination: night.moonIllumination, moonLabel: night.moonLabel,
           targetAltitude: minAltitude,
@@ -199,9 +199,12 @@ export function upcomingNightDateLabel(night: UpcomingNight, timezone: string) {
 }
 
 /** Choose the nearest usable window, not the highest-ranked night later in the month. */
-export function nearestMoonFreeTargetTime(options:UpcomingNightsOptions&{target:UnifiedTarget;minAltitude?:15|30}):Date|null {
-  const window=moonFreeTargetWindows(options).find(window=>+window.end>+options.date);
+export function nearestMoonFreeTargetTime(options:UpcomingNightsOptions&{target:UnifiedTarget;minAltitude?:15|30;minDurationMinutes?:number}):Date|null {
+  const minimum=(options.minDurationMinutes??30)*60_000;
+  const window=moonFreeTargetWindows(options).find(window=>+window.end-Math.max(+window.start,+options.date)>=minimum);
   if(!window)return null;
-  const start=Math.max(+window.start,+options.date);
-  return new Date((start+ +window.end)/2);
+  const start=new Date(Math.max(+window.start,+options.date));
+  const peak=targetWindow(options.target.ra,options.target.dec,options.lat,options.lon,{ok:true,start,end:window.end,segments:[{start,end:window.end}]});
+  // Boundaries of darkness/altitude are exclusive in the action: leave a small margin.
+  return new Date(Math.min(+window.end-1000,Math.max(+start+1000,+peak.bestAt)));
 }
