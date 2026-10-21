@@ -198,10 +198,17 @@ export function upcomingNightDateLabel(night: UpcomingNight, timezone: string) {
   return formatInTimeZone(night.start, timezone, "EEE, MMM d");
 }
 
+/** Clip ongoing windows to the selected instant and reject expired/short tails. */
+export function remainingMoonFreeWindows(windows:MoonFreeTargetWindow[],from:Date,minimumMinutes=30):MoonFreeTargetWindow[] {
+  return windows.flatMap(window=>{
+    const start=new Date(Math.max(+window.start,+from));
+    return +window.end-+start>=minimumMinutes*60_000?[{...window,start}]:[];
+  });
+}
+
 /** Choose the nearest usable window, not the highest-ranked night later in the month. */
 export function nearestMoonFreeTargetTime(options:UpcomingNightsOptions&{target:UnifiedTarget;minAltitude?:15|30;minDurationMinutes?:number}):Date|null {
-  const minimum=(options.minDurationMinutes??30)*60_000;
-  const window=moonFreeTargetWindows(options).find(window=>+window.end-Math.max(+window.start,+options.date)>=minimum);
+  const window=remainingMoonFreeWindows(moonFreeTargetWindows(options),options.date,options.minDurationMinutes??30)[0];
   if(!window)return null;
   const start=new Date(Math.max(+window.start,+options.date));
   const peak=targetWindow(options.target.ra,options.target.dec,options.lat,options.lon,{ok:true,start,end:window.end,segments:[{start,end:window.end}]});

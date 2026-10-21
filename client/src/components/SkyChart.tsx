@@ -8,7 +8,7 @@ import { orientChartPoint } from '@/lib/observing';
 import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom } from '@/lib/chart-view';
 import { milkyWayPaths as projectMilkyWay } from '@/lib/sky-polygons';
 import { angularRing, RETICLE_DIAMETERS, type FinderReticle } from '@/lib/finder-view';
-import { boxesOverlap,labelFits,labelBelongsToPoint,labelPointLookup,type LabelBox } from '@/lib/chart-labels';
+import { boxesOverlap,labelFits,labelBelongsToPoint,labelPointLookup,constellationSymbolBox,type LabelBox } from '@/lib/chart-labels';
 import { useChartPreferences } from './ChartPreferences';
 import { memo, useMemo, useRef, useState, useCallback, useEffect, useLayoutEffect, useId, type ReactNode } from 'react';
 import {
@@ -739,7 +739,7 @@ export function SkyChart({
 
   const placedConstellationLabels=useMemo(()=>{
     if(isDragging.current)return constellationCache.current;
-    const occupied=[...reservedLabels,...labels.filter(label=>label.isTarget||label.star.type==='star'&&label.star.mag<=2.5||['M31','M45'].includes(label.star.id)).map(label=>label.box),...plottedStars.filter(item=>isDeepSky(item.star.category)||item.star.mag<=3).map(item=>({left:item.point.x-6*screenUnit,right:item.point.x+6*screenUnit,top:item.point.y-6*screenUnit,bottom:item.point.y+6*screenUnit}))];
+    const occupied=[...reservedLabels,...labels.filter(label=>label.isTarget||label.isAnchor||label.isPatternAnchor||label.star.type==='star'&&label.star.mag<=2.5||['M31','M45'].includes(label.star.id)).map(label=>label.box),...plottedStars.flatMap(item=>{const box=constellationSymbolBox(item.star,item.point,screenUnit,item.isTarget);return box?[box]:[];})];
     const accepted:Array<typeof constellationLabels[number]&{box:LabelBox}>=[];
     const font=Math.max(12,labelSize*.85)*screenUnit;
     // Uppercase names vary considerably in width (e.g. SERPENS). Measure

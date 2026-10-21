@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { labelBelongsToPoint,pointLabelDistance,labelPointLookup } from '../chart-labels';
+import { labelBelongsToPoint,pointLabelDistance,labelPointLookup,constellationSymbolBox,boxesOverlap } from '../chart-labels';
 
 describe('star label ownership',()=>{
   const box={left:108,right:158,top:94,bottom:108};
@@ -10,6 +10,17 @@ describe('star label ownership',()=>{
   it('drops a displaced name beside a different star or object',()=>{
     expect(labelBelongsToPoint(box,own,[own,{id:'Dubhe',x:110,y:110}],14)).toBe(false);
     expect(labelBelongsToPoint(box,own,[own,{id:'M102',x:125,y:101}],14)).toBe(false);
+  });
+  it('reserves space for the mag-5.5 double-star 16 Draconis',()=>{
+    const marker=constellationSymbolBox({type:'binocular',mag:5.5},{x:500,y:394},1)!;
+    expect(marker).not.toBeNull();
+    expect(boxesOverlap({left:480,right:550,top:395,bottom:410},marker)).toBe(true);
+    expect(constellationSymbolBox({type:'star',mag:5.5},{x:500,y:394},1)).toBeNull();
+  });
+  it('reserves the full selected-object ring instead of only its center',()=>{
+    const marker=constellationSymbolBox({type:'messier',mag:3.4},{x:500,y:400},1,true)!;
+    expect(marker.left).toBeLessThanOrEqual(500-8*1.3);
+    expect(marker.right).toBeGreaterThanOrEqual(500+8*1.3);
   });
   it('keeps coincident source-catalog aliases from competing with their own point',()=>{
     expect(labelBelongsToPoint(box,own,[own,{...own,id:'catalog-alias'}],14)).toBe(true);
