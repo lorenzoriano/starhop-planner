@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { labelBelongsToPoint,pointLabelDistance,labelPointLookup,constellationSymbolBox,boxesOverlap } from '../chart-labels';
+import { labelBelongsToPoint,pointLabelDistance,labelPointLookup,constellationSymbolBox,boxesOverlap,pointSegmentDistanceSquared } from '../chart-labels';
 
 describe('star label ownership',()=>{
   const box={left:108,right:158,top:94,bottom:108};
@@ -47,4 +47,11 @@ it('ignores only unresolved copies of the same catalog identity',()=>{
  expect(labelBelongsToPoint(box,owner,[{id:'STAR-Deneb',identity:'Deneb|Cyg',x:100.05,y:100}],12)).toBe(true);
  expect(labelBelongsToPoint(box,owner,[{id:'unrelated',identity:'Deneb|Cyg',x:110,y:100}],12)).toBe(false);
  expect(labelBelongsToPoint(box,owner,[{id:'Sadr',x:110,y:100}],12)).toBe(false);
+});
+
+it('measures caption proximity to real figure lines and endpoints',()=>{
+ const a={x:0,y:0},b={x:10,y:0};
+ expect(pointSegmentDistanceSquared({x:5,y:3},a,b)).toBe(9);
+ expect(pointSegmentDistanceSquared({x:13,y:4},a,b)).toBe(25);
+ expect(pointSegmentDistanceSquared({x:3,y:4},a,a)).toBe(25);
 });

@@ -8,7 +8,7 @@ import { orientChartPoint } from '@/lib/observing';
 import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom } from '@/lib/chart-view';
 import { milkyWayPaths as projectMilkyWay } from '@/lib/sky-polygons';
 import { angularRing, RETICLE_DIAMETERS, type FinderReticle } from '@/lib/finder-view';
-import { boxesOverlap,labelFits,labelBelongsToPoint,pointLabelDistance,labelPointLookup,constellationSymbolBox,type LabelBox } from '@/lib/chart-labels';
+import { boxesOverlap,labelFits,labelBelongsToPoint,pointLabelDistance,labelPointLookup,constellationSymbolBox,pointSegmentDistanceSquared,type LabelBox } from '@/lib/chart-labels';
 import { useChartPreferences } from './ChartPreferences';
 import { memo, useMemo, useRef, useState, useCallback, useEffect, useLayoutEffect, useId, type ReactNode } from 'react';
 import {
@@ -112,6 +112,7 @@ export function SkyChart({
   const chartAspect=Math.max(1,viewport.width/Math.max(1,viewport.height));
   const chartWidth=CHART_SIZE*chartAspect;
   const [isFullscreen,setIsFullscreen]=useState(false);
+  const [highlightedFigure,setHighlightedFigure]=useState<string|null>(null);
   useLayoutEffect(() => {
     const svg = svgRef.current; if (!svg) return;
     const measure = () => {
@@ -757,15 +758,16 @@ export function SkyChart({
     // the same font as the SVG so collision bounds match the visible text.
     const measure=document.createElement('canvas').getContext('2d');
     if(measure)measure.font=`500 ${font}px ${getComputedStyle(svgRef.current??document.body).getPropertyValue('--font-sans')||'sans-serif'}`;
-    const figureSegments=new Map<string,Array<{x:number;y:number;length:number}>>();
+    const figureSegments=new Map<string,Array<{x:number;y:number;length:number;nx:number;ny:number}>>();
+    const segments:Array<{id:string;a:{x:number;y:number};b:{x:number;y:number}}>=[];
     for(const path of constellationPaths){
       const id=path.id.split('-')[0],anchors=figureSegments.get(id)??[];
       const points=Array.from(path.d.matchAll(/[ML]([\d.eE+-]+),([\d.eE+-]+)/g)).map(m=>({x:+m[1],y:+m[2]}));
-      for(let i=1;i<points.length;i++){const a=points[i-1],b=points[i],length=Math.hypot(b.x-a.x,b.y-a.y);for(const f of [.5,.25,.75])anchors.push({x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f,length});}
+      for(let i=1;i<points.length;i++){const a=points[i-1],b=points[i],length=Math.hypot(b.x-a.x,b.y-a.y);if(!length)continue;segments.push({id,a,b});for(const f of [.5,.25,.75])anchors.push({x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f,length,nx:(b.y-a.y)/length,ny:-(b.x-a.x)/length});}
       figureSegments.set(id,anchors);
     }
-    for(const label of constellationLabels.slice().sort((a,b)=>b.prominence-a.prominence||Number(b.nearFocus)-Number(a.nearFocus)||Math.hypot(a.x-cx,a.y-cy)-Math.hypot(b.x-cx,b.y-cy))){
-      const text=label.name.toUpperCase();
+    for(const label of constellationLabels.slice().sort((a,b)=>Number(b.key.split('-')[0]===highlightedFigure)-Number(a.key.split('-')[0]===highlightedFigure)||b.prominence-a.prominence||Number(b.nearFocus)-Number(a.nearFocus)||Math.hypot(a.x-cx,a.y-cy)-Math.hypot(b.x-cx,b.y-cy))){
+      const text=overview&&viewportPixels<430?label.key.split('-')[0].toUpperCase():label.name.toUpperCase();
       const metrics=measure?.measureText(text);
       const width=(metrics?.width??text.length*font*.8)+text.length*.6*screenUnit;
       const ascent=Math.max(font,metrics?.fontBoundingBoxAscent??font);
@@ -773,19 +775,30 @@ export function SkyChart({
       // Anchor each name on its own figure, rather than nudging a centroid
       // into a neighbouring constellation. Try other segments when crowded.
       const options=(figureSegments.get(label.key.split('-')[0])??[]).filter(p=>p.length>font).sort((a,b)=>Math.hypot(a.x-label.x,a.y-label.y)-Math.hypot(b.x-label.x,b.y-label.y)||b.length-a.length).slice(0,24);
+      const id=label.key.split('-')[0],ownSegments=segments.filter(s=>s.id===id);
+      let placed=false;
       for(const option of options){
-        const x=option.x,y=option.y+font*.3;
-        const box={left:x-width/2,right:x+width/2,top:y-ascent,bottom:y+descent};
-        if(!labelFits(box,labelViewport,labelCircle)||occupied.some(area=>boxesOverlap(box,area,3*screenUnit)))continue;
-        occupied.push(box);accepted.push({...label,x,y,box});break;
+        for(const offset of [0,14,-14,28,-28]){
+          const point={x:option.x+option.nx*offset*screenUnit,y:option.y+option.ny*offset*screenUnit};
+          const x=point.x,y=point.y+font*.3;
+          const box={left:x-width/2,right:x+width/2,top:y-ascent,bottom:y+descent};
+          if(!labelFits(box,labelViewport,labelCircle)||occupied.some(area=>boxesOverlap(box,area,3*screenUnit)))continue;
+          const own=Math.sqrt(Math.min(...ownSegments.map(s=>pointSegmentDistanceSquared(point,s.a,s.b)))),limit=own+2*screenUnit;
+          // A cheap segment-bounds check avoids scanning every figure in detail.
+          if(segments.some(s=>s.id!==id&&point.x>=Math.min(s.a.x,s.b.x)-limit&&point.x<=Math.max(s.a.x,s.b.x)+limit&&point.y>=Math.min(s.a.y,s.b.y)-limit&&point.y<=Math.max(s.a.y,s.b.y)+limit&&pointSegmentDistanceSquared(point,s.a,s.b)<limit*limit))continue;
+          occupied.push(box);accepted.push({...label,x,y,box});placed=true;break;
+        }
+        if(placed)break;
       }
       if(overview&&accepted.length>=(viewportPixels<430?12:22))break;
     }
     constellationCache.current=accepted;
     return accepted;
-  },[dragVersion,constellationPaths,constellationLabels,labels,plottedStars,labelSize,screenUnit,viewBoxX,viewBoxY,viewBoxWidth,viewBoxHeight,viewportPixels,showLegend,starsOnly]);
+  },[highlightedFigure,dragVersion,constellationPaths,constellationLabels,labels,plottedStars,labelSize,screenUnit,viewBoxX,viewBoxY,viewBoxWidth,viewBoxHeight,viewportPixels,showLegend,starsOnly]);
 
 
+
+  const figureChoices=useMemo(()=>overview?constellations.filter(c=>['Ori','Tau','Per','Cas','And','Peg','Cyg','Aur','Gem'].includes(c.id)&&c.points.flat().some(([ra,dec])=>eqToHorizontal(ra,dec,lat,lon,date).alt>0)).map(c=>({id:c.id,name:getConstellationName(c.id)})):[],[overview,constellations,lat,lon,date]);
 
   const visibleLabels=labels.filter(label=>(!starsOnly||label.isTarget)&&!placedConstellationLabels.some(constellation=>boxesOverlap(label.box,constellation.box)));
 
@@ -1018,8 +1031,8 @@ export function SkyChart({
             key={`${path.id}-${index}`}
             d={path.d}
             data-constellation-path={path.id}
-            stroke={overview?'#5a8abf':path.nearFocus ? '#456383' : '#31465e'}
-            vectorEffect="non-scaling-stroke" strokeWidth={overview?1.4:path.nearFocus ? 1 : 0.7}
+            stroke={highlightedFigure===path.id.split('-')[0]?'#e3c67c':overview?'#5a8abf':path.nearFocus ? '#456383' : '#31465e'}
+            vectorEffect="non-scaling-stroke" strokeWidth={highlightedFigure===path.id.split('-')[0]?2.2:overview?1.4:path.nearFocus ? 1 : 0.7}
             fill="none"
             opacity={overview?.8:path.nearFocus ? .55 : .3}
             strokeLinecap="round"
@@ -1037,12 +1050,14 @@ export function SkyChart({
             opacity={label.nearFocus ? 0.95 : 0.8}
             fontSize={Math.max(12, labelSize * 0.85)*screenUnit}
             data-chart-label="constellation"
+            data-constellation-id={label.key.split('-')[0]}
+            aria-label={`Constellation ${label.name}`}
             fontFamily="var(--font-sans)"
             fontWeight="500"
             letterSpacing={.6*screenUnit}
             pointerEvents="none"
           >
-            {label.name.toUpperCase()}
+            {overview&&viewportPixels<430?label.key.split('-')[0].toUpperCase():label.name.toUpperCase()}
           </text>
         ))}
 
@@ -1278,7 +1293,7 @@ export function SkyChart({
 
       </svg>
 
-      {overview&&<div className="planetarium-guide"><label><input type="checkbox" checked={showObjects} onChange={e=>setShowObjects(e.target.checked)}/>Catalog objects · {nodes.filter(n=>n.type==='messier'||n.type==='binocular').length} above horizon</label><span>Inside circle = above horizon · edge 0° · center 90°</span><div className="planetarium-symbol-key">{[{category:"Open Cluster",name:"Open cluster"},{category:"Globular Cluster",name:"Globular cluster"},{category:"Galaxy",name:"Galaxy"},{category:"Emission Nebula",name:"Nebula"},{category:"Asterism",name:"Star pattern"}].map(kind=><span key={kind.name}><svg width="22" height="22" viewBox="-11 -11 22 22" aria-hidden="true"><CatalogSkySymbol category={kind.category}/></svg>{kind.name}</span>)}<span className="selected-symbol-key">Gold = selected</span></div></div>}
+      {overview&&<div className="planetarium-guide"><label><input type="checkbox" checked={showObjects} onChange={e=>setShowObjects(e.target.checked)}/>Catalog objects · {nodes.filter(n=>n.type==='messier'||n.type==='binocular').length} above horizon</label><span>Inside circle = above horizon · edge 0° · center 90°</span><div className="planetarium-symbol-key">{[{category:"Open Cluster",name:"Open cluster"},{category:"Globular Cluster",name:"Globular cluster"},{category:"Galaxy",name:"Galaxy"},{category:"Emission Nebula",name:"Nebula"},{category:"Asterism",name:"Star pattern"}].map(kind=><span key={kind.name}><svg width="22" height="22" viewBox="-11 -11 22 22" aria-hidden="true"><CatalogSkySymbol category={kind.category}/></svg>{kind.name}</span>)}<span className="selected-symbol-key">Gold = selected</span></div>{showConstellations&&figureChoices.length>0&&<div className="planetarium-figure-picker" style={{flexBasis:'100%',minWidth:0,width:'100%'}}><span>Choose a name to highlight its figure</span><div role="group" aria-label="Highlight a constellation" style={{display:'flex',gap:6,overflowX:'auto',maxWidth:'100%',padding:'6px 0'}}>{figureChoices.map(c=><button key={c.id} type="button" aria-pressed={highlightedFigure===c.id} title={`Highlight ${c.name} on the map`} onClick={()=>{setHighlightedFigure(current=>current===c.id?null:c.id);svgRef.current?.scrollIntoView({behavior:'smooth',block:'center'});}} style={{flex:'0 0 auto',whiteSpace:'nowrap',border:'1px solid #3c5b64',borderRadius:20,padding:'7px 12px',minHeight:44,background:highlightedFigure===c.id?'#193540':'transparent',color:highlightedFigure===c.id?'#e6d49b':'#add0bc'}}>{c.name} · {c.id.toUpperCase()}</button>)}</div></div>}</div>}
       {starsOnly&&<div className="stars-only-indicator" role="status">Stars only · destination marker retained</div>}
       {fieldNavigation}
 

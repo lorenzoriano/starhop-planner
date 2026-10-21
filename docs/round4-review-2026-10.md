@@ -4,9 +4,11 @@
 
 The responsive chart's projection callback already captured its measured width, but stars, constellation paths and route paths did not depend on that callback. They could retain the square first-render centre while rings and constellation names used the measured centre. Those consumers now depend directly on `project`. Geometry is deferred until the SVG has been measured, avoiding a wasted square projection before the first paint.
 
-The browser regression uses Astronomy Engine's J2000-to-horizontal rotation independently of the app's projection function. It checks Polaris, Capella, Deneb, Vega and Betelgeuse where above the horizon, on October 20 and November 8, at 1024/1280/1440/1920 and 393 px, including actual resizes. It also checks the target/field centre and distances between constellation captions and their figure segments. Captions now anchor on their own figure's segments rather than being displaced toward neighbouring figures.
+The browser regression uses Astronomy Engine's J2000-to-horizontal rotation independently of the app's projection function. It checks Polaris, Capella, Deneb, Vega and Betelgeuse where above the horizon, on October 20 and November 8, at 1024/1280/1440/1920 and 393 px, including actual resizes. It also checks the target/field centre and distances between constellation captions and their figure segments. Caption candidates come from their own figure's segments, with short perpendicular offsets when needed. An exact point-to-segment distance check rejects any caption closer to another figure, with a two-pixel safety margin. This keeps useful captions beside the lines while preserving their association.
 
-Name plates protect stars through magnitude 4.5 and catalog deep-sky symbols, including Messier and Caldwell objects. Unresolved copies of the same named star do not compete with each other. Every accepted plate touches its owning point, so an unobscured faint point outside the plate is necessarily farther away. This means the ownership test can index protected symbols without rebuilding a grid of thousands of faint background stars. Crowded names may still be omitted; priority changes do not guarantee that Deneb, Altair, Capella and M31 can all be labelled safely in a 393 px whole-sky view. That remaining limitation must be explicit in the issue disposition.
+Phones use compact IAU constellation codes, with full-name buttons that highlight the corresponding figure on the map. This replaces the passive list with a spatial interaction.
+
+Name plates protect stars through magnitude 4.5 and catalog deep-sky symbols, including Messier and Caldwell objects. Unresolved copies of the same named star do not compete with each other. Every accepted plate touches its owning point, so an unobscured faint point outside the plate is necessarily farther away. This means the ownership test can index protected symbols without rebuilding a grid of thousands of faint background stars. Crowded names may still be omitted; priority changes do not guarantee that Deneb, Altair, Capella and M31 can all be labelled safely in a 393 px whole-sky view. That remaining limitation must be explicit in the issue disposition, including crowded desktop scenes where formerly shown names are suppressed.
 
 ## Other changes
 
@@ -20,7 +22,7 @@ Name plates protect stars through magnitude 4.5 and catalog deep-sky symbols, in
 
 ## Validation and publication
 
-TypeScript, production build and the full 349-test / 49-file suite pass. `script/review-round4/` contains the independent geometry, plate, layout and performance browser checks. They use Playwright and Chromium; set `NODE_PATH` for an external Playwright install and `BASE_URL` for the server. The public transport fetches actual TLS-verified public bytes and compares assets with `dist/public`.
+TypeScript, production build and the full 350-test / 49-file suite pass. `script/review-round4/` contains the independent geometry, plate, layout and performance browser checks. They use Playwright and Chromium; set `NODE_PATH` for an external Playwright install and `BASE_URL` for the server. The public transport fetches actual TLS-verified public bytes and compares assets with `dist/public`.
 
 Performance comparisons use the same browser, 393×852 DPR3, San Francisco sky 19.0, October 24 at 21:30 and 4× CPU. Content readiness is measured on the committed star layer, separately from animation-frame scheduling. Absolute timings depend on this execution environment; issue comments record the final comparison and do not claim a universal sub-500 ms load.
 

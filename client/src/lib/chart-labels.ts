@@ -44,3 +44,9 @@ export function constellationSymbolBox(star:{type:string;mag:number},point:{x:nu
   const radius=(selected?12:6)*unit;
   return {left:point.x-radius,right:point.x+radius,top:point.y-radius,bottom:point.y+radius};
 }
+
+/** Squared distance to a drawn figure segment, including its endpoints. */
+export function pointSegmentDistanceSquared(point:{x:number;y:number},a:{x:number;y:number},b:{x:number;y:number}) {
+ const dx=b.x-a.x,dy=b.y-a.y,t=Math.max(0,Math.min(1,((point.x-a.x)*dx+(point.y-a.y)*dy)/(dx*dx+dy*dy||1)));
+ return (point.x-a.x-t*dx)**2+(point.y-a.y-t*dy)**2;
+}
