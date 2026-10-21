@@ -1348,7 +1348,7 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "Markarian 6 is a small Cassiopeia cluster; at 14×50, the useful goal is a subtle concentration rather than resolved detail.",
+    "impression": "Markarian 6 shares the Cassiopeia field with the Heart Nebula cluster IC 1805. Identify the little cluster separately from the much larger nebulous region.",
     "finding": "Mark 6 lies 5.1° south-east of Segin (magnitude 3.4), in Cassiopeia.",
     "minAperture": 50,
     "references": [
@@ -1556,13 +1556,18 @@
     "family": "cluster",
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
-    "impression": "NGC 1893 is the open cluster in the IC 410 region. With 14×50 binoculars, make the cluster itself the goal; the surrounding nebula is not a realistic expectation.",
+    "impression": "The young stars of NGC 1893 are embedded in IC 410, the Tadpole Nebula. Finding the cluster does not imply that its surrounding emission nebula will be visible.",
     "finding": "NGC 1893 lies 4.9° north of Elnath (magnitude 1.6), in Auriga.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · deep-sky binocular target table",
         "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 1893",
+        "url": "https://en.wikipedia.org/wiki/NGC_1893",
         "kind": "reference"
       }
     ]
@@ -1668,13 +1673,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "NGC 2301 in Monoceros is cataloged at magnitude 6.0 over 12 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "NGC 2301 mixes blue stars with a conspicuous orange star that may be in the foreground. Its brightest main-sequence member is about magnitude 9, so a steady view matters more than its total magnitude suggests.",
     "finding": "NGC 2301 lies 5.1° west of δ Monocerotis (magnitude 4.2), in Monoceros.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · deep-sky binocular target table",
         "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 2301",
+        "url": "https://en.wikipedia.org/wiki/NGC_2301",
         "kind": "reference"
       }
     ]
@@ -1812,7 +1822,7 @@
     "family": "cluster",
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
-    "impression": "NGC 6716 is a small Sagittarius cluster and a subtle target at 14×50. Aim to recognize a faint grouping, not to resolve it into a rich star field.",
+    "impression": "NGC 6716 lies east of M25 in Sagittarius. Use M25 as a starting landmark, then distinguish this separate, much smaller grouping from the surrounding Milky Way stars.",
     "finding": "NGC 6716 lies 1.4° north-west of ξ² Sagittarii (magnitude 3.5), in Sagittarius.",
     "minAperture": 50,
     "references": [
@@ -1844,13 +1854,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "NGC 6823 is the star cluster in the Sh 2-86 region. In 14×50 binoculars, concentrate on the stars; do not expect the surrounding emission nebula.",
+    "impression": "NGC 6823 is the stellar cluster surrounded by the NGC 6820 emission region. Its stars are the binocular goal; the photographic pillars and surrounding gas are a different challenge.",
     "finding": "NGC 6823 lies 3.6° east of Lucida Anseris (magnitude 4.4), in Vulpecula.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · deep-sky binocular target table",
         "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 6823",
+        "url": "https://en.wikipedia.org/wiki/NGC_6823",
         "kind": "reference"
       }
     ]
@@ -1908,13 +1923,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "NGC 7063 is a compact open cluster in Cygnus, cataloged at 7′ across and magnitude 7.0.",
+    "impression": "Near 69 Cygni, NGC 7063 was once counted as only ten or twelve stars. Modern membership studies identify many more faint members than a binocular view reveals.",
     "finding": "NGC 7063 lies 2.1° north-east of υ Cygni (magnitude 4.4), in Cygnus.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · deep-sky binocular target table",
         "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 7063",
+        "url": "https://en.wikipedia.org/wiki/NGC_7063",
         "kind": "reference"
       }
     ]
@@ -1924,13 +1944,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50",
-    "impression": "NGC 7160 is a compact Cepheus open cluster. At 14×50, look for a small stellar grouping rather than a broad, detached cluster shape.",
+    "impression": "NGC 7160 belongs to the Cepheus OB2 association. It is a sparse cluster with little central concentration, so expect a loose stellar group rather than a tightly packed knot.",
     "finding": "NGC 7160 lies 1.8° north-east of ν Cephei (magnitude 4.3), in Cepheus.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · deep-sky binocular target table",
         "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 7160",
+        "url": "https://en.wikipedia.org/wiki/NGC_7160",
         "kind": "reference"
       }
     ]
@@ -1940,13 +1965,18 @@
     "family": "cluster",
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
-    "impression": "NGC 7209 is a broader open cluster in Lacerta, cataloged at 25′ across and magnitude 7.7.",
+    "impression": "Most members of NGC 7209 are magnitude 9 or fainter. In binoculars you are seeing only the bright end of a much richer Lacerta cluster, not its full membership.",
     "finding": "NGC 7209 lies 4.2° south-east of π² Cygni (magnitude 4.2), in Lacerta.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · deep-sky binocular target table",
         "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 7209",
+        "url": "https://en.wikipedia.org/wiki/NGC_7209",
         "kind": "reference"
       }
     ]
@@ -2020,13 +2050,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 362 in Tucana is cataloged at magnitude 6.6 over 12.9 arcminutes. Its combined light forms a small unresolved haze; individual stars require a telescope.",
+    "impression": "NGC 362 sits just north of the Small Magellanic Cloud on the sky, but belongs to our own Milky Way. Keep it distinct from the much larger neighbouring globular 47 Tucanae.",
     "finding": "NGC 362 lies 6.9° north-east of β Hydri (magnitude 2.8), in Tucana.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 362",
+        "url": "https://en.wikipedia.org/wiki/NGC_362",
         "kind": "reference"
       }
     ]
@@ -2036,13 +2071,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 1851 in Columba is cataloged at magnitude 7.2 over 11.0 arcminutes. Its combined light forms a small unresolved haze; individual stars require a telescope.",
+    "impression": "Caldwell 73 has an unusually concentrated core for a Galactic globular cluster. The bright central condensation is the binocular feature; its extended stellar halo is much harder.",
     "finding": "NGC 1851 lies 5.7° south-west of ε Columbae (magnitude 3.9), in Columba.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 1851",
+        "url": "https://en.wikipedia.org/wiki/NGC_1851",
         "kind": "reference"
       }
     ]
@@ -2116,13 +2156,18 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 2547 in Vela is cataloged at magnitude 4.7 over 20.0 arcminutes. At 14× its catalog diameter spans about 4.7° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "NGC 2547 is a young Vela cluster, roughly thirty million years old. Its population formed in the same era as several nearby southern associations, unlike an ancient globular cluster.",
     "finding": "NGC 2547 lies 1.9° south of γ¹ Velorum (magnitude 4.3), in Vela.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 2547",
+        "url": "https://en.wikipedia.org/wiki/NGC_2547",
         "kind": "reference"
       }
     ]
@@ -2132,13 +2177,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 2546 in Puppis is cataloged at magnitude 6.3 over 40.0 arcminutes. At 14× its catalog diameter spans about 9.3° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "The elongated patch called NGC 2546 actually contains two overlapping clusters at different distances. Their projected mixture helps explain why the group has no simple circular boundary.",
     "finding": "NGC 2546 lies 2.9° north-east of Naos (magnitude 2.2), in Puppis.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 2546",
+        "url": "https://en.wikipedia.org/wiki/NGC_2546",
         "kind": "reference"
       }
     ]
@@ -2164,7 +2214,7 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "IC 2395 in Vela is cataloged at magnitude 4.6 over 7.0 arcminutes. At 14× its catalog diameter spans about 1.6° to the eye; a compact patch needs a steady field match.",
+    "impression": "IC 2395 lies north of the False Cross in Vela. The conspicuous cross is a guide to this region, not the cluster itself; narrow your attention to the small marked grouping.",
     "finding": "IC 2395 lies 5.4° east of γ² Velorum (magnitude 1.8), in Vela.",
     "minAperture": 50,
     "references": [
@@ -2180,13 +2230,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 2808 in Carina is cataloged at magnitude 6.3 over 13.8 arcminutes. Its combined light forms a small unresolved haze; individual stars require a telescope.",
+    "impression": "NGC 2808 contains more than a million stars and is one of the Milky Way’s most massive globular clusters. Its ancient stellar populations blend into a compact glow at binocular resolution.",
     "finding": "NGC 2808 lies 1.8° north-east of α Volantis (magnitude 4.0), in Carina.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 2808",
+        "url": "https://en.wikipedia.org/wiki/NGC_2808",
         "kind": "reference"
       }
     ]
@@ -2196,7 +2251,7 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 2910 in Vela is cataloged at magnitude 7.2 over 5.0 arcminutes. At 14× its catalog diameter spans about 1.2° to the eye; a compact patch needs a steady field match.",
+    "impression": "NGC 2910 is the small eastern counterpart to the much more conspicuous IC 2391 region in Vela. Check the marked field carefully rather than stopping at the first bright southern cluster.",
     "finding": "NGC 2910 lies 2.4° north-east of κ Velorum (magnitude 2.5), in Vela.",
     "minAperture": 50,
     "references": [
@@ -2212,13 +2267,18 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 3114 in Carina is cataloged at magnitude 4.2 over 35.0 arcminutes. At 14× its catalog diameter spans about 8.2° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "NGC 3114 lies against the crowded outskirts of the Carina complex. Unrelated Milky Way stars make its boundary ambiguous even in professional membership studies.",
     "finding": "NGC 3114 lies 5.3° north of υ Carinae (magnitude 3.0), in Carina.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 3114",
+        "url": "https://en.wikipedia.org/wiki/NGC_3114",
         "kind": "reference"
       }
     ]
@@ -2228,13 +2288,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 3201 in Vela is cataloged at magnitude 6.7 over 18.0 arcminutes. Its combined light forms a small unresolved haze; individual stars require a telescope.",
+    "impression": "Unlike strongly condensed globulars, NGC 3201 has a low central concentration. Its light spreads out gradually, so it may be less obvious than its integrated magnitude suggests.",
     "finding": "NGC 3201 lies 5.7° north-west of μ Velorum (magnitude 2.7), in Vela.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 3201",
+        "url": "https://en.wikipedia.org/wiki/NGC_3201",
         "kind": "reference"
       }
     ]
@@ -2244,13 +2309,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 3228 in Vela is cataloged at magnitude 6.0 over 18.0 arcminutes. At 14× its catalog diameter spans about 4.2° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "The brightest member of NGC 3228 is only about magnitude 7.9. A few brighter stars dominate this poorly populated Vela group rather than a dense unresolved core.",
     "finding": "NGC 3228 lies 4.6° south-west of μ Velorum (magnitude 2.7), in Vela.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 3228",
+        "url": "https://en.wikipedia.org/wiki/NGC_3228",
         "kind": "reference"
       }
     ]
@@ -2260,13 +2330,18 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 3293 in Carina is cataloged at magnitude 4.7 over 5.0 arcminutes. At 14× its catalog diameter spans about 1.2° to the eye; a compact patch needs a steady field match.",
+    "impression": "NGC 3293 contains bright blue supergiants and the red supergiant V361 Carinae. These belong to a very young cluster associated with nearby NGC 3324; subtle stellar colours need a steady view.",
     "finding": "NGC 3293 lies 6.2° north of θ Carinae (magnitude 2.8), in Carina.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 3293",
+        "url": "https://en.wikipedia.org/wiki/NGC_3293",
         "kind": "reference"
       }
     ]
@@ -2276,13 +2351,18 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 3766 in Centaurus is cataloged at magnitude 5.3 over 12.0 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "Caldwell 97 contains an unusual population of rapidly rotating, pulsating B-type stars. Their tiny brightness variations are research measurements, not changes to expect during a binocular sweep.",
     "finding": "NGC 3766 lies 1.4° north of λ Centauri (magnitude 3.1), in Centaurus.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 3766",
+        "url": "https://en.wikipedia.org/wiki/NGC_3766",
         "kind": "reference"
       }
     ]
@@ -2292,13 +2372,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 4463 in Musca is cataloged at magnitude 7.2 over 5.0 arcminutes. At 14× its catalog diameter spans about 1.2° to the eye; a compact patch needs a steady field match.",
+    "impression": "The planetary nebula He 2-86 is thought to belong to NGC 4463. Treat the star cluster as the binocular target; the small nebula is not a comparable binocular feature.",
     "finding": "NGC 4463 lies 1.5° south-east of ζ Crucis (magnitude 4.0), in Musca.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 4463",
+        "url": "https://en.wikipedia.org/wiki/NGC_4463",
         "kind": "reference"
       }
     ]
@@ -2308,13 +2393,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 4609 in Crux is cataloged at magnitude 6.9 over 5.0 arcminutes. At 14× its catalog diameter spans about 1.2° to the eye; a compact patch needs a steady field match.",
+    "impression": "Caldwell 98 lies beyond the Coalsack dark nebula in Crux. Its star grouping is seen through this dusty line of sight, beside one of the southern sky’s most prominent dark clouds.",
     "finding": "NGC 4609 lies 1.8° east of α² Crucis (magnitude 1.7), in Crux.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 4609",
+        "url": "https://en.wikipedia.org/wiki/NGC_4609",
         "kind": "reference"
       }
     ]
@@ -2356,13 +2446,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 5316 in Centaurus is cataloged at magnitude 6.0 over 13.0 arcminutes. At 14× its catalog diameter spans about 3.0° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "The brightest member of NGC 5316 is only about magnitude 9.4. This is a useful reality check: a bright total cluster magnitude does not mean it contains an equally bright individual guide star.",
     "finding": "NGC 5316 lies 1.9° south-west of Hadar (magnitude 0.6), in Centaurus.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 5316",
+        "url": "https://en.wikipedia.org/wiki/NGC_5316",
         "kind": "reference"
       }
     ]
@@ -2372,13 +2467,18 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 5460 in Centaurus is cataloged at magnitude 5.6 over 25.0 arcminutes. At 14× its catalog diameter spans about 5.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "NGC 5460 is a loose group nearly two degrees east-southeast of Zeta Centauri. Use that bright reference to recognise its scattered outline rather than searching for a globular-like core.",
     "finding": "NGC 5460 lies 2.3° south-east of ζ Centauri (magnitude 2.5), in Centaurus.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 5460",
+        "url": "https://en.wikipedia.org/wiki/NGC_5460",
         "kind": "reference"
       }
     ]
@@ -2388,13 +2488,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 5617 in Centaurus is cataloged at magnitude 6.3 over 10.0 arcminutes. At 14× its catalog diameter spans about 2.3° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "NGC 5617 forms a physical cluster pair with Trumpler 22, close to the Alpha Centauri field. The two cluster names describe separate stellar groups, not two names for one object.",
     "finding": "NGC 5617 lies 1.2° west of Rigil Kentaurus (magnitude -0.0), in Centaurus.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 5617",
+        "url": "https://en.wikipedia.org/wiki/NGC_5617",
         "kind": "reference"
       }
     ]
@@ -2404,13 +2509,18 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 5662 in Centaurus is cataloged at magnitude 5.5 over 12.0 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "NGC 5662 includes the Cepheid variable V Centauri, well away from the cluster’s centre. Its membership illustrates why a real cluster can extend beyond the most obvious central grouping.",
     "finding": "NGC 5662 lies 4.3° north of Rigil Kentaurus (magnitude -0.0), in Centaurus.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 5662",
+        "url": "https://en.wikipedia.org/wiki/NGC_5662",
         "kind": "reference"
       }
     ]
@@ -2420,13 +2530,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 5822 in Lupus is cataloged at magnitude 6.5 over 39.0 arcminutes. At 14× its catalog diameter spans about 9.1° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "NGC 5822 is an intermediate-age cluster near NGC 5823 in Lupus. Many members occupy a wide area, so a narrow-looking central concentration understates its extent.",
     "finding": "NGC 5822 lies 2.5° south-west of ζ Lupi (magnitude 3.4), in Lupus.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 5822",
+        "url": "https://en.wikipedia.org/wiki/NGC_5822",
         "kind": "reference"
       }
     ]
@@ -2436,13 +2551,18 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 6025 in Triangulum Australe is cataloged at magnitude 5.1 over 12.0 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "Caldwell 95 straddles the official boundary between Norma and Triangulum Australe. Its brightest member, MQ Trianguli Australis, is a blue straggler; the constellation boundary does not divide the cluster physically.",
     "finding": "NGC 6025 lies 3.1° north of Betria (magnitude 2.9), in Triangulum Australe.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 6025",
+        "url": "https://en.wikipedia.org/wiki/NGC_6025",
         "kind": "reference"
       }
     ]
@@ -2452,13 +2572,18 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 6067 in Norma is cataloged at magnitude 5.6 over 12.0 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "NGC 6067 sits in the Norma Star Cloud north of Kappa Normae. Its members include the Cepheid variables QZ and V340 Normae, embedded in a particularly rich Milky Way field.",
     "finding": "NGC 6067 lies 4.2° south of γ² Normae (magnitude 4.0), in Norma.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 6067",
+        "url": "https://en.wikipedia.org/wiki/NGC_6067",
         "kind": "reference"
       }
     ]
@@ -2468,13 +2593,18 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 6087 in Norma is cataloged at magnitude 5.4 over 12.0 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "The Cepheid S Normae is the brightest member of NGC 6087 and gives the cluster its alternative name. Use this conspicuous star to anchor the surrounding, fainter stellar group.",
     "finding": "NGC 6087 lies 4.2° west of η Arae (magnitude 3.8), in Norma.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 6087",
+        "url": "https://en.wikipedia.org/wiki/NGC_6087",
         "kind": "reference"
       }
     ]
@@ -2484,13 +2614,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 6124 in Scorpius is cataloged at magnitude 5.8 over 40.0 arcminutes. At 14× its catalog diameter spans about 9.3° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "Caldwell 75 is a broad southern Scorpius cluster, closer to us than many dense Milky Way groups. Give its scattered members room in the field rather than concentrating only on the centre.",
     "finding": "NGC 6124 lies 5.4° south-east of θ Lupi (magnitude 4.2), in Scorpius.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 6124",
+        "url": "https://en.wikipedia.org/wiki/NGC_6124",
         "kind": "reference"
       }
     ]
@@ -2500,7 +2635,7 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 6134 in Norma is cataloged at magnitude 7.2 over 6.0 arcminutes. At 14× its catalog diameter spans about 1.4° to the eye; a compact patch needs a steady field match.",
+    "impression": "NGC 6134 lies west of NGC 6167 in the same Norma binocular region. Compare the two marked positions; the brighter neighbouring cluster is not the destination under a second catalog number.",
     "finding": "NGC 6134 lies 1.6° south of ε Normae (magnitude 4.5), in Norma.",
     "minAperture": 50,
     "references": [
@@ -2516,7 +2651,7 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 6167 in Norma is cataloged at magnitude 6.7 over 7.0 arcminutes. At 14× its catalog diameter spans about 1.6° to the eye; a compact patch needs a steady field match.",
+    "impression": "NGC 6167 sits between the NGC 6134 field to the west and the NGC 6193 region to the east. This sequence of distinct clusters makes a useful positional check in the crowded southern Milky Way.",
     "finding": "NGC 6167 lies 2.4° south-east of ε Normae (magnitude 4.5), in Norma.",
     "minAperture": 50,
     "references": [
@@ -2532,13 +2667,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 6208 in Ara is cataloged at magnitude 7.2 over 15.0 arcminutes. At 14× its catalog diameter spans about 3.5° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "NGC 6208 is over a billion years old, substantially older than many bright southern open clusters. Its surviving stellar population belongs to an evolved group rather than a young star-forming region.",
     "finding": "NGC 6208 lies 1.6° south-west of ε¹ Arae (magnitude 4.1), in Ara.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 6208",
+        "url": "https://en.wikipedia.org/wiki/NGC_6208",
         "kind": "reference"
       }
     ]
@@ -2564,13 +2704,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "IC 4651 in Ara is cataloged at magnitude 6.9 over 12.0 arcminutes. At 14× its catalog diameter spans about 2.8° to the eye; compare the whole stellar grouping with the adjacent field.",
+    "impression": "IC 4651 is an intermediate-age cluster whose stars are richer in heavy elements than the Sun. Much of its original population has escaped or evolved into remnants, leaving the visible group we see today.",
     "finding": "IC 4651 lies 1.2° west of α Arae (magnitude 3.0), in Ara.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · IC 4651",
+        "url": "https://en.wikipedia.org/wiki/IC_4651",
         "kind": "reference"
       }
     ]
@@ -2596,13 +2741,18 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 6541 in Corona Australis is cataloged at magnitude 6.1 over 13.0 arcminutes. Its combined light forms a small unresolved haze; individual stars require a telescope.",
+    "impression": "Caldwell 78 is a very old, metal-poor globular orbiting in the inner Milky Way. Its concentrated light is the binocular feature; individual member stars and its blue stragglers require much more resolving power.",
     "finding": "NGC 6541 lies 4.1° north-west of α Telescopii (magnitude 3.5), in Corona Australis.",
     "minAperture": 50,
     "references": [
       {
         "title": "Astronomical League · southern-sky binocular list",
         "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+        "kind": "reference"
+      },
+      {
+        "title": "Object background and membership · NGC 6541",
+        "url": "https://en.wikipedia.org/wiki/NGC_6541",
         "kind": "reference"
       }
     ]

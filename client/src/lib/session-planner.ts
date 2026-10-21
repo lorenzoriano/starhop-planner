@@ -91,6 +91,18 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
     remaining.splice(remaining.indexOf(best.id),1);
     current=new Date(best.date.getTime()+session.minutesPerTarget*60_000);
   }
+  // Keep setting-first order, but give a low, rising target time to climb.
+  // Work backwards so each improved slot still ends before the next one.
+  for(let i=steps.length-1;i>=0;i--){
+    const step=steps[i];if(!step.date||step.alt>=30||step.lunar)continue;
+    const latest=(steps[i+1]?.date??end).getTime()-session.minutesPerTarget*60_000;
+    let best=atTarget(step.id,step.date)!;
+    for(let ms=step.date.getTime()+15*60_000;ms<=latest;ms+=15*60_000){
+      const candidate=atTarget(step.id,new Date(ms));
+      if(candidate?.usable&&atTarget(step.id,new Date(ms+session.minutesPerTarget*60_000))?.usable&&candidate.score>best.score)best=candidate;
+    }
+    if(best.alt>=step.alt+5)steps[i]={...step,...best,reason:"Later in the session to catch this rising target higher"};
+  }
   for(const id of remaining){const p=atTarget(id,start);steps.push({id,name:p?.name??id,date:null,alt:p?.alt??-90,az:p?.az??0,separation:p?.separation??null,moonlight:p?.moonlight??0,lunar:id.startsWith("moon:"),reason:!p?"Catalog entry unavailable":steps.length*session.minutesPerTarget>=session.durationMinutes?"Not enough time: lengthen this session":`No usable slot: needs ${p.minimum}° altitude and ${p.lunar?"distance from the Sun":"a darker sky"}`});}
   return steps;
 }

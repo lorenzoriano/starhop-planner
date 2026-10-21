@@ -207,13 +207,12 @@ export function searchCatalog(targets: readonly UnifiedTarget[], query: string, 
   const ranked=targets.map(target=>({target,score:catalogSearchScore(target,query)}))
     .filter(match=>Number.isFinite(match.score))
     .sort((a,b)=>a.score-b.score||a.target.name.localeCompare(b.target.name));
-  // An exact name or identifier is an unambiguous request. Keep copies/aliases
-  // of that identity, but do not pad it with unrelated fuzzy suggestions.
-  // A literal partial name (e.g. Mizar in “Mizar & Alcor”) also takes
-  // precedence over spelling corrections; constellation matches remain valid.
+  // Keep literal continuations even when the query also has an exact match:
+  // “m3” offers M3 and M30–M39, and “mizar” offers Mizar & Alcor too.
+  // Direct matches take precedence over spelling corrections, while literal
+  // constellation/category matches remain valid.
   const best=ranked[0]?.score??Infinity;
-  const relevant=best<=1?ranked.filter(match=>match.score<=1)
-    :best<=4?ranked.filter(match=>match.score<=5):ranked;
+  const relevant=best<=4?ranked.filter(match=>match.score<=5):ranked;
   const matches=deduplicateCatalogMatches(relevant,limit);
   if(cache.size>=8)cache.delete(cache.keys().next().value!);
   cache.set(cacheKey,matches);

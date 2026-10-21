@@ -5,22 +5,25 @@ export function labelFits(box:LabelBox,viewport:LabelBox,circle?:{x:number;y:num
   return !circle||[[box.left,box.top],[box.right,box.top],[box.left,box.bottom],[box.right,box.bottom]].every(([x,y])=>(x-circle.x)**2+(y-circle.y)**2<=circle.r**2);
 }
 
-export interface LabelPoint { id:string; x:number; y:number; occludable?:boolean; }
+export interface LabelPoint { id:string; x:number; y:number; occludable?:boolean; identity?:string; }
 /** Distance to the visible label, rather than its text anchor (which can be a
  * whole word away from the nearest edge). Labels may never adopt another dot. */
 export function pointLabelDistance(point:{x:number;y:number},box:LabelBox){
   return Math.hypot(Math.max(box.left-point.x,0,point.x-box.right),Math.max(box.top-point.y,0,point.y-box.bottom));
 }
 export function labelBelongsToPoint(box:LabelBox,owner:LabelPoint,points:readonly LabelPoint[],maximumGap:number){
-  const gap=pointLabelDistance(owner,box);
-  return gap<=maximumGap&&points.every(point=>{
-    if(point.id===owner.id||Math.hypot(point.x-owner.x,point.y-owner.y)<.01)return true;
-    const distance=pointLabelDistance(point,box);
-    // A faint background dot completely behind the opaque label plate is not
-    // a visible competing symbol. Bright stars and prominent catalog symbols cannot hide.
-    if(point.occludable&&distance===0)return true;
-    return distance>gap+.01;
-  });
+  const dx=Math.max(box.left-owner.x,0,owner.x-box.right),dy=Math.max(box.top-owner.y,0,owner.y-box.bottom);
+  const gapSquared=dx*dx+dy*dy;
+  if(gapSquared>maximumGap*maximumGap)return false;
+  const competingDistance=(Math.sqrt(gapSquared)+.01)**2;
+  for(const point of points){
+    if(point.id===owner.id||(owner.identity&&point.identity===owner.identity&&(point.x-owner.x)**2+(point.y-owner.y)**2<maximumGap*maximumGap/144)||(point.x-owner.x)**2+(point.y-owner.y)**2<.0001)continue;
+    const x=Math.max(box.left-point.x,0,point.x-box.right),y=Math.max(box.top-point.y,0,point.y-box.bottom);
+    const squared=x*x+y*y;
+    if(point.occludable&&squared===0)continue;
+    if(squared<=competingDistance)return false;
+  }
+  return true;
 }
 
 /** Limit collision work to a small region even when a detailed finder field

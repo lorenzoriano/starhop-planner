@@ -44,10 +44,7 @@ function LunarFeaturePhoto({feature}:{feature:LunarFeature}) {
 }
 
 function lunarFeatureTip(feature: LunarFeature) {
-  const repeated = "Look for the dark plain against brighter highlands. Follow its outline rather than trying to resolve small surface details.";
-  return feature.tip === repeated
-    ? `Mare · ${feature.diameterKm.toFixed(0)} km across. Its dark lava plain contrasts with brighter highlands; compare its outline as the sunlight changes.`
-    : feature.tip;
+  return feature.tip;
 }
 
 function OpticsInput({ value, min, max, step = 1, label, onValue }: { value:number; min:number; max:number; step?:number; label:string; onValue:(n:number)=>void }) {
@@ -229,7 +226,7 @@ export function MoonObservatory({ lat, lon, date, timezone, settings, update, ta
   const prioritizeDark=state.illumination<.08||state.alt<0;
   const lunarWorkspace=(<div className="lunar-workspace"><MoonAtlas lat={lat} lon={lon} date={date} settings={settings} update={update} selectedId={selectedId} onSelect={setSelectedId} /><aside className="lunar-guide-column">
       <section className="panel lunar-feature-detail"><span className="eyebrow">YOUR LUNAR LANDMARK</span><h2>{selected.name}</h2><LunarFeaturePhoto feature={selected}/><div className="lunar-feature-tags"><span>{selected.kind === "sea" ? "Lava sea" : selected.kind === "region" ? "Bay or plain" : selected.rays ? "Crater & rays" : "Crater"}</span><span>{selected.minMagnification}× or more · steady view</span></div><p>{lunarFeatureTip(selected)}</p>
-        <div className="lunar-feature-light"><strong>{!featurePosition.visible ? "Beyond the visible limb" : !featurePosition.lit ? "On the night side" : featurePosition.favored ? "Lighting favors this feature" : "Sunlit; compare on another phase"}</strong><span>Sun {Math.round(featurePosition.sunAltitude)}° above this feature’s horizon</span></div>
+        <div className="lunar-feature-light"><strong>{!featurePosition.visible ? "Beyond the visible limb" : !featurePosition.lit ? "On the night side" : featurePosition.favored ? "Lighting favors this feature" : "Sunlit; compare on another phase"}</strong><span>Sun {Math.abs(Math.round(featurePosition.sunAltitude))}° {featurePosition.sunAltitude < 0 ? "below" : "above"} this feature’s horizon</span></div>
         <p className="lunar-feature-scale">{selected.diameterKm.toFixed(0)} km across · projected size ≈ {nominalSize.toFixed(0)}″. {selected.rays ? "The ray system extends well beyond the crater." : nominalSize < 2*resolution || settings.binocularMagnification < selected.minMagnification ? "A challenging outline at your settings; more magnification and steady support may help." : "The broad outline is a reasonable goal at your settings; fine detail is not guaranteed."}</p>
         <div className="lunar-feature-links"><button className="text-action" onClick={() => onSave(featureSaveId)}>{savedIds.has(featureSaveId) ? <Check size={14} /> : <Plus size={14} />}{savedIds.has(featureSaveId) ? "Added to night · remove" : "Add to night"}</button><a href={selected.source} target="_blank" rel="noreferrer">IAU feature record <ArrowUpRight size={12} /></a></div>
       </section>

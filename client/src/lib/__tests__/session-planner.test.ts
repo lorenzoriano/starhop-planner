@@ -32,3 +32,11 @@ describe("observing session planner",()=>{
  it("distinguishes angular separation from altitude differences",()=>{const moon=moonState(37.77,-122.42,at);const near=angularDistance(moon.ra,moon.dec,moon.ra,moon.dec);const far=angularDistance(moon.ra,moon.dec,(moon.ra+180)%360,-moon.dec);expect(near).toBeCloseTo(0,5);expect(far).toBeCloseTo(180,5);const m31=targets[0];const distance=angularDistance(m31.ra,m31.dec,moon.ra,moon.dec);const altitudeDifference=Math.abs(eqToHorizontal(m31.ra,m31.dec,37.77,-122.42,at).alt-moon.alt);expect(Math.abs(distance-altitudeDifference)).toBeGreaterThan(10);});
  it("does not recommend a night-side lunar feature as visible",()=>{const feature=lunarFeatures.find(f=>f.name==="Grimaldi")!;const session=makeSession("Thin Moon",new Date("2026-10-15T03:00:00Z"),37.77,-122.42,[item(`moon:${feature.id}`)]);session.durationMinutes=60;expect(suggestSequence(session,targets)[0].date).toBeNull();});
 });
+
+it("gives Orion’s rising Belt a higher usable slot inside the real Nov 8 session",()=>{
+ const belt:UnifiedTarget={id:"AST-OrionBelt",name:"Orion’s Belt",displayName:"Orion’s Belt",ra:83.8833,dec:-1.0686,con:"Ori",mag:.4,category:"Asterism",categoryShort:"AST",source:"binocular"};
+ const start=new Date("2026-11-09T05:00:00Z"),session=makeSession("Nov 8",start,37.77,-122.42,[item("M31"),item(belt.id)]);
+ const steps=suggestSequence(session,[...targets,belt],19);const step=steps.find(x=>x.id===belt.id)!;
+ expect(step.date).not.toBeNull();expect(step.alt).toBeGreaterThan(30);expect(+step.date!+15*60000).toBeLessThanOrEqual(+start+180*60000);
+ const slots=steps.filter(x=>x.date);for(let i=1;i<slots.length;i++)expect(+slots[i].date!).toBeGreaterThanOrEqual(+slots[i-1].date!+15*60000);
+});

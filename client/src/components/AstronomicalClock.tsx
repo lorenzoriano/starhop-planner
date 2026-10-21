@@ -617,7 +617,7 @@ export function AstronomicalClock({
                   strokeWidth={alt === 0 ? 1.6 : 1}
                 />
                 <text
-                  x="325"
+                  x={alt === 90 ? 370 : 325}
                   y={320 - ((alt + 90) / 180) * 254 + (alt===90?16:-5)}
                   className="astro-ring-label"
                 >

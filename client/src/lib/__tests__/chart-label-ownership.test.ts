@@ -41,3 +41,10 @@ describe('star label ownership',()=>{
     expect(pointLabelDistance(own,box)).toBe(8);
   });
 });
+
+it('ignores only unresolved copies of the same catalog identity',()=>{
+ const box={left:100,right:160,top:90,bottom:105},owner={id:'HR7924',identity:'Deneb|Cyg',x:100,y:100};
+ expect(labelBelongsToPoint(box,owner,[{id:'STAR-Deneb',identity:'Deneb|Cyg',x:100.05,y:100}],12)).toBe(true);
+ expect(labelBelongsToPoint(box,owner,[{id:'unrelated',identity:'Deneb|Cyg',x:110,y:100}],12)).toBe(false);
+ expect(labelBelongsToPoint(box,owner,[{id:'Sadr',x:110,y:100}],12)).toBe(false);
+});

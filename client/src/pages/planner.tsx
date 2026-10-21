@@ -1462,7 +1462,7 @@ export default function PlannerPage() {
                   <div className="panel empty-state">
                     <Search size={28} />
                     <h3>{query.trim()?"Search results outside this view":"No objects in this view"}</h3>
-                    <p>{catalogSearchDiagnostics(query,planningTargets,[...filtered.map(o=>o.target),...starHits.map(o=>starPlanningTarget(o.star))],target=>{const alt=eqToHorizontal(target.ra,target.dec,lat,lon,date).alt;return visibleOnly&&alt<15?`${target.name} is ${Math.round(alt)}° ${alt<0?'below the horizon':'high'}, below the Above 15° limit.`:category!=='all'?`Hidden by the ${category} object-type filter.`:friendlyOnly?'Hidden by Binocular picks.':undefined;}).message||'Try another time or broaden your filters.'}</p>
+                    <p>{catalogSearchDiagnostics(query,planningTargets,[...filtered.map(o=>o.target),...starHits.map(o=>starPlanningTarget(o.star))],target=>{const alt=eqToHorizontal(target.ra,target.dec,lat,lon,date).alt;return visibleOnly&&alt<15?`${target.name} is ${Math.abs(alt).toFixed(1)}° ${alt<0?'below the horizon':'high'}, below the Above 15° limit.`:category!=='all'?`Hidden by the ${category} object-type filter.`:friendlyOnly?'Hidden by Binocular picks.':undefined;}).message||'Try another time or broaden your filters.'}</p>
                     <Button
                       variant="outline"
                       onClick={() => {

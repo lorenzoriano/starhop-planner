@@ -8,7 +8,7 @@ import { orientChartPoint } from '@/lib/observing';
 import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom } from '@/lib/chart-view';
 import { milkyWayPaths as projectMilkyWay } from '@/lib/sky-polygons';
 import { angularRing, RETICLE_DIAMETERS, type FinderReticle } from '@/lib/finder-view';
-import { boxesOverlap,labelFits,labelBelongsToPoint,labelPointLookup,constellationSymbolBox,type LabelBox } from '@/lib/chart-labels';
+import { boxesOverlap,labelFits,labelBelongsToPoint,pointLabelDistance,labelPointLookup,constellationSymbolBox,type LabelBox } from '@/lib/chart-labels';
 import { useChartPreferences } from './ChartPreferences';
 import { memo, useMemo, useRef, useState, useCallback, useEffect, useLayoutEffect, useId, type ReactNode } from 'react';
 import {
@@ -107,7 +107,7 @@ export function SkyChart({
   const [zoom, setZoom] = useState(1);
   const [panX, setPanX] = useState(0);
   const [panY, setPanY] = useState(0);
-  const [viewport, setViewport] = useState({width:CHART_SIZE,height:CHART_SIZE});
+  const [viewport, setViewport] = useState({width:CHART_SIZE,height:CHART_SIZE,measured:false});
   const viewportPixels=Math.min(viewport.width,viewport.height);
   const chartAspect=Math.max(1,viewport.width/Math.max(1,viewport.height));
   const chartWidth=CHART_SIZE*chartAspect;
@@ -117,7 +117,7 @@ export function SkyChart({
     const measure = () => {
       const box = svg.getBoundingClientRect();
       if(box.width<=0||box.height<=0)return;
-      setViewport(previous => Math.abs(previous.width-box.width)<.5&&Math.abs(previous.height-box.height)<.5?previous:{width:box.width,height:box.height});
+      setViewport(previous => previous.measured&&Math.abs(previous.width-box.width)<.5&&Math.abs(previous.height-box.height)<.5?previous:{width:box.width,height:box.height,measured:true});
     };
     measure(); const observer = new ResizeObserver(measure); observer.observe(svg);
     return () => observer.disconnect();
@@ -462,6 +462,7 @@ export function SkyChart({
   }, [currentHop, fovWidth]);
 
   const visibleStars = useMemo(() => {
+    if(!viewport.measured)return [];
     return nodes.filter((node) => {
       const distFromCenter = angularDistance(node.ra, node.dec, center.ra, center.dec);
       if (distFromCenter > viewRadius) return false;
@@ -475,11 +476,12 @@ export function SkyChart({
       // Show all stars up to the user's limiting magnitude
       return node.mag <= limitingMag;
     });
-  }, [nodes, mirrored, rotation, center.ra, center.dec, viewRadius, highlightedIds, limitingMag, overview, showObjects]);
+  }, [viewport.measured,nodes, mirrored, rotation, center.ra, center.dec, viewRadius, highlightedIds, limitingMag, overview, showObjects]);
 
   // Background star layer from dense Hipparcos catalog — pure rendering, no routing
   const backgroundStarLayer = useMemo(() => {
     const result: { x: number; y: number; mag: number; bv: number; ra:number; dec:number }[] = [];
+    if(!viewport.measured)return result;
     for (const star of [...denseStars,...deepCatalog.stars]) {
       const [ra, dec, mag, bv] = star;
       if (mag > limitingMag) continue;
@@ -492,15 +494,16 @@ export function SkyChart({
       result.push({ x, y, mag, bv, ra, dec });
     }
     return result;
-  }, [denseStars, deepCatalog.stars, limitingMag, project, viewRadius, chartAspect, chartWidth]);
+  }, [viewport.measured,denseStars, deepCatalog.stars, limitingMag, project, viewRadius, chartAspect, chartWidth]);
 
   // ───── Milky Way outline paths (from d3-celestial mw.json) ─────
   // 5 nested polygon layers (ol1–ol5) rendered with additive opacity:
   // overlapping regions appear brighter, creating a natural brightness gradient.
-  const milkyWayPaths=useMemo(()=>projectMilkyWay(milkyWay,projectionFrame,center,scale,mirrored,rotation,overview),[milkyWay,projectionFrame,center,scale,mirrored,rotation,overview]);
+  const milkyWayPaths=useMemo(()=>viewport.measured?projectMilkyWay(milkyWay,projectionFrame,center,scale,mirrored,rotation,overview):[],[viewport.measured,milkyWay,projectionFrame,center,scale,mirrored,rotation,overview]);
 
   const constellationPaths = useMemo(() => {
     const paths: { d: string; id: string; nearFocus: boolean }[] = [];
+    if(!viewport.measured)return paths;
     for (const constellation of constellations) {
       // Check if any vertex of this constellation is near the focus
       const isNearFocus = focusPoint ? constellation.points.some(seg =>
@@ -526,11 +529,11 @@ export function SkyChart({
       }
     }
     return paths;
-  }, [constellations, mirrored, rotation, center.ra, center.dec, scale, viewRadius, focusPoint, localRadius, activeConstellationIds]);
+  }, [viewport.measured,constellations, project, focusPoint, localRadius, activeConstellationIds, overview]);
 
   // ───── Constellation name labels at centroid of visible constellations ─────
   const constellationLabels = useMemo(() => {
-    if (!showConstellations) return [];
+    if (!showConstellations||!viewport.measured) return [];
     const labels: { x: number; y: number; name: string; key: string; nearFocus: boolean; prominence:number }[] = [];
     for (let index=0;index<constellations.length;index++) {
       const constellation=constellations[index];
@@ -564,7 +567,7 @@ export function SkyChart({
       });
     }
     return labels;
-  }, [constellations, projectionFrame, mirrored, rotation, center.ra, center.dec, scale, viewRadius, focusPoint, localRadius, activeConstellationIds, showConstellations, chartWidth]);
+  }, [viewport.measured,constellations, projectionFrame, mirrored, rotation, center.ra, center.dec, scale, viewRadius, focusPoint, localRadius, activeConstellationIds, showConstellations, chartWidth]);
 
   const routePath = useMemo(() => {
     if (!route) return null;
@@ -575,7 +578,7 @@ export function SkyChart({
     let d = `M${points[0].x},${points[0].y}`;
     for (let i = 1; i < points.length; i++) d += ` L${points[i].x},${points[i].y}`;
     return d;
-  }, [route, mirrored, rotation, center.ra, center.dec, scale, viewRadius]);
+  }, [route, project]);
 
   const routeProgressPath = useMemo(() => {
     if (!route) return null;
@@ -587,7 +590,7 @@ export function SkyChart({
     let d = `M${points[0].x},${points[0].y}`;
     for (let i = 1; i < points.length; i++) d += ` L${points[i].x},${points[i].y}`;
     return d;
-  }, [route, animStep, mirrored, rotation, center.ra, center.dec, scale, viewRadius]);
+  }, [route, animStep, project]);
 
   const plottedStars = useMemo(() => {
     return visibleStars
@@ -617,11 +620,11 @@ export function SkyChart({
       isPatternAnchor: boolean;
       isGuide: boolean;
     }>;
-  }, [visibleStars, route, targetNode, currentHop, mirrored, rotation, center.ra, center.dec, scale]);
+  }, [visibleStars, route, targetNode, currentHop, project]);
 
   // Compact chart labels: constellation abbreviation to save space
   const chartLabel = (star: SkyNode): string => {
-    if(overview&&isDeepSky(star.category)&&star.id!==targetNode?.id)return star.id.startsWith('AST-')?star.name:star.id;
+    if(overview&&isDeepSky(star.category))return star.id.startsWith('AST-')?star.name:star.id;
     if (star.name && star.name.length > 2 && !star.name.startsWith('HR') && star.name !== star.bayer) {
       return star.name;
     }
@@ -636,7 +639,7 @@ export function SkyChart({
   const constellationCache=useRef<Array<typeof constellationLabels[number]&{box:LabelBox}>>([]);
   const labels = useMemo(() => {
     if(isDragging.current)return labelCache.current;
-    if (labelSize === 0) return [];
+    if (labelSize === 0 || !viewport.measured) return [];
     const candidates = plottedStars
       .filter(({ star, isAnchor, isTarget, isPatternAnchor, isGuide }) => {
         if (isTarget || isAnchor || isPatternAnchor) return true;
@@ -657,7 +660,7 @@ export function SkyChart({
         // Proximity to focus point boosts score for tie-breaking
         const focusBonusA = focusPoint ? Math.max(0, 15 - angularDistance(a.star.ra, a.star.dec, focusPoint.ra, focusPoint.dec)) : 0;
         const focusBonusB = focusPoint ? Math.max(0, 15 - angularDistance(b.star.ra, b.star.dec, focusPoint.ra, focusPoint.dec)) : 0;
-        const catalogPriority=(star:SkyNode)=>overview?(star.type==='star'&&star.mag<=2.5?65+(['Deneb','Polaris','Fomalhaut','Schedar','Caph'].includes(chartLabel(star))?15:0):isDeepSky(star.category)?(/^M\d+$/.test(star.id)?74:skyObjectKind(star.category)==='field'?8:25):0):0;
+        const catalogPriority=(star:SkyNode)=>overview?(star.type==='star'&&star.mag<=2.5?100+(['Deneb','Polaris','Fomalhaut','Schedar','Caph'].includes(chartLabel(star))?15:0):isDeepSky(star.category)?(/^M\d+$/.test(star.id)?74:skyObjectKind(star.category)==='field'?8:25):0):0;
         const scoreA = (a.isTarget ? 100 : 0) + (a.isAnchor ? 70 : 0) + (a.isPatternAnchor ? 45 : 0) + (a.isGuide ? 20 : 0) + catalogPriority(a.star) - a.star.mag * 4 + focusBonusA;
         const scoreB = (b.isTarget ? 100 : 0) + (b.isAnchor ? 70 : 0) + (b.isPatternAnchor ? 45 : 0) + (b.isGuide ? 20 : 0) + catalogPriority(b.star) - b.star.mag * 4 + focusBonusB;
         return scoreB - scoreA;
@@ -665,14 +668,17 @@ export function SkyChart({
 
     // Keep the nearest text edge within one line height of its own point.
     // Centered positions are allowed, but never a distant inward nudge.
-    const plateOffset=Math.max(1,labelUnits/screenUnit*.4);
-    const placements = [...[4,8,0,12,6,10,2,1,3,5,7,9,11,13,-1].flatMap(dy=>[
+    const plateOffset=2;
+    const placements = [...[.33,.67,0,1,.5,.83,.17,.08,.25,.42,.58,.75,.92,1.08,-.08].map(f=>f*labelUnits/screenUnit).flatMap(dy=>[
       {dx:plateOffset,dy,anchor:'start' as const},
       {dx:-plateOffset,dy,anchor:'end' as const},
-    ]),{dx:0,dy:13,anchor:'middle' as const},{dx:0,dy:-1,anchor:'middle' as const}];
-    const pointSymbols=plottedStars.map(item=>({id:item.star.id,...item.point,occludable:isBatchedStar(item)||(isDeepSky(item.star.category)&&item.star.mag>6&&!item.isTarget&&!item.isAnchor)}));
-    pointSymbols.push(...backgroundStarLayer.filter(point=>point.mag>3).map((point,index)=>({id:`background-${index}`,x:point.x,y:point.y,occludable:true})));
-    const nearbyPoints=labelPointLookup(pointSymbols,24*screenUnit);
+    ]),{dx:0,dy:labelUnits/screenUnit*1.08,anchor:'middle' as const},{dx:0,dy:-labelUnits/screenUnit*.08,anchor:'middle' as const}];
+    const pointSymbols=plottedStars.map(item=>({id:item.star.id,identity:(item.star.type==='star'||item.star.category==='Star')?`${item.star.name}|${item.star.constellation??''}`:undefined,...item.point,occludable:((item.star.type==='star'||item.star.category==='Star')&&item.star.mag>4.5||skyObjectKind(item.star.category)==='field'&&!/^M\d+$/.test(item.star.id))&&!item.isTarget&&!item.isAnchor}));
+    // Every candidate touches its owner (zero distance). Faint points under
+    // the plate are hidden, and any visible point outside it is farther away.
+    // Only protected symbols can invalidate such a candidate; avoid indexing
+    // thousands of faint background points that cannot change that answer.
+    const nearbyPoints=labelPointLookup(pointSymbols.filter(point=>!point.occludable),24*screenUnit);
 
     const accepted: Array<{
       star: SkyNode;
@@ -698,11 +704,16 @@ export function SkyChart({
       const text = chartLabel(candidate.star);
       // Skip empty labels (HR-only stars) and deduplicate
       if (!text || usedNames.has(text)) continue;
-      const lPad = Math.max(screenUnit, labelUnits * 0.4);
+      const lPad = 2*screenUnit;
       if(measure)measure.font=`${candidate.isTarget||candidate.isAnchor?'700':'500'} ${labelUnits}px ${family}`;
       const width = Math.max(labelUnits * 2, measure?.measureText(text).width??text.length*labelUnits*.63);
-      const owner={id:candidate.star.id,...candidate.point};
-      for (const placement of placements) {
+      const owner={id:candidate.star.id,identity:(candidate.star.type==='star'||candidate.star.category==='Star')?`${candidate.star.name}|${candidate.star.constellation??''}`:undefined,...candidate.point};
+      const verticalPad=Math.max(screenUnit,labelUnits*.08);
+      const edgePlacements=[0,.125,.25,.375,.5,.625,.75,.875,1].flatMap(f=>[
+        {dx:(lPad-(width+2*lPad)*f)/screenUnit,dy:-verticalPad/screenUnit,anchor:'start' as const},
+        {dx:(lPad-(width+2*lPad)*f)/screenUnit,dy:(labelUnits+verticalPad)/screenUnit,anchor:'start' as const},
+      ]);
+      for (const placement of [...placements,...edgePlacements]) {
         const x = candidate.point.x + placement.dx * screenUnit;
         const y = candidate.point.y + placement.dy * screenUnit;
         const left = placement.anchor === 'start' ? x - lPad : placement.anchor === 'middle' ? x-width/2-lPad : x - width - lPad;
@@ -713,7 +724,7 @@ export function SkyChart({
         const box={left,right,top,bottom};
         const overlaps = accepted.some(label=>boxesOverlap(box,label.box));
         const outOfBounds=!labelFits(box,labelViewport,labelCircle)||reservedLabels.some(area=>boxesOverlap(box,area));
-        if (!overlaps && !outOfBounds && labelBelongsToPoint(box,owner,nearbyPoints(box,labelUnits),labelUnits)) {
+        if (!overlaps && !outOfBounds && pointLabelDistance(owner,box)<screenUnit*.001 && labelBelongsToPoint(box,owner,nearbyPoints(box,pointLabelDistance(owner,box)+.02),labelUnits)) {
           accepted.push({
             star: candidate.star,
             x,
@@ -735,7 +746,7 @@ export function SkyChart({
 
     labelCache.current=accepted;
     return accepted;
-  }, [dragVersion,plottedStars,backgroundStarLayer, activeConstellationIds, focusPoint, localRadius, labelSize, labelUnits, screenUnit, viewBoxX, viewBoxY, viewBoxWidth, viewBoxHeight, overview, viewportPixels, zoom]);
+  }, [viewport.measured,dragVersion,plottedStars, activeConstellationIds, focusPoint, localRadius, labelSize, labelUnits, screenUnit, viewBoxX, viewBoxY, viewBoxWidth, viewBoxHeight, overview, viewportPixels, zoom]);
 
   const placedConstellationLabels=useMemo(()=>{
     if(isDragging.current)return constellationCache.current;
@@ -746,15 +757,24 @@ export function SkyChart({
     // the same font as the SVG so collision bounds match the visible text.
     const measure=document.createElement('canvas').getContext('2d');
     if(measure)measure.font=`500 ${font}px ${getComputedStyle(svgRef.current??document.body).getPropertyValue('--font-sans')||'sans-serif'}`;
+    const figureSegments=new Map<string,Array<{x:number;y:number;length:number}>>();
+    for(const path of constellationPaths){
+      const id=path.id.split('-')[0],anchors=figureSegments.get(id)??[];
+      const points=Array.from(path.d.matchAll(/[ML]([\d.eE+-]+),([\d.eE+-]+)/g)).map(m=>({x:+m[1],y:+m[2]}));
+      for(let i=1;i<points.length;i++){const a=points[i-1],b=points[i],length=Math.hypot(b.x-a.x,b.y-a.y);for(const f of [.5,.25,.75])anchors.push({x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f,length});}
+      figureSegments.set(id,anchors);
+    }
     for(const label of constellationLabels.slice().sort((a,b)=>b.prominence-a.prominence||Number(b.nearFocus)-Number(a.nearFocus)||Math.hypot(a.x-cx,a.y-cy)-Math.hypot(b.x-cx,b.y-cy))){
       const text=label.name.toUpperCase();
       const metrics=measure?.measureText(text);
       const width=(metrics?.width??text.length*font*.8)+text.length*.6*screenUnit;
       const ascent=Math.max(font,metrics?.fontBoundingBoxAscent??font);
       const descent=Math.max(font*.3,metrics?.fontBoundingBoxDescent??font*.3);
-      const options=[{dx:0,dy:0},...[16,32,48,64,80,96,112].flatMap(radius=>Array.from({length:8},(_,i)=>({dx:Math.cos(i*Math.PI/4)*radius,dy:Math.sin(i*Math.PI/4)*radius})))];
+      // Anchor each name on its own figure, rather than nudging a centroid
+      // into a neighbouring constellation. Try other segments when crowded.
+      const options=(figureSegments.get(label.key.split('-')[0])??[]).filter(p=>p.length>font).sort((a,b)=>Math.hypot(a.x-label.x,a.y-label.y)-Math.hypot(b.x-label.x,b.y-label.y)||b.length-a.length).slice(0,24);
       for(const option of options){
-        const x=label.x+option.dx*screenUnit,y=label.y+option.dy*screenUnit;
+        const x=option.x,y=option.y+font*.3;
         const box={left:x-width/2,right:x+width/2,top:y-ascent,bottom:y+descent};
         if(!labelFits(box,labelViewport,labelCircle)||occupied.some(area=>boxesOverlap(box,area,3*screenUnit)))continue;
         occupied.push(box);accepted.push({...label,x,y,box});break;
@@ -763,9 +783,9 @@ export function SkyChart({
     }
     constellationCache.current=accepted;
     return accepted;
-  },[dragVersion,constellationLabels,labels,plottedStars,labelSize,screenUnit,viewBoxX,viewBoxY,viewBoxWidth,viewBoxHeight,viewportPixels,showLegend,starsOnly]);
+  },[dragVersion,constellationPaths,constellationLabels,labels,plottedStars,labelSize,screenUnit,viewBoxX,viewBoxY,viewBoxWidth,viewBoxHeight,viewportPixels,showLegend,starsOnly]);
 
-  const prominentFigures=useMemo(()=>overview?constellations.filter(c=>['Ori','Tau','Per','Cas','And','Peg','Cyg','Aur','Gem'].includes(c.id)&&c.points.flat().some(([ra,dec])=>eqToHorizontal(ra,dec,lat,lon,date).alt>0)).map(c=>getConstellationName(c.id)):[],[overview,constellations,lat,lon,date]);
+
 
   const visibleLabels=labels.filter(label=>(!starsOnly||label.isTarget)&&!placedConstellationLabels.some(constellation=>boxesOverlap(label.box,constellation.box)));
 
@@ -1258,7 +1278,7 @@ export function SkyChart({
 
       </svg>
 
-      {overview&&<div className="planetarium-guide"><label><input type="checkbox" checked={showObjects} onChange={e=>setShowObjects(e.target.checked)}/>Catalog objects · {nodes.filter(n=>n.type==='messier'||n.type==='binocular').length} above horizon</label><span>Inside circle = above horizon · edge 0° · center 90°</span><div className="planetarium-symbol-key">{[{category:"Open Cluster",name:"Open cluster"},{category:"Globular Cluster",name:"Globular cluster"},{category:"Galaxy",name:"Galaxy"},{category:"Emission Nebula",name:"Nebula"},{category:"Asterism",name:"Star pattern"}].map(kind=><span key={kind.name}><svg width="22" height="22" viewBox="-11 -11 22 22" aria-hidden="true"><CatalogSkySymbol category={kind.category}/></svg>{kind.name}</span>)}<span className="selected-symbol-key">Gold = selected</span></div>{showConstellations&&prominentFigures.length>0&&<p className="planetarium-figures"><strong>Prominent figures above the horizon:</strong> {prominentFigures.join(' · ')}. Names on the map use available space around stars and object symbols.</p>}</div>}
+      {overview&&<div className="planetarium-guide"><label><input type="checkbox" checked={showObjects} onChange={e=>setShowObjects(e.target.checked)}/>Catalog objects · {nodes.filter(n=>n.type==='messier'||n.type==='binocular').length} above horizon</label><span>Inside circle = above horizon · edge 0° · center 90°</span><div className="planetarium-symbol-key">{[{category:"Open Cluster",name:"Open cluster"},{category:"Globular Cluster",name:"Globular cluster"},{category:"Galaxy",name:"Galaxy"},{category:"Emission Nebula",name:"Nebula"},{category:"Asterism",name:"Star pattern"}].map(kind=><span key={kind.name}><svg width="22" height="22" viewBox="-11 -11 22 22" aria-hidden="true"><CatalogSkySymbol category={kind.category}/></svg>{kind.name}</span>)}<span className="selected-symbol-key">Gold = selected</span></div></div>}
       {starsOnly&&<div className="stars-only-indicator" role="status">Stars only · destination marker retained</div>}
       {fieldNavigation}
 
