@@ -692,8 +692,10 @@ export function SkyChart({
       const lPad = Math.max(screenUnit, labelUnits * 0.4);
       if(measure)measure.font=`${candidate.isTarget||candidate.isAnchor?'700':'500'} ${labelUnits}px ${family}`;
       const width = Math.max(labelUnits * 2, measure?.measureText(text).width??text.length*labelUnits*.63);
-      const options=candidate.isTarget||candidate.isAnchor
-        ? [...placements,{dx:0,dy:-16,anchor:'middle' as const},{dx:0,dy:22,anchor:'middle' as const}]
+      const priorityStar=overview&&candidate.star.type==='star'&&candidate.star.mag<=2.5;
+      const extraPlacements=priorityStar?[24,36,48].flatMap(radius=>Array.from({length:8},(_,i)=>{const angle=i*Math.PI/4,dx=Math.cos(angle)*radius,dy=Math.sin(angle)*radius;return {dx,dy,anchor:dx>4?'start' as const:dx< -4?'end' as const:'middle' as const};})):[];
+      const options=candidate.isTarget||candidate.isAnchor||priorityStar
+        ? [...placements,{dx:0,dy:-16,anchor:'middle' as const},{dx:0,dy:22,anchor:'middle' as const},...extraPlacements]
         : placements;
       const inward=overview&&(candidate.isTarget||candidate.isAnchor||candidate.star.type==='star'&&candidate.star.mag<=2.5)?[0,12,24,48,72]:[0];
       let placed=false;
@@ -719,7 +721,7 @@ export function SkyChart({
             isAnchor: candidate.isAnchor,
             isTarget: candidate.isTarget,
             isPatternAnchor: candidate.isPatternAnchor,
-            box,leader:nudge?candidate.point:null,
+            box,leader:nudge||placement.dx===0||Math.abs(placement.dx)>20||Math.abs(placement.dy)>22?candidate.point:null,
           });
           usedNames.add(text);placed=true;
           if(catalogLabel)catalogLabels++;
