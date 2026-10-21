@@ -2,7 +2,7 @@ import {AltitudeStatus} from "@/components/ExplainedStatus";
 import { getSiteSkyBrightness, suggestedSiteSkyBrightness } from "@/lib/site-sky-brightness";
 import { AppTextSizeControl } from "@/components/AppTextSizeControl";
 import { targetDesignation } from "@/lib/catalog-presentation";
-import { bestUpcomingNights, moonFreeTargetWindows } from "@/lib/upcoming-nights";
+import { nearestMoonFreeTargetTime } from "@/lib/upcoming-nights";
 import { TargetNightSuggestions } from "@/components/TargetNightSuggestions";
 import {CoordinatePairInput} from "@/components/CoordinatePairInput";
 import {CatalogCombobox} from "@/components/CatalogCombobox";
@@ -362,7 +362,7 @@ export default function PlannerPage() {
       ).sort((a,b)=>catalogSearchScore(a.target,query,getConstellationName(a.target.con))-catalogSearchScore(b.target,query,getConstellationName(b.target.con))),
     [ranked, visibleOnly, friendlyOnly, category, query],
   );
-  const starSearchTargets = useMemo(() => catalogs.stars.map(star => ({ star, target:starPlanningTarget(star) })), [catalogs.stars]);
+  const starSearchTargets = useMemo(() => {const indexed=new Map(planningTargets.map(target=>[target.id,target]));return catalogs.stars.map(star=>({star,target:indexed.get(`star:${star.id}`)!}));}, [catalogs.stars,planningTargets]);
   const starHits = useMemo<NavigationStarHit[]>(() => {
     if (!query.trim() || (category !== "all" && category !== "Star")) return [];
     return starSearchTargets.flatMap(({star,target}) => {
@@ -759,9 +759,7 @@ export default function PlannerPage() {
     await new Promise((resolve) => setTimeout(resolve, 40));
     try {
       const options={selected,lat,lon,timezone,date};
-      const recommended=bestUpcomingNights(options)[0];
-      const nearby=moonFreeTargetWindows({...options,target:selected,minAltitude:15}).find(window=>+window.end>+date);
-      const at=recommended?.chooseAt??(nearby?new Date((Math.max(+nearby.start,+date)+ +nearby.end)/2):null);
+      const at=nearestMoonFreeTargetTime({...options,target:selected,minAltitude:15});
       const window=at?{date:at,alt:eqToHorizontal(selected.ra,selected.dec,lat,lon,at).alt}:null;
       if (keyRef.current !== key) return;
       if (window) {
@@ -1261,7 +1259,7 @@ export default function PlannerPage() {
             <div><Clock size={14} /><span><strong>{settings.timeMode === "live" ? "Live sky" : "Viewing planned sky"}</strong> · <ContextDateButton>{dateLabel} · {observingTime}</ContextDateButton><small>{timezone.replaceAll("_", " ")} (UTC{formatInTimeZone(date,timezone,"xxx")}) · <ContextLocationButton>{locationLabel}</ContextLocationButton></small></span></div>
             <div className="session-time-actions"><button className="text-action" onClick={()=>setPage("night")}><CalendarDays size={13}/>{activeSession ? `Planner · ${night.length} ${night.length===1?"object":"objects"}` : "Open planner"}</button><button className="text-action" onClick={useNow}>{settings.timeMode === "live" ? "Refresh now" : "Use current time"}</button></div>
           </section>}
-          {page!=="night"&&<div className="saving-context" role="status">Saving to: <strong>{saveDestination}</strong> · <ContextLocationButton>{locationLabel}</ContextLocationButton></div>}
+          {page!=="night"&&page!=="binocular"&&<div className="saving-context" role="status">Saving to: <strong>{saveDestination}</strong> · <ContextLocationButton>{locationLabel}</ContextLocationButton></div>}
           {page === "tonight" && <WeatherPanel overview onPlanNight={at=>{previewMoment(at,lat,lon,false);setPage("night");}} lat={lat} lon={lon} date={date} timezone={timezone} skyBrightness={settings.skyBrightness} locationName={locationLabel} onTime={at=>previewMoment(at,lat,lon,false)}/>}
           {page === "tonight" && (
             <>
@@ -1586,7 +1584,7 @@ export default function PlannerPage() {
                   </span>
                 </div>
               )}
-              <details className="route-settings"><summary>Starting star & required guide stars</summary>              <div className="route-start-choice"><label>Starting star <input aria-label="Filter starting stars" placeholder="Filter by name or constellation" value={startQuery} onChange={e=>setStartQuery(e.target.value)}/><select aria-label="Starting star" value={settings.startStarId ?? ""} onChange={event => update({ startStarId:event.target.value || undefined })}>
+              <details className="route-settings hop-preflight"><summary>Starting star & required guide stars</summary>              <div className="route-start-choice"><label>Starting star <input aria-label="Filter starting stars" placeholder="Filter by name or constellation" value={startQuery} onChange={e=>setStartQuery(e.target.value)}/><select aria-label="Starting star" value={settings.startStarId ?? ""} onChange={event => update({ startStarId:event.target.value || undefined })}>
                 <option value="">Automatic starting stars</option>
                 {startOptions.filter(({star})=>`${starPlanningTarget(star).name} ${getConstellationName(star.constellation??"")}`.toLowerCase().includes(startQuery.toLowerCase())).map(({star,alt}) => <option key={star.id} value={star.id}>{starPlanningTarget(star).name} · mag {star.mag.toFixed(1)} · {Math.round(alt)}° high</option>)}
               </select></label><small>Choose a visible reference and replan. Your field and guide-star limit still apply.</small></div>
@@ -1911,8 +1909,7 @@ export default function PlannerPage() {
           {page === "night" && (
             <>
               <div className="page-heading night-page-heading"><div><p className="eyebrow">YOUR NEXT NIGHT OUT</p><h1>Plan your night<span>.</span></h1><p>Choose a night. Add targets. Follow the stars.</p></div></div>
-              <details open className="panel upcoming-nights-disclosure"><summary>Compare upcoming nights · Moon-free darkness</summary><UpcomingNights lat={lat} lon={lon} timezone={timezone} date={date} selected={selected} targets={planningTargets.filter(target=>night.some(item=>item.id===target.id))} onDate={at=>previewMoment(at,lat,lon,false)}/></details>
-              <SessionPlanner profile={binocularProfile} onCompare={(ids,at,a,b)=>compareObjects(ids,at,a,b)} savedLocations={savedLocations} onLocationsChange={setSavedLocations} sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} live={settings.timeMode === "live"}
+              <SessionPlanner selectedTarget={selected} profile={binocularProfile} onCompare={(ids,at,a,b)=>compareObjects(ids,at,a,b)} savedLocations={savedLocations} onLocationsChange={setSavedLocations} sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} live={settings.timeMode === "live"}
                 onCreate={createSession} onUpdate={updateSession} onSelect={selectSession} onPreview={(at,a,b,stay)=>previewMoment(at,a,b,!stay)} onVisit={visitScheduledTarget} onAdd={toggleSave} onObserved={markObserved}
                 onNotes={(id,notes)=>setNight(current=>current.map(item=>item.id===id?{...item,notes}:item))}
                 actions={<><SkySafariExport items={night} targets={planningTargets} session={activeSession} date={date} lat={lat} lon={lon} skyBrightness={settings.skyBrightness}/><Button variant="outline" onClick={exportNight} disabled={!night.length}><Download size={15}/> Export notes</Button></>}

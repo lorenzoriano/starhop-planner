@@ -682,16 +682,16 @@ export function AstronomicalClock({
             <path
               d={clockCurve(samples, (s) => s.sun)}
               fill="none"
-              stroke="#edc56e"
+              stroke="#d7a28b"
               strokeWidth="1.7"
-              strokeDasharray="3 5"
+              strokeDasharray="2 5"
             />
             <path
               d={clockCurve(samples, (s) => s.moon)}
               fill="none"
-              stroke="#adb1b8"
+              stroke="#a4a8ad"
               strokeWidth="1.7"
-              strokeDasharray="7 4"
+              strokeDasharray="10 3 2 3"
             />
             {chosen.map((t, i) => (
               <path

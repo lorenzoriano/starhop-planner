@@ -1,3 +1,4 @@
+import { useSvgWidth } from '@/hooks/use-svg-width';
 import { ContextDateButton, ContextLocationButton } from "./ObservingContext";
 import { useMemo,useState,useId } from 'react';
 import { formatInTimeZone,fromZonedTime } from 'date-fns-tz';
@@ -98,7 +99,8 @@ export function WeatherPanel({lat,lon,date,timezone,locationName,onTime,skyBrigh
   </details></>;
 }
 function WeatherChart({hours,timezone,lat,lon,dark,selected,onInspect,models}:{models?:ForecastModels;hours:WeatherHour[];timezone:string;lat:number;lon:number;dark:{start:Date;end:Date}[];selected:WeatherHour;onInspect:(time:number)=>void}) {
-  const mobile=useIsMobile(),width=mobile?360:850,left=38,right=width-14,plot=right-left;
+  const {ref:chartRef,width}=useSvgWidth(850);
+  const left=42,right=width-14,plot=right-left;
   const id=`weather-${useId().replaceAll(':','')}`,start=hours[0].time,end=hours.at(-1)!.time+WEATHER_HOUR;
   const x=(ms:number)=>left+(ms-start)/(end-start)*plot,y=(percent:number)=>106-percent*.86;
   const moonUp=useMemo(()=>hours.map(hour=>{
@@ -142,12 +144,13 @@ function WeatherChart({hours,timezone,lat,lon,dark,selected,onInspect,models}:{m
         tickList.push({time:at,label:`${String(hour).padStart(2,'0')}:00${label!==localDate(start)?' +1d':''}`,key:`${label}-${hour}`});
       }
     }
-    return tickList;
-  },[start,end,timezone]);
+    const stride=Math.max(1,Math.ceil(tickList.length/Math.max(1,plot/85)));
+    return tickList.filter((tick,i)=>i%stride===0 && x(tick.time)<right-28);
+  },[start,end,timezone,width]);
   const choose=(px:number)=>{const ratio=Math.max(0,Math.min(.999999,px));onInspect(hours[Math.floor(ratio*hours.length)].time);};
   const hover=(e:React.PointerEvent<SVGSVGElement>)=>{const box=e.currentTarget.getBoundingClientRect();choose(((e.clientX-box.left)/box.width*width-left)/plot);};
   const selectedX=x(selected.time),labelX=Math.max(left+4,Math.min(right-4,selectedX)),labelAnchor=selectedX>right-125?'end':'start';
-  return <svg className="weather-chart" style={{width:'100%',maxWidth:'none',margin:'8px 0 0'}} viewBox={`0 0 ${width} 151`} role="slider" tabIndex={0} aria-label="Hourly observing weather. Filled area shows hourly cloud cover; the pale band spans ECMWF and GFS cloud forecasts. Darker bands show astronomical darkness and the lower strip shows when the Moon is above the horizon." aria-valuemin={0} aria-valuemax={hours.length-1} aria-valuenow={hours.indexOf(selected)} aria-valuetext={`${formatInTimeZone(selected.time,timezone,'MMM d, HH:mm xxx')}, selected time, cloud ${value(selected.cloud,'%')}, precipitation chance ${value(selected.rainChance,'%')}`} onPointerMove={hover} onPointerDown={e=>{e.currentTarget.focus({preventScroll:true});e.currentTarget.setPointerCapture(e.pointerId);hover(e);}} onKeyDown={e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();onInspect(hours[e.key==='Home'?0:e.key==='End'?hours.length-1:Math.max(0,Math.min(hours.length-1,hours.indexOf(selected)+(e.key==='ArrowLeft'?-1:1)))].time);}}>
+  return <svg ref={chartRef} className="weather-chart" style={{height:151,width:'100%',maxWidth:'none',margin:'8px 0 0'}} viewBox={`0 0 ${width} 151`} role="slider" tabIndex={0} aria-label="Hourly observing weather. Filled area shows hourly cloud cover; the pale band spans ECMWF and GFS cloud forecasts. Darker bands show astronomical darkness and the lower strip shows when the Moon is above the horizon." aria-valuemin={0} aria-valuemax={hours.length-1} aria-valuenow={hours.indexOf(selected)} aria-valuetext={`${formatInTimeZone(selected.time,timezone,'MMM d, HH:mm xxx')}, selected time, cloud ${value(selected.cloud,'%')}, precipitation chance ${value(selected.rainChance,'%')}`} onPointerMove={hover} onPointerDown={e=>{e.currentTarget.focus({preventScroll:true});e.currentTarget.setPointerCapture(e.pointerId);hover(e);}} onKeyDown={e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();onInspect(hours[e.key==='Home'?0:e.key==='End'?hours.length-1:Math.max(0,Math.min(hours.length-1,hours.indexOf(selected)+(e.key==='ArrowLeft'?-1:1)))].time);}}>
     <defs><clipPath id={id}><rect x={left} y="20" width={plot} height="86"/></clipPath></defs>
     <g clipPath={`url(#${id})`}>
       {dark.map(segment=><rect key={`dark-${+segment.start}`} x={x(+segment.start)} y="20" width={x(+segment.end)-x(+segment.start)} height="86" fill="#02080e" opacity=".78"/>)}
@@ -161,8 +164,8 @@ function WeatherChart({hours,timezone,lat,lon,dark,selected,onInspect,models}:{m
       {selected.rainChance!==null&&<circle cx={selectedX} cy={y(selected.rainChance)} r="3" fill="#e0bd78" stroke="#0b1a23" strokeWidth="1"/>}
     </g>
     {moonUp.map(hour=>hour.up?<rect key={`moon-${hour.time}`} x={x(hour.time)} y="108" width={Math.max(0,x(hour.time+WEATHER_HOUR)-x(hour.time))+.2} height="5" fill="#aeb4be" opacity=".78"/>:null)}
-    {[0,50,100].map(n=><text key={`axis-${n}`} x="29" y={y(n)+3} textAnchor="end" fill="#a8bac2" fontSize="10">{n}%</text>)}
-    {ticks.map(tick=><text key={tick.key} x={x(tick.time)} y="137" textAnchor={tick.time<=start+1?'start':tick.time>=end-1?'end':'middle'} fill="#afc0c6" fontSize="10">{tick.label}</text>)}
-    <text x={labelX+(labelAnchor==='end'?-5:5)} y="15" textAnchor={labelAnchor} fill="#f1e7c8" fontSize="11">Selected · {formatInTimeZone(selected.time,timezone,'HH:mm')}</text>
+    {[0,50,100].map(n=><text key={`axis-${n}`} x={left-8} y={y(n)+3} textAnchor="end" fill="#a8bac2" style={{fontSize:12}}>{n}%</text>)}
+    {ticks.map(tick=><text key={tick.key} x={x(tick.time)} y="137" textAnchor={tick.time<=start+1?'start':tick.time>=end-1?'end':'middle'} fill="#afc0c6" style={{fontSize:12}}>{tick.label}</text>)}
+    <text x={labelX+(labelAnchor==='end'?-5:5)} y="15" textAnchor={labelAnchor} fill="#f1e7c8" style={{fontSize:12}}>Selected · {formatInTimeZone(selected.time,timezone,'HH:mm')}</text>
   </svg>;
 }

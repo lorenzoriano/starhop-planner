@@ -26,6 +26,15 @@ describe("monthly binocular guide", () => {
       expect(pick.bestMonths.length).toBeGreaterThan(0);
     }
   });
+  it("gives the formerly templated open clusters distinct, restrained observing notes", () => {
+    const ids = ["NGC129", "Mark6", "Tr2", "Tr3", "NGC1342", "NGC1582", "NGC1893", "NGC2251", "NGC2343", "NGC2527", "NGC2539", "NGC2571", "NGC6709", "NGC6716", "NGC6823", "NGC6910", "NGC7160", "NGC7235"];
+    const entries = ids.map((id) => BINOCULAR_ENTRIES.find((entry) => entry.targetId === id)!);
+    expect(entries.every((entry) => entry.references.some((ref) => ref.title.includes("Astronomical League")))).toBe(true);
+    expect(new Set(entries.map((entry) => entry.impression)).size).toBe(ids.length);
+    expect(entries.every((entry) => !/invites a careful field comparison|Use the finder map in .* to match the marked position/i.test(`${entry.impression} ${entry.finding}`))).toBe(true);
+    expect(BINOCULAR_ENTRIES.find((entry) => entry.targetId === "NGC6910")!.finding).toContain("Sadr");
+    expect(BINOCULAR_ENTRIES.find((entry) => entry.targetId === "NGC7235")!.finding).toContain("Cepheus");
+  });
   it("bundles two credited, decoded survey cutouts at the actual coordinates of every guide target", () => {
     for (const pick of north(10)) {
       const media = binocularMedia(pick.targetId)!;

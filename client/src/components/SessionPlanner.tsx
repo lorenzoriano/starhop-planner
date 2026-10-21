@@ -1,3 +1,5 @@
+import {UpcomingNights} from "./UpcomingNights";
+import {sessionBinocularSuggestions} from "@/lib/session-suggestions";
 import {CoordinatePairInput} from "./CoordinatePairInput";
 import "./SessionPlanner.css";
 import { ObservingContextScope } from "./ObservingContext";
@@ -16,9 +18,9 @@ import { Textarea } from "./ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog";
 import { CatalogCombobox } from "./CatalogCombobox";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { binocularAssessment, KITE_14X50, type BinocularProfile } from "@/lib/binocular-assessment";
+import { KITE_14X50, type BinocularProfile } from "@/lib/binocular-assessment";
 import { makeSession, planningShortcut, eveningOn, sessionTimezone, suggestSequence, type ObservingSession, type SequenceStep } from "@/lib/session-planner";
-import { sessionDraft, resolveSessionDraft, reuseNightItems, duplicateNightItems, observingNightDate, sameObservingNight, type SessionDraft } from "@/lib/session-draft";
+import { sessionDraft, resolveSessionDraft, reuseNightItems, duplicateNightItems, observingNightDate, sameObservingNight, derivedNightName, isDerivedNightName, sessionDraftAt, type SessionDraft } from "@/lib/session-draft";
 import { eqToHorizontal, type UnifiedTarget } from "@/lib/astronomy";
 import { lunarFeatures, lunarFrame, projectLunarFeature, moonState } from "@/lib/moon";
 import { compassLabel } from "@/lib/observing";
@@ -29,20 +31,14 @@ interface Props {
   savedLocations:SavedLocation[]; onLocationsChange:(locations:SavedLocation[])=>void;
   sessions:ObservingSession[]; active:ObservingSession|undefined; targets:UnifiedTarget[];
   date:Date; lat:number; lon:number; timezone:string; items:NightItem[]; skyBrightness:number; live:boolean;
-  profile?:BinocularProfile;
+  profile?:BinocularProfile; selectedTarget?:UnifiedTarget;
   actions:ReactNode;
   onCompare:(ids:string[],at:Date,lat:number,lon:number)=>void;
   onCreate:(s:ObservingSession)=>void; onUpdate:(s:ObservingSession)=>void; onSelect:(id:string|null)=>void;
   onPreview:(at:Date,lat:number,lon:number,stay?:boolean)=>void; onVisit:(id:string,at:Date)=>void;
   onAdd:(id:string)=>void; onObserved:(id:string)=>void; onNotes:(id:string,notes:string)=>void;
 }
-export function derivedNightName(day:string, zone:string) {
-  const noon=resolveLocalMoment(day,"12:00",zone);
-  return `${formatInTimeZone(noon??new Date(`${day}T12:00:00`),zone,"MMM d")} observing night`;
-}
-export function isDerivedNightName(name:string, day:string, zone:string) {
-  return name===derivedNightName(day,zone);
-}
+export {derivedNightName,isDerivedNightName} from "@/lib/session-draft";
 
 export function detailedUnavailableReason(step:SequenceStep, session:ObservingSession, target:UnifiedTarget|undefined, zone:string) {
   const start=new Date(session.startAt),end=new Date(+start+session.durationMinutes*60_000),lunar=step.id.startsWith("moon:"),minimum=lunar?5:15;
@@ -95,7 +91,7 @@ function SessionTimeline({ session, items, steps, targets, zone, darkSegments, m
     <div className="planner-timeline-legend"><span className="planner-legend-dark">Astronomical darkness</span><span className="planner-legend-moon">Moon above horizon</span><span className="planner-legend-slot">Scheduled slot</span>{items.map((item,index)=><span className="planner-legend-target" key={item.id}><i style={{background:["#53e352","#ff59ce","#ff792f","#459bff","#ff4b67","#00c9b7","#ac77ff","#ead328"][index%8]}}/>{index+1}. {targetsById.get(item.id)?.displayName??lunarFeatures.find(feature=>`moon:${feature.id}`===item.id)?.name??item.id}</span>)}</div>
   </section>;
 }
-export function SessionPlanner({savedLocations,onLocationsChange,sessions,active,targets,date,lat,lon,timezone,items,skyBrightness,profile=KITE_14X50,live,actions,onCompare,onCreate,onUpdate,onSelect,onPreview,onVisit,onAdd,onObserved,onNotes}:Props) {
+export function SessionPlanner({savedLocations,onLocationsChange,sessions,active,targets,date,lat,lon,timezone,items,skyBrightness,profile=KITE_14X50,selectedTarget,live,actions,onCompare,onCreate,onUpdate,onSelect,onPreview,onVisit,onAdd,onObserved,onNotes}:Props) {
   const defaultNight = () => {
     const at=live?planningShortcut("tonight",lat,lon).date:date;
     return makeSession(derivedNightName(observingNightDate(at,timezone),timezone),at,lat,lon,[],matchingLocation(savedLocations,lat,lon)?.name??"");
@@ -119,7 +115,7 @@ export function SessionPlanner({savedLocations,onLocationsChange,sessions,active
   useEffect(()=>()=>{if(archiveTimer.current)clearTimeout(archiveTimer.current);},[]);
   const resolved=useMemo(()=>resolveSessionDraft(draft,isNew?undefined:active),[draft,isNew,active?.startAt]);
   const visibleItems=useMemo(()=>isNew?(copy?reuseNightItems(items,!active):[]):items,[isNew,copy,items,active?.id]);
-  const preview=useMemo<ObservingSession|undefined>(()=>!isNew?active:resolved.ok?{...resolved.value,id:"draft",items:visibleItems,createdAt:date.toISOString(),archived:false}:undefined,[isNew,active,resolved,visibleItems]);
+  const preview=useMemo<ObservingSession|undefined>(()=>resolved.ok?{...(active??{id:"draft",createdAt:date.toISOString(),archived:false}),...resolved.value,items:visibleItems}:undefined,[active,resolved,visibleItems]);
   // Notes don't change scheduling. Avoid repeating the astronomical search on
   // every keystroke in an expanded field-note editor.
   const scheduleKey=preview?JSON.stringify([preview.startAt,preview.lat,preview.lon,preview.durationMinutes,preview.minutesPerTarget,preview.items.map(i=>[i.id,i.observedAt])]):"";
@@ -140,13 +136,8 @@ export function SessionPlanner({savedLocations,onLocationsChange,sessions,active
   const savedIds=new Set(visibleItems.map(item=>item.id));
   const dirty=!isNew&&active&&JSON.stringify(draft)!==JSON.stringify(sessionDraft(active));
   const selectNight=(id:string)=>{const selected=sessions.find(session=>session.id===id);if(!selected)return;onSelect(id);setDraft(sessionDraft(selected));setMonth(new Date(`${formatInTimeZone(new Date(selected.startAt),sessionTimezone(selected),"yyyy-MM-dd")}T12:00:00`));setIsNew(false);setQuery("");setError("");setStatus("");if(siteDetails.current)siteDetails.current.open=false;};
-  const suggestions=useMemo(()=>preview&&visibleItems.length===0?targets.filter(target=>!target.id.startsWith("star:")&&target.mag<=9&&!visibleItems.some(item=>item.id===target.id))
-    .map(target=>{
-      const start=new Date(preview.startAt),end=new Date(+start+preview.durationMinutes*60_000),samples:Array<{at:Date;alt:number;fit:number;curated:number;dark:boolean}> = [];
-      for(let ms=+start;ms<=+end;ms+=15*60_000){const at=new Date(ms),alt=eqToHorizontal(target.ra,target.dec,preview.lat,preview.lon,at).alt;if(alt<15)continue;const moon=forecastMoon(at),assessment=binocularAssessment(target,profile,{alt,moon,skyBrightness}),level=assessment.entry?.level,curated=level==="easy"?0:level==="dark"||level==="steady"?1:level==="challenge"?2:3;samples.push({at,alt,fit:assessment.rating,curated,dark:moon.sunAlt<=-18});}
-      samples.sort((a,b)=>a.fit-b.fit||a.curated-b.curated||Number(b.dark)-Number(a.dark)||b.alt-a.alt);
-      const best=samples[0];return best?{target,alt:best.alt,fit:best.fit,curated:best.curated,dark:best.dark,at:best.at}:null;
-    }).filter((pick):pick is NonNullable<typeof pick>=>!!pick).sort((a,b)=>a.fit-b.fit||a.curated-b.curated||Number(b.dark)-Number(a.dark)||b.alt-a.alt||a.target.mag-b.target.mag).slice(0,5):[],[targets,preview?.startAt,preview?.durationMinutes,preview?.lat,preview?.lon,visibleItems,skyBrightness,profile]);
+  const suggestions=useMemo(()=>preview&&visibleItems.length===0?sessionBinocularSuggestions(preview,targets,profile,skyBrightness,forecastMoon):[],[targets,preview?.startAt,preview?.durationMinutes,preview?.lat,preview?.lon,visibleItems,skyBrightness,profile,forecastMoon]);
+  const [allSuggestions,setAllSuggestions]=useState(false);
   const patch=(value:Partial<SessionDraft>)=>{setDraft(previous=>({...previous,...value}));setError("");setStatus("");};
   const openNew=(at?:Date)=>{
     if(siteDetails.current)siteDetails.current.open=false;
@@ -179,10 +170,9 @@ export function SessionPlanner({savedLocations,onLocationsChange,sessions,active
     setStatus(`Added ${picks.length} binocular suggestions.`);
   };
   const changeDateTime=(day:string,time:string)=>{
-    const previousAt=resolveLocalMoment(draft.date,draft.time,formZone),nextAt=resolveLocalMoment(day,time,formZone);
-    const keepDerived=isDerivedNightName(draft.name,draft.date,formZone)||!!previousAt&&isDerivedNightName(draft.name,observingNightDate(previousAt,formZone),formZone);
+    const nextAt=resolveLocalMoment(day,time,formZone);
     setMonth(new Date(`${day}T12:00:00`));
-    patch({date:day,time,...(keepDerived?{name:derivedNightName(nextAt?observingNightDate(nextAt,formZone):day,formZone)}:{})});
+    patch(nextAt?sessionDraftAt(draft,nextAt,formZone):{date:day,time});
   };
   const archive=(session:ObservingSession)=>{
     onUpdate({...session,archived:true});onSelect(null);setArchiveUndo(session);setMenuOpen(false);setStatus("");
@@ -222,7 +212,7 @@ export function SessionPlanner({savedLocations,onLocationsChange,sessions,active
     const updated={...active,...result.value,items};onUpdate(updated);setDraft(sessionDraft(updated));setError("");setStatus(`Session extended to include ${formatInTimeZone(at,formZone,"HH:mm")}.`);
   };
   const moveSessionStart=(at:Date)=>{
-    const nextDraft={...draft,date:formatInTimeZone(at,formZone,"yyyy-MM-dd"),time:formatInTimeZone(at,formZone,"HH:mm")};
+    const nextDraft=sessionDraftAt(draft,at,formZone);
     if(isNew||!active){setDraft(nextDraft);setError("");setStatus(`Preview moved to ${formatInTimeZone(at,formZone,"MMM d · HH:mm")}. Create the night to save it.`);return;}
     const result=resolveSessionDraft(nextDraft,active);if(!result.ok){setError(result.error);return;}
     const updated={...active,...result.value,items};onUpdate(updated);setDraft(sessionDraft(updated));setError("");setStatus(`Session moved to ${formatInTimeZone(at,formZone,"MMM d · HH:mm")} to fit this target.`);
@@ -275,6 +265,7 @@ export function SessionPlanner({savedLocations,onLocationsChange,sessions,active
   </li>;
 
   return <ObservingContextScope date={resolved.ok?new Date(resolved.value.startAt):date} timezone={formZone} lat={resolved.ok?resolved.value.lat:lat} lon={resolved.ok?resolved.value.lon:lon} locationName={draft.place||"Session site"} onTime={at=>changeDateTime(formatInTimeZone(at,formZone,"yyyy-MM-dd"),formatInTimeZone(at,formZone,"HH:mm"))} onLocation={(a,b,name)=>patch({lat:String(a),lon:String(b),place:name})}><div className="session-planner planner-workbench" data-testid="session-planner">
+    <details open className="panel upcoming-nights-disclosure"><summary>Compare upcoming nights · Moon-free darkness</summary><UpcomingNights lat={forecastLat} lon={forecastLon} timezone={formZone} date={resolved.ok?new Date(resolved.value.startAt):date} selected={selectedTarget} targets={targets.filter(target=>visibleItems.some(item=>item.id===target.id))} onDate={at=>{changeDateTime(formatInTimeZone(at,formZone,"yyyy-MM-dd"),formatInTimeZone(at,formZone,"HH:mm"));onPreview(at,forecastLat,forecastLon,true);}}/></details>
     <section className="panel planner-command" aria-label="Plan your observing night">
       {archiveUndo&&<div className="planner-archive-undo" role="status"><span>Archived “{archiveUndo.name}”.</span><button type="button" className="text-action" onClick={undoArchive}><Undo2 size={13}/> Undo</button></div>}
       <div className="planner-night-switch"><label>Observing night<select aria-label="Observing session" value={isNew?"new":active?.id??"new"} onChange={event=>{if(event.target.value==="new")openNew();else{selectNight(event.target.value);}}}><option value="new">New observing night</option>{present.map(session=><option key={session.id} value={session.id}>{session.name} · {formatInTimeZone(new Date(session.startAt),sessionTimezone(session),"HH:mm")}</option>)}</select></label><button className="text-action" aria-label="Calendar and saved nights" onClick={()=>{setMonth(new Date(`${calendarDate}T12:00:00`));setCalendarOpen(true);}}><CalendarDays size={15}/><span>Calendar</span></button><button className="text-action" aria-label="New night" onClick={()=>openNew()}><Plus size={15}/><span>New night</span></button><Popover open={menuOpen} onOpenChange={setMenuOpen}><PopoverTrigger asChild><button type="button" className="text-action planner-workspace-menu" aria-label="Export and session actions"><Download size={15}/><span>Export & more</span></button></PopoverTrigger><PopoverContent align="end" className="grid w-72 gap-2 rounded-md border border-[#42645e] bg-[#10232e] p-3 text-[#d1e0d6] shadow-xl">{(!isNew||!active)?actions:<p>Create this night before exporting it.</p>}{active&&!isNew&&<><button className="text-action" onClick={duplicateActive}><Copy size={12}/> Duplicate night</button><button className="text-action" onClick={()=>{setMenuOpen(false);onPreview(new Date(active.startAt),active.lat,active.lon);}}>View this night’s sky <ArrowUpRight size={12}/></button><button className="text-action" onClick={()=>archive(active)}><Archive size={12}/> Archive night</button></>}</PopoverContent></Popover></div>
@@ -292,7 +283,7 @@ export function SessionPlanner({savedLocations,onLocationsChange,sessions,active
 
     <section className="panel planner-target-board" aria-label="Targets and viewing sequence">
       <CatalogCombobox targets={targets} query={query} onQuery={setQuery} onSelect={add} savedIds={savedIds} label="Add targets" placeholder="Search M31, a star, cluster, double star…" className="planner-target-search"/>
-      {!query.trim()&&suggestions.length>0&&visibleItems.length===0&&<div className="planner-suggestions"><span>Binocular picks across your {isNew?"chosen":"saved"} session</span><div>{suggestions.map(({target,alt,fit,dark,at})=><button type="button" key={target.id} aria-label={`Add ${target.displayName} to session`} onClick={()=>add(target)}><strong>{target.name}</strong><small>{fit===0?"Excellent fit":fit===1?"Worthwhile":fit===2?"Challenging":"Telescope more rewarding"} · {Math.round(alt)}° at {formatInTimeZone(at,zone,"HH:mm")} · {dark?"dark":"twilight"} <Plus size={12}/></small></button>)}</div><Button type="button" variant="outline" onClick={addTopFive}>Add top 5 for binoculars</Button></div>}
+      {!query.trim()&&suggestions.length>0&&visibleItems.length===0&&<div className="planner-suggestions"><span>Binocular picks across your {isNew||dirty?"chosen":"saved"} session · ranked by optical fit, useful apparent size and brightness</span><div>{(allSuggestions?suggestions:suggestions.slice(0,8)).map(({target,alt,fit,dark,at})=><button type="button" key={target.id} aria-label={`Add ${target.displayName} to session`} onClick={()=>add(target)}><strong>{target.name}</strong><small>{fit===0?"Excellent fit":fit===1?"Worthwhile":fit===2?"Challenging":"Telescope more rewarding"} · {Math.round(alt)}° at {formatInTimeZone(at,zone,"HH:mm")} · {dark?"dark":"twilight"} <Plus size={12}/></small></button>)}</div>{suggestions.length>8&&<button type="button" className="text-action" onClick={()=>setAllSuggestions(value=>!value)}>{allSuggestions?"Show top 8":`Show all ${suggestions.length} binocular suggestions`}</button>}<Button type="button" variant="outline" onClick={addTopFive}>Add top 5 for binoculars</Button></div>}
       <p className="planner-add-status" role="status">{status||"Search and press Enter to add the highlighted match."}</p>
       <div className="planner-sequence-heading"><h3>Your viewing order</h3><span>{scheduled.length} scheduled · {completed.length} observed{preview?` · ${preview.minutesPerTarget} min each`:""}</span></div>
       {!visibleItems.length&&<p className="planner-empty-copy">Add a target above. StarHop will suggest an order that gives setting objects a chance before they get too low.</p>}

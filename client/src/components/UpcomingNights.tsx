@@ -1,9 +1,9 @@
 import {useWeather} from "@/hooks/use-weather";
-import {observingWeather,meanWeather,forecastAge} from "@/lib/weather";
+import {nightWeather,rankWeatherNights} from "@/lib/night-weather";
 import { useMemo } from "react";
 import { formatInTimeZone } from "date-fns-tz";
 import type { UnifiedTarget } from "@/lib/astronomy";
-import { bestUpcomingNights, upcomingNightDateLabel, upcomingNights, type UpcomingNight } from "@/lib/upcoming-nights";
+import { upcomingNightDateLabel, upcomingNights, type UpcomingNight } from "@/lib/upcoming-nights";
 import { clockNightDate } from "@/lib/astronomical-clock";
 import "./ObservingCalendar.css";
 
@@ -24,9 +24,15 @@ export interface UpcomingNightsProps {
 
 export function UpcomingNights({ lat, lon, timezone, date, onDate, targets = [], selected = null }: UpcomingNightsProps) {
   const weather=useWeather(lat,lon);
-  const weatherLabel=(night:UpcomingNight)=>{if(!weather.forecast)return "Weather unknown";const report=observingWeather(weather.forecast,night.start,timezone);if(!report.darkCovered)return "Weather not yet available for all dark hours";const covered=report.night.ok?report.hours.filter(hour=>report.night.ok&&report.night.segments.some(segment=>hour.time<+segment.end&&hour.time+3600000>+segment.start)):[];const cloud=meanWeather(covered,"cloud");return cloud===null?"Cloud forecast unavailable":`${Math.round(cloud)}% cloud · dark-hour average${weather.online?"":" · offline cache"}${forecastAge(weather.forecast,weather.now)==="fresh"?"":` · ${forecastAge(weather.forecast,weather.now)} forecast`}`;};
-  const nights = useMemo(() => upcomingNights({ lat, lon, timezone, date, days: 7, targets, selected }), [lat, lon, timezone, +date, targets, selected]);
-  const best = useMemo(() => bestUpcomingNights({ lat, lon, timezone, date, targets, selected }), [lat, lon, timezone, +date, targets, selected]);
+  const nightKey=clockNightDate(date,timezone);
+  const targetKey=targets.map(target=>`${target.id}:${target.ra}:${target.dec}`).join("|");
+  const allNights=useMemo(()=>upcomingNights({lat,lon,timezone,date,days:30,targets,selected}),[lat,lon,timezone,nightKey,targetKey,selected?.id,selected?.ra,selected?.dec]);
+  const nights=allNights.slice(0,7);
+  const reports=useMemo(()=>new Map(allNights.map(night=>[night.date,nightWeather(night,weather.forecast,weather)])),[allNights,weather.forecast,weather.now,weather.online,weather.loading,weather.error]);
+  const eligible=allNights.filter(night=>night.moonFreeDarkHours>0&&(!selected||(night.selectedTarget?.goodAltitudeHours??0)>0));
+  const best=rankWeatherNights(eligible,reports).slice(0,3);
+  const hasWeather=eligible.some(night=>reports.get(night.date)?.available);
+  const weatherLabel=(night:UpcomingNight)=>{const report=reports.get(night.date)!;return `${report.label} · ${report.reason}`;};
   const selectedDate = clockNightDate(date, timezone);
   const choose = (night: UpcomingNight) => onDate(night.chooseAt);
 
@@ -52,8 +58,10 @@ export function UpcomingNights({ lat, lon, timezone, date, onDate, targets = [],
         <span>{index + 1}. {upcomingNightDateLabel(night, timezone)}</span>
         <span>{glyph(night.moonPhase)} {Math.round(night.moonIllumination * 100)}% Moon · {duration(night.moonFreeDarkHours)} moon-free</span>
         {night.selectedTarget && <span>{duration(night.selectedTarget.goodAltitudeHours)} target above 30°{night.selectedTarget.bestAt ? ` · best ${clock(night.selectedTarget.bestAt, timezone)}` : ""}</span>}
+        <small>{weatherLabel(night)}</small>
       </button>)}</div> : <span className="upcoming-best-empty">No target-friendly moon-free night found in the next 30 nights.</span>}
-      <small>Ranked by Moon-free darkness and target altitude; weather is not included.</small>
+      <small>{hasWeather?'Forecast-covered nights first, combining weather (65%) with Moon-free darkness and target altitude (35%). Nights without a usable forecast are ranked by geometry only.':'Ranked by Moon-free darkness and target altitude. Weather is unavailable for these choices; the reason is shown on each night.'} Weather score is a planning estimate from cloud, wind and precipitation, not a visibility probability.</small>
+      {weather.forecast&&<small>Open-Meteo · forecast retrieved {formatInTimeZone(weather.forecast.fetchedAt,timezone,'MMM d, HH:mm')}{weather.online?'':' · offline cache'}</small>}
     </div>
   </section>;
 }

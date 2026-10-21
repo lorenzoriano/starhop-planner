@@ -10,7 +10,7 @@ import { milkyWayPaths as projectMilkyWay } from '@/lib/sky-polygons';
 import { angularRing, RETICLE_DIAMETERS, type FinderReticle } from '@/lib/finder-view';
 import { boxesOverlap,labelFits,type LabelBox } from '@/lib/chart-labels';
 import { useChartPreferences } from './ChartPreferences';
-import { useMemo, useRef, useState, useCallback, useEffect, useLayoutEffect, useId, type ReactNode } from 'react';
+import { memo, useMemo, useRef, useState, useCallback, useEffect, useLayoutEffect, useId, type ReactNode } from 'react';
 import {
   angularDistance,
   getConstellationName,
@@ -59,16 +59,16 @@ function isBatchedStar(item:{star:SkyNode;isAnchor:boolean;isTarget:boolean;isPa
   return item.star.type==='star'&&item.star.mag>3&&!item.isAnchor&&!item.isTarget&&!item.isPatternAnchor&&!item.isGuide;
 }
 /** Share geometry for faint catalog stars; no thousands of hidden buttons or title nodes. */
-function BatchedStarLayer({points,bounds}:{points:Array<{x:number;y:number;r:number;color:string;opacity:number}>;bounds:{left:number;top:number;right:number;bottom:number}}) {
+const BatchedStarLayer=memo(function BatchedStarLayer({points}:{points:Array<{x:number;y:number;r:number;color:string;opacity:number}>}) {
   const groups=new Map<string,{color:string;opacity:number;d:string}>();
   for(const point of points){
-    if(point.x+point.r<bounds.left||point.x-point.r>bounds.right||point.y+point.r<bounds.top||point.y-point.r>bounds.bottom)continue;
-    const opacity=Math.round(point.opacity*5)/5,key=`${point.color}/${opacity}`,group=groups.get(key)??{color:point.color,opacity,d:''};
-    const {x,y,r}=point;group.d+=`M${x-r},${y}a${r},${r} 0 1 0 ${2*r},0a${r},${r} 0 1 0 ${-2*r},0`;
+    const color=point.color.startsWith('rgb(')?point.color.replace(/\d+/g,value=>String(Math.min(255,Math.round(Number(value)/32)*32))):point.color;
+    const opacity=Math.round(point.opacity*5)/5,key=`${color}/${opacity}`,group=groups.get(key)??{color,opacity,d:''};
+    const x=+point.x.toFixed(2),y=+point.y.toFixed(2),r=+point.r.toFixed(4);group.d+=`M${x-r},${y}a${r},${r} 0 1 0 ${2*r},0a${r},${r} 0 1 0 ${-2*r},0`;
     groups.set(key,group);
   }
   return <g aria-hidden="true" pointerEvents="none" data-batched-stars={points.length}>{Array.from(groups,([key,group])=><path key={key} fill={group.color} opacity={group.opacity} d={group.d}/>)}</g>;
-}
+});
 
 export function SkyChart({
   nodes,
@@ -125,6 +125,7 @@ export function SkyChart({
 
   // Drag state (pointer-based for both mouse and touch)
   const isDragging = useRef(false);
+  const [dragVersion,setDragVersion]=useState(0);
   const didDrag = useRef(false);
   const dragStart = useRef({ x: 0, y: 0 });
   const panStart = useRef({ x: 0, y: 0 });
@@ -241,6 +242,13 @@ export function SkyChart({
     (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
   }, [panX, panY]);
 
+  const queuedPan=useRef<{x:number;y:number}|null>(null),panFrame=useRef<number|null>(null);
+  useEffect(()=>()=>{if(panFrame.current!==null)cancelAnimationFrame(panFrame.current);},[]);
+  const queuePan=useCallback((value:{x:number;y:number})=>{
+    queuedPan.current=value;
+    if(panFrame.current!==null)return;
+    panFrame.current=requestAnimationFrame(()=>{panFrame.current=null;const next=queuedPan.current;if(next){setPanX(next.x);setPanY(next.y);}});
+  },[]);
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (e.pointerType === 'touch') return; // handled by touch events
     if (!isDragging.current) return;
@@ -254,12 +262,12 @@ export function SkyChart({
     const dy = (e.clientY - dragStart.current.y) * scaleRatio;
     if (Math.hypot(dx, dy) > 2) didDrag.current = true;
     const clamped = clampPan(panStart.current.x + dx, panStart.current.y + dy, zoom);
-    setPanX(clamped.x);
-    setPanY(clamped.y);
-  }, [zoom, clampPan,zoomLimit]);
+    queuePan(clamped);
+  }, [zoom, clampPan,zoomLimit,queuePan]);
 
   const handlePointerUp = useCallback(() => {
     isDragging.current = false;
+    setDragVersion(value=>value+1);
   }, []);
 
   // ───── Touch pan & pinch-to-zoom ─────
@@ -297,8 +305,7 @@ export function SkyChart({
       const dy = (e.touches[0].clientY - dragStart.current.y) * scaleRatio;
       if (Math.hypot(dx, dy) > 2) didDrag.current = true;
       const clamped = clampPan(panStart.current.x + dx, panStart.current.y + dy, zoom);
-      setPanX(clamped.x);
-      setPanY(clamped.y);
+      queuePan(clamped);
     } else if (e.touches.length === 2 && lastPinchDist.current !== null) {
       const t1 = e.touches[0];
       const t2 = e.touches[1];
@@ -327,6 +334,7 @@ export function SkyChart({
     }
     if (e.touches.length === 0) {
       isDragging.current = false;
+      setDragVersion(value=>value+1);
     } else if (e.touches.length === 1) {
       // Switch from pinch to single-finger pan
       isDragging.current = true;
@@ -618,7 +626,11 @@ export function SkyChart({
     return '';  // skip labels for HR-only stars
   };
 
+  type PlacedSkyLabel={star:SkyNode;x:number;y:number;anchor:'start'|'end'|'middle';width:number;isAnchor:boolean;isTarget:boolean;isPatternAnchor:boolean;box:LabelBox;leader:{x:number;y:number}|null};
+  const labelCache=useRef<PlacedSkyLabel[]>([]);
+  const constellationCache=useRef<typeof constellationLabels>([]);
   const labels = useMemo(() => {
+    if(isDragging.current)return labelCache.current;
     if (labelSize === 0) return [];
     const candidates = plottedStars
       .filter(({ star, isAnchor, isTarget, isPatternAnchor, isGuide }) => {
@@ -626,7 +638,7 @@ export function SkyChart({
         if(overview&&isDeepSky(star.category))return true;
         if (isGuide && !!star.name) return true;
         // Bright named stars always get labels
-        if (star.mag < 1.1) return true;
+        if (star.type==='star' && star.mag <= 2.5 && !!star.name && !star.name.startsWith('HR')) return true;
         // Named stars in the active constellation up to mag 3.5
         if (star.name && star.constellation && activeConstellationIds.has(star.constellation) && star.mag < 3.5) return true;
         // Named stars near the focus point up to mag 2.8
@@ -640,7 +652,7 @@ export function SkyChart({
         // Proximity to focus point boosts score for tie-breaking
         const focusBonusA = focusPoint ? Math.max(0, 15 - angularDistance(a.star.ra, a.star.dec, focusPoint.ra, focusPoint.dec)) : 0;
         const focusBonusB = focusPoint ? Math.max(0, 15 - angularDistance(b.star.ra, b.star.dec, focusPoint.ra, focusPoint.dec)) : 0;
-        const catalogPriority=(star:SkyNode)=>overview&&isDeepSky(star.category)?skyObjectKind(star.category)==='field'?8:40:0;
+        const catalogPriority=(star:SkyNode)=>overview?(star.type==='star'&&star.mag<=2.5?65:isDeepSky(star.category)?skyObjectKind(star.category)==='field'?8:25:0):0;
         const scoreA = (a.isTarget ? 100 : 0) + (a.isAnchor ? 70 : 0) + (a.isPatternAnchor ? 45 : 0) + (a.isGuide ? 20 : 0) + catalogPriority(a.star) - a.star.mag * 4 + focusBonusA;
         const scoreB = (b.isTarget ? 100 : 0) + (b.isAnchor ? 70 : 0) + (b.isPatternAnchor ? 45 : 0) + (b.isGuide ? 20 : 0) + catalogPriority(b.star) - b.star.mag * 4 + focusBonusB;
         return scoreB - scoreA;
@@ -683,7 +695,7 @@ export function SkyChart({
       const options=candidate.isTarget||candidate.isAnchor
         ? [...placements,{dx:0,dy:-16,anchor:'middle' as const},{dx:0,dy:22,anchor:'middle' as const}]
         : placements;
-      const inward=overview&&(candidate.isTarget||candidate.isAnchor)?[0,12,24,48,72]:[0];
+      const inward=overview&&(candidate.isTarget||candidate.isAnchor||candidate.star.type==='star'&&candidate.star.mag<=2.5)?[0,12,24,48,72]:[0];
       let placed=false;
       for(const nudge of inward){
        const length=Math.hypot(cx-candidate.point.x,cy-candidate.point.y)||1;
@@ -716,13 +728,15 @@ export function SkyChart({
        }
        if(placed)break;
       }
-      if (accepted.length >= (overview&&viewportPixels<430?14:26)) break;
+      if (accepted.length >= (overview?(viewportPixels<430?22:48):26)) break;
     }
 
+    labelCache.current=accepted;
     return accepted;
-  }, [plottedStars, activeConstellationIds, focusPoint, localRadius, labelSize, labelUnits, screenUnit, viewBoxX, viewBoxY, viewBoxWidth, viewBoxHeight, overview, viewportPixels, zoom]);
+  }, [dragVersion,plottedStars, activeConstellationIds, focusPoint, localRadius, labelSize, labelUnits, screenUnit, viewBoxX, viewBoxY, viewBoxWidth, viewBoxHeight, overview, viewportPixels, zoom]);
 
   const placedConstellationLabels=useMemo(()=>{
+    if(isDragging.current)return constellationCache.current;
     const occupied=[...reservedLabels,...labels.map(label=>label.box)];
     const accepted:typeof constellationLabels=[];
     const font=Math.max(12,labelSize*.85)*screenUnit;
@@ -744,8 +758,9 @@ export function SkyChart({
       }
       if(overview&&accepted.length>=(viewportPixels<430?12:22))break;
     }
+    constellationCache.current=accepted;
     return accepted;
-  },[constellationLabels,labels,labelSize,screenUnit,viewBoxX,viewBoxY,viewBoxWidth,viewBoxHeight,viewportPixels,showLegend,starsOnly]);
+  },[dragVersion,constellationLabels,labels,labelSize,screenUnit,viewBoxX,viewBoxY,viewBoxWidth,viewBoxHeight,viewportPixels,showLegend,starsOnly]);
 
   const fovCenter = currentHop ? project(currentHop.center.ra, currentHop.center.dec) : targetNode ? project(targetNode.ra, targetNode.dec) : null;
   const finderRings = useMemo<Array<{ id: string; diameter?: number; d: string }>>(() => {
@@ -855,6 +870,10 @@ export function SkyChart({
       ));
   }, [route, animStep, renderPatternShape]);
 
+  // Geometry and catalog-derived colors are stable while panning. Reuse the
+  // paths and let the SVG viewport clip them instead of rebuilding every star.
+  const backgroundPoints=useMemo(()=>backgroundStarLayer.map(star=>({x:star.x,y:star.y,r:Math.max(.55,bgStarSize(star.mag)*brightMul*backgroundPointScale)*screenUnit,color:stellarColor(undefined,star.bv),opacity:Math.min(.97,bgStarOpacity(star.mag)*brightMul)})),[backgroundStarLayer,brightMul,backgroundPointScale,screenUnit]);
+  const catalogPoints=useMemo(()=>plottedStars.filter(item=>isBatchedStar(item)).map(({star,point})=>({x:point.x,y:point.y,r:Math.max(.65,stellarRadius(star.mag)*Math.min(1.8,brightMul)*catalogPointScale)*screenUnit,color:stellarColor(star.temperature,star.bv),opacity:Math.min(.95,.6*brightMul)})),[plottedStars,brightMul,catalogPointScale,screenUnit]);
   return (
     <div
       ref={containerRef}
@@ -1001,8 +1020,8 @@ export function SkyChart({
         ))}
 
         {/* Dense background star field from Hipparcos catalog */}
-        <BatchedStarLayer points={backgroundStarLayer.map(star=>({x:star.x,y:star.y,r:Math.max(.55,bgStarSize(star.mag)*brightMul*backgroundPointScale)*screenUnit,color:stellarColor(undefined,star.bv),opacity:Math.min(.97,bgStarOpacity(star.mag)*brightMul)}))} bounds={{left:viewBoxX,top:viewBoxY,right:viewBoxX+viewBoxWidth,bottom:viewBoxY+viewBoxHeight}} />
-        <BatchedStarLayer points={plottedStars.filter(item=>isBatchedStar(item)).map(({star,point})=>({x:point.x,y:point.y,r:Math.max(.65,stellarRadius(star.mag)*Math.min(1.8,brightMul)*catalogPointScale)*screenUnit,color:stellarColor(star.temperature,star.bv),opacity:Math.min(.95,.6*brightMul)}))} bounds={{left:viewBoxX,top:viewBoxY,right:viewBoxX+viewBoxWidth,bottom:viewBoxY+viewBoxHeight}} />
+        <BatchedStarLayer points={backgroundPoints} />
+        <BatchedStarLayer points={catalogPoints} />
 
         {!starsOnly && routePath && <path d={routePath} stroke="#ad8f58" vectorEffect="non-scaling-stroke" strokeWidth="1.2" fill="none" opacity="0.26" strokeDasharray="5 4" />}
         {!starsOnly && routeProgressPath && <path d={routeProgressPath} stroke="#e4ba72" vectorEffect="non-scaling-stroke" strokeWidth="1.8" fill="none" opacity="0.88" />}

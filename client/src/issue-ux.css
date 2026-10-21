@@ -53,11 +53,11 @@
 .lunar-separation-panel .legend-shading.moon-glare { background: var(--chart-moon-glare); }
 .night-altitude-chart .moon-separation-line {
   stroke: var(--chart-silver);
-  stroke-dasharray: 8 4;
+  stroke-dasharray: 4 5;
 }
 .night-altitude-chart .night-moon-shading { fill: #aeb4be; }
 .night-altitude-chart .context-sun-altitude { stroke-dasharray: 1 3; }
-.night-altitude-chart .context-moon-altitude { stroke: #929ba8; stroke-dasharray: 8 4; }
+.night-altitude-chart .context-moon-altitude { stroke: #929ba8; stroke-dasharray: 10 3 2 3; }
 
 /* Avoid planner and comparison grids forcing the whole viewport wider. */
 .main-content,
@@ -489,3 +489,19 @@
 .night-chart-time-axis > div:last-child { text-align:right; }
 .night-chart-time-axis span,.night-chart-time-axis time { display:block; }
 .night-chart-time-axis span { color:#829ea8; }
+
+/* Reserve header columns instead of letting navigation slide under actions. */
+@media(min-width:1101px){
+ .app-header{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;padding-inline:24px}
+ .main-nav{justify-content:center;gap:2px;mask-image:none;-webkit-mask-image:none}
+ .main-nav>a{padding-inline:9px;gap:6px}
+ .brand-subtitle{display:none}
+ .header-actions{gap:8px}
+}
+.night-altitude-heading .context-moon-key::before{width:23px;border:0;height:2px;background:linear-gradient(90deg,currentColor 0 55%,transparent 55% 70%,currentColor 70% 80%,transparent 80%)}
+.hop-page-heading{margin-bottom:10px}
+.hop-page-heading h1{font-size:28px!important}
+.hop-page-heading p:not(.eyebrow){display:none}
+.hop-target-bar{margin-bottom:10px}
+.hop-preflight{margin-block:8px}
+.lunar-new-moon-action button{font-size:12px!important}

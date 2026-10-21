@@ -1,11 +1,9 @@
-import { useMemo } from "react";
-import { formatInTimeZone } from "date-fns-tz";
-import { bestUpcomingNights } from "@/lib/upcoming-nights";
+import { useState } from "react";
 import type { UnifiedTarget } from "@/lib/astronomy";
+import { UpcomingNights } from "./UpcomingNights";
 
-/** A compact target-specific entry to the same Moon-free night comparison. */
+/** Use the same weather-aware comparison everywhere a target's best nights appear. */
 export function TargetNightSuggestions({target,lat,lon,timezone,date,onDate}:{target:UnifiedTarget;lat:number;lon:number;timezone:string;date:Date;onDate:(date:Date)=>void}) {
-  const day=formatInTimeZone(date,timezone,"yyyy-MM-dd");
-  const nights=useMemo(()=>bestUpcomingNights({selected:target,lat,lon,timezone,date}),[target,lat,lon,timezone,day]);
-  return <details className="target-best-nights"><summary>Best nights for {target.name}</summary><div>{nights.length?nights.map(night=><button type="button" className="text-action" key={night.date} onClick={()=>onDate(night.chooseAt)}>{formatInTimeZone(night.chooseAt,timezone,"EEE, MMM d · HH:mm")} · {night.selectedTarget!.goodAltitudeHours.toFixed(1)} h above 30° in Moon-free darkness</button>):<p>No Moon-free dark time above 30° in the next 30 nights. Use the clock to inspect other seasons or nights with moonlight.</p>}</div><small>Geometry only; check the forecast for each night.</small></details>;
+  const [open,setOpen]=useState(false);
+  return <details className="target-best-nights" onToggle={event=>setOpen(event.currentTarget.open)}><summary>Best nights for {target.name}</summary>{open&&<UpcomingNights selected={target} lat={lat} lon={lon} timezone={timezone} date={date} onDate={onDate}/>}</details>;
 }

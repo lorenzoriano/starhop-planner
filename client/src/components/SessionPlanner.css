@@ -85,3 +85,13 @@
   .planner-date-calendar { max-width: calc(100vw - 24px); }
   .planner-date-calendar .observing-calendar-day { min-height: 42px; }
 }
+
+/* Keep action names visible: an icon alone does not explain these workflows. */
+.session-planner .planner-night-switch > button > span { display:inline; }
+.session-planner .planner-night-switch .planner-workspace-menu { display:inline-flex; align-items:center; gap:6px; }
+@media (max-width:760px) {
+  .session-planner .planner-night-switch { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); align-items:stretch; gap:7px; }
+  .session-planner .planner-night-switch > label { grid-column:1/-1; max-width:none; }
+  .session-planner .planner-night-switch > button { min-width:0; min-height:44px; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:4px; white-space:normal; font-size:12px; }
+  .session-planner .planner-night-switch .planner-workspace-menu { margin:0; }
+}
