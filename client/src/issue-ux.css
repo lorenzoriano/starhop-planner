@@ -576,3 +576,8 @@
 .lunar-altitude-chart text,.lunar-separation-chart text{font-size:max(15px,.9375rem)!important}
 .planner-night-timeline svg text{font-size:var(--chart-label-size)!important}
 .planetarium-figures{font-size:12px;line-height:1.5;color:#9bb99f;max-width:90ch}.planetarium-figures strong{font-weight:500}
+/* HTML axes and legends follow the same physical type scale as SVG labels. */
+.observatory-shell :is(.night-chart-time-axis,.night-altitude-heading,.astro-chart-legend,.astro-solar-legend,.night-chart-readout,.night-moon-scale){font-size:var(--chart-label-size)!important}
+.observatory-shell :is(.season-altitude-key,.season-density-key){font-size:var(--chart-label-size)!important}
+.observatory-shell .lunar-chart-legend{font-size:max(15px,.9375rem)!important}
+.weather-chart text{font-size:var(--chart-label-size)!important}

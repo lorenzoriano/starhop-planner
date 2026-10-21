@@ -291,8 +291,8 @@ export function SeasonTrajectoryClock({
             strokeWidth={alt === 0 ? 1.7 : 0.8}
           />
           <text
-            x="325"
-            y={315 - ((alt + 90) / 180) * 254}
+            x={alt===90?155:325}
+            y={alt===90?150:315 - ((alt + 90) / 180) * 254}
             className="astro-ring-label"
             style={{fontSize:`calc(var(--chart-label-size, 12px) * ${640/dialWidth})`}}
           >
