@@ -34,3 +34,7 @@ A separate quiet public search run measured zero typing long tasks at 1× and 4�
 The preservation replay also found that Moon “Next window” could select an expired pre-dawn interval. Future-window selection now removes expired intervals and clips ongoing ones before applying the 30-minute minimum; the regression uses M31 at Nov 9, 04:00 in San Francisco. Touch instructions use the same input-aware wording as the finder.
 
 Suggestion ordering also keeps context around large clusters: clusters filling more than 70% of the optical field receive less framing credit. Bright stellar patterns can use the full field as their own guides. The real-default Nov 8 regression explicitly requires the Pleiades to remain second and M31 to stay in the top ten.
+
+The final typography check measures HTML time-axis labels and legend captions as well as SVG tick labels. All three use the same 12 px Medium / 13.5 px Large scale; none relies on inherited fixed-size text.
+
+The seasonal dial's 90° caption is positioned on the upper-left arc so its physical-size label cannot collide with midnight or the 60° caption on narrow screens. The annual replay checks both Medium and Large text.
