@@ -56,12 +56,17 @@ The field is clipped to its actual circular or rectangular opening. Stars come
 from the bundled Hipparcos catalog to magnitude 8, with optional Tycho-2 reference
 fields to VT 10.5 within 8° of each target. There are no decorative random stars.
 Dot radii and opacity follow catalog magnitude; color uses catalog B−V through
-the same stellar appearance model as the planetarium. Dot size is not a resolved
+the same stellar color model as the planetarium. The eyepiece uses its own compressed
+radius curve: `min(6, 0.8 + 3.4 × 10^(−0.13 × (magnitude − 2)))` CSS pixels.
+This keeps magnitude-8 stars about 2.7px across and magnitude-10.5 reference stars
+about 2.1px across at the default size, retaining differences among faint stars
+instead of collapsing them to a one-pixel floor. Dot size is not a resolved
 stellar diameter. The guide outline is a catalog extent, not simulated nebulosity.
 
-Controls offer a magnitude-depth slider, named-star labels, and an object-outline
+Controls offer separate magnitude-depth and star-size (0.75–2×) sliders, named-star labels, and an object-outline
 and marker toggle. The selected observing depth seeds the slider; previewing
-another depth does not change global instrument settings. After catalogs load,
+another depth or dot size does not change global instrument settings. Star size changes
+only the display radii; catalog positions, angular extents and field width stay fixed. After catalogs load,
 switching views can reuse them offline. Missing detailed fields are identified;
 the bright catalog remains available. A loading/error state replaces silent blank
 fields. Keyboard Left/Right and Home/End change tabs.
@@ -71,3 +76,9 @@ catalog vectors for M31, M45, M42 and NGC7209 at desktop, 710px and phone widths
 at magnitude 8 and 10.5. It verifies clipping, color diversity, shared controls,
 o horizontal overflow and offline reuse. Algorithm tests additionally cover RA
 wrap, polar geometry, magnitude limits and rotated rectangular fields.
+
+The star-size review additionally checks M31 at 1440px, 710px and 393px, at
+3.7° and 7° fields. Browser assertions measure CSS radii, verify every star remains
+more than two CSS pixels across at default scale, and confirm doubling the size
+changes neither the number of stars nor their projected centers. M45, M42 and
+NGC7209 provide brighter-star and crowded-field comparisons.
