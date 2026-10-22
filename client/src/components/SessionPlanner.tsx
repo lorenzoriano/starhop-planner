@@ -20,7 +20,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { CatalogCombobox } from "./CatalogCombobox";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { KITE_14X50, type BinocularProfile } from "@/lib/binocular-assessment";
-import { makeSession, planningShortcut, eveningOn, sessionTimezone, suggestSequence, sessionTimelineItems, type ObservingSession, type SequenceStep } from "@/lib/session-planner";
+import { makeSession, planningShortcut, eveningOn, sessionTimezone, suggestSequence, sessionTimelineItems, sessionFreeGaps, type ObservingSession, type SequenceStep } from "@/lib/session-planner";
 import { sessionDraft, resolveSessionDraft, reuseNightItems, duplicateNightItems, observingNightDate, sameObservingNight, derivedNightName, isDerivedNightName, sessionDraftAt, type SessionDraft } from "@/lib/session-draft";
 import { eqToHorizontal, type UnifiedTarget } from "@/lib/astronomy";
 import { lunarFeatures, lunarFrame, projectLunarFeature, moonState } from "@/lib/moon";
@@ -298,6 +298,7 @@ export function SessionPlanner({savedLocations,onLocationsChange,sessions,active
       <div className="planner-sequence-heading"><h2>Your viewing order</h2><span>{scheduled.length} scheduled · {completed.length} observed{preview?` · ${preview.minutesPerTarget} min each`:""}</span></div>
       {!visibleItems.length&&<p className="planner-empty-copy">Add a target above. StarHop will suggest an order that gives setting objects a chance before they get too low.</p>}
       {preview&&visibleItems.length>0&&<SessionTimeline session={preview} items={visibleItems} steps={sequence} targets={targets} zone={zone} darkSegments={forecastNight.ok?forecastNight.segments:[]} moonAt={forecastMoon}/>}
+      {preview&&sessionFreeGaps(preview,sequence).length>0&&<div className="planner-free-gaps" aria-label="Free time in this session">{sessionFreeGaps(preview,sequence).map(gap=><p key={gap.start.toISOString()}>Free {formatInTimeZone(gap.start,zone,'HH:mm')}–{formatInTimeZone(gap.end,zone,'HH:mm')} · no target scheduled</p>)}</div>}
       <ol className="planner-sequence">{scheduled.map((step,index)=>{const item=visibleItems.find(item=>item.id===step.id);return item?row(item,index,step):null;})}</ol>
       {unavailable.length>0&&<details className="planner-unavailable" open><summary>Doesn’t fit this session · {unavailable.length}</summary><ol className="planner-sequence">{unavailable.map((step,index)=>{const item=visibleItems.find(item=>item.id===step.id);return item?row(item,index,{...step,reason:unavailableReasons.get(step.id)??step.reason}):null;})}</ol></details>}
       {completed.length>0&&<details className="planner-completed"><summary>Observed targets ({completed.length})</summary><ol className="planner-sequence">{completed.map((item,index)=>row(item,index))}</ol></details>}

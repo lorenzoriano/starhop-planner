@@ -102,6 +102,8 @@ export interface SkyNode {
   temperature?:number;
   bv?:number;
   category?:string;
+  size?:string;
+  phase?:number;
 }
 
 export type ObservingMode = 'telescope' | 'binocular';
@@ -542,7 +544,7 @@ export function findBestObservingTime(
   return null;
 }
 
-export function getPlanetPositions(lat: number, lon: number, date: Date): SkyNode[] {
+export function getPlanetPositions(lat: number, lon: number, date: Date, navigationOnly=true): SkyNode[] {
   const time = Astro.MakeTime(date);
   const observer = new Astro.Observer(lat, lon, 0);
   const planets: SkyNode[] = [];
@@ -556,7 +558,7 @@ export function getPlanetPositions(lat: number, lon: number, date: Date): SkyNod
   ];
   const sunEq=Astro.Equator(Astro.Body.Sun,time,observer,true,true);
   const sunAlt=Astro.Horizon(time,observer,sunEq.ra,sunEq.dec).altitude;
-  if(sunAlt>-6)return [];
+  if(navigationOnly&&sunAlt>-6)return [];
   const sunJ2000=Astro.Equator(Astro.Body.Sun,time,observer,false,true);
 
   for (const { body, name } of planetsToTrack) {
@@ -564,7 +566,7 @@ export function getPlanetPositions(lat: number, lon: number, date: Date): SkyNod
       const eq = Astro.Equator(body, time, observer, false, true);
       const eqOfDate=Astro.Equator(body,time,observer,true,true);
       const hor = Astro.Horizon(time, observer, eqOfDate.ra, eqOfDate.dec, 'normal');
-      if (hor.altitude > 5 && angularDistance(eq.ra*15,eq.dec,sunJ2000.ra*15,sunJ2000.dec)>=30) {
+      if (hor.altitude > (navigationOnly?5:0) && (!navigationOnly||angularDistance(eq.ra*15,eq.dec,sunJ2000.ra*15,sunJ2000.dec)>=30)) {
         planets.push({
           id: `planet-${name}`,
           ra: eq.ra * 15, // hours to degrees
@@ -581,6 +583,16 @@ export function getPlanetPositions(lat: number, lon: number, date: Date): SkyNod
     }
   }
   return planets;
+}
+
+/** Visible solar-system bodies for the planetarium, without route-anchor
+ * safety cuts. Coordinates are topocentric J2000, like the stellar layer. */
+export function chartSolarSystemPositions(lat:number,lon:number,date:Date):SkyNode[]{
+ const nodes=getPlanetPositions(lat,lon,date,false),observer=new Astro.Observer(lat,lon,0);
+ const eq=Astro.Equator(Astro.Body.Moon,date,observer,false,true),ofDate=Astro.Equator(Astro.Body.Moon,date,observer,true,true);
+ const hor=Astro.Horizon(date,observer,ofDate.ra,ofDate.dec,'normal');
+ if(hor.altitude>0)nodes.push({id:'solar-Moon',name:'Moon',type:'planet',category:'Moon',ra:eq.ra*15,dec:eq.dec,alt:hor.altitude,az:hor.azimuth,mag:Astro.Illumination(Astro.Body.Moon,date).mag,phase:Astro.MoonPhase(date)});
+ return nodes;
 }
 
 // ─── Angular Distance ────────────────────────────────────────
@@ -694,6 +706,8 @@ function buildSkyNodes(
       name: m.name || m.m,
       type: 'messier',
       constellation: m.constellation,
+      size: m.size ? `${m.size}′` : undefined,
+      category: ({OC:'Open Cluster',GC:'Globular Cluster',DN:'Diffuse Nebula',PN:'Planetary Nebula',SG:'Galaxy',EG:'Galaxy',BG:'Galaxy',IG:'Galaxy',LG:'Galaxy',SN:'Supernova Remnant',AS:'Asterism'} as Record<string,string>)[m.type],
     });
   }
 
@@ -718,6 +732,8 @@ function buildSkyNodes(
         constellation: t.con,
         bayer: bayerFromAlt,
         binocularCategory: t.cat,
+        category: BINOCULAR_CATEGORY_LABELS[t.cat],
+        size: t.size,
       });
     }
   }

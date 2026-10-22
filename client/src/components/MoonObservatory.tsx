@@ -1,5 +1,5 @@
 import { ContextDateButton, ContextLocationButton } from "./ObservingContext";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as Astro from "astronomy-engine";
 import { formatInTimeZone } from "date-fns-tz";
 import { Moon, ArrowUpRight, Binoculars, Check, Plus, Search, ChevronRight, Compass, X, Circle, CheckCircle2 } from "lucide-react";
@@ -113,18 +113,28 @@ function MoonAtlas({ lat, lon, date, settings, update, selectedId, onSelect }: {
   const transform = `translate(${pan.x}px,${pan.y}px) rotate(${preferences.rotation}deg) scaleX(${preferences.mirrored ? -1 : 1})`;
   const shown = lunarFeatures.filter(f => { const p = projectLunarFeature(f, frame); return p.visible && (reference || p.lit) && (f.kind !== "crater" || f.id === selectedId || zoom>=4 || zoom>=2&&f.diameterKm>=70); });
   const labelBoxes:{left:number;top:number;width:number;height:number}[]=[];
-  const mapFeatures=shown.slice().sort((a,b)=>Number(b.id===selectedId)-Number(a.id===selectedId)).map(feature=>{
+  const positionedFeatures=shown.slice().sort((a,b)=>Number(b.id===selectedId)-Number(a.id===selectedId)).map(feature=>{
     const p=projectLunarFeature(feature,frame),angle=preferences.rotation*Math.PI/180;
     const mx=p.x*radius*(preferences.mirrored?-1:1),my=p.y*radius;
     const x=stageWidth/2+(pan.x+mx*Math.cos(angle)-my*Math.sin(angle))*stageScale;
     const y=stageWidth/2+(pan.y+mx*Math.sin(angle)+my*Math.cos(angle))*stageScale;
+    return {feature,x,y};
+  });
+  const mapFeatures=positionedFeatures.map(({feature,x,y})=>{
     const text=feature.name.replace("Mare ","");
     const width=Math.ceil(text.length*preferences.labelSize*.6)+8,height=Math.ceil(preferences.labelSize*1.25)+4;
     let label:{dx:number;dy:number}|null=null;
     if(preferences.labelSize>0)for(const [dx,dy] of [[9,-height+4],[9,4],[-width-9,-height+4],[-width-9,4]]){
-      const box={left:x+dx,top:y+dy,width,height};
+      // The visible label starts 8px inside the map button. Use its painted
+      // bounds, then keep that box clear of every other feature's hit target.
+      const box={left:x+dx+8,top:y+dy+8,width,height};
       if(box.left<5||box.top<34||box.left+width>stageWidth-5||box.top+height>stageWidth-30)continue;
       if(labelBoxes.some(b=>!(box.left+width<b.left||box.left>b.left+b.width||box.top+height<b.top||box.top>b.top+b.height)))continue;
+      // Marker buttons inherit the 44px touch-target minimum, even though
+      // their inline visual marker is only 16px across.
+      const targetRadius=22;
+      const coversAnotherTarget=positionedFeatures.some(other=>other.feature.id!==feature.id&&!(box.left+width<other.x-targetRadius||box.left>other.x+targetRadius||box.top+height<other.y-targetRadius||box.top>other.y+targetRadius));
+      if(coversAnotherTarget)continue;
       labelBoxes.push(box);label={dx,dy};break;
     }
     return {feature,x,y,text,label};
@@ -156,7 +166,7 @@ function MoonAtlas({ lat, lon, date, settings, update, selectedId, onSelect }: {
           {selected && view === "binocular" && labels && (() => { const p = projectLunarFeature(selected, frame); return p.visible && (reference || p.lit) ? <span className="lunar-selection-dot" style={{ left: 256+p.x*radius, top: 256+p.y*radius }} /> : null; })()}
         </div>
       </div>
-      {labels&&view==="atlas"&&mapFeatures.map(({feature,x,y,text,label})=><button key={feature.id} data-lunar-feature={feature.id} className={`lunar-map-feature ${selectedId===feature.id?"selected":""}`} style={{left:x,top:y,width:16,height:16,padding:0}} onClick={event=>{if(event.detail===0)onSelect(feature.id);}} aria-label={`Identify ${feature.name}`}><i/>{label&&<span style={{left:label.dx+8,top:label.dy+8,fontSize:preferences.labelSize,lineHeight:1.25}}>{text}</span>}</button>)}
+      {labels&&view==="atlas"&&mapFeatures.map(({feature,x,y,text,label})=><Fragment key={feature.id}><button data-lunar-feature={feature.id} className={`lunar-map-feature ${selectedId===feature.id?"selected":""}`} style={{left:x,top:y,width:16,height:16,padding:0,zIndex:selectedId===feature.id?8:5}} onClick={event=>{if(event.detail===0)onSelect(feature.id);}} aria-label={label?undefined:`Identify ${feature.name}`} aria-hidden={label?true:undefined} tabIndex={label?-1:0}><i/></button>{label&&<button data-lunar-feature={feature.id} className="lunar-map-feature-label" style={{position:"absolute",left:x+label.dx+8,top:y+label.dy+8,width:Math.ceil(text.length*preferences.labelSize*.6)+8,height:Math.ceil(preferences.labelSize*1.25)+4,fontSize:preferences.labelSize,lineHeight:1.25,padding:"2px 4px",border:0,borderRadius:3,background:"#060f18b0",color:selectedId===feature.id?"#ffe3a7":"#d6e4dc",whiteSpace:"nowrap",minWidth:0,minHeight:0,zIndex:selectedId===feature.id?9:7}} onClick={event=>{if(event.detail===0)onSelect(feature.id);}} aria-label={`Identify ${feature.name}`}><span style={{fontSize:preferences.labelSize,lineHeight:1.25}}>{text}</span></button>}</Fragment>)}
       <span className="lunar-orientation">Lunar N ↑ · E → before rotation</span><span className="lunar-view-caption">{reference ? "REFERENCE ATLAS · LIGHTING DISABLED" : view === "atlas" ? "MAGNIFIED ATLAS · CALCULATED LIGHTING" : `${mag}×${aperture} · ${previewOptics.fov.toFixed(1)}° FIELD${zoom !== 1 ? " · DISPLAY ZOOM" : ""}`}</span>
       {!texture && <p className="lunar-loading">{failed ? "Surface map unavailable. Reconnect to prepare the offline atlas." : "Opening the lunar map…"}</p>}
     </div>
@@ -226,11 +236,11 @@ export function MoonObservatory({ lat, lon, date, timezone, settings, update, ta
   const prioritizeDark=state.illumination<.08||state.alt<0;
   const lunarWorkspace=(<div className="lunar-workspace"><MoonAtlas lat={lat} lon={lon} date={date} settings={settings} update={update} selectedId={selectedId} onSelect={setSelectedId} /><aside className="lunar-guide-column">
       <section className="panel lunar-feature-detail"><span className="eyebrow">YOUR LUNAR LANDMARK</span><h2>{selected.name}</h2><LunarFeaturePhoto feature={selected}/><div className="lunar-feature-tags"><span>{selected.kind === "sea" ? "Lava sea" : selected.kind === "region" ? "Bay or plain" : selected.rays ? "Crater & rays" : "Crater"}</span><span>{selected.minMagnification}× or more · steady view</span></div><p>{lunarFeatureTip(selected)}</p>
-        <div className="lunar-feature-light"><strong>{!featurePosition.visible ? "Beyond the visible limb" : !featurePosition.lit ? "On the night side" : featurePosition.favored ? "Lighting favors this feature" : "Sunlit; compare on another phase"}</strong><span>Sun {Math.abs(Math.round(featurePosition.sunAltitude))}° {featurePosition.sunAltitude < 0 ? "below" : "above"} this feature’s horizon</span></div>
+        <div className="lunar-feature-light"><strong>{!featurePosition.visible ? "Beyond the visible limb" : !featurePosition.lit ? "On the night side" : featurePosition.favored ? "Lighting favors this feature" : "Sunlit; compare on another phase"}</strong><span>Sun {Math.abs(featurePosition.sunAltitude)<=0.5?"on":`${Math.abs(Math.round(featurePosition.sunAltitude))}° ${featurePosition.sunAltitude<0?"below":"above"}`} this feature’s horizon</span></div>
         <p className="lunar-feature-scale">{selected.diameterKm.toFixed(0)} km across · projected size ≈ {nominalSize.toFixed(0)}″. {selected.rays ? "The ray system extends well beyond the crater." : nominalSize < 2*resolution || settings.binocularMagnification < selected.minMagnification ? "A challenging outline at your settings; more magnification and steady support may help." : "The broad outline is a reasonable goal at your settings; fine detail is not guaranteed."}</p>
         <div className="lunar-feature-links"><button className="text-action" onClick={() => onSave(featureSaveId)}>{savedIds.has(featureSaveId) ? <Check size={14} /> : <Plus size={14} />}{savedIds.has(featureSaveId) ? "Added to night · remove" : "Add to night"}</button><a href={selected.source} target="_blank" rel="noreferrer">IAU feature record <ArrowUpRight size={12} /></a></div>
       </section>
-      {target && <section className="panel lunar-target-panel"><div className="lunar-target-heading"><span className="eyebrow">SELECTED COMPARISON OBJECT</span><button className="text-action" onClick={()=>{document.getElementById("moon-comparison-target")?.scrollIntoView({behavior:"smooth",block:"center"});document.querySelector<HTMLInputElement>('#moon-comparison-target input[role="combobox"]')?.focus({preventScroll:true});}}>Change object ↑</button></div><h2>{target.name}</h2><div className="lunar-target-photo"><TargetPhoto target={target} compact/></div><TargetPhotoCredit target={target}/><MoonlightCard target={target} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} /><label className="lunar-sky-input">Moonless zenith sky <select aria-label="Moonless sky brightness" value={settings.skyBrightness} onChange={e => update({ skyBrightness:Number(e.target.value) })}>{Array.from(new Set([21.6,20.5,19,18,settings.skyBrightness])).map(n => <option key={n} value={n}>{n.toFixed(1)} mag/arcsec²{n===21.6 ? " · dark site" : n===20.5 ? " · rural" : n===19 ? " · suburban" : n===18 ? " · urban" : ""}</option>)}</select></label><small>Reference assumptions; local sky brightness is not measured.</small></section>}
+      {target && <section className="panel lunar-target-panel"><div className="lunar-target-heading"><span className="eyebrow">SELECTED COMPARISON OBJECT</span><button className="text-action" onClick={()=>{document.getElementById("moon-comparison-target")?.scrollIntoView({behavior:"smooth",block:"center"});document.querySelector<HTMLInputElement>('#moon-comparison-target input[role="combobox"]')?.focus({preventScroll:true});}}>Change object ↑</button></div><h2>{target.name}</h2><div className="lunar-target-photo"><TargetPhoto target={target} compact opticalField={{width:settings.fov,height:settings.shape==='circle'?settings.fov:settings.fovHeight,shape:settings.shape,label:settings.mode==='binocular'?`${settings.binocularMagnification}×${settings.binocularAperture} binoculars`:'Telescope',onChange:width=>update({fov:width,...(settings.shape==='circle'?{fovHeight:width}:{})})}}/></div><TargetPhotoCredit target={target}/><MoonlightCard target={target} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} /><label className="lunar-sky-input">Moonless zenith sky <select aria-label="Moonless sky brightness" value={settings.skyBrightness} onChange={e => update({ skyBrightness:Number(e.target.value) })}>{Array.from(new Set([21.6,20.5,19,18,settings.skyBrightness])).map(n => <option key={n} value={n}>{n.toFixed(1)} mag/arcsec²{n===21.6 ? " · dark site" : n===20.5 ? " · rural" : n===19 ? " · suburban" : n===18 ? " · urban" : ""}</option>)}</select></label><small>Reference assumptions; local sky brightness is not measured.</small></section>}
     </aside></div>);
   return <div className="moon-observatory" data-testid="moon-observatory">
     <div className="page-heading"><div><p className="eyebrow">{state.illumination<.08?"MAKE THE MOST OF A DARK MOON":state.alt<0?"PLAN WHEN THE MOON RETURNS":"WHEN THE MOON STEALS THE SHOW"}</p><h1>{state.illumination<.08?"A window for the deep sky":state.alt<0?"The Moon, later tonight":"A world next door"}<span>.</span></h1><p>{state.illumination<.08?"Little lunar light tonight. Compare dark windows for your deep-sky targets below.":state.alt<0?"The Moon is below the horizon. Check its next rise or explore the reference atlas.":"Follow the light. Trace a sea. Make a bright night your own."}</p></div><Moon className="moon-heading-mark" strokeWidth={1} /></div>

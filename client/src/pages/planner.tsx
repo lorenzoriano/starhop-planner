@@ -1,3 +1,4 @@
+import { chartSolarSystemPositions } from "@/lib/astronomy";
 import {AltitudeStatus} from "@/components/ExplainedStatus";
 import { getSiteSkyBrightness, suggestedSiteSkyBrightness } from "@/lib/site-sky-brightness";
 import { AppTextSizeControl } from "@/components/AppTextSizeControl";
@@ -186,6 +187,7 @@ export default function PlannerPage() {
     if(activeSession) setPlannerStore(current=>({...current,sessions:current.sessions.map(s=>s.id===activeSession.id?{...s,items:typeof next==="function"?next(s.items):next}:s)}));
     else setLegacyNight(next);
   }
+  const [inspectedSolar,setInspectedSolar]=useState<SkyNode|null>(null);
   const [inspectedStar,setInspectedStar] = useState<CatalogStar|null>(null);
   const update = (patch: Partial<Settings>) =>
     setSettings((prev) => {
@@ -410,8 +412,8 @@ export default function PlannerPage() {
     const objects = ranked.filter((o) => o.alt > 0);
     const markers = objects.map((o): SkyNode => ({ ...o.target, alt: o.alt, az: o.az, type: o.target.source === "messier" ? "messier" : "binocular", constellation: o.target.con }));
     if (previewTarget && previewTarget.alt > 0 && !markers.some((o) => o.id === previewTarget.id)) markers.push(previewTarget);
-    return [...previewNodes, ...markers];
-  }, [previewNodes, ranked, targetId]);
+    return [...previewNodes, ...markers,...chartSolarSystemPositions(lat,lon,date)];
+  }, [previewNodes, ranked, targetId,lat,lon,date]);
 
   const loadCatalogs = useCallback(async () => {
     setLoading(true);
@@ -498,6 +500,7 @@ export default function PlannerPage() {
   }, [playing, route, speed]);
 
   function selectTarget(id: string) {
+    const solar=overviewNodes.find(node=>node.id===id&&node.type==="planet");if(solar){setInspectedSolar(solar);return;}
     if(id.startsWith("star:")){setInspectedStar(catalogs.stars.find(s=>`star:${s.id}`===id)??null);return;}
     const star=catalogs.stars.find(s=>s.id===id);
     if(star&&!catalogs.targets.some(t=>t.id===id)){setInspectedStar(star);return;}
@@ -1294,7 +1297,7 @@ export default function PlannerPage() {
                       fovHeight={shape === "circle" ? fov : fovHeight}
                       fovShape={shape}
                       limitingMag={limitingMag}
-                      onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })}
+                      onFovChange={(width) => update({ fov: width, ...(mode === "binocular" ? { binocularFov: width } : {}), ...(shape === "circle" ? { fovHeight: width } : {}) })}
                       onLimitingMagChange={(value) => update({ limitingMag: value })}
                       lat={lat}
                       lon={lon}
@@ -1312,7 +1315,7 @@ export default function PlannerPage() {
                 {selected && selection ? (
                   <section className="panel featured-object" ref={featuredObjectRef}>
                     <div className="featured-art">
-                      <TargetPhoto target={selected} />
+                      <TargetPhoto target={selected} opticalField={{width:fov,height:shape==='circle'?fov:fovHeight,shape,label:mode==='binocular'?`${settings.binocularMagnification}×${settings.binocularAperture} binoculars`:'Telescope',onChange:width=>update({fov:width,...(shape==='circle'?{fovHeight:width,binocularFov:mode==='binocular'?width:settings.binocularFov}:{})})}}/>
                       <span className="art-badge">SELECTED · {targetDesignation(selected)}</span>
                     </div>
                     <div className="featured-body">
@@ -1656,7 +1659,7 @@ export default function PlannerPage() {
                     limitingMag={limitingMag}
                     denseStars={catalogs.dense}
                     milkyWay={catalogs.milkyWay}
-                    onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })}
+                    onFovChange={(width) => update({ fov: width, ...(mode === "binocular" ? { binocularFov: width } : {}), ...(shape === "circle" ? { fovHeight: width } : {}) })}
                     onLimitingMagChange={(value) => update({ limitingMag: value })}
                   />
                   <div className="chart-footnote">
@@ -1918,7 +1921,7 @@ export default function PlannerPage() {
             </>
           )}
           {page === "binocular" && (
-            <BinocularGuide locationName={locationLabel} isSavedAt={(id,at)=>plannerStore.sessions.some(session=>!session.archived&&Math.abs(session.lat-lat)<.001&&Math.abs(session.lon-lon)<.001&&clockNightDate(new Date(session.startAt),timezone)===clockNightDate(at,timezone)&&session.items.some(item=>item.id===id))} live={settings.timeMode==="live"} onDate={at=>previewMoment(at,lat,lon,false)} onEditSetup={()=>setSetupOpen(true)} onCompare={(id,at)=>compareObjects([id],at)} profile={binocularProfile} profileControls={<BinocularProfileSummary settings={settings} onEditSetup={()=>setSetupOpen(true)}/>} onMoon={checkAgainstMoon} saveDestination={saveDestination} targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
+            <BinocularGuide locationName={locationLabel} isSavedAt={(id,at)=>plannerStore.sessions.some(session=>!session.archived&&Math.abs(session.lat-lat)<.001&&Math.abs(session.lon-lon)<.001&&clockNightDate(new Date(session.startAt),timezone)===clockNightDate(at,timezone)&&session.items.some(item=>item.id===id))} live={settings.timeMode==="live"} onDate={at=>previewMoment(at,lat,lon,false)} onEditSetup={()=>setSetupOpen(true)} onCompare={(id,at)=>compareObjects([id],at)} profile={binocularProfile} profileControls={<BinocularProfileSummary settings={settings} onEditSetup={()=>setSetupOpen(true)}/>} onMoon={checkAgainstMoon} saveDestination={saveDestination} targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(mode === "binocular" ? { binocularFov: width } : {}), ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} />
           )}
           {page === "catalog" && <CatalogExplorer onEditSetup={()=>setSetupOpen(true)} onCompare={(id,at)=>compareObjects([id],at)} targets={catalogs.targets} settings={settings} update={update} date={date} timezone={timezone} locationName={locationLabel} saveDestination={saveDestination} savedIds={savedIds} onSave={toggleSave} onMoon={checkAgainstMoon} onSky={(id,at)=>{selectTarget(id);previewMoment(at,lat,lon);setPage("tonight");window.scrollTo({top:0,behavior:"smooth"});}}/>}
           {page === "clock" && <><AstronomicalClock targets={planningTargets} ids={compareIds} onIds={setCompareIds} selectedId={targetId} sessionIds={night.map(item=>item.id)} lat={lat} lon={lon} date={date} timezone={timezone} locationName={locationLabel} locations={savedLocations} onLocation={(a,b)=>requestSiteChange(a,b)} onTime={at=>previewMoment(at,lat,lon,false)} onLive={()=>update({timeMode:"live"})} live={settings.timeMode==="live"} skyBrightness={settings.skyBrightness}/>{compareError&&<p role="alert">Your browser could not save the comparison list. Keep this tab open to retain it.</p>}</>}
@@ -1958,6 +1961,7 @@ export default function PlannerPage() {
           </footer>
         </main>
       </div>
+      <Dialog open={!!inspectedSolar} onOpenChange={open=>{if(!open)setInspectedSolar(null);}}><DialogContent><DialogHeader><DialogTitle>{inspectedSolar?.name}</DialogTitle><DialogDescription>Solar system · {formatInTimeZone(date,timezone,"MMM d, yyyy · HH:mm")} local</DialogDescription></DialogHeader>{inspectedSolar&&<><p>{Math.round(inspectedSolar.alt)}° {compassLabel(inspectedSolar.az)} · {altitudeLabel(inspectedSolar.alt)}</p><p>Magnitude {inspectedSolar.mag.toFixed(1)} · RA {inspectedSolar.ra.toFixed(3)}° · Dec {inspectedSolar.dec.toFixed(3)}°</p>{inspectedSolar.category==='Moon'?<><p>{currentMoon.phaseName} · {Math.round(currentMoon.illumination*100)}% illuminated</p><Button onClick={()=>{setInspectedSolar(null);setPage('moon');}}>Open lunar atlas</Button></>:<p>Binoculars show a bright point or small disc. A telescope is needed for fine planetary detail.</p>}</>}</DialogContent></Dialog>
       <Dialog open={!!inspectedStar} onOpenChange={open=>{if(!open)setInspectedStar(null);}}><DialogContent className="star-detail-dialog"><DialogHeader><DialogTitle>{inspectedStar?starPlanningTarget(inspectedStar).name:"Star"}</DialogTitle><DialogDescription>Bright Star Catalogue · {formatInTimeZone(date,timezone,"MMM d, yyyy · HH:mm")} local</DialogDescription></DialogHeader>{inspectedStar&&(()=>{const target=starPlanningTarget(inspectedStar);const pos=eqToHorizontal(target.ra,target.dec,lat,lon,date);const node:SkyNode={...inspectedStar,...pos,id:target.id,name:target.name,type:"star"};return <><p className="object-location">Magnitude {target.mag.toFixed(1)} · {Math.round(pos.alt)}° {compassLabel(pos.az)} · {altitudeLabel(pos.alt)}</p><p>{activeSession?`Add to ${activeSession.name}, or remove it from that session.`:"Add this star to an observing session, then open Planner to choose a date and sequence."}</p><Button variant="outline" onClick={()=>compareObjects([target.id],date)}>Astronomical clock & compare ↗</Button><Button onClick={()=>toggleSave(target.id)}>{savedIds.has(target.id)?<Check size={14}/>:<Plus size={14}/>} {savedIds.has(target.id)?"Remove from night":"Add to night"}</Button>{selected&&<Button variant="outline" disabled={computing||loading||inspectedStar.mag>Math.min(4.5,limitingMag)||pos.alt<5} onClick={()=>{const id=inspectedStar.id;update({startStarId:id});setInspectedStar(null);void compute(undefined,id);}}>Start hop from this star</Button>}{selected&&inspectedStar.mag<=limitingMag&&pos.alt>=5&&<Button variant="outline" disabled={(settings.waypointIds?.length??0)>=8||settings.waypointIds?.includes(inspectedStar.id)} onClick={()=>{update({waypointIds:[...(settings.waypointIds??[]),inspectedStar.id]});setInspectedStar(null);setPage("hop",targetId);}}>Add required guide waypoint</Button>}{selected&&<p className="setup-hint">Destination: {selected.name}. Starting references must be above 5° and magnitude {Math.min(4.5,limitingMag).toFixed(1)} or brighter at your observing time.</p>}<SkyChart isBinocular={mode==="binocular"} onEditSetup={()=>setSetupOpen(true)} setupSummary={`${fov.toFixed(1)}° field · stars to mag ${limitingMag.toFixed(1)}`} onSelect={selectTarget} nodes={[...previewNodes.filter(s=>s.id!==inspectedStar.id),node]} constellations={catalogs.constellations} route={null} targetNode={node} animStep={0} fovWidth={fov} fovHeight={shape==="circle"?fov:fovHeight} fovShape={shape} lat={lat} lon={lon} date={date} limitingMag={limitingMag} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} onFovChange={width=>update({fov:width,...(shape==="circle"?{fovHeight:width}:{})})} onLimitingMagChange={value=>update({limitingMag:value})}/><MoonlightCard target={target} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness}/></>;})()}</DialogContent></Dialog>
       <Dialog open={instrumentOpen} onOpenChange={setInstrumentOpen}>
         <DialogContent className="instrument-choice-dialog">
