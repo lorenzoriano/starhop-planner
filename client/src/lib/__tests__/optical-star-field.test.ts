@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import type { DenseStar } from '../astronomy';
 import { angularDistance } from '../astronomy';
 import { skyOffset } from '../optical-geometry';
-import { opticalFieldStars } from '../optical-star-field';
+import { eyepieceStarRadius, opticalFieldStars } from '../optical-star-field';
 
 describe('binocular identification field',()=>{
   it('clips stars by true circular field angle and magnitude, never a square crop',()=>{
@@ -17,6 +17,12 @@ describe('binocular identification field',()=>{
     expect(red.radius).toBeGreaterThan(blue.radius);expect(red.opacity).toBeGreaterThan(blue.opacity);expect(red.color).not.toBe(blue.color);
     const r=red.color.match(/\d+/g)!.map(Number),b=blue.color.match(/\d+/g)!.map(Number);expect(r[0]).toBeGreaterThan(r[2]);expect(b[2]).toBeGreaterThan(b[0]);
     expect(blue.x).toBeLessThan(0);expect(red.x).toBeCloseTo(0);
+  });
+  it('keeps faint reference stars legible and distinguishes their catalog magnitudes',()=>{
+    const radii=[2,4,6,8,9,10.5].map(eyepieceStarRadius);
+    expect(radii.at(-1)).toBeGreaterThan(1); // More than two CSS pixels across, even at the deepest setting.
+    for(let i=1;i<radii.length;i++)expect(radii[i]).toBeLessThan(radii[i-1]);
+    expect(eyepieceStarRadius(-1.46)).toBeLessThanOrEqual(6);
   });
   it('handles polar/wrapped fields and a rotated rectangular telescope opening',()=>{
     expect(opticalFieldStars([[170,89.8,5,.5]],{ra:350,dec:89.8},3.7,3.7,'circle',8)).toHaveLength(1);
