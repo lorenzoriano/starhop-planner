@@ -195,6 +195,36 @@ export function deduplicateCatalogMatches(matches: readonly CatalogSearchMatch[]
 }
 
 const rankedCollections = new WeakMap<readonly UnifiedTarget[], Map<string, CatalogSearchMatch[]>>();
+function catalogNumber(target: UnifiedTarget) {
+  const match = target.id.match(/^(M|NGC|IC|HR|Cr|Mel|Tr|Stock)(\d+)$/i);
+  return match ? { prefix: match[1].toUpperCase(), number: Number(match[2]) } : undefined;
+}
+
+function prominence(target: UnifiedTarget) {
+  // Put bright, properly named stars and familiar deep-sky targets ahead of
+  // the long tail of faint catalog entries in constellation searches.
+  const designation = /^(?:\d+\s+|(?:Alpha|Beta|Gamma|Delta|Epsilon|Zeta|Eta|Theta|Iota|Kappa|Lambda|Mu|Nu|Xi|Omicron|Pi|Rho|Sigma|Tau|Upsilon|Phi|Chi|Psi|Omega|[α-ω])(?:\s|[-–]))/i;
+  if (target.source === "messier" || commonAliases[target.id]?.length) return 0;
+  if (target.category === "Star") return !designation.test(target.name) && target.mag <= 4 ? 1 : 2;
+  return 3;
+}
+
+function compareCatalogMatches(a: CatalogSearchMatch, b: CatalogSearchMatch, query: string, constellationQuery: boolean) {
+  // Full constellation names and abbreviated catalog contexts often receive
+  // adjacent text scores; rank those hits together so target prominence can
+  // order the combined star and deep-sky list.
+  const byScore = constellationQuery ? 0 : a.score - b.score;
+  if (byScore) return byScore;
+  const catalogQuery = query.match(/^(M|NGC|IC|HR|CR|MEL|TR|STOCK)\d*$/i);
+  const aCatalog = catalogQuery && catalogNumber(a.target), bCatalog = catalogQuery && catalogNumber(b.target);
+  if (aCatalog && bCatalog && aCatalog.prefix === bCatalog.prefix && aCatalog.number !== bCatalog.number) {
+    return aCatalog.number - bCatalog.number;
+  }
+  const byProminence = prominence(a.target) - prominence(b.target);
+  if (byProminence) return byProminence;
+  return a.target.mag - b.target.mag || a.target.name.localeCompare(b.target.name);
+}
+
 /** One ranked, deduplicated search shared by suggestions and diagnostics. */
 export function searchCatalog(targets: readonly UnifiedTarget[], query: string, limit = Infinity): CatalogSearchMatch[] {
   const q=searchQuery(query).text;
@@ -204,9 +234,10 @@ export function searchCatalog(targets: readonly UnifiedTarget[], query: string, 
   const cacheKey=`${limit}:${q}`;
   const cached=cache.get(cacheKey);
   if(cached)return cached;
+  const constellationQuery=targets.some(target=>normalizedSearch(getConstellationName(target.con))===q);
   const ranked=targets.map(target=>({target,score:catalogSearchScore(target,query)}))
     .filter(match=>Number.isFinite(match.score))
-    .sort((a,b)=>a.score-b.score||a.target.name.localeCompare(b.target.name));
+    .sort((a, b) => compareCatalogMatches(a, b, q, constellationQuery));
   // Keep literal continuations even when the query also has an exact match:
   // “m3” offers M3 and M30–M39, and “mizar” offers Mizar & Alcor too.
   // Direct matches take precedence over spelling corrections, while literal

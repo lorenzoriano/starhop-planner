@@ -72,39 +72,75 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
     const point={id,name:feature?.name??target!.displayName,date:at,alt:pos.alt,az:pos.az,separation:separation,moonlight:impact?.brightening??0,lunar,usable,score,minimum,darkEnough};
     targetCache.set(key,point); return point;
   };
-  let current=start;
-  while(remaining.length && current<end) {
-    const options=remaining.map(id=> {
-      const samples:NonNullable<ReturnType<typeof atTarget>>[]=[];
-      for(let ms=current.getTime();ms+session.minutesPerTarget*60_000<=end.getTime();ms+=15*60_000){const p=atTarget(id,new Date(ms));if(p?.usable&&atTarget(id,new Date(ms+session.minutesPerTarget*60_000))?.usable)samples.push(p);}
-      const first=samples[0];if(!first)return null;
-      // Use the first continuous viewing window, not a later reappearance.
-      const gap=samples.findIndex((p,i)=>i>0&&p.date.getTime()-samples[i-1].date.getTime()>15*60_000);
-      const last=samples[gap<0?samples.length-1:gap-1];
-      const urgency=last.date.getTime()-current.getTime()<45*60_000?55:0;
-      return {...first,score:first.score,urgent:!!urgency,latestStart:last.date.getTime()};
-    }).filter(Boolean) as (NonNullable<ReturnType<typeof atTarget>> & {urgent:boolean;latestStart:number})[];
-    if(!options.length)break;
-    options.sort((a,b)=>a.date.getTime()-b.date.getTime()||a.latestStart-b.latestStart||b.score-a.score);
-    const best=options[0];
-    steps.push({...best,reason:best.urgent?"Observe before its usable window closes":best.moonlight>=1?"Moonlit sky: prioritize bright detail":best.lunar?"Moon is up and safely separated from the Sun":"Well placed at this time"});
-    remaining.splice(remaining.indexOf(best.id),1);
-    current=new Date(best.date.getTime()+session.minutesPerTarget*60_000);
-  }
-  // Keep setting-first order, but give a low, rising target time to climb.
-  // Work backwards so each improved slot still ends before the next one.
-  for(let i=steps.length-1;i>=0;i--){
-    const step=steps[i];if(!step.date||step.alt>=30||step.lunar)continue;
-    const latest=(steps[i+1]?.date??end).getTime()-session.minutesPerTarget*60_000;
-    let best=atTarget(step.id,step.date)!;
-    for(let ms=step.date.getTime()+15*60_000;ms<=latest;ms+=15*60_000){
-      const candidate=atTarget(step.id,new Date(ms));
-      if(candidate?.usable&&atTarget(step.id,new Date(ms+session.minutesPerTarget*60_000))?.usable&&candidate.score>best.score)best=candidate;
+  const duration=session.minutesPerTarget*60_000,quantum=5*60_000;
+  // Compute real descending altitude crossings beyond the session, rather than
+  // mistaking the session cutoff for a setting deadline.
+  const closes=new Map<string,number>();
+  for(const id of remaining){
+    const target=targetMap.get(id);
+    const altitude=(ms:number)=>target?eqToHorizontal(target.ra,target.dec,session.lat,session.lon,new Date(ms)).alt:moonState(session.lat,session.lon,new Date(ms)).alt;
+    const minimum=id.startsWith('moon:')?5:15;
+    let previous=altitude(+start),closing=Infinity;
+    for(let ms=+start+15*60_000;ms<=+start+26*3600_000;ms+=15*60_000){
+      const next=altitude(ms);
+      if(previous>=minimum&&next<minimum){let lo=ms-15*60_000,hi=ms;for(let n=0;n<12;n++){const mid=(lo+hi)/2;if(altitude(mid)>=minimum)lo=mid;else hi=mid;}closing=hi;break;}
+      previous=next;
     }
-    if(best.alt>=step.alt+5)steps[i]={...step,...best,reason:"Later in the session to catch this rising target higher"};
+    closes.set(id,closing);
+  }
+  const ids=remaining.slice().sort((a,b)=>closes.get(a)!-closes.get(b)!||a.localeCompare(b));
+  type Plan={mask:bigint;score:number;slots:Candidate[]};
+  // Joint time/order search. Waiting is a real alternative, so packed sessions
+  // can reorder rising objects and long sessions can use higher later slots.
+  // Small sessions are exact; large lists use a bounded beam to keep UI work finite.
+  const beam=ids.length<=10?2**ids.length:128;
+  const grid=Array.from({length:Math.floor(session.durationMinutes/5)+1},()=>new Map<bigint,Plan>());
+  grid[0].set(BigInt(0),{mask:BigInt(0),score:0,slots:[]});
+  let best:Plan=grid[0].get(BigInt(0))!;
+  const put=(index:number,plan:Plan)=>{if(index>=grid.length)return;const previous=grid[index].get(plan.mask);if(!previous||plan.score>previous.score)grid[index].set(plan.mask,plan);};
+  for(let tick=0;tick<grid.length;tick++){
+    let states=Array.from(grid[tick].values());if(states.length>beam)states=states.sort((a,b)=>b.score-a.score).slice(0,beam);
+    const ms=+start+tick*quantum;
+    for(const plan of states){
+      if(plan.score>best.score)best=plan;
+      if(tick+1<grid.length)put(tick+1,plan);
+      if(ms+duration>+end)continue;
+      for(let i=0;i<ids.length;i++){
+        const bit=BigInt(1)<<BigInt(i);if(plan.mask&bit)continue;
+        const candidate=atTarget(ids[i],new Date(ms));
+        if(!candidate?.usable||!atTarget(ids[i],new Date(ms+duration))?.usable)continue;
+        const finishTick=Math.ceil((ms+duration-+start)/quantum);
+        const lowPenalty=Math.max(0,20-candidate.alt)*5;
+        const settingBonus=closes.get(ids[i])!<=+end+duration?5:0;
+        const score=plan.score+10000+candidate.alt-candidate.moonlight*.5-lowPenalty+settingBonus;
+        put(finishTick,{mask:plan.mask|bit,score,slots:[...plan.slots,candidate]});
+      }
+    }
+    // Earlier maps no longer participate in the search.
+    grid[tick].clear();
+  }
+  for(const candidate of best.slots){
+    const later=atTarget(candidate.id,new Date(+candidate.date+10*60_000));
+    const rising=!!later&&later.alt>candidate.alt+.2;
+    const nearEnd=+end-(+candidate.date+duration)<30*60_000;
+    const realClosing=closes.get(candidate.id)!-(+candidate.date+duration)<45*60_000;
+    const reason=rising&&nearEnd?'Rising target · later for altitude; session ends soon':rising&&+candidate.date>+start+30*60_000?'Later in the session to catch this rising target higher':!rising&&realClosing?'Observe before its usable window closes':candidate.moonlight>=1?'Moonlit sky: prioritize bright detail':candidate.lunar?'Moon is up and safely separated from the Sun':'Well placed at this time';
+    steps.push({...candidate,reason});remaining.splice(remaining.indexOf(candidate.id),1);
   }
   for(const id of remaining){const p=atTarget(id,start);steps.push({id,name:p?.name??id,date:null,alt:p?.alt??-90,az:p?.az??0,separation:p?.separation??null,moonlight:p?.moonlight??0,lunar:id.startsWith("moon:"),reason:!p?"Catalog entry unavailable":steps.length*session.minutesPerTarget>=session.durationMinutes?"Not enough time: lengthen this session":`No usable slot: needs ${p.minimum}° altitude and ${p.lunar?"distance from the Sun":"a darker sky"}`});}
   return steps;
+}
+
+/** Idle spans are explicit; they are time available to rest, adapt or observe freely. */
+export function sessionFreeGaps(session:ObservingSession,steps:SequenceStep[]){
+ const gaps:Array<{start:Date;end:Date}>=[],end=+new Date(session.startAt)+session.durationMinutes*60_000;
+ let cursor=+new Date(session.startAt);
+ for(const step of steps.filter(s=>s.date).slice().sort((a,b)=>+a.date!-+b.date!)){
+  if(+step.date!-cursor>=5*60_000)gaps.push({start:new Date(cursor),end:step.date!});
+  cursor=+step.date!+session.minutesPerTarget*60_000;
+ }
+ if(end-cursor>=5*60_000)gaps.push({start:new Date(cursor),end:new Date(end)});
+ return gaps;
 }
 
 export function starPlanningTarget(star:Star):UnifiedTarget {

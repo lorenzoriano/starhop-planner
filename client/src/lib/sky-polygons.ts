@@ -16,14 +16,14 @@ function prepare(feature:MilkyWayFeature){
 }
 
 /** Matches chart stars, while spherical streaming clips/resamples polygon boundaries. */
-export function skyPolygonProjection(frame:EquatorialPoint,focus:EquatorialPoint,scale:number,mirrored=false,rotation=0,overview=false) {
+export function skyPolygonProjection(frame:EquatorialPoint,focus:EquatorialPoint,scale:number,mirrored=false,rotation=0,overview=false,width=600,height=600) {
   const offset=orientChartPoint(stereographicProject(focus.ra,focus.dec,frame.ra,frame.dec,scale)??{x:0,y:0},mirrored,rotation);
   return geoStereographic().rotate([-frame.ra,-frame.dec]).reflectX(!mirrored).angle(-rotation)
-    .scale(scale*360/Math.PI).translate([300-offset.x,300-offset.y])
-    .clipAngle(overview?90:96).clipExtent([[0,0],[600,600]]).precision(.15);
+    .scale(scale*360/Math.PI).translate([width/2-offset.x,height/2-offset.y])
+    .clipAngle(overview?90:96).clipExtent([[0,0],[width,height]]).precision(.15);
 }
-export function milkyWayPaths(features:MilkyWayFeature[],frame:EquatorialPoint,focus:EquatorialPoint,scale:number,mirrored=false,rotation=0,overview=false) {
-  const path=geoPath(skyPolygonProjection(frame,focus,scale,mirrored,rotation,overview));
+export function milkyWayPaths(features:MilkyWayFeature[],frame:EquatorialPoint,focus:EquatorialPoint,scale:number,mirrored=false,rotation=0,overview=false,width=600,height=600) {
+  const path=geoPath(skyPolygonProjection(frame,focus,scale,mirrored,rotation,overview,width,height));
   return features.flatMap(feature=>{
     // Stream rings individually. The source's large northern hole otherwise
     // makes circle clipping interpret the complement as a filled hemisphere.

@@ -16,7 +16,7 @@ export const OBJECT_GUIDES: Record<string, ObjectGuide> = {
     story:
       "The light reaching Earth tonight left Andromeda about 2.5 million years ago. This is a whole galaxy, home to roughly a trillion stars.",
     lookFor:
-      "A soft oval glow with a brighter center. Start at Mirach and sweep toward the two faint stars above it. Dark skies reveal more of its enormous disk.",
+      "A soft oval glow with a brighter center. Find μ Andromedae from brighter Mirach, then sweep onward to the galaxy. A route starting at μ And skips that naked-eye landmark step. Dark skies reveal more of its enormous disk.",
     equipment: "Binoculars · low power telescope",
     binocular: true,
   },

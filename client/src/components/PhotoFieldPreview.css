@@ -1,0 +1,19 @@
+.target-photo-framing-toggle{position:absolute;top:12px;right:12px;min-height:44px;padding:8px 12px;border:1px solid #779a9c;border-radius:7px;background:#0b1c27ed;color:#d3e4dd;font-size:14px;line-height:1.3;z-index:2;box-shadow:0 2px 12px #0008}
+.target-photo-framing-toggle:hover{background:#23434c}
+.photo-optics-dialog{width:calc(100vw - 24px);max-width:720px;max-height:92dvh;overflow-y:auto;padding:24px;color:#d0ddd8;border:1px solid #36535c;background:#0b1922;gap:12px}
+.photo-optics-dialog h2{font-family:inherit;font-size:21px;font-weight:500;line-height:1.3;padding-right:24px}
+.photo-optics-selected{font-size:14px;color:#b0c9c6;margin:0;line-height:1.5}
+.photo-optics-field{display:block;width:100%;max-height:54dvh;aspect-ratio:1;flex-shrink:0;background:#03070c;border:1px solid #243a47;border-radius:8px}
+.photo-optics-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.photo-optics-controls label{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:14px}
+.photo-optics-controls input{width:90px;min-height:44px;padding:7px;background:#102832;color:#dce6df;border:1px solid #547775;border-radius:6px;font-size:16px}
+.photo-optics-presets,.photo-optics-orientation{display:flex;flex-wrap:wrap;gap:8px}
+.photo-optics-controls button{min-height:44px;padding:8px 10px;border:1px solid #45656a;border-radius:6px;color:#b6d5cb;background:#10232d;font-size:14px;line-height:1.3}
+.photo-optics-controls button:hover,.photo-optics-controls button[aria-pressed=true]{background:#24484e;border-color:#92b8ac}
+.photo-optics-controls button:disabled{opacity:.5}
+.photo-optics-coverage,.photo-optics-unavailable{font-size:14px;line-height:1.6;padding:10px 12px;border-left:2px solid #889fac;background:#132630;margin:0}
+.photo-optics-note{font-size:13px;line-height:1.6;color:#9cb3bd;margin:0}
+.photo-optics-note a{color:#b2cec8;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:480px){.photo-optics-dialog{padding:18px;gap:10px}.photo-optics-field{max-height:42dvh}.target-photo-framing-toggle{top:10px;right:10px;font-size:13px;padding:6px 9px}}
+
+.target-photo-framing-toggle.photo-optics-inline{position:static;align-self:flex-start;justify-self:start;margin:12px 0;z-index:auto}

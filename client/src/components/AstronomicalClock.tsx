@@ -617,8 +617,8 @@ export function AstronomicalClock({
                   strokeWidth={alt === 0 ? 1.6 : 1}
                 />
                 <text
-                  x={alt === 90 ? 370 : 325}
-                  y={320 - ((alt + 90) / 180) * 254 + (alt===90?16:-5)}
+                  x={alt === 90 ? 20 : 325}
+                  y={alt===90?35:320 - ((alt + 90) / 180) * 254 - 5}
                   className="astro-ring-label"
                 >
                   {alt === 0 ? "0° · HORIZON" : `${alt}°`}

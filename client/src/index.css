@@ -1156,7 +1156,9 @@ button:disabled { opacity: .45; cursor: default; }
   .planner-add-status { margin-bottom:0; }
 }
 @media(max-width:760px) {
-  .planner-row-actions .icon-button, .planner-row-actions .text-action { width:44px; min-width:44px; min-height:44px; }
+  .planner-row-actions .icon-button { width:44px; min-width:44px; min-height:44px; flex-shrink:0; }
+  .planner-row-actions .text-action { width:auto; min-width:max-content; min-height:44px; flex-shrink:0; padding:0 10px; }
+  .planner-row-actions { flex-basis:100%; justify-content:flex-end; gap:8px; }
 }
 
 /* Reusable observing spots in the planning workbench and sky setup. */

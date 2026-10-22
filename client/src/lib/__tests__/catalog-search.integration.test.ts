@@ -52,6 +52,13 @@ describe("real catalog search regressions", () => {
     expect(searchCatalog(planningTargets,query)[0]?.target.id).toBe(id);
   });
 
+  it("puts familiar Cassiopeia landmarks ahead of faint catalog entries", () => {
+    const firstRows = searchCatalog(planningTargets, "Cassiopeia", 7).map(match => match.target);
+    expect(firstRows.map(target => target.name)).toEqual(expect.arrayContaining(["Schedar", "Caph"]));
+    expect(firstRows.map(target => target.id)).toEqual(expect.arrayContaining(["M52", "NGC457"]));
+    expect(firstRows.findIndex(target => target.id === "NGC457")).toBeLessThan(7);
+  });
+
   it("explains the specific filter hiding a known target", () => {
     const result=catalogSearchDiagnostics("Vega",planningTargets,[],()=>"It is 10° high, below the 15° limit of “Above 15°”.");
     expect(result.kind).toBe("filtered");
@@ -76,4 +83,19 @@ describe("real catalog search regressions", () => {
 it("keeps catalog prefixes alongside an exact M3 result",()=>{
  const ids=searchCatalog(planningTargets,"m3").map(m=>m.target.id);
  expect(ids[0]).toBe("M3");expect(ids).toContain("M31");expect(ids).toContain("M33");
+ const numeric=ids.filter(id=>/^M3\d+$/.test(id));
+ expect(numeric).toEqual([...numeric].sort((a,b)=>Number(a.slice(1))-Number(b.slice(1))));
+});
+
+it("ranks named Cassiopeia objects before numbered stars and orders catalog numbers numerically",()=>{
+ const cassiopeia=searchCatalog(planningTargets,"cassiopeia");
+ expect(cassiopeia[0].target.category).not.toBe("Star");
+ expect(cassiopeia.some(match=>match.target.id==="M52")).toBe(true);
+ expect(cassiopeia.some(match=>match.target.id==="NGC457")).toBe(true);
+
+ const m4=searchCatalog(planningTargets,"m4").map(match=>match.target.id).filter(id=>/^M4\d+$/.test(id));
+ expect(m4).toContain("M41");
+ expect(m4).toContain("M42");
+ expect(m4.indexOf("M41")).toBeLessThan(m4.indexOf("M42"));
+ expect(m4).toEqual([...m4].sort((a,b)=>Number(a.slice(1))-Number(b.slice(1))));
 });

@@ -22,6 +22,16 @@ function visibleCatalogId(target: UnifiedTarget) {
   return /^(?:M\d+|NGC\s*\d+|IC\s*\d+|HR\s*\d+)$/i.test(target.id) ? formatCatalogDesignation(target.id) : undefined;
 }
 
+/** Figure results are navigation actions, never saved as fabricated sky targets. */
+function figureSuggestions(targets:UnifiedTarget[],query:string):UnifiedTarget[]{
+ const q=query.trim().toLowerCase();if(q.length<3)return [];
+ return Array.from(new Set(targets.map(t=>t.con))).filter(id=>id&&getConstellationName(id).toLowerCase().startsWith(q)).slice(0,2).map(id=>({id:`constellation:${id}`,name:getConstellationName(id),displayName:getConstellationName(id),con:id,category:'Constellation',categoryShort:'Highlight figure',source:'binocular' as const,mag:0,ra:0,dec:0}));
+}
+function suggestions(targets:UnifiedTarget[],query:string){
+ const figures=figureSuggestions(targets,query).map(target=>({target,score:-1}));
+ return [...figures,...searchCatalog(targets,query,7-figures.length)];
+}
+
 export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, label = "Search catalog", placeholder = "Name, constellation or catalog number…", className = "", lunarHintAction, onTyping, announceSelection = true }: CatalogComboboxProps) {
   const generatedId = useId().replace(/:/g, "");
   const inputId = `catalog-combobox-${generatedId}`;
@@ -52,7 +62,7 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
     return ()=>clearTimeout(timer);
   },[targets]);
   useEffect(()=>setStatus(""),[query,savedIds]);
-  const matches=useMemo(()=>searchCatalog(targets,query,7),[targets,query]);
+  const matches=useMemo(()=>suggestions(targets,query),[targets,query]);
   const pending=draft!==query;
   const results=pending?[]:matches;
   const diagnostics=useMemo(()=>catalogSearchDiagnosticsFromMatches(query,matches),[query,matches]);
@@ -62,6 +72,11 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
   const shownActiveIndex = listOpen && results.length ? Math.min(activeIndex, results.length - 1) : -1;
 
   const select = (target: UnifiedTarget) => {
+    if(target.id.startsWith('constellation:')){
+      sessionStorage.setItem('starhop-highlight-constellation',target.con);
+      window.dispatchEvent(new CustomEvent('starhop:highlight-constellation',{detail:target.con}));
+      window.location.hash='/';setListDismissed(true);setStatus(`Highlighting ${target.name} on the planetarium.`);return;
+    }
     if (announceSelection) {
       if (savedIds?.has(target.id)) setStatus(`${target.name} is already in your saved targets.`);
       else setStatus(`${target.name} selected.`);
@@ -80,7 +95,7 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
       aria-activedescendant={shownActiveIndex >= 0 ? `${listId}-option-${shownActiveIndex}` : undefined}
       value={draft}
       placeholder={placeholder}
-      onFocus={() => setListDismissed(false)}
+      onFocus={event => { setListDismissed(false); if (event.currentTarget.value) event.currentTarget.select(); }}
       onChange={event => { setDraft(event.target.value); setListDismissed(false); setActiveIndex(0); setStatus(""); onTyping?.(); }}
       onKeyDown={event => {
         if (event.key === "ArrowDown" && results.length) {
@@ -91,7 +106,7 @@ export function CatalogCombobox({ targets, query, onQuery, onSelect, savedIds, l
           event.preventDefault();
           // Enter commits the text the user can see, even inside the debounce
           // interval. Never select an option from the previous query.
-          const fresh = pending ? searchCatalog(targets, draft, 7) : results;
+          const fresh = pending ? suggestions(targets, draft) : results;
           if (pending) { emittedQuery.current=draft; onQueryRef.current(draft); }
           const match=fresh[Math.min(activeIndex, fresh.length-1)];
           if (match) select(match.target);

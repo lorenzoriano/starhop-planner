@@ -1566,7 +1566,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 1893",
+        "title": "Wikipedia · NGC 1893",
         "url": "https://en.wikipedia.org/wiki/NGC_1893",
         "kind": "reference"
       }
@@ -1683,7 +1683,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 2301",
+        "title": "Wikipedia · NGC 2301",
         "url": "https://en.wikipedia.org/wiki/NGC_2301",
         "kind": "reference"
       }
@@ -1822,7 +1822,7 @@
     "family": "cluster",
     "level": "challenge",
     "equipment": "Supported 10×50; dark sky",
-    "impression": "NGC 6716 lies east of M25 in Sagittarius. Use M25 as a starting landmark, then distinguish this separate, much smaller grouping from the surrounding Milky Way stars.",
+    "impression": "NGC 6716 lies east of M25 in Sagittarius. Use ξ² Sagittarii, only 1.4° away, as the starting landmark, then look for this much smaller grouping against the Milky Way stars.",
     "finding": "NGC 6716 lies 1.4° north-west of ξ² Sagittarii (magnitude 3.5), in Sagittarius.",
     "minAperture": 50,
     "references": [
@@ -1864,7 +1864,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 6823",
+        "title": "Wikipedia · NGC 6823",
         "url": "https://en.wikipedia.org/wiki/NGC_6823",
         "kind": "reference"
       }
@@ -1933,7 +1933,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 7063",
+        "title": "Wikipedia · NGC 7063",
         "url": "https://en.wikipedia.org/wiki/NGC_7063",
         "kind": "reference"
       }
@@ -1954,7 +1954,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 7160",
+        "title": "Wikipedia · NGC 7160",
         "url": "https://en.wikipedia.org/wiki/NGC_7160",
         "kind": "reference"
       }
@@ -1975,7 +1975,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 7209",
+        "title": "Wikipedia · NGC 7209",
         "url": "https://en.wikipedia.org/wiki/NGC_7209",
         "kind": "reference"
       }
@@ -2060,7 +2060,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 362",
+        "title": "Wikipedia · NGC 362",
         "url": "https://en.wikipedia.org/wiki/NGC_362",
         "kind": "reference"
       }
@@ -2071,7 +2071,7 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "Caldwell 73 has an unusually concentrated core for a Galactic globular cluster. The bright central condensation is the binocular feature; its extended stellar halo is much harder.",
+    "impression": "Caldwell 73, NGC 1851, is a compact globular cluster. In binoculars, look for a small concentrated haze with a brighter center; its faint outer halo is much harder.",
     "finding": "NGC 1851 lies 5.7° south-west of ε Columbae (magnitude 3.9), in Columba.",
     "minAperture": 50,
     "references": [
@@ -2081,7 +2081,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 1851",
+        "title": "Wikipedia · NGC 1851",
         "url": "https://en.wikipedia.org/wiki/NGC_1851",
         "kind": "reference"
       }
@@ -2156,7 +2156,7 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 2547 is a young Vela cluster, roughly thirty million years old. Its population formed in the same era as several nearby southern associations, unlike an ancient globular cluster.",
+    "impression": "NGC 2547 is a young open cluster in Vela. In binoculars, look for a loose scattering of bright stars around the field center, 1.9° south of γ¹ Velorum.",
     "finding": "NGC 2547 lies 1.9° south of γ¹ Velorum (magnitude 4.3), in Vela.",
     "minAperture": 50,
     "references": [
@@ -2166,7 +2166,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 2547",
+        "title": "Wikipedia · NGC 2547",
         "url": "https://en.wikipedia.org/wiki/NGC_2547",
         "kind": "reference"
       }
@@ -2187,7 +2187,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 2546",
+        "title": "Wikipedia · NGC 2546",
         "url": "https://en.wikipedia.org/wiki/NGC_2546",
         "kind": "reference"
       }
@@ -2230,7 +2230,7 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 2808 contains more than a million stars and is one of the Milky Way’s most massive globular clusters. Its ancient stellar populations blend into a compact glow at binocular resolution.",
+    "impression": "NGC 2808 is a compact globular cluster in Carina. Look for a small, concentrated glow about 1.8° northeast of α Volantis; its immense star population blends into that unresolved patch.",
     "finding": "NGC 2808 lies 1.8° north-east of α Volantis (magnitude 4.0), in Carina.",
     "minAperture": 50,
     "references": [
@@ -2240,7 +2240,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 2808",
+        "title": "Wikipedia · NGC 2808",
         "url": "https://en.wikipedia.org/wiki/NGC_2808",
         "kind": "reference"
       }
@@ -2251,7 +2251,7 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 2910 is the small eastern counterpart to the much more conspicuous IC 2391 region in Vela. Check the marked field carefully rather than stopping at the first bright southern cluster.",
+    "impression": "NGC 2910 is a small open cluster in Vela. From κ Velorum, sweep about 2.4° northeast and look for its compact group of stars in the surrounding southern Milky Way.",
     "finding": "NGC 2910 lies 2.4° north-east of κ Velorum (magnitude 2.5), in Vela.",
     "minAperture": 50,
     "references": [
@@ -2277,7 +2277,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 3114",
+        "title": "Wikipedia · NGC 3114",
         "url": "https://en.wikipedia.org/wiki/NGC_3114",
         "kind": "reference"
       }
@@ -2298,7 +2298,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 3201",
+        "title": "Wikipedia · NGC 3201",
         "url": "https://en.wikipedia.org/wiki/NGC_3201",
         "kind": "reference"
       }
@@ -2319,7 +2319,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 3228",
+        "title": "Wikipedia · NGC 3228",
         "url": "https://en.wikipedia.org/wiki/NGC_3228",
         "kind": "reference"
       }
@@ -2340,7 +2340,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 3293",
+        "title": "Wikipedia · NGC 3293",
         "url": "https://en.wikipedia.org/wiki/NGC_3293",
         "kind": "reference"
       }
@@ -2351,7 +2351,7 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "Caldwell 97 contains an unusual population of rapidly rotating, pulsating B-type stars. Their tiny brightness variations are research measurements, not changes to expect during a binocular sweep.",
+    "impression": "Caldwell 97, NGC 3766, is a rich southern open cluster. Sweep from λ Centauri about 1.4° north to find its bright, compact knot of stars; a pulsating B star is a catalog detail, not a binocular effect.",
     "finding": "NGC 3766 lies 1.4° north of λ Centauri (magnitude 3.1), in Centaurus.",
     "minAperture": 50,
     "references": [
@@ -2361,7 +2361,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 3766",
+        "title": "Wikipedia · NGC 3766",
         "url": "https://en.wikipedia.org/wiki/NGC_3766",
         "kind": "reference"
       }
@@ -2382,7 +2382,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 4463",
+        "title": "Wikipedia · NGC 4463",
         "url": "https://en.wikipedia.org/wiki/NGC_4463",
         "kind": "reference"
       }
@@ -2393,7 +2393,7 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "Caldwell 98 lies beyond the Coalsack dark nebula in Crux. Its star grouping is seen through this dusty line of sight, beside one of the southern sky’s most prominent dark clouds.",
+    "impression": "Caldwell 98, NGC 4609, lies beside the Coalsack in Crux. Look for a small grouping of stars against the dark nebula’s sharply reduced star field.",
     "finding": "NGC 4609 lies 1.8° east of α² Crucis (magnitude 1.7), in Crux.",
     "minAperture": 50,
     "references": [
@@ -2403,7 +2403,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 4609",
+        "title": "Wikipedia · NGC 4609",
         "url": "https://en.wikipedia.org/wiki/NGC_4609",
         "kind": "reference"
       }
@@ -2456,7 +2456,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 5316",
+        "title": "Wikipedia · NGC 5316",
         "url": "https://en.wikipedia.org/wiki/NGC_5316",
         "kind": "reference"
       }
@@ -2467,7 +2467,7 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 5460 is a loose group nearly two degrees east-southeast of Zeta Centauri. Use that bright reference to recognise its scattered outline rather than searching for a globular-like core.",
+    "impression": "NGC 5460 is a loose cluster about 2¼° east-southeast of Zeta Centauri. Use that bright reference to recognize its scattered outline rather than searching for a globular-like core.",
     "finding": "NGC 5460 lies 2.3° south-east of ζ Centauri (magnitude 2.5), in Centaurus.",
     "minAperture": 50,
     "references": [
@@ -2477,7 +2477,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 5460",
+        "title": "Wikipedia · NGC 5460",
         "url": "https://en.wikipedia.org/wiki/NGC_5460",
         "kind": "reference"
       }
@@ -2498,7 +2498,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 5617",
+        "title": "Wikipedia · NGC 5617",
         "url": "https://en.wikipedia.org/wiki/NGC_5617",
         "kind": "reference"
       }
@@ -2519,7 +2519,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 5662",
+        "title": "Wikipedia · NGC 5662",
         "url": "https://en.wikipedia.org/wiki/NGC_5662",
         "kind": "reference"
       }
@@ -2540,7 +2540,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 5822",
+        "title": "Wikipedia · NGC 5822",
         "url": "https://en.wikipedia.org/wiki/NGC_5822",
         "kind": "reference"
       }
@@ -2551,7 +2551,7 @@
     "family": "cluster",
     "level": "easy",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "Caldwell 95 straddles the official boundary between Norma and Triangulum Australe. Its brightest member, MQ Trianguli Australis, is a blue straggler; the constellation boundary does not divide the cluster physically.",
+    "impression": "Caldwell 95, NGC 6025, is a broad southern cluster. Sweep about 3° north of Betria and look for a loose scatter of stars rather than a compact knot.",
     "finding": "NGC 6025 lies 3.1° north of Betria (magnitude 2.9), in Triangulum Australe.",
     "minAperture": 50,
     "references": [
@@ -2561,7 +2561,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 6025",
+        "title": "Wikipedia · NGC 6025",
         "url": "https://en.wikipedia.org/wiki/NGC_6025",
         "kind": "reference"
       }
@@ -2582,7 +2582,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 6067",
+        "title": "Wikipedia · NGC 6067",
         "url": "https://en.wikipedia.org/wiki/NGC_6067",
         "kind": "reference"
       }
@@ -2603,7 +2603,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 6087",
+        "title": "Wikipedia · NGC 6087",
         "url": "https://en.wikipedia.org/wiki/NGC_6087",
         "kind": "reference"
       }
@@ -2614,7 +2614,7 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "Caldwell 75 is a broad southern Scorpius cluster, closer to us than many dense Milky Way groups. Give its scattered members room in the field rather than concentrating only on the centre.",
+    "impression": "Caldwell 75, NGC 6124, is a broad Scorpius cluster. Give its scattered members room in a wide field and compare the bright stars near the center with the looser outskirts.",
     "finding": "NGC 6124 lies 5.4° south-east of θ Lupi (magnitude 4.2), in Scorpius.",
     "minAperture": 50,
     "references": [
@@ -2624,7 +2624,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 6124",
+        "title": "Wikipedia · NGC 6124",
         "url": "https://en.wikipedia.org/wiki/NGC_6124",
         "kind": "reference"
       }
@@ -2667,7 +2667,7 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "NGC 6208 is over a billion years old, substantially older than many bright southern open clusters. Its surviving stellar population belongs to an evolved group rather than a young star-forming region.",
+    "impression": "NGC 6208 is a sparse open cluster in Ara. Sweep about 1.6° southwest of ε¹ Arae and look for a loose group of faint stars; its old age is not visible as a separate feature.",
     "finding": "NGC 6208 lies 1.6° south-west of ε¹ Arae (magnitude 4.1), in Ara.",
     "minAperture": 50,
     "references": [
@@ -2677,7 +2677,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 6208",
+        "title": "Wikipedia · NGC 6208",
         "url": "https://en.wikipedia.org/wiki/NGC_6208",
         "kind": "reference"
       }
@@ -2704,7 +2704,7 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "IC 4651 is an intermediate-age cluster whose stars are richer in heavy elements than the Sun. Much of its original population has escaped or evolved into remnants, leaving the visible group we see today.",
+    "impression": "IC 4651 is a rich open cluster in Ara. From α Arae, sweep about 1.2° east and look for a scattered group of stars; its metal-rich population is an astrophysical detail rather than a visible color contrast.",
     "finding": "IC 4651 lies 1.2° west of α Arae (magnitude 3.0), in Ara.",
     "minAperture": 50,
     "references": [
@@ -2714,7 +2714,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · IC 4651",
+        "title": "Wikipedia · IC 4651",
         "url": "https://en.wikipedia.org/wiki/IC_4651",
         "kind": "reference"
       }
@@ -2741,7 +2741,7 @@
     "family": "cluster",
     "level": "dark",
     "equipment": "7×50 / 10×50; southern sky",
-    "impression": "Caldwell 78 is a very old, metal-poor globular orbiting in the inner Milky Way. Its concentrated light is the binocular feature; individual member stars and its blue stragglers require much more resolving power.",
+    "impression": "Caldwell 78, NGC 6541, is a very old globular cluster in Corona Australis. Look for its small concentrated glow; individual stars and blue stragglers need more resolving power.",
     "finding": "NGC 6541 lies 4.1° north-west of α Telescopii (magnitude 3.5), in Corona Australis.",
     "minAperture": 50,
     "references": [
@@ -2751,7 +2751,7 @@
         "kind": "reference"
       },
       {
-        "title": "Object background and membership · NGC 6541",
+        "title": "Wikipedia · NGC 6541",
         "url": "https://en.wikipedia.org/wiki/NGC_6541",
         "kind": "reference"
       }
