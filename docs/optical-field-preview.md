@@ -47,3 +47,27 @@ CRVAL2 = 41.2666667
 ## Verification
 
 Six algorithm tests cover exact TAN scaling, unchanged image proportions, circle/rectangle aspect, M31 and M45 metadata, RA wrapping, a high-declination target, missing metadata, invalid fields and FITS reference-pixel alignment. Browser test: `script/review-round5/photo-optics.cjs` measures actual SVG image dimensions at 7°, 3.7°, 1° and 0.2° and verifies apply behavior, orientation controls, missing-image-area copy and phone layout.
+
+## Binocular star-field tab
+
+The dialog now offers **Photograph** and **Binocular star field** tabs. Both
+use the same TAN center, angular opening, width and mirror/rotation controls.
+The field is clipped to its actual circular or rectangular opening. Stars come
+from the bundled Hipparcos catalog to magnitude 8, with optional Tycho-2 reference
+fields to VT 10.5 within 8° of each target. There are no decorative random stars.
+Dot radii and opacity follow catalog magnitude; color uses catalog B−V through
+the same stellar appearance model as the planetarium. Dot size is not a resolved
+stellar diameter. The guide outline is a catalog extent, not simulated nebulosity.
+
+Controls offer a magnitude-depth slider, named-star labels, and an object-outline
+and marker toggle. The selected observing depth seeds the slider; previewing
+another depth does not change global instrument settings. After catalogs load,
+switching views can reuse them offline. Missing detailed fields are identified;
+the bright catalog remains available. A loading/error state replaces silent blank
+fields. Keyboard Left/Right and Home/End change tabs.
+
+`star-field.cjs` checks actual rendered path centers against independently projected
+catalog vectors for M31, M45, M42 and NGC7209 at desktop, 710px and phone widths,
+at magnitude 8 and 10.5. It verifies clipping, color diversity, shared controls,
+o horizontal overflow and offline reuse. Algorithm tests additionally cover RA
+wrap, polar geometry, magnitude limits and rotated rectangular fields.

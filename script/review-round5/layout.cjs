@@ -141,6 +141,15 @@ async function catalogChecks(browser) {
   } finally { await context.close(); }
 }
 
+async function binocularToolbarChecks(browser) {
+ const {context,page}=await browserPage(browser,{width:1440,height:900});
+ try{
+  await page.getByTestId('tab-binocular').click();const search=page.getByRole('combobox',{name:'Search binocular targets',exact:true});await search.waitFor();
+  const result=await search.evaluate(input=>{const label=input.closest('.catalog-combobox').querySelector('label');const range=document.createRange();range.selectNodeContents(label);const select=document.querySelector('[aria-label="Sort binocular targets"]'),style=getComputedStyle(select);return{label:label.textContent,lines:range.getClientRects().length,sortBackground:style.backgroundColor,sortColor:style.color};});
+  assert.equal(result.lines,1);const rgb=result.sortBackground.match(/\d+/g).map(Number);assert(rgb.slice(0,3).every(v=>v<100));console.log('BINOCULAR TOOLBAR',JSON.stringify(result));
+ }finally{await context.close();}
+}
+
 async function hopChecks(browser) {
   const { context, page } = await browserPage(browser, { width: 1024, height: 768 }, '2026-11-09T06:00:00Z');
   try {
@@ -154,8 +163,9 @@ async function hopChecks(browser) {
       const optionName = await option.locator('strong').textContent();
       await option.click();
       await page.waitForTimeout(1000);
-      for (const width of [360, 393]) {
+      for (const width of [360, 390, 393]) for(const size of ['medium','large']) {
         await page.setViewportSize({ width, height: 852 });
+        await page.evaluate(size=>document.documentElement.dataset.textSize=size,size);await page.waitForTimeout(100);
         const actions = await page.locator('.hop-target-bar').evaluate(bar => {
           const box = bar.getBoundingClientRect();
           return { box: box.toJSON(), buttons: [...bar.querySelectorAll('button')].map(button => {
@@ -165,8 +175,9 @@ async function hopChecks(browser) {
           }) };
         });
         assert(actions.buttons.every(button => button.textRects.every(rect => rect.left >= button.box.left - 1 && rect.right <= button.box.right + 1 && rect.top >= button.box.top - 1 && rect.bottom <= button.box.bottom + 1)), JSON.stringify({ destination, width, actions }));
-        console.log(JSON.stringify({ check: 'hop-phone-actions', destination, width, actions }));
+        console.log(JSON.stringify({ check: 'hop-phone-actions', destination, width, size, actions }));
       }
+      await page.evaluate(()=>document.documentElement.dataset.textSize='medium');
       for (const [width, height] of [[900, 800], [1000, 800], [1024, 768], [1100, 800]]) {
         await page.setViewportSize({ width, height });
         await page.waitForTimeout(250);
@@ -187,6 +198,6 @@ async function hopChecks(browser) {
 
 (async () => {
   const browser = await chromium.launch({ executablePath: '/usr/bin/chromium', args: ['--no-sandbox', '--disable-dev-shm-usage'] });
-  try { await moonHitChecks(browser); await clockChecks(browser); await catalogChecks(browser); await hopChecks(browser); console.log('ROUND-5 LAYOUT CHECKS PASS'); }
+  try { await moonHitChecks(browser); await clockChecks(browser); await catalogChecks(browser); await binocularToolbarChecks(browser); await hopChecks(browser); console.log('ROUND-5 LAYOUT CHECKS PASS'); }
   finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

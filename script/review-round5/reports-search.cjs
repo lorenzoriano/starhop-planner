@@ -205,6 +205,15 @@ function fixture() {
     assert(Math.abs(finder.M42.ra - 83.8220833) < 0.001 && Math.abs(finder.M42.dec + 5.3911111) < 0.001, 'M42 finder position should match reviewed optical field');
     assert(Math.abs(finder.M103.ra - 23.3391667) < 0.001 && Math.abs(finder.M103.dec - 60.6588889) < 0.001);
     assert(Math.abs(finder.NGC884.ra - 35.5841667) < 0.001 && Math.abs(finder.NGC884.dec - 57.1488889) < 0.001);
+    // #50: predawn forecast actions belong to the preceding observing night.
+    await page.getByTestId('tab-tonight').click();
+    await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('starhop-settings-v2'));Object.assign(s,{date:'2026-10-21',time:'03:00',timeMode:'planned',plannedAt:'2026-10-21T10:00:00Z'});localStorage.setItem('starhop-settings-v2',JSON.stringify(s));});
+    await page.reload();await page.locator('.weather-overview-cache').waitFor();
+    const forecast=page.getByTestId('weather-panel');await forecast.evaluate(e=>e.open=true);
+    await forecast.locator('.weather-window .text-action').click();
+    const planned=await page.evaluate(()=>JSON.parse(localStorage.getItem('starhop-settings-v2')).plannedAt);
+    assert(Date.parse(planned)>=Date.parse('2026-10-20T19:00:00Z')&&Date.parse(planned)<Date.parse('2026-10-21T19:00:00Z'),'Predawn forecast jumped to a different observing night: '+planned);
+    console.log('PREDAWN FORECAST PLAN',JSON.stringify({selected:'2026-10-21T10:00:00Z',planned,fixture:true,observingNight:'Oct 20'}));
     console.log('PAGE ERRORS', JSON.stringify(errors)); assert.deepEqual(errors, []);
     console.log('REPORTS SEARCH PASS');
   } finally { await context.close(); await browser.close(); }
