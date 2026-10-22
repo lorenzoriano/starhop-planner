@@ -21,10 +21,14 @@ export function calibratedOpticalPhoto(id:string):CalibratedPhoto|null {
 
 /** Uniform image scaling on its calibrated TAN plane. The optical opening stays
  * fixed on screen while a smaller angular field magnifies the survey photo. */
-export function photoFrameGeometry(photo:CalibratedPhoto,fieldWidth:number,fieldHeight:number,shape:'circle'|'rectangle',opening=420) {
+export function opticalOpening(fieldWidth:number,fieldHeight:number,shape:'circle'|'rectangle',opening=420) {
   if(![fieldWidth,fieldHeight].every(angle=>Number.isFinite(angle)&&angle>0&&angle<90))throw new RangeError('Optical field must be between 0 and 90 degrees.');
   const tangentWidth=2*Math.tan(radians(fieldWidth/2)),tangentHeight=shape==='circle'?tangentWidth:2*Math.tan(radians(fieldHeight/2));
   const scale=opening/Math.max(tangentWidth,tangentHeight),width=tangentWidth*scale,height=tangentHeight*scale;
+  return {width,height,scale};
+}
+export function photoFrameGeometry(photo:CalibratedPhoto,fieldWidth:number,fieldHeight:number,shape:'circle'|'rectangle',opening=420) {
+  const {width,height,scale}=opticalOpening(fieldWidth,fieldHeight,shape,opening);
   const imageWidth=2*Math.tan(radians(photo.fieldWidth/2))*scale,imageHeight=imageWidth*photo.height/photo.width;
   // hips2fits uses FITS CRPIX=(width/2,height/2). After north-up raster export,
   // the reference lies at (width/2-.5,height/2+.5) in pixel-edge coordinates.

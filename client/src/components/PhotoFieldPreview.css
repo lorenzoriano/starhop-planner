@@ -17,3 +17,11 @@
 @media(max-width:480px){.photo-optics-dialog{padding:18px;gap:10px}.photo-optics-field{max-height:42dvh}.target-photo-framing-toggle{top:10px;right:10px;font-size:13px;padding:6px 9px}}
 
 .target-photo-framing-toggle.photo-optics-inline{position:static;align-self:flex-start;justify-self:start;margin:12px 0;z-index:auto}
+.photo-optics-tabs{display:flex;gap:6px;border-bottom:1px solid #34505b;padding-bottom:8px}
+.photo-optics-tabs button{flex:1;min-height:44px;padding:8px 10px;border:1px solid transparent;border-radius:6px;color:#9db5be;font-size:14px;line-height:1.4}
+.photo-optics-tabs button[aria-selected=true]{color:#e0ebe3;border-color:#729d97;background:#1c3d45}
+.eyepiece-star-controls{display:flex;gap:10px 16px;flex-wrap:wrap;padding:10px 0}
+.eyepiece-star-controls label{display:flex;align-items:center;gap:7px;min-height:44px;font-size:13px;flex-wrap:wrap}
+.eyepiece-star-controls input[type=range]{width:130px;min-height:28px;accent-color:#a5cbbb}
+.eyepiece-star-controls output{font-variant-numeric:tabular-nums;min-width:28px}
+.binocular-eyepiece .photo-optics-note{margin-top:8px}

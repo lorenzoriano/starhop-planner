@@ -1315,7 +1315,7 @@ export default function PlannerPage() {
                 {selected && selection ? (
                   <section className="panel featured-object" ref={featuredObjectRef}>
                     <div className="featured-art">
-                      <TargetPhoto target={selected} opticalField={{width:fov,height:shape==='circle'?fov:fovHeight,shape,label:mode==='binocular'?`${settings.binocularMagnification}×${settings.binocularAperture} binoculars`:'Telescope',onChange:width=>update({fov:width,...(shape==='circle'?{fovHeight:width,binocularFov:mode==='binocular'?width:settings.binocularFov}:{})})}}/>
+                      <TargetPhoto target={selected} opticalField={{width:fov,height:shape==='circle'?fov:fovHeight,shape,limitingMag,label:mode==='binocular'?`${settings.binocularMagnification}×${settings.binocularAperture} binoculars`:'Telescope',onChange:width=>update({fov:width,...(shape==='circle'?{fovHeight:width,binocularFov:mode==='binocular'?width:settings.binocularFov}:{})})}}/>
                       <span className="art-badge">SELECTED · {targetDesignation(selected)}</span>
                     </div>
                     <div className="featured-body">
