@@ -730,7 +730,7 @@ export function SkyChart({
   const placedConstellationLabels=useMemo(()=>{
     void dragVersion;
     if(isDragging.current)return constellationCache.current;
-    const occupied=[...reservedLabels,...labels.map(label=>label.box),...plottedStars.filter(item=>item.star.type==='star'&&item.star.mag<=2).flatMap(item=>{const box=constellationSymbolBox(item.star,item.point,screenUnit,item.isTarget);return box?[box]:[];})];
+    const occupied=[...reservedLabels,...labels.map(label=>label.box),...plottedStars.flatMap(item=>{const box=constellationSymbolBox(item.star,item.point,screenUnit,item.isTarget);return box?[box]:[];})];
     const accepted:Array<typeof constellationLabels[number]&{box:LabelBox}>=[];
     const font=Math.max(12,labelSize*.85)*screenUnit;
     // Uppercase names vary considerably in width (e.g. SERPENS). Measure
