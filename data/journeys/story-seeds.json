@@ -1,0 +1,1471 @@
+{
+ "version": "kb-v1+93ae671b75",
+ "generatedBy": "script/journeys/build_kb.ts",
+ "notes": "Story seeds from the curated batch files, normalised (id, batch, kind, archetypes, stops, summary, sourceIds; other fields under extra). Ideas for templates, judge slates and QA, not runtime data.",
+ "seeds": [
+  {
+   "id": "autumn-perseus-age-ladder",
+   "batch": "autumn",
+   "kind": "dso",
+   "file": "script/journeys/curated/autumn-dso.json",
+   "title": "Perseus age ladder: from a glowing nursery to a fading family",
+   "archetypes": [
+    "A1",
+    "A5",
+    "A6"
+   ],
+   "stops": [
+    "Mel15",
+    "NGC869",
+    "NGC884",
+    "Stock2",
+    "Mel20",
+    "M34",
+    "NGC752"
+   ],
+   "summary": "Start at the Heart Nebula cluster (~3.5 Myr, still lighting its cloud), move to the Double Cluster (~14 Myr, red supergiants already present), contrast it with nearby-but-unrelated Stock 2, then step down the ladder Alpha Persei (~90 Myr) → M34 (~220 Myr) → NGC 752 (~1.3 Gyr, no blue stars left). The twist is Stock 2: two degrees from the Double Cluster yet six times closer and twenty times older.",
+   "sourceIds": [
+    "astronomy-sparkling",
+    "astronomy-queenly",
+    "sung2017-ic1805",
+    "currie2010",
+    "stauffer1999-aper",
+    "meibom2011-m34",
+    "agueros2018-n752"
+   ],
+   "extra": {
+    "region": "Cassiopeia–Perseus–Andromeda along the Perseus arm (span about 25°)"
+   }
+  },
+  {
+   "id": "autumn-cassiopeia-clusters",
+   "batch": "autumn",
+   "kind": "dso",
+   "file": "script/journeys/curated/autumn-dso.json",
+   "title": "Queen of clusters: young sparkle and an old rose in Cassiopeia",
+   "archetypes": [
+    "A6",
+    "A5"
+   ],
+   "stops": [
+    "NGC457",
+    "M103",
+    "NGC663",
+    "M52",
+    "NGC7789",
+    "NGC129"
+   ],
+   "summary": "Follows Harrington's Cassiopeia binocular tour: the Owl Cluster and its debated supergiant \"eye\", the young Cas OB8 clusters, then M52 (~80 Myr) beside Caroline's Rose (~1.6 Gyr) at similar distances as the age contrast, ending at NGC 129, whose Cepheid links cluster ages to the cosmic distance scale.",
+   "sourceIds": [
+    "astronomy-queenly",
+    "st-feb2022-phicas",
+    "hr24",
+    "apod-ngc7789-2017",
+    "arp1959-dlcas"
+   ],
+   "extra": {
+    "region": "Cassiopeia W (span about 15°)"
+   }
+  },
+  {
+   "id": "autumn-how-far",
+   "batch": "autumn",
+   "kind": "dso",
+   "file": "script/journeys/curated/autumn-dso.json",
+   "title": "How far can your eyes reach?",
+   "archetypes": [
+    "A3",
+    "A4"
+   ],
+   "stops": [
+    "Mel20",
+    "NGC869",
+    "M31",
+    "M32",
+    "M33"
+   ],
+   "summary": "A light-travel ladder: Alpha Persei (566 ly) → Double Cluster (7,400 ly) → Andromeda (2.5 Mly, Hubble's 1923 Cepheid) → its satellite M32 in the same field → M33 as the dark-sky payoff whose low surface brightness teaches night vision. Uses EarthSky's Great Square star-hop to M31.",
+   "sourceIds": [
+    "earthsky-m31-hop",
+    "li2021-m31",
+    "breuval2023-m33",
+    "st-hubble-v1",
+    "nasa-hubble-m31",
+    "nasa-hubble-m33"
+   ],
+   "extra": {
+    "region": "Perseus–Andromeda–Triangulum (span about 30°)"
+   }
+  },
+  {
+   "id": "autumn-cepheus-nursery",
+   "batch": "autumn",
+   "kind": "dso",
+   "file": "script/journeys/curated/autumn-dso.json",
+   "title": "Cepheus: a nursery, its older sibling and a doomed giant",
+   "archetypes": [
+    "A1"
+   ],
+   "stops": [
+    "NGC7160",
+    "IC1396",
+    "STAR-MuCep",
+    "DS-DeltaCep"
+   ],
+   "summary": "Cepheus OB2 in three generations: NGC 7160 (~10 Myr, gas gone), IC 1396/Tr 37 (~4 Myr, still ionizing its cloud, with triggered protostars in the Elephant's Trunk), then the Garnet Star as the red-supergiant fate of heavy stars (membership debated), and δ Cephei as a coda about pulsating supergiants as yardsticks.",
+   "sourceIds": [
+    "sicilia2005-cepob2",
+    "pelayo2023-ic1396",
+    "reach2004-ic1396a",
+    "gaia-cepob2-2023"
+   ],
+   "extra": {
+    "region": "Cepheus (span about 8°)"
+   }
+  },
+  {
+   "id": "autumn-halo-and-helix",
+   "batch": "autumn",
+   "kind": "dso",
+   "file": "script/journeys/curated/autumn-dso.json",
+   "title": "Ancient swarms and a gentle death (southern autumn sky)",
+   "archetypes": [
+    "A8",
+    "A11"
+   ],
+   "stops": [
+    "M30",
+    "M2",
+    "M15",
+    "NGC7293"
+   ],
+   "summary": "Three halo globulars about 12–13 Gyr old with different heavy-element contents, M15 hiding the planetary nebula Pease 1, then the Helix as a close-up of the same gentle death awaiting the Sun. Needs a dark sky; the Helix is a challenge stop.",
+   "sourceIds": [
+    "vandenberg2013",
+    "harris2010",
+    "astronomy-pease1",
+    "apod-helix-2003",
+    "odell2004-helix"
+   ],
+   "extra": {
+    "region": "Capricornus–Aquarius–Pegasus (long arc, about 40°; split at M2 if the region cap is tight)"
+   }
+  },
+  {
+   "id": "autumn-variables-circuit",
+   "batch": "autumn",
+   "kind": "star",
+   "file": "script/journeys/curated/autumn-stars.json",
+   "title": "Stars that change: a Cepheus–Cassiopeia–Perseus circuit",
+   "archetypes": [
+    "A10",
+    "A2"
+   ],
+   "stops": [
+    "DS-DeltaCep",
+    "STAR-MuCep",
+    "HR9045",
+    "HR264",
+    "STAR-Algol",
+    "HR1220",
+    "DS-AlmaakDS"
+   ],
+   "summary": "Start with δ Cephei and the observing task EarthSky suggests: judge it against ζ and ε Cephei. Move to the Garnet Star (slow, irregular), ρ Cas (outbursts), γ Cas (a disk that comes and goes), and finish on Algol, with Almach and ε Persei as the brightness yardsticks from EarthSky’s Algol guide. Comparison method from the BAA Variable Star Section beginners’ page. Payoff: one region, four different reasons a star changes.",
+   "sourceIds": [
+    "earthsky-deltacep",
+    "earthsky-algol",
+    "baa-vss-beginners"
+   ],
+   "extra": {
+    "region": "Cepheus, Cassiopeia, Perseus (about 25° radius around Cassiopeia)"
+   }
+  },
+  {
+   "id": "autumn-how-big",
+   "batch": "autumn",
+   "kind": "star",
+   "file": "script/journeys/curated/autumn-stars.json",
+   "title": "How big can a star be? Giants of Cepheus",
+   "archetypes": [
+    "A7",
+    "A1"
+   ],
+   "stops": [
+    "HR8622",
+    "IC1396",
+    "STAR-MuCep",
+    "HR8383",
+    "HD212466",
+    "HR8162"
+   ],
+   "summary": "A hot, heavy young star (10 Lac) and a nursery (IC 1396) set up the question; the Garnet Star, VV Cephei and RW Cephei answer it with three of the largest stars in binocular reach, each measured a different way (spectra, eclipses, interferometer images). Coda: Alderamin, a small star squashed by its spin. Ground: APOD on μ Cep, Baines et al. 2021, Anugu et al. 2023.",
+   "sourceIds": [
+    "apod-mucep",
+    "baines2021",
+    "anugu2023",
+    "aschenbrenner2023"
+   ],
+   "extra": {
+    "region": "Cepheus and Lacerta (about 20° radius)"
+   }
+  },
+  {
+   "id": "autumn-other-worlds",
+   "batch": "autumn",
+   "kind": "star",
+   "file": "script/journeys/curated/autumn-stars.json",
+   "title": "Worlds around other suns",
+   "archetypes": [
+    "A6",
+    "A4"
+   ],
+   "stops": [
+    "HR8729",
+    "HD209458",
+    "HR458",
+    "M31"
+   ],
+   "summary": "51 Pegasi (the first planet found around a Sun-like star) → HD 209458 (the first transit) → υ Andromedae (the first multi-planet system) → the Andromeda Galaxy as the scale payoff. A variant opens on Errai, the 1988 hint that came too early. NASA’s exoplanet page for 51 Peg b and the discovery papers supply the facts.",
+   "sourceIds": [
+    "nasa-51pegb",
+    "mayor1995",
+    "charbonneau2000",
+    "butler1999",
+    "campbell1988"
+   ],
+   "extra": {
+    "region": "Pegasus and Andromeda (about 25° radius)"
+   }
+  },
+  {
+   "id": "autumn-southern-rings",
+   "batch": "autumn",
+   "kind": "star",
+   "file": "script/journeys/curated/autumn-stars.json",
+   "title": "Rings at both ends of life: Fomalhaut, the Helix and the dim neighbors",
+   "archetypes": [
+    "A6",
+    "A3"
+   ],
+   "stops": [
+    "STAR-Fomalhaut",
+    "HD217987",
+    "HD202560",
+    "NGC7293"
+   ],
+   "summary": "Fomalhaut’s debris rings (Webb) against the Helix, a dying star’s shell, with two of the nearest red dwarfs as the twist: closer than Fomalhaut but invisible to the eye. EarthSky’s Fomalhaut guide supplies the find-it route from the Great Square; NASA’s Webb release the disk story.",
+   "sourceIds": [
+    "earthsky-fomalhaut",
+    "nasa-webb-fomalhaut",
+    "mamajek2013"
+   ],
+   "extra": {
+    "region": "Piscis Austrinus and Aquarius (about 20° radius; best below 40° N)"
+   }
+  },
+  {
+   "id": "seed.carina-life-story",
+   "batch": "southern",
+   "kind": "dso",
+   "file": "script/journeys/curated/southern-dso.json",
+   "title": "Carina: from dark cloud to old family",
+   "archetypes": [
+    "A1"
+   ],
+   "stops": [
+    "DN-Coalsack",
+    "IC2944",
+    "NGC3372",
+    "NGC3293",
+    "IC2602",
+    "NGC3532"
+   ],
+   "summary": "A starless dust cloud (Coalsack) → a nursery eroding its globules (IC 2944) → the great Carina nursery lit by Eta Carinae → a sibling that has cleared its gas (NGC 3293) → a 46 Myr family on our doorstep (IC 2602, also a 15× depth jump) → a 300 Myr family with orange giants (NGC 3532). Span about 18°.",
+   "sourceIds": [
+    "eso-b06",
+    "eso1135",
+    "smith2006",
+    "dobbie2010",
+    "fritzewski2019",
+    "al-southern-binocular"
+   ],
+   "extra": {
+    "season": "southern autumn (Feb–May evenings)",
+    "twist": "IC 2602 sits beside the Carina Nebula on the sky but is about fifteen times nearer."
+   }
+  },
+  {
+   "id": "seed.crux-centaurus-depth",
+   "batch": "southern",
+   "kind": "dso",
+   "file": "script/journeys/curated/southern-dso.json",
+   "title": "Around the Southern Cross: how far is far?",
+   "archetypes": [
+    "A3"
+   ],
+   "stops": [
+    "HR5459",
+    "NGC5617",
+    "DN-Coalsack",
+    "NGC4755",
+    "NGC5139",
+    "NGC5128"
+   ],
+   "summary": "The nearest star system (α Cen, about 4 ly) → a cluster 1.2° away but 1,600× farther (NGC 5617) → a dust cloud at about 500 ly → the Jewel Box at about 6,400 ly → ω Cen at about 17,700 ly → Centaurus A at about 12 million ly. A distance ladder of six powers of ten inside roughly 30° of sky.",
+   "sourceIds": [
+    "hr24",
+    "dharmawardena2023",
+    "eso0940",
+    "bv21",
+    "harris2010cena"
+   ],
+   "extra": {
+    "season": "southern autumn–winter",
+    "twist": "Mimosa looks like the Jewel Box’s big sister but is a foreground star."
+   }
+  },
+  {
+   "id": "seed.magellanic-depth-illusion",
+   "batch": "southern",
+   "kind": "dso",
+   "file": "script/journeys/curated/southern-dso.json",
+   "title": "The Magellanic depth illusion",
+   "archetypes": [
+    "A3"
+   ],
+   "stops": [
+    "NGC104",
+    "SMC",
+    "NGC362",
+    "LMC"
+   ],
+   "summary": "Two globulars that seem to sit on the Small Cloud are 7–14× nearer; then the larger Cloud, measured to 1% with eclipsing binaries. Doc 03 story A4.",
+   "sourceIds": [
+    "bv21",
+    "graczyk2020",
+    "pietrzynski2019",
+    "leavitt1912"
+   ],
+   "extra": {
+    "season": "southern spring (Sep–Dec evenings)",
+    "twist": "Leavitt’s Cepheids in the SMC are how the distance ladder began."
+   }
+  },
+  {
+   "id": "seed.puppis-depth-stack",
+   "batch": "southern",
+   "kind": "dso",
+   "file": "script/journeys/curated/southern-dso.json",
+   "title": "Puppis: same field, different worlds",
+   "archetypes": [
+    "A6"
+   ],
+   "stops": [
+    "M47",
+    "M46",
+    "NGC2438",
+    "NGC2451",
+    "NGC2477"
+   ],
+   "summary": "M47 (470 pc, ~110 Myr) beside M46 (1.55 kpc, ~430 Myr) with a planetary nebula that is not a member; then NGC 2451, really two clusters at 190 and 368 pc, beside rich NGC 2477 at 1.38 kpc. Doc 03 story W5 extended south. NGC 2438 is a photo-only stop.",
+   "sourceIds": [
+    "hr24",
+    "kiss2008",
+    "chornay2021",
+    "roeser1994"
+   ],
+   "extra": {
+    "season": "southern summer / northern late winter",
+    "twist": "Every apparent group here is a depth stack."
+   }
+  },
+  {
+   "id": "southern-cross-family-and-impostor",
+   "batch": "southern",
+   "kind": "star",
+   "file": "script/journeys/curated/southern-stars.json",
+   "title": "The Southern Cross: a family, an impostor and our nearest neighbour",
+   "archetypes": [
+    "A5",
+    "A3"
+   ],
+   "stops": [
+    "HR4853",
+    "NGC4755",
+    "HR4656",
+    "HR4730",
+    "HR4763",
+    "HR5267",
+    "HR5459"
+   ],
+   "sourceIds": [
+    "al-southern-binocular",
+    "preibisch2008",
+    "hip2007",
+    "pigulski2016",
+    "kervella2017"
+   ],
+   "extra": {
+    "drivingQuestion": "Are the stars of a constellation really neighbours?",
+    "notes": "Mimosa (probable LCC, ~16 Myr) → Jewel Box 1° away (same age, 23× farther) → δ Cru (secure LCC member) → Acrux (debated member) → Gacrux twist (foreground red giant, 89 ly vs ~280–460 ly) → Hadar → Alpha Centauri payoff (4.4 ly, LINE_OF_SIGHT with Hadar). Everything within ~12° of Crux; Coalsack can be a coda. Mirrors the Southern Cross / Pointers / Jewel Box core of the Astronomical League Southern Skies binocular list."
+   }
+  },
+  {
+   "id": "carina-heavyweights",
+   "batch": "southern",
+   "kind": "star",
+   "file": "script/journeys/curated/southern-stars.json",
+   "title": "Carina and Vela: how heavy stars live and die",
+   "archetypes": [
+    "A8",
+    "A6"
+   ],
+   "stops": [
+    "HR4199",
+    "IC2602",
+    "HR4210",
+    "NGC3372",
+    "HR3165",
+    "HR3207",
+    "HR3634"
+   ],
+   "sourceIds": [
+    "smith2006",
+    "heic1912",
+    "howarth2019",
+    "north2007",
+    "dobbie2010"
+   ],
+   "extra": {
+    "drivingQuestion": "What happens to the heaviest stars?",
+    "notes": "θ Car and the Southern Pleiades (a ~46 Myr family) → η Car (twist: the fainter star is 16× farther and far more powerful; LBV, Great Eruption) → Carina Nebula it lights → ζ Pup (O supergiant, runaway, 40,000 K) → γ² Vel (Wolf–Rayet stripped core; binocular double) → Suhail (cool red supergiant, alternative ending). Region spans ~35°; split into a Carina half and a Puppis–Vela half if the cap is tight."
+   }
+  },
+  {
+   "id": "suns-past-present-future",
+   "batch": "southern",
+   "kind": "star",
+   "file": "script/journeys/curated/southern-stars.json",
+   "title": "The Sun’s life story, told by its southern cousins",
+   "archetypes": [
+    "A1",
+    "A8"
+   ],
+   "stops": [
+    "HR2020",
+    "HR5459",
+    "HR98",
+    "HR2748",
+    "NGC2438"
+   ],
+   "sourceIds": [
+    "mamajek2014",
+    "portodemello2008",
+    "metcalfe2024-bhyi",
+    "kervella2016-l2pup",
+    "eso1523"
+   ],
+   "extra": {
+    "drivingQuestion": "What will happen to the Sun?",
+    "notes": "β Pic (a 23 Myr star still making planets: the Sun’s infancy) → α Cen A (a near-solar twin, 4.5–5.3 Gyr: the Sun today) → β Hyi (6.5 Gyr subgiant: the Sun in ~2 Gyr) → L² Pup (AGB, 0.66 M☉, ESO’s ‘glimpse of the Sun’s future’) → NGC 2438 (planetary nebula, challenge). Too spread for one region; best as two regional variants: Pictor–Puppis (β Pic, L² Pup, NGC 2438) and Centaurus–Hydrus (α Cen, β Hyi)."
+   }
+  },
+  {
+   "id": "dove-and-easel-strangers",
+   "batch": "southern",
+   "kind": "star",
+   "file": "script/journeys/curated/southern-stars.json",
+   "title": "Strangers near Canopus: a runaway, a halo visitor and a planet nursery",
+   "archetypes": [
+    "A6",
+    "A3"
+   ],
+   "stops": [
+    "HR2326",
+    "HR2020",
+    "HD33793",
+    "NGC1851",
+    "HR1956",
+    "HR1996"
+   ],
+   "sourceIds": [
+    "domiciano2021",
+    "mamajek2014",
+    "anglada2014",
+    "gualandris2004",
+    "aschenbrenner2023"
+   ],
+   "extra": {
+    "drivingQuestion": "Do all stars belong where we see them?",
+    "notes": "Canopus (bright because powerful, 310 ly) → β Pic 6° away (5× closer, fainter; 23 Myr with imaged planets) → Kapteyn’s Star (challenge; ancient halo red dwarf, 8.6″/yr) → NGC 1851 5° away (a whole ball of halo stars) → Phact → μ Col 2° away (runaway ejected from the Orion Nebula Cluster 2.5 Myr ago). All within ~20° of Columba/Pictor."
+   }
+  },
+  {
+   "id": "spring-cluster-clock",
+   "batch": "spring",
+   "kind": "dso",
+   "file": "script/journeys/curated/spring-dso.json",
+   "title": "The cluster clock of Cancer and Hydra",
+   "archetypes": [
+    "A5",
+    "A6"
+   ],
+   "stops": [
+    "M44",
+    "M48",
+    "M67",
+    "HR3522"
+   ],
+   "sourceIds": [
+    "binocularsky-m44",
+    "binocularsky-m67",
+    "binocularsky-m48",
+    "morales2022",
+    "castro2011",
+    "sun2023",
+    "quinn2012"
+   ],
+   "extra": {
+    "drivingQuestion": "How can you tell a star family's age by looking at it?",
+    "notes": "Beehive (~640 Myr) → M48 (~420 Myr, four times farther) → M67 (~3.9 Gyr, Sun's age); optional coda at 55 Cancri, a nearby planet host, because the Beehive was the first cluster with planets around Sun-like stars. Span about 26°. Mirrors doc 03 story S1 and BinocularSky's M44/M67 notes."
+   }
+  },
+  {
+   "id": "spring-galaxies-in-conversation",
+   "batch": "spring",
+   "kind": "dso",
+   "file": "script/journeys/curated/spring-dso.json",
+   "title": "Galaxies in conversation (Ursa Major)",
+   "archetypes": [
+    "A6",
+    "A11"
+   ],
+   "stops": [
+    "M81",
+    "M82",
+    "M51",
+    "M63",
+    "M101"
+   ],
+   "sourceIds": [
+    "binocularsky-m81",
+    "binocularsky-m51",
+    "binocularsky-m101",
+    "demello2008",
+    "nasa-messier-m82",
+    "esahubble-heic0506a"
+   ],
+   "extra": {
+    "drivingQuestion": "What happens when galaxies get too close?",
+    "notes": "M81 stirs M82 into a starburst (CAUSE); M51's companion sculpts crisp arms; M63 shows a spiral with no companion; M101 closes on surface brightness. M81→M51 is ~25° from the circumpolar pair to the handle. Grounded in Harrington's 'A Galactic Dynamic Duo' binocular column, BinocularSky notes, NASA/ESA Hubble pages."
+   }
+  },
+  {
+   "id": "spring-window-out-of-the-galaxy",
+   "batch": "spring",
+   "kind": "dso",
+   "file": "script/journeys/curated/spring-dso.json",
+   "title": "A window out of the Milky Way (Coma Berenices)",
+   "archetypes": [
+    "A3",
+    "A11"
+   ],
+   "stops": [
+    "Mel111",
+    "M53",
+    "M64",
+    "M3"
+   ],
+   "sourceIds": [
+    "binocularsky-mel111",
+    "tang2019",
+    "bv21",
+    "ned-d",
+    "nasa-messier-m53"
+   ],
+   "extra": {
+    "drivingQuestion": "How far can binoculars reach?",
+    "notes": "Look up out of the disk near the north Galactic pole: a dissolving nearby cluster (280 ly) → a halo globular (60,000 ly) → a galaxy (~15 Mly) → back to M3 as a richer globular. Each step 100–1,000× farther. Span ~22°."
+   }
+  },
+  {
+   "id": "spring-measuring-the-universe",
+   "batch": "spring",
+   "kind": "dso",
+   "file": "script/journeys/curated/spring-dso.json",
+   "title": "Measuring the universe from the Big Dipper",
+   "archetypes": [
+    "A3"
+   ],
+   "stops": [
+    "DS-MizarAlcor",
+    "M101",
+    "M106",
+    "M51"
+   ],
+   "sourceIds": [
+    "reid2019",
+    "ned-d",
+    "binocularsky-m101",
+    "hiramatsu2023"
+   ],
+   "extra": {
+    "drivingQuestion": "How do we know how far away a galaxy is?",
+    "notes": "Mizar (stellar parallax) → M101 (Cepheids and supernovae) → M106 (the geometric maser anchor that calibrates the Cepheids) → M51 (red-giant-branch distance). Tells the distance ladder with real targets. Span ~15°."
+   }
+  },
+  {
+   "id": "spring-dipper-family",
+   "batch": "spring",
+   "kind": "star",
+   "file": "script/journeys/curated/spring-stars.json",
+   "title": "The Big Dipper’s secret family",
+   "archetypes": [
+    "A5"
+   ],
+   "stops": [
+    "HR4295",
+    "HR4554",
+    "HR4660",
+    "DS-Winnecke4",
+    "HR4905",
+    "DS-MizarAlcor",
+    "HR4301",
+    "HR5191"
+   ],
+   "summary": "Walk the five Dipper stars that were born together (Merak, Phecda, Megrez, Alioth, Mizar & Alcor), with a twist at M40 (a pair that is not a pair, 1.4° from Megrez) and a payoff at the two outsiders, yellow Dubhe and blue-white Alkaid, which drift their own way. Coda: the Coma Star Cluster as a family that has not yet dispersed. All within one 25° patch.",
+   "sourceIds": [
+    "king2003",
+    "jones2015",
+    "hertzsprung1909",
+    "croswell-dipper",
+    "st-m40",
+    "mamajek2010"
+   ]
+  },
+  {
+   "id": "spring-arc-to-spica",
+   "batch": "spring",
+   "kind": "star",
+   "file": "script/journeys/curated/spring-stars.json",
+   "title": "Arc to Arcturus, speed on to Spica: how mass sets a star’s fate",
+   "archetypes": [
+    "A8"
+   ],
+   "stops": [
+    "HR5235",
+    "STAR-Arcturus",
+    "HR4550",
+    "HR5056"
+   ],
+   "summary": "Muphrid (a subgiant just starting to swell, a true 3-light-year neighbor of Arcturus) → Arcturus (a Sun-mass giant from the thick disk, the Sun’s future) → optional Groombridge 1830 detour (an even older halo visitor) → Spica (two stars of 11 and 7 solar masses, 12 Myr old, a future supernova). Classic ‘arc to Arcturus’ star-hop from the Dipper handle; the Spring Triangle with Denebola can be the coda.",
+   "sourceIds": [
+    "ramirez2011",
+    "tkachenko2016",
+    "cfa-spica",
+    "hip2007",
+    "gaia-edr3"
+   ]
+  },
+  {
+   "id": "spring-cvn-thermometer",
+   "batch": "spring",
+   "kind": "star",
+   "file": "script/journeys/curated/spring-stars.json",
+   "title": "Red, redder, reddest under the Dipper’s handle",
+   "archetypes": [
+    "A2"
+   ],
+   "stops": [
+    "DS-AlpCVn",
+    "HR4785",
+    "STAR-Arcturus",
+    "STAR-LaSuperba"
+   ],
+   "summary": "Cor Caroli (≈12,000 K, magnetic spotted prototype) → Chara (a near-solar twin, ≈5,900 K) → Arcturus (orange giant, 4,286 K) → La Superba (carbon star, ≈2,700 K, ‘the magnificent’), using Universe Today’s finding directions (a third of the way from Cor Caroli toward Megrez). Teach the Purkinje effect at La Superba and end on where our carbon comes from. Doc 02 §7 story 6 (spring variant).",
+   "sourceIds": [
+    "ut-lasuperba",
+    "lambert1986",
+    "ramirez2011",
+    "gcvs",
+    "kochukhov2010"
+   ]
+  },
+  {
+   "id": "spring-bootes-doubles",
+   "batch": "spring",
+   "kind": "star",
+   "file": "script/journeys/curated/spring-stars.json",
+   "title": "Seeing double, and doubting it, in Boötes",
+   "archetypes": [
+    "A9"
+   ],
+   "stops": [
+    "HR5681",
+    "HR5733",
+    "HR5763",
+    "HR5506",
+    "STAR-Arcturus"
+   ],
+   "summary": "δ Boo (104″ physical pair; its companion is as bright as the Sun would be there) → μ Boo (109″ pair whose faint star is itself a telescopic double) → ν¹/ν² Boo (a 10′ ‘pair’ at 974 and 441 ly: optical) → Izar (looks like a dim Arcturus but is five times farther; luminosity vs brightness) → Arcturus. All within about 15°, Moon-friendly.",
+   "sourceIds": [
+    "wds",
+    "gaia-edr3",
+    "hip2007"
+   ]
+  },
+  {
+   "id": "summer-north-dso-seed-1",
+   "batch": "summer-north",
+   "kind": "dso",
+   "file": "script/journeys/curated/summer-north-dso.json",
+   "title": "Summer Triangle: birth, gentle death, violent death",
+   "archetypes": [
+    "A8",
+    "A1"
+   ],
+   "stops": [
+    "NGC7000",
+    "MWF-CygnusRift",
+    "M29",
+    "HD192163",
+    "NGC6888",
+    "NGC6992",
+    "NGC6960",
+    "M27"
+   ],
+   "summary": "Start in the North America Nebula (stars being born, lit by a hidden star), cross the Cygnus Rift to M29 (a young cluster dimmed by that dust), visit WR 136 and its Crescent bubble (a heavy star shedding itself), then the Veil (what such a star leaves) and finish at the Dumbbell (how the Sun will end). Split it into a Cygnus half and a Vulpecula half if the region is too large. Built on doc 03 story U4, BAA Veil observing reports and the Astronomical League binocular lists.",
+   "sourceIds": [
+    "baa-veil",
+    "comeron2005",
+    "esahubble-crescent",
+    "fesen2021",
+    "al-binocular-messier"
+   ]
+  },
+  {
+   "id": "summer-north-dso-seed-2",
+   "batch": "summer-north",
+   "kind": "dso",
+   "file": "script/journeys/curated/summer-north-dso.json",
+   "title": "Ancient star balls: the Hercules globular contrast",
+   "archetypes": [
+    "A6",
+    "A11"
+   ],
+   "stops": [
+    "HR6212",
+    "M13",
+    "M92"
+   ],
+   "summary": "Use the Keystone (ζ Her, a nearby star) as the hook, then M13 (12 Gyr, [Fe/H] −1.53), then M92 (13.8 Gyr, [Fe/H] −2.31): same kind of object, different family history. Extend with M56 and M71 in Lyra and Sagitta for a metal-poor to metal-rich ladder when the region allows. Built on doc 03 story U3b and the NASA Hubble Messier pages.",
+   "sourceIds": [
+    "harris2010",
+    "ying2023",
+    "vandenberg2013",
+    "nasa-m13",
+    "nasa-m92"
+   ]
+  },
+  {
+   "id": "summer-north-dso-seed-3",
+   "batch": "summer-north",
+   "kind": "dso",
+   "file": "script/journeys/curated/summer-north-dso.json",
+   "title": "Dark rivers: the dust that hides and makes stars",
+   "archetypes": [
+    "A11"
+   ],
+   "stops": [
+    "MWF-CygnusRift",
+    "M29",
+    "NGC6910",
+    "NGC7000"
+   ],
+   "summary": "Naked-eye Rift first, then M29 (dimmed more than tenfold by that dust), NGC 6910 next to foreground Sadr (perspective), then the North America Nebula, whose “Gulf of Mexico” is more of the same dust. An Aquila variant swaps in Barnard’s E near Tarazed. Grounded in Straižys et al. 2014 and Astronomy magazine’s Barnard’s E column.",
+   "sourceIds": [
+    "straizys2014",
+    "astronomy-barnardE",
+    "comeron2005"
+   ]
+  },
+  {
+   "id": "summer-north-dso-seed-4",
+   "batch": "summer-north",
+   "kind": "dso",
+   "file": "script/journeys/curated/summer-north-dso.json",
+   "title": "Ophiuchus families: same distance, different age",
+   "archetypes": [
+    "A5",
+    "A6"
+   ],
+   "stops": [
+    "IC4665",
+    "NGC6633",
+    "NGC6709"
+   ],
+   "summary": "IC 4665 (~55 Myr, blue-white, its age still debated) and NGC 6633 (~550 Myr, a Hyades twin) sit at almost the same distance about 10 degrees apart, a clean cluster-age contrast. NGC 6709 in Aquila adds a middle step. Grounded in Jeffries et al. 2023, Brogaard et al. 2025 and Hunt & Reffert 2024.",
+   "sourceIds": [
+    "jeffries2023",
+    "brogaard2025",
+    "hr24",
+    "jeffries2002"
+   ]
+  },
+  {
+   "id": "summer-north-dso-seed-5",
+   "batch": "summer-north",
+   "kind": "dso",
+   "file": "script/journeys/curated/summer-north-dso.json",
+   "title": "Fake clusters, real families",
+   "archetypes": [
+    "A6"
+   ],
+   "stops": [
+    "AST-Coathanger",
+    "NGC6823",
+    "M71",
+    "M27"
+   ],
+   "summary": "Open with the Coathanger (a chance alignment, Baumgardt 1998), contrast it with NGC 6823 (a real newborn family) and M71 (a real ancient one long misclassified), and close at M27 where M71’s stars are headed. Phil Harrington’s Binocular Universe Coathanger column covers the same sweep.",
+   "sourceIds": [
+    "baumgardt1998",
+    "harrington-coathanger",
+    "esahubble-m71",
+    "nasa-m27"
+   ]
+  },
+  {
+   "id": "sn-heavy-star-endings",
+   "batch": "summer-north",
+   "kind": "star",
+   "file": "script/journeys/curated/summer-north-stars.json",
+   "title": "How heavy stars end, in one Cygnus sweep",
+   "archetypes": [
+    "A8",
+    "A1"
+   ],
+   "stops": [
+    "STAR-Deneb",
+    "HR7796",
+    "HR7763",
+    "HD192163",
+    "NGC6888",
+    "HD226868",
+    "NGC6992"
+   ],
+   "summary": "Calm supergiant (Deneb) → yellow supergiant in the Milky Way (Sadr) → unstable LBV that erupted in 1600 (P Cyg) → stripped Wolf-Rayet core (WR 136) and the bubble it blew (Crescent, challenge) → the companion of a 21-solar-mass black hole (Cygnus X-1) → a supernova shell (Veil, dark sky). All within ~15° of Sadr.",
+   "sourceIds": [
+    "schiller2008-deneb",
+    "smith2006-pcyg",
+    "rubio2020-ngc6888",
+    "millerjones2021-cygx1"
+   ],
+   "extra": {
+    "basedOn": "doc 02 §7 story 5; Miller-Jones et al. 2021; Rubio et al. 2020"
+   }
+  },
+  {
+   "id": "sn-lyra-seeing-double",
+   "batch": "summer-north",
+   "kind": "star",
+   "file": "script/journeys/curated/summer-north-stars.json",
+   "title": "Lyra: seeing double, and doubting it",
+   "archetypes": [
+    "A9",
+    "A10"
+   ],
+   "stops": [
+    "STAR-Vega",
+    "DS-DoubleDbl",
+    "HR7056",
+    "HR7139",
+    "HR7106",
+    "M57"
+   ],
+   "summary": "A single brilliant star (Vega) → a physical quadruple (ε Lyr) → an easy unequal pair (ζ Lyr) → a red giant beside a blue star (δ Lyr) → a pair that swaps gas and eclipses (β Lyr, compare with γ Lyr over nights) → the shell of a dying Sun-like star (M57). Everything sits inside a 6° patch.",
+   "sourceIds": [
+    "wds",
+    "zhao2008-betlyr",
+    "vsx"
+   ],
+   "extra": {
+    "basedOn": "doc 02 §7 story 12; WDS; Zhao et al. 2008"
+   }
+  },
+  {
+   "id": "sn-crown-of-surprises",
+   "batch": "summer-north",
+   "kind": "star",
+   "file": "script/journeys/curated/summer-north-stars.json",
+   "title": "The Northern Crown: a star that will flare and a star that vanishes",
+   "archetypes": [
+    "A10"
+   ],
+   "stops": [
+    "HR5793",
+    "HR5958",
+    "HR5880",
+    "HR5968"
+   ],
+   "summary": "Alphecca as the steady anchor → T CrB, a recurrent nova waiting to erupt (state-agnostic card; check AAVSO) → R CrB, which can disappear behind its own soot → ρ CrB, a calm Sun-like planet host for comparison. Every stop within ~6°.",
+   "sourceIds": [
+    "nasa2024-tcrb",
+    "pei2026-tcrb",
+    "clayton2012-rcb",
+    "nasa-exoplanet-archive"
+   ],
+   "extra": {
+    "basedOn": "doc 02 §7 story 13; NASA Watch the Skies (2024)"
+   }
+  },
+  {
+   "id": "sn-near-and-far-triangle",
+   "batch": "summer-north",
+   "kind": "star",
+   "file": "script/journeys/curated/summer-north-stars.json",
+   "title": "Near, far and in between: the Summer Triangle as a distance ladder",
+   "archetypes": [
+    "A3",
+    "A6"
+   ],
+   "stops": [
+    "HR7557",
+    "HR7525",
+    "STAR-Vega",
+    "DS-61Cyg",
+    "HD189733",
+    "M27",
+    "STAR-Deneb"
+   ],
+   "summary": "Altair (17 ly) beside Tarazed (~400 ly) → Vega (25 ly) → faint but close 61 Cygni (11 ly, the first measured distance) → HD 189733 (65 ly) sharing a field with the far more distant Dumbbell → brilliant but remote Deneb (~1,400–2,600 ly). NASA's skywatching notes place M27 inside the Triangle, between Altair and Deneb.",
+   "sourceIds": [
+    "hip2007",
+    "gaia-edr3",
+    "bessel1838-61cyg",
+    "heic1312",
+    "nasa2025-whatsup-aug",
+    "schiller2008-deneb"
+   ],
+   "extra": {
+    "basedOn": "NASA What's Up (Aug 2025); ESA/Hubble heic1312; doc 02 §7 story 14"
+   }
+  },
+  {
+   "id": "ss-seed-sgr-nurseries",
+   "batch": "summer-south",
+   "kind": "dso",
+   "file": "script/journeys/curated/summer-south-dso.json",
+   "title": "The nursery district of Sagittarius",
+   "archetypes": [
+    "A1",
+    "A5"
+   ],
+   "stops": [
+    "DN-Pipe",
+    "M8",
+    "NGC6530",
+    "M21",
+    "M23",
+    "M24",
+    "M18",
+    "M17",
+    "M16"
+   ],
+   "summary": "Cold dark cloud (Pipe) → glowing nursery (Lagoon) and its newborn cluster → a slightly older sibling out of its cloud (M21) → the same kind of family 200 Myr on (M23); then the dust window (M24) and the two nurseries of the next arm in (M17, M16). Region about 15° across; compact 5-stop cut: M8 → NGC6530 → M21 → M23 → M24.",
+   "sourceIds": [
+    "tothill2008",
+    "hr24",
+    "nasa-m24",
+    "eso1233",
+    "al-binocular-messier"
+   ],
+   "extra": {
+    "note": "Follows doc 03 tour U1 and the Astronomical League binocular Messier list; every stop is an AL “easy” or “dark-sky” target except the Pipe (naked-eye/wide-field)."
+   }
+  },
+  {
+   "id": "ss-seed-scorpius-tail",
+   "batch": "summer-south",
+   "kind": "dso",
+   "file": "script/journeys/curated/summer-south-dso.json",
+   "title": "Scorpius tail: a family album",
+   "archetypes": [
+    "A1",
+    "A5",
+    "A6"
+   ],
+   "stops": [
+    "HR6262",
+    "NGC6231",
+    "M6",
+    "M7",
+    "NGC6397"
+   ],
+   "summary": "Start with the ζ Sco pair (foreground orange giant vs member hypergiant twist), then the age ladder NGC 6231 (~4 Myr) → M6 (~50 Myr, with orange BM Sco as timestamp) → M7 (~170 Myr, Ptolemy’s cluster), finishing on an ancient globular (NGC 6397, ~11.5 Gyr) for southern observers.",
+   "sourceIds": [
+    "kuhn2017",
+    "hr24",
+    "seds-m7",
+    "seds-m6",
+    "hansen2007",
+    "al-southern-binocular"
+   ]
+  },
+  {
+   "id": "ss-seed-antares-m4",
+   "batch": "summer-south",
+   "kind": "dso",
+   "file": "script/journeys/curated/summer-south-dso.json",
+   "title": "Near and far around Antares",
+   "archetypes": [
+    "A6",
+    "A3"
+   ],
+   "stops": [
+    "STAR-Antares",
+    "M4",
+    "M80",
+    "M62",
+    "M19"
+   ],
+   "summary": "Antares and M4 share a field but differ ~10× in distance and ~1000× in age (LINE_OF_SIGHT twist); then M80 (5× farther than M4) and the lopsided/flattened globulars M62 and M19 near the Galactic hub, Shapley’s clue to where the centre lies.",
+   "sourceIds": [
+    "bv21",
+    "harris2010",
+    "shapley1918",
+    "nasa-m4",
+    "nasa-m62",
+    "seds-m19"
+   ]
+  },
+  {
+   "id": "ss-seed-another-galaxy",
+   "batch": "summer-south",
+   "kind": "dso",
+   "file": "script/journeys/curated/summer-south-dso.json",
+   "title": "A globular from another galaxy",
+   "archetypes": [
+    "A3",
+    "A4"
+   ],
+   "stops": [
+    "M22",
+    "M28",
+    "M54",
+    "M55",
+    "M75"
+   ],
+   "summary": "Distance/lookback ladder of Sagittarius globulars: M22 (~10,800 ly) → M28 (~17,500 ly; same kind, smaller look) → M54 (~86,000 ly, nucleus of the Sagittarius dwarf galaxy) → twist M55 (nearer, bigger-looking but 8× less massive) → coda M75 in the far halo.",
+   "sourceIds": [
+    "bv21",
+    "ibata1994",
+    "bellazzini2008",
+    "nasa-m54",
+    "nasa-m22"
+   ]
+  },
+  {
+   "id": "seed.sco-family-album",
+   "batch": "summer-south",
+   "kind": "star",
+   "file": "script/journeys/curated/summer-south-stars.json",
+   "title": "The Scorpius family album",
+   "archetypes": [
+    "A5",
+    "A2",
+    "A1"
+   ],
+   "stops": [
+    "HR5984",
+    "HR6027",
+    "HR5993",
+    "HR5953",
+    "HR6084",
+    "STAR-Antares",
+    "M4",
+    "HR6165"
+   ],
+   "summary": "Start at Seronik's binocular triangle of doubles (β, ν, ω Sco): a real multiple, a hard double-double, and a chance pair. Then δ Sco's disk-driven brightness check against β and π, σ Sco, and Antares: all one 11-Myr Upper Scorpius family, with the heaviest sibling already a red supergiant. Twist: M4 in the same field is about a thousand times older and ten times farther. Coda: τ Sco, still blue, possibly a merger.",
+   "sourceIds": [
+    "seronik2015",
+    "pecaut2012",
+    "dezeeuw1999",
+    "ohnaka2013"
+   ],
+   "extra": {
+    "drivingQuestion": "Do stars have families, and do siblings age differently?",
+    "region": "Scorpius head and Antares (≈12° patch)"
+   }
+  },
+  {
+   "id": "seed.tail-illusions",
+   "batch": "summer-south",
+   "kind": "star",
+   "file": "script/journeys/curated/summer-south-stars.json",
+   "title": "Illusions in the tail: the False Comet",
+   "archetypes": [
+    "A6",
+    "A3",
+    "A7"
+   ],
+   "stops": [
+    "HR6241",
+    "HR6247",
+    "HR6262",
+    "NGC6231",
+    "HR6527",
+    "M7"
+   ],
+   "summary": "ε Sco looks like Antares' near-twin but is nine times nearer. μ¹/μ² is a naked-eye pair of real neighbors (and μ¹ eclipses), while ζ¹/ζ² is a perspective trick: orange ζ² at 135 ly, blue ζ¹ a hypergiant near 5,500 ly in NGC 6231, the 'head' of Wedel's False Comet. Finish at Shaula's weighed triple and the naked-eye cluster M7.",
+   "sourceIds": [
+    "wedel2022",
+    "clark2012",
+    "gaiadr3",
+    "tango2006"
+   ],
+   "extra": {
+    "drivingQuestion": "Can you trust how bright, or how close together, stars look?",
+    "region": "Scorpius tail (ε Sco to Shaula, ≈15° patch; low for mid-northern sites)"
+   }
+  },
+  {
+   "id": "seed.old-and-sunlike",
+   "batch": "summer-south",
+   "kind": "star",
+   "file": "script/journeys/curated/summer-south-stars.json",
+   "title": "Methuselah, the Sun's twin and the Sun's future",
+   "archetypes": [
+    "A7",
+    "A11",
+    "A8"
+   ],
+   "stops": [
+    "HR5685",
+    "HD140283",
+    "M5",
+    "HR6060",
+    "HR6056",
+    "HR6401"
+   ],
+   "summary": "From 'green' Zubeneschamali hop to HD 140283, a 12-Gyr halo subgiant with 1/250 of the Sun's metals, then M5, a globular of similar age. 18 Sco shows the Sun as it is today, Yed Prior the red-giant stage ahead, and 36 Oph three smaller orange suns only 19 ly away. Uses the NASA/Hubble 'Methuselah' story and the Bazot asteroseismic twin result.",
+   "sourceIds": [
+    "nasa-hd140283",
+    "tangjoyce2021",
+    "bazot2011",
+    "gaiadr3"
+   ],
+   "extra": {
+    "drivingQuestion": "How old can a star be, and what will happen to the Sun?",
+    "region": "Libra, Serpens Caput and western Ophiuchus (≈25° patch)"
+   }
+  },
+  {
+   "id": "seed.teapot-3d",
+   "batch": "summer-south",
+   "kind": "star",
+   "file": "script/journeys/curated/summer-south-stars.json",
+   "title": "The Teapot in 3-D, pointing at the Galaxy's heart",
+   "archetypes": [
+    "A3",
+    "A11",
+    "A1"
+   ],
+   "stops": [
+    "HR6913",
+    "HR6879",
+    "HR6859",
+    "HR6746",
+    "HR6736",
+    "M8",
+    "HR7194",
+    "M54"
+   ],
+   "summary": "Teapot stars at 78 (Kaus Borealis), 143 (Kaus Australis), 348 (Kaus Media) and 97 ly (Alnasl) show the asterism is a perspective picture; the spout points 4.6° from the hidden Galactic Center. Then 9 Sgr, the ~1-Myr O-star pair energizing the Lagoon at ~4,300 ly, and Ascella beside M54, a cluster from the Sagittarius dwarf galaxy. Pairs well with an R Scuti/δ Scuti variable-star coda near M11 (Astronomy magazine's R Sct guide).",
+   "sourceIds": [
+    "hip2007",
+    "fabry2021",
+    "tothill2008",
+    "astronomy-rsct"
+   ],
+   "extra": {
+    "drivingQuestion": "How deep is the sky behind a flat-looking asterism?",
+    "region": "Sagittarius Teapot and the Lagoon (≈15° patch)"
+   }
+  },
+  {
+   "id": "W-orion-family-album",
+   "batch": "winter",
+   "kind": "dso",
+   "file": "script/journeys/curated/winter-dso.json",
+   "title": "Orion’s family album",
+   "archetypes": [
+    "A1",
+    "A5"
+   ],
+   "stops": [
+    "M42",
+    "M43",
+    "NGC1977",
+    "NGC1981",
+    "AST-OrionBelt",
+    "Cr69"
+   ],
+   "optional": [
+    "M78",
+    "STAR-Betelgeuse"
+   ],
+   "summary": "Start in the Sword with the glowing nursery (M42) and its one-star bubble (M43), notice reflected light in the Running Man, then climb the Sword to NGC 1981 (gas already gone), the Belt’s big siblings, and Meissa’s cluster at the head, a few million years older inside its cleared ring. Twist: the newest stars are in the faint Sword, not the bright Belt. Coda: Betelgeuse, what heavy siblings become.",
+   "sourceIds": [
+    "brown1994",
+    "hillenbrand1997",
+    "hr24",
+    "tonkin-feb"
+   ],
+   "extra": {
+    "drivingQuestion": "How does a star family grow up?",
+    "pathDeg": 15.3,
+    "spanDeg": 15.3
+   }
+  },
+  {
+   "id": "W-unicorn-cloud-to-grownup",
+   "batch": "winter",
+   "kind": "dso",
+   "file": "script/journeys/curated/winter-dso.json",
+   "title": "The Unicorn: from cloud to grown-up",
+   "archetypes": [
+    "A1",
+    "A6"
+   ],
+   "stops": [
+    "NGC2264",
+    "NGC2244",
+    "NGC2237",
+    "NGC2232",
+    "M50",
+    "M41"
+   ],
+   "optional": [
+    "NGC2362"
+   ],
+   "summary": "A monotonic north-to-south sweep: Christmas Tree (still in its cloud) → Rosette cluster and its hollowed nebula → NGC 2232 (gas gone, debris disks) → M50 → M41 (orange giant at its heart). Twist: τ CMa cluster (NGC 2362) has the Christmas Tree’s age but no gas at all. Foreground twist: orange 12 Mon is not a Rosette star.",
+   "sourceIds": [
+    "hr24",
+    "apod-rosette",
+    "currie2008",
+    "dahm2008"
+   ],
+   "extra": {
+    "drivingQuestion": "What happens to a star family after its cloud is gone?",
+    "pathDeg": 38.1,
+    "spanDeg": 30.7
+   }
+  },
+  {
+   "id": "W-auriga-clock",
+   "batch": "winter",
+   "kind": "dso",
+   "file": "script/journeys/curated/winter-dso.json",
+   "title": "Three ages of Auriga, plus a stowaway",
+   "archetypes": [
+    "A6"
+   ],
+   "stops": [
+    "M36",
+    "M38",
+    "M37",
+    "M35",
+    "NGC2158"
+   ],
+   "optional": [
+    "NGC1907",
+    "AST-FlyingMinnow"
+   ],
+   "summary": "Similar distances, very different ages: M36 (about 22 Myr, lithium age) → M38 (a few hundred Myr) → M37 (about 500 Myr, richest). Then M35, Pleiades-aged, and the payoff NGC 2158 beside it: four times farther and over ten times older.",
+   "sourceIds": [
+    "jeffries2013",
+    "hartman2008",
+    "meibom2009",
+    "hr24",
+    "al-binocular-messier"
+   ],
+   "extra": {
+    "drivingQuestion": "Can you tell a cluster’s age by looking at it?",
+    "pathDeg": 17.5,
+    "spanDeg": 14.4
+   }
+  },
+  {
+   "id": "W-taurus-real-or-chance",
+   "batch": "winter",
+   "kind": "dso",
+   "file": "script/journeys/curated/winter-dso.json",
+   "title": "Taurus: real families and impostors",
+   "archetypes": [
+    "A3",
+    "A6"
+   ],
+   "stops": [
+    "M45",
+    "AST-DavisDog",
+    "AST-Hyades",
+    "NGC1647",
+    "NGC1746"
+   ],
+   "optional": [
+    "STAR-Aldebaran",
+    "NGC1807",
+    "NGC1817",
+    "M1"
+   ],
+   "summary": "The Pleiades (young family) → Davis’ Dog (a chance pattern) → the Hyades (older family, with Aldebaran as the foreground impostor) → NGC 1647 (the Pleiades’ age twin, four times farther) → NGC 1746 (a catalogue “cluster” that does not exist, hiding two real ones). Coda option: the Crab, what the heaviest family members become.",
+   "sourceIds": [
+    "harrington-pleiades",
+    "perryman1998",
+    "stauffer1998",
+    "galadi1998",
+    "hr24"
+   ],
+   "extra": {
+    "drivingQuestion": "Which groups of stars are real families?",
+    "pathDeg": 24.5,
+    "spanDeg": 17.5
+   }
+  },
+  {
+   "id": "seed-orion-one-family",
+   "batch": "winter",
+   "kind": "star",
+   "file": "script/journeys/curated/winter-stars.json",
+   "title": "Orion: one family, born in waves",
+   "archetypes": [
+    "A5",
+    "A1"
+   ],
+   "stops": [
+    "HR1879",
+    "M42",
+    "HR1895",
+    "HR1899",
+    "HR1931",
+    "AST-OrionBelt",
+    "STAR-Betelgeuse"
+   ],
+   "summary": "Start at Meissa’s exposed 5-Myr cluster, drop to the Orion Nebula where θ¹ Ori C is still lighting its 1-Myr cloud, then ι Ori (the likely slingshot that launched AE Aur and μ Col), σ Orionis (a weighed multiple at the heart of its own young cluster), the Belt siblings, and close on Betelgeuse: what heavy stars like these become. Optional coda: point binoculars at AE Aur in Auriga, a runaway sibling.",
+   "sourceIds": [
+    "brown1994",
+    "hr24",
+    "dolan2002",
+    "kraus2009",
+    "hoogerwerf2001",
+    "schaefer2016",
+    "joyce2020"
+   ],
+   "extra": {
+    "basis": "docs/sky-journeys/02-astronomy-stars.md §7 story 1; Orion OB1 subgroup ages from Brown et al. 1994; runaway story from Hoogerwerf et al. 2001.",
+    "drivingQuestion": "Do stars have families, and do they all grow up at once?",
+    "region": "Orion (≈20° patch around the Belt)"
+   }
+  },
+  {
+   "id": "seed-taurus-two-clusters",
+   "batch": "winter",
+   "kind": "star",
+   "file": "script/journeys/curated/winter-stars.json",
+   "title": "Two clusters and an impostor",
+   "archetypes": [
+    "A5",
+    "A6"
+   ],
+   "stops": [
+    "M45",
+    "HR1165",
+    "HR1180",
+    "AST-Hyades",
+    "DS-ThetaTau",
+    "HR1409",
+    "STAR-Aldebaran"
+   ],
+   "summary": "Blue-white Pleiades (125 Myr; Pleione’s changing disk as a side note) → Hyades five times older, where θ¹ Tau has become a giant while its same-age sibling θ² is still white → ε Tau, first cluster star with a planet → twist: Aldebaran, the bright orange ‘member’, is a foreground star at less than half the distance. Challenge extension: T Tauri, a star still being born, 1½° from ε Tau.",
+   "sourceIds": [
+    "stauffer1998",
+    "perryman1998",
+    "hr24",
+    "sato2007",
+    "hip2007",
+    "nemravova2010",
+    "loinard2007"
+   ],
+   "extra": {
+    "basis": "docs/sky-journeys/02-astronomy-stars.md §7 story 2 and doc 04 A1 example; facts from the cited papers.",
+    "drivingQuestion": "How can you tell the age of a star family, and who really belongs to it?",
+    "region": "Taurus (Pleiades–Hyades, ≈15°)"
+   }
+  },
+  {
+   "id": "seed-orion-lepus-thermometer",
+   "batch": "winter",
+   "kind": "star",
+   "file": "script/journeys/curated/winter-stars.json",
+   "title": "Red, redder, reddest: where your carbon comes from",
+   "archetypes": [
+    "A2",
+    "A8"
+   ],
+   "stops": [
+    "HR1713",
+    "HR1790",
+    "STAR-Betelgeuse",
+    "HR1648",
+    "HR1865",
+    "HR1607"
+   ],
+   "summary": "Rigel (12,100 K) and Bellatrix set the hot end; Betelgeuse (3,600 K) the cool, oxygen-rich end; then the carbon stars W Ori and Hind’s Crimson Star (≈2,400–2,700 K), reddened by carbon they dredged up, with Arneb as a distance twist on the way. Payoff: some of the carbon in you was made in giants like R Lep. R Lep is volatile: use W Ori if R Lep is near minimum.",
+   "sourceIds": [
+    "przybilla2006",
+    "levesque2020",
+    "lambert1986",
+    "gcvs",
+    "vsx",
+    "hip2007"
+   ],
+   "extra": {
+    "basis": "docs/sky-journeys/02-astronomy-stars.md §7 story 6 (winter path); temperatures from the cited papers.",
+    "drivingQuestion": "Why are some stars red, and is red always the same thing?",
+    "region": "Orion and Lepus (≈25°)"
+   }
+  },
+  {
+   "id": "seed-auriga-eclipses-runaway",
+   "batch": "winter",
+   "kind": "star",
+   "file": "script/journeys/curated/winter-stars.json",
+   "title": "Auriga: hidden companions and a runaway",
+   "archetypes": [
+    "A10",
+    "A9"
+   ],
+   "stops": [
+    "STAR-Capella",
+    "HR1605",
+    "HR1612",
+    "HR2088",
+    "HR1712",
+    "M38"
+   ],
+   "summary": "Capella’s two giants weighed by their 104-day orbit → ε Aurigae, eclipsed every 27 years by a dark disk imaged in 2010 → ζ Aurigae, a supergiant hiding a hot star every 972 days → Menkalinan’s shallow 4-day eclipses → AE Aurigae, a runaway thrown out of Orion 2.5 Myr ago → the clusters of Auriga as a coda.",
+   "sourceIds": [
+    "torres2015",
+    "kloppenborg2010",
+    "gcvs",
+    "hoogerwerf2001"
+   ],
+   "extra": {
+    "basis": "docs/sky-journeys/02-astronomy-stars.md §7 story 15; facts from the cited papers.",
+    "drivingQuestion": "How do we learn about stars we cannot see?",
+    "region": "Auriga (≈15°)"
+   }
+  }
+ ]
+}

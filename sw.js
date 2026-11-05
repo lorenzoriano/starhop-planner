@@ -1,6 +1,6 @@
 // The build generates an asset manifest and inserts a content-based version.
 const PREFIX = `starhop-${encodeURIComponent(new URL(self.registration.scope).pathname)}-`;
-const CACHE = `${PREFIX}e16cd02af917efaa`;
+const CACHE = `${PREFIX}72e5aca42d40c74e`;
 const urlFor = (path) => new URL(path, self.registration.scope).href;
 
 // Sky catalogs and the app shell are small enough to prepare automatically.
@@ -9,6 +9,7 @@ const isBulkAsset = (path) => {
   const normalized = path.replace(/^\.\//, "");
   return (
     /^data\/binocular-images\//i.test(normalized) ||
+    /^data\/journey-images\//i.test(normalized) ||
     /^data\/finder-stars\//i.test(normalized) ||
     /^data\/moon\/(?:features\/.*|lroc-gray-.*)\.(?:avif|gif|jpe?g|png|webp)$/i.test(normalized)
   );

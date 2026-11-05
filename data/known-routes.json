@@ -3196,7 +3196,7 @@
     ]
   },
   {
-    "targetId": "Cr399",
+    "targetId": "AST-Coathanger",
     "targetName": "Coathanger (Brocchi's Cluster / Cr 399)",
     "routes": [
       {
@@ -3382,7 +3382,7 @@
     ]
   },
   {
-    "targetId": "KemblesCascade",
+    "targetId": "AST-KemblesCascade",
     "targetName": "Kemble's Cascade",
     "routes": [
       {

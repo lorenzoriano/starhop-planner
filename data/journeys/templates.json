@@ -1,0 +1,1434 @@
+{
+ "version": "templates-1",
+ "templates": [
+  {
+   "id": "A1-cradle-to-grave",
+   "archetype": "A1",
+   "title": "Cradle to Grave",
+   "titleKeys": [
+    "title.A1-cradle-to-grave"
+   ],
+   "drivingQuestion": "Where do stars come from, and how do they end?",
+   "questionKeys": [
+    "question.A1-cradle-to-grave"
+   ],
+   "hookLine": "Follow one star's whole life, from glowing cradle to scattered ashes, in one sweep of sky.",
+   "hookKeys": [
+    "hook.A1-cradle-to-grave"
+   ],
+   "payoffKeys": [
+    "payoff.A1-cradle-to-grave"
+   ],
+   "themeTags": [
+    "lives-of-stars",
+    "nurseries",
+    "star-corpses"
+   ],
+   "orderingPrinciple": "Life stage (evoStage) never goes backwards during the build. A flash-forward hook (open on the doomed star, then rewind to the nursery) is allowed, and the coda may call back to the nursery.",
+   "slots": [
+    {
+     "arc": "hook",
+     "label": "Nursery",
+     "match": {
+      "roles": [
+       "nursery",
+       "supergiant"
+      ],
+      "minWow": 3,
+      "maxObsDifficulty": 2
+     }
+    },
+    {
+     "arc": "build",
+     "label": "Newborn family",
+     "match": {
+      "roles": [
+       "young-cluster",
+       "association"
+      ],
+      "evoStageIn": [
+       1,
+       2
+      ]
+     },
+     "repeat": [
+      1,
+      3
+     ],
+     "inEdges": [
+      "LIFE_NEXT",
+      "SIBLING",
+      "CAUSE"
+     ]
+    },
+    {
+     "arc": "twist",
+     "label": "Impostor",
+     "match": {
+      "hasMisconception": true,
+      "roles": [
+       "giant",
+       "adult-cluster",
+       "old-cluster"
+      ]
+     },
+     "optional": true
+    },
+    {
+     "arc": "build",
+     "label": "Grown-up family",
+     "match": {
+      "roles": [
+       "adult-cluster",
+       "old-cluster",
+       "giant"
+      ],
+      "evoStageIn": [
+       3,
+       4,
+       5
+      ]
+     },
+     "optional": true,
+     "inEdges": [
+      "LIFE_NEXT",
+      "CONTRAST",
+      "LINE_OF_SIGHT"
+     ]
+    },
+    {
+     "arc": "payoff",
+     "label": "Dying star",
+     "match": {
+      "roles": [
+       "supergiant",
+       "giant",
+       "pn",
+       "snr"
+      ],
+      "evoStageIn": [
+       5,
+       6,
+       7
+      ],
+      "maxObsDifficulty": 3
+     },
+     "inEdges": [
+      "LIFE_NEXT",
+      "CONTRAST",
+      "CAUSE"
+     ]
+    },
+    {
+     "arc": "coda",
+     "label": "What remains",
+     "match": {
+      "roles": [
+       "snr",
+       "pn",
+       "nursery"
+      ],
+      "maxObsDifficulty": 4
+     },
+     "optional": true,
+     "inEdges": [
+      "LIFE_NEXT",
+      "CAUSE",
+      "SAME_PHYSICS"
+     ]
+    }
+   ],
+   "order": "partial",
+   "swapGroups": [
+    [
+     2,
+     3
+    ]
+   ],
+   "edges": [
+    "LIFE_NEXT",
+    "CAUSE",
+    "SIBLING",
+    "CONTRAST",
+    "LINE_OF_SIGHT",
+    "SAME_FAMILY",
+    "SAME_PHYSICS"
+   ],
+   "progression": {
+    "property": "evoStage",
+    "direction": "arc"
+   },
+   "length": [
+    4,
+    7
+   ],
+   "defaultLength": 5,
+   "ingredients": {
+    "roles": [
+     {
+      "anyOf": [
+       "nursery"
+      ],
+      "min": 1
+     },
+     {
+      "anyOf": [
+       "young-cluster",
+       "adult-cluster",
+       "association"
+      ],
+      "min": 1
+     },
+     {
+      "anyOf": [
+       "giant",
+       "supergiant",
+       "pn",
+       "snr"
+      ],
+      "min": 1
+     }
+    ],
+    "minDistinctEvoStages": 3
+   },
+   "coreConcepts": [
+    "LIFE.nursery",
+    "LIFE.cluster-birth",
+    "LIFE.giant",
+    "LIFE.recycling"
+   ],
+   "moonFriendly": false,
+   "moonSuitability": "partial",
+   "needsDark": false,
+   "kidFriendly": true,
+   "chainTo": [
+    "A8-how-stars-die"
+   ],
+   "switchRule": {
+    "to": [
+     "A8-how-stars-die"
+    ],
+    "atArc": "payoff",
+    "via": [
+     "LIFE_NEXT",
+     "CONTRAST"
+    ],
+    "minStrength": 0.7,
+    "announceKey": "switch.A1-cradle-to-grave"
+   }
+  },
+  {
+   "id": "A2-thermometer",
+   "archetype": "A2",
+   "title": "A Thermometer in the Sky",
+   "titleKeys": [
+    "title.A2-thermometer"
+   ],
+   "drivingQuestion": "Why are stars different colors, and what does that tell us?",
+   "questionKeys": [
+    "question.A2-thermometer"
+   ],
+   "hookLine": "Read the temperature of stars from their color, ember-orange to blue-white, by eye.",
+   "hookKeys": [
+    "hook.A2-thermometer"
+   ],
+   "payoffKeys": [
+    "payoff.A2-thermometer"
+   ],
+   "themeTags": [
+    "star-colours",
+    "temperature",
+    "moonlit"
+   ],
+   "orderingPrinciple": "Surface temperature (teffK) climbs from the cool hook to the hottest payoff, with one high-contrast pair (often a color double) in the middle. The coda steps back to a Sun-like star in the middle of the scale.",
+   "slots": [
+    {
+     "arc": "hook",
+     "label": "Ember star",
+     "match": {
+      "kinds": [
+       "star"
+      ],
+      "factRanges": {
+       "teffK": {
+        "max": 4500
+       }
+      },
+      "minWow": 3,
+      "maxObsDifficulty": 2
+     }
+    },
+    {
+     "arc": "build",
+     "label": "Color step",
+     "match": {
+      "kinds": [
+       "star"
+      ]
+     },
+     "repeat": [
+      1,
+      3
+     ],
+     "inEdges": [
+      "CONTRAST",
+      "SAME_PHYSICS",
+      "SIBLING"
+     ]
+    },
+    {
+     "arc": "twist",
+     "label": "Color clash",
+     "match": {
+      "roles": [
+       "double",
+       "supergiant"
+      ],
+      "hasMisconception": true
+     },
+     "optional": true,
+     "inEdges": [
+      "CONTRAST",
+      "LINE_OF_SIGHT",
+      "SAME_PHYSICS"
+     ]
+    },
+    {
+     "arc": "payoff",
+     "label": "Blue-hot star",
+     "match": {
+      "kinds": [
+       "star"
+      ],
+      "factRanges": {
+       "teffK": {
+        "min": 9000
+       }
+      }
+     },
+     "inEdges": [
+      "CONTRAST",
+      "SAME_PHYSICS"
+     ]
+    },
+    {
+     "arc": "coda",
+     "label": "The Sun's color",
+     "match": {
+      "kinds": [
+       "star"
+      ],
+      "factRanges": {
+       "teffK": {
+        "min": 5000,
+        "max": 6500
+       }
+      }
+     },
+     "optional": true
+    }
+   ],
+   "order": "partial",
+   "swapGroups": [
+    [
+     1,
+     2
+    ]
+   ],
+   "edges": [
+    "CONTRAST",
+    "SAME_PHYSICS",
+    "SIBLING",
+    "LINE_OF_SIGHT"
+   ],
+   "progression": {
+    "property": "teffK",
+    "direction": "up"
+   },
+   "length": [
+    4,
+    6
+   ],
+   "defaultLength": 5,
+   "ingredients": {
+    "factSpans": [
+     {
+      "fact": "teffK",
+      "minSpan": 6000
+     }
+    ],
+    "minStars": 4
+   },
+   "coreConcepts": [
+    "LIGHT.color-temp",
+    "PERC.night-eyes",
+    "STAR.size"
+   ],
+   "moonFriendly": true,
+   "moonSuitability": "bright-ok",
+   "needsDark": false,
+   "kidFriendly": true,
+   "chainTo": [
+    "A1-cradle-to-grave"
+   ],
+   "switchRule": {
+    "to": [
+     "A1-cradle-to-grave"
+    ],
+    "atArc": "payoff",
+    "via": [
+     "CONTRAST",
+     "LIFE_NEXT"
+    ],
+    "minStrength": 0.6,
+    "announceKey": "switch.A2-thermometer"
+   }
+  },
+  {
+   "id": "A3-how-far",
+   "archetype": "A3",
+   "title": "How Far Is Far?",
+   "titleKeys": [
+    "title.A3-how-far"
+   ],
+   "drivingQuestion": "Which of these is closest, and how do we know?",
+   "questionKeys": [
+    "question.A3-how-far"
+   ],
+   "hookLine": "Climb a ladder of distances, each rung at least twice as far as the last.",
+   "hookKeys": [
+    "hook.A3-how-far"
+   ],
+   "payoffKeys": [
+    "payoff.A3-how-far"
+   ],
+   "themeTags": [
+    "distance",
+    "scale",
+    "how-we-know"
+   ],
+   "orderingPrinciple": "Distance (distanceLy) strictly increases at every stop, each rung 2 to 15 times farther than the last; only the leap to another galaxy, from a rung at least 2,000 light-years out, may be longer (engine: candidates.ladderStepOk). The ladder ends on its farthest rung, never back home. The Deeper text names the measuring method at each rung: parallax, cluster fitting, standard candles.",
+   "slots": [
+    {
+     "arc": "hook",
+     "label": "Next-door star",
+     "match": {
+      "kinds": [
+       "star"
+      ],
+      "factRanges": {
+       "distanceLy": {
+        "max": 100
+       }
+      },
+      "minWow": 3,
+      "maxObsDifficulty": 2
+     }
+    },
+    {
+     "arc": "build",
+     "label": "Next rung",
+     "match": {},
+     "repeat": [
+      2,
+      4
+     ],
+     "inEdges": [
+      "SCALE",
+      "TIME_MACHINE",
+      "LINE_OF_SIGHT",
+      "CONTRAST"
+     ]
+    },
+    {
+     "arc": "twist",
+     "label": "Far but blazing",
+     "match": {
+      "kinds": [
+       "star"
+      ],
+      "hasMisconception": true,
+      "factRanges": {
+       "lumLsun": {
+        "min": 1000
+       }
+      }
+     },
+     "optional": true,
+     "inEdges": [
+      "SCALE",
+      "CONTRAST",
+      "LINE_OF_SIGHT"
+     ]
+    },
+    {
+     "arc": "payoff",
+     "label": "Farthest light",
+     "match": {
+      "roles": [
+       "galaxy",
+       "globular"
+      ],
+      "maxObsDifficulty": 3
+     },
+     "inEdges": [
+      "SCALE",
+      "TIME_MACHINE"
+     ]
+    }
+   ],
+   "order": "partial",
+   "swapGroups": [
+    [
+     1,
+     2
+    ]
+   ],
+   "edges": [
+    "SCALE",
+    "TIME_MACHINE",
+    "CONTRAST",
+    "LINE_OF_SIGHT",
+    "SIBLING"
+   ],
+   "progression": {
+    "property": "distanceLy",
+    "direction": "up"
+   },
+   "length": [
+    5,
+    7
+   ],
+   "defaultLength": 6,
+   "ingredients": {
+    "factSpans": [
+     {
+      "fact": "distanceLy",
+      "minRatio": 1000
+     }
+    ]
+   },
+   "coreConcepts": [
+    "DIST.light-year",
+    "DIST.lum-vs-app",
+    "DIST.standard-candle",
+    "SCALE.cosmic"
+   ],
+   "moonFriendly": false,
+   "moonSuitability": "partial",
+   "needsDark": false,
+   "kidFriendly": true
+  },
+  {
+   "id": "A5-families",
+   "archetype": "A5",
+   "title": "Families and Siblings",
+   "titleKeys": [
+    "title.A5-families"
+   ],
+   "drivingQuestion": "Do stars have families?",
+   "questionKeys": [
+    "question.A5-families"
+   ],
+   "hookLine": "Meet star families at every age, from tight-knit newborns to scattered siblings.",
+   "hookKeys": [
+    "hook.A5-families"
+   ],
+   "payoffKeys": [
+    "payoff.A5-families"
+   ],
+   "themeTags": [
+    "clusters",
+    "families",
+    "moving-groups"
+   ],
+   "orderingPrinciple": "From tight to loose and young to old (ageMyr rises): a jewel-box cluster, then looser and older clusters, then a dissolving association or moving group.",
+   "slots": [
+    {
+     "arc": "hook",
+     "label": "Jewel box",
+     "match": {
+      "roles": [
+       "young-cluster",
+       "adult-cluster"
+      ],
+      "minWow": 4,
+      "maxObsDifficulty": 2
+     }
+    },
+    {
+     "arc": "build",
+     "label": "Older family",
+     "match": {
+      "roles": [
+       "young-cluster",
+       "adult-cluster",
+       "old-cluster"
+      ]
+     },
+     "repeat": [
+      1,
+      3
+     ],
+     "inEdges": [
+      "LIFE_NEXT",
+      "SAME_FAMILY",
+      "CONTRAST",
+      "SIBLING"
+     ]
+    },
+    {
+     "arc": "twist",
+     "label": "Scattered family",
+     "match": {
+      "roles": [
+       "association"
+      ],
+      "anyConcepts": [
+       "MW.families",
+       "KIN.moving-group"
+      ]
+     },
+     "optional": true,
+     "inEdges": [
+      "SIBLING",
+      "CONTRAST",
+      "LINE_OF_SIGHT",
+      "LIFE_NEXT"
+     ]
+    },
+    {
+     "arc": "payoff",
+     "label": "Lost siblings",
+     "match": {
+      "roles": [
+       "association",
+       "old-cluster",
+       "adult-cluster"
+      ],
+      "anyConcepts": [
+       "MW.families",
+       "KIN.moving-group",
+       "LIFE.cluster-age"
+      ]
+     },
+     "inEdges": [
+      "LIFE_NEXT",
+      "CONTRAST",
+      "SIBLING",
+      "SAME_FAMILY"
+     ]
+    },
+    {
+     "arc": "coda",
+     "label": "Family portrait",
+     "match": {
+      "roles": [
+       "association"
+      ],
+      "maxObsDifficulty": 1
+     },
+     "optional": true
+    }
+   ],
+   "order": "partial",
+   "swapGroups": [
+    [
+     2,
+     3
+    ]
+   ],
+   "edges": [
+    "SIBLING",
+    "SAME_FAMILY",
+    "LIFE_NEXT",
+    "CONTRAST",
+    "LINE_OF_SIGHT"
+   ],
+   "progression": {
+    "property": "ageMyr",
+    "direction": "up"
+   },
+   "length": [
+    4,
+    6
+   ],
+   "defaultLength": 5,
+   "ingredients": {
+    "roles": [
+     {
+      "anyOf": [
+       "young-cluster",
+       "adult-cluster",
+       "old-cluster",
+       "association"
+      ],
+      "min": 3
+     }
+    ],
+    "factSpans": [
+     {
+      "fact": "ageMyr",
+      "minRatio": 10
+     }
+    ]
+   },
+   "coreConcepts": [
+    "LIFE.cluster-birth",
+    "MW.families",
+    "LIFE.cluster-age"
+   ],
+   "moonFriendly": true,
+   "moonSuitability": "bright-ok",
+   "needsDark": false,
+   "kidFriendly": true,
+   "chainTo": [
+    "A1-cradle-to-grave"
+   ],
+   "switchRule": {
+    "to": [
+     "A1-cradle-to-grave"
+    ],
+    "atArc": "payoff",
+    "via": [
+     "LIFE_NEXT",
+     "SIBLING"
+    ],
+    "minStrength": 0.7,
+    "announceKey": "switch.A5-families"
+   }
+  },
+  {
+   "id": "A6-contrasts",
+   "archetype": "A6",
+   "title": "Same Sky, Different Stories",
+   "titleKeys": [
+    "title.A6-contrasts"
+   ],
+   "drivingQuestion": "Why do these neighbors look so different?",
+   "questionKeys": [
+    "question.A6-contrasts"
+   ],
+   "hookLine": "Pairs that look alike but live opposite lives. Spot the difference, then learn why.",
+   "hookKeys": [
+    "hook.A6-contrasts"
+   ],
+   "payoffKeys": [
+    "payoff.A6-contrasts"
+   ],
+   "themeTags": [
+    "contrasts",
+    "pairs"
+   ],
+   "orderingPrinciple": "Two or three pairs. Each pair shares at least one obvious trait and differs sharply on one axis (temperature, age, distance, size, life stage). Pairs are linked to the next pair by a shared idea. The deepest contrast comes last.",
+   "slots": [
+    {
+     "arc": "hook",
+     "label": "Pair opener",
+     "match": {
+      "minWow": 3,
+      "maxObsDifficulty": 2
+     }
+    },
+    {
+     "arc": "build",
+     "label": "Its opposite",
+     "match": {},
+     "inEdges": [
+      "CONTRAST",
+      "LINE_OF_SIGHT"
+     ]
+    },
+    {
+     "arc": "build",
+     "label": "New pair",
+     "match": {},
+     "inEdges": [
+      "SAME_PHYSICS",
+      "SAME_FAMILY",
+      "SIBLING",
+      "CONTRAST"
+     ]
+    },
+    {
+     "arc": "twist",
+     "label": "Unlikely opposite",
+     "match": {
+      "hasMisconception": true
+     },
+     "optional": true,
+     "inEdges": [
+      "CONTRAST",
+      "LINE_OF_SIGHT"
+     ]
+    },
+    {
+     "arc": "build",
+     "label": "Last pair",
+     "match": {},
+     "optional": true,
+     "inEdges": [
+      "SAME_PHYSICS",
+      "SAME_FAMILY",
+      "SIBLING"
+     ]
+    },
+    {
+     "arc": "payoff",
+     "label": "Deepest contrast",
+     "match": {
+      "minInterest": 0.6,
+      "maxObsDifficulty": 3
+     },
+     "inEdges": [
+      "CONTRAST",
+      "LINE_OF_SIGHT"
+     ]
+    }
+   ],
+   "order": "strict",
+   "edges": [
+    "CONTRAST",
+    "LINE_OF_SIGHT",
+    "SAME_PHYSICS",
+    "SAME_FAMILY",
+    "SIBLING"
+   ],
+   "length": [
+    4,
+    6
+   ],
+   "defaultLength": 4,
+   "ingredients": {
+    "minDistinctEvoStages": 2
+   },
+   "coreConcepts": [
+    "SKY.projection",
+    "LIGHT.color-temp",
+    "LIFE.cluster-age"
+   ],
+   "moonFriendly": false,
+   "moonSuitability": "partial",
+   "needsDark": false,
+   "kidFriendly": true,
+   "chainTo": [
+    "A2-thermometer"
+   ],
+   "switchRule": {
+    "to": [
+     "A2-thermometer"
+    ],
+    "atArc": "payoff",
+    "via": [
+     "CONTRAST"
+    ],
+    "minStrength": 0.7,
+    "announceKey": "switch.A6-contrasts"
+   }
+  },
+  {
+   "id": "A8-how-stars-die",
+   "archetype": "A8",
+   "title": "How Stars Die",
+   "titleKeys": [
+    "title.A8-how-stars-die"
+   ],
+   "drivingQuestion": "Will the Sun explode?",
+   "questionKeys": [
+    "question.A8-how-stars-die"
+   ],
+   "hookLine": "Two ways to die: a slow smoke ring or a blast. Find out which one awaits the Sun.",
+   "hookKeys": [
+    "hook.A8-how-stars-die"
+   ],
+   "payoffKeys": [
+    "payoff.A8-how-stars-die"
+   ],
+   "themeTags": [
+    "star-corpses",
+    "fates",
+    "lives-of-stars"
+   ],
+   "orderingPrinciple": "Two branches by mass. First the light-star branch (giant, then planetary nebula, then white dwarf), then the heavy branch (supergiant, then supernova remnant). The journey ends on recycling: dead stars seed new ones.",
+   "slots": [
+    {
+     "arc": "hook",
+     "label": "The Sun's future",
+     "match": {
+      "roles": [
+       "giant"
+      ],
+      "kinds": [
+       "star"
+      ],
+      "evoStageIn": [
+       5
+      ],
+      "maxObsDifficulty": 2
+     }
+    },
+    {
+     "arc": "build",
+     "label": "Smoke ring",
+     "match": {
+      "roles": [
+       "pn"
+      ],
+      "maxObsDifficulty": 3
+     },
+     "inEdges": [
+      "LIFE_NEXT",
+      "CAUSE"
+     ]
+    },
+    {
+     "arc": "twist",
+     "label": "Earth-sized ember",
+     "match": {
+      "roles": [
+       "wd",
+       "pn"
+      ],
+      "hasMisconception": true
+     },
+     "optional": true,
+     "inEdges": [
+      "LIFE_NEXT",
+      "SAME_PHYSICS",
+      "CONTRAST"
+     ]
+    },
+    {
+     "arc": "build",
+     "label": "Heavyweight",
+     "match": {
+      "roles": [
+       "supergiant"
+      ],
+      "maxObsDifficulty": 2
+     },
+     "inEdges": [
+      "CONTRAST",
+      "SAME_PHYSICS"
+     ]
+    },
+    {
+     "arc": "payoff",
+     "label": "Shattered star",
+     "match": {
+      "roles": [
+       "snr"
+      ],
+      "maxObsDifficulty": 4
+     },
+     "inEdges": [
+      "LIFE_NEXT",
+      "CAUSE"
+     ]
+    },
+    {
+     "arc": "coda",
+     "label": "New beginnings",
+     "match": {
+      "roles": [
+       "nursery"
+      ],
+      "maxObsDifficulty": 3
+     },
+     "optional": true,
+     "inEdges": [
+      "LIFE_NEXT",
+      "CAUSE",
+      "SAME_PHYSICS"
+     ]
+    }
+   ],
+   "order": "strict",
+   "edges": [
+    "LIFE_NEXT",
+    "CAUSE",
+    "CONTRAST",
+    "SAME_PHYSICS"
+   ],
+   "progression": {
+    "property": "evoStage",
+    "direction": "arc"
+   },
+   "length": [
+    4,
+    6
+   ],
+   "defaultLength": 5,
+   "ingredients": {
+    "roles": [
+     {
+      "anyOf": [
+       "giant",
+       "supergiant"
+      ],
+      "min": 1
+     },
+     {
+      "anyOf": [
+       "pn",
+       "snr"
+      ],
+      "min": 1
+     }
+    ],
+    "maxMoonIllumination": 0.4
+   },
+   "coreConcepts": [
+    "STAR.mass-fate",
+    "LIFE.pn-wd",
+    "LIFE.supernova",
+    "LIFE.recycling"
+   ],
+   "moonFriendly": false,
+   "moonSuitability": "dark-only",
+   "needsDark": false,
+   "kidFriendly": true,
+   "chainTo": [
+    "A1-cradle-to-grave"
+   ],
+   "switchRule": {
+    "to": [
+     "A1-cradle-to-grave"
+    ],
+    "atArc": "payoff",
+    "via": [
+     "LIFE_NEXT",
+     "CAUSE"
+    ],
+    "minStrength": 0.7,
+    "announceKey": "switch.A8-how-stars-die"
+   }
+  },
+  {
+   "id": "A9-seeing-double",
+   "archetype": "A9",
+   "title": "Seeing Double",
+   "titleKeys": [
+    "title.A9-seeing-double"
+   ],
+   "drivingQuestion": "Is that one star, or two, or six?",
+   "questionKeys": [
+    "question.A9-seeing-double"
+   ],
+   "hookLine": "Split stars that your eyes think are single, then ask which pairs are real partners.",
+   "hookKeys": [
+    "hook.A9-seeing-double"
+   ],
+   "payoffKeys": [
+    "payoff.A9-seeing-double"
+   ],
+   "themeTags": [
+    "double-stars",
+    "moonlit",
+    "colors"
+   ],
+   "orderingPrinciple": "A skill ramp from wide to tight pairs, and an idea ramp from chance alignment to true orbiting systems. Several doubles in a row are allowed here.",
+   "slots": [
+    {
+     "arc": "hook",
+     "label": "Naked-eye pair",
+     "match": {
+      "roles": [
+       "double"
+      ],
+      "maxObsDifficulty": 2,
+      "minWow": 3
+     }
+    },
+    {
+     "arc": "build",
+     "label": "Look closer",
+     "match": {
+      "roles": [
+       "double"
+      ]
+     },
+     "repeat": [
+      1,
+      3
+     ],
+     "inEdges": [
+      "SAME_FAMILY",
+      "CONTRAST",
+      "SAME_PHYSICS",
+      "SIBLING"
+     ]
+    },
+    {
+     "arc": "twist",
+     "label": "Chance alignment?",
+     "match": {
+      "roles": [
+       "double"
+      ],
+      "hasMisconception": true
+     },
+     "optional": true,
+     "inEdges": [
+      "LINE_OF_SIGHT",
+      "CONTRAST",
+      "SAME_FAMILY"
+     ]
+    },
+    {
+     "arc": "payoff",
+     "label": "Hidden system",
+     "match": {
+      "roles": [
+       "double",
+       "variable"
+      ],
+      "anyConcepts": [
+       "MULT.weighing",
+       "VAR.eclipsing",
+       "STAR.mass-transfer"
+      ]
+     },
+     "inEdges": [
+      "SAME_FAMILY",
+      "SAME_PHYSICS",
+      "CONTRAST"
+     ]
+    }
+   ],
+   "order": "partial",
+   "swapGroups": [
+    [
+     1,
+     2
+    ]
+   ],
+   "edges": [
+    "SAME_FAMILY",
+    "CONTRAST",
+    "SAME_PHYSICS",
+    "LINE_OF_SIGHT",
+    "SIBLING"
+   ],
+   "length": [
+    4,
+    6
+   ],
+   "defaultLength": 5,
+   "ingredients": {
+    "roles": [
+     {
+      "anyOf": [
+       "double"
+      ],
+      "min": 3
+     }
+    ]
+   },
+   "coreConcepts": [
+    "SKY.projection",
+    "MULT.doubles",
+    "MULT.weighing"
+   ],
+   "moonFriendly": true,
+   "moonSuitability": "bright-ok",
+   "needsDark": false,
+   "kidFriendly": true
+  },
+  {
+   "id": "A11-inside-our-galaxy",
+   "archetype": "A11",
+   "title": "Inside Our Galaxy",
+   "titleKeys": [
+    "title.A11-inside-our-galaxy"
+   ],
+   "drivingQuestion": "Where are we in the Milky Way?",
+   "questionKeys": [
+    "question.A11-inside-our-galaxy"
+   ],
+   "hookLine": "Sweep the Milky Way from inside, climb to its halo, then glimpse what lies beyond.",
+   "hookKeys": [
+    "hook.A11-inside-our-galaxy"
+   ],
+   "payoffKeys": [
+    "payoff.A11-inside-our-galaxy"
+   ],
+   "themeTags": [
+    "milky-way",
+    "galaxies",
+    "dark-sky"
+   ],
+   "orderingPrinciple": "From the galactic plane outward (distanceLy rises at every step after the opening star field, 2 to 15 times per step; candidates.ladderStepOk): a dense star field along the band, then nurseries and young clusters in the disk, then a globular in the halo, then another galaxy. Without a galaxy in reach, end on the globular.",
+   "slots": [
+    {
+     "arc": "hook",
+     "label": "Milky Way river",
+     "match": {
+      "dsoClasses": [
+       "milky-way-field",
+       "star-cloud"
+      ],
+      "maxObsDifficulty": 2
+     }
+    },
+    {
+     "arc": "build",
+     "label": "In the disk",
+     "match": {
+      "roles": [
+       "nursery",
+       "young-cluster",
+       "adult-cluster"
+      ]
+     },
+     "repeat": [
+      1,
+      2
+     ],
+     "inEdges": [
+      "SIBLING",
+      "SAME_PHYSICS",
+      "SCALE",
+      "LINE_OF_SIGHT"
+     ]
+    },
+    {
+     "arc": "twist",
+     "label": "Dark lane",
+     "match": {
+      "dsoClasses": [
+       "dark-nebula"
+      ]
+     },
+     "optional": true,
+     "inEdges": [
+      "SAME_PHYSICS",
+      "CONTRAST",
+      "LINE_OF_SIGHT"
+     ]
+    },
+    {
+     "arc": "build",
+     "label": "Halo swarm",
+     "match": {
+      "roles": [
+       "globular"
+      ]
+     },
+     "optional": true,
+     "inEdges": [
+      "SCALE",
+      "CONTRAST",
+      "TIME_MACHINE"
+     ]
+    },
+    {
+     "arc": "payoff",
+     "label": "Another galaxy",
+     "match": {
+      "roles": [
+       "galaxy",
+       "globular"
+      ],
+      "maxObsDifficulty": 3
+     },
+     "inEdges": [
+      "SCALE",
+      "TIME_MACHINE",
+      "CONTRAST"
+     ]
+    }
+   ],
+   "order": "partial",
+   "swapGroups": [
+    [
+     1,
+     2
+    ]
+   ],
+   "edges": [
+    "SCALE",
+    "TIME_MACHINE",
+    "SAME_PHYSICS",
+    "CONTRAST",
+    "SIBLING",
+    "LINE_OF_SIGHT"
+   ],
+   "progression": {
+    "property": "distanceLy",
+    "direction": "up"
+   },
+   "length": [
+    4,
+    6
+   ],
+   "defaultLength": 5,
+   "ingredients": {
+    "roles": [
+     {
+      "anyOf": [
+       "globular",
+       "galaxy"
+      ],
+      "min": 1
+     }
+    ],
+    "minSkyBrightness": 20,
+    "maxMoonIllumination": 0.4
+   },
+   "coreConcepts": [
+    "MW.disk",
+    "MW.halo",
+    "GAL.other",
+    "SCALE.cosmic"
+   ],
+   "moonFriendly": false,
+   "moonSuitability": "dark-only",
+   "needsDark": true,
+   "kidFriendly": true
+  },
+  {
+   "id": "A12-moonlit",
+   "archetype": "A12",
+   "title": "Moonlight Can't Hide These",
+   "titleKeys": [
+    "title.A12-moonlit"
+   ],
+   "drivingQuestion": "What can you still see when the Moon floods the sky?",
+   "questionKeys": [
+    "question.A12-moonlit"
+   ],
+   "hookLine": "Tonight's Moon drowns faint clouds but can't touch color, doubles or bright clusters.",
+   "hookKeys": [
+    "hook.A12-moonlit"
+   ],
+   "payoffKeys": [
+    "payoff.A12-moonlit"
+   ],
+   "themeTags": [
+    "moonlit",
+    "star-colours",
+    "double-stars"
+   ],
+   "orderingPrinciple": "A constraint archetype for bright-Moon nights. It draws on the A2, A9 and A10 material and bright open clusters, and says plainly why the nebulae are missing tonight. Free order with strong links.",
+   "slots": [
+    {
+     "arc": "hook",
+     "label": "Moon-proof jewel",
+     "match": {
+      "kinds": [
+       "star"
+      ],
+      "minWow": 3,
+      "maxObsDifficulty": 1
+     }
+    },
+    {
+     "arc": "build",
+     "label": "Color or pair",
+     "match": {
+      "roles": [
+       "double",
+       "variable",
+       "giant",
+       "supergiant",
+       "main-sequence"
+      ]
+     },
+     "repeat": [
+      1,
+      3
+     ],
+     "inEdges": [
+      "CONTRAST",
+      "SAME_PHYSICS",
+      "SAME_FAMILY",
+      "SIBLING",
+      "LINE_OF_SIGHT"
+     ]
+    },
+    {
+     "arc": "twist",
+     "label": "Hidden surprise",
+     "match": {
+      "hasMisconception": true,
+      "maxObsDifficulty": 2
+     },
+     "optional": true
+    },
+    {
+     "arc": "payoff",
+     "label": "Bright family",
+     "match": {
+      "roles": [
+       "young-cluster",
+       "adult-cluster",
+       "association"
+      ],
+      "minWow": 4,
+      "maxObsDifficulty": 2
+     },
+     "inEdges": [
+      "SIBLING",
+      "LIFE_NEXT",
+      "CONTRAST",
+      "LINE_OF_SIGHT"
+     ]
+    },
+    {
+     "arc": "coda",
+     "label": "One last color",
+     "match": {
+      "kinds": [
+       "star"
+      ],
+      "maxObsDifficulty": 1
+     },
+     "optional": true
+    }
+   ],
+   "order": "free",
+   "edges": [
+    "CONTRAST",
+    "SAME_PHYSICS",
+    "SAME_FAMILY",
+    "SIBLING",
+    "LINE_OF_SIGHT",
+    "LIFE_NEXT"
+   ],
+   "length": [
+    4,
+    5
+   ],
+   "defaultLength": 4,
+   "ingredients": {
+    "minStars": 3,
+    "minMoonIllumination": 0.6
+   },
+   "coreConcepts": [
+    "LIGHT.color-temp",
+    "MULT.doubles",
+    "LIFE.cluster-birth"
+   ],
+   "moonFriendly": true,
+   "moonSuitability": "bright-ok",
+   "needsDark": false,
+   "kidFriendly": true,
+   "chainTo": [
+    "A2-thermometer"
+   ],
+   "switchRule": {
+    "to": [
+     "A2-thermometer"
+    ],
+    "atArc": "payoff",
+    "via": [
+     "CONTRAST",
+     "SAME_PHYSICS"
+    ],
+    "minStrength": 0.6,
+    "announceKey": "switch.A12-moonlit"
+   }
+  }
+ ]
+}
