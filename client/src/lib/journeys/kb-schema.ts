@@ -902,7 +902,6 @@ export function parseScorerModel(input: unknown): ScorerModel {
 
 type Same<A, B> = [A] extends [B] ? ([B] extends [A] ? true : false) : false;
 type Assert<T extends true> = T;
-/* eslint-disable @typescript-eslint/no-unused-vars */
 type _Source = Assert<Same<z.infer<typeof SourceSchema>, Source>>;
 type _Object = Assert<Same<z.infer<typeof KbObjectSchema>, KbObject>>;
 type _Context = Assert<Same<z.infer<typeof ContextNodeSchema>, ContextNode>>;
@@ -919,4 +918,3 @@ type _Res = Assert<Same<z.infer<typeof JourneyResultSchema>, JourneyResult>>;
 type _Lens = Assert<Same<z.infer<typeof ThemeLensSchema>, ThemeLens>>;
 type _LensSet = Assert<Same<z.infer<typeof ThemeLensSetSchema>, ThemeLensSet>>;
 type _LensFile = Assert<Same<z.infer<typeof LensesJsonFileSchema>, LensesJsonFile>>;
-/* eslint-enable @typescript-eslint/no-unused-vars */
