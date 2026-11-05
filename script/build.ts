@@ -72,11 +72,18 @@ async function buildAll() {
       files: files.map((p) => `./${p.slice("dist/public/".length)}`),
     }),
   );
-  const worker = await readFile("dist/public/sw.js", "utf8");
-  await writeFile(
-    "dist/public/sw.js",
-    worker.replace("__STARHOP_BUILD__", build),
-  );
+  // The service worker is bundled (it shares tested logic with client/src/lib)
+  // and carries the build hash, so every deploy changes its bytes.
+  await esbuild({
+    entryPoints: ["client/service-worker/sw.js"],
+    outfile: "dist/public/sw.js",
+    bundle: true,
+    format: "iife",
+    platform: "browser",
+    target: "es2020",
+    define: { __STARHOP_BUILD__: JSON.stringify(build) },
+    logLevel: "warning",
+  });
 
   console.log("building server...");
   const pkg = JSON.parse(await readFile("package.json", "utf-8"));

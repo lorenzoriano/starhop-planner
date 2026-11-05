@@ -110,7 +110,7 @@ Install the app using your browser’s install or Add to Home Screen action if d
 - `client/src/lib/astronomy.ts`, `route-planner.ts`, `cost-strategies.ts`: catalogs, coordinates, patterns, and routing.
 - `client/src/lib/observing.ts`: sky conditions, object guidance, and recommendations.
 - `client/src/lib/session.ts`, `hooks/use-local-state.ts`: validated device storage.
-- `client/src/lib/offline.ts`, `client/public/sw.js`, `script/build.ts`: production offline preparation.
+- `client/src/lib/offline.ts`, `client/service-worker/sw.js` (bundled by `script/build.ts` with `client/src/lib/sw-logic.ts`), `client/src/lib/pwa-update.ts`: production offline preparation and automatic updates.
 - `server/`: Express hosting shell. The database/storage stubs are currently unused.
 
 See [the repository assessment](docs/repository-assessment.md) for the changes and next priorities.

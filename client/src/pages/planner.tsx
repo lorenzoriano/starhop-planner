@@ -113,6 +113,7 @@ import {
   ArrowLeft,
   RotateCcw,
   Waypoints,
+  RefreshCw,
 } from "lucide-react";
 import {
   planRoutes,
@@ -284,7 +285,7 @@ export default function PlannerPage() {
   const featuredObjectRef = useRef<HTMLElement>(null);
   const [speed, setSpeed] = useState(3500);
   const [clockNow, setClockNow] = useState(() => new Date());
-  const offline = useOffline();
+  const offline = useOffline({ busy: playing });
   const {
     lat,
     lon,
@@ -1155,6 +1156,18 @@ export default function PlannerPage() {
           >
             <Settings2 size={17} />
           </button>
+          {offline.updateReady ? (
+            <button
+              aria-label="StarHop was updated. Reload to use the new version"
+              title="Reload to use the updated StarHop"
+              className="offline-pill ready"
+              onClick={offline.reloadForUpdate}
+              data-testid="update-ready"
+            >
+              <RefreshCw size={13} />
+              <span>Update ready</span>
+            </button>
+          ) : (
           <button
             aria-label={offlineLabel}
             title={offlineLabel}
@@ -1165,6 +1178,7 @@ export default function PlannerPage() {
             <span className="status-dot" />
             <span>{offline.state==="preparing"?"Preparing…":offline.state==="ready"&&!offline.online?"Offline mode":!offline.online?"Offline setup":offlineLabel}</span>
           </button>
+          )}
           <button
             className={`icon-button red-toggle ${settings.redLight ? "active" : ""}`}
             onClick={() => update({ redLight: !settings.redLight })}
