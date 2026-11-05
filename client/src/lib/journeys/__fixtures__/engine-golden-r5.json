@@ -1,0 +1,1175 @@
+{
+ "kbVersion": "kb-v1+93ae671b75",
+ "fixture": {
+  "dark": {
+   "journeys": [
+    {
+     "key": "ajF8MDVmZXxBMS1jcmFkbGUtdG8tZ3JhdmV8fE00MixOR0MxOTgxLEFTVC1PcmlvbkJlbHQsU1RBUi1CZXRlbGdldXNlLE0xfDAxMTQ1fGh1dGNjfDM3Ljh8LTEyMi40fDYuNXw1MHwxMHwwfDIxLjN8MzB8MzB8OHwxfDY4Ljk4fDE2LjUx",
+     "templateId": "A1-cradle-to-grave",
+     "score": 9.048198,
+     "title": "Cradle to Grave in Orion",
+     "stops": [
+      [
+       "M42",
+       "hook",
+       41.8
+      ],
+      [
+       "NGC1981",
+       "build",
+       43.5
+      ],
+      [
+       "AST-OrionBelt",
+       "build",
+       47.3
+      ],
+      [
+       "STAR-Betelgeuse",
+       "payoff",
+       53.7
+      ],
+      [
+       "M1",
+       "coda",
+       69.7
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-01-09T03:45:00.000Z",
+      "end": "2027-01-09T09:55:00.000Z"
+     },
+     "closestMoonDeg": null
+    }
+   ],
+   "diagnostics": {
+    "message": "Only “Cradle to Grave” stories fit this part of the sky right now; other themes may open up later in the night.",
+    "limitingFactors": [],
+    "relaxed": [
+     "length 3–6 stops"
+    ],
+    "candidates": 8,
+    "validated": 2
+   },
+   "conditions": {
+    "instant": "2027-01-09T05:00:00.000Z",
+    "darkness": "night",
+    "sunAltDeg": -45.2,
+    "darkWindow": {
+     "start": "2027-01-09T02:41:00.901Z",
+     "end": "2027-01-09T13:52:02.764Z"
+    },
+    "moon": {
+     "up": false,
+     "illumination": 0.017,
+     "altDeg": -32.4,
+     "azDeg": 267.3,
+     "minSepDeg": 15,
+     "rise": "2027-01-09T16:43:30.877Z",
+     "set": "2027-01-10T03:04:00.632Z"
+    },
+    "glowLimits": {
+     "diffuse": 0.7,
+     "cluster": 1.2,
+     "star": 2.5
+    },
+    "sunLimits": {
+     "star": -12,
+     "dso": -18
+    },
+    "minAlt": 30,
+    "regionRadius": 30,
+    "skyBrightness": 21.3,
+    "limitingFactors": []
+   }
+  },
+  "dark gbdt": {
+   "journeys": [
+    {
+     "key": "ajF8MDVmZXxBMS1jcmFkbGUtdG8tZ3JhdmV8fE00MixOR0MxOTgxLEFTVC1PcmlvbkJlbHQsU1RBUi1CZXRlbGdldXNlLE0xfDAxMTQ1fGh1dGNjfDM3Ljh8LTEyMi40fDYuNXw1MHwxMHwwfDIxLjN8MzB8MzB8OHwxfDY4Ljk4fDE2LjUx",
+     "templateId": "A1-cradle-to-grave",
+     "score": 0.602286,
+     "title": "Cradle to Grave in Orion",
+     "stops": [
+      [
+       "M42",
+       "hook",
+       41.8
+      ],
+      [
+       "NGC1981",
+       "build",
+       43.5
+      ],
+      [
+       "AST-OrionBelt",
+       "build",
+       47.3
+      ],
+      [
+       "STAR-Betelgeuse",
+       "payoff",
+       53.7
+      ],
+      [
+       "M1",
+       "coda",
+       69.7
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-01-09T03:45:00.000Z",
+      "end": "2027-01-09T09:55:00.000Z"
+     },
+     "closestMoonDeg": null
+    }
+   ],
+   "diagnostics": {
+    "message": "Only “Cradle to Grave” stories fit this part of the sky right now; other themes may open up later in the night.",
+    "limitingFactors": [],
+    "relaxed": [
+     "length 3–6 stops"
+    ],
+    "candidates": 8,
+    "validated": 2
+   },
+   "conditions": {
+    "instant": "2027-01-09T05:00:00.000Z",
+    "darkness": "night",
+    "sunAltDeg": -45.2,
+    "darkWindow": {
+     "start": "2027-01-09T02:41:00.901Z",
+     "end": "2027-01-09T13:52:02.764Z"
+    },
+    "moon": {
+     "up": false,
+     "illumination": 0.017,
+     "altDeg": -32.4,
+     "azDeg": 267.3,
+     "minSepDeg": 15,
+     "rise": "2027-01-09T16:43:30.877Z",
+     "set": "2027-01-10T03:04:00.632Z"
+    },
+    "glowLimits": {
+     "diffuse": 0.7,
+     "cluster": 1.2,
+     "star": 2.5
+    },
+    "sunLimits": {
+     "star": -12,
+     "dso": -18
+    },
+    "minAlt": 30,
+    "regionRadius": 30,
+    "skyBrightness": 21.3,
+    "limitingFactors": []
+   }
+  },
+  "moonlit": {
+   "journeys": [],
+   "diagnostics": {
+    "message": "The Moon is 100% lit and up. Its glow washes out faint nebulae and galaxies, so every stop is kept at least 40° from it; it sets at 07:37.",
+    "limitingFactors": [
+     "moon",
+     "region"
+    ],
+    "relaxed": [],
+    "candidates": 0,
+    "validated": 0
+   },
+   "conditions": {
+    "instant": "2027-01-22T07:00:00.000Z",
+    "darkness": "night",
+    "sunAltDeg": -64.8,
+    "darkWindow": {
+     "start": "2027-01-22T02:52:35.933Z",
+     "end": "2027-01-22T13:49:21.999Z"
+    },
+    "moon": {
+     "up": true,
+     "illumination": 0.999,
+     "altDeg": 68.1,
+     "azDeg": 130.9,
+     "minSepDeg": 40,
+     "rise": "2027-01-23T01:56:30.231Z",
+     "set": "2027-01-22T15:37:35.049Z"
+    },
+    "glowLimits": {
+     "diffuse": 0.7,
+     "cluster": 1.2,
+     "star": 2.5
+    },
+    "sunLimits": {
+     "star": -12,
+     "dso": -18
+    },
+    "minAlt": 30,
+    "regionRadius": 30,
+    "skyBrightness": 21.3,
+    "limitingFactors": [
+     "moon",
+     "region"
+    ]
+   }
+  },
+  "twilight": {
+   "journeys": [],
+   "diagnostics": {
+    "message": "The sky is still in twilight. Bright stars work from 18:09; faint nebulae, clusters and galaxies need full darkness from 18:41. Few objects are higher than 30° right now.",
+    "limitingFactors": [
+     "twilight",
+     "altitude"
+    ],
+    "relaxed": [],
+    "candidates": 0,
+    "validated": 0
+   },
+   "conditions": {
+    "instant": "2027-01-09T01:50:00.000Z",
+    "darkness": "nautical",
+    "sunAltDeg": -8.4,
+    "darkWindow": {
+     "start": "2027-01-09T02:41:00.901Z",
+     "end": "2027-01-09T13:52:02.764Z"
+    },
+    "moon": {
+     "up": true,
+     "illumination": 0.014,
+     "altDeg": 1.7,
+     "azDeg": 240.5,
+     "minSepDeg": 15,
+     "rise": "2027-01-09T16:43:30.813Z",
+     "set": "2027-01-09T02:03:16.043Z"
+    },
+    "glowLimits": {
+     "diffuse": 0.7,
+     "cluster": 1.2,
+     "star": 2.5
+    },
+    "sunLimits": {
+     "star": -12,
+     "dso": -18
+    },
+    "minAlt": 30,
+    "regionRadius": 30,
+    "skyBrightness": 21.3,
+    "limitingFactors": [
+     "twilight",
+     "altitude"
+    ]
+   }
+  },
+  "shuffle + seen": {
+   "journeys": [
+    {
+     "key": "ajF8MDVmZXxBMS1jcmFkbGUtdG8tZ3JhdmV8fE00MixOR0MxOTgxLEFTVC1PcmlvbkJlbHQsU1RBUi1CZXRlbGdldXNlLE0xfDAxMTQ1fGh1dGNjfDM3Ljh8LTEyMi40fDYuNXw1MHwxMHwwfDIxLjN8MzB8MzB8OHwxfDY4Ljk4fDE2LjUx",
+     "templateId": "A1-cradle-to-grave",
+     "score": 8.548198,
+     "title": "Cradle to Grave in Orion",
+     "stops": [
+      [
+       "M42",
+       "hook",
+       41.8
+      ],
+      [
+       "NGC1981",
+       "build",
+       43.5
+      ],
+      [
+       "AST-OrionBelt",
+       "build",
+       47.3
+      ],
+      [
+       "STAR-Betelgeuse",
+       "payoff",
+       53.7
+      ],
+      [
+       "M1",
+       "coda",
+       69.7
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-01-09T03:45:00.000Z",
+      "end": "2027-01-09T09:55:00.000Z"
+     },
+     "closestMoonDeg": null
+    }
+   ],
+   "diagnostics": {
+    "message": "Only “Cradle to Grave” stories fit this part of the sky right now; other themes may open up later in the night.",
+    "limitingFactors": [],
+    "relaxed": [
+     "length 3–6 stops"
+    ],
+    "candidates": 8,
+    "validated": 2
+   },
+   "conditions": {
+    "instant": "2027-01-09T05:00:00.000Z",
+    "darkness": "night",
+    "sunAltDeg": -45.2,
+    "darkWindow": {
+     "start": "2027-01-09T02:41:00.901Z",
+     "end": "2027-01-09T13:52:02.764Z"
+    },
+    "moon": {
+     "up": false,
+     "illumination": 0.017,
+     "altDeg": -32.4,
+     "azDeg": 267.3,
+     "minSepDeg": 15,
+     "rise": "2027-01-09T16:43:30.877Z",
+     "set": "2027-01-10T03:04:00.632Z"
+    },
+    "glowLimits": {
+     "diffuse": 0.7,
+     "cluster": 1.2,
+     "star": 2.5
+    },
+    "sunLimits": {
+     "star": -12,
+     "dso": -18
+    },
+    "minAlt": 30,
+    "regionRadius": 30,
+    "skyBrightness": 21.3,
+    "limitingFactors": []
+   }
+  }
+ },
+ "real": {
+  "SF January dark": {
+   "journeys": [
+    {
+     "key": "ajF8YmY4MXxBMy1ob3ctZmFyfHxTVEFSLUNhcGVsbGEsTWVsMjAsU3RvY2syLE5HQzQ1NyxNMzF8MDEyMzR8aHVzNzN8MzcuOHwtMTIyLjR8Ni41fDUwfDEwfDB8MTl8MzB8MzB8OHwxfDQwLjV8NDIuNzg",
+     "templateId": "A3-how-far",
+     "score": 9.414107,
+     "title": "Up Through Cassiopeia on a Ladder of Rulers",
+     "stops": [
+      [
+       "STAR-Capella",
+       "hook",
+       65.8
+      ],
+      [
+       "Mel20",
+       "build",
+       79.1
+      ],
+      [
+       "Stock2",
+       "build",
+       65.3
+      ],
+      [
+       "NGC457",
+       "build",
+       59.6
+      ],
+      [
+       "M31",
+       "payoff",
+       54.9
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-01-08T02:30:00.000Z",
+      "end": "2027-01-08T06:55:00.000Z"
+     },
+     "closestMoonDeg": null
+    },
+    {
+     "key": "ajF8YmY4MXxBNi1jb250cmFzdHN8fE5HQzQ1NyxIUjI2NCxIUjkwNDUsTkdDODY5LEhSMTAxN3wwMTIzM3xodXM3M3wzNy44fC0xMjIuNHw2LjV8NTB8MTB8MHwxOXwzMHwzMHw4fDF8MTAuNjh8NDEuMjc",
+     "templateId": "A6-contrasts",
+     "score": 9.602872,
+     "title": "Cassiopeia's Unlikely Twins",
+     "stops": [
+      [
+       "NGC457",
+       "hook",
+       62.2
+      ],
+      [
+       "HR264",
+       "build",
+       57.7
+      ],
+      [
+       "HR9045",
+       "build",
+       50.1
+      ],
+      [
+       "NGC869",
+       "build",
+       66.6
+      ],
+      [
+       "HR1017",
+       "payoff",
+       77.2
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-01-08T02:45:00.000Z",
+      "end": "2027-01-08T07:10:00.000Z"
+     },
+     "closestMoonDeg": null
+    },
+    {
+     "key": "ajF8YmY4MXxBMS1jcmFkbGUtdG8tZ3JhdmV8fE00MixDcjY5LE0zNSxIUjIyODYsU1RBUi1CZXRlbGdldXNlfDAxMjM0fGh1czczfDM3Ljh8LTEyMi40fDYuNXw1MHwxMHwwfDE5fDMwfDMwfDh8MXw4NC40MXwyMS4xNA",
+     "templateId": "A1-cradle-to-grave",
+     "score": 8.471145,
+     "title": "How the Stars of Orion Grow Old",
+     "stops": [
+      [
+       "M42",
+       "hook",
+       35.7
+      ],
+      [
+       "Cr69",
+       "build",
+       49.1
+      ],
+      [
+       "M35",
+       "build",
+       53.7
+      ],
+      [
+       "HR2286",
+       "build",
+       51.5
+      ],
+      [
+       "STAR-Betelgeuse",
+       "payoff",
+       47.9
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-01-08T03:45:00.000Z",
+      "end": "2027-01-08T09:55:00.000Z"
+     },
+     "closestMoonDeg": null
+    }
+   ],
+   "diagnostics": {
+    "message": "Dark sky with the Moon down: every kind of journey is available.",
+    "limitingFactors": [],
+    "relaxed": [],
+    "candidates": 694,
+    "validated": 46
+   },
+   "conditions": {
+    "instant": "2027-01-08T04:15:00.000Z",
+    "darkness": "night",
+    "sunAltDeg": -36.5,
+    "darkWindow": {
+     "start": "2027-01-08T02:40:11.477Z",
+     "end": "2027-01-08T13:52:02.218Z"
+    },
+    "moon": {
+     "up": false,
+     "illumination": 0.001,
+     "altDeg": -34.6,
+     "azDeg": 264.1,
+     "minSepDeg": 15,
+     "rise": "2027-01-08T16:12:26.016Z",
+     "set": "2027-01-09T02:03:16.141Z"
+    },
+    "glowLimits": {
+     "diffuse": 0.7,
+     "cluster": 1.2,
+     "star": 2.5
+    },
+    "sunLimits": {
+     "star": -12,
+     "dso": -18
+    },
+    "minAlt": 30,
+    "regionRadius": 30,
+    "skyBrightness": 19,
+    "limitingFactors": []
+   }
+  },
+  "SF full Moon": {
+   "journeys": [
+    {
+     "key": "ajF8YmY4MXxBOS1zZWVpbmctZG91YmxlfHxIUjEzODcsRFMtVGhldGFUYXUsSFIxNDc5LEhSMTg1MixIUjE5MzF8MDEyNDR8aHY3dm98MzcuOHwtMTIyLjR8Ni41fDUwfDEwfDB8MTl8MzB8MzB8OHwxfDY1LjczfDE3LjU0",
+     "templateId": "A9-seeing-double",
+     "score": -0.322616,
+     "title": "Taurus, Counted in Pairs",
+     "stops": [
+      [
+       "HR1387",
+       "hook",
+       54.6
+      ],
+      [
+       "DS-ThetaTau",
+       "build",
+       49.8
+      ],
+      [
+       "HR1479",
+       "build",
+       50.3
+      ],
+      [
+       "HR1852",
+       "build",
+       44.7
+      ],
+      [
+       "HR1931",
+       "payoff",
+       42.5
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-01-22T02:30:00.000Z",
+      "end": "2027-01-22T08:55:00.000Z"
+     },
+     "closestMoonDeg": 43.6
+    },
+    {
+     "key": "ajF8YmY4MXxBNS1mYW1pbGllc3x8TkdDODY5LE1lbDIwLE0zNHwwMTJ8aHY3dm98MzcuOHwtMTIyLjR8Ni41fDUwfDEwfDB8MTl8MzB8MzB8OHwxfDQwLjEyfDY2LjU2",
+     "templateId": "A5-families",
+     "score": 1.141321,
+     "title": "Perseus, a Family Album",
+     "stops": [
+      [
+       "NGC869",
+       "hook",
+       42.1
+      ],
+      [
+       "Mel20",
+       "build",
+       49.3
+      ],
+      [
+       "M34",
+       "payoff",
+       40
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-01-22T03:00:00.000Z",
+      "end": "2027-01-22T08:09:00.000Z"
+     },
+     "closestMoonDeg": 61.2
+    },
+    {
+     "key": "ajF8YmY4MXxBMTItbW9vbmxpdHx8U1RBUi1BbGRlYmFyYW4sRFMtVGhldGFUYXUsTTQ1fDAxMnxodjd2b3wzNy44fC0xMjIuNHw2LjV8NTB8MTB8MHwxOXwzMHwzMHw4fDF8NzUuNTF8NDEuODc",
+     "templateId": "A12-moonlit",
+     "score": 2.506318,
+     "title": "Taurus' Moon-Proof Lights",
+     "stops": [
+      [
+       "STAR-Aldebaran",
+       "hook",
+       53
+      ],
+      [
+       "DS-ThetaTau",
+       "build",
+       49.8
+      ],
+      [
+       "M45",
+       "payoff",
+       44.9
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-01-22T02:45:00.000Z",
+      "end": "2027-01-22T07:39:00.000Z"
+     },
+     "closestMoonDeg": 49.5
+    }
+   ],
+   "diagnostics": {
+    "message": "The Moon is 100% lit and up. Its glow washes out faint nebulae and galaxies, so every stop is kept at least 40° from it; it sets at 15:37 UTC.",
+    "limitingFactors": [
+     "moon"
+    ],
+    "relaxed": [
+     "length 3–6 stops"
+    ],
+    "candidates": 63,
+    "validated": 19
+   },
+   "conditions": {
+    "instant": "2027-01-22T07:00:00.000Z",
+    "darkness": "night",
+    "sunAltDeg": -64.8,
+    "darkWindow": {
+     "start": "2027-01-22T02:52:35.933Z",
+     "end": "2027-01-22T13:49:21.999Z"
+    },
+    "moon": {
+     "up": true,
+     "illumination": 0.999,
+     "altDeg": 68.1,
+     "azDeg": 130.9,
+     "minSepDeg": 40,
+     "rise": "2027-01-23T01:56:30.231Z",
+     "set": "2027-01-22T15:37:35.049Z"
+    },
+    "glowLimits": {
+     "diffuse": 0.7,
+     "cluster": 1.2,
+     "star": 2.5
+    },
+    "sunLimits": {
+     "star": -12,
+     "dso": -18
+    },
+    "minAlt": 30,
+    "regionRadius": 30,
+    "skyBrightness": 19,
+    "limitingFactors": [
+     "moon"
+    ]
+   }
+  },
+  "Colorado July": {
+   "journeys": [
+    {
+     "key": "ajF8YmY4MXxBMS1jcmFkbGUtdG8tZ3JhdmV8fElDMTM5NixNMzksU1RBUi1EZW5lYixIUjc3NjMsTTI3fDAyMzQ1fGkwYTE2fDM4Ljh8LTEwNC41fDYuNXw1MHwxMHwwfDIxLjV8MzB8MzB8OHwxfDI5MC4zNHw1MS4wMw",
+     "templateId": "A1-cradle-to-grave",
+     "score": 8.967125,
+     "title": "Birth and Death Above Cygnus",
+     "stops": [
+      [
+       "IC1396",
+       "hook",
+       45.4
+      ],
+      [
+       "M39",
+       "build",
+       46.5
+      ],
+      [
+       "STAR-Deneb",
+       "build",
+       56
+      ],
+      [
+       "HR7763",
+       "build",
+       60.7
+      ],
+      [
+       "M27",
+       "payoff",
+       59
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-07-05T04:30:00.000Z",
+      "end": "2027-07-05T09:25:00.000Z"
+     },
+     "closestMoonDeg": null
+    },
+    {
+     "key": "ajF8YmY4MXxBNi1jb250cmFzdHN8fFNUQVItVmVnYSxIRDIyNjg2OCxEUy1BbGJpcmVvLEhSNzUyNSxJQzQ3NTZ8MDAxMjN8aTBhMTZ8MzguOHwtMTA0LjV8Ni41fDUwfDEwfDB8MjEuNXwzMHwzMHw4fDF8Mjk1Ljc3fDIzLjM",
+     "templateId": "A6-contrasts",
+     "score": 8.607832,
+     "title": "How Cygnus Fools the Eye",
+     "stops": [
+      [
+       "STAR-Vega",
+       "hook",
+       75.6
+      ],
+      [
+       "HD226868",
+       "build",
+       60.6
+      ],
+      [
+       "DS-Albireo",
+       "build",
+       64.4
+      ],
+      [
+       "HR7525",
+       "build",
+       51.3
+      ],
+      [
+       "IC4756",
+       "payoff",
+       55.2
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-07-05T04:00:00.000Z",
+      "end": "2027-07-05T09:25:00.000Z"
+     },
+     "closestMoonDeg": null
+    },
+    {
+     "key": "ajF8YmY4MXxBMy1ob3ctZmFyfHxIUjY1NTYsSUM0NjY1LElDNDc1NixNMTEsTTE0fDAxMjIzfGkwYTE2fDM4Ljh8LTEwNC41fDYuNXw1MHwxMHwwfDIxLjV8MzB8MzB8OHwxfDI4My44fDkuMzU",
+     "templateId": "A3-how-far",
+     "score": 5.743131,
+     "title": "Ophiuchus' Ladder into the Dark",
+     "stops": [
+      [
+       "HR6556",
+       "hook",
+       63.6
+      ],
+      [
+       "IC4665",
+       "build",
+       56.7
+      ],
+      [
+       "IC4756",
+       "build",
+       54
+      ],
+      [
+       "M11",
+       "build",
+       42.5
+      ],
+      [
+       "M14",
+       "payoff",
+       47.8
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-07-05T04:15:00.000Z",
+      "end": "2027-07-05T08:40:00.000Z"
+     },
+     "closestMoonDeg": null
+    }
+   ],
+   "diagnostics": {
+    "message": "Dark sky with the Moon down: every kind of journey is available.",
+    "limitingFactors": [],
+    "relaxed": [],
+    "candidates": 903,
+    "validated": 81
+   },
+   "conditions": {
+    "instant": "2027-07-05T05:30:00.000Z",
+    "darkness": "night",
+    "sunAltDeg": -24.7,
+    "darkWindow": {
+     "start": "2027-07-05T04:23:17.723Z",
+     "end": "2027-07-05T09:41:58.017Z"
+    },
+    "moon": {
+     "up": false,
+     "illumination": 0.019,
+     "altDeg": -19.4,
+     "azDeg": 320.8,
+     "minSepDeg": 15,
+     "rise": "2027-07-05T13:21:39.823Z",
+     "set": "2027-07-06T03:58:33.749Z"
+    },
+    "glowLimits": {
+     "diffuse": 0.7,
+     "cluster": 1.2,
+     "star": 2.5
+    },
+    "sunLimits": {
+     "star": -12,
+     "dso": -18
+    },
+    "minAlt": 30,
+    "regionRadius": 30,
+    "skyBrightness": 21.5,
+    "limitingFactors": []
+   }
+  },
+  "Sydney July": {
+   "journeys": [
+    {
+     "key": "ajF8YmY4MXxBMS1jcmFkbGUtdG8tZ3JhdmV8fE04LE5HQzY1MzAsTTcsSFI2MjYyLFNUQVItQW50YXJlc3wwMTIzNHxpMGE3dXwtMzMuOXwxNTEuMnw2LjV8NTB8MTB8MHwxOXwzMHwzMHw4fDF8Mjc2LjA0fC0zNC4zOA",
+     "templateId": "A1-cradle-to-grave",
+     "score": 11.174681,
+     "title": "The Life of Scorpius' Stars",
+     "stops": [
+      [
+       "M8",
+       "hook",
+       42
+      ],
+      [
+       "NGC6530",
+       "build",
+       43.4
+      ],
+      [
+       "M7",
+       "build",
+       50.7
+      ],
+      [
+       "HR6262",
+       "build",
+       64.3
+      ],
+      [
+       "STAR-Antares",
+       "payoff",
+       68.9
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-07-05T08:45:00.000Z",
+      "end": "2027-07-05T16:10:00.000Z"
+     },
+     "closestMoonDeg": null
+    },
+    {
+     "key": "ajF8YmY4MXxBMy1ob3ctZmFyfHxIUjQ3NjMsSUMyNjAyLE5HQzM1MzIsTkdDNDc1NSxOR0M1MTM5fDAxMjMzfGkwYTd1fC0zMy45fDE1MS4yfDYuNXw1MHwxMHwwfDE5fDMwfDMwfDh8MXwyMjkuNzN8LTY4LjY4",
+     "templateId": "A3-how-far",
+     "score": 9.993007,
+     "title": "Up Through Crux on a Ladder of Rulers",
+     "stops": [
+      [
+       "HR4763",
+       "hook",
+       59.6
+      ],
+      [
+       "IC2602",
+       "build",
+       43.9
+      ],
+      [
+       "NGC3532",
+       "build",
+       46.9
+      ],
+      [
+       "NGC4755",
+       "build",
+       57.4
+      ],
+      [
+       "NGC5139",
+       "payoff",
+       68.1
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-07-05T08:15:00.000Z",
+      "end": "2027-07-05T12:10:00.000Z"
+     },
+     "closestMoonDeg": null
+    },
+    {
+     "key": "ajF8YmY4MXxBMi10aGVybW9tZXRlcnx8SFI0NzYzLEhSNTQ1OSxIUjU4OTcsSFI2NTEwLEhSNjI2MnwwMjM0NXxpMGE3dXwtMzMuOXwxNTEuMnw2LjV8NTB8MTB8MHwxOXwzMHwzMHw4fDF8MjIwLjQ4fC00Ny4zOQ",
+     "templateId": "A2-thermometer",
+     "score": 9.746756,
+     "title": "Centaurus by the Color of Its Stars",
+     "stops": [
+      [
+       "HR4763",
+       "hook",
+       59.6
+      ],
+      [
+       "HR5459",
+       "build",
+       62.9
+      ],
+      [
+       "HR5897",
+       "build",
+       58.2
+      ],
+      [
+       "HR6510",
+       "build",
+       56.4
+      ],
+      [
+       "HR6262",
+       "payoff",
+       65.7
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-07-05T08:00:00.000Z",
+      "end": "2027-07-05T13:40:00.000Z"
+     },
+     "closestMoonDeg": null
+    }
+   ],
+   "diagnostics": {
+    "message": "Dark sky with the Moon down: every kind of journey is available.",
+    "limitingFactors": [],
+    "relaxed": [],
+    "candidates": 839,
+    "validated": 51
+   },
+   "conditions": {
+    "instant": "2027-07-05T09:30:00.000Z",
+    "darkness": "night",
+    "sunAltDeg": -30.6,
+    "darkWindow": {
+     "start": "2027-07-05T08:27:40.354Z",
+     "end": "2027-07-05T19:31:50.254Z"
+    },
+    "moon": {
+     "up": false,
+     "illumination": 0.025,
+     "altDeg": -14.5,
+     "azDeg": 285.9,
+     "minSepDeg": 15,
+     "rise": "2027-07-05T22:39:38.095Z",
+     "set": "2027-07-06T09:28:24.849Z"
+    },
+    "glowLimits": {
+     "diffuse": 0.7,
+     "cluster": 1.2,
+     "star": 2.5
+    },
+    "sunLimits": {
+     "star": -12,
+     "dso": -18
+    },
+    "minAlt": 30,
+    "regionRadius": 30,
+    "skyBrightness": 19,
+    "limitingFactors": []
+   }
+  },
+  "SF 2026-11-04 tonight": {
+   "journeys": [
+    {
+     "key": "ajF8YmY4MXxBNi1jb250cmFzdHN8fEhSODIzOCxTVEFSLU11Q2VwLERTLURlbHRhQ2VwLEhSOTA0NSxOR0M4Njl8MDExMjN8aHNyeml8MzcuOHwtMTIyLjR8Ni41fDUwfDEwfDB8MjAuNXwzMHwzMHw4fDF8MTAuMTN8NTYuNTQ",
+     "templateId": "A6-contrasts",
+     "score": 10.581682,
+     "title": "Look-Alikes of Cepheus",
+     "stops": [
+      [
+       "HR8238",
+       "hook",
+       54.3
+      ],
+      [
+       "STAR-MuCep",
+       "build",
+       63.7
+      ],
+      [
+       "DS-DeltaCep",
+       "build",
+       67.1
+      ],
+      [
+       "HR9045",
+       "build",
+       69.9
+      ],
+      [
+       "NGC869",
+       "payoff",
+       58.1
+      ]
+     ],
+     "bestWindow": {
+      "start": "2026-11-04T02:15:00.000Z",
+      "end": "2026-11-04T09:25:00.000Z"
+     },
+     "closestMoonDeg": null
+    },
+    {
+     "key": "ajF8YmY4MXxBOC1ob3ctc3RhcnMtZGllfHxIUjc5NDksSFI4MjYyLFNUQVItRGVuZWIsSFI3NzYzLE0yN3wwMTIzNXxoc3J6aXwzNy44fC0xMjIuNHw2LjV8NTB8MTB8MHwyMC41fDMwfDMwfDh8MXwzMjAuOTl8MjAuOTU",
+     "templateId": "A8-how-stars-die",
+     "score": 8.009082,
+     "title": "Cygnus and the Fate of the Sun",
+     "stops": [
+      [
+       "HR7949",
+       "hook",
+       60.2
+      ],
+      [
+       "HR8262",
+       "build",
+       69
+      ],
+      [
+       "STAR-Deneb",
+       "build",
+       58.1
+      ],
+      [
+       "HR7763",
+       "build",
+       51.2
+      ],
+      [
+       "M27",
+       "payoff",
+       39.9
+      ]
+     ],
+     "bestWindow": {
+      "start": "2026-11-04T02:15:00.000Z",
+      "end": "2026-11-04T05:40:00.000Z"
+     },
+     "closestMoonDeg": null
+    },
+    {
+     "key": "ajF8YmY4MXxBMy1ob3ctZmFyfHxTVEFSLUFsZ29sLE1lbDIwLFN0b2NrMixOR0M0NTcsTTMxfDAxMjM0fGhzcnppfDM3Ljh8LTEyMi40fDYuNXw1MHwxMHwwfDIwLjV8MzB8MzB8OHwxfDEwLjEzfDU2LjU0",
+     "templateId": "A3-how-far",
+     "score": 9.396123,
+     "title": "Perseus, Rung by Rung",
+     "stops": [
+      [
+       "STAR-Algol",
+       "hook",
+       45.2
+      ],
+      [
+       "Mel20",
+       "build",
+       45.9
+      ],
+      [
+       "Stock2",
+       "build",
+       55.9
+      ],
+      [
+       "NGC457",
+       "build",
+       63.5
+      ],
+      [
+       "M31",
+       "payoff",
+       78.3
+      ]
+     ],
+     "bestWindow": {
+      "start": "2026-11-04T03:15:00.000Z",
+      "end": "2026-11-04T11:10:00.000Z"
+     },
+     "closestMoonDeg": null
+    }
+   ],
+   "diagnostics": {
+    "message": "Dark sky with the Moon down: every kind of journey is available.",
+    "limitingFactors": [],
+    "relaxed": [],
+    "candidates": 922,
+    "validated": 39
+   },
+   "conditions": {
+    "instant": "2026-11-04T04:30:00.000Z",
+    "darkness": "night",
+    "sunAltDeg": -40.1,
+    "darkWindow": {
+     "start": "2026-11-04T02:37:41.586Z",
+     "end": "2026-11-04T13:09:10.922Z"
+    },
+    "moon": {
+     "up": false,
+     "illumination": 0.255,
+     "altDeg": -46,
+     "azDeg": 9,
+     "minSepDeg": 17.7,
+     "rise": "2026-11-04T10:00:30.534Z",
+     "set": "2026-11-04T22:41:44.589Z"
+    },
+    "glowLimits": {
+     "diffuse": 0.7,
+     "cluster": 1.2,
+     "star": 2.5
+    },
+    "sunLimits": {
+     "star": -12,
+     "dso": -18
+    },
+    "minAlt": 30,
+    "regionRadius": 30,
+    "skyBrightness": 20.5,
+    "limitingFactors": []
+   }
+  }
+ },
+ "rebuild": {
+  "SF January dark": {
+   "valid": true,
+   "stops": [
+    "STAR-Capella",
+    "Mel20",
+    "Stock2",
+    "NGC457",
+    "M31"
+   ],
+   "problems": [],
+   "codes": []
+  },
+  "SF full Moon": {
+   "valid": true,
+   "stops": [
+    "HR1387",
+    "DS-ThetaTau",
+    "HR1479",
+    "HR1852",
+    "HR1931"
+   ],
+   "problems": [],
+   "codes": []
+  },
+  "Colorado July": {
+   "valid": true,
+   "stops": [
+    "IC1396",
+    "M39",
+    "STAR-Deneb",
+    "HR7763",
+    "M27"
+   ],
+   "problems": [],
+   "codes": []
+  },
+  "Sydney July": {
+   "valid": true,
+   "stops": [
+    "M8",
+    "NGC6530",
+    "M7",
+    "HR6262",
+    "STAR-Antares"
+   ],
+   "problems": [],
+   "codes": []
+  },
+  "SF 2026-11-04 tonight": {
+   "valid": true,
+   "stops": [
+    "HR8238",
+    "STAR-MuCep",
+    "DS-DeltaCep",
+    "HR9045",
+    "NGC869"
+   ],
+   "problems": [],
+   "codes": []
+  }
+ }
+}

@@ -1,0 +1,72 @@
+/* Star hop chain bar (integration r5, WS-B): sits directly above .hop-layout while a chained hop is active. */
+.hop-chain-bar { border: 1px solid #2a414e; background: #0c1a25; border-radius: 11px; padding: 10px 14px; margin: 0 0 10px; display: grid; gap: 8px; min-width: 0; }
+.hop-chain-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 4px 12px; min-width: 0; }
+.hop-chain-bar .hop-chain-name { font-family: var(--font-serif); font-weight: 400; font-size: 18px; line-height: 1.3; color: #e9d29a; min-width: 0; overflow-wrap: anywhere; }
+.hop-chain-bar .hop-chain-summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 0; margin: 0; min-width: 0; font-size: 14px; line-height: 1.45; color: #b9c9cb; }
+.hop-chain-summary > span { min-width: 0; overflow-wrap: anywhere; }
+.hop-chain-summary > span + span::before { content: "·"; margin: 0 7px; color: #6f8790; }
+.hop-chain-difficulty { color: #dae1d9; }
+.hop-chain-difficulty[data-level="hard"], .hop-chain-difficulty[data-level="jump"] { color: #f1c27d; }
+.hop-chain-difficulty[data-level="unroutable"] { color: #f0a39b; }
+.hop-chain-actions { display: flex; align-items: center; gap: 6px; }
+.hop-chain-bar .text-action { display: inline-flex; align-items: center; gap: 4px; margin: 0; padding: 4px 2px; white-space: nowrap; background: transparent; border: 0; font-size: 13px; }
+.hop-chain-bar .text-action:disabled { opacity: .4; cursor: default; background: transparent; }
+.hop-chain-exit { width: 30px; height: 30px; display: inline-grid; place-items: center; }
+.hop-chain-bar .hop-chain-note { margin: 0; font-size: 13px; line-height: 1.4; color: #a9bcc0; overflow-wrap: anywhere; }
+.hop-chain-note[data-kind="jump"] strong { color: #f1c27d; font-weight: 600; margin-right: 4px; }
+.hop-chain-note[data-kind="missed"] { color: #c9a9a4; }
+.hop-chain-row { display: flex; align-items: center; gap: 8px 14px; min-width: 0; }
+.hop-chain-stops { display: flex; gap: 6px; margin: 0; padding: 2px 0 4px; list-style: none; overflow-x: auto; scrollbar-width: thin; min-width: 0; flex: 1 1 auto; }
+.hop-chain-stops > li { flex: 0 0 auto; }
+.hop-chain-stop { display: inline-flex; align-items: center; gap: 6px; max-width: 220px; min-height: 32px; padding: 3px 10px 3px 3px; border-radius: 999px; border: 1px solid #304b59; background: #0f2230; color: #c3d2d4; font-size: 13px; cursor: pointer; }
+.hop-chain-stop:hover:not(:disabled) { border-color: #e9d29a; }
+.hop-chain-stop-number { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; border: 1px solid #e9d29a; color: #e9d29a; font-size: 12px; font-weight: 600; flex: 0 0 auto; }
+.hop-chain-stop-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hop-chain-stop[data-state="current"] { border-color: #e9d29a; background: #2a2614; color: #f4ead0; }
+.hop-chain-stop[data-state="current"] .hop-chain-stop-number { background: #e9d29a; color: #14120a; }
+.hop-chain-stop[data-state="done"] { opacity: .75; }
+.hop-chain-stop[data-state="missed"] { border-style: dashed; opacity: .6; cursor: default; }
+.hop-chain-stop[data-state="missed"] .hop-chain-stop-number { border-style: dashed; }
+.hop-chain-stop[data-level="jump"] .hop-chain-stop-number { border-style: dotted; border-width: 2px; }
+.hop-chain-nav { display: flex; align-items: center; gap: 6px 12px; flex: 0 0 auto; }
+.hop-chain-seen { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 4px 14px; border-radius: 8px; border: 1px solid #e9d29a; background: #2a2614; color: #f4ead0; font-size: 14px; font-weight: 600; cursor: pointer; max-width: 260px; min-width: 0; }
+.hop-chain-seen > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hop-chain-seen[data-seen] { background: transparent; color: #e9d29a; font-weight: 500; }
+
+/* Field navigation beside the chart: the field that reaches a chain stop (HopFieldNavigation `checkpoint`). */
+.chart-hop-checkpoint { display: inline-block; margin-left: 8px; padding: 0 7px; border: 1px solid #e9d29a; border-radius: 999px; color: #e9d29a; font-size: 12px; line-height: 18px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
+
+@media (max-width: 760px) {
+  .hop-chain-bar { padding: 8px 10px; gap: 6px; border-radius: 9px; }
+  .hop-chain-head { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name actions" "summary summary"; }
+  .hop-chain-name { grid-area: name; }
+  .hop-chain-bar .hop-chain-name { font-size: 16px; }
+  .hop-chain-summary { grid-area: summary; }
+  .hop-chain-actions { grid-area: actions; }
+  .hop-chain-bar .hop-chain-summary { font-size: 13px; }
+  .hop-chain-leg { flex-basis: 100%; order: 3; }
+  .hop-chain-leg::before { content: none !important; }
+  .hop-chain-row { flex-direction: column; align-items: stretch; gap: 4px; }
+  .hop-chain-stop { max-width: 150px; min-height: 30px; font-size: 12px; }
+  .hop-chain-nav { flex-wrap: wrap; justify-content: space-between; }
+  .hop-chain-seen { order: 3; flex-basis: 100%; justify-content: center; max-width: none; }
+}
+
+/* Desktop Star hop grid (issue-ux.css places the page's children by row): the bar sits right under the time bar
+   (row 2, it comes first in the page), and the destination, route setup, notices and layout move down one row. */
+@media (min-width: 900px) {
+  .main-content.main-content:has(>.hop-chain-bar)>.hop-chain-bar { grid-column: 1 / -1; grid-row: 2; }
+  .main-content.main-content:has(>.hop-chain-bar)>:is(.catalog-combobox, .hop-target-bar, .hop-empty-state) { grid-row: 3; }
+  .main-content.main-content:has(>.hop-chain-bar)>:is(.hop-preflight, .route-options) { grid-row: 4; }
+  .main-content.main-content:has(>.hop-chain-bar)>:is(.notice, .twilight-note) { grid-row: 5; }
+  .main-content.main-content:has(>.hop-chain-bar)>.hop-layout { grid-row: 5; }
+  .main-content.main-content:has(>.hop-chain-bar):is(:has(>.notice), :has(>.twilight-note))>.hop-layout { grid-row: 6; }
+  .main-content.main-content:has(>.hop-chain-bar)>.all-steps { grid-row: 7; }
+  .main-content.main-content:has(>.hop-chain-bar)>.app-footer { grid-row: 8; }
+}
+.hop-chain-bar .hop-chain-name { display: inline-flex; align-items: center; gap: 7px; }
+.hop-journey-strip .hop-chain-nav { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.hop-chain-bar .hop-chain-name svg { vertical-align: -2px; }
+/* The journey's end: "Journey complete" opens its summary; after the last "I see" it stands out. */
+.hop-chain-bar .hop-chain-done { color: #e9d29a; text-decoration: none; }
+.hop-chain-bar .hop-chain-done[data-ready] { border: 1px solid #e9d29a; border-radius: 8px; padding: 4px 10px; background: #2a2614; }

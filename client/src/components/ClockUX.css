@@ -29,3 +29,6 @@
   outline: 2px solid #d5e1d9;
   outline-offset: 3px;
 }
+/* Integration r5: the shared object-action row and journey links under each compared object. */
+.astro-readout article .astro-object-actions { margin: 6px 0 0; }
+.astro-readout article .astro-object-actions > .object-journey-links.compact { padding: 0; }

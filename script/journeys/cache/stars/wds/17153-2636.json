@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/wds/wds&WDS=17153-2636&-out=WDS,Disc,Comp,Obs2,pa2,sep2,mag1,mag2,SpType,pmRA1,pmDE1,pmRA2,pmDE2,Notes",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\nWDS\tDisc\tComp\tObs2\tpa2\tsep2\tmag1\tmag2\tSpType\tpmRA1\tpmDE1\tpmRA2\tpmDE2\tNotes\n \t \t \tyr\tdeg\tarcsec\tmag\tmag\t \tmas/yr\tmas/yr\tmas/yr\tmas/yr\t\n----------\t-------\t-----\t----\t---\t------\t------\t-----\t----------\t----\t----\t----\t----\t----\n17153-2636\tSHJ 243\tAB   \t2025\t137\t  5.10\t 5.120\t 5.12\tK5Ve+K1V  \t -51\t-115\t -47\t-114\tNO P\n17153-2636\tSHJ 243\tAC   \t2021\t 74\t732.50\t 5.120\t 6.46\tK5Ve      \t -51\t-115\t -48\t-112\tNV P\n17153-2636\tSHJ 243\tAD   \t2021\t342\t295.50\t 5.120\t 7.80\tK5Ve      \t -51\t-115\t   0\t   3\tNL P\n17153-2636\tSHJ 243\tAE   \t2016\t337\t 47.50\t 5.120\t12.30\tK5Ve      \t -51\t-115\t  -1\t   1\tNU P\n17153-2636\tSHJ 243\tBD   \t2016\t341\t295.00\t 5.120\t 7.80\tK1V       \t -47\t-114\t   0\t   3\tNL P\n\n"
+}

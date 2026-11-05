@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=152.092962%2B11.967209&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD87901                     \tALF LEO                     \t  1.33000\t 1.3800\t        \t4385A     \t1967MNRAS.137..393H\tHD87901\n 0.00\tHD87901                     \tALF LEO                     \t  1.70000\t       \t  0.5000\t5470A     \t1971HiA.....2..700B\tHD87901\n 0.00\tHD87901                     \tALF LEO                     \t  1.32000\t 1.3700\t  0.0600\t4430A     \t1974MNRAS.167..121H\tHD87901\n 0.00\tHD87901                     \tALF LEO                     \t  1.30000\t       \t  0.1200\t576nm     \t1981AJ.....86.1685R\tHD87901\n 0.00\tHD87901                     \tALF LEO                     \t  1.50000\t 1.4200\t  0.3700\t2.2       \t1982AJ.....87..680R\tHD87901\n 0.00\tHD87901                     \tRegulus                     \t  1.65000\t       \t  0.0200\t550 to 850\t2014SPIE.9146E..0WB\tHD87901\n 0.00\tHD87901                     \talf Leo                     \t  1.62600\t 1.6640\t  0.0370\t550..850nm\t2018AJ....155...30B\tHD87901\n\n"
+}

@@ -1,0 +1,199 @@
+{
+  "version": 1,
+  "kbVersion": "kb-v1+74563ef9a8",
+  "source": "owner, A/B round 1 artifact V3eaJ1nHVoc6hweMvuRzfX (db ab1/*), 2026-11-03",
+  "answers": [
+    {
+      "pairId": "ab1-01",
+      "left": {
+        "key": "ajF8NWM1M3xBNy1yZWNvcmQtYnJlYWtlcnN8fEhSODM4MyxTVEFSLU11Q2VwLEhSOTA0NSxNMzEsRFMtRXRhQ2FzfDAxMTIzfGh1czZvfDM3Ljh8LTEyMi40fDYuNXw1MHwxMHwwfDE5fDMwfDMwfDh8MXwzNTAuNTN8NDEuMTE",
+        "templateId": "A7-record-breakers",
+        "title": "Where Cepheus Breaks the Records"
+      },
+      "right": {
+        "key": "ajF8NWM1M3xBNS1mYW1pbGllc3x8TkdDODY5LE5HQzQ1NyxNMTAzLE1lbDIwLE5HQzc1MnwwMTExM3xodXM2b3wzNy44fC0xMjIuNHw2LjV8NTB8MTB8MHwxOXwzMHwzMHw4fDF8MjYuNXw2MS4yNQ",
+        "templateId": "A5-families",
+        "title": "Perseus' Scattered Siblings"
+      },
+      "choice": "left",
+      "note": "Honestly, they're both really good, but I like left a little more.  Also, no need to have an open card as a writing. I will just click on a card, that's it. ",
+      "answeredAt": "2026-11-03T03:29:57.283Z"
+    },
+    {
+      "pairId": "ab1-02",
+      "left": {
+        "key": "ajF8NWM1M3xBNC10aW1lLW1hY2hpbmV8fFNUQVItQ2FwZWxsYSxIUjEwMTcsU3RvY2syLE5HQzQ1NyxNMzF8MDExMTN8aTN6ZXV8MzcuOHwtMTIyLjR8Ny4xfDUwfDd8MHwxOXwzMHwzMHw4fDF8NDAuNXw0Mi43OA",
+        "templateId": "A4-time-machine",
+        "title": "Reading Cassiopeia Like a History Book"
+      },
+      "right": {
+        "key": "ajF8NWM1M3xBNy1yZWNvcmQtYnJlYWtlcnN8fERTLTYxQ3lnLFNUQVItRGVuZWIsU1RBUi1NdUNlcCxIUjkwNDUsTTMxfDExMTAyfGkzemV1fDM3Ljh8LTEyMi40fDcuMXw1MHw3fDB8MTl8MzB8MzB8OHwxfDMzNy4zfDU4LjQy",
+        "templateId": "A7-record-breakers",
+        "title": "How Extreme Can Cygnus Get?"
+      },
+      "choice": "right",
+      "note": "I like the premise of left, but I don't think the cards are actually reflecting that premise. Yes, they are at increasing distances, but then there is no thread between them. You take any five objects in the sky and you sort them by their distance, and then you have five objects of increasing distance. I don't see a real connection between them unless the distance is exponential or Fibonacci or something else, but I don't know. It just doesn't feel too strong as a connection or as a journey. I like the right journey a lot more. ",
+      "answeredAt": "2026-11-03T03:36:25.260Z"
+    },
+    {
+      "pairId": "ab1-03",
+      "left": {
+        "key": "ajF8NWM1M3xBNC10aW1lLW1hY2hpbmV8fEhSNjU1NixIUjYxNDgsSFI2MDA4LEhSNTg4MCxNMTN8MDExMTN8aTA4eDZ8MzguOHwtMTA0LjV8Ni41fDUwfDEwfDB8MjEuNXwzMHwzMHw4fDF8MjYzLjczfDEyLjU2",
+        "templateId": "A4-time-machine",
+        "title": "Reading Hercules Like a History Book"
+      },
+      "right": {
+        "key": "ajF8NWM1M3xBMS1jcmFkbGUtdG8tZ3JhdmV8fE0xNyxNMTYsSUM0NzU2LEhSNzUyNSxNMjd8MDEyNDV8aTA4eDZ8MzguOHwtMTA0LjV8Ni41fDUwfDEwfDB8MjEuNXwzMHwzMHw4fDF8MjgzLjh8OS4zNQ",
+        "templateId": "A1-cradle-to-grave",
+        "title": "Serpens' Cradles and Graves"
+      },
+      "choice": "right",
+      "note": "Again, I like the individual cards on the left, but they don't seem to follow a story, while the ones on the right do. ",
+      "answeredAt": "2026-11-03T03:37:52.648Z"
+    },
+    {
+      "pairId": "ab1-04",
+      "left": {
+        "key": "ajF8NWM1M3xBNy1yZWNvcmQtYnJlYWtlcnN8fFNUQVItRGVuZWIsU1RBUi1NdUNlcCxOR0M3Nzg5LE0zMSxIUjQ1OHwwMTEyM3xpMzZkdXwzOC44fC0xMDQuNXw3LjF8NTB8N3wwfDIxLjV8MzB8MzB8OHwxfDM1NS4yNnw1NS44NA",
+        "templateId": "A7-record-breakers",
+        "title": "How Extreme Can Andromeda Get?"
+      },
+      "right": {
+        "key": "ajF8NWM1M3xBNi1jb250cmFzdHN8fFNUQVItRGVuZWIsRFMtNjFDeWcsSEQyMjY4NjgsRFMtQWxiaXJlbyxTVEFSLVZlZ2F8MDEyMzV8aTM2ZHV8MzguOHwtMTA0LjV8Ny4xfDUwfDd8MHwyMS41fDMwfDMwfDh8MXwzMTQuMXwzMS43Mg",
+        "templateId": "A6-contrasts",
+        "title": "Cygnus' Unlikely Twins"
+      },
+      "choice": "right",
+      "note": "Slightly prefer right, but only slightly. I like where it lands. I just don't like the sentence \"where it lands.\" I think we can just omit it and make that box just a little longer, just one sentence longer. ",
+      "answeredAt": "2026-11-03T03:40:21.000Z"
+    },
+    {
+      "pairId": "ab1-05",
+      "left": {
+        "key": "ajF8NWM1M3xBNC10aW1lLW1hY2hpbmV8fFNUQVItQXJjdHVydXMsSFI1NTA2LEhSNTc2MyxIUjU4ODAsTTEzfDAxMTEzfGh4ZXA2fDM4Ljh8LTEwNC41fDcuMXw1MHw3fDB8MjEuNXwzMHwzMHw4fDF8MjI1LjQyfDQ2LjY4",
+        "templateId": "A4-time-machine",
+        "title": "Old Light over Boötes"
+      },
+      "right": {
+        "key": "ajF8NWM1M3xBOS1zZWVpbmctZG91YmxlfHxIUjQyNCxEUy1Qc2lEcmEsRFMtTnVEcmEsRFMtMTZEcmEsSFI1NzYzLEhSNTc5M3wwMTExMjN8aHhlcDZ8MzguOHwtMTA0LjV8Ny4xfDUwfDd8MHwyMS41fDMwfDQwfDh8MXwyMzEuMjN8NTguOTc",
+        "templateId": "A9-seeing-double",
+        "title": "Partners or Strangers: The Doubles of Draco"
+      },
+      "choice": "right",
+      "note": "the cards for ν¹ & ν² Boötis  they read exactly the same, but they were added for different contexts here, right?  On the left side, we're talking about the distance of the star, well, on the right side, we're talking about double stars, so cards should reflect those differences. I understand that some information will be common to both of them, but why we're seeing an item for one journey or the other is important. Even though the same item plays a role for distant and for double stars, we're looking at it because it's a double. We're looking at it because it's distant, and that information has to be in the card. Cards should be kind of personalized to the journey. ",
+      "answeredAt": "2026-11-03T03:44:45.528Z"
+    },
+    {
+      "pairId": "ab1-06",
+      "left": {
+        "key": "ajF8NWM1M3xBMTAtc3RhcnMtdGhhdC1jaGFuZ2V8fFNUQVItTXVDZXAsSFI4MzgzLEhSMjEsSEQyMTI0NjYsRFMtRGVsdGFDZXB8MDEyMzR8aTJuOWl8NTEuNXwtMC4xfDYuNXw1MHwxMHwwfDE5fDMwfDMwfDh8MXwzNTAuNTN8NDEuMTE",
+        "templateId": "A10-stars-that-change",
+        "title": "The Restless Stars of Cepheus"
+      },
+      "right": {
+        "key": "ajF8NWM1M3xBOS1zZWVpbmctZG91YmxlfHxEUy1Eb3VibGVEYmwsRFMtQWxiaXJlbyxIRDIyNjg2OCxIUjc1MDQsSFI3NzM1fDAxMTEzfGkybjlpfDUxLjV8LTAuMXw2LjV8NTB8MTB8MHwxOXwzMHwzMHw4fDF8Mjg1LjYxfDM3LjQx",
+        "templateId": "A9-seeing-double",
+        "title": "Partners or Strangers: The Doubles of Cygnus"
+      },
+      "choice": "right",
+      "note": "I understand that the information on the left is important. However, imagine you're the stargazer with your binoculars. You point your binoculars, aha. There is a variable star, but you don't know it. You're just looking at a star.\n\nIt's good to have this thing. It's just that we should prioritize things that the observer will notice. Things like brightness, distance, double stars, and clusters are all things that one can see, but a variable star you can't really see. Not against variable stars, it's just trying to make you rethink the goal of this tool that we're developing.  Again, I love the individual cards on the left. I just don't know that we want to have a whole journey on variable stars when we actually can't observe variable stars. The information about a star being variable, it's good to have it. I just don't think it should be a journey on its own. ",
+      "answeredAt": "2026-11-03T03:46:41.023Z"
+    },
+    {
+      "pairId": "ab1-07",
+      "left": {
+        "key": "ajF8NWM1M3xBNi1jb250cmFzdHN8fEhSMjY0LERTLUV0YUNhcyxIUjE2OCxIUjIxLEhSOTA0NXwwMTI0NXxpNTlyNnw1MS41fC0wLjF8Ni41fDUwfDEwfDB8MTl8MzB8MzB8OHwxfDMwLjk4fDQyLjMz",
+        "templateId": "A6-contrasts",
+        "title": "Look-Alikes of Cassiopeia"
+      },
+      "right": {
+        "key": "ajF8NWM1M3xBOS1zZWVpbmctZG91YmxlfHxEUy1EZWx0YUNlcCxIUjgzODMsSFI4OTc0LEhENTY3OSxIUjQyNHwwMTExM3xpNTlyNnw1MS41fC0wLjF8Ni41fDUwfDEwfDB8MTl8MzB8MzB8OHwxfDI2LjV8NjEuMjU",
+        "templateId": "A9-seeing-double",
+        "title": "Partners or Strangers: The Doubles of Cepheus"
+      },
+      "choice": "left",
+      "note": "I really like the left journey. I hope these features are somewhat visible with binoculars. ",
+      "answeredAt": "2026-11-03T03:47:41.908Z"
+    },
+    {
+      "pairId": "ab1-08",
+      "left": {
+        "key": "ajF8NWM1M3xBMS1jcmFkbGUtdG8tZ3JhdmV8fE5HQzIyNjQsTTM1LE0zNyxTVEFSLUNhcGVsbGEsSFIxNjA1fDAxMzI0fGh2ZjVjfDUxLjV8LTAuMXw3LjF8NTB8N3wwfDE5fDMwfDMwfDh8MXwxMDMuMjR8MzEuNQ",
+        "templateId": "A1-cradle-to-grave",
+        "title": "Cloud, Star, Cinder: A Life Told in Auriga"
+      },
+      "right": {
+        "key": "ajF8NWM1M3xBMy1ob3ctZmFyfHxTVEFSLUFsZ29sLEhSMTAxNyxUcjIsTkdDNDU3LE0zMXwwMTExM3xodmY1Y3w1MS41fC0wLjF8Ny4xfDUwfDd8MHwxOXwzMHwzMHw4fDF8MjMuM3w2MC43",
+        "templateId": "A3-how-far",
+        "title": "Perseus, Rung by Rung"
+      },
+      "choice": "right",
+      "note": "I love the idea of left, and I can follow it with steps 1, 2, and 3. I'm not sure that 4 and 5 are actually doing what you're describing. It's great to have a cycle. Say we start from a stellar nursery, and then we have the clusters, and then we have the stars, and then the stars die. Maybe there is a supernova, and I think that's great: showing the whole life and death of stars in the sky. Not sure the card is doing it, so please pay particular attention to the storyline. It's great. I just want to make sure that the execution of the storyline is correct in the card. ",
+      "answeredAt": "2026-11-03T03:49:29.373Z"
+    },
+    {
+      "pairId": "ab1-09",
+      "left": {
+        "key": "ajF8NWM1M3xBNS1mYW1pbGllc3x8TkdDNDc1NSxOR0MzNzY2LElDMjYwMixOR0MzNTMyfDAxMTN8aTBrOG98LTMzLjl8MTUxLjJ8Ni41fDUwfDEwfDB8MTl8MzB8NDB8OHwxfDIzNS4zMnwtNTQuODQ",
+        "templateId": "A5-families",
+        "title": "Carina, a Family Album"
+      },
+      "right": {
+        "key": "ajF8NWM1M3xBMTItbW9vbmxpdHx8SFI1NDU5LEhSNDg1MyxIUjQ3NjMsSFI0NzMwLE5HQzQ3NTV8MDExMTN8aTBrOG98LTMzLjl8MTUxLjJ8Ni41fDUwfDEwfDB8MTl8MzB8MzB8OHwxfDI0Mi45OHwtNjcuMjk",
+        "templateId": "A12-moonlit",
+        "title": "Crux Under a Bright Moon"
+      },
+      "choice": "left",
+      "note": "This is another case where there is this continuity between the journey and the individual cards, especially when it comes to the content of the cards.  For example, the jewel box appears in both journeys. However, in both cases, on the left side, it makes more sense, and on the right side, it makes less sense. It's probably appropriate for the right side, but just the card being equal for all the journeys doesn't adapt and doesn't tell me why it's actually there. ",
+      "answeredAt": "2026-11-03T03:52:09.263Z"
+    },
+    {
+      "pairId": "ab1-10",
+      "left": {
+        "key": "ajF8NWM1M3xBNC10aW1lLW1hY2hpbmV8fERTLUFscExpYixIRDE0MDI4MyxTVEFSLUFudGFyZXMsTTYsTTIyfDAxMTEzfGh5ZnFpfC0zMy45fDE1MS4yfDcuMXw1MHw3fDB8MTl8MzB8MzB8OHwxfDI0OS41M3wtMTcuOTE",
+        "templateId": "A4-time-machine",
+        "title": "Scorpius, Seen as It Was"
+      },
+      "right": {
+        "key": "ajF8NWM1M3xBMi10aGVybW9tZXRlcnx8U1RBUi1BbnRhcmVzLEhSNjA4NCxIUjU5NDQsSFI2MjQ3LEhSNjUyN3wwMTExM3xoeWZxaXwtMzMuOXwxNTEuMnw3LjF8NTB8N3wwfDE5fDMwfDMwfDh8MXwyNDMuM3wtNTQuMjI",
+        "templateId": "A2-thermometer",
+        "title": "Reading the Heat of Scorpius by Eye"
+      },
+      "choice": "neither",
+      "note": "I love the idea of the right card, but the right side. Do the cards actually reflect that? Are we showing colors and then telling the temperature based on the color? There is a pattern here. You start with a really good premise in the journey, but then the cards are disjoint. They're not linked together to form a story, at least not in the text, and they're not linked to the journey team. Kind of like almost randomly taken in place there ",
+      "answeredAt": "2026-11-03T03:53:43.089Z"
+    },
+    {
+      "pairId": "ab1-11",
+      "left": {
+        "key": "ajF8NWM1M3xBMTItbW9vbmxpdHx8SFIzMTY1LEhSMjc3MyxIUjI3ODIsTTQ2LE00N3wwMTEyM3xoeHlob3wtMzMuNHwtNzAuN3w2LjV8NTB8MTB8MHwxOXwzMHwzMHw4fDF8MTMyLjA4fC0yMC4wMw",
+        "templateId": "A12-moonlit",
+        "title": "Puppis' Moonproof Wonders"
+      },
+      "right": {
+        "key": "ajF8NWM1M3xBNi1jb250cmFzdHN8fEhSMzQ4NSxIUjQxOTksSFI0MjEwLE5HQzMyOTMsTkdDMzUzMnwwMTI0NXxoeHlob3wtMzMuNHwtNzAuN3w2LjV8NTB8MTB8MHwxOXwzMHwzMHw4fDF8MTgyLjh8LTUzLjM3",
+        "templateId": "A6-contrasts",
+        "title": "Carina, Pair by Pair"
+      },
+      "choice": null,
+      "note": null,
+      "answeredAt": null
+    },
+    {
+      "pairId": "ab1-12",
+      "left": {
+        "key": "ajF8NWM1M3xBMi10aGVybW9tZXRlcnx8SFIxNjQ4LEhSMTkwMyxIUjE5NDgsU1RBUi1CZXRlbGdldXNlLEhSMTg3OXwwMTEyM3xodjExMHwtMzMuNHwtNzAuN3w3LjF8NTB8N3wwfDE5fDMwfDMwfDh8MXw3OC42M3wtOC4y",
+        "templateId": "A2-thermometer",
+        "title": "The Colors of Orion"
+      },
+      "right": {
+        "key": "ajF8NWM1M3xBOS1zZWVpbmctZG91YmxlfHxTVEFSLVNpcml1cyxEUy1CZXRNb24sSFIxODk5LEhSMTkzMSxIUjE4NTJ8MDExMTN8aHYxMTB8LTMzLjR8LTcwLjd8Ny4xfDUwfDd8MHwxOXwzMHwzMHw4fDF8MTAxLjI5fC0xNi43Mg",
+        "templateId": "A9-seeing-double",
+        "title": "Orion's Hidden Pairs"
+      },
+      "choice": null,
+      "note": null,
+      "answeredAt": null
+    }
+  ]
+}

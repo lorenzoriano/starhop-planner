@@ -1,0 +1,7 @@
+/* Moon tab links into the rest of the app (integration r5): journeys that work under tonight's Moon and the shared
+   object-action row on the comparison card. */
+.lunar-journeys { padding: 20px 22px; margin: 18px 0; }
+.lunar-journeys-heading h2 { font-family: var(--font-serif); font-weight: 400; font-size: 26px; line-height: 1.2; color: #e8e5d8; margin: 6px 0 4px; }
+.lunar-journeys-heading p { margin: 0 0 6px; font-size: 13px; color: #9db1b8; }
+.lunar-target-panel .object-action-row { margin-top: 12px; }
+@media (max-width: 760px) { .lunar-journeys { padding: 16px; } .lunar-journeys-heading h2 { font-size: 22px; } }

@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/346/jsdc_v2&-c=86.821199-51.066511&-c.rs=10&-out=Name,SpType,Vmag,LDD,e_LDD,LDDCHI,CalFlag,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tName\tSpType\tVmag\tLDD\te_LDD\tLDDCHI\tCalFlag\tSimbadName\narcsec\t \t \tmag\tmas\tmas\t \t \t\n------\t---------------------------------\t--------------------\t-------\t---------\t---------\t------------\t-\t---------------------------------\n 0.002\tHD39060                          \tA6V                 \t  3.850\t 0.711001\t 0.057668\t 1.11949e-02\t2\tHD39060\n\n"
+}

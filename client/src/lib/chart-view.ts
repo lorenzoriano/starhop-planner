@@ -19,6 +19,31 @@ export function chartFrame(points: EquatorialPoint[]): EquatorialPoint {
 export function skyZenith(lat: number, lon: number, date: Date): EquatorialPoint {
   return equatorialOfDate(((Astro.SiderealTime(date)*15+lon)%360+360)%360,lat,date,true);
 }
+/**
+ * Chart rotation (degrees, as orientChartPoint takes it) that puts the zenith straight up at `frame`, so the chart
+ * matches what an observer facing that part of the sky sees: up = overhead, right = increasing azimuth. Sky Journeys
+ * field mode gives its directions in that frame ("move left about two fields"), so its map must use it too
+ * (design review r4). Null when the frame is within ~0.5° of the zenith (every direction is "up" there).
+ */
+export function observerUpRotation(frame: EquatorialPoint, zenith: EquatorialPoint, mirrored = false): number | null {
+  const r = Math.PI / 180;
+  const vec = (p: EquatorialPoint) => [Math.cos(p.dec * r) * Math.cos(p.ra * r), Math.cos(p.dec * r) * Math.sin(p.ra * r), Math.sin(p.dec * r)];
+  const c = vec(frame), z = vec(zenith);
+  const dot = c[0] * z[0] + c[1] * z[1] + c[2] * z[2];
+  const u = [z[0] - dot * c[0], z[1] - dot * c[1], z[2] - dot * c[2]];
+  const n = Math.hypot(u[0], u[1], u[2]);
+  if (n < 0.01) return null;
+  const step = 0.5 * r;
+  const q = [0, 1, 2].map((k) => c[k] * Math.cos(step) + (u[k] / n) * Math.sin(step));
+  const toward = { ra: ((Math.atan2(q[1], q[0]) / r) + 360) % 360, dec: Math.asin(Math.max(-1, Math.min(1, q[2]))) / r };
+  const a = stereographicProject(frame.ra, frame.dec, frame.ra, frame.dec, 100), b = stereographicProject(toward.ra, toward.dec, frame.ra, frame.dec, 100);
+  if (!a || !b) return null;
+  const vx = (mirrored ? -1 : 1) * (b.x - a.x), vy = b.y - a.y;
+  if (Math.hypot(vx, vy) < 1e-9) return null;
+  let deg = -90 - Math.atan2(vy, vx) / r;
+  deg = ((deg % 360) + 540) % 360 - 180;
+  return Math.round(deg);
+}
 /** Move the viewport on a fixed plane. Following a hop never turns the sky. */
 export function projectChartPoint(point: EquatorialPoint, frame: EquatorialPoint, focus: EquatorialPoint, scale: number) {
   const projected = stereographicProject(point.ra, point.dec, frame.ra, frame.dec, scale);

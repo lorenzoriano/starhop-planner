@@ -1,0 +1,75 @@
+#
+#   VizieR Astronomical Server vizier.idia.ac.za
+#    Date: 2026-11-02T04:55:54 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-02T04:55:55	  Query execution date
+#INFO	request=https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=J%2FA%2BA%2F686%2FA42%2Fclusters&-out=Name%2CID%2CAllNames%2CType%2CCST%2CN%2CRA_ICRS%2CDE_ICRS%2Cr50%2Crt%2Cr50pc%2CPlx%2Ce_Plx%2Cdist16%2Cdist50%2Cdist84%2CRV%2Ce_RV%2Cn_RV%2CCMDCl50%2ClogAge16%2ClogAge50%2ClogAge84%2CAV50%2CrJpc%2CNJ%2CMassJ%2Ce_MassJ%2CMassTot%2Ce_MassTot%2CNote&-out.add=_r&-c=98.07500+%2B5.05000&-c.rm=60.0&-out.max=500&-sort=_r	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=098.075000+05.050000,rm=60.	
+#Constraint -sort=_r
+
+#RESOURCE=yCat_36860042
+#Name: J/A+A/686/A42
+#Title: Improving the open cluster census. III. (Hunt+, 2024)
+#INFO	ivoid=ivo://cds.vizier/j/a+a/686/a42	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/a+a/686/a42	    IVOID of underlying data collection
+#INFO	creator=Hunt E.L.	    First author or institution
+#INFO	cites=bibcode:2024A&A...686A..42H	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2024	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/686/A42	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.36860042	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-11-21	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H_2016.000:	ICRS
+#Table	J_A_A_686_A42_clusters:
+#Name: J/A+A/686/A42/clusters
+#Title: Main catalogue (table 1)
+#Column	_r	(F7.4)	Distance from center (098.07500000+05.05000000)[ICRS], at Epoch=J2016.0	[ucd=pos.angDistance]
+#Column	Name	(a20)	Main accepted cluster name	[ucd=meta.id;meta.main]
+#Column	ID	(I4)	Internal cluster ID	[ucd=meta.id]
+#Column	AllNames	(a253)	Comma separated list of all cluster names this object crossmatched against and all name variants	[ucd=meta.id]
+#Column	Type	(A1)	[omgdr] Estimated type of object (1)	[ucd=src.class]
+#Column	CST	(F11.8)	[3/99] Astrometric SNR (cluster significance test) (2)	[ucd=stat.snr]
+#Column	N	(I6)	[10/153797] Number of member stars	[ucd=meta.number]
+#Column	RA_ICRS	(F12.8)	Right ascension of densest point (ICRS) at Ep=2016.0	[ucd=pos.eq.ra;meta.main]
+#Column	DE_ICRS	(F12.8)	Declination of densest point (ICRS) at Ep=2016.0	[ucd=pos.eq.dec;meta.main]
+#Column	r50	(F11.8)	Radius containing 50% of members within the tidal radius	[ucd=phys.angSize]
+#Column	rt	(F11.8)	Tidal radius (approximate estimate)	[ucd=phys.angSize;src]
+#Column	r50pc	(F13.8)	Radius containing 50% of members in parsecs	[ucd=phys.size.radius]
+#Column	Plx	(F12.8)	Mean parallax	[ucd=pos.parallax;stat.mean]
+#Column	e_Plx	(F11.8)	Standard error of parallax	[ucd=stat.error;pos.parallax]
+#Column	dist16	(F15.8)	16th percentile of maximum likelihood distance	[ucd=pos.distance]
+#Column	dist50	(F15.8)	50th percentile of maximum likelihood distance	[ucd=pos.distance]
+#Column	dist84	(F16.8)	84th percentile of maximum likelihood distance	[ucd=pos.distance]
+#Column	RV	(F13.8)	? Mean Gaia DR3 radial velocity	[ucd=phys.veloc;pos.heliocentric]
+#Column	e_RV	(F13.8)	? Standard error of radial velocity	[ucd=stat.error]
+#Column	n_RV	(I4)	Number of member stars with a radial velocity	[ucd=meta.note]
+#Column	CMDCl50	(F11.8)	[0/1] 50th percentile of CMD class	[ucd=meta.code]
+#Column	logAge16	(F11.8)	? 16th percentile of logarithm of cluster age	[ucd=time.age]
+#Column	logAge50	(F11.8)	? 50th percentile of logarithm of cluster age	[ucd=time.age]
+#Column	logAge84	(F12.8)	? 84th percentile of logarithm of cluster age	[ucd=time.age]
+#Column	AV50	(F11.8)	? 50th percentile of V-band cluster extinction	[ucd=phys.absorption]
+#Column	rJpc	(F13.8)	? Jacobi radius in parsecs	[ucd=phys.size.radius]
+#Column	NJ	(I4)	[9/4171]? Number of stars within best-fit Jacobi radius	[ucd=meta.number]
+#Column	MassJ	(F15.8)	? Cluster mass within the Jacobi radius	[ucd=phys.mass]
+#Column	e_MassJ	(F15.8)	? Error on cluster mass within the Jacobi radius	[ucd=stat.error]
+#Column	MassTot	(F15.8)	? Total observed cluster mass	[ucd=phys.mass]
+#Column	e_MassTot	(F15.8)	? Error on total observed cluster mass	[ucd=stat.error]
+#Column	Note	(a33)	Reason why cluster was rejected	[ucd=meta.note]
+_r	Name	ID	AllNames	Type	CST	N	RA_ICRS	DE_ICRS	r50	rt	r50pc	Plx	e_Plx	dist16	dist50	dist84	RV	e_RV	n_RV	CMDCl50	logAge16	logAge50	logAge84	AV50	rJpc	NJ	MassJ	e_MassJ	MassTot	e_MassTot	Note
+arcmin	 	 	 	 	 	 	deg	deg	deg	deg	pc	mas	mas	pc	pc	pc	km/s	km/s	 	 	[yr]	[yr]	[yr]	mag	pc	 	Msun	Msun	Msun	Msun	
+-------	--------------------	----	-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	-	-----------	------	------------	------------	-----------	-----------	-------------	------------	-----------	---------------	---------------	----------------	-------------	-------------	----	-----------	-----------	-----------	------------	-----------	-------------	----	---------------	---------------	---------------	---------------	---------------------------------
+ 9.1359	NGC_2244            	4527	NGC_2244                                                                                                                                                                                                                                                     	o	24.20617653	   360	097.98530100	+04.92671252	 0.10431765	 0.35817430	   2.57670266	  0.65674182	 0.00362869	  1411.02684603	  1415.23527721	   1419.46888705	  31.88483071	   8.30549962	  21	 0.87712723	 6.48233509	 6.61371422	  6.72673178	 1.63061565	  17.17988755	 360	  1387.56824106	   135.56336265	  1387.56824106	   135.56336265	
+23.0758	HSC_1623            	3094	HSC_1623                                                                                                                                                                                                                                                     	o	 6.57538441	    48	098.18795494	+05.41778023	 0.08955220	 0.15894161	   5.72959433	  0.24535278	 0.00811900	  3543.02368679	  3665.80946705	   3797.41121172	  75.26608254	   4.84433090	   2	 0.16023025	 8.18716717	 8.40697432	  8.59464741	 2.78729963	  15.10132255	  47	   601.23001959	    84.28924455	   645.50763967	    72.71317736	
+23.9797	HSC_1625            	3096	HSC_1625                                                                                                                                                                                                                                                     	o	 4.84116565	    28	098.30921284	+05.37454147	 0.03888141	 0.20439758	   2.72730244	  0.19300934	 0.00813060	  3826.45733057	  4018.96200459	   4231.86212842	  80.41653879	   6.61359450	   1	 0.86109874	 8.55106163	 8.75031185	  9.00992107	 2.65386581	  13.26042938	  26	   381.65379394	   103.52351742	   385.13264703	   114.49710222	
+28.6453	Theia_189           	5530	Theia_189                                                                                                                                                                                                                                                    	m	 8.50197629	   104	097.78669580	+05.43145307	 0.90433092	 3.06078793	  14.15444886	  1.07897967	 0.00724210	   894.38650372	   896.71028635	    899.04617568	  20.86140131	   3.24449344	  23	 0.99095678	 8.15086365	 8.40176868	  8.61336899	 0.21087109	   4.66986049	  13	    32.53026592	     5.69009231	   227.33433038	    29.96643458	
+49.2977	OC_0343             	4981	CWNU_1003,OC_0343,Theia_838                                                                                                                                                                                                                                  	o	16.48254840	   104	097.63164676	+04.35729786	 0.39374851	 1.78563875	   4.41463196	  1.52366545	 0.00612024	   641.21205516	   642.37906581	    643.55033213	  11.01046663	   1.11502293	  41	 0.99533468	 7.24722672	 7.48846531	  7.74074268	 0.14793876	   6.97889859	  71	   110.42163966	    22.25134309	   151.69929552	    31.20877823	
+50.8913	Teutsch_137         	1316	Collinder_97,DSH_J0631.6+0552,Teutsch_137                                                                                                                                                                                                                    	o	 3.28170245	    48	097.92022268	+05.88407765	 0.07477641	 0.21138897	   6.72401026	  0.13563089	 0.00636259	  4953.51866382	  5152.12233134	   5367.31658639	             	             	   0	 0.66095534	 8.05955410	 8.36527729	  8.58395767	 2.24681818	  11.60822245	  18	   215.62681417	    88.42012099	   880.71093310	   111.07754910	
+

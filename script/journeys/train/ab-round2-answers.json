@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "kbVersion": "kb-v1+2bfd5c4ee0",
+  "source": "owner, A/B round 2 artifact V3eaJ1nHVoc6hweMvuRzfX (db ab2/*), 2026-11-03",
+  "answers": [
+    {
+      "pairId": "ab2-01",
+      "left": {
+        "key": "ajF8OGYzM3xBNy1yZWNvcmQtYnJlYWtlcnN8fEFTVC1IeWFkZXMsSFIxNjQ4LEhSMTcxMyxIUjE4OTUsU1RBUi1CZXRlbGdldXNlfDAxMjIzfGh1czZvfDM3Ljh8LTEyMi40fDYuNXw1MHwxMHwwfDE5fDMwfDMwfDh8MXw2MS4zfDkuMDY",
+        "templateId": "A7-record-breakers",
+        "title": "Orion's Record Book"
+      },
+      "right": {
+        "key": "ajF8OGYzM3xBMy1ob3ctZmFyfHxTVEFSLUNhcGVsbGEsTWVsMjAsU3RvY2syLE5HQzQ1NyxNMzF8MDEyMzR8aHVzNm98MzcuOHwtMTIyLjR8Ni41fDUwfDEwfDB8MTl8MzB8MzB8OHwxfDQwLjV8NDIuNzg",
+        "templateId": "A3-how-far",
+        "title": "How Deep Does Cassiopeia Go?"
+      },
+      "choice": "right",
+      "note": "I think \"right\" tells a little more of a coherent story. I like \"left\" story, just don't think it flows. Kind of jumps around the five cards",
+      "answeredAt": "2026-11-03T19:10:27.144Z"
+    },
+    {
+      "pairId": "ab2-02",
+      "left": {
+        "key": "ajF8OGYzM3xBMS1jcmFkbGUtdG8tZ3JhdmV8fElDMTM5NixNMzksU1RBUi1EZW5lYixIUjc3NjMsTTI3fDAyMzQ1fGkzdXQwfDM4Ljh8LTEwNC41fDYuNXw1MHwxMHwwfDIxLjV8MzB8MzB8OHwxfDMxNi43M3wzOC43NQ",
+        "templateId": "A1-cradle-to-grave",
+        "title": "Cygnus, from Nursery to Embers"
+      },
+      "right": {
+        "key": "ajF8OGYzM3xBOS1zZWVpbmctZG91YmxlfHxIUjcwNTYsSFI3NzM1LEhSNzUwNCxEUy1Eb3VibGVEYmx8MDEzNHxpM3V0MHwzOC44fC0xMDQuNXw2LjV8NTB8MTB8MHwyMS41fDMwfDMwfDh8MXwzMDAuOTN8MjMuNDI",
+        "templateId": "A9-seeing-double",
+        "title": "Splitting Cygnus Star by Star"
+      },
+      "choice": "left",
+      "note": "Between the two stories, the left one definitely captivates me more. The right one is fine. It's just a list of double stars, right, which is okay. It's not really a story. It's a collection. It's nice. I don't want that to be removed, but it just lacks a story that connects double stars.",
+      "answeredAt": "2026-11-03T19:12:46.435Z"
+    },
+    {
+      "pairId": "ab2-03",
+      "left": {
+        "key": "ajF8OGYzM3xBMi10aGVybW9tZXRlcnx8SFI4NjM2LEhSODUwMixIUjk4LEhSNTkxLEhSNDcyfDAxMjM0fGk0c2psfC0zMy45fDE1MS4yfDYuNXw1MHwxMHwwfDE5fDMwfDMwfDh8MXwyNC40M3wtNTcuMjQ",
+        "templateId": "A2-thermometer",
+        "title": "The Colors of Hydrus"
+      },
+      "right": {
+        "key": "ajF8OGYzM3xBNS1mYW1pbGllc3x8SFIxOTMxLE5HQzE5ODEsTkdDMTY2MixBU1QtSHlhZGVzLEFTVC1PcmlvbkJlbHR8MDAyMjN8aTRzamx8LTMzLjl8MTUxLjJ8Ni41fDUwfDEwfDB8MTl8MzB8MzB8OHwxfDYxLjN8OS4wNg",
+        "templateId": "A5-families",
+        "title": "The Star Families of Orion"
+      },
+      "choice": "equal",
+      "note": "Both great stories.",
+      "answeredAt": "2026-11-03T19:15:08.206Z"
+    },
+    {
+      "pairId": "ab2-04",
+      "left": {
+        "key": "ajF8OGYzM3xBMTEtaW5zaWRlLW91ci1nYWxheHl8fE1lbDIwLFN0b2NrMixOR0M0NTcsTTMxfDAyMzV8aTN1eDZ8MzguOHwtMTA0LjV8Ni41fDUwfDEwfDB8MjEuNXwzMHwzMHw4fDF8MjMuM3w2MC43",
+        "templateId": "A11-inside-our-galaxy",
+        "title": "Finding Our Place in the Galaxy from Cassiopeia"
+      },
+      "right": {
+        "key": "ajF8OGYzM3xBNi1jb250cmFzdHN8fEhSODIzOCxEUy1EZWx0YUNlcCxIUjkwNDUsTkdDODY5LE0zMXwwMTIzNHxpM3V4NnwzOC44fC0xMDQuNXw2LjV8NTB8MTB8MHwyMS41fDMwfDMwfDh8MXwyMy4zfDYwLjc",
+        "templateId": "A6-contrasts",
+        "title": "Look-Alikes of Cepheus"
+      },
+      "choice": "right",
+      "note": "I think right is better, but I don't understand why Andromeda is there. Talking about stars here, right? Andromeda's Galaxy. I don't know. I can see your point. It just doesn't seem like a strong point.",
+      "answeredAt": "2026-11-03T19:17:33.683Z"
+    }
+  ]
+}

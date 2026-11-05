@@ -64,6 +64,19 @@ describe("Starhop backups", () => {
     expect(result.planner.sessions[0].items[0].observations?.map(entry=>entry.notes)).toEqual(["first","second"]);
     expect(parseBackupText(createBackup(result)).counts.observations).toBe(2);
   });
+  it("round trips journey-tagged night items, reads untagged ones, and keeps the tag when merging", () => {
+    const tagged = { ...observation("from a journey"), id: "NGC869", journeyKey: "look-alikes~M45.NGC869~202611040430", journeyStop: 4, plannedAt: "2026-11-04T04:52:00.000Z" };
+    const source = backup([session("a", [observation("plain"), tagged])]);
+    expect(parseBackupText(createBackup(source)).backup).toEqual(source);
+    const raw = JSON.parse(createBackup(source));
+    raw.data.planner.sessions[0].items[1].journeyStop = 0;
+    expect(() => parseBackupText(JSON.stringify(raw))).toThrow(/invalid data/);
+    const merged = applyBackup(backup([session("a", [{ ...observation("x"), id: "NGC869" }])]), source, "merge");
+    expect(merged.planner.sessions[0].items.find(item => item.id === "NGC869")).toMatchObject({ journeyKey: tagged.journeyKey, journeyStop: 4, plannedAt: tagged.plannedAt });
+    raw.data.planner.sessions[0].items[1].journeyStop = 4;
+    raw.data.planner.sessions[0].items[1].plannedAt = "not a time";
+    expect(() => parseBackupText(JSON.stringify(raw))).toThrow(/invalid data/);
+  });
   it("replace mode restores imported data exactly", () => {
     const current = backup([session("local")]);
     const incoming = backup([session("cloud")]);

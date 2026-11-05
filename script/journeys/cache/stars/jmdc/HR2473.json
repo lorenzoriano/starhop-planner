@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=100.983030%2B25.131127&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.01\tHD48329                     \tEPS GEM                     \t  1.80000\t       \t        \tB?        \t1974BAAS....6R.216B\tHD48329\n 0.01\tHD48329                     \tEPS GEM                     \t  5.60000\t       \t  0.6000\t500nm     \t1976A&A....47..457D\tHD48329\n 0.01\tHD48329                     \tEPS GEM                     \t  2.68000\t 3.0000\t  0.3000\t748nm     \t1980AJ.....85.1505B\tHD48329\n 0.01\tHD48329                     \tEPS GEM                     \t  4.56000\t       \t  0.1000\t2.17      \t1986AJ.....91..961S\tHD48329\n 0.01\tHD48329                     \tEPS GEM                     \t  4.75000\t       \t  0.5000\ty         \t1987AJ.....94..201S\tHD48329\n 0.01\tHD48329                     \tEPS GEM                     \t  4.98000\t       \t  0.1000\t2.2       \t1992A&A...265..535R\tHD48329\n 0.01\tHD48329                     \tHR2473                      \t  4.46000\t 4.7300\t  0.0200\t740nm     \t1999AJ....118.3032N\tHD48329\n 0.01\tHD48329                     \tHR2473                      \t  4.40600\t 4.7030\t  0.0470\t800nm     \t2003AJ....126.2502M\tHD48329\n 0.01\tHD48329                     \t                            \t  4.48000\t       \t  0.0100\t550 to 850\t2014SPIE.9146E..0WB\tHD48329\n 0.01\tHD48329                     \teps Gem                     \t  4.46800\t 4.6770\t  0.0130\t550..850nm\t2018AJ....155...30B\tHD48329\n\n"
+}

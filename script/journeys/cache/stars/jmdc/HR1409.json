@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=67.154168%2B19.180434&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.03\tHD28305                     \tHR1409                      \t  2.51000\t       \t  0.0600\tK         \t1999AJ....117..521V\tHD28305\n 0.03\tHD28305                     \tHR1409                      \t  2.26000\t       \t  0.1000\t740nm     \t2001AJ....122.2707N\tHD28305\n 0.03\tHD28305                     \tHR1409                      \t  2.52200\t 2.6710\t  0.0320\t800nm     \t2003AJ....126.2502M\tHD28305\n 0.03\tHD28305                     \tHR 1409                     \t  2.65900\t 2.7330\t  0.0300\tK'        \t2009ApJ...691.1243B\tHD28305\n 0.03\tHD28305                     \t                            \t  2.42000\t       \t  0.0300\t550 to 850\t2014SPIE.9146E..0WB\tHD28305\n 0.03\tHD28305                     \teps Tau                     \t  2.43900\t 2.5920\t  0.0500\t550..850nm\t2018AJ....155...30B\tHD28305\n\n"
+}

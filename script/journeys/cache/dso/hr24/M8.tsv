@@ -1,0 +1,71 @@
+#
+#   VizieR Astronomical Server vizier.idia.ac.za
+#    Date: 2026-11-02T04:54:04 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-02T04:54:05	  Query execution date
+#INFO	request=https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=J%2FA%2BA%2F686%2FA42%2Fclusters&-out=Name%2CID%2CAllNames%2CType%2CCST%2CN%2CRA_ICRS%2CDE_ICRS%2Cr50%2Crt%2Cr50pc%2CPlx%2Ce_Plx%2Cdist16%2Cdist50%2Cdist84%2CRV%2Ce_RV%2Cn_RV%2CCMDCl50%2ClogAge16%2ClogAge50%2ClogAge84%2CAV50%2CrJpc%2CNJ%2CMassJ%2Ce_MassJ%2CMassTot%2Ce_MassTot%2CNote&-out.add=_r&-c=270.95000+-24.38333&-c.rm=33.8&-out.max=500&-sort=_r	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=270.950000-24.383330,rm=33.8	
+#Constraint -sort=_r
+
+#RESOURCE=yCat_36860042
+#Name: J/A+A/686/A42
+#Title: Improving the open cluster census. III. (Hunt+, 2024)
+#INFO	ivoid=ivo://cds.vizier/j/a+a/686/a42	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/a+a/686/a42	    IVOID of underlying data collection
+#INFO	creator=Hunt E.L.	    First author or institution
+#INFO	cites=bibcode:2024A&A...686A..42H	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2024	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/686/A42	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.36860042	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-11-21	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H_2016.000:	ICRS
+#Table	J_A_A_686_A42_clusters:
+#Name: J/A+A/686/A42/clusters
+#Title: Main catalogue (table 1)
+#Column	_r	(F7.4)	Distance from center (270.95000000-24.38333000)[ICRS], at Epoch=J2016.0	[ucd=pos.angDistance]
+#Column	Name	(a20)	Main accepted cluster name	[ucd=meta.id;meta.main]
+#Column	ID	(I4)	Internal cluster ID	[ucd=meta.id]
+#Column	AllNames	(a253)	Comma separated list of all cluster names this object crossmatched against and all name variants	[ucd=meta.id]
+#Column	Type	(A1)	[omgdr] Estimated type of object (1)	[ucd=src.class]
+#Column	CST	(F11.8)	[3/99] Astrometric SNR (cluster significance test) (2)	[ucd=stat.snr]
+#Column	N	(I6)	[10/153797] Number of member stars	[ucd=meta.number]
+#Column	RA_ICRS	(F12.8)	Right ascension of densest point (ICRS) at Ep=2016.0	[ucd=pos.eq.ra;meta.main]
+#Column	DE_ICRS	(F12.8)	Declination of densest point (ICRS) at Ep=2016.0	[ucd=pos.eq.dec;meta.main]
+#Column	r50	(F11.8)	Radius containing 50% of members within the tidal radius	[ucd=phys.angSize]
+#Column	rt	(F11.8)	Tidal radius (approximate estimate)	[ucd=phys.angSize;src]
+#Column	r50pc	(F13.8)	Radius containing 50% of members in parsecs	[ucd=phys.size.radius]
+#Column	Plx	(F12.8)	Mean parallax	[ucd=pos.parallax;stat.mean]
+#Column	e_Plx	(F11.8)	Standard error of parallax	[ucd=stat.error;pos.parallax]
+#Column	dist16	(F15.8)	16th percentile of maximum likelihood distance	[ucd=pos.distance]
+#Column	dist50	(F15.8)	50th percentile of maximum likelihood distance	[ucd=pos.distance]
+#Column	dist84	(F16.8)	84th percentile of maximum likelihood distance	[ucd=pos.distance]
+#Column	RV	(F13.8)	? Mean Gaia DR3 radial velocity	[ucd=phys.veloc;pos.heliocentric]
+#Column	e_RV	(F13.8)	? Standard error of radial velocity	[ucd=stat.error]
+#Column	n_RV	(I4)	Number of member stars with a radial velocity	[ucd=meta.note]
+#Column	CMDCl50	(F11.8)	[0/1] 50th percentile of CMD class	[ucd=meta.code]
+#Column	logAge16	(F11.8)	? 16th percentile of logarithm of cluster age	[ucd=time.age]
+#Column	logAge50	(F11.8)	? 50th percentile of logarithm of cluster age	[ucd=time.age]
+#Column	logAge84	(F12.8)	? 84th percentile of logarithm of cluster age	[ucd=time.age]
+#Column	AV50	(F11.8)	? 50th percentile of V-band cluster extinction	[ucd=phys.absorption]
+#Column	rJpc	(F13.8)	? Jacobi radius in parsecs	[ucd=phys.size.radius]
+#Column	NJ	(I4)	[9/4171]? Number of stars within best-fit Jacobi radius	[ucd=meta.number]
+#Column	MassJ	(F15.8)	? Cluster mass within the Jacobi radius	[ucd=phys.mass]
+#Column	e_MassJ	(F15.8)	? Error on cluster mass within the Jacobi radius	[ucd=stat.error]
+#Column	MassTot	(F15.8)	? Total observed cluster mass	[ucd=phys.mass]
+#Column	e_MassTot	(F15.8)	? Error on total observed cluster mass	[ucd=stat.error]
+#Column	Note	(a33)	Reason why cluster was rejected	[ucd=meta.note]
+_r	Name	ID	AllNames	Type	CST	N	RA_ICRS	DE_ICRS	r50	rt	r50pc	Plx	e_Plx	dist16	dist50	dist84	RV	e_RV	n_RV	CMDCl50	logAge16	logAge50	logAge84	AV50	rJpc	NJ	MassJ	e_MassJ	MassTot	e_MassTot	Note
+arcmin	 	 	 	 	 	 	deg	deg	deg	deg	pc	mas	mas	pc	pc	pc	km/s	km/s	 	 	[yr]	[yr]	[yr]	mag	pc	 	Msun	Msun	Msun	Msun	
+-------	--------------------	----	-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	-	-----------	------	------------	------------	-----------	-----------	-------------	------------	-----------	---------------	---------------	----------------	-------------	-------------	----	-----------	-----------	-----------	------------	-----------	-------------	----	---------------	---------------	---------------	---------------	---------------------------------
+ 8.3365	NGC_6530            	4759	NGC_6530,OC_0006                                                                                                                                                                                                                                             	o	34.27673268	   680	271.10188692	-24.37047848	 0.07869345	 0.50612329	   1.68867190	  0.76405942	 0.00275146	  1226.54823605	  1229.50150057	   1232.46902106	   5.95692479	   6.28580700	  56	 0.43240406	 6.45104599	 6.59172559	  6.67583275	 1.47620076	  16.47136490	 680	  2336.22621137	   287.74661853	  2336.22621137	   287.74661853	
+32.7273	UBC_338             	6264	UBC_338                                                                                                                                                                                                                                                      	o	18.45181154	   191	271.53419068	-24.26440236	 0.09975212	 0.28038327	   2.58026087	  0.63271724	 0.00365574	  1476.36967225	  1482.05279794	   1487.77984586	 -21.22995468	   7.61711985	   7	 0.51712501	 7.41805124	 7.59473658	  7.82668686	 3.24778068	  14.20581764	 191	  1610.38607598	   104.91022068	  1610.38607598	   104.91022068	
+

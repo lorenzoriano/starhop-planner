@@ -3,6 +3,8 @@ import { fromZonedTime, formatInTimeZone } from "date-fns-tz";
 import { angularDistance, eqToHorizontal, type UnifiedTarget } from "./astronomy";
 import { clockBounds, clockNightDate } from "./astronomical-clock";
 import features from "./lunar-features.json";
+// Function-only cycle with sky-feasibility.ts (it re-exports the levels below); nothing runs at module load.
+import { isDiffuseCategory, isStellarCategory } from "./sky-feasibility";
 
 export const lunarFeatures = features;
 export type LunarFeature = typeof features[number];
@@ -31,6 +33,24 @@ export function moonState(lat: number, lon: number, date: Date) {
     magnitude: light.mag, sunSeparation: Astro.AngleFromSun(Astro.Body.Moon, date), distanceKm, diameter: 2 * Math.asin(1737.4 / distanceKm) / rad, sunAlt };
 }
 export type MoonState = ReturnType<typeof moonState>;
+
+/**
+ * Moon illumination shown everywhere (Tonight, selected object, Moon tab, upcoming nights, journeys): the lit
+ * fraction at ONE instant, rounded the same way. Different tabs used to show 24 % and 26 % for "tonight" because
+ * some read the selected time and others the middle of the dark window; pass the instant you mean and say it.
+ */
+export function moonIllumination(at: Date): { fraction: number; percent: number; label: string } {
+  const fraction = Astro.Illumination(Astro.Body.Moon, at).phase_fraction;
+  const percent = Math.round(fraction * 100);
+  return { fraction, percent, label: `${percent}% lit` };
+}
+/** Same rounding for an illumination fraction already computed (moonState(...).illumination). */
+export const illuminationPercent = (fraction: number) => Math.round(fraction * 100);
+/** "Moon 24% lit at 20:30" — the instant is part of the label whenever it is not the selected time. */
+export function moonIlluminationLabel(at: Date, timezone: string, opts: { withTime?: boolean } = {}): string {
+  const { percent } = moonIllumination(at);
+  return `Moon ${percent}% lit${opts.withTime ? ` at ${formatInTimeZone(at, timezone, "HH:mm")}` : ""}`;
+}
 
 // IAU body-fixed frame: ascending node, its perpendicular, and spin about the pole.
 // Uses the topocentric observer, so the texture and feature markers include parallax/libration.
@@ -134,14 +154,21 @@ export function scatteredMoonlight(moon: MoonState, targetAlt: number, separatio
   const baseline = (20.7233-Math.log(background/34.08))/0.92104;
   return { brightening, skyBrightness: baseline-brightening, moonBrightness };
 }
+/** Moon-tab moonlight levels: upper bounds (mag of K–S brightening) of each wording. */
+export const MOONLIGHT_LEVELS = { little: 0.3, some: 1, brightened: 2 } as const;
+export type MoonlightLevel = "Moon below horizon" | "Little moonlight" | "Some moonlight" | "Brightened sky" | "Strong moonlight";
+export function moonlightLevel(brightening: number, moonUp: boolean): MoonlightLevel {
+  if (!moonUp) return "Moon below horizon";
+  return brightening < MOONLIGHT_LEVELS.little ? "Little moonlight" : brightening < MOONLIGHT_LEVELS.some ? "Some moonlight" : brightening < MOONLIGHT_LEVELS.brightened ? "Brightened sky" : "Strong moonlight";
+}
 export function targetMoonlight(target: UnifiedTarget, lat: number, lon: number, date: Date, skyBrightness = 21.6) {
   const moon = moonState(lat, lon, date);
   const position = eqToHorizontal(target.ra, target.dec, lat, lon, date);
   const separation = angularDistance(target.ra, target.dec, moon.ra, moon.dec);
   const model = scatteredMoonlight(moon, position.alt, separation, skyBrightness);
-  const diffuse = /galaxy|nebula|cloud/i.test(target.category);
-  const stars = /star|asterism/i.test(target.category);
-  const level = moon.alt <= -moon.diameter/2 ? "Moon below horizon" : model.brightening < 0.3 ? "Little moonlight" : model.brightening < 1 ? "Some moonlight" : model.brightening < 2 ? "Brightened sky" : "Strong moonlight";
+  const diffuse = isDiffuseCategory(target.category);
+  const stars = isStellarCategory(target.category);
+  const level = moonlightLevel(model.brightening, !(moon.alt <= -moon.diameter/2));
   const advice = moon.sunAlt >= 0 ? "Daylight at your selected time. Plan after dark to find stars and deep-sky targets." : position.alt <= 0 ? "This target is below the horizon at this time." : moon.sunAlt > -18 ? "Twilight also brightens the sky. Wait for astronomical darkness for faint targets." : moon.alt <= -moon.diameter/2 ? "The Moon is down. Local light pollution and transparency still matter." : diffuse ? "Diffuse detail loses contrast. A bright core may remain visible; try a darker window for the outer glow." : stars ? target.mag > 6 ? "This is a faint stellar target. Moonlight makes identification harder; choose a darker window and use steady support." : "Bright stars and wide pairs tolerate moonlight. Faint companions and subtle colors become harder." : "Bright cluster members may remain visible; the faint stars and unresolved glow lose contrast.";
   return { moon, ...model, separation, targetAlt: position.alt, targetAz: position.az, level, advice, diffuse, stars, reliable: moon.sunAlt <= -18 && position.alt >= 10 && moon.alt >= 5 && separation >= 10 && separation <= 120 };
 }

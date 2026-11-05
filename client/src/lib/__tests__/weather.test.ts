@@ -34,7 +34,7 @@ describe('location forecasts and observing-night interpretation',()=>{
   });
   it('finds dry windows only inside astronomical darkness, including DST and southern sites',()=>{
     for(const [lat,lon,zone,day] of [[37.77,-122.42,'America/Los_Angeles','2026-11-01'],[-33.86,151.21,'Australia/Sydney','2026-10-24']] as const){
-      const start=Date.parse(`${day}T00:00:00Z`),f=parseWeather(response(96,start),lat,lon,start),r=observingWeather(f,new Date(start+12*WEATHER_HOUR),zone);
+      const start=Date.parse(`${day}T00:00:00Z`),f=parseWeather(response(96,start),lat,lon,start),r=observingWeather(f,new Date(start+12*WEATHER_HOUR),zone,start);
       expect(r.best).not.toBeNull();expect(r.night.ok).toBe(true);
       if(r.night.ok)expect(r.night.segments.some(s=>r.best!.start>=+s.start&&r.best!.end<=+s.end)).toBe(true);
       expect(r.best!.end-r.best!.start).toBe(2*WEATHER_HOUR);
@@ -42,14 +42,15 @@ describe('location forecasts and observing-night interpretation',()=>{
   });
   it('does not recommend cloudy, wet, gusty, foggy or missing-data hours',()=>{
     const f=parseWeather(response(),37.77,-122.42,at),date=new Date('2026-10-24T22:00Z');
+    expect(observingWeather(f,date,'America/Los_Angeles',at).best).not.toBeNull();
     for(const patch of [{cloud:90},{rain:1},{rainChance:70},{gust:50},{visibility:500},{wind:null}]){
-      const bad={...f,hours:f.hours.map(h=>({...h,...patch}))};expect(observingWeather(bad,date,'America/Los_Angeles').best).toBeNull();
+      const bad={...f,hours:f.hours.map(h=>({...h,...patch}))};expect(observingWeather(bad,date,'America/Los_Angeles',at).best).toBeNull();
     }
     expect(weatherVerdict({...f.hours[0],rain:1}).tone).toBe('poor');expect(weatherVerdict({...f.hours[0],visibility:500}).label).toContain('Fog');
   });
   it('does not extend a forecast into a distant planning date or invent polar darkness',()=>{
-    const f=parseWeather(response(),37.77,-122.42,at);expect(observingWeather(f,new Date('2027-01-01T22:00Z'),'America/Los_Angeles').hours).toEqual([]);expect(observingWeather(f,new Date('2026-10-24T22:00Z'),'America/Los_Angeles',at+96*WEATHER_HOUR).best).toBeNull();
-    const north=parseWeather(response(96,Date.parse('2026-06-21T00:00Z')),69.65,18.96,at);expect(observingWeather(north,new Date('2026-06-21T20:00Z'),'Europe/Oslo').best).toBeNull();
+    const f=parseWeather(response(),37.77,-122.42,at);expect(observingWeather(f,new Date('2027-01-01T22:00Z'),'America/Los_Angeles',at).hours).toEqual([]);expect(observingWeather(f,new Date('2026-10-24T22:00Z'),'America/Los_Angeles',at+96*WEATHER_HOUR).best).toBeNull();
+    const north=parseWeather(response(96,Date.parse('2026-06-21T00:00Z')),69.65,18.96,at);expect(observingWeather(north,new Date('2026-06-21T20:00Z'),'Europe/Oslo',Date.parse('2026-06-21T00:00Z')).best).toBeNull();
   });
 });
 describe('durable weather cache and networking',()=>{

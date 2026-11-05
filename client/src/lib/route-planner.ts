@@ -71,6 +71,82 @@ export const DIFFICULTY_PRESETS: Record<DifficultyLevel, DifficultyParams> = {
   },
 };
 
+// ─── Search costs & Guided hop limits ────────────────────────
+
+/**
+ * Every move costs this much in the A* search, on top of its distance terms. Without it the strategy costs (pure
+ * distance × obscurity) made the planner indifferent to the number of moves, so it zig-zagged between landmarks.
+ */
+export const MOVE_COST = 0.5;
+/**
+ * Plain distance cost per field travelled, added to the strategy's recognisability-weighted distance. It bounds the
+ * landmark discount: a field travelled past the brightest landmark still costs ≥ DISTANCE_COST, so a detour has to be
+ * short to pay for itself (before, a 0.2× obscurity made a path through landmarks 5× longer still look cheaper).
+ */
+export const DISTANCE_COST = 0.5;
+/** Guided (beginner) moves keep ≥ 30% field overlap: at most this share of the field per move… */
+export const GUIDED_OVERLAP_HOP_FOV = 0.7;
+/**
+ * …unless the waypoint catalog (bright-star catalogue to mag 7, 0.22 stars per square degree) has a gap wider than that
+ * on the way: then a move may stretch up to one field (the previous field's edge stays in view), at guidedStretchCost.
+ * The catalogue's continuum-percolation radius is ≈ 2.6° (λπr² ≈ 4.5): at the default 3.7° field 0.7·field (2.59°)
+ * sits right on it, so a hard 0.7 cap left only tortuous paths (10–16 moves on 8–10° legs, the shortest possible).
+ */
+export const GUIDED_MAX_HOP_FOV = 1.0;
+
+/**
+ * A Guided move may aim straight at a star the observer sees by eye (NAKED_EYE_WAYPOINT_MAG or brighter): the
+ * destination itself is the guide, so no overlap is needed, up to this many fields (still at guidedStretchCost).
+ */
+export const GUIDED_NAKED_EYE_HOP_FOV = 1.5;
+/** Point sources at least this bright are seen by eye in a suburban sky (naked-eye anchors go to 4.5). */
+export const NAKED_EYE_WAYPOINT_MAG = 4.0;
+/** A star, planet or binocular star/double at least NAKED_EYE_WAYPOINT_MAG bright: findable by eye. */
+export function isNakedEyePoint(node: Pick<SkyNode, 'mag' | 'type' | 'binocularCategory'>): boolean {
+  const pointLike = node.type === 'star' || node.type === 'planet' || node.binocularCategory === 'STAR' || node.binocularCategory === 'DS';
+  return pointLike && node.mag <= NAKED_EYE_WAYPOINT_MAG;
+}
+/** Longest Guided move to `node`, in fields (`nakedEyeMoves: false` keeps every move within one field). */
+export function guidedMaxHopFov(node: Pick<SkyNode, 'mag' | 'type' | 'binocularCategory'>, nakedEyeMoves = true): number {
+  return nakedEyeMoves && isNakedEyePoint(node) ? GUIDED_NAKED_EYE_HOP_FOV : GUIDED_MAX_HOP_FOV;
+}
+
+export interface RouteSearchOptions {
+  /**
+   * Guided only: allow a move to aim straight at a naked-eye star up to GUIDED_NAKED_EYE_HOP_FOV (default true).
+   * The field-guide adaptation turns it off: it breaks a classic route's long moves onto fainter waypoints (or the
+   * target) into overlapping fields; the classic naked-eye jumps themselves are kept (buildKnownRoute).
+   */
+  nakedEyeMoves?: boolean;
+}
+
+/** A stretched Guided move costs this many moves just past GUIDED_OVERLAP_HOP_FOV… */
+export const STRETCH_MOVES_MIN = 1.5;
+/** …plus this many per field beyond it (≈ 2.4 moves at a full field, ≈ 3.9 at a 1.5-field naked-eye move). */
+export const STRETCH_MOVES_PER_FOV = 3;
+/** Cost of one move in the legacy cost model (edgeCost: base 1.0 per move), used when no strategy is given. */
+export const LEGACY_MOVE_COST = 1.0;
+/**
+ * Extra A* cost of a Guided move longer than GUIDED_OVERLAP_HOP_FOV fields (0 within it), in units of the cost of one
+ * move (`moveCost`): STRETCH_MOVES_MIN moves' worth just past 0.7 field, rising by STRETCH_MOVES_PER_FOV per field to
+ * a full field. A stretched move is therefore only taken when it saves more overlapping moves than that — a gap in the
+ * waypoint catalog — never to shave a move off a well-connected route.
+ */
+export function guidedStretchCost(fovRatio: number, moveCost: number = MOVE_COST): number {
+  if (fovRatio <= GUIDED_OVERLAP_HOP_FOV) return 0;
+  return moveCost * (STRETCH_MOVES_MIN + STRETCH_MOVES_PER_FOV * (fovRatio - GUIDED_OVERLAP_HOP_FOV));
+}
+/**
+ * Discomfort of one sweep, in moves: 0 up to the level's comfortable sweep (1 + (reachMultiplier − 0.7)·3 fields:
+ * Guided 1.45, Balanced 1.9, Direct 2.5), then 3·excess². Balanced therefore takes more, shorter sweeps than Direct.
+ */
+export function sweepDiscomfort(fovRatio: number, params: DifficultyParams): number {
+  const comfortable = 1.0 + (params.reachMultiplier - 0.7) * 3.0;
+  if (fovRatio <= comfortable) return 0;
+  const excess = fovRatio - comfortable;
+  return excess * excess * 3.0;
+}
+
 // ─── Pure Functions ──────────────────────────────────────────
 
 /**
@@ -289,10 +365,11 @@ export function variableReachAStar(
   difficulty: DifficultyLevel,
   costStrategy?: CostStrategy,
   costContext?: CostContext,
+  options: RouteSearchOptions = {},
 ): SkyNode[] | null {
-  // Graph connectivity uses full reach so all difficulty levels can find a route.
-  // Difficulty affects hop cost: beginners prefer shorter hops (soft penalty),
-  // which makes A* route through more intermediate waypoints.
+  // Balanced and Direct use the full brightness-dependent reach, with a soft penalty past their comfortable sweep
+  // (sweepDiscomfort). Guided keeps 30% overlap (≤ 0.7 field) unless a catalogue gap needs a stretched move (≤ 1 field,
+  // or ≤ 1.5 fields straight at a naked-eye star), priced by guidedStretchCost.
   const MAX_WAYPOINT_MAG = 7.0;
   const params = DIFFICULTY_PRESETS[difficulty];
 
@@ -318,13 +395,21 @@ export function variableReachAStar(
 
   // Best possible reach (for admissible heuristic)
   const bestReach = maxReach(0, fov, true);
+  const guided = difficulty === 'beginner';
+  const nakedEyeMoves = options.nakedEyeMoves ?? true;
+  /** Longest single move the search can make (a goal hop may use a very bright star's reach). */
+  let brightestMag = 0;
+  allNodes.forEach(n => { if (n.mag < brightestMag) brightestMag = n.mag; });
+  const guidedMaxStepFov = nakedEyeMoves ? GUIDED_NAKED_EYE_HOP_FOV : GUIDED_MAX_HOP_FOV;
+  const maxStep = guided ? fov * guidedMaxStepFov : Math.max(bestReach, maxReach(brightestMag, fov, true), fov * 2.0) * 1.2;
 
-  // Heuristic: optimistic estimate of remaining hops
+  // Heuristic: optimistic estimate of the remaining cost. With a strategy every move costs ≥ MOVE_COST plus
+  // DISTANCE_COST per field, and a move covers ≤ maxStep — an admissible, consistent bound that focuses the search.
   function heuristic(node: SkyNode): number {
-    if (costStrategy) {
-      return costStrategy.heuristic(node, goal, fov);
-    }
     const dist = angularDistance(node.ra, node.dec, goal.ra, goal.dec);
+    if (costStrategy) {
+      return costStrategy.heuristic(node, goal, fov) + MOVE_COST * Math.ceil(dist / maxStep - 1e-9) + DISTANCE_COST * dist / fov;
+    }
     return (dist / (bestReach * 1.2)) * 0.9;
   }
 
@@ -360,7 +445,7 @@ export function variableReachAStar(
     const currentNode = allNodes.get(current.id)!;
 
     // Max reach from current position — depends on what we can see
-    const searchRadius = difficulty==='beginner'?Math.min(bestReach,fov*.7):bestReach;
+    const searchRadius = guided ? Math.min(bestReach, fov * guidedMaxStepFov) : bestReach;
 
     // Get neighbor candidates from spatial grid
     const candidates = getNeighborCandidates(grid, currentNode.ra, currentNode.dec, searchRadius);
@@ -386,30 +471,29 @@ export function variableReachAStar(
         reach = maxReach(neighbor.mag, fov, isNamed);
       }
 
-      if(difficulty==='beginner')reach=Math.min(reach,fov*.7);
+      if (guided) reach = Math.min(reach, fov * guidedMaxHopFov(neighbor, nakedEyeMoves));
       if (dist > reach) continue;
       if (!isGoal && neighbor.mag > MAX_WAYPOINT_MAG) continue;
 
       let hopCost: number;
       if (costStrategy && costContext) {
-        hopCost = costStrategy.edgeCost(currentNode, neighbor, dist, fov, costContext);
+        // Per move + plain distance + the strategy's recognisability-weighted distance (see MOVE_COST, DISTANCE_COST),
+        // plus the level's comfortable-sweep penalty (Balanced and Direct; Guided is limited by guidedStretchCost).
+        hopCost = MOVE_COST + DISTANCE_COST * dist / fov + costStrategy.edgeCost(currentNode, neighbor, dist, fov, costContext);
+        if (!guided) hopCost += MOVE_COST * sweepDiscomfort(dist / fov, params);
       } else {
         // Legacy cost function (backward compatible when no strategy provided)
         hopCost = isGoal
           ? edgeCost(dist, currentNode.mag, currentNode.name !== '', fov)
           : edgeCost(dist, neighbor.mag, isNamed, fov);
 
-        const distFov = dist / fov;
-        const comfortThreshold = 1.0 + (params.reachMultiplier - 0.7) * 3.0;
-        if (distFov > comfortThreshold) {
-          const excess = distFov - comfortThreshold;
-          hopCost += excess * excess * 3.0;
-        }
+        hopCost += LEGACY_MOVE_COST * sweepDiscomfort(dist / fov, params);
 
         if (!isGoal && neighbor.mag > params.minWaypointMag) {
           hopCost += (neighbor.mag - params.minWaypointMag) * 0.3;
         }
       }
+      if (guided) hopCost += guidedStretchCost(dist / fov, costStrategy && costContext ? MOVE_COST : LEGACY_MOVE_COST);
 
       const g = current.g + hopCost;
       const existing = best.get(neighbor.id);
@@ -443,8 +527,9 @@ export function planRoute(
   difficulty: DifficultyLevel,
   costStrategy?: CostStrategy,
   costContext?: CostContext,
+  options: RouteSearchOptions = {},
 ): { path: SkyNode[]; compressed: CompressedHop[] } | null {
-  const rawPath = variableReachAStar(start, goal, stars, fov, difficulty, costStrategy, costContext);
+  const rawPath = variableReachAStar(start, goal, stars, fov, difficulty, costStrategy, costContext, options);
   if (!rawPath) return null;
 
   const params = DIFFICULTY_PRESETS[difficulty];

@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/vsx/vsx&-c=16.420601%2B21.473192&-c.rs=30&-out=Name,V,Type,max,n_max,f_min,min,n_min,Period,Sp&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tName\tV\tType\tmax\tn_max\tf_min\tmin\tn_min\tPeriod\tSp\narcsec\t \t \t \tmag\t \t \tmag\t \td\t\n-----\t------------------------------\t-\t------------------------------\t-------\t----------\t-\t-------\t--------\t-------------------\t-----------------------------\n 0.23\tpsi 1 Psc A                   \t0\tSXARI:                        \t  5.330\tV         \t \t  5.340\tV       \t     0.269787000000\tB9.5Vn\n13.67\tGaia DR3 2790503409705998208  \t0\tRS                            \t 13.580\tG         \t \t 13.720\tG       \t                   \tK\n\n"
+}

@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=114.825498%2B5.224988&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD61421                     \tALF CMI                     \t  5.31000\t 5.7100\t  0.3600\t4430A     \t1967MNRAS.137..393H\tHD61421\n 0.00\tHD61421                     \tALF CMI                     \t  5.10000\t 5.5000\t  0.1600\t4430A     \t1974MNRAS.167..121H\tHD61421\n 0.00\tHD61421                     \tALF CMI                     \t  6.15000\t 6.4400\t  0.2500\t706nm     \t1988ApJ...327..905S\tHD61421\n 0.00\tHD61421                     \tALF CMI                     \t  5.26100\t 5.5100\t  0.0530\t800nm     \t1991AJ....101.2207M\tHD61421\n 0.00\tHD61421                     \tHR2943                      \t  5.19000\t       \t  0.0400\t740nm     \t2001AJ....122.2707N\tHD61421\n 0.00\tHD61421                     \tHR2943                      \t  5.22800\t 5.4460\t  0.0540\t800nm     \t2003AJ....126.2502M\tHD61421\n 0.00\tHD61421                     \tAlf CMi A                   \t  5.37600\t 5.4480\t  0.0470\tK         \t2004A&A...413..251K\tHD61421\n\n"
+}

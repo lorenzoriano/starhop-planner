@@ -6,8 +6,10 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import {
-  Upload, Crosshair, RotateCcw, MousePointer2, Eye, ZoomIn, ZoomOut, Trash2
+  Upload, Crosshair, RotateCcw, MousePointer2, Eye, ZoomIn, ZoomOut, Trash2, ArrowLeft
 } from 'lucide-react';
+import type { Star, UnifiedTarget } from '@/lib/astronomy';
+import { displayName, resolveObject } from '@/lib/object-links';
 
 interface CalibrationPoint {
   imgX: number;
@@ -33,8 +35,39 @@ interface MarkedStar {
   label: string;
 }
 
-export function ImageFallback() {
+/** The destination the image page opens with: one display name and its J2000 position (degrees). */
+export interface ImageTarget { id: string; label: string; ra: number; dec: number }
+/** Optional link back to where the image page was opened from (e.g. "Back to tonight"). */
+export interface ImageBackLink { label: string; href?: string; onClick?: () => void }
+export interface ImageFallbackProps {
+  /** Prefill the page for this object (any id form: M31, NGC869, STAR-Betelgeuse, HR2061, star:HR2061). */
+  objectId?: string;
+  /** Catalogs used to resolve `objectId` (the planner's loaded targets and BSC stars). */
+  targets?: readonly UnifiedTarget[];
+  stars?: readonly Star[];
+  back?: ImageBackLink;
+}
+
+/**
+ * Resolve the image page's destination with the shared resolver and display-name rule, so the page names the object
+ * exactly like every other tab. Null when no id is given or it does not resolve.
+ */
+export function imageTargetFor(objectId: string | undefined, targets: readonly UnifiedTarget[] = [], stars: readonly Star[] = []): ImageTarget | null {
+  if (!objectId) return null;
+  const resolved = resolveObject(objectId, { targets, stars });
+  if (!resolved) return null;
+  const target = resolved.unifiedId ? targets.find((t) => t.id === resolved.unifiedId) : undefined;
+  const star = !target && resolved.hr ? stars.find((s) => s.hr === resolved.hr) : undefined;
+  const label = target ? displayName(target) : star ? displayName(star) : resolved.name;
+  return { id: resolved.routingId ?? objectId, label, ra: resolved.ra, dec: resolved.dec };
+}
+
+/** Calibration fields prefilled with the destination (a known position the observer can click in the image). */
+export const imageCalibrationPrefill = (t: ImageTarget) => ({ label: t.label, ra: t.ra.toFixed(4), dec: t.dec.toFixed(4) });
+
+export function ImageFallback({ objectId, targets, stars, back }: ImageFallbackProps = {}) {
   const { toast } = useToast();
+  const destination = imageTargetFor(objectId, targets, stars);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [calibPoints, setCalibPoints] = useState<CalibrationPoint[]>([]);
@@ -47,9 +80,19 @@ export function ImageFallback() {
   const [fovHeight, setFovHeight] = useState(5);
 
   // Calibration input fields
-  const [calibRA, setCalibRA] = useState('');
-  const [calibDec, setCalibDec] = useState('');
-  const [calibLabel, setCalibLabel] = useState('');
+  const [calibRA, setCalibRA] = useState(() => destination ? imageCalibrationPrefill(destination).ra : '');
+  const [calibDec, setCalibDec] = useState(() => destination ? imageCalibrationPrefill(destination).dec : '');
+  const [calibLabel, setCalibLabel] = useState(() => destination ? imageCalibrationPrefill(destination).label : '');
+  // A new destination refills the empty calibration fields; never overwrite what the observer is typing.
+  const destinationKey = destination ? `${destination.id}|${destination.label}` : '';
+  useEffect(() => {
+    if (!destination) return;
+    const fill = imageCalibrationPrefill(destination);
+    setCalibLabel((v) => v || fill.label);
+    setCalibRA((v) => v || fill.ra);
+    setCalibDec((v) => v || fill.dec);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [destinationKey]);
 
   // Computed transform (pixel -> sky coords)
   const [transform, setTransform] = useState<{
@@ -337,8 +380,11 @@ export function ImageFallback() {
   }, [image, calibPoints, markedStars, targetMark, transform, zoom, offset, fovWidth, fovHeight]);
 
   return (
-    <div className="max-w-[1200px] mx-auto p-4">
-      <Card className="p-4 bg-card border-card-border mb-4">
+    <div className="max-w-[1200px] mx-auto p-4 min-w-0">
+      <Card className="p-4 bg-card border-card-border mb-4 min-w-0">
+        {back && (back.href
+          ? <a className="text-action mb-3 inline-flex items-center gap-1 text-xs" href={back.href} onClick={back.onClick} data-testid="link-image-back"><ArrowLeft className="w-3.5 h-3.5" />{back.label}</a>
+          : <button type="button" className="text-action mb-3 inline-flex items-center gap-1 text-xs" onClick={back.onClick} data-testid="link-image-back"><ArrowLeft className="w-3.5 h-3.5" />{back.label}</button>)}
         <h2 className="text-sm font-medium mb-3 flex items-center gap-2">
           <Eye className="w-4 h-4 text-primary" />
           Image-Assisted Star-Hop Mode
@@ -347,6 +393,12 @@ export function ImageFallback() {
           Upload a star chart image, calibrate it by marking 2+ known stars with their coordinates,
           then mark guide stars and your target. The app will overlay FOV frames on the image.
         </p>
+        {destination && (
+          <p className="text-xs mb-4 break-words" data-testid="text-image-destination">
+            Destination: <strong>{destination.label}</strong> · RA {destination.ra.toFixed(2)}° Dec {destination.dec.toFixed(2)}°.
+            {' '}Its position is filled in below: click it in the image as a calibration point, then mark it as the target.
+          </p>
+        )}
 
         <div className="flex flex-wrap gap-2 mb-4">
           <label className="cursor-pointer">
@@ -387,7 +439,7 @@ export function ImageFallback() {
 
         {/* Calibration inputs */}
         {mode === 'calibrate' && image && (
-          <div className="flex items-end gap-2 mb-4">
+          <div className="flex flex-wrap items-end gap-2 mb-4">
             <div>
               <Label className="text-xs text-muted-foreground">Star Label</Label>
               <Input value={calibLabel} onChange={e => setCalibLabel(e.target.value)} placeholder="e.g., Alpheratz" className="h-8 text-sm w-28 bg-background" data-testid="input-calib-label" />
@@ -408,14 +460,14 @@ export function ImageFallback() {
               <Label className="text-xs text-muted-foreground">FOV H (°)</Label>
               <Input type="number" value={fovHeight} onChange={e => setFovHeight(parseFloat(e.target.value) || 5)} className="h-8 text-sm w-16 bg-background" />
             </div>
-            <span className="text-xs text-muted-foreground pb-1.5">Click known stars in the image. Three or more points enable plate-solving style calibration.</span>
+            <span className="text-xs text-muted-foreground pb-1.5 basis-full sm:basis-auto">Click known stars in the image. Three or more points enable plate-solving style calibration.</span>
           </div>
         )}
 
         {/* Status */}
-        <div className="flex items-center gap-2 mb-3">
+        <div className="flex flex-wrap items-center gap-2 mb-3">
           {transform && (
-            <Badge variant="secondary" className="text-xs">
+            <Badge variant="secondary" className="text-xs whitespace-normal">
               {transform.fitType === 'plate' ? 'Plate fit' : 'Two-point fit'} · Scale: {(transform.scale * 60).toFixed(1)} arcmin/px · Rotation: {(transform.rotation * 180 / Math.PI).toFixed(1)}° · Residual: {transform.residualArcmin.toFixed(1)}′
             </Badge>
           )}
@@ -451,7 +503,7 @@ export function ImageFallback() {
           <h3 className="text-xs font-medium text-muted-foreground mb-2">Calibration Points</h3>
           <div className="space-y-1">
             {calibPoints.map((p, i) => (
-              <div key={i} className="flex items-center gap-3 text-xs">
+              <div key={i} className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
                 <Badge variant="outline" className="w-6 h-6 flex items-center justify-center p-0">{i + 1}</Badge>
                 <span className="font-medium">{p.label}</span>
                 <span className="text-muted-foreground">RA {p.ra.toFixed(2)}° Dec {p.dec.toFixed(2)}°</span>

@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "kbVersion": "kb-v1+93ae671b75",
+  "source": "artifact db ab4/ (https://claude.ai/artifact/V3eaJ1nHVoc6hweMvuRzfX)",
+  "answers": [
+    {
+      "pairId": "ab4-01",
+      "left": {
+        "key": "ajF8YmY4MXxBOS1zZWVpbmctZG91YmxlfHxIUjcwNTYsSFI3MTM5LEhSNzczNSxIUjc1MDQsRFMtRG91YmxlRGJsfDAxMTM0fGkxNTU2fDM4Ljh8LTEwNC41fDYuNXw1MHwxMHwwfDIxLjV8MzB8MzB8OHwxfDI5Mi42OHwyNy45Nw",
+        "templateId": "A9-seeing-double",
+        "title": "The Pairs That Weigh Stars in Lyra"
+      },
+      "right": {
+        "key": "ajF8YmY4MXxBMS1jcmFkbGUtdG8tZ3JhdmV8fE5HQzcwMDAsTTM5LFNUQVItRGVuZWIsSFI3NzYzLE0yN3wwMjM0NXxpMTU1NnwzOC44fC0xMDQuNXw2LjV8NTB8MTB8MHwyMS41fDMwfDMwfDh8MXwzMTQuMXwzMS43Mg",
+        "templateId": "A1-cradle-to-grave",
+        "title": "Cygnus' Cradles and Graves"
+      },
+      "choice": "equal",
+      "note": "They are both great. ",
+      "answeredAt": "2026-11-05T01:12:03.053Z"
+    },
+    {
+      "pairId": "ab4-02",
+      "left": {
+        "key": "ajF8YmY4MXxBMy1ob3ctZmFyfHxTVEFSLUNhcGVsbGEsTWVsMjAsU3RvY2syLE5HQzQ1NyxNMzF8MDEyMzR8aHZwNXJ8NTEuNXwtMC4xfDYuNXw1MHwxMHwwfDE5fDMwfDMwfDh8MXw0MC41fDQyLjc4",
+        "templateId": "A3-how-far",
+        "title": "Up Through Cassiopeia on a Ladder of Rulers"
+      },
+      "right": {
+        "key": "ajF8YmY4MXxBOS1zZWVpbmctZG91YmxlfHxIUjEzODcsRFMtVGhldGFUYXUsSFIxNDc5LEhSMTg1MixIUjE5MzF8MDEyNDR8aHZwNXJ8NTEuNXwtMC4xfDYuNXw1MHwxMHwwfDE5fDMwfDMwfDh8MXw4NC40MXwyMS4xNA",
+        "templateId": "A9-seeing-double",
+        "title": "Who Belongs Together in Taurus?"
+      },
+      "choice": "equal",
+      "note": "Again, both great. ",
+      "answeredAt": "2026-11-05T01:13:56.212Z"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import "./issue-ux.css";
+import "./integration-r5.css";
 
 if (!window.location.hash) {
   window.location.hash = "#/";

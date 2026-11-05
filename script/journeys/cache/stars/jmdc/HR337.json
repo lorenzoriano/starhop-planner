@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=17.433016%2B35.620558&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD6860                      \tBET AND                     \t 12.00000\t13.2000\t  1.5000\t550nm     \t1981A&A...103...28B\tHD6860\n 0.00\tHD6860                      \tBET AND                     \t 14.00000\t14.4000\t  0.5000\t2.2       \t1983ApJ...268..309D\tHD6860\n 0.00\tHD6860                      \tBET AND                     \t 13.85000\t14.2500\t  0.1800\t2.2       \t1987A&A...188..114D\tHD6860\n 0.00\tHD6860                      \tBET AND                     \t 13.00000\t19.9000\t  0.2000\t674nm     \t1989ApJ...340.1103H\tHD6860\n 0.00\tHD6860                      \tBET AND                     \t 12.78300\t14.3500\t  0.1280\t800nm     \t1991AJ....101.2207M\tHD6860\n 0.00\tHD6860                      \tBET AND                     \t 12.73000\t       \t  0.1800\t712nm     \t1993ApJ...406..215Q\tHD6860\n 0.00\tHD6860                      \tHR337                       \t 12.20000\t       \t  0.6000\t2.2mu     \t1998AJ....116..981D\tHD6860\n 0.00\tHD6860                      \tHR337                       \t 12.78200\t13.7490\t  0.1370\t800nm     \t2003AJ....126.2502M\tHD6860\n\n"
+}

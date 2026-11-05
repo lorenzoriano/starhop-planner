@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/wds/wds&WDS=04153-0739&-out=WDS,Disc,Comp,Obs2,pa2,sep2,mag1,mag2,SpType,pmRA1,pmDE1,pmRA2,pmDE2,Notes",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\nWDS\tDisc\tComp\tObs2\tpa2\tsep2\tmag1\tmag2\tSpType\tpmRA1\tpmDE1\tpmRA2\tpmDE2\tNotes\n \t \t \tyr\tdeg\tarcsec\tmag\tmag\t \tmas/yr\tmas/yr\tmas/yr\tmas/yr\t\n----------\t-------\t-----\t----\t---\t------\t------\t-----\t----------\t----\t----\t----\t----\t----\n04153-0739\tSTF 518\tA,BC \t2024\t102\t 83.20\t 4.430\t 9.31\tK0.5V+DA3 \t-224\t-342\t-223\t-338\tNV P\n04153-0739\tSTF 518\tAC   \t2024\t 98\t 77.90\t 4.430\t11.17\tK0.5V+M5V \t-224\t-342\t-225\t-341\tNV P\n04153-0739\tSTF 518\tAD   \t2016\t 37\t551.00\t 4.430\t12.62\tK0.5V     \t-224\t-342\t   3\t  -2\tNL P\n04153-0739\tSTF 518\tAE   \t1998\t 25\t639.00\t 4.430\t12.99\tK0.5V     \t-224\t-342\t   3\t   0\tNL P\n04153-0739\tSTF 518\tBC   \t2024\t327\t  7.70\t 9.530\t11.17\tDA2.9+M5V \t-224\t-334\t-225\t-341\tNO P\n04153-0739\tSTF 518\tBD   \t2016\t 29\t521.00\t 9.530\t12.62\tDA2.9     \t-224\t-334\t   3\t  -2\tNL P\n04153-0739\tSTF 518\tBE   \t2016\t 18\t625.40\t 9.530\t12.99\tDA2.9     \t-223\t-338\t   0\t   0\tNL P\n\n"
+}

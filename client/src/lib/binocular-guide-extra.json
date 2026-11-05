@@ -2928,10 +2928,10 @@
   {
     "targetId": "DS-16Dra",
     "family": "double",
-    "level": "steady",
-    "equipment": "Supported 10×50",
-    "impression": "The wide 16 and 17 Draconis pair rewards a steady view. The close inner pair needs a telescope.",
-    "finding": "Match the marked field in Draco north of Hercules.",
+    "level": "easy",
+    "equipment": "7×35 / 10×50",
+    "impression": "The wide, nearly equal 16 and 17 Draconis pair splits at a glance in any binoculars. The close inner pair, 3 arcseconds wide, needs a telescope.",
+    "finding": "Start at Rastaban in the head of Draco and move about 8° due west.",
     "minAperture": 50,
     "references": [
       {
@@ -2978,8 +2978,8 @@
     "family": "double",
     "level": "steady",
     "equipment": "Supported 10×50; dark sky",
-    "impression": "A wide pair with a much fainter companion, separated by 113 arcseconds. Stability helps distinguish the secondary from the background.",
-    "finding": "Match the finder field around ν Geminorum; compare nearby stars before identifying the faint companion.",
+    "impression": "A bright blue-white star with a much fainter star 113 arcseconds away that is no companion: Gaia puts the faint one more than a hundred light-years nearer, a stranger seen in the same direction.",
+    "finding": "Match the finder field around ν Geminorum, at Gemini's feet near Alhena, and compare nearby stars before picking out the faint star to its north-north-west.",
     "minAperture": 50,
     "references": [
       {

@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/wds/wds&WDS=13252-1110&-out=WDS,Disc,Comp,Obs2,pa2,sep2,mag1,mag2,SpType,pmRA1,pmDE1,pmRA2,pmDE2,Notes",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\nWDS\tDisc\tComp\tObs2\tpa2\tsep2\tmag1\tmag2\tSpType\tpmRA1\tpmDE1\tpmRA2\tpmDE2\tNotes\n \t \t \tyr\tdeg\tarcsec\tmag\tmag\t \tmas/yr\tmas/yr\tmas/yr\tmas/yr\t\n----------\t-------\t-----\t----\t---\t------\t------\t-----\t----------\t----\t----\t----\t----\t----\n13252-1110\tOCC 418\tAa,Ab\t1995\t -1\t -1.00\t 1.300\t 4.50\tB1III-    \t -42\t -31\t    \t    \tN\n13252-1110\tOCC 418\tAa,Ac\t1975\t -1\t  0.50\t 1.300\t 7.50\tB1III-    \t -42\t -31\t    \t    \tN\n13252-1110\tWAI  40\tAa,Ad\t2026\t 39\t  0.00\t 1.300\t 4.50\tB1III-    \t -42\t -31\t    \t    \tN  K\n13252-1110\tWAI  40\tAa,Ae\t2026\t187\t  0.10\t 1.700\t 6.70\tB1III-    \t -42\t -31\t    \t    \tN  K\n13252-1110\tBUP 150\tAB   \t2010\t 33\t151.90\t 0.980\t12.00\tB1III-+B2 \t -42\t -31\t    \t    \tN\n13252-1110\tBUP 150\tAC   \t2010\t 61\t367.30\t 0.980\t10.50\tB1III-+B2 \t -42\t -31\t    \t    \tN\n\n"
+}

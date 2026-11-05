@@ -29,6 +29,8 @@ export interface UpcomingNight {
   end: Date;
   moonPhase: number;
   moonIllumination: number;
+  /** The instant moonIllumination and moonLabel describe (middle of the first dark segment). */
+  moonAt: Date;
   moonLabel: string;
   moonFreeDarkHours: number;
   moonFreeWindows: { start: Date; end: Date }[];
@@ -127,6 +129,7 @@ export function upcomingNights(options: UpcomingNightsOptions): UpcomingNight[] 
       end: bounds.end,
       moonPhase: phase,
       moonIllumination: moon.illumination,
+      moonAt: phaseAt,
       moonLabel: moon.phaseName,
       moonFreeDarkHours: moonFree.reduce((sum, s) => sum + (+s.end - +s.start) / 3_600_000, 0),
       moonFreeWindows: moonFree,

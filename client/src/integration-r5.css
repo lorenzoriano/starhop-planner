@@ -1,0 +1,71 @@
+/* Integration round 5 (WS-A): cross-tab object links and phone layout fixes. Loaded after index.css and issue-ux.css. */
+
+
+@media (max-width: 760px) {
+  /* Main nav: two compact rows instead of a sideways strip that hid Moon and Star hop. */
+  .main-nav {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 2px;
+    height: auto; overflow: visible; scroll-snap-type: none; padding: 2px 4px 0;
+    mask-image: none; -webkit-mask-image: none;
+  }
+  .main-nav > :is(button, a) {
+    min-width: 0; height: 38px; padding: 0 2px; justify-content: center; gap: 4px; font-size: 12px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .main-nav > :is(button, a) svg { flex: 0 0 auto; width: 14px; height: 14px; }
+  .main-nav > :is(button, a).active:after { left: 6px; right: 6px; }
+
+  /* Star hop destination bar: name and meta first, then the shared action row, then the plan button full width. */
+  .hop-target-bar { flex-direction: column; align-items: stretch; }
+  .hop-target-bar > [data-testid="button-plan-route"] { width: 100%; justify-content: center; }
+
+  /* Route options: wrap into a grid instead of a truncated strip. */
+  .route-options { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); overflow: visible; }
+  .route-options button { min-width: 0 !important; padding: 7px 24px 7px 9px !important; }
+  .route-options button span, .route-options button small { overflow-wrap: anywhere; }
+
+  /* Bring-your-own-chart page: no horizontal overflow at 390 px. */
+  .page-heading { flex-wrap: wrap; min-width: 0; }
+  .image-page { min-width: 0; max-width: 100%; overflow-x: clip; }
+  .image-page > div { padding-left: 0; padding-right: 0; max-width: 100%; }
+  .image-page :is(img, canvas, svg) { max-width: 100%; }
+}
+
+/* Tonight's Best card: the shared one-line description (object-info). */
+.target-card .target-summary { margin: 4px 0 2px; font-size: 12px; line-height: 1.35; color: #93aab3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.catalog-object .catalog-object-summary { margin: 4px 0; font-size: 12px; line-height: 1.4; color: #93aab3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ── Star hop (r5 fix 1) ── */
+/* Destination header: name + plain meta (altitude is information, not a control), the shared ObjectActionRow, one plan button. */
+.hop-target-bar .hop-target-name { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.hop-target-bar .hop-target-meta { margin: 2px 0 0; font-size: 13px; line-height: 1.4; color: #9fb4b9; }
+.hop-target-bar .hop-target-actions { flex: 1 1 100%; min-width: 0; }
+.main-content:has(>.hop-layout)>.hop-target-bar { row-gap: 4px; }
+/* Star dialog (a plain BSC star): the hop tools for the current destination under the shared row. */
+.star-detail-dialog .star-dialog-hop-tools { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.star-detail-dialog .star-dialog-hop-tools .setup-hint { flex-basis: 100%; margin: 0; }
+/* No destination yet: say where to pick one. */
+.hop-empty-state { display: grid; justify-items: center; gap: 8px; text-align: center; padding: 22px 16px; }
+.hop-empty-state p { margin: 0; color: #a9bcc0; font-size: 14px; }
+.hop-empty-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+@media (min-width: 900px) { .main-content:has(>.hop-layout)>.hop-empty-state { grid-column: 2; grid-row: 2; margin: 0 0 6px; } }
+/* Field progress: many fields (a whole journey) wrap as a thin bar instead of running out of the card. */
+.step-progress.many { flex-wrap: wrap; gap: 3px; }
+.step-progress.many button { flex: 1 0 10px; min-width: 0 !important; min-height: 0 !important; height: 5px !important; padding: 0 !important; }
+
+/* Red light: Star hop's controls are written as light neutrals on near-black; theme/red-theme-postcss.js turns them into
+   full-red text on the dark-red surface ladder (light fills sink to the top of the ladder, ≥ 4.5:1). */
+.red-light .hop-target-bar :is(.object-action, .object-action.primary, .object-action.saved) { color: #ededed; }
+.red-light .hop-target-bar .hop-target-meta, .red-light .route-options small { color: #cfcfcf; }
+.red-light .hop-target-bar [data-testid="button-plan-route"], .red-light .hop-empty-actions button { background: #e6e6e6; color: #0a0a0a; border-color: #e6e6e6; }
+.red-light .route-options button { color: #ededed; border-color: #7a7a7a; background: #101010; }
+.red-light .route-options button.selected { border-color: #e6e6e6; }
+.red-light .hop-chain-bar { background: #0e0e0e; border-color: #6e6e6e; }
+.red-light .hop-chain-bar :is(.hop-chain-name, .hop-chain-summary, .hop-chain-difficulty, .text-action, .hop-chain-note, .hop-chain-stop) { color: #ececec; }
+.red-light .hop-chain-bar .hop-chain-stop { background: #121212; border-color: #8a8a8a; }
+.red-light .hop-chain-bar .hop-chain-stop-number { border-color: #e6e6e6; color: #ececec; }
+.red-light .hop-chain-bar .hop-chain-stop[data-state="current"] { background: #2a2a2a; border-color: #f0f0f0; }
+.red-light .hop-chain-bar .hop-chain-stop[data-state="current"] .hop-chain-stop-number { background: #f0f0f0; color: #0a0a0a; }
+.red-light .hop-chain-bar .hop-chain-seen { background: #e6e6e6; color: #0a0a0a; border-color: #e6e6e6; }
+.red-light .hop-chain-bar .hop-chain-seen[data-seen] { background: transparent; color: #ececec; }
+.red-light .hop-chain-bar .icon-button { color: #ececec; border-color: #8a8a8a; }

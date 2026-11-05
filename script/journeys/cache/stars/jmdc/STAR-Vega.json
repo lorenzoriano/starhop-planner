@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=279.234735%2B38.783689&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD172167                    \tALF LYR                     \t  3.31000\t 3.4700\t        \t4430A     \t1967MNRAS.137..393H\tHD172167\n 0.00\tHD172167                    \tALF LYR                     \t  3.08000\t 3.2400\t  0.0700\t4430A     \t1974MNRAS.167..121H\tHD172167\n 0.00\tHD172167                    \tVega                        \t  3.24000\t 3.2800\t  0.0100\tK         \t2001ApJ...559.1147C\tHD172167\n 0.00\tHD172167                    \tHR7001                      \t  3.14900\t 3.2250\t  0.0320\t800nm     \t2003AJ....126.2502M\tHD172167\n 0.00\tHD172167                    \tVega                        \t         \t 3.3060\t  0.0300\t8-13      \t2014ApJ...797..119M\tHD172167\n 0.00\tHD172167                    \tVega                        \t  3.20000\t       \t  0.0300\t550 to 850\t2014SPIE.9146E..0WB\tHD172167\n 0.00\tHD172167                    \talf Lyr                     \t  3.19800\t 3.2800\t  0.0160\t550..850nm\t2018AJ....155...30B\tHD172167\n\n"
+}

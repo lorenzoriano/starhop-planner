@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=295.466553%2B50.517525&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.01\tHD186427                    \t                            \t  0.41700\t 0.4260\t  0.0550\t2.15      \t2008ApJ...680..728B\tHD186427\n 0.01\tHD186427                    \t                            \t  0.49900\t 0.5130\t  0.0110\tH         \t2013ApJ...771...40B\tHD186427\n 0.01\tHD186427                    \t16 Cyg B                    \t  0.56000\t 0.4670\t  0.4900\tR         \t2013MNRAS.433.1262W\tHD186427\n\n"
+}

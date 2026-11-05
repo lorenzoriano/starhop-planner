@@ -1,0 +1,45 @@
+/* Sky Journeys entry points outside the Journeys section (doc 06 §2.1). App tokens only; red-light safe:
+   nothing relies on hue, every state has text. */
+.journeys-banner { display:flex; align-items:center; gap:12px; width:100%; min-height:56px; margin:10px 0 4px; padding:10px 14px; border:1px solid hsl(var(--border)); border-left:3px solid var(--gold, hsl(var(--primary))); border-radius:12px; background:hsl(var(--card)); color:hsl(var(--foreground)); text-align:left; cursor:pointer; }
+.journeys-banner:hover { border-color:hsl(var(--foreground) / .45); }
+.journeys-banner:focus-visible, .object-journey-links button:focus-visible { outline:2px solid var(--gold, hsl(var(--ring))); outline-offset:2px; }
+.journeys-banner > svg { flex:none; color:var(--gold, hsl(var(--primary))); }
+.journeys-banner > span:first-of-type { display:grid; gap:2px; min-width:0; flex:1; }
+.journeys-banner strong { font-size:14.5px; font-weight:600; }
+.journeys-banner small { font-size:12.5px; color:hsl(var(--muted-foreground)); }
+.journeys-banner-cta { display:inline-flex; align-items:center; gap:6px; flex:none; font-size:13px; font-weight:600; color:var(--gold, hsl(var(--primary))); }
+@media (max-width:560px) { .journeys-banner { flex-wrap:wrap; } .journeys-banner > span:first-of-type { flex:1 1 200px; } .journeys-banner-cta { flex-basis:100%; margin-left:30px; } }
+/* ObjectJourneyLinks (integration r5): "In journey: <title> · stop n" + "Start here", or "Find a journey with this". */
+.object-journey-links { display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; min-width:0; margin:6px 0 2px; }
+.object-journey-links button { display:inline-flex; align-items:center; gap:6px; min-height:36px; min-width:0; padding:0 12px; border:1px solid hsl(var(--border)); border-radius:999px; background:hsl(var(--card)); color:hsl(var(--foreground)); font-size:13px; font-weight:600; text-align:left; cursor:pointer; }
+.object-journey-links button:hover { border-color:hsl(var(--foreground) / .45); }
+.object-journey-links button > svg { flex:none; color:var(--gold, hsl(var(--primary))); }
+.object-journey-links .ojl-journey > span { min-width:0; overflow-wrap:anywhere; }
+.object-journey-links .ojl-journey small, .object-journey-links .ojl-find > span { color:hsl(var(--muted-foreground)); }
+.object-journey-links .ojl-start { border-color:var(--gold, hsl(var(--primary))); }
+.object-journey-links.compact { margin:0; padding:0 10px 10px; gap:4px 6px; }
+.object-journey-links.compact button { min-height:30px; padding:0 9px; font-size:12px; font-weight:500; }
+.object-journey-links.compact .ojl-journey { flex:1 1 140px; }
+
+/* Stop actions (integration r5): the app's one ObjectActionRow under a stop's story, in its own shared look (r5 UX #6:
+   no journey-only sizes or gaps). Only field mode (compact) folds the four look-up links (Moon effect, Visibility
+   tonight, See in Catalog, Photos) behind "More", so the dock stays the focus; Plan star hop and Add to tonight's
+   plan stay. */
+.stop-actions { margin:12px 0 4px; min-width:0; }
+.stop-actions .stop-action-more { display:none; }
+.stop-actions.compact .stop-action-more { display:inline-flex; }
+.stop-actions.compact[data-more="closed"] .object-action:not(.primary):not(.add):not(.stop-action-more) { display:none; }
+
+/* Tonight's journeys list (Moon tab, Planner "Add a journey to this night"). */
+.tonight-journey-list .tjl-list { list-style: none; margin: 10px 0 6px; padding: 0; display: grid; gap: 8px; }
+.tonight-journey-list .tjl-item { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 10px 12px; border: 1px solid #2a414e; border-radius: 10px; background: #0c1a25; min-width: 0; }
+.tonight-journey-list .tjl-copy { display: grid; gap: 2px; min-width: 0; flex: 1 1 260px; }
+.tonight-journey-list .tjl-copy .eyebrow { font-size: 11px; letter-spacing: .08em; color: #8fa7ae; }
+.tonight-journey-list .tjl-copy strong { font-family: var(--font-serif); font-weight: 400; font-size: 17px; color: #e9d29a; overflow-wrap: anywhere; }
+.tonight-journey-list .tjl-copy small { font-size: 12.5px; color: #a9bcc0; }
+.tonight-journey-list .tjl-copy p { margin: 2px 0 0; font-size: 13px; color: #b9c9cb; }
+.tonight-journey-list .tjl-moon { display: inline-flex; align-items: center; gap: 5px; }
+.tonight-journey-list .tjl-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+.tonight-journey-list .tjl-status { font-size: 13px; color: #a9bcc0; }
+.tonight-journey-list .tjl-subheading { display: flex; align-items: center; gap: 6px; font-size: 14px; margin: 12px 0 0; color: #dfe6df; }
+.tonight-journey-list .tjl-more { margin-top: 4px; }

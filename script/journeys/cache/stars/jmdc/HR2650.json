@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=106.027213%2B20.570298&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD52973                     \tZET GEM                     \t  1.90000\t 1.8500\t  0.8600\t1.618     \t1982AJ.....87..680R\tHD52973\n 0.00\tHD52973                     \t                            \t  1.53720\t       \t  0.0425\tH         \t2016A&A...587A.117B\tHD52973\n 0.00\tHD52973                     \t                            \t  1.56600\t       \t  0.0425\tH         \t2016A&A...587A.117B\tHD52973\n 0.00\tHD52973                     \t                            \t  1.58710\t       \t  0.0425\tH         \t2016A&A...587A.117B\tHD52973\n 0.00\tHD52973                     \t                            \t  1.60470\t       \t  0.0690\tH         \t2016A&A...587A.117B\tHD52973\n\n"
+}

@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=177.264910%2B14.572058&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD102647                    \tBET LEO                     \t  1.25000\t 1.3300\t  0.0900\t4430A     \t1974MNRAS.167..121H\tHD102647\n 0.00\tHD102647                    \tBet Leo                     \t  1.42900\t 1.4490\t  0.0270\tK         \t2004A&A...426..601D\tHD102647\n 0.00\tHD102647                    \tbet Leo                     \t  1.32300\t 1.3390\t  0.0130\tK'        \t2009ApJ...691.1896A\tHD102647\n 0.00\tHD102647                    \t                            \t         \t 1.3390\t  0.0870\t8-13      \t2014ApJ...797..119M\tHD102647\n\n"
+}

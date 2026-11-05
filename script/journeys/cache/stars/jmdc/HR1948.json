@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=85.189696-1.942572&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD37742                     \t* zet Ori A                 \t  0.47000\t 0.4800\t  0.0400\t4430A     \t1974MNRAS.167..121H\tHD37742\n 0.00\tWDS J05407-0157Aa,Ab        \t                            \t  0.54000\t       \t  0.0100\tR         \t2018A&A...618A.153M\tHD 37742\n 0.00\tWDS J05407-0157Aa,Ab        \t                            \t  0.45000\t       \t  0.1200\tR         \t2018A&A...618A.153M\tHD 37742\n 0.00\tHD37742                     \t* zet Ori A                 \t  0.54600\t 0.5560\t  0.0290\t800nm     \t2018ApJ...869...37G\tHD37742\n\n"
+}

@@ -1,0 +1,708 @@
+{
+  "archetype": "A8",
+  "storyline": "Will the Sun explode? The sky answers by showing stars at every stage of dying at once, and the one thing that decides how a star ends is how much matter it was born with. The night first follows the Sun's own road: a star of modest weight grows old slowly, swells into a cool giant, then loosens and breathes away its outer layers. Then it crosses to the other road, taken only by stars born many times heavier, which race through their fuel and swell into supergiants. Those end when the core collapses and the rest of the star explodes, leaving wreckage that spreads across light-years. Where the sky allows, the night comes back at the end to the Sun's road and its quiet finish, a glowing shell of gas around a bare, Earth-sized ember, so that the last thing you see is the answer for the Sun.",
+  "beats": [
+    {
+      "step": 1,
+      "label": "The Sun's road: an aging giant",
+      "maxStops": 1
+    },
+    {
+      "step": 2,
+      "label": "The Sun's road: shedding its skin",
+      "maxStops": 1
+    },
+    {
+      "step": 3,
+      "label": "The heavy road: a heavyweight",
+      "maxStops": 1
+    },
+    {
+      "step": 4,
+      "label": "The heavy road: on the brink",
+      "maxStops": 1
+    },
+    {
+      "step": 5,
+      "label": "The violent ending",
+      "maxStops": 1
+    },
+    {
+      "step": 6,
+      "label": "The gentle ending: the Sun's fate",
+      "maxStops": 1
+    }
+  ],
+  "minBeats": 4,
+  "narration": {
+    "title.A8-how-stars-die": [
+      "How Stars Die in {region}",
+      "{region} and the Fate of the Sun",
+      "Will the Sun End Like the Stars of {region}?",
+      "Two Roads Through the Stars of {region}",
+      "What {region}'s Giants Foretell for the Sun"
+    ],
+    "question.A8-how-stars-die": [
+      "Will the Sun explode one day?",
+      "Will the Sun end in a supernova, or in something quieter?",
+      "How will the Sun die, and why not like the heaviest stars?"
+    ],
+    "hook.A8-how-stars-die": [
+      "A star's weight at birth decides whether it fades away or explodes.",
+      "Every star dies in one of two ways, and the Sun's way was settled at birth.",
+      "Some stars end as glowing shells, others as supernovae; mass makes the choice."
+    ],
+    "story.A8-how-stars-die": [
+      "Stars die in one of two ways, and what decides it is simply how much matter a star was born with. Tonight's stops walk both roads, the Sun's and the heavyweights', so that by the end you can say which one the Sun is on.",
+      "A star of modest weight swells, sheds its outer layers and leaves a small cooling ember, while a star many times heavier collapses and explodes. Starting at {hook}, each stop is one stage of those two endings, and together they let you work out which one is waiting for the Sun.",
+      "The sky holds dying stars of every weight side by side, the light ones and the heavy ones. Tonight they line up so that the two roads can be compared, and by the end you can answer the question for the Sun yourself."
+    ],
+    "payoff.A8-how-stars-die": [
+      "The Sun will not explode: it is far too light, so it will swell into a giant, breathe its outer layers into space and end as a glowing shell of gas around a white dwarf about the size of Earth. Only stars born many times heavier end in a supernova, when the core collapses and the rest of the star is blown apart. Both roads give back what the star made, and much of the carbon in your cells and the oxygen you breathe was scattered by endings like these.",
+      "Mass decides how every star ends, and the Sun is a lightweight, so its future is the gentle one: a giant, then a fading shell of gas, then a slowly cooling ember. The violent ending belongs to heavyweights, whose cores collapse and blow the rest of the star apart. Neither ending is a waste, for the gas each one returns to space is the raw material of the next stars and planets.",
+      "The Sun is safe from exploding but not from dying, and in billions of years it will swell, shed its outer layers and settle into a white dwarf, a dead core no bigger than Earth. The supernova is kept for stars heavy enough that their own weight crushes their cores once the fuel runs out. From {hook} to {name} the difference between those two fates was never age or luck, only the amount of matter each star was born with."
+    ],
+    "story.A8-how-stars-die.end6": [
+      "Tonight walks both roads a dying star can take, the gentle one and the violent one, and finishes where the Sun's own road ends, at {name}. Each stop is a stage that makes sense only after the one before.",
+      "Weight at birth decides whether a star fades or explodes, and tonight you meet stars on both roads, ending on the quiet finish that waits for the Sun. By the last stop the question answers itself."
+    ],
+    "story.A8-how-stars-die.end5": [
+      "Tonight follows the Sun's gentle road and then the heavy one all the way to its end, the wreck of a star that exploded, at {name}. By the last stop you will know why the Sun can never finish that way.",
+      "Weight at birth decides whether a star fades or explodes, and tonight's stops follow a light star into old age before crossing to the heavyweights and the wreckage they leave. By the end the Sun's place between the two roads is plain."
+    ],
+    "story.A8-how-stars-die.end4": [
+      "Tonight follows a star like the Sun into old age, then crosses to the heavyweights, ending with {name}, a star close to its collapse. By then the difference between the two roads, and the reason for it, will be plain.",
+      "Weight at birth decides whether a star fades or explodes, and tonight's stops follow a light star into old age before crossing to the heavyweights on the brink. By the end you can say which road the Sun is on."
+    ],
+    "payoff.A8-how-stars-die.end6": [
+      "The Sun's ending is the one you met at {name}, not a blast. It is far too light to explode, so it will swell, cast off its outer layers and leave a white dwarf about the size of Earth, glowing for a while inside a shell of its own gas. Tonight's other road belongs to stars born with many times more matter, enough for their cores to collapse when the fuel runs out. That single number, a star's weight at birth, decided both endings, and the gas each one returns to space becomes the raw material of new stars and planets.",
+      "From {hook} to {name} the night has answered its own question. A star's weight at birth sets its road: the heavy ones race through their fuel and collapse, while a lightweight like the Sun swells, sheds its outer layers and settles into a slowly cooling ember. {name} is that quiet finish, the end that waits for the Sun, and its gas will one day help build stars that have not yet been born."
+    ],
+    "payoff.A8-how-stars-die.end5": [
+      "The Sun will not end like {name}: a supernova is reserved for stars born with many times its matter, whose cores collapse once their fuel runs out and blow the rest of the star apart. The Sun is far too light for that, so it will swell into a giant, let its outer layers drift into space and leave a white dwarf about the size of Earth. Either way a star gives back what it made, and the oxygen you breathe was scattered by endings like the one in front of you.",
+      "From {hook} to {name} the night walked both roads, and it ends at the wreck of a heavyweight. Only stars born many times heavier than the Sun finish like this, their cores collapsing in about a second and the rest blasted outward. The Sun's road is the quiet one you began on tonight, and it ends not in wreckage but in a fading shell around a white dwarf."
+    ],
+    "payoff.A8-how-stars-die.end4": [
+      "The Sun will not end like {name}: a star this close to collapse was born with many times the Sun's matter, and when its fuel runs out its core will fall in and the rest will explode. The Sun is too light for that, so its road is the one you began on tonight, a swollen giant that sheds its outer layers and leaves a white dwarf about the size of Earth. Weight at birth decided both futures, and both stars will return to space the elements that new stars and planets are made of.",
+      "From {hook} to {name} the night has followed both roads to their last stretch. The heavy road ends in a collapse and a supernova, and {name} is close to it, while the Sun's road ends gently, in a shell of gas around a slowly cooling ember. The difference was never age or luck, only how much matter each star was born with."
+    ],
+    "title.A8-how-stars-die.end4": [
+      "Will the Sun End Like the Stars of {region}?",
+      "{region} and the Fate of the Sun",
+      "What {region}'s Giants Foretell for the Sun"
+    ],
+    "title.A8-how-stars-die.end5": [
+      "How Stars Die in {region}",
+      "{region}'s Road to a Violent End",
+      "The Heavy Road Through {region}"
+    ],
+    "title.A8-how-stars-die.end6": [
+      "The Sun's Quiet Ending, Seen from {region}",
+      "How Stars Die in {region}",
+      "A Night in {region} Among Dying Stars",
+      "{region} and the Fate of the Sun"
+    ]
+  },
+  "transitions": {
+    "pairs": {
+      "1>2": [
+        "{prev} is a calm giant; {next} has gone further down the same road, into the restless stage where a giant starts to lose itself.",
+        "Where {prev} is a giant still holding itself together, {next} shows what follows on the Sun's road, a giant so bloated that its outer layers begin to drift away."
+      ],
+      "1>3": [
+        "{prev} is on the Sun's road; {next} weighs so much more that its whole life, and its death, run on a different plan.",
+        "Leave the Sun's road at {prev} and cross to the other one: {next} was born many times heavier, and everything in its life runs faster."
+      ],
+      "2>3": [
+        "{prev} will end quietly, but {next} is far too heavy for that, and its road leads somewhere else entirely.",
+        "That is as far down the Sun's road as {prev} has come; {next} opens the other road, taken only by stars born many times heavier than the Sun."
+      ],
+      "1>4": [
+        "{prev} is on the Sun's road; {next} is on the other one and nearly at its end, a heavyweight that will not fade but collapse.",
+        "From a giant of modest weight like {prev}, cross to {next}, a heavyweight whose road is almost over and will end in a blast."
+      ],
+      "2>4": [
+        "{prev} is losing itself gently; {next} is a heavyweight losing itself far more dangerously, on the last stretch before a collapse.",
+        "{prev} will finish quietly, but {next}, born many times heavier, is close to an ending of the other kind."
+      ],
+      "3>4": [
+        "{prev} still has time left; {next} is a heavyweight that has nearly run out of it.",
+        "Further down the road {prev} is on, {next} has reached the last stage before the collapse."
+      ],
+      "1>5": [
+        "From the Sun's road, {next} takes you straight to the end of the other one, the wreck of a heavyweight that exploded."
+      ],
+      "2>5": [
+        "{prev} is giving itself away gently; {next} is what is left when a heavyweight's life ends all at once."
+      ],
+      "3>5": [
+        "Follow a star like {prev} to its end and you reach something like {next}, the wreckage of a heavyweight that exploded.",
+        "{prev} is still shining; {next} is what such a star leaves once its core has collapsed."
+      ],
+      "4>5": [
+        "{prev} is on the last stretch of the heavy road, and {next} shows where that road ends, in the wreckage of a star that has already exploded.",
+        "Give a star like {prev} a little more time, as stars count it, and its core collapses into something like {next}."
+      ],
+      "5>6": [
+        "That is how the heavy road ends; the Sun is far too light for it, and {next} shows where its own road finishes instead, quietly.",
+        "After the wreck of a heavyweight, {next} is the other kind of ending, the one waiting for the Sun, with no explosion at all."
+      ],
+      "4>6": [
+        "{prev} will end in a blast, but the Sun weighs far too little for that, and {next} shows the quiet way its road finishes.",
+        "Where {prev} is headed for collapse, {next} shows the other ending, the gentle one that waits for the Sun."
+      ],
+      "3>6": [
+        "A heavyweight like {prev} will end violently; {next} is how a light star like the Sun ends instead, without any explosion.",
+        "{prev} is bound for a collapse, but the Sun's road finishes somewhere quieter, and {next} shows where."
+      ],
+      "2>6": [
+        "Once a giant like {prev} has given away its outer layers, what remains looks like {next}.",
+        "{prev} is still letting its envelope go; at {next} the shedding is over and the core lies bare."
+      ],
+      "1>6": [
+        "Follow a giant like {prev} to the very end of its road, and you arrive at something like {next}.",
+        "{prev} is a chapter the Sun has still to reach; {next} is the last page of the same story."
+      ]
+    },
+    "arrive": {
+      "1": [
+        "{next} is where the ending of a star of modest weight begins, with old age.",
+        "{next} stands on the Sun's own road, a star that has run its core dry and swollen into a giant.",
+        "With {next} the story begins where the Sun's ending will begin, in a giant's swollen old age."
+      ],
+      "2": [
+        "Further along the same road, {next} has reached the last and least steady stage of a giant's life.",
+        "{next} is a giant near the end of the light star's road, where the swelling turns into shedding.",
+        "After {prev}, {next} shows the Sun's road one stage on, a giant beginning to let its outer layers go."
+      ],
+      "3": [
+        "{next} begins the other road, the one taken only by stars born many times heavier than the Sun.",
+        "The second road starts with {next}, a star so heavy that its life runs fast and its ending will be nothing like the Sun's.",
+        "From {prev} the night crosses to the heavy road, and {next} is a star born with far more matter than the Sun."
+      ],
+      "4": [
+        "{next} is a heavyweight close to the end of its road, the kind of star that explodes next.",
+        "With {next} the heavy road reaches a star that has not exploded yet but will, soon as stars count time.",
+        "{next} is on the last stretch of the heavy road, a star whose core has little fuel left."
+      ],
+      "5": [
+        "{next} is where the heavy road ends, in the wreckage of a star that collapsed and exploded.",
+        "At the end of a heavyweight's road lies something like {next}, the debris of a supernova still spreading through space.",
+        "{next} is what a heavyweight leaves once its core has collapsed: wreckage racing outward through space."
+      ],
+      "6": [
+        "{next} is the gentle ending, the way a star of the Sun's weight finishes, with no explosion at all.",
+        "The night ends where the Sun's own road ends, at something like {next}.",
+        "{next} shows what a star of modest weight leaves behind when its giant years are over."
+      ]
+    }
+  },
+  "objects": {
+    "STAR-Arcturus": {
+      "step": 1,
+      "beat": "Sun's road: an aging giant",
+      "question": "Is Arcturus a preview of what the Sun will become?",
+      "why": "To see how the Sun's ending begins, look at a star that started out much like it and is simply further along the road.",
+      "look": "Follow the arc of the Big Dipper's handle to Arcturus, the brightest star of Boötes, and hold it in the field. Its orange-gold is plain at once, and that warm tint is the first symptom of old age, a surface that cooled as the star swelled.",
+      "answer": "It is about as close to a preview as the sky offers, because a star of the Sun's mass that has run its core dry looks just like this. For a star so light, though, the orange giant is only the opening of the ending, and the rest unfolds slowly over many millions of years.",
+      "rank": 2,
+      "story": "Arcturus weighs about as much as the Sun, a figure checked by the way its surface rings: tiny oscillations whose rhythm depends on how dense the star is, picked up by satellites as minute flickers in its light. Because it is so like the Sun in weight, every step it takes from here, the sudden ignition of helium in its core, the calm helium years, the last swelling, is a step the Sun will take too."
+    },
+    "STAR-Aldebaran": {
+      "step": 1,
+      "beat": "Sun's road: an aging giant",
+      "question": "Why does a star grow larger, not smaller, as it runs out of fuel?",
+      "why": "Aldebaran is an aging giant, the stage a star of modest weight enters when its long middle age is over, and its size hides a small paradox.",
+      "look": "Frame Aldebaran with the V of the Hyades behind it. Its orange stands apart from the white and pale-yellow cluster stars, and that color belongs to a surface that cooled as the star swelled.",
+      "answer": "When the hydrogen in its core ran out, the core shrank and heated, and a shell of hydrogen around it began to burn far more fiercely than the core ever had. That extra heat pushed the outer layers outward until they cooled to orange, and the Sun will balloon in the same way when its own core runs dry.",
+      "rank": 2,
+      "story": "Aldebaran weighs only a little more than the Sun, about one and a sixth, a figure found by matching its size, temperature and the slow ringing of its surface to models. A star that light can never squeeze its core hot enough to burn carbon, so its road ends the gentle way, and so will the Sun's."
+    },
+    "STAR-Capella": {
+      "step": 1,
+      "beat": "Sun's road: weight sets the pace",
+      "question": "Why does a heavier star reach old age sooner rather than later?",
+      "why": "The two giants inside Capella each carry about two and a half times the Sun's mass, and that extra weight has made them old while the Sun is still in its prime.",
+      "look": "Capella is the brilliant yellowish star high on winter evenings, leading the pentagon of Auriga. Its creamy gold is the blended light of two giants that no binoculars can split, both swollen and cooled by age.",
+      "answer": "A heavier star squeezes its core harder and hotter, and fusion speeds up so steeply with temperature that the bigger fuel supply runs out first. That is why weight is the first thing to know about any star's future, including the Sun's.",
+      "rank": 3,
+      "story": "Capella's stars are heavier than the Sun but still far below the line that leads to a supernova, roughly eight Suns, so both will end the gentle way. Their extra weight changed the pace of the road, not where it leads: they reached the giant stage in about half a billion years, while the Sun will need more than ten billion."
+    },
+    "HR1231": {
+      "step": 1,
+      "beat": "Sun's road: an aging giant",
+      "question": "What will the Sun look like deep into its giant years?",
+      "why": "Zaurak is a giant that has swollen and cooled further than most, far enough that its orange is starting to lean toward red.",
+      "look": "Zaurak is the brightest star on the first big bend of Eridanus, west of Rigel. Put it beside white Cursa near Rigel's foot, and its orange leans toward red, the color of a surface far cooler than the Sun's.",
+      "answer": "The Sun will one day look much like Zaurak, a surface stretched to about 60 times the Sun's present width and glowing with roughly 850 times its light, and even then its swelling will not be over. A star of the Sun's weight climbs through a stage like this on its way to becoming a red giant far larger still.",
+      "rank": 2,
+      "story": "A giant's road can be drawn on a chart of temperature against brightness: as a star like the Sun swells, it slides toward cooler and brighter at once, climbing what astronomers call the red giant branch. Zaurak sits well up that climb, and the Sun will pass the same point on its way to the top, where the climb ends in a sudden ignition of helium in its core."
+    },
+    "DS-Albireo": {
+      "step": 1,
+      "beat": "Sun's road: weight sets the pace",
+      "question": "Why is Albireo's golden star already a giant after only a hundred million years?",
+      "why": "Albireo's gold and blue stars were probably born together, yet the gold one has already reached the giant stage that the Sun will not reach for billions of years.",
+      "look": "Brace the binoculars on something solid and Albireo splits into a golden-orange star with a blue-white spark beside it. The gold is a giant's swollen, cooled surface; the blue is a star still burning hydrogen in its prime.",
+      "answer": "It was born heavier than the Sun, and a heavier star burns its core hydrogen so much faster that a hundred million years was enough to run it dry. The Sun, lighter and more frugal, has billions of years left before it swells like this.",
+      "rank": 2,
+      "story": "Albireo's gold star is still on the gentle road despite its weight: at roughly five Suns it sits below the line of about eight that decides which stars explode. So even this heavier, faster sibling will end as a white dwarf, only much sooner than the Sun, which shows that weight sets the pace of a star's life and, past a threshold, the kind of ending too."
+    },
+    "HR7525": {
+      "step": 1,
+      "beat": "Sun's road: an aging giant",
+      "question": "How large does a giant grow once its core runs out of hydrogen?",
+      "why": "Tarazed is a giant caught well into its swelling, and beside compact white Altair it shows the scale of the change that old age brings.",
+      "look": "Put Altair and Tarazed in one field, about 2° apart, crisp white against warm orange. The orange star is the giant, and its color comes from a surface spread so wide that it has cooled far below Altair's.",
+      "answer": "Tarazed has grown big enough that, set in the Sun's place, its surface would lie beyond the orbit of Mercury. The Sun's own giant years will carry it through sizes like this, and Mercury will not survive them.",
+      "rank": 2,
+      "story": "Tarazed is several times heavier than the Sun yet still below the weight at which a star's ending turns violent, so its swelling previews the Sun's own, only faster. As the Sun swells it will also lose weight through its wind and loosen its grip on the planets, which will drift outward, and whether Venus and the Earth escape its growing surface depends on that race."
+    },
+    "HR7949": {
+      "step": 1,
+      "beat": "Sun's road: a giant's quiet pause",
+      "question": "Does a giant keep swelling forever, or does it pause along the way?",
+      "why": "Aljanah, at the swan's eastern wingtip, is a giant that has stopped growing for the time being, and its calm is a stage the Sun will pass through too.",
+      "look": "Aljanah is a clear orange-yellow point at the tip of the swan's eastern wing. Its tint is gentler than the deep orange of the biggest giants, the color of a surface only a little cooler than the Sun's.",
+      "answer": "The swelling pauses: once the shrunken core grows hot enough it ignites helium, and the star settles back to a more modest size and burns steadily for a long while. When the core's helium is gone too, the swelling starts again, bigger than before, and that second swelling is the one that ends a light star's life.",
+      "rank": 3,
+      "story": "Aljanah sits in the red clump, a crowd of giants all burning helium in their cores, and so many stars sit there because this calm stage lasts about a hundred million years for a star of the Sun's weight. Astronomers spot clump giants by their pulsations: the rhythm of their surfaces reveals whether helium is burning in the core or only hydrogen in a shell around it."
+    },
+    "HR6705": {
+      "step": 1,
+      "beat": "Sun's road: an aging giant",
+      "question": "If Eltanin is cooler than the Sun, how does it give out so much more light?",
+      "why": "Eltanin, the bright head of Draco, is an orange giant, and its glow carries a lesson about what old age does to a star's output.",
+      "look": "Eltanin is the brightest of the four stars in the Dragon's head, north-west of Vega. In binoculars it is clearly orange next to yellower Rastaban beside it, the mark of a cooler surface.",
+      "answer": "Its surface is cooler, near 4,000 K, but there is so much of it, about 50 times the Sun's width, that together it gives out roughly 660 times the Sun's light. Growing old makes a star of modest weight both cooler and brighter, and the Sun will follow the same rule.",
+      "rank": 2,
+      "story": "Eltanin is a star of under two Suns climbing toward the top of its first swelling, and its brightness gives that away. The shell of hydrogen around its spent core burns faster as the core grows heavier, so the star keeps brightening as long as it climbs. At the top its core will ignite helium, and the star will shrink back for a while before its last swelling."
+    },
+    "HR7948": {
+      "step": 1,
+      "beat": "Sun's road: the first step",
+      "question": "What does a star look like when old age has only just begun?",
+      "why": "γ Delphini, at the corner of the little Dolphin, has only just left its long middle age, so it shows the very first step on the road the Sun will take.",
+      "look": "Frame the whole Dolphin in one field; γ is the warm, golden star at the far corner of its little diamond. Its partner is too close for binoculars, and the tint you see comes mostly from the aging star.",
+      "answer": "It looks like γ Delphini, already about eight times wider than the Sun and cooled to a golden orange, yet well short of a full giant's size. Once that slow start is over the swelling speeds up, and the star grows many times wider still.",
+      "rank": 1,
+      "story": "A subgiant like this has just run out of hydrogen in its core and is rebuilding itself: the core contracts, the burning moves out into a shell around it, and for a while the star grows only slowly. For the Sun this awkward adolescence will last several hundred million years, short against its ten-billion-year prime but long enough that the sky shows many stars caught in it."
+    },
+    "HR8974": {
+      "step": 1,
+      "beat": "Sun's road: the first step",
+      "question": "What does a star of roughly the Sun's age look like as it starts to swell?",
+      "why": "Errai, at the peak of the little house of Cepheus, is a star of nearly the Sun's kind caught at the moment its middle age ends.",
+      "look": "Errai points from the top of Cepheus toward Polaris, and binoculars show it as a pale orange point. Compare it with white Alderamin at the lower corner of the house: the warmer tint is a surface beginning to cool as the star slowly expands.",
+      "answer": "It looks like Errai, about 5.7 billion years old, already about five times the Sun's width and turning pale orange, with the real swelling still ahead. Its core is spent, so from here the only way is outward.",
+      "rank": 1,
+      "story": "Errai is only slightly heavier than the Sun, yet that was enough to bring it to this point at an age when the Sun will still be in the middle of its prime. A star's lifetime falls steeply with weight, roughly as its mass to the power of two and a half, so a little extra matter goes a long way."
+    },
+    "HR6241": {
+      "step": 1,
+      "beat": "Sun's road: a modest giant",
+      "question": "Do all aging orange stars come to the same kind of end?",
+      "why": "ε Scorpii is a modest orange giant on the road a star like the Sun takes, and it shares its patch of sky with a star whose road is very different.",
+      "look": "Drop about nine degrees south-south-east from Antares to the first bright star of the Scorpion's tail. Put each in the field in turn: ε is a paler yellow-orange and Antares a deeper orange, and the two look far more alike than they are.",
+      "answer": "Aging orange stars come to very different ends, and color cannot tell you which is coming; it only says that a star has grown old. ε Scorpii is a modest giant giving out about 60 times the Sun's light, while Antares, nearly the same color, is a heavyweight headed for a supernova.",
+      "rank": 3,
+      "story": "The difference between ε Scorpii and Antares was decided before either star shone: ε was born with only a little more matter than the Sun, Antares with about fifteen Suns. Everything since, how fast each aged, how large each grew and how each will end, follows from that one number."
+    },
+    "HR6859": {
+      "step": 1,
+      "beat": "Sun's road: an aging giant",
+      "question": "Why does a star brighten so much as it grows old?",
+      "why": "Kaus Media, in the Teapot of Sagittarius, is an orange giant pouring out far more light than it did in its prime, and the reason lies deep in its core.",
+      "look": "Kaus Media is the middle star on the spout side of the Teapot. Defocus slightly to bring out its orange, then compare it with blue-white Kaus Australis just below, a cool swollen giant beside a hot star.",
+      "answer": "With its core hydrogen gone, the core shrinks and heats, and the hydrogen burning in a shell around it runs hotter and faster than the core ever did, so Kaus Media now gives out about 1,650 times the Sun's light. The Sun will brighten the same way as it swells, long before its outer layers begin to leave.",
+      "rank": 2,
+      "story": "Kaus Media is a giant of a few Suns, heavy enough to be bright and light enough to stay on the gentle road, since no star born below about eight Suns builds a core that collapses. Below that line the core ends as a white dwarf, and no white dwarf can weigh more than about one and four-tenths Suns, the most that the pressure of its packed electrons can hold up."
+    },
+    "HR4763": {
+      "step": 1,
+      "beat": "Sun's road: an aging giant",
+      "question": "Is Gacrux still swelling for the first time, or swelling again?",
+      "why": "Gacrux, the orange-red top of the Southern Cross, is a red giant close enough to study in detail, yet its exact stage is still an open question.",
+      "look": "Center the top star of the Cross and compare its warm orange-red with blue-white Acrux at the foot; a slight defocus makes the color jump out. That tint is the glow of a surface cooled by enormous swelling.",
+      "answer": "Nobody can say yet, because its size and light fit either a giant on its first climb or one that has already burned its core helium and swollen a second time. The difference matters, because the second swelling is the last one, the stage in which a giant begins to shed its outer layers.",
+      "rank": 2,
+      "story": "Gacrux weighs about one and a half Suns, so whichever stage it is in, its road can only end gently, in a shell of gas around a white dwarf. The open question about its stage is the kind that the ringing of a giant's surface can settle, because those oscillations change once helium is burning in the core."
+    },
+    "HR2553": {
+      "step": 1,
+      "beat": "Sun's road: an aging giant",
+      "question": "Why are so many of the bright stars we see aging giants?",
+      "why": "Tau Puppis is an ordinary orange giant, the kind of star the Sun will become, and its very ordinariness is a clue.",
+      "look": "In binoculars Tau Puppis is a soft yellow-orange point. Compare it with brilliant white Canopus about 5° to the west-south-west, and the giant's warmer color is plain.",
+      "answer": "The giant stage lasts a long time, which helps, but mostly a giant shines so brightly that it can be seen from far away: Tau Puppis gives out about 260 times the Sun's light. You see giants across a far larger volume of space than dwarfs like the Sun, so they crowd the list of bright stars.",
+      "rank": 3,
+      "story": "Tau Puppis is a clump giant, burning helium in its core in the calm middle of its old age, a stage that for a star of its weight lasts on the order of a hundred million years. When that helium is gone it will swell again, further than before, and only then will it start to lose its outer layers."
+    },
+    "HR168": {
+      "step": 1,
+      "beat": "Sun's road: a modest giant",
+      "question": "Will Schedar end the way the faint ρ Cassiopeiae nearby will?",
+      "why": "Schedar, the bright southern point of Cassiopeia's W, is an aging giant on the road a star like the Sun takes. ρ Cassiopeiae, a faint yellowish star just beyond Caph at the same end of the W, is on a very different one.",
+      "look": "Schedar is the bright southern point of the W. Swing to white γ Cassiopeiae at the W's center and back, and Schedar's orange looks warmer still.",
+      "answer": "Schedar will end far more quietly, because it is a modest giant giving out about 800 times the Sun's light. ρ Cassiopeiae, faint only because it is so far away, is one of the most powerful stars you can see and many times heavier. Old age alone says little about the ending; weight decides it.",
+      "rank": 2,
+      "story": "Schedar weighs a few Suns, and that puts it below a line of about eight Suns that divides every star's future. Below it the core never grows hot enough to fuse carbon, so it ends as a white dwarf; above it the core keeps burning heavier fuels until it collapses. ρ Cassiopeiae, close to it on the sky, sits far above that line."
+    },
+    "HR337": {
+      "step": 1,
+      "beat": "Sun's road: an aging giant",
+      "question": "What color does a star like the Sun turn as it swells?",
+      "why": "Mirach, the middle bright star of Andromeda, is a giant that has swollen and cooled further than most orange giants, far enough to tint it red.",
+      "look": "Mirach is the middle star of Andromeda's chain, the usual stepping stone to the Andromeda Galaxy. In binoculars it is a ruddy orange point, and a slight defocus deepens the red.",
+      "answer": "A star like the Sun turns orange first, and then a ruddy orange-red like Mirach's, as the surface stretches to about 90 times the Sun's width and cools below 4,000 K. The redder a giant of modest weight becomes, the closer it is to the restless stage at the end of its road.",
+      "rank": 2,
+      "story": "In giants as cool as Mirach, molecules such as titanium oxide survive in the atmosphere and soak up blue and green light, deepening the red. Those molecular bands are how astronomers sort the coolest giants by temperature, and they will appear in the Sun's light too, late in its giant years."
+    },
+    "HR2748": {
+      "step": 2,
+      "beat": "Sun's road: shedding its skin",
+      "question": "How does a dying star of the Sun's weight start to let itself go?",
+      "why": "L² Puppis is a star of about the Sun's weight caught in the final giant stage, one of the nearest of its kind, so it shows the Sun's own exit just beginning.",
+      "look": "Find L² Puppis about 7.5° south of π Puppis, where it makes a wide pair with blue-white L¹. L² is clearly redder, and on some nights much fainter than you expect, because the dust it is shedding can veil it for years.",
+      "answer": "It lets go slowly and unevenly: each pulse lifts gas off its swollen surface, the gas cools into dust, and the star's light pushes that dust outward, dragging more gas along. Given enough time, that wind carries away the whole outer envelope until only the hot core is left.",
+      "rank": 2,
+      "story": "A light star sheds its outer layers faster and faster near the end: early on its wind carries off a little each year, but in its last few tens of thousands of years it loses more than in all the time before. L² Puppis is in that final rush, which is why the dust around it thickens so quickly."
+    },
+    "HR7139": {
+      "step": 2,
+      "beat": "Sun's road: the second swelling",
+      "question": "How big does a giant become in its last, second swelling?",
+      "why": "δ² Lyrae, near Sheliak in Lyra, has most likely burned through the helium in its core as well as the hydrogen, and swollen a second time into the final stage of a giant's life.",
+      "look": "About 3½° north of Sheliak, δ² Lyrae glows orange-red, with fainter blue-white δ¹ about a third of a Moon-width to the west. The red one is the giant in its final stage; the blue one is a hot star with no part in its story.",
+      "answer": "δ² Lyrae has grown so big that, in the Sun's place, its surface would reach beyond the orbit of Earth. A star this swollen holds its outer layers only loosely, and in the ages ahead it will give them up to space.",
+      "rank": 1,
+      "story": "In this second swelling a giant burns hydrogen and helium in two thin shells around a core of carbon and oxygen, ash it can never burn, because a star of modest weight never gets hot enough inside. Later in this stage the helium shell will start to flare every few tens of thousands of years, each flare shaking the star and loosening its envelope further."
+    },
+    "HR8262": {
+      "step": 2,
+      "beat": "Sun's road: shedding its skin",
+      "question": "Why does a giant near the end start to breathe in and out?",
+      "why": "W Cygni is a red giant in the last stage of a light star's life, and you can watch its brightness change over a single summer.",
+      "look": "Center ρ Cygni; W Cyg is the reddish star just to its south-east. Compare the two every week or two through the season and you will see the giant rise and fall.",
+      "answer": "Its outer layers are so swollen and so loosely held that the star cannot find a steady size. A layer inside traps heat as it is squeezed and lets it go as it expands, so the whole envelope keeps lifting and falling like a lid rattling on a boiling pan. That rattling is how the end begins for a giant like this, which does not blow apart but slowly shakes itself loose.",
+      "rank": 2,
+      "story": "Pulsation and mass loss feed each other in a giant like W Cygni: each swing of the surface throws gas up into cooler regions where dust can form, and the dust, pushed by starlight, carries the gas away. Infrared telescopes see the result as a warm glow of dust around such stars, and radio telescopes as molecules streaming outward."
+    },
+    "HR8297": {
+      "step": 2,
+      "beat": "Sun's road: shedding its skin",
+      "question": "What does a giant's deep red color reveal about how near its end is?",
+      "why": "V460 Cygni, among the Milky Way stars of eastern Cygnus, wears a color that says something precise about the stage it has reached.",
+      "look": "About 6° east-south-east of τ Cygni, look for a warm orange-red point among white field stars. Glance between it and a white star nearby, and the tint becomes obvious.",
+      "answer": "A carbon star's deep red means the star has been through repeated flashes of helium burning in a shell around its core, which happens only in the last giant stage. That stage is short, and it ends once the star has blown its outer layers away.",
+      "rank": 2,
+      "story": "A star becomes a carbon star only if it is heavy enough for its flares to dredge carbon up and light enough not to burn it again near the surface, roughly between one and a half and four Suns. That narrow window makes carbon stars a signature of the gentle road, and much of the Galaxy's carbon came from stars passing through it."
+    },
+    "HR7220": {
+      "step": 2,
+      "beat": "Sun's road: shedding its skin",
+      "question": "What does the soot in a carbon star's atmosphere do to the star itself?",
+      "why": "V Aquilae glows so deep a red that it stands out at once in a field of white stars, and the stuff that reddens it is also helping to carry it away.",
+      "look": "From λ Aquilae in southern Aquila, move about 1° south-west. V Aql is the obviously red point in the field, clearest when you compare it with any white star nearby.",
+      "answer": "The carbon condenses into grains of soot in the cool outer atmosphere, and starlight pushes on those grains like wind on a sail, dragging the surrounding gas outward with them. The star is blowing itself away on its own smoke, a little more with every pulse.",
+      "rank": 2,
+      "story": "Astronomers measure how fast a star like V Aquilae is losing itself by listening to its wind in radio light. Molecules such as carbon monoxide in the outflow give off a line whose width reveals the wind's speed and whose strength reveals how much gas is leaving. For carbon stars the answer is often a millionth of a Sun or more every year, enough to strip the envelope in a few hundred thousand years."
+    },
+    "STAR-Rasalgethi": {
+      "step": 2,
+      "beat": "Sun's road: shedding its skin",
+      "question": "Why does a giant this big have such a loose hold on its outer layers?",
+      "why": "Rasalgethi, the head of Hercules, is a giant in its final stage, swollen so far that its outer layers barely belong to it anymore.",
+      "look": "Rasalgethi and Rasalhague, the heads of Hercules and Ophiuchus, sit about 5° apart, one orange-red and one white. Check Rasalgethi against its neighbor over a few weeks and you may catch its light drifting.",
+      "answer": "Gravity weakens with distance from a star's center, so at a surface that far out the pull on the outer gas is far feebler than at the Sun's surface. A gentle push from pulsation and light is then enough to lift it away. For a giant like this, losing its envelope is not an accident; it is the way its life ends.",
+      "rank": 1,
+      "story": "Rasalgethi is where astronomers first proved that giants lose their outer layers. In 1956 Armin Deutsch noticed that the spectrum of its companion, hundreds of times the Earth–Sun distance away, showed the marks of cool gas in front of it. Rasalgethi's outflowing envelope, he reasoned, must reach beyond the companion's orbit."
+    },
+    "HR7066": {
+      "step": 2,
+      "beat": "Sun's road: the last of the envelope",
+      "question": "What does a giant look like as it nears the end of its shedding?",
+      "why": "R Scuti, beside the Wild Duck Cluster, is a giant whose rhythm keeps stalling and restarting, the sign of a star near the end of its giant years.",
+      "look": "Find the Wild Duck Cluster in Scutum, then look about one degree north-west for a yellowish star in a small group. Check it again in a week or two: it alternates deep and shallow dips and never repeats exactly.",
+      "answer": "R Scuti lurches rather than breathes: it swings between deep and shallow dips and sometimes stops pulsing altogether, and astronomers still argue over whether it is in the last giant stage or has just left it. Either way it is close to the point where its envelope runs out and the hot core begins to show.",
+      "rank": 1,
+      "story": "R Scuti belongs to a small class, the RV Tauri stars, that astronomers think are giants leaving the last swelling: their envelopes are nearly gone, and their light flails as what is left struggles to find a steady size. Many of them are surrounded by disks of dust, likely the leftovers of their shedding, held in orbit by a companion."
+    },
+    "HD59693": {
+      "step": 2,
+      "beat": "Sun's road: the last of the envelope",
+      "question": "How can you tell that a giant has almost finished shedding its skin?",
+      "why": "U Monocerotis, in the faint stretch between Procyon and Sirius, is a star caught right at the end of the giant road.",
+      "look": "U Monocerotis lies in Monoceros, between Procyon and Sirius. Over a few weeks compare it with nearby stars: it rises and falls nearly eightfold, alternating deep and shallow dips.",
+      "answer": "Its surface gives it away: at about 5,700 K, close to the Sun's own temperature, it is far hotter than a red giant, because the layers you now see were once buried deep inside. Each layer it loses uncovers a hotter one beneath.",
+      "rank": 3,
+      "story": "U Monocerotis has a companion, and the pair sits inside a disk of dust far wider than the solar system, made from the giant's own shed layers. Disks like this are common around stars at this stage that have partners, and they may explain why so many of the shells light stars leave behind come out shaped like hourglasses rather than spheres."
+    },
+    "HR8775": {
+      "step": 2,
+      "beat": "Sun's road: the second swelling",
+      "question": "What has Scheat already burned through that a calm orange giant has not?",
+      "why": "Scheat, a corner of the Great Square of Pegasus, is a red giant that has entered the last stage of a light star's life.",
+      "look": "Scheat is the north-west corner of the Great Square. Swing to Markab, the corner directly south, and back: Scheat's orange-red beside Markab's blue-white is a giant in its final stage next to a hot white star.",
+      "answer": "The helium in its core, the fuel that keeps a giant calm through its middle years, is very likely gone, so Scheat has swollen a second time, larger and cooler than before. In that second swelling a giant's hold on its outer layers starts to slip.",
+      "rank": 1,
+      "story": "Scheat weighs about twice the Sun, close to the weight of most stars you can see by eye, so its road is the common one. Its slight, irregular flicker is the first of the restlessness that grows through this stage, until the star's swings become strong enough to lift its envelope away."
+    },
+    "HR9004": {
+      "step": 2,
+      "beat": "Sun's road: shedding its skin",
+      "question": "What happens to a dying giant once carbon outnumbers oxygen in its atmosphere?",
+      "why": "TX Piscium, just east of the Circlet below the Great Square, is a giant whose chemistry has flipped, and the flip changes how quickly it loses itself.",
+      "answer": "The spare carbon builds dust as well as molecules, and the star's own light pushes on that dust and drives a stronger wind. The giant has become a soot factory venting into space, and every flash of helium burning deep inside adds more carbon to the vent.",
+      "rank": 2,
+      "story": "TX Piscium is near and bright enough that interferometers have resolved its surface and the uneven, dusty shell around it, showing that the shedding does not happen evenly but in clumps and arcs. Radio images of stars like it show nested shells, each the record of a flare deep inside, spaced thousands of years apart."
+    },
+    "HR2286": {
+      "step": 2,
+      "beat": "Sun's road: the second swelling",
+      "question": "Has Tejat begun the final, restless stage of a giant's life?",
+      "why": "Tejat, at the western foot of Gemini, looks like an ordinary red giant, but its size and temperature hint that it has moved on to the last stage.",
+      "look": "Find Gemini's western foot: Tejat is the orange-red star there, with the cluster M35 about 3½° to its west-north-west, just beyond Propus (η Geminorum). Its brightness wavers by only a few tenths of a magnitude, too little to judge by eye in one night.",
+      "answer": "Tejat very likely has: it appears to have used up the helium in its core and swollen a second time, the stage that ends a light star's life as a giant. Stars in that stage slowly lose their hold on their outer layers, and Tejat is near the start of it.",
+      "rank": 1,
+      "story": "Astronomers place Tejat in the second swelling from its brightness and temperature together. Stars of its weight on their first climb never get quite this luminous at this temperature, but those that have burned their core helium and swollen again do. Its slow flicker is the first stirring of the instability that will strip it."
+    },
+    "HR1648": {
+      "step": 2,
+      "beat": "Sun's road: shedding its skin",
+      "question": "What is W Orionis giving away as it nears the end of its giant life?",
+      "why": "W Orionis, a few degrees from Orion's shoulder, is a carbon star in the final giant stage, and it is slowly coming apart.",
+      "answer": "It is giving away itself: its outer envelope streams off in a slow wind of gas and carbon-rich dust. By the end of its giant years most of the star will have left this way, and what stays behind is a small, hot core.",
+      "rank": 2,
+      "story": "Not every dying light star becomes a carbon star, only those whose flares bring up enough carbon to outnumber the oxygen at the surface. W Orionis crossed that line, and its wind now carries soot instead of the rock-like dust that oxygen-rich giants make, two kinds of stardust that end up as different kinds of grains between the stars."
+    },
+    "STAR-LaSuperba": {
+      "step": 2,
+      "beat": "Sun's road: shedding its skin",
+      "question": "Is La Superba really losing its outer layers, and how can anyone tell?",
+      "why": "La Superba, below the Big Dipper's handle, is one of the very few carbon stars bright enough to see without optics, and it carries the evidence of its own shedding around it.",
+      "answer": "It really is: the shell around it is about three light-years across, vastly wider than the orbits of all the planets, and every bit of it was once part of the star. A giant at this stage is turning itself, one breath at a time, into the cloud that will surround its remains.",
+      "rank": 2,
+      "story": "Infrared satellites found a vast shell of dust and gas around La Superba, piled up where its wind runs into the thin gas between the stars. The shell is also a clock, since dividing its size by the speed of the wind that built it gives how long the star has been shedding at this pace, on the order of a hundred thousand years. A light star's final giant stage is short, so La Superba has been giving itself away for a large part of it."
+    },
+    "M27": {
+      "step": 6,
+      "beat": "The Sun's fate: a glowing shell",
+      "question": "What is left when a star of modest weight has shed its outer layers?",
+      "why": "The Dumbbell, the first of its kind ever discovered, is the clearest view binoculars give of how a star of modest weight finishes.",
+      "answer": "What is left is a shell of the star's own gas about two and a half light-years across, and at its center a white dwarf, the spent core crushed to roughly the size of Earth with no fuel left to burn. Long after the shell has faded away, that ember will still be there, cooling for billions of years.",
+      "story": "A star of the Sun's weight ends this way because its core is never hot enough to fuse carbon: when its last shell burning sputters out, the core simply contracts into a white dwarf while its outer layers drift free. The core's brief ultraviolet blaze is what makes the shell glow, and it lasts only some tens of thousands of years before the white dwarf cools and the glow fades."
+    },
+    "M57": {
+      "step": 6,
+      "beat": "The Sun's fate: a glowing shell",
+      "question": "Would the Sun's own death look like this from thousands of light-years away?",
+      "why": "The Ring is the glowing shell of a star of modest weight, and in binoculars it is a lesson in how small such an ending looks from far away.",
+      "answer": "From that far the Sun's death would look very much like this, a shell of shed gas lit by the hot core at its center, shrunk by some 2,600 light-years to a dot that will not come to a sharp focus. Up close the same shell would fill the sky, and only distance makes such an ending look so modest.",
+      "story": "The Ring's colors in photographs map the elements its star has given back: green from oxygen nearer the hot center, red from nitrogen and hydrogen farther out. Measuring how strongly each element glows lets astronomers count the carbon and nitrogen the star made and dredged up before it died, the gentle road's gift to the Galaxy."
+    },
+    "NGC7293": {
+      "step": 6,
+      "beat": "The Sun's fate: a glowing shell",
+      "question": "Why is the nearest shell of its kind so hard to see?",
+      "why": "The Helix is the closest bright shell left by a star of modest weight, the gentle ending seen from as near as the sky allows.",
+      "answer": "Its glow is spread thin: the gas has been coasting outward for thousands of years over a patch of sky so large that each part of it is faint, even though the whole holds plenty of light. Shells like this keep thinning until they merge with the gas between the stars, and only the white dwarf remains.",
+      "story": "The Helix's central white dwarf will keep shining for billions of years after its shell has dissolved, cooling the whole time without any fuel. That is the fate waiting for the Sun: in about seven or eight billion years, a white dwarf of roughly half its present weight, surrounded for a short while by a fading shell like this one."
+    },
+    "HR1325": {
+      "step": 6,
+      "beat": "The Sun's fate: the ember",
+      "question": "What does the core a light star leaves behind actually look like?",
+      "why": "40 Eridani holds something binoculars almost never show, the ember a star of modest weight leaves behind once its outer layers are gone, and finding it is a real test of binoculars and patience.",
+      "look": "Find 40 Eridani about 15° west of Rigel, a yellow-orange star in Eridanus, and brace the binoculars hard. About a minute and a half of arc to its east-south-east sits 40 Eri B, a very faint point at the limit of braced 10×50s under a dark sky. If it will not separate, the story still holds: the white dwarf is there, and you are looking at the spot where a star's life ended quietly.",
+      "answer": "The faint point beside 40 Eridani is exactly that, a white dwarf, a core that stopped making energy about 120 million years ago and has been living off its stored heat ever since. With nothing left to burn, it will go on fading for billions of years, the quietest ending a star can have.",
+      "story": "A white dwarf is held up not by heat but by its electrons, packed so tightly that quantum physics forbids them to be squeezed further, and that support has a limit of about one and four-tenths Suns. A core heavier than that cannot stay a white dwarf, which is exactly why stars born far heavier than the Sun end by collapsing instead."
+    },
+    "STAR-Deneb": {
+      "step": 3,
+      "beat": "Heavy road: a heavyweight",
+      "question": "What becomes of a star nineteen times heavier than the Sun?",
+      "why": "Deneb, the tail of the swan, is a heavyweight, and its weight has set it on a road that no star of modest mass can take.",
+      "look": "Deneb marks the top of the Northern Cross, a white star in a field crowded with the faint stars of the Milky Way. Its white is the color of a surface about one and a half times hotter than the Sun's, spread over a star some 200 times wider.",
+      "answer": "Deneb's surface already shows nitrogen brought up from its core, and the best models have it on its way to becoming a red supergiant. A star this heavy cannot finish as a quiet ember: when its fuel runs out, its core is expected to collapse and the rest to explode.",
+      "story": "Deneb's weight comes from models fitted to its brightness and temperature, so it depends on its distance, which is still argued over. Either way it lies far above the line of about eight Suns that separates the two roads, so the uncertainty changes the details of its ending but not its kind."
+    },
+    "HR1713": {
+      "step": 3,
+      "beat": "Heavy road: a heavyweight",
+      "question": "What does a star pay for shining like tens of thousands of Suns?",
+      "why": "Rigel, Orion's blue-white foot, is a star of a different class altogether, one whose weight shapes both how it lives and how it will die.",
+      "look": "Rigel is Orion's foot, diagonally across from Betelgeuse. Hold it in the field just after a look at the orange shoulder: its icy blue-white is the color of a heavyweight still hot and compact, beside one that has already swollen.",
+      "answer": "Rigel pays with a short life and a violent end: to pour out roughly 80,000 times the Sun's light, its heavy core runs its fusion at a furious pace, so its fuel lasts only a sliver of the Sun's lifetime. Stars this luminous usually end as core-collapse supernovae, when the core finally gives out.",
+      "story": "A star's light climbs far faster than its weight, roughly as the cube of its mass or faster, so Rigel, born at about twenty Suns, has twenty times the Sun's fuel but spends it tens of thousands of times faster. That is the arithmetic behind a heavyweight's short life."
+    },
+    "HR1903": {
+      "step": 3,
+      "beat": "Heavy road: living fast",
+      "question": "How quickly does a star of 28 Suns grow old?",
+      "why": "Alnilam, the middle star of Orion's Belt, is a true heavyweight, and the stars born alongside it give away how young it is.",
+      "look": "Center the middle Belt star with the other two near the field's edges. The curving string of fainter stars around it was born in the same burst of star formation, and the brightest of them all is already a supergiant.",
+      "answer": "Alnilam has aged astonishingly fast: the Belt's stars are only a few million years old, and it has already swollen into a supergiant. A star this heavy burns through its life in a tiny fraction of the time the Sun takes, and it ends with a collapsing core, not a fading shell.",
+      "story": "A heavyweight starts losing weight long before it dies. Alnilam's wind, measured from the shapes of the lines in its spectrum, carries off a few millionths of a Sun every year at speeds near two thousand kilometers per second. Over its life that adds up to several Suns, and how much a heavy star sheds helps decide what its collapsing core finally leaves behind."
+    },
+    "HR1948": {
+      "step": 3,
+      "beat": "Heavy road: a heavyweight",
+      "question": "How do we know Alnitak is heavy enough to end in a supernova?",
+      "why": "Alnitak, the eastern star of Orion's Belt, has been weighed directly, which makes it a rare test of the rule that weight decides a star's ending.",
+      "look": "Fit all three Belt stars in one field and center Alnitak at the eastern end. Its blue-white is the color of one of the hottest kinds of star, a surface about five times hotter than the Sun's.",
+      "answer": "Its partner gives it away, because following the pair around their seven-year orbit gives Alnitak at least about 14 times the Sun's mass, and more if it lies at the Belt's full distance. That is well above the weight at which a star stops ending gently. One day its core will collapse, and the explosion will scatter the rest of it among the clouds of Orion.",
+      "story": "Alnitak's companion is a hot star too, and the pair may not age independently: as the heavier one swells, it could spill gas onto its partner, stripping itself and feeding the other. Most heavy stars have close partners, and astronomers now think that this sharing of matter changes how a large share of them end."
+    },
+    "HR3165": {
+      "step": 3,
+      "beat": "Heavy road: living fast",
+      "question": "How long can a star of 25 Suns keep burning?",
+      "why": "Naos, in the stern of the ship Argo, is one of the hottest stars visible to the eye, and its heat is a measure of how fast it is spending itself.",
+      "look": "Naos is a sharp, steely blue-white point in Puppis among many fainter Milky Way stars. About 10° to the west-south-west lies L² Puppis, a red star of about the Sun's weight near the end of the gentle road; hold the two in mind, one a heavyweight still young and the other a light star already old.",
+      "answer": "Naos cannot burn for long: it is only about three million years old and has already swollen past its youth, because a star this heavy spends its fuel at a ruinous rate. Its life will be over long before the Sun has aged at all, and it will end with a collapsing core.",
+      "story": "Stars this heavy are rare: for every star of Naos's weight the Galaxy makes hundreds like the Sun and thousands of smaller ones, because clouds break up mostly into small pieces. Yet these few heavyweights make most of the oxygen in the Galaxy, because only their cores get hot enough, and their deaths violent enough, to forge it and scatter it."
+    },
+    "HR6262": {
+      "step": 3,
+      "beat": "Heavy road: a heavyweight",
+      "question": "What does a star born dozens of times heavier than the Sun become?",
+      "why": "ζ¹ Scorpii, the paler, fainter member of a naked-eye pair in the bend of the Scorpion's tail, is one of the most massive stars in the Milky Way.",
+      "answer": "It becomes something like ζ¹ Scorpii, about 36 Suns of matter swollen to roughly a hundred times the Sun's width. That star sits partway between a steady blue supergiant and the restless stars that blow off their outer layers in bursts. Nothing this heavy goes out quietly; its core is headed for collapse.",
+      "story": "ζ¹ Scorpii belongs to NGC 6231, the cluster just north of it, and the cluster's youth is what sets its weight so high: nothing lighter could already have swollen out of its prime. Stars this massive are so rare that only a handful in the whole sky are bright enough for binoculars."
+    },
+    "HR2782": {
+      "step": 3,
+      "beat": "Heavy road: living fast",
+      "question": "Why do the heaviest stars in a cluster live the shortest lives?",
+      "why": "τ Canis Majoris is a knot of hot heavyweights at the heart of a cluster only a few million years old, a family of heavyweights caught early in their short lives.",
+      "answer": "Fusion speeds up so steeply with the heat and pressure in a heavy core that a few extra Suns of mass burn the fuel many times faster. τ CMa's heaviest stars will be gone, as supernovae, long before the faint ones around them have even finished settling down.",
+      "story": "In a cluster this young the heavy and the light are the same age, so any difference between them is weight alone, which makes it a clean experiment. The heaviest members are already near the end of their steady lives, while the faintest have not even begun theirs. Clusters like this are how astronomers tested the rule that a star's lifetime shrinks steeply as its mass grows."
+    },
+    "HR7796": {
+      "step": 3,
+      "beat": "Heavy road: a heavyweight",
+      "question": "What kind of star shines like tens of thousands of Suns?",
+      "why": "Sadr, at the heart of the Northern Cross, looks like an ordinary yellowish star in a crowded Milky Way field, but its output tells a different story.",
+      "look": "Center Sadr and let the crowded Milky Way fill the field. Sadr itself is a pale yellow, not far from the Sun's own tint, which makes its true power all the more surprising.",
+      "answer": "Sadr gives out about 34,000 times the Sun's light from a surface hardly hotter than the Sun's, so it must be enormous, roughly 180 times wider, and only a star born with many times the Sun's matter can shine like that. A star born that heavy burns its fuel recklessly, and its road ends in collapse and explosion, not in a quiet shell.",
+      "story": "Yellow supergiants like Sadr are rare, because a heavy star crosses from blue to red in a few tens of thousands of years, or loops back toward yellow late in life, and either way the stage is brief. That makes each one a fleeting snapshot of a heavyweight changing state on its way toward the collapse."
+    },
+    "HR9018": {
+      "step": 3,
+      "beat": "Heavy road: a heavyweight",
+      "question": "What sets 6 Cassiopeiae apart from the ordinary white stars around it?",
+      "why": "6 Cassiopeiae, a modest white star east of the cluster M52, is a heavyweight whose ending will look nothing like the Sun's.",
+      "look": "Find the cluster M52 west of Caph, then move about three degrees east to a modest white star in the same rich Milky Way field. Nothing about it looks special, which is exactly the point.",
+      "answer": "What sets it apart is its weight, which you can only infer: no star of modest mass could shine brightly enough to be seen from about 9,000 light-years, so this one was born many times heavier than the Sun. That inheritance decides its fate, a short life ending in a collapsing core rather than a fading shell.",
+      "story": "When a star cannot be weighed directly, astronomers use the tight link between light and mass. A star's output climbs so steeply with its weight that shining like tens of thousands of Suns takes a dozen or more Suns of matter. Most heavyweights on this road are weighed that way, and only the few with close partners are weighed by their orbits."
+    },
+    "HR1203": {
+      "step": 3,
+      "beat": "Heavy road: a heavyweight",
+      "question": "How does a heavy star's life differ from the Sun's long middle age?",
+      "why": "ζ Persei, the southern foot of Perseus, is a blue-white heavyweight, and its whole story runs on a different clock from the Sun's.",
+      "look": "ζ Persei marks the southern foot of Perseus, north of the Pleiades, a crisp blue-white point. Its color is the glow of a surface about four times hotter than the Sun's.",
+      "answer": "A heavy star's life is brief: a star like ζ Persei lives only tens of millions of years, while the Sun's middle age alone lasts billions. Heavyweights spend their fuel so fast that old age arrives almost at once, and their ending comes with a collapse rather than a fade.",
+      "story": "ζ Persei is the brightest member of a loose group of hot young stars spread across Perseus, and its weight, well over ten Suns, puts it firmly on the heavy road. One of its siblings, ξ Persei, was flung out of the group and now lights the California Nebula, a reminder of how violent a family of heavyweights can be even before any of them explodes."
+    },
+    "NGC6992": {
+      "step": 5,
+      "beat": "The violent ending: a supernova's wreck",
+      "question": "What is left of a star heavy enough to explode?",
+      "why": "The Veil is the far end of the heavy road, and from a dark site 10×50 binoculars can just catch a piece of it.",
+      "answer": "What is left is a shock wave from the explosion, still racing outward, and a bubble of the star's debris now about 120 light-years across. Only stars born more than about eight times heavier than the Sun end this way, and some of the atoms glowing in these threads were forged inside the star that died.",
+      "story": "A supernova's energy is mostly carried off by neutrinos, and only about one percent goes into the blast you see as a remnant. Yet that one percent is enough to drive the Veil's shell outward for tens of thousands of years. The collapse that released it took about a second, deep inside a star like the heavyweights on this road."
+    },
+    "M1": {
+      "step": 5,
+      "beat": "The violent ending: wreck and ember",
+      "question": "How do we know the Crab came from a heavy star rather than a light one?",
+      "why": "The Crab, near the tip of the Bull's southern horn, is the debris of an explosion that people on Earth watched happen, and its center holds the strangest kind of ember a star can leave.",
+      "answer": "Its heart gives it away: a spinning neutron star can only form when a heavy star's core collapses, while a light star's core is left behind intact as a white dwarf. The Crab is the heavy road's signature, an ember far smaller and stranger than anything the gentle ending leaves.",
+      "story": "The Crab's parent star is estimated at about eight to ten Suns, right at the light end of the heavy road, from the amount and makeup of its debris, which is poor in the oxygen that heavier stars produce in bulk. So the dividing line between the two roads is real and close: with a little less matter this star would have ended as a glowing shell instead."
+    },
+    "STAR-Betelgeuse": {
+      "step": 4,
+      "beat": "Heavy road: on the brink",
+      "question": "How close is Betelgeuse to the end of its road?",
+      "why": "Betelgeuse, Orion's orange shoulder, is a heavyweight that has already swollen into a red supergiant, the last stage before its core gives out.",
+      "answer": "Betelgeuse is close to the end by a star's reckoning but not by ours: models of its pulsations place it early in its helium-burning stage, so the supernova is most likely about 100,000 years away. Its famous fade in 2019 and 2020 was mostly a cloud of dust it had puffed out, over a briefly cooler patch of its surface, one more sign of a heavyweight already shedding its outer layers.",
+      "story": "Betelgeuse's weight is not measured directly but inferred from models that must match its brightness, its size and the rhythm of its slow pulsations all at once. That is why estimates range from about fifteen to twenty Suns. Every estimate in that range is far above the eight-Sun line, so the question for Betelgeuse is not whether it will explode but when."
+    },
+    "STAR-Antares": {
+      "step": 4,
+      "beat": "Heavy road: on the brink",
+      "question": "How do astronomers know Antares is heavy enough to explode?",
+      "why": "Antares, the red heart of Scorpius, is a red supergiant on the last stretch of the heavy road.",
+      "answer": "Its family gives it away: Antares belongs to Upper Scorpius, a group about 11 million years old, and only a star born many times heavier than the Sun could have become a supergiant that fast. Mass estimates of 12 to 15 Suns put it well above the roughly eight needed for a collapsing core.",
+      "story": "When Antares's core collapses it will most likely leave a neutron star, matter so dense that a teaspoonful would weigh as much as a mountain. Its core will be too heavy for a white dwarf, yet probably too light for a black hole. Which remnant a heavy star leaves depends on the weight of its core at the end, set by how much it was born with and how much it has lost."
+    },
+    "STAR-MuCep": {
+      "step": 4,
+      "beat": "Heavy road: on the brink",
+      "question": "What does a heavyweight look like on the last stretch before it explodes?",
+      "why": "The Garnet Star in Cepheus is one of the largest and reddest stars visible to the eye, a heavyweight swollen to an almost unimaginable size.",
+      "answer": "It looks like the Garnet Star, a supergiant so swollen and so cool that its glow has turned a deep orange-red, wrapped in a shell of molecules it has already cast off. It is near the end of its life, and when its core runs out of fuel the star will collapse.",
+      "story": "The Garnet Star's weight, perhaps twenty to twenty-five Suns at birth, is inferred from its enormous light, since nothing so luminous could be a lightweight. Red supergiants that heavy are rarer than expected among the stars seen to explode, a puzzle that may mean the heaviest of them collapse quietly into black holes instead."
+    },
+    "HR9045": {
+      "step": 4,
+      "beat": "Heavy road: on the brink",
+      "question": "What does a forty-Sun star do in the brief, unstable stage before the end?",
+      "why": "ρ Cassiopeiae looks like a faint yellowish star near Caph, but it is a yellow hypergiant, one of the most luminous stars visible to the eye, in a stage only the heaviest stars ever reach.",
+      "answer": "It loses itself in bursts as well as in a steady wind, and many astronomers think it has already been a red supergiant and is now heating up again as its outer layers peel away. A star this heavy has only one way out at the end of that, a collapsing core.",
+      "story": "Yellow hypergiants like ρ Cassiopeiae seem to bounce against an invisible wall: as they heat up, their outer layers turn unstable, so they throw off a shell, cool, and start again. Astronomers watching it since the 1940s have seen several such outbursts, a heavyweight shedding its envelope in fits rather than in a steady wind."
+    },
+    "HR7763": {
+      "step": 4,
+      "beat": "Heavy road: on the brink",
+      "question": "How much of itself has P Cygni already thrown into space?",
+      "why": "P Cygni looks like a plain white point near the heart of the Northern Cross, yet it is a heavyweight that has already begun to lose its grip on itself.",
+      "answer": "Its outburst of 1600 alone threw off about a tenth of a Sun's worth of gas, and a fierce wind strips more every year. A star cannot lose itself like this for long, and when its core gives out the heavy road ends in collapse.",
+      "story": "P Cygni gave its name to a pattern in starlight: in its spectrum each line has a bright part and, beside it, a dark notch on the blue side, made by gas in the wind rushing toward us and absorbing the starlight. Astronomers find that P Cygni profile in stars across the universe and read from it how fast their winds blow."
+    },
+    "HR3207": {
+      "step": 4,
+      "beat": "Heavy road: on the brink",
+      "question": "How close to the end is a star that has lost its whole outer envelope?",
+      "why": "Gamma Velorum, the brightest star of Vela, hides inside its light a heavyweight that has already lost the outer layers most stars keep all their lives.",
+      "look": "Steady your binoculars and Gamma Velorum splits into a bright white star with a fainter one beside it. The stripped star is inside that bright point, paired with a hot giant too close to separate.",
+      "answer": "Gamma Velorum's stripped star is very close, for the Wolf-Rayet stage is the last, brief chapter of a heavyweight's life, a nearly bare core surrounded only by its own fierce wind. Even after all it has blown away, this star is probably still heavy enough to end as a supernova.",
+      "story": "A Wolf–Rayet star is what is left when a heavyweight's wind, or a companion's pull, has stripped away all its hydrogen, and the one inside Gamma Velorum is the nearest of its kind. Its carbon-rich wind collides with the wind of the hot giant beside it, and the shock between them glows in X-rays, a measurable sign of how fast the stripped star is still losing itself."
+    },
+    "NGC3242": {
+      "step": 6,
+      "beat": "The Sun's fate: a glowing shell",
+      "question": "How much of the dead star is in the Ghost of Jupiter's glow?",
+      "why": "The Ghost of Jupiter, in Hydra on March and April evenings, is the quiet ending at its brightest, the cast-off layers of a star of modest weight lit by the core it left behind.",
+      "answer": "Most of it is: a star of modest weight gives back well over half its matter in its last giant years, and that gas is what glows here, while the core left at the center keeps less than a Sun. The Sun will make the same trade, ending as a white dwarf of about half its present weight.",
+      "story": "The difference from the heavy road lies in what stays behind and how the rest leaves. Here the core simply contracts into a white dwarf. The outer layers drift off at a walking pace for a star, a few tens of kilometers per second, rather than the thousands of kilometers per second of a supernova blast."
+    },
+    "NGC3132": {
+      "step": 6,
+      "beat": "The Sun's fate: a glowing shell",
+      "question": "How heavy was the star that made the Eight-Burst Nebula?",
+      "why": "The Eight-Burst Nebula is a gentle ending from a star born heavier than the Sun, which makes it a test of how heavy a star can be and still finish quietly.",
+      "answer": "It was born at nearly three Suns, a figure astronomers worked out from the age of its bright companion, born alongside it, and that is still well under the weight at which a star explodes. So even a star several times heavier than the Sun ends gently, as long as it stays below about eight Suns.",
+      "story": "Webb's images show the shell is not one breath but a series of nested rings and arcs, each puffed off as the dying star and its companions swung around one another. That is the gentle road's last stage: a star giving itself away in installments over thousands of years, not all at once."
+    },
+    "NGC2440": {
+      "step": 6,
+      "beat": "The Sun's fate: a glowing shell",
+      "question": "What will the Sun's core look like once its outer layers are gone?",
+      "why": "NGC 2440 shows the gentle ending at its very start, the core of a star of modest weight only recently laid bare.",
+      "answer": "It will look like the unseen point at NGC 2440's heart, a core of carbon and oxygen about the size of the Earth, so hot at first that most of its light is ultraviolet and you see it only through the gas it makes glow. The Sun's core will be uncovered in the same way, some seven or eight billion years from now.",
+      "story": "A star like this never explodes because its core never grew hot enough to burn carbon: when its last helium shell sputtered out there was no further fuel to ignite, only a slow contraction into a white dwarf. The heavy road's collapse needs a core built from carbon and heavier fuels, usually iron, and a star of modest weight never comes close to making one."
+    },
+    "HR2773": {
+      "step": 4,
+      "beat": "Heavy road: on the brink",
+      "question": "How close to its end is the orange supergiant at the heart of Puppis?",
+      "why": "Pi Puppis, the brightest star in this part of Puppis, has already swollen into an orange supergiant, the last long stretch of the heavy road.",
+      "look": "Pi Puppis is the bright deep-orange star about 10° west-north-west of Naos, with a much fainter star just beside it. Its warm glow among the blue-white stars of the Puppis Milky Way is the color of a big star that has swollen and cooled.",
+      "answer": "Pi Puppis has spent the hydrogen in its core and swollen into a supergiant, and every fuel it burns from here lasts a shorter time than the one before. At about a dozen Suns by the best estimates, it is well above the line where a core collapses at the end, so its road finishes in a supernova, not in a glowing shell.",
+      "story": "The scatter of fainter stars around it is its own family, born at the same time, and their age, about twenty million years, shows how fast a star of its weight runs through its fuel. The Sun, more than four billion years old, is still in the middle of its steady life."
+    }
+  }
+}

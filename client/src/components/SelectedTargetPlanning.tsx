@@ -5,6 +5,7 @@ import { formatInTimeZone } from 'date-fns-tz';
 import type { UnifiedTarget } from '@/lib/astronomy';
 import { visibilityWindow,targetDayEvents } from '@/lib/target-visibility';
 import { NightAltitudeChart } from './ObservingVisuals';
+import { displayName } from '@/lib/object-links';
 
 /** Reuses the object/session chart, with a whole-day option for daylight planning. */
 export function SelectedTargetPlanning({target,lat,lon,date,timezone,skyBrightness}:{target:UnifiedTarget;lat:number;lon:number;date:Date;timezone:string;skyBrightness:number}) {
@@ -13,7 +14,7 @@ export function SelectedTargetPlanning({target,lat,lon,date,timezone,skyBrightne
   const window=useMemo(()=>visibilityWindow(day,span==='night'?'12:00':'00:00','00:00',span==='night'?'night':'range',timezone,lat,lon),[day,span,timezone,lat,lon]);
   const events=useMemo(()=>span==='night'?clockTargetEvents(target,lat,lon,day,timezone):targetDayEvents(target.ra,target.dec,lat,lon,date,timezone),[target.ra,target.dec,lat,lon,day,timezone,span]);
   const event=(at:Date|null)=>at?formatInTimeZone(at,timezone,'HH:mm'):'None today';
-  return <section className="selected-target-planning" aria-label={`Observing graph for ${target.name}`}>
+  return <section className="selected-target-planning" aria-label={`Observing graph for ${displayName(target)}`}>
     <div className="selected-planning-heading"><ContextDateButton value={date} timezone={timezone}>{formatInTimeZone(new Date(`${day}T12:00:00Z`),'UTC','MMM d, yyyy')}</ContextDateButton><select aria-label="Selected object graph time span" value={span} onChange={e=>setSpan(e.target.value as 'night'|'day')}><option value="night">Astronomical night</option><option value="day">Whole selected day</option></select></div>
     <div className="binocular-event-times"><span>Rise<strong>{events.alwaysUp?'Always up':events.neverUp?'Never rises':event(events.rise)}</strong></span><span>Transit<strong>{event(events.transit)}</strong></span><span>Set<strong>{events.alwaysUp?'Always up':events.neverUp?'Never rises':event(events.set)}</strong></span></div>
     <NightAltitudeChart target={target} lat={lat} lon={lon} night={window} timezone={timezone} skyBrightness={skyBrightness} showContext span={span} selectedAt={date}/>

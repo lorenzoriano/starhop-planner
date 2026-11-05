@@ -1,0 +1,159 @@
+{
+ "notes": "Comparison lines (compare.<comparisonKey>) that curated cards use but the shared narration bank (client/public/data/journeys/src/narration.json) does not define. build_kb.ts adds a key, band or citation from here only when the bank lacks it, so the bank always wins. Voice: docs/sky-journeys/voice.md (start from the value and carry on in one flowing sentence; no meta-talk, no fragments). Placeholders {value}, {name}, {ratioPhrase} as documented in the bank. Period bands are shared by time.hours / time.days / time.years (the narrator picks the band from the period itself, so a curator's key choice cannot mislabel a 2-day cycle as 'hours').",
+ "variants": {
+  "compare.mass.sun": [
+   "About {value}, measured against the mass of the Sun."
+  ],
+  "compare.mass.sun.ms0": [
+   "About {value}, lighter than the Sun.",
+   "About {value}, so it holds less matter than the Sun."
+  ],
+  "compare.mass.sun.ms1": [
+   "About {value}, which makes it {ratioPhrase}.",
+   "About {value}, and weighed against the Sun it comes out {ratioPhrase}."
+  ],
+  "compare.size.milky-way": [
+   "About {value} across, to set beside the roughly 100,000 light-years of our own Milky Way's disk."
+  ],
+  "compare.size.milky-way.g0": [
+   "About {value} across, a small patch next to our Milky Way's disk, which spans roughly 100,000 light-years.",
+   "About {value} across, a modest size beside the roughly 100,000 light-years of our galaxy's disk."
+  ],
+  "compare.size.milky-way.g30k": [
+   "About {value} across, under half the width of our own Milky Way's disk.",
+   "About {value} across, a smaller galaxy than ours, whose disk spans roughly 100,000 light-years."
+  ],
+  "compare.size.milky-way.g60k": [
+   "About {value} across, somewhat smaller than our own Milky Way but in the same league.",
+   "About {value} across, a little smaller than the roughly 100,000 light-years of our galaxy's disk."
+  ],
+  "compare.size.milky-way.g90k": [
+   "About {value} across, roughly the size of our own Milky Way.",
+   "About {value} across, so seen from out there our galaxy would look much the same size."
+  ],
+  "compare.size.milky-way.g130k": [
+   "About {value} across, larger than our own Milky Way, whose disk spans roughly 100,000 light-years.",
+   "About {value} across, bigger than the galaxy we live in."
+  ],
+  "compare.time.hours": [
+   "About {value} for one full cycle."
+  ],
+  "compare.time.days": [
+   "About {value} for one full cycle."
+  ],
+  "compare.time.years": [
+   "About {value} for one full cycle."
+  ]
+ },
+ "periodBands": {
+  "keys": [
+   "compare.time.hours",
+   "compare.time.days",
+   "compare.time.years"
+  ],
+  "bands": [
+   {
+    "suffix": "p0",
+    "max": 0.5,
+    "fact": "periodDays"
+   },
+   {
+    "suffix": "p05",
+    "min": 0.5,
+    "max": 30,
+    "fact": "periodDays"
+   },
+   {
+    "suffix": "p30",
+    "min": 30,
+    "max": 365,
+    "fact": "periodDays"
+   },
+   {
+    "suffix": "p365",
+    "min": 365,
+    "max": 3650,
+    "fact": "periodDays"
+   },
+   {
+    "suffix": "p3650",
+    "min": 3650,
+    "fact": "periodDays"
+   }
+  ],
+  "variants": {
+   "p0": [
+    "About {value}, so a whole cycle fits inside one long night.",
+    "About {value}, quick enough that a patient watcher can follow a full cycle in one session."
+   ],
+   "p05": [
+    "About {value}, a rhythm measured in days, so compare it with its neighbors over a few clear nights.",
+    "About {value}, so the change shows from one night to the next rather than within an hour."
+   ],
+   "p30": [
+    "About {value}, a slow rhythm measured in months.",
+    "About {value}, a cycle you follow across a season rather than a night."
+   ],
+   "p365": [
+    "About {value}, so one cycle takes years to complete.",
+    "About {value}, longer than a year, which makes each turn of the cycle an event."
+   ],
+   "p3650": [
+    "About {value}, so one cycle takes decades and a person sees only a few in a lifetime.",
+    "About {value}, long enough that whole careers have been spent waiting for the next turn of the cycle."
+   ]
+  }
+ },
+ "bands": {
+  "compare.mass.sun": [
+   {
+    "suffix": "ms0",
+    "max": 1,
+    "fact": "massMsun"
+   },
+   {
+    "suffix": "ms1",
+    "min": 1,
+    "fact": "massMsun"
+   }
+  ],
+  "compare.size.milky-way": [
+   {
+    "suffix": "g0",
+    "max": 30000,
+    "fact": "sizeLy"
+   },
+   {
+    "suffix": "g30k",
+    "min": 30000,
+    "max": 60000,
+    "fact": "sizeLy"
+   },
+   {
+    "suffix": "g60k",
+    "min": 60000,
+    "max": 90000,
+    "fact": "sizeLy"
+   },
+   {
+    "suffix": "g90k",
+    "min": 90000,
+    "max": 130000,
+    "fact": "sizeLy"
+   },
+   {
+    "suffix": "g130k",
+    "min": 130000,
+    "fact": "sizeLy"
+   }
+  ]
+ },
+ "citations": {
+  "compare.size.milky-way": [
+   "https://science.nasa.gov/universe/galaxies/"
+  ],
+  "compare.size.milky-way.": [
+   "https://science.nasa.gov/universe/galaxies/"
+  ]
+ }
+}

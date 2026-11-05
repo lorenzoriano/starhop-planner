@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=95.987958-52.695661&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD45348                     \tALF CAR                     \t  6.48000\t 6.8600\t        \t4385A     \t1967MNRAS.137..393H\tHD45348\n 0.00\tHD45348                     \tALF CAR                     \t  6.10000\t 6.6000\t  0.7000\t4385A     \t1974MNRAS.167..121H\tHD45348\n 0.00\tHD45348                     \t* alf Car                   \t         \t 6.9200\t  0.0011\t2.3       \t2013MNRAS.434..437C\tHD45348\n\n"
+}

@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=297.641339%2B32.914049&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.05\tHD187796                    \tKHI CYG                     \t 34.00000\t       \t  1.6000\t700nm     \t1995MNRAS.276..640H\tHD187796\n 0.05\tHD187796                    \tKHI CYG                     \t 40.00000\t       \t  4.0000\t700nm     \t1995MNRAS.276..640H\tHD187796\n 0.05\tHD187796                    \tKHI CYG                     \t 43.50000\t       \t  4.0000\t700nm     \t1995MNRAS.276..640H\tHD187796\n 0.05\tHD187796                    \tKHI CYG                     \t 41.20000\t       \t  4.0000\t710nm     \t1995MNRAS.276..640H\tHD187796\n 0.05\tHD187796                    \tKHI CYG                     \t 33.30000\t       \t  4.0000\t833nm     \t1995MNRAS.276..640H\tHD187796\n 0.05\tHD187796                    \tKHI CYG                     \t 32.90000\t       \t  2.0000\t902nm     \t1995MNRAS.276..640H\tHD187796\n\n"
+}

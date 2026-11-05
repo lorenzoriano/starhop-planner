@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=243.586413-3.694326&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.02\tHD146051                    \tdel Oph                     \t  9.30000\t 9.5000\t  0.5000\tK         \t1996AJ....111.1705D\tHD146051\n 0.02\tHD146051                    \tHR6056                      \t  9.30000\t       \t  0.4000\t2.2mu     \t1998AJ....116..981D\tHD146051\n 0.02\tHD146051                    \tdel Oph                     \t 10.08000\t       \t  0.4800\tK         \t1998AJ....116..981D\tHD146051\n 0.02\tHD146051                    \tHR6056                      \t  9.71400\t10.4710\t  0.1170\t800nm     \t2003AJ....126.2502M\tHD146051\n 0.02\tHD146051                    \tDEL OPH                     \t         \t 9.9300\t  0.0090\t2.3       \t2013MNRAS.434..437C\tHD146051\n\n"
+}

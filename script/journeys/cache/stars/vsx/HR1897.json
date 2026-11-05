@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/vsx/vsx&-c=83.845422-5.416065&-c.rs=30&-out=Name,V,Type,max,n_max,f_min,min,n_min,Period,Sp&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tName\tV\tType\tmax\tn_max\tf_min\tmin\tn_min\tPeriod\tSp\narcsec\t \t \t \tmag\t \t \tmag\t \td\t\n-----\t------------------------------\t-\t------------------------------\t-------\t----------\t-\t-------\t--------\t-------------------\t-----------------------------\n 0.02\tNSV 2320                      \t1\t                              \t  5.050\tV         \t \t  5.190\tV       \t                   \tO9.5Vpe\n11.32\t[H97b] 741                    \t0\tTTS                           \t 13.970\tI         \tY\t  0.660\tI       \t                   \t\n12.25\t[H97b] 10605                  \t0\tTTS                           \t 14.880\tI         \tY\t  0.630\tI       \t                   \t\n13.95\t[H97b] 713                    \t0\tTTS                           \t 13.800\tI         \tY\t  0.150\tI       \t                   \t\n20.00\t[H97b] 3087                   \t0\tTTS                           \t 14.830\tI         \tY\t  0.270\tI       \t                   \t\n24.47\tV2425 Ori                     \t0\tINT                           \t 14.870\tI         \tY\t  0.700\tI       \t                   \tM1e\n24.81\tV0377 Ori                     \t0\tTTS/ROT                       \t 12.800\tV         \t \t 14.000\tV       \t    13.000000000000\t\n27.95\t[H97b] 5179                   \t0\tTTS/ROT                       \t 13.740\tI         \tY\t  0.050\tI       \t     3.530000000000\t\n29.08\tV2423 Ori                     \t0\tINT                           \t 12.560\tI         \tY\t  0.050\tI       \t                   \tM0e\n29.10\tV2421 Ori                     \t0\tTTS/ROT                       \t 13.010\tI         \tY\t  0.140\tI       \t     3.940000000000\tK2.5e\n\n"
+}

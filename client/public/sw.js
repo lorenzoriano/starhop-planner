@@ -9,6 +9,7 @@ const isBulkAsset = (path) => {
   const normalized = path.replace(/^\.\//, "");
   return (
     /^data\/binocular-images\//i.test(normalized) ||
+    /^data\/journey-images\//i.test(normalized) ||
     /^data\/finder-stars\//i.test(normalized) ||
     /^data\/moon\/(?:features\/.*|lroc-gray-.*)\.(?:avif|gif|jpe?g|png|webp)$/i.test(normalized)
   );

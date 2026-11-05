@@ -3,7 +3,7 @@ import tzLookup from "tz-lookup";
 import type { UnifiedTarget } from "./astronomy";
 import { lunarFeatures } from "./moon";
 import type { NightItem } from "./session";
-import { suggestSequence, type ObservingSession } from "./session-planner";
+import { stepMinutes, suggestSequence, type ObservingSession } from "./session-planner";
 
 export const SKYSAFARI_FORMAT_HELP = "https://support.simulationcurriculum.com/hc/en-us/articles/231539467-SkySafari-for-Android-Frequently-Asked-Questions";
 export const SKYSAFARI_ANDROID_HELP = "https://support.simulationcurriculum.com/hc/en-us/community/posts/28478507276567-How-To-Copy-Skylist-Files-To-Observing-List-Using-SkySafari-7-On-Android-Answer-Read-On";
@@ -97,7 +97,7 @@ export function buildSkySafariExport(context: ExportContext) {
     entry.comments.push([
       `StarHop ${scope === "plan" ? "plan" : "list"} #${index+1}: ${nameFor(item.id)}`,
       `${title} · ${stamp(at)} · ${zone} · Site: ${site}`,
-      slot?.date ? `Suggested start: ${stamp(slot.date)} · ${session!.minutesPerTarget} min · ${Math.round(slot.alt)}° high${slot.separation !== null ? ` · ${Math.round(slot.separation)}° from Moon` : ""}` : item.observedAt ? "Previously observed; not rescheduled." : session ? `Not scheduled: ${slot?.reason ?? "no usable slot"}` : "No timed session assigned.",
+      slot?.date ? `Suggested start: ${stamp(slot.date)} · ${stepMinutes(slot,session!)} min · ${Math.round(slot.alt)}° high${slot.separation !== null ? ` · ${Math.round(slot.separation)}° from Moon` : ""}` : item.observedAt ? "Previously observed; not rescheduled." : session ? `Not scheduled: ${slot?.reason ?? "no usable slot"}` : "No timed session assigned.",
       ...(feature ? [`Lunar landmark: ${feature.name}. Individual feature records remain in these notes.`] : []),
       ...(target?.binoTip ? [`Observing tip: ${target.binoTip}`] : []),
       item.observedAt ? `Recorded observation: ${item.observedAt}` : "Planned only; no observation recorded.",
@@ -118,7 +118,7 @@ export function buildSkySafariExport(context: ExportContext) {
     ...entries.map((entry,index) => `${index+1}. ${entry.name} — ${entry.catalog ?? entry.commonName}`),
     ...(lunarCount ? [`${lunarCount} lunar landmarks grouped into one Moon entry; feature details and records are in comments.`] : []),
     "", "SUGGESTED VIEWING SEQUENCE",
-    ...(scheduled.length ? scheduled.map((step,index) => `${index+1}. ${stamp(step.date!)} — ${step.name} · ${session!.minutesPerTarget} min · ${Math.round(step.alt)}° high${step.separation !== null ? ` · ${Math.round(step.separation)}° from Moon` : ""}\n   ${step.reason}`) : ["No timed targets in this session. Completed targets are not scheduled again."]),
+    ...(scheduled.length ? scheduled.map((step,index) => `${index+1}. ${stamp(step.date!)} — ${step.name} · ${stepMinutes(step,session!)} min · ${Math.round(step.alt)}° high${step.separation !== null ? ` · ${Math.round(step.separation)}° from Moon` : ""}\n   ${step.reason}`) : ["No timed targets in this session. Completed targets are not scheduled again."]),
     ...sequence.filter(step => !step.date).map(step => `Not scheduled: ${step.name} — ${step.reason}`),
     "", "OBJECTS, OBSERVATIONS AND NOTES — COMPLETE SAVED LIST",
   ];

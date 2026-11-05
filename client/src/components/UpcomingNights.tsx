@@ -5,6 +5,8 @@ import { formatInTimeZone } from "date-fns-tz";
 import type { UnifiedTarget } from "@/lib/astronomy";
 import { upcomingNightDateLabel, upcomingNights, type UpcomingNight } from "@/lib/upcoming-nights";
 import { clockNightDate } from "@/lib/astronomical-clock";
+import { illuminationPercent } from "@/lib/moon";
+import { displayName } from "@/lib/object-links";
 import "./ObservingCalendar.css";
 
 const glyphs = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"];
@@ -49,7 +51,7 @@ export function UpcomingNights({ lat, lon, timezone, date, onDate, targets = [],
         const selectedResult = night.selectedTarget;
         return <button type="button" key={night.date} className={`upcoming-night${night.date === selectedDate ? " is-selected" : ""}`} aria-label={`${upcomingNightDateLabel(night, timezone)}. Open at ${clock(night.chooseAt, timezone)}, during darkness`} aria-pressed={night.date === selectedDate} onClick={() => choose(night)}>
           <strong>{upcomingNightDateLabel(night, timezone)}</strong>
-          <span className="upcoming-night-moon"><span aria-hidden="true">{glyph(night.moonPhase)}</span> {night.moonLabel} · {Math.round(night.moonIllumination * 100)}%</span>
+          <span className="upcoming-night-moon"><span className="moon-phase-glyph" aria-hidden="true">{glyph(night.moonPhase)}</span> {night.moonLabel} · {illuminationPercent(night.moonIllumination)}% at {clock(night.moonAt, timezone)}</span>
           <span>{duration(night.moonFreeDarkHours)} moon-free dark</span>
           <span>{targetCount ?? ""}</span>
           {selectedResult && <small>{duration(selectedResult.goodAltitudeHours)} target time ≥30°{selectedResult.bestAt ? ` · best ${clock(selectedResult.bestAt, timezone)}` : ""}</small>}
@@ -58,10 +60,10 @@ export function UpcomingNights({ lat, lon, timezone, date, onDate, targets = [],
       })}
     </div>
     <div className="upcoming-best">
-      <strong>{selected ? `Best nights for ${selected.name} · next 30 nights` : "Best Moon-free nights · next 30 nights"}</strong>
+      <strong>{selected ? `Best nights for ${displayName(selected)} · next 30 nights` : "Best Moon-free nights · next 30 nights"}</strong>
       {best.length ? <div className="upcoming-best-list">{best.map((night, index) => <button type="button" key={night.date} onClick={() => choose(night)}>
         <span>{index + 1}. {upcomingNightDateLabel(night, timezone)}</span>
-        <span>{glyph(night.moonPhase)} {Math.round(night.moonIllumination * 100)}% Moon · {duration(night.moonFreeDarkHours)} moon-free</span>
+        <span><span className="moon-phase-glyph" aria-hidden="true">{glyph(night.moonPhase)}</span> {illuminationPercent(night.moonIllumination)}% Moon at {clock(night.moonAt, timezone)} · {duration(night.moonFreeDarkHours)} moon-free</span>
         {night.selectedTarget && <span>{duration(night.selectedTarget.goodAltitudeHours)} target above 30°{night.selectedTarget.bestAt ? ` · best ${clock(night.selectedTarget.bestAt, timezone)}` : ""}</span>}
         <small>{weatherLabel(night)}</small>
       </button>)}</div> : <span className="upcoming-best-empty">No target-friendly moon-free night found in the next 30 nights.</span>}

@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/wds/wds&WDS=01097%2B3537&-out=WDS,Disc,Comp,Obs2,pa2,sep2,mag1,mag2,SpType,pmRA1,pmDE1,pmRA2,pmDE2,Notes",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\nWDS\tDisc\tComp\tObs2\tpa2\tsep2\tmag1\tmag2\tSpType\tpmRA1\tpmDE1\tpmRA2\tpmDE2\tNotes\n \t \t \tyr\tdeg\tarcsec\tmag\tmag\t \tmas/yr\tmas/yr\tmas/yr\tmas/yr\t\n----------\t-------\t-----\t----\t---\t------\t------\t-----\t----------\t----\t----\t----\t----\t----\n01097+3537\tBAR   1\tAB   \t2016\t234\t 30.60\t 2.240\t14.40\tM1III     \t 175\t-112\t    \t    \tNL\n01097+3537\tBAR   1\tAC   \t2015\t276\t108.40\t 2.240\t12.98\tM0+IIIa   \t 176\t-112\t   5\t  -5\tNU\n01097+3537\tBAR   1\tAD   \t2015\t149\t 65.30\t 2.240\t11.80\tM0+IIIa   \t 176\t-112\t   5\t   0\tNL\n01097+3537\tBAR   1\tAE   \t2015\t303\t155.20\t 2.240\t11.92\tM0+IIIa   \t 176\t-112\t -16\t -17\tN\n01097+3537\tBAR   1\tAF   \t2015\t 81\t141.80\t 2.240\t11.59\tM0+IIIa   \t 176\t-112\t  44\t   6\tN\n01097+3537\tBAR   1\tAG   \t2016\t215\t206.40\t 2.240\t11.93\tM0+IIIa   \t 176\t-112\t  48\t  12\tN\n01097+3537\tBAR   1\tAH   \t2016\t224\t232.50\t 2.240\t10.70\tM0+IIIa   \t 176\t-112\t   2\t  -8\tN\n01097+3537\tBAR   1\tAI   \t2015\t294\t335.20\t 2.240\t11.92\tM0+IIIa   \t 176\t-112\t -12\t   3\tN\n01097+3537\tDAL  39\tAK   \t2016\t 88\t 59.10\t 2.240\t13.60\tM0+IIIa   \t 175\t-112\t    \t    \tN\n01097+3537\tKUI   5\tBJ   \t1998\t117\t 23.80\t14.400\t13.70\t          \t    \t    \t    \t    \tN\n01097+3537\tDAL  39\tKL   \t2016\t178\t  6.00\t13.600\t13.70\t          \t    \t    \t    \t    \tN\n\n"
+}

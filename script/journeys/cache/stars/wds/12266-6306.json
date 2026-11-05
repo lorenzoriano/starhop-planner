@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/wds/wds&WDS=12266-6306&-out=WDS,Disc,Comp,Obs2,pa2,sep2,mag1,mag2,SpType,pmRA1,pmDE1,pmRA2,pmDE2,Notes",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\nWDS\tDisc\tComp\tObs2\tpa2\tsep2\tmag1\tmag2\tSpType\tpmRA1\tpmDE1\tpmRA2\tpmDE2\tNotes\n \t \t \tyr\tdeg\tarcsec\tmag\tmag\t \tmas/yr\tmas/yr\tmas/yr\tmas/yr\t\n----------\t-------\t-----\t----\t---\t------\t------\t-----\t----------\t----\t----\t----\t----\t----\n12266-6306\tDUN 252\tAB   \t2024\t111\t  3.50\t 1.250\t 1.55\tB0.5V+B1V \t -35\t -15\t -43\t  -8\tNL\n12266-6306\tDUN 252\tAC   \t2020\t203\t 89.00\t 1.250\t 4.80\tB0.5V+B4V \t -35\t -15\t -40\t -14\tN\n12266-6306\tANT   1\tAG   \t2014\t145\t 58.70\t 1.250\t12.00\tB0.5IV    \t -35\t -15\t    \t    \tN\n12266-6306\tANT   1\tAH   \t2013\t167\t 47.30\t 1.250\t13.00\tB0.5IV    \t -35\t -15\t    \t    \tN\n12266-6306\tANT   1\tAI   \t2013\t227\t 63.30\t 1.250\t12.00\tB0.5IV    \t -35\t -15\t    \t    \tN\n12266-6306\tANT   7\tAJ   \t2010\t344\t 29.60\t 1.250\t12.00\tB1V       \t -35\t -15\t    \t    \tN\n12266-6306\tANT   7\tAK   \t2010\t218\t125.20\t 1.250\t13.00\tB1V       \t -35\t -15\t    \t    \tN\n12266-6306\tDUN 252\tBC   \t2020\t203\t 89.00\t 1.550\t 4.80\tB1V+B4V   \t -43\t  -8\t -40\t -14\tN\n12266-6306\tTOK   7\tCD   \t2000\t 53\t  2.40\t 5.400\t10.50\tB4IV      \t -38\t -15\t    \t    \tN  K\n12266-6306\tTOK   7\tCE   \t1997\t214\t  4.90\t 5.400\t17.00\tB4IV      \t -38\t -15\t    \t    \tN  K\n12266-6306\tTOK   7\tCF   \t2015\t114\t  7.40\t 5.400\t15.97\tB4IV      \t -38\t -15\t  -7\t   0\tNU K\n\n"
+}

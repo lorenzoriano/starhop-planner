@@ -5,7 +5,7 @@ import { equatorialOfDate } from "./fixed-equatorial";
  * sky graph construction, and route planning.
  */
 import * as Astro from 'astronomy-engine';
-import { planRoute as planVariableReachRoute, directionAngle, type DifficultyLevel } from './route-planner';
+import { planRoute as planVariableReachRoute, directionAngle, isNakedEyePoint, maxReach, GUIDED_MAX_HOP_FOV, GUIDED_OVERLAP_HOP_FOV, type DifficultyLevel } from './route-planner';
 import { landmarkScore, buildConstellationSegmentCounts } from './landmark-score';
 import { selectStrategy, getStrategy, type CostContext, type CostStrategyId } from './cost-strategies';
 
@@ -155,6 +155,16 @@ export interface ObservingParams {
   startStarId?: string;
   /** Internal continuation from a required field star, already reached in the preceding leg. */
   startIsWaypoint?:boolean;
+  /**
+   * Start the route at this sky node, whatever its type (a deep-sky object or a faint star already reached, e.g. the
+   * previous stop of a chained hop). Takes precedence over startStarId; the node must be above 5° altitude.
+   */
+  startNodeId?: string;
+  /**
+   * Objects outside the bundled catalogs (journey stops that are only in the journeys knowledge base, e.g. RW Cephei,
+   * Cygnus X-1), added as sky nodes so they can be a destination or a start node. Ignored when the id already exists.
+   */
+  extraTargets?: { id: string; name: string; ra: number; dec: number; mag: number }[];
   waypointIds?: string[];
 }
 
@@ -1410,6 +1420,7 @@ const CLASSIC_START_STAR_IDS: Record<string, string[]> = {
 };
 
 function findAnchors(nodes: SkyNode[], targetNode: SkyNode, count: number, params: ObservingParams): SkyNode[] {
+  if (params.startNodeId) return nodes.filter(node => node.id === params.startNodeId && node.id !== targetNode.id && node.alt >= 5).slice(0, 1);
   if (params.startStarId) return nodes.filter(node => node.id === params.startStarId && node.type === 'star' && node.mag <= (params.startIsWaypoint?params.limitingMag:4.5) && node.alt >= 5);
   const candidates=nodes.filter(n=>n.id!==targetNode.id&&n.type==='star'&&n.mag<=4.5&&n.alt>=15&&(!!n.name||!!n.bayer||!!n.flamsteed));
   candidates.sort((a,b)=>angularDistance(a.ra,a.dec,targetNode.ra,targetNode.dec)-angularDistance(b.ra,b.dec,targetNode.ra,targetNode.dec)||a.mag-b.mag);
@@ -1425,6 +1436,13 @@ function findAnchors(nodes: SkyNode[], targetNode: SkyNode, count: number, param
     if(selected.length>=count*2)break;
   }
   return selected;
+}
+
+/** Hop steps (fields, patterns, instructions) along an explicit path of sky nodes; used for chained same-field legs. */
+export function hopStepsAlong(path: SkyNode[], allNodes: SkyNode[], params: ObservingParams): HopStep[] {
+  const nodeMap = new Map(allNodes.map(n => [n.id, n]));
+  for (const node of path) nodeMap.set(node.id, node);
+  return generateHopSteps(path.map(n => n.id), nodeMap, allNodes, params);
 }
 
 /** A short, human-readable designation for route chips and field instructions. */
@@ -1484,6 +1502,8 @@ function generateHopSteps(
         : `${dist.toFixed(1)}° · about ${fovRatio.toFixed(1)} fields`)
       : '0';
 
+    // A move longer than the field to a star seen by eye: the star itself is the guide, not the overlap.
+    const byEye = fovRatio > 1 && isNakedEyePoint(node) ? ' It is bright enough to see by eye: aim straight at it.' : '';
     const namedStars = deduped.filter(v => v.name && v.name !== v.id);
     const patternAnalysis = inferPattern(node, deduped);
     const pattern = patternAnalysis.description;
@@ -1507,7 +1527,7 @@ function generateHopSteps(
       if (fovRatio <= 0.85) {
         instruction = `Nudge ${dir} (${hopDistLabel}) to bring ${dn} into view.`;
       } else {
-        instruction = `Move ${dir} (${hopDistLabel}) to bring ${dn} into view.`;
+        instruction = `Move ${dir} (${hopDistLabel}) to bring ${dn} into view.${byEye}`;
       }
       if (patternAnalysis.type !== 'field') {
         instruction += ` Confirm the ${patternAnalysis.type}: ${namedPattern}.`;
@@ -1517,7 +1537,7 @@ function generateHopSteps(
       if (fovRatio <= 0.85) {
         instruction = `Slide ${dir} (${hopDistLabel}) to ${dn} — keep the previous field partially in view.`;
       } else {
-        instruction = `Move ${dir} (${hopDistLabel}) to ${dn}.`;
+        instruction = `Move ${dir} (${hopDistLabel}) to ${dn}.${byEye}`;
       }
       if (namedStars.length > 0) {
         const guide = namedStars[0];
@@ -1578,69 +1598,81 @@ export function getConstellationName(abbr: string): string {
 const GENITIVE_NAMES:Record<string,string>=Object.fromEntries('And:Andromedae|Ant:Antliae|Aps:Apodis|Aqr:Aquarii|Aql:Aquilae|Ara:Arae|Ari:Arietis|Aur:Aurigae|Boo:Boötis|Cae:Caeli|Cam:Camelopardalis|Cnc:Cancri|CVn:Canum Venaticorum|CMa:Canis Majoris|CMi:Canis Minoris|Cap:Capricorni|Car:Carinae|Cas:Cassiopeiae|Cen:Centauri|Cep:Cephei|Cet:Ceti|Cha:Chamaeleontis|Cir:Circini|Col:Columbae|Com:Comae Berenices|CrA:Coronae Australis|CrB:Coronae Borealis|Crv:Corvi|Crt:Crateris|Cru:Crucis|Cyg:Cygni|Del:Delphini|Dor:Doradus|Dra:Draconis|Equ:Equulei|Eri:Eridani|For:Fornacis|Gem:Geminorum|Gru:Gruis|Her:Herculis|Hor:Horologii|Hya:Hydrae|Hyi:Hydri|Ind:Indi|Lac:Lacertae|Leo:Leonis|LMi:Leonis Minoris|Lep:Leporis|Lib:Librae|Lup:Lupi|Lyn:Lyncis|Lyr:Lyrae|Men:Mensae|Mic:Microscopii|Mon:Monocerotis|Mus:Muscae|Nor:Normae|Oct:Octantis|Oph:Ophiuchi|Ori:Orionis|Pav:Pavonis|Peg:Pegasi|Per:Persei|Phe:Phoenicis|Pic:Pictoris|Psc:Piscium|PsA:Piscis Austrini|Pup:Puppis|Pyx:Pyxidis|Ret:Reticuli|Sge:Sagittae|Sgr:Sagittarii|Sco:Scorpii|Scl:Sculptoris|Sct:Scuti|Ser:Serpentis|Sex:Sextantis|Tau:Tauri|Tel:Telescopii|Tri:Trianguli|TrA:Trianguli Australis|Tuc:Tucanae|UMa:Ursae Majoris|UMi:Ursae Minoris|Vel:Velorum|Vir:Virginis|Vol:Volantis|Vul:Vulpeculae'.split('|').map(pair=>pair.split(':')));
 export function getConstellationGenitive(abbr:string){return GENITIVE_NAMES[abbr]??getConstellationName(abbr);}
 
-// Score a route
-function scoreRoute(hops: HopStep[], params: ObservingParams): number {
+/** Quality points of one move (field after the start): overlap with the previous field, guide stars, pattern. */
+function moveQuality(hop: HopStep, fov: number, mode: 'binocular' | 'telescope', profile: ReturnType<typeof observingProfile>, nakedEyeJump = false): number {
+  const bino = mode === 'binocular';
+  const fovRatio = hop.distanceDeg / fov;
+  let q = 0;
+  // FOV overlap quality
+  if (fovRatio < 0.25) q -= 4;            // a tiny slide can look like progress while barely changing the view
+  else if (fovRatio < 0.35) q -= 1;
+  else if (fovRatio <= 0.7) q += 2;       // useful overlap
+  else if (fovRatio <= 0.85) q += 1;      // good overlap (15-30%)
+  else if (fovRatio <= 1.0) q -= 2;       // marginal overlap
+  else if (fovRatio <= 1.5) q -= bino ? 8 : 6; // no overlap
+  else q -= bino ? 14 : 10;               // way too far
+
+  if (hop.visibleGuideStars.length < 2) q -= 4;
+  if (hop.visibleGuideStars.length >= 3) q += 1;
+  // Pattern tiers
+  if (hop.patternType === 'triangle' || hop.patternType === 'diamond' || hop.patternType === 'cross' || hop.patternType === 'trapezoid') q += bino ? 4 : 3; // highly distinctive
+  else if (hop.patternType === 'kite' || hop.patternType === 'arrow' || hop.patternType === 'arc' || hop.patternType === 'bracket') q += bino ? 3 : 2; // recognizable
+  else if (hop.patternType === 'zigzag' || hop.patternType === 'chain') q += bino ? 2 : 1; // linear/directional
+  else if (hop.patternType === 'pair') q -= profile.pairPenalty;
+  else q -= profile.sparsePenalty;
+
+  q += Math.round((hop.patternScore - 50) / 12);
+  q += Math.round((hop.patternConfidence - 0.55) * 6);
+  // A classic route's jump onto a naked-eye star needs neither overlap nor a star pattern: the observer finds the star
+  // by eye and raises the binoculars onto it, so it counts at least as a good move however long it is.
+  return nakedEyeJump ? Math.max(q, NAKED_EYE_JUMP_QUALITY) : q;
+}
+/** Quality of a classic route's naked-eye jump (of MOVE_QUALITY_MAX): an easy, certain move. */
+const NAKED_EYE_JUMP_QUALITY = 11;
+
+/** Best quality a move can have (wide overlap, ≥ 3 guide stars, top-tier, high-scoring, confident pattern). */
+const MOVE_QUALITY_MAX = 14;
+/** Points a route with no moves' shortfall gets on top of the base (keeps a direct 2-move route with excellent fields ≈ 95). */
+const ROUTE_QUALITY_CREDIT = 27;
+/** Points lost per move beyond the moves the straight-line distance needs at ≤ 0.7 field per move. */
+const ROUTE_DETOUR_MOVE_PENALTY = { binocular: 6, telescope: 5 } as const;
+/** Points lost per unit of path stretch (path length / straight-line distance − 1). */
+const ROUTE_STRETCH_PENALTY = 5;
+
+/**
+ * Score a route 5–100 (shown as "n/100"; ranks alternatives). Every move costs its shortfall from the best possible
+ * field (MOVE_QUALITY_MAX − moveQuality ≥ 0), so the field quality is length-penalised: adding moves never adds points
+ * (the old per-move bonus let a 6-move detour outscore a direct 2-move route), and a detour only wins when it avoids
+ * poor fields. Moves beyond what the straight-line distance needs, extra path length and long routes also cost points.
+ */
+/**
+ * Route quality 5–100. `nakedEyeJumps` (hop indices) marks a classic route's moves onto naked-eye stars, scored as
+ * easy moves whatever their length (moveQuality); computed routes pass none.
+ */
+export function scoreRoute(hops: HopStep[], params: ObservingParams, nakedEyeJumps: ReadonlySet<number> = new Set()): number {
   const profile = observingProfile(params);
-  let score = profile.mode === 'binocular' ? 66 : 70;
+  const mode = profile.mode === 'binocular' ? 'binocular' : 'telescope';
+  const bino = mode === 'binocular';
+  const fov = Math.max(params.fovWidth, 0.25);
+  let score = bino ? 66 : 70;
 
+  // Length: a short route is easy; every field beyond three costs a little.
   const numHops = hops.length;
-  if (profile.mode === 'binocular') {
-    if (numHops <= 3) score += 6;
-    else if (numHops <= 4) score += 2;
-    else if (numHops <= 5) score -= 2;
-    else if (numHops <= 6) score -= 8;
-    else score -= 18 + (numHops - 6) * 10;
-  } else {
-    if (numHops <= 3) score += 5;
-    else if (numHops <= 4) score += 1;
-    else if (numHops <= 6) score -= (numHops - 4) * 4;
-    else score -= 20 + (numHops - 6) * 7;
-  }
+  if (numHops <= 3) score += bino ? 6 : 5;
+  else score += bino ? 6 - (numHops - 3) * 3 : 5 - (numHops - 3) * 2.5;
 
-  for (let i = 1; i < hops.length; i++) {
-    const hop = hops[i];
-    const fovRatio = hop.distanceDeg / Math.max(params.fovWidth, 0.25);
+  const moves = hops.slice(1);
+  score += ROUTE_QUALITY_CREDIT;
+  if (moves.length) {
+    score -= moves.reduce((sum, hop, i) => sum + Math.max(0, MOVE_QUALITY_MAX - moveQuality(hop, fov, mode, profile, nakedEyeJumps.has(i + 1))), 0);
 
-    // Score based on FOV overlap quality
-    if (fovRatio < 0.25) {
-      // A tiny slide can look like progress while barely changing the view.
-      score -= 4;
-    } else if (fovRatio < 0.35) {
-      score -= 1;
-    } else if (fovRatio <= 0.7) {
-      // Reward useful overlap without making tiny hops artificially attractive.
-      score += 2;
-    } else if (fovRatio <= 0.85) {
-      // Good overlap (15-30%) — small reward
-      score += 1;
-    } else if (fovRatio <= 1.0) {
-      // Marginal overlap — no bonus
-      score -= 2;
-    } else if (fovRatio <= 1.5) {
-      // No overlap — penalize
-      score -= (profile.mode === 'binocular' ? 8 : 6);
-    } else {
-      // Way too far — heavy penalty
-      score -= (profile.mode === 'binocular' ? 14 : 10);
-    }
-
-    if (hop.visibleGuideStars.length < 2) score -= 4;
-    if (hop.visibleGuideStars.length >= 3) score += 1;
-    // Pattern scoring tiers
-    if (hop.patternType === 'triangle' || hop.patternType === 'diamond' || hop.patternType === 'cross' || hop.patternType === 'trapezoid') {
-      score += profile.mode === 'binocular' ? 4 : 3; // Tier 1: highly distinctive
-    } else if (hop.patternType === 'kite' || hop.patternType === 'arrow' || hop.patternType === 'arc' || hop.patternType === 'bracket') {
-      score += profile.mode === 'binocular' ? 3 : 2; // Tier 2: recognizable
-    } else if (hop.patternType === 'zigzag' || hop.patternType === 'chain') {
-      score += profile.mode === 'binocular' ? 2 : 1; // Tier 3: linear/directional
-    } else if (hop.patternType === 'pair') {
-      score -= profile.pairPenalty;
-    } else {
-      score -= profile.sparsePenalty;
-    }
-
-    score += Math.round((hop.patternScore - 50) / 12);
-    score += Math.round((hop.patternConfidence - 0.55) * 6);
+    // Detour: moves and path length beyond the straight line from the first field to the last.
+    const first = hops[0].center, last = hops[hops.length - 1].center;
+    const direct = angularDistance(first.ra, first.dec, last.ra, last.dec);
+    const pathLength = moves.reduce((sum, h) => sum + h.distanceDeg, 0);
+    const neededMoves = Math.max(1, Math.ceil(direct / (0.7 * fov) - 1e-9));
+    score -= Math.max(0, moves.length - neededMoves) * ROUTE_DETOUR_MOVE_PENALTY[mode];
+    if (direct > 0) score -= Math.max(0, pathLength / direct - 1) * ROUTE_STRETCH_PENALTY;
   }
 
   if (hops.length > 0 && hops[0].visibleGuideStars.length > 0) {
@@ -1648,9 +1680,6 @@ function scoreRoute(hops: HopStep[], params: ObservingParams): number {
     if (brightestMag < 1.5) score += 6;
     else if (brightestMag < 2.5) score += 3;
   }
-
-  const totalDist = hops.reduce((sum, h) => sum + h.distanceDeg, 0);
-  score -= totalDist / (profile.mode === 'binocular' ? 6 : 8);
 
   return Math.max(5, Math.min(100, Math.round(score)));
 }
@@ -1665,7 +1694,7 @@ const GREEK_DESIGNATIONS: Record<string, string> = {
 const CONSTELLATION_GENITIVES: Record<string, string> = {
   andromedae: 'and', aquarii: 'aqr', aquilae: 'aql', arietis: 'ari', aurigae: 'aur',
   bootis: 'boo', cancri: 'cnc', 'canum venaticorum': 'cvn', 'canis majoris': 'cma', 'canis minoris': 'cmi',
-  capricorni: 'cap', cassiopeiae: 'cas', cephei: 'cep', ceti: 'cet', comae: 'com',
+  capricorni: 'cap', cassiopeiae: 'cas', cephei: 'cep', ceti: 'cet', 'comae berenices': 'com', comae: 'com',
   cygni: 'cyg', draconis: 'dra', geminorum: 'gem', herculis: 'her', hydrae: 'hya',
   lacertae: 'lac', leonis: 'leo', leporis: 'lep', librae: 'lib', lyrae: 'lyr',
   monocerotis: 'mon', ophiuchi: 'oph', orionis: 'ori', pegasi: 'peg', persei: 'per',
@@ -1693,44 +1722,165 @@ export function resolveKnownWaypoint(name: string, nodes: SkyNode[]): SkyNode | 
   const candidates = [name, ...name.split(/[()/]/)].map(normalizedDesignation).filter(Boolean);
   const catalogId = name.match(/\b(?:M|NGC|IC)\s*\d+\b/i)?.[0].replace(/\s/g, '').toUpperCase();
   if (catalogId) return nodes.find(n => n.id.toUpperCase() === catalogId) ?? null;
-  return nodes.find(node => {
-    const aliases = [node.name, node.id];
-    if (node.bayer && node.constellation) aliases.push(`${node.bayer} ${node.constellation}`);
-    if (node.flamsteed && node.constellation) aliases.push(`${node.flamsteed} ${node.constellation}`);
-    return aliases.some(alias => candidates.includes(normalizedDesignation(alias)));
-  }) ?? null;
+  // Proper names repeat (Markab is α Peg and κ Vel; Mizar, Castor, Diadem name both components): a match on the
+  // written designation ("Mizar (Zeta Ursae Majoris)") wins, then the brighter star.
+  let best: { node: SkyNode; byDesignation: boolean } | null = null;
+  for (const node of nodes) {
+    const designations: string[] = [];
+    if (node.bayer && node.constellation) designations.push(`${node.bayer} ${node.constellation}`);
+    if (node.flamsteed && node.constellation) designations.push(`${node.flamsteed} ${node.constellation}`);
+    const byDesignation = designations.some(alias => candidates.includes(normalizedDesignation(alias)));
+    if (!byDesignation && ![node.name, node.id].some(alias => candidates.includes(normalizedDesignation(alias)))) continue;
+    if (!best || (byDesignation && !best.byDesignation) || (byDesignation === best.byDesignation && node.mag < best.node.mag)) best = { node, byDesignation };
+  }
+  return best?.node ?? null;
+}
+
+/**
+ * Whether the current optic and difficulty can follow one move of a classic (field guide) route. A move onto a
+ * naked-eye star is always followable: the observer lowers the binoculars and finds it by eye, which is how the
+ * classic routes jump 7–8° along bright chains (Alpheratz → δ And → Mirach). Any other move must be one the
+ * planner itself would make: within one field for Guided, else within maxReach (for the target, the planner's
+ * last-hop rule: the start star's reach or two fields).
+ */
+export function isClassicMoveFollowable(from: SkyNode, to: SkyNode, isGoal: boolean, fov: number, difficulty: DifficultyLevel | undefined): boolean {
+  if (isNakedEyePoint(to)) return true;
+  const dist = angularDistance(from.ra, from.dec, to.ra, to.dec);
+  if (difficulty === 'beginner') return dist <= fov * GUIDED_MAX_HOP_FOV + 1e-9;
+  const reach = isGoal ? Math.max(maxReach(from.mag, fov, !!from.name), fov * 2) : maxReach(to.mag, fov, !!to.name);
+  return dist <= reach + 1e-9;
+}
+
+/**
+ * The field guide (classic) route for `entry` tonight, or null when it does not work: a waypoint does not resolve or
+ * is below 5°, the route does not end on the target, or a move cannot be followed with this field and difficulty
+ * (isClassicMoveFollowable). Guided keeps the classic naked-eye jumps and breaks only the longer moves onto fainter
+ * waypoints (or the target) into overlapping fields; those fields get computed instructions, the rest keep the guide's.
+ */
+/**
+ * Field guide waypoints that name an asterism or a pair rather than one star: the representative star the route
+ * means (the Belt's centre, the Square's corner toward the target…), or null for a purely descriptive step ("Trail of
+ * faint stars") that the route walks past; its instruction is kept on the next field. Keys are exact waypoint names.
+ */
+const KNOWN_WAYPOINT_ALIASES: Record<string, string | null> = {
+  'Keystone asterism': 'Eta Herculis',
+  'Great Square of Pegasus': 'Alpha Pegasi', // Markab; the bare name also matches κ Velorum
+  "Orion's Belt": 'Alnilam',
+  "Orion's Sword": 'Iota Orionis',
+  'Sagitta (the Arrow)': 'Delta Sagittae',
+  'Zeta Scorpii pair': 'Zeta Scorpii',
+  'Theta1/Theta2 Sgr': 'Theta Sagittarii',
+  'Omicron 1 & 2 Canis Majoris': 'Omicron Canis Majoris',
+  'Trail of faint stars': null,
+  'Triangular star group': null,
+  'Close pair of 6th-mag stars': null,
+  'T-shaped asterism': null,
+  'Triangle in Monoceros': null,
+};
+
+/**
+ * A field guide route's waypoints as sky nodes, with the guide's instruction for each, or null when a waypoint does
+ * not resolve. The route ends on `target` by definition: its last waypoint is the target whatever the guide calls it
+ * ("Double Cluster", "Albireo (Beta Cyg)"), and a route that passes the target and goes on to a companion (M81 → M82)
+ * ends at the target. Asterism waypoints resolve through KNOWN_WAYPOINT_ALIASES; a step that lands on the same star as
+ * the next one is merged into it. Altitude is not checked here.
+ */
+export function resolveKnownRouteWaypoints(entry: KnownRouteEntry, nodes: SkyNode[], target: SkyNode): { nodes: SkyNode[]; instructions: string[] } | null {
+  const out: SkyNode[] = [], instructions: string[] = [];
+  let carried = '';
+  for (let i = 0; i < entry.waypoints.length; i++) {
+    const wp = entry.waypoints[i], last = i === entry.waypoints.length - 1;
+    const alias = Object.prototype.hasOwnProperty.call(KNOWN_WAYPOINT_ALIASES, wp.name) ? KNOWN_WAYPOINT_ALIASES[wp.name] : wp.name;
+    if (alias === null && !last) { carried = `${carried}${wp.instruction} `; continue; }
+    const node = last ? target : resolveKnownWaypoint(alias ?? wp.name, nodes);
+    if (!node) return null;
+    const instruction = `${carried}${wp.instruction}`;
+    carried = '';
+    if (out.at(-1)?.id === node.id) { instructions[instructions.length - 1] = `${instructions.at(-1)} ${instruction}`; continue; }
+    out.push(node); instructions.push(instruction);
+    if (node.id === target.id) break;
+  }
+  return out.length >= 2 && out.at(-1)!.id === target.id ? { nodes: out, instructions } : null;
 }
 
 export function buildKnownRoute(entry: KnownRouteEntry, nodes: SkyNode[], target: SkyNode, params: ObservingParams): Route | null {
-  const resolved = entry.waypoints.map(wp => resolveKnownWaypoint(wp.name, nodes));
-  if (resolved.some(node => !node || node.alt < 5) || resolved.length < 2) return null;
-  let waypoints = resolved as SkyNode[];
-  if (waypoints[waypoints.length - 1].id !== target.id) return null;
+  const resolved = resolveKnownRouteWaypoints(entry, nodes, target);
+  if (!resolved || resolved.nodes.some(node => node.alt < 5)) return null;
+  let waypoints = resolved.nodes;
   const field=params.fovShape==='rectangle'?Math.min(params.fovWidth,params.fovHeight):params.fovWidth;
-  let adapted=false;
+  /** The guide's instruction for each final waypoint, or null for a field inserted (or reached) by an adapted move. */
+  let instructions: (string | null)[] = resolved.instructions;
   if(params.difficulty==='beginner'){
     const expanded=[waypoints[0]];
+    instructions=[resolved.instructions[0]];
     for(let i=1;i<waypoints.length;i++){
       const from=waypoints[i-1],to=waypoints[i];
-      if(angularDistance(from.ra,from.dec,to.ra,to.dec)>field*.7){
-        const segment=planVariableReachRoute(from,to,nodes.filter(n=>n.type==='star'),field,'beginner');
+      if(!isNakedEyePoint(to)&&angularDistance(from.ra,from.dec,to.ra,to.dec)>field*GUIDED_OVERLAP_HOP_FOV){
+        const segment=planVariableReachRoute(from,to,nodes.filter(n=>n.type==='star'),field,'beginner',undefined,undefined,{nakedEyeMoves:false});
         if(!segment)return null;
-        expanded.push(...segment.path.slice(1));adapted=true;
-      }else expanded.push(to);
+        const added=segment.path.slice(1);
+        expanded.push(...added);instructions.push(...added.map(()=>null));
+      }else{expanded.push(to);instructions.push(resolved.instructions[i]);}
     }
     waypoints=expanded;
   }
+  for(let i=1;i<waypoints.length;i++)if(!isClassicMoveFollowable(waypoints[i-1],waypoints[i],i===waypoints.length-1,field,params.difficulty))return null;
   const hops = generateHopSteps(waypoints.map(n => n.id), new Map(nodes.map(n => [n.id, n])), nodes, params);
-  if(!adapted)hops.forEach((hop, i) => { hop.instruction = entry.waypoints[i].instruction; });
-  return { id: 'route-expert', score: scoreRoute(hops, params), startAnchor: waypoints[0], target, hops, isExpertRoute: true, expertSource: entry.source };
+  hops.forEach((hop, i) => { const own = instructions[i]; if (own) hop.instruction = own; });
+  const nakedEyeJumps = new Set(waypoints.flatMap((node, i) => (i > 0 && isNakedEyePoint(node) ? [i] : [])));
+  return { id: 'route-expert', score: scoreRoute(hops, params, nakedEyeJumps), startAnchor: waypoints[0], target, hops, isExpertRoute: true, expertSource: entry.source };
+}
+
+/** Upper bound on the moves of a sensible leg: ceil(distance / (0.7·field)) + 3 (hopper audit; hop-chain re-exports it). */
+export const legHopBound = (distanceDeg: number, fovDeg: number) => Math.ceil(distanceDeg / (0.7 * fovDeg)) + 3;
+/** A route whose moves stay within legHopBound of its own first field → target distance (no long detour). */
+export function routeWithinHopBound(route: Pick<Route, 'hops' | 'target'>, fovDeg: number): boolean {
+  const first = route.hops[0]?.center;
+  return !!first && route.hops.length - 1 <= legHopBound(angularDistance(first.ra, first.dec, route.target.ra, route.target.dec), fovDeg);
+}
+
+/**
+ * Longest path a working classic route may travel, as a multiple of its start → target distance. Some field guide
+ * entries are pointers rather than hops ("M44 lies between Pollux and Regulus", "M3 is midway from Arcturus to Cor
+ * Caroli"): walked as hops they overshoot to the far star and come back (3–4× the direct distance), so they are not
+ * promoted. The Andromeda chain to M31 travels ≈ 1.6×.
+ */
+export const CLASSIC_MAX_STRETCH = 2.5;
+/** A classic route that works with this field: within routeWithinHopBound and CLASSIC_MAX_STRETCH (see classicRoutesFirst). */
+export function classicRouteWorks(route: Pick<Route, 'hops' | 'target'>, fovDeg: number): boolean {
+  if (!routeWithinHopBound(route, fovDeg)) return false;
+  const first = route.hops[0].center;
+  const direct = angularDistance(first.ra, first.dec, route.target.ra, route.target.dec);
+  const path = route.hops.slice(1).reduce((sum, h) => sum + h.distanceDeg, 0);
+  return direct <= 0 || path <= CLASSIC_MAX_STRETCH * direct;
+}
+
+/**
+ * The owner's rule: "if there are classic routes that work, then we should try to use them because they exist for a
+ * good reason. We should revert to algorithmic calculations whenever a classic, well-established, good route does
+ * not exist." A classic route works when buildKnownRoute returns it (every waypoint resolves and is up, the start
+ * anchor is up, the equipment matches, every move is followable with this field and difficulty) and classicRouteWorks
+ * (its moves stay within routeWithinHopBound — an adapted classic that takes far more fields than its distance needs
+ * is not a good route with this optic — and it does not overshoot past CLASSIC_MAX_STRETCH). Working classic routes lead, by score among themselves, ahead of every computed route
+ * whatever its score; everything else (computed routes and a classic over the bound) follows by score. A computed
+ * route identical to a working classic is dropped (shown once, as the classic).
+ */
+export function classicRoutesFirst(computed: Route[], classic: Route[], fovDeg: number): Route[] {
+  const byScore = (a: Route, b: Route) => b.score - a.score;
+  const working = classic.filter(r => classicRouteWorks(r, fovDeg));
+  // A computed route through exactly the classic's fields is the same route: list it once, as the classic.
+  const fields = (r: Route) => r.hops.map(h => `${h.center.ra},${h.center.dec}`).join(';');
+  const classicFields = new Set(working.map(fields));
+  const others = computed.filter(r => !classicFields.has(fields(r)));
+  return [...working.sort(byScore), ...[...others, ...classic.filter(r => !working.includes(r))].sort(byScore)];
 }
 
 export async function planRoutes(params:ObservingParams):Promise<Awaited<ReturnType<typeof planRoutesInternal>>&{warning?:string}> {
-  const via=Array.from(new Set(params.waypointIds??[])).filter(id=>id!==params.targetId&&id!==params.startStarId).slice(0,8);
+  const via=Array.from(new Set(params.waypointIds??[])).filter(id=>id!==params.targetId&&id!==params.startStarId&&id!==params.startNodeId).slice(0,8);
   if(via.length){
     let anchor=params.startStarId,combined:Route|null=null,last:Awaited<ReturnType<typeof planRoutesInternal>>|null=null;
     for(const id of [...via,params.targetId]){
-      const leg=await planRoutes({...params,targetId:id,startStarId:anchor,startIsWaypoint:!!combined,waypointIds:[]});
+      const leg=await planRoutes({...params,targetId:id,startStarId:anchor,startNodeId:combined?undefined:params.startNodeId,startIsWaypoint:!!combined,waypointIds:[]});
       if(!leg.routes.length)return {...leg,routes:[],warning:`Cannot connect the required waypoint ${id}. Choose a visible guide star or remove that waypoint.`};
       const best=leg.routes[0];
       if(id!==params.targetId)best.hops.at(-1)!.instruction=`Required reference: ${best.target.name}. Confirm this field before continuing to the final destination.`;
@@ -1741,9 +1891,17 @@ export async function planRoutes(params:ObservingParams):Promise<Awaited<ReturnT
     return {...last!,routes:[combined!]};
   }
   const result=await planRoutesInternal(params);
-  if(params.difficulty==='beginner'&&!params.startStarId){
+  if(params.difficulty==='beginner'&&!params.startStarId&&!params.startNodeId){
     const preferredAnchorId=CLASSIC_START_STAR_IDS[params.targetId]?.[0];
-    if(preferredAnchorId&&!result.routes.some(route=>!route.isExpertRoute&&route.startAnchor.id===preferredAnchorId)){
+    // A working classic route already leads (classicRoutesFirst) and keeps the lead; the classic start then leads the
+    // computed routes, whether Guided connects it (below) or, without a working classic, only a Balanced route does (fallback).
+    const field=params.fovShape==='rectangle'?Math.min(params.fovWidth,params.fovHeight):params.fovWidth;
+    const classicLead=result.routes.filter(route=>route.isExpertRoute&&classicRouteWorks(route,field));
+    const rest=result.routes.filter(route=>!classicLead.includes(route));
+    const guidedClassic=preferredAnchorId?rest.filter(route=>!route.isExpertRoute&&route.startAnchor.id===preferredAnchorId):[];
+    if(guidedClassic.length)return {...result,routes:[...classicLead,...guidedClassic,...rest.filter(route=>!guidedClassic.includes(route))]};
+    if(classicLead.length)return result;
+    if(preferredAnchorId){
       const relaxed=await planRoutesInternal({...params,difficulty:'intermediate',startStarId:preferredAnchorId});
       const classicRoutes=relaxed.routes.filter(route=>!route.isExpertRoute&&route.startAnchor.id===preferredAnchorId);
       if(classicRoutes.length){
@@ -1771,6 +1929,11 @@ async function planRoutesInternal(params: ObservingParams): Promise<{
     loadStars(), loadMessier(), loadBinocularTargets()
   ]);
   const allNodes = buildSkyNodes(stars, messier, params, binoTargets);
+  for (const extra of params.extraTargets ?? []) {
+    if (allNodes.some(n => n.id === extra.id)) continue;
+    const { alt, az } = eqToHorizontal(extra.ra, extra.dec, params.lat, params.lon, params.date);
+    if (alt >= 5) allNodes.push({ id: extra.id, ra: extra.ra, dec: extra.dec, alt, az, mag: extra.mag, name: extra.name, type: 'binocular' });
+  }
 
   // Find target
   const targetNode = allNodes.find(n => n.id === params.targetId) || null;
@@ -1778,18 +1941,16 @@ async function planRoutesInternal(params: ObservingParams): Promise<{
     // Check if target exists but is below horizon
     const mObj = messier.find(m => m.id === params.targetId);
     const bObj = binoTargets.find(t => t.id === params.targetId);
-    const anyObj = mObj || bObj;
+    const anyObj = mObj || bObj || params.extraTargets?.find(t => t.id === params.targetId) || stars.find(s => s.id === params.targetId);
     if (anyObj) {
-      const ra = mObj ? mObj.ra : bObj!.ra;
-      const dec = mObj ? mObj.dec : bObj!.dec;
-      const { alt } = eqToHorizontal(ra, dec, params.lat, params.lon, params.date);
+      const { alt } = eqToHorizontal(anyObj.ra, anyObj.dec, params.lat, params.lon, params.date);
       return { routes: [], nodes: allNodes, targetNode: null, belowHorizon: alt < 5 };
     }
     return { routes: [], nodes: allNodes, targetNode: null, belowHorizon: false };
   }
 
   // ─── Load known (expert) routes for this target ───
-  if (params.startStarId && !findAnchors(allNodes, targetNode, 1, params).length) {
+  if ((params.startStarId || params.startNodeId) && !findAnchors(allNodes, targetNode, 1, params).length) {
     return { routes: [], nodes: allNodes, targetNode, belowHorizon:false, anchorUnavailable:true };
   }
   const knownRoutesData = await loadKnownRoutes().catch(() => [] as KnownRoute[]);
@@ -1800,7 +1961,8 @@ async function planRoutesInternal(params: ObservingParams): Promise<{
       if (!isKnownRouteFeasible(knownEntry, params.lat, params.lon, params.date)) continue;
       if (knownEntry.equipmentType !== 'both' && knownEntry.equipmentType !== (params.observingMode ?? 'telescope')) continue;
       const resolved = buildKnownRoute(knownEntry, allNodes, targetNode, params);
-      if (resolved && (!params.startStarId || resolved.startAnchor.id === params.startStarId)) expertRoutes.push({ ...resolved, id: `route-expert-${expertRoutes.length + 1}` });
+      const requiredStart = params.startNodeId ?? params.startStarId;
+      if (resolved && (!requiredStart || resolved.startAnchor.id === requiredStart)) expertRoutes.push({ ...resolved, id: `route-expert-${expertRoutes.length + 1}` });
     }
   }
 
@@ -1922,9 +2084,7 @@ async function planRoutesInternal(params: ObservingParams): Promise<{
       }
     }
 
-    routes.sort((a, b) => b.score - a.score);
-    const allRoutes = [...routes, ...expertRoutes].sort((a, b) => b.score - a.score);
-    return { routes: allRoutes, nodes: allNodes, targetNode, belowHorizon: false };
+    return { routes: classicRoutesFirst(routes, expertRoutes, params.fovShape === 'rectangle' ? Math.min(params.fovWidth, params.fovHeight) : params.fovWidth), nodes: allNodes, targetNode, belowHorizon: false };
   }
 
   // ─── Legacy Dijkstra algorithm (no difficulty set) ───
@@ -1975,10 +2135,7 @@ async function planRoutesInternal(params: ObservingParams): Promise<{
     });
   }
 
-  // Sort by score descending
-  routes.sort((a, b) => b.score - a.score);
-
-  return { routes: [...routes, ...expertRoutes].sort((a, b) => b.score - a.score), nodes: allNodes, targetNode, belowHorizon: false };
+  return { routes: classicRoutesFirst(routes, expertRoutes, params.fovShape === 'rectangle' ? Math.min(params.fovWidth, params.fovHeight) : params.fovWidth), nodes: allNodes, targetNode, belowHorizon: false };
 }
 
 // ─── Stereo Projection ───────────────────────────────────────

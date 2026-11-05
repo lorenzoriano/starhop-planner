@@ -67,6 +67,47 @@ export const defaultSettings: Settings = {
   binocularProfileVersion:1,
   skyBrightness: 19.0,
 };
+/** The journey fields of a night item (Planner "Journey · stop n" badge and the stop's own planned time). */
+export interface JourneyTag { journeyKey?: string; journeyStop?: number; plannedAt?: string }
+/** Only the journey fields of an item (no undefined keys), to spread over a merged item. */
+export const journeyTagOf = (item: JourneyTag): JourneyTag => ({
+  ...(item.journeyKey ? { journeyKey: item.journeyKey } : {}), ...(item.journeyStop ? { journeyStop: item.journeyStop } : {}), ...(item.plannedAt ? { plannedAt: item.plannedAt } : {}),
+});
+/**
+ * One merge rule for a night item's journey tag (appendNightItems, the stored-list dedupe, backup merge):
+ * - an untagged item takes the incoming journey, its stop and its planned time;
+ * - the same journey and stop (or a stop on only one side) fills what is missing: the stop number and, when the item
+ *   has no planned time yet, the incoming one (`preferIncomingTime`: the incoming time wins when present, as a backup
+ *   restore does);
+ * - another journey's tag never changes an item.
+ * Returns `previous` itself when nothing changes.
+ */
+export function mergeJourneyTag<T extends JourneyTag>(previous: T, incoming: JourneyTag, o: { preferIncomingTime?: boolean } = {}): T {
+  if (!incoming.journeyKey) return previous;
+  const adopt = !previous.journeyKey;
+  const same = previous.journeyKey === incoming.journeyKey && (!previous.journeyStop || !incoming.journeyStop || previous.journeyStop === incoming.journeyStop);
+  if (!adopt && !same) return previous;
+  const journeyStop = adopt ? incoming.journeyStop : previous.journeyStop ?? incoming.journeyStop;
+  const plannedAt = o.preferIncomingTime ? incoming.plannedAt ?? previous.plannedAt : previous.plannedAt ?? incoming.plannedAt;
+  if (!adopt && journeyStop === previous.journeyStop && plannedAt === previous.plannedAt) return previous;
+  const { journeyKey: _k, journeyStop: _s, plannedAt: _p, ...rest } = previous;
+  return { ...rest, journeyKey: incoming.journeyKey, ...(journeyStop ? { journeyStop } : {}), ...(plannedAt ? { plannedAt } : {}) } as T;
+}
+/**
+ * Drop the journey tag (journeyKey, journeyStop) of items whose journey no longer resolves (`resolves`, e.g.
+ * journeys/journey-key.ts journeyKeyResolver(kb) after a KB rebuild). The items stay planned, with their planned
+ * time. Returns `items` itself when every tag still resolves.
+ */
+export function stripStaleJourneyTags<T extends JourneyTag>(items: T[], resolves: (key: string) => boolean): T[] {
+  let changed = false;
+  const next = items.map((item) => {
+    if (!item.journeyKey || resolves(item.journeyKey)) return item;
+    changed = true;
+    const { journeyKey: _k, journeyStop: _s, ...rest } = item;
+    return rest as T;
+  });
+  return changed ? next : items;
+}
 export const nightListSchema = z
   .array(
     z.object({
@@ -75,6 +116,12 @@ export const nightListSchema = z
       observedAt: z.string().datetime().optional(),
       observations:z.array(z.object({at:z.string().datetime(),notes:z.string().default(""),instrument:z.string().optional()})).max(2000).optional(),
       notes: z.string(),
+      /** Journey this item was added from (Planner "Journey · stop n" badge); optional, older data has none. */
+      journeyKey:z.string().max(500).optional(),
+      /** 1-based stop number in that journey. */
+      journeyStop:z.number().int().min(1).max(99).optional(),
+      /** Planned start of this item (ISO), e.g. a journey stop's own time; the Planner keeps it instead of re-timing the item. Optional, older data has none. */
+      plannedAt:z.string().datetime().optional(),
     }),
   )
   .max(1000).transform(items=>{
@@ -85,7 +132,8 @@ export const nightListSchema = z
       merged.set(id,{...previous,addedAt:previous.addedAt<item.addedAt?previous.addedAt:item.addedAt,
         observations:Array.from(new Map([...(previous.observations??[]),...(item.observations??[])].map(entry=>[`${entry.at}/${entry.notes}`,entry])).values()),
         notes:previous.notes&&item.notes&&previous.notes!==item.notes?`${previous.notes}\n\n${item.notes}`:previous.notes||item.notes,
-        observedAt:previous.observedAt&&item.observedAt?(previous.observedAt>item.observedAt?previous.observedAt:item.observedAt):previous.observedAt??item.observedAt});
+        observedAt:previous.observedAt&&item.observedAt?(previous.observedAt>item.observedAt?previous.observedAt:item.observedAt):previous.observedAt??item.observedAt,
+        ...journeyTagOf(mergeJourneyTag(previous,item))});
     }
     return Array.from(merged.values());
   });

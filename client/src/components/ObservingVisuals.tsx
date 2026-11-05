@@ -2,7 +2,7 @@ import { useSvgWidth } from "@/hooks/use-svg-width";
 import { useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
 import { observationProfile, suggestedObservation, createMoonSampler, observationAt, profileCursorDate } from "@/lib/observing-profile";
-import type { MoonState } from "@/lib/moon";
+import { moonIllumination, moonIlluminationLabel, type MoonState } from "@/lib/moon";
 import { type VisibilityWindow } from "@/lib/target-visibility";
 import {
   type UnifiedTarget,
@@ -153,8 +153,10 @@ export function NightAltitudeChart({target,lat,lon,night,timezone,skyBrightness=
   const moonDownAllNight=samples.every(sample=>sample.moon.alt<=-sample.moon.diameter/2);
   const best=scheduledAt?observationAt(target,lat,lon,scheduledAt,skyBrightness,moonAt??localMoon):suggestedObservation(samples.filter(s=>s.moon.sunAlt<=-18),target,range);
   const middle=new Date((+start+ +end)/2),phaseSample=samples.reduce((a,b)=>Math.abs(+a.date-+middle)<Math.abs(+b.date-+middle)?a:b);
-  const shownMoon=inspected??phaseSample;
-  const illumination=Math.round(shownMoon.moon.illumination*100);
+  // The selected time when it falls in this night (so the number matches the rest of the app), else mid-darkness.
+  const selectedSample=selectedAt&&selectedAt>=start&&selectedAt<=end?samples.reduce((a,b)=>Math.abs(+a.date-+selectedAt)<Math.abs(+b.date-+selectedAt)?a:b):null;
+  const shownMoon=inspected??selectedSample??phaseSample;
+  const illumination=moonIllumination(shownMoon.date).percent;
   const selectFraction=(fraction:number)=>{const date=profileCursorDate(night,fraction);if(date)setCursor(previous=>previous?.key===profileKey&&+previous.date===+date?previous:{key:profileKey,date});};
   const selectPointer=(event:React.PointerEvent<SVGSVGElement>)=>{const svg=event.currentTarget,matrix=svg.getScreenCTM();
     if(!matrix)return;
@@ -193,7 +195,7 @@ export function NightAltitudeChart({target,lat,lon,night,timezone,skyBrightness=
     <span id={`${clipId}-help`} className="sr-only">Hover, tap or drag horizontally to inspect. Arrow keys move one minute; Shift plus arrow moves fifteen minutes; Home and End select dusk and dawn.</span>
     <output className={`night-chart-readout ${inspected?"active":""}`} aria-live="polite">{readout}</output>
     <div className="night-moon-illumination">
-      <div className="night-moon-illumination-label"><span>Moon illumination</span><strong>{illumination}% <span>· {shownMoon.moon.alt<=-shownMoon.moon.diameter/2?"Moon down":"above horizon"}</span></strong></div>
+      <div className="night-moon-illumination-label"><span>Moon illumination</span><strong>{moonIlluminationLabel(shownMoon.date,timezone,{withTime:true})} <span>· {shownMoon.moon.alt<=-shownMoon.moon.diameter/2?"Moon down":"above horizon"}</span></strong></div>
       <div className="night-moon-meter" role="meter" aria-label={`Moon illumination at ${time(shownMoon.date)}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={illumination} aria-valuetext={`${illumination}% illuminated; 0% new Moon, 100% full Moon`}><span style={{width:`${illumination}%`,background:`rgb(${Math.round(45+illumination*1.25)} ${Math.round(45+illumination*1.25)} ${Math.round(45+illumination*1.25)})`}}/></div>
       <div className="night-moon-scale"><span>0% · New Moon</span><span>100% · Full Moon</span></div>
     </div>

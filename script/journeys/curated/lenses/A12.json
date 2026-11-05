@@ -1,0 +1,1125 @@
+{
+  "archetype": "A12",
+  "storyline": "A bright Moon does not dim a single star. It adds a faint, even glow to every patch of sky, and whether you can still see something depends on how tightly it packs its light against that glow. The journey walks from the tightest packing to the loosest, starting with a single bright point whose color shrugs off the glare and then two points the glare cannot merge. Next comes a cluster whose faint members drop out while its bright ones remain. The walk ends on a glow of stars or gas too crowded or too far to split, the faintest kind of thing that still survives, though smaller than on a dark night. Each stop spreads its light more thinly than the last, so by the end you have seen exactly where moonlight starts to win, and why most nebulae and galaxies have vanished tonight or shrunk to their brightest hearts.",
+  "beats": [
+    {
+      "step": 1,
+      "label": "A single point of color",
+      "maxStops": 2
+    },
+    {
+      "step": 2,
+      "label": "Two points that stay two",
+      "maxStops": 2
+    },
+    {
+      "step": 3,
+      "label": "A crowd of points, thinned",
+      "maxStops": 2
+    },
+    {
+      "step": 4,
+      "label": "Where points blur into glow",
+      "maxStops": 1
+    }
+  ],
+  "minBeats": 3,
+  "endSteps": [
+    3,
+    4
+  ],
+  "narration": {
+    "title.A12-moonlit": [
+      "Moonlight over {region}",
+      "{region}'s Moon-Proof Lights",
+      "{region} Against the Glare",
+      "The Stars of {region} That Outlast the Moon",
+      "What Can Outshine the Moon in {region}?"
+    ],
+    "question.A12-moonlit": [
+      "When the Moon floods the sky, what survives, and why those things and not others?",
+      "Why does moonlight wash out faint, spread-out light yet leave every bright star untouched?",
+      "What decides which sights a bright Moon can steal and which it cannot?"
+    ],
+    "hook.A12-moonlit": [
+      "Moonlight never dims a star; it brightens the sky behind it, and that changes everything.",
+      "A bright Moon steals only what spreads its light thin, so points of light come through.",
+      "The Moon cannot dim a single star, only the sky between them, and that is the whole game."
+    ],
+    "story.A12-moonlit": [
+      "Tonight you start with bright points of light and move, stop by stop, toward things that spread their light more thinly, watching each time how much the Moon can take. The answer turns out to hang on one thing, how densely each sight crowds its light together.",
+      "Starting at {hook}, each stop spreads its light a little more thinly than the last. Somewhere along that line the Moon begins to win, and the night is about finding where.",
+      "A bright Moon turns the sky over {region} into a lesson in contrast. From {hook} onward you follow light as it spreads out, from sharp points toward crowds of them, and see exactly how much of it the glare can swallow."
+    ],
+    "payoff.A12-moonlit": [
+      "The Moon never dims anything; it lays the same pale glow over the whole sky, and only what outshines that glow patch for patch survives. A star packs all its light into a point and wins easily, while light spread over a patch, whether faint stars blended together, glowing gas or a distant galaxy, has to beat the glow on every patch at once. The things a bright Moon hides are still up there, shining exactly as before and waiting for a darker night.",
+      "What decides it is how tightly something packs its light, because moonlight brightens every patch of sky alike, and a point of starlight towers over its patch while a faint, spread-out glow barely rises above its own. Stop by stop the light you looked at spread more thinly, and the Moon's power grew with it. That is why the faintest, widest things in the sky are the first a bright Moon takes, and why they return untouched the moment it sets.",
+      "Moonlight is light added, not light taken away: it raises the floor of the whole sky, so anything that packs its light into a point stays far above it while anything spread thin sinks beneath. That is why a star keeps its color and its companions under any Moon, while faint stars, blended clusters and soft glows give way in order of how thinly they spread. On the next moonless night the same patch of sky will hold all of them again, not because they brightened but because the floor came down."
+    ],
+    "story.A12-moonlit.end3": [
+      "Tonight's stops run from bright points of light that no Moon can touch to a whole cluster of stars, and at the end you watch the Moon's cut fall right through a crowd of stars. What survives turns out to hang on one thing, how much light each point packs.",
+      "Starting at {hook}, each stop spreads its light among more stars than the last, until at {name} a whole crowd of stars meets the moonlit sky and only its brightest members get through. Somewhere along that line the Moon begins to win, and the night is about finding where.",
+      "A bright Moon turns the sky over {region} into a lesson in contrast. From {hook} to {name} you go from sharp, bright points to a crowd of them, and see exactly which stars the glare can swallow and which it cannot."
+    ],
+    "story.A12-moonlit.end4": [
+      "Tonight you start with bright points of light and move, stop by stop, toward things that spread their light ever more thinly, ending on a glow that the Moon trims to its heart. What survives turns out to hang on one thing, how densely each sight crowds its light together.",
+      "Starting at {hook}, each stop spreads its light a little more thinly than the last, until it reaches the soft glow of {name}. Somewhere along that line the Moon begins to win, and the night is about finding where.",
+      "A bright Moon turns the sky over {region} into a lesson in contrast. From {hook} to {name} you follow light as it spreads out, from sharp points to a glow, and see exactly how much of it the glare can swallow."
+    ],
+    "payoff.A12-moonlit.end3": [
+      "The Moon took nothing from the stars themselves; it raised the glow of the whole sky, and each point of light survived or vanished by how far it stood above that glow. The night ended on {name}, a crowd that shows the Moon's rule at work: faint members drop below the risen sky while bright ones stand clear. A faint nebula or galaxy is that same cut taken to the extreme, light so thinly spread that none of it clears the glow, which is why a moonlit night belongs to stars and clusters.",
+      "What a bright Moon can steal is decided by brightness per patch of sky: a star concentrates its light into a point the glow cannot match, and a cluster keeps only the members bright enough to stand on their own. At {name} you watched that cut fall through a crowd of stars, sparing the brightest and dimming the rest. The blended glow of more distant clusters, and the faint light of nebulae and galaxies, falls on the losing side of the same cut, and all of it returns on the first dark night.",
+      "Moonlight is light added to the sky, never taken from a star, so everything you saw tonight kept its own light and only lost contrast against a brighter background. The brighter and more concentrated a thing, the less that mattered, and by the time the night reached a whole crowd of stars the Moon was dimming its faintest members one by one. Nothing in the sky is spared for being famous or large, only for packing its light tightly, which is why the soft glows of nebulae and galaxies are the first things a bright Moon hides."
+    ],
+    "payoff.A12-moonlit.end4": [
+      "The Moon never dims anything; it lays the same pale glow over the whole sky, and only what outshines that glow patch for patch survives. A star packs all its light into a point and wins easily, a cluster keeps just its brightest members, and a glow like {name} survives only where it is densest, trimmed to its bright heart. Most nebulae and galaxies spread their light too thin even for that, and they sink below the glow, still shining exactly as before and waiting for a darker night.",
+      "What decides it is how tightly an object packs its light, because moonlight brightens every patch of sky alike, and a point of starlight towers over its patch while a faint glow barely rises above it. Stop by stop the light spread thinner, and by the time you reached {name} you had watched the Moon's power grow with it. That is why faint nebulae and galaxies are the first things a bright Moon takes, and why even the brightest of them shrink to their cores rather than vanish.",
+      "Moonlight is light added, not light taken away: it raises the floor of the whole sky, so anything that packs its light into a point stays far above it while anything spread thin sinks beneath. That is why a star keeps its color and its companions under any Moon, while a glow like {name} keeps only its densest core. The fainter nebulae and galaxies you could not see tonight are still up there, as bright as on the darkest night of the year."
+    ]
+  },
+  "transitions": {
+    "pairs": {
+      "1>1": [
+        "{next} is another single point, and like {prev} it holds its own against the glow however bright the Moon.",
+        "From {prev} to {next} you stay with lone points of light, each packing all its light into a spot the moonlit sky cannot match."
+      ],
+      "1>2": [
+        "{prev} showed that a single point of light shrugs off the Moon; at {next} there is more than one point in the field, and the glow falls on each of them alike.",
+        "One bright point held its own at {prev}, and at {next} you have stars side by side, a chance to see how the glow treats each of them."
+      ],
+      "2>2": [
+        "Beside {prev}, {next} is a fresh pair with its own mix of brightness and spacing, and its fainter star is the one to watch, because what the Moon takes from a pair is contrast, starting with the dimmer star.",
+        "{next} sets more stars side by side, and next to {prev} it shows that what decides each star's fate tonight is its brightness, not how close it sits to its neighbor."
+      ],
+      "1>3": [
+        "From the single point of {prev} you jump to a crowd of them at {next}, and now the Moon has stars of many brightnesses to choose from.",
+        "{prev} was one star the Moon could not touch; {next} is a crowd of stars of every brightness, and the glare will not treat them all alike."
+      ],
+      "2>3": [
+        "From the few points at {prev} to the crowd at {next}: a crowd is the same contest repeated star by star, and its faintest members are the first to lose.",
+        "The points at {prev} stayed apart; at {next} a whole crowd of them shares the field, and the Moon now gets to decide which of them you see."
+      ],
+      "3>3": [
+        "A second crowd of stars waits at {next}, and beside {prev} it shows the Moon's cut falling in a different place, because the cut depends on how bright each member looks from here.",
+        "Moving from {prev} to {next} you meet another crowd of points, a fresh chance to see which members the glare spares and which it takes."
+      ],
+      "2>4": [
+        "The stars at {prev} stayed clean points; {next} is light your binoculars cannot pull apart into points, a glow rather than a star, and that is the hardest kind of thing to keep in a moonlit sky.",
+        "After the crisp points at {prev}, {next} gives up on points altogether, and its light reaches you spread out as a glow."
+      ],
+      "3>4": [
+        "At {prev} the stars were still separate points; at {next} the light merges into a glow, and a glow has to fight the Moon on harder terms.",
+        "{prev} was a crowd you could count; {next} is light your binoculars mostly cannot pull apart into points, and that changes the contest with the Moon."
+      ],
+      "1>4": [
+        "From the single point of {prev} the night goes straight to the hardest test at {next}, light that binoculars cannot gather into points.",
+        "{prev} packed all its light into one point; {next} spreads its light into a glow, and a glow has to beat the moonlit sky on every patch at once."
+      ]
+    },
+    "arrive": {
+      "2": [
+        "{next} puts more than one star in the field, so you can watch how the glow treats each of them.",
+        "At {next} two or more points share the field, and the moonlit sky falls on each of them alike.",
+        "With {next} the question becomes whether the Moon can take one star of a group and leave its neighbor, and brightness alone decides."
+      ],
+      "3": [
+        "{next} trades single stars for a crowd of them, so the Moon finally has faint stars to take away.",
+        "At {next} a whole crowd of stars meets the moonlit sky, and the Moon's cut runs right through it.",
+        "{next} holds stars of many brightnesses at once, the ideal place to see exactly where moonlight draws its line."
+      ],
+      "4": [
+        "With {next} the points of light finally blur into a glow, which is where moonlight starts to win.",
+        "{next} spreads its light the thinnest of anything tonight, so it is the place to see how far into the glow the Moon lets you go.",
+        "At {next} the light no longer comes in points at all, and a glow has to beat the moonlit sky on every patch at once."
+      ]
+    }
+  },
+  "objects": {
+    "STAR-Betelgeuse": {
+      "step": 1,
+      "beat": "A point of color: red supergiant",
+      "question": "Why does Betelgeuse’s orange come through moonlight as strongly as on a dark night?",
+      "why": "Tonight is about what a bright Moon cannot take, and it begins with the simplest survivor, one brilliant point of colored light on Orion’s shoulder.",
+      "look": "Betelgeuse is Orion’s eastern shoulder, opposite blue-white Rigel. Notice how few faint stars are left around Orion tonight, then nudge the focus slightly past sharp: Betelgeuse swells into a small orange disk, as rich in color as on any moonless night.",
+      "answer": "The Moon does not dim Betelgeuse at all; it adds a faint glow to every patch of sky, and all of the star’s light lands in one tiny spot that towers over its own patch of glow. A point of light is the hardest thing for moonlight to hide.",
+      "story": "Haze makes a moonlit night far worse than the Moon alone: water droplets and dust scatter moonlight forward into a broad, milky halo, while in clean air the glow stays tight around the Moon. Observers read the night's quality from that halo before they look at anything else. Betelgeuse comes through either way, but the faint stars around Orion are more sensitive to a little haze than to the Moon's phase.",
+      "rank": 0.0
+    },
+    "HR1713": {
+      "step": 1,
+      "beat": "A point of color: blue-white supergiant",
+      "question": "How can your eye still see Rigel’s icy blue while moonlight washes the sky?",
+      "why": "Color is the first thing a dim sky steals from your eyes, so brilliant Rigel is a fair test of whether the Moon can steal it from a star.",
+      "look": "Rigel is Orion’s foot, diagonally across from Betelgeuse. Its blue-white tint is plain even against tonight’s pale sky, and a quick swing to orange Betelgeuse puts the two colors side by side.",
+      "answer": "Only the cones of your eye, its less sensitive light cells, can see color, and a faint glow never wakes them. Rigel pours so much light into one point that they fire at once, so its color survives any moonlit sky.",
+      "story": "A star's image is not a perfect point: the air smears it into a tiny shimmering disk a few arcseconds across, and your binoculars and eye spread it a little more. Even so, that disk covers so little sky that the moonlight falling on the same spot is almost nothing, while Rigel's whole output lands right there. That imbalance between a star's light and the sky behind it is why the Moon can never wash out a bright star's color.",
+      "rank": 0.12
+    },
+    "STAR-Aldebaran": {
+      "step": 1,
+      "beat": "A point of color: orange giant",
+      "question": "Does defocusing a star still bring out its color under a bright Moon?",
+      "why": "Aldebaran, the orange eye of Taurus, tests whether color holds up when the whole sky has turned pale.",
+      "look": "Aldebaran sits at one tip of the V of the Hyades in Taurus. Center it, then turn the focus a little past sharp: the point blooms into a small disk of warm orange, while the sky around it stays a pale gray.",
+      "answer": "Defocusing still works, because even spread into a little disk Aldebaran's light is far brighter, patch for patch, than the moonlit sky behind it. The fainter stars of the Hyades around it are another matter, and some of them have already slipped into the glare.",
+      "story": "Aldebaran lies close to the Moon's path, so in some years the Moon itself slides over it, and observers watch the star shine right up to the bright edge of the lunar disk. That such a star stays visible beside the Moon's sunlit ground is the clearest demonstration there is that moonlight cannot dim a star, only crowd the sky around it. The faint stars of the Hyades enjoy no such protection, and they vanish in the Moon's glare long before it arrives.",
+      "rank": 0.85
+    },
+    "STAR-Capella": {
+      "step": 1,
+      "beat": "A point of color: a subtle gold",
+      "question": "Can a pale, golden tint like Capella’s survive a sky washed out by moonlight?",
+      "why": "Capella’s color is subtle, a creamy gold, so it shows how fine a shade the Moon leaves alone.",
+      "look": "Capella is the brilliant star leading the pentagon of Auriga. Sweep to Menkalinan, the next bright corner to the east, and back: beside that white star, Capella’s warm cream is still there.",
+      "answer": "Capella's gold survives, because the tint lives in the star's own light, which the Moon does not touch. The moonlit sky is really the same scattered blue as the daytime sky, only far too faint for your eye to see as a color, so it cannot tint Capella either.",
+      "story": "Low in the sky a bright star like Capella flashes red and green and blue, because turbulent air bends its colors along slightly different paths and they reach your eye in separate flickers. That is the air at work, not the Moon, and it calms as the star climbs. A pale tint like Capella's is best judged when the star stands high and steady, and on a moonlit night that steadiness matters more than the darkness.",
+      "rank": 0.08
+    },
+    "HR2990": {
+      "step": 1,
+      "beat": "A point of color: orange giant",
+      "question": "Does moonlight change the colors of Castor and Pollux, or only the sky behind them?",
+      "why": "Gemini’s twins differ in color, which makes them a ready-made test of whether a bright Moon alters the stars themselves or only the dark between them.",
+      "look": "Pollux and Castor, the two heads of Gemini, fit together in the field of most binoculars. Pollux is the brighter and orange, Castor white; defocus slightly and the difference is as clear as on any dark night.",
+      "answer": "Moonlight changes only the sky: it adds the same faint glow behind both stars, so the difference between them, a cooler orange giant beside a hotter white star, reaches you unchanged.",
+      "story": "How faint a thing can the eye see against a lit background? During the Second World War the vision scientist Richard Blackwell had observers make hundreds of thousands of judgments of faint spots on backgrounds of every brightness. What the eye detects, he found, is contrast, a spot's light compared with the light around it. Brighten the background and a faint spot needs proportionally more light to be noticed, while stars as bright as Gemini's twins have contrast to spare.",
+      "rank": 1.14
+    },
+    "STAR-Sirius": {
+      "step": 1,
+      "beat": "A point of color: the brightest star",
+      "question": "The Moon is vastly brighter than Sirius, so why can’t it hide it?",
+      "why": "Sirius is the brightest star of the night, and pitting it against the far brighter Moon shows where moonlight’s power actually goes.",
+      "look": "Follow Orion’s Belt down and to the left to Sirius, the blazing white star of Canis Major. Even with the Moon up it dazzles in binoculars, and low in the sky it still flashes colors as our air bends its light.",
+      "answer": "The moonlight that hides stars is the small share scattered by the air, spread over the entire sky, so the patch around Sirius gets only a sliver. Sirius puts all its light into one point, and in that tiny contest the star wins.",
+      "story": "The daytime sky is the extreme case of a moonlit one, with the Sun's scattered light bright enough to hide every star, yet astronomers have long found Sirius in full daylight with a telescope aimed at the right spot. Magnification darkens the patch of sky around a star while the star stays a point, so even the blue noon sky can be beaten. Your binoculars play the same trick tonight on a far fainter glow.",
+      "rank": -1.46
+    },
+    "STAR-Arcturus": {
+      "step": 1,
+      "beat": "A point of color: orange giant",
+      "question": "Why is Arcturus as easy to find tonight as on the darkest night?",
+      "why": "Arcturus, the orange beacon at the end of the Big Dipper’s arc, is the simplest survivor of a moonlit sky, one bright point with a color you can name.",
+      "look": "Follow the curve of the Big Dipper’s handle to Arcturus, the brightest star of Boötes. In binoculars its orange-gold is unmistakable, and the field around it, full of faint stars on a dark night, looks emptier.",
+      "answer": "Moonlight is like switching on the lights in a room where someone holds up a lamp: the room gets brighter, but the lamp does not dim. Arcturus is the lamp, its light gathered in one point that still stands far above the brightened sky.",
+      "story": "The eye does not see light so much as differences in light: a spot is noticed when it stands out from its surroundings by a large enough fraction. Richard Blackwell's wartime experiments pinned down that fraction for backgrounds of every brightness. Moonlight raises the surroundings everywhere at once, so every faint star needs more light to be seen. Arcturus clears that higher bar by such a margin that the Moon makes no visible difference to it.",
+      "rank": -0.04
+    },
+    "HR5056": {
+      "step": 1,
+      "beat": "A point of color: blue-white pair",
+      "question": "Why does Spica’s blue-white tint survive a sky that has lost its faint stars?",
+      "why": "Spica is a single hard point at the end of the arc from Arcturus, and its cold blue-white is the opposite color to test against the Moon.",
+      "look": "From Arcturus, carry the Dipper-handle curve on about as far again to a lone, brilliant blue-white star in Virgo. It stays one sharp point in binoculars, its icy tint clear against the pale sky; swing back to Arcturus for the orange.",
+      "answer": "Color needs a lot of light, because only the less sensitive cells of your eye, the cones, can see it, and a faint sky never wakes them. Spica delivers all its light to one point, enough to fire the cones however bright the sky has become.",
+      "story": "A Moon near full is far brighter than its lit area alone would suggest, because sunlight then strikes the lunar ground from straight behind you and every grain of dust hides its own shadow. Laboratory studies of lunar soil reproduce this surge, and it means the last nights before full Moon brighten the sky much faster than the nights around half Moon. Even then the glow on any small patch of sky stays far below the light Spica pours into one point.",
+      "rank": 0.98
+    },
+    "HR3982": {
+      "step": 1,
+      "beat": "A point of color: blue-white star",
+      "question": "If the Moon leaves Regulus alone, why can its faint companion vanish tonight?",
+      "why": "Regulus, the bright heart of Leo, comes with a small companion that is easy on a dark night, which makes the pair a first glimpse of where moonlight begins to bite.",
+      "look": "Regulus is the bright star at the bottom of Leo’s backward question mark, crisp and blue-white in binoculars. Brace them and look a short way to the north-west for faint Regulus B; tonight it may be very hard or simply gone.",
+      "answer": "The Moon adds the same glow behind both stars, and Regulus stands far above it while its eighth-magnitude companion barely rose above a dark sky to begin with. Brightness, not closeness, decides who survives, a rule the rest of the night keeps confirming.",
+      "story": "A faint star beside a brilliant one fights two glows at once: the moonlit sky, and the bright star's own halo of light scattered inside your binoculars and your eye. Each adds to the background the companion has to beat, and together they can push it below what the eye can pick out. On a dark night the halo is its only enemy, which is why the companion that may vanish tonight is an easy catch under a moonless sky.",
+      "rank": 1.35
+    },
+    "STAR-Alphard": {
+      "step": 1,
+      "beat": "A point of color: lonely orange giant",
+      "question": "Why does ‘the solitary one’ look even lonelier under a bright Moon?",
+      "why": "Alphard’s Arabic name means the solitary one, because it shines alone in an empty part of Hydra, and moonlight turns that loneliness into a demonstration.",
+      "look": "Look about 20 degrees south-west of Regulus for the only bright star in a wide, empty region. In binoculars it is a rich orange, and the faint stars that fill the field on a dark night are mostly missing.",
+      "answer": "Moonlight erases the faint stars first and leaves the bright ones, so Hydra’s dim stars sink into the glow while Alphard, far brighter than any of them, keeps its place and its orange.",
+      "story": "The patch of Hydra around Alphard is genuinely poor in bright stars, and how empty a patch looks depends steeply on how faint you can see, since dim stars vastly outnumber bright ones. Lift the faintest visible star by a couple of steps, as a bright Moon does, and a sparse region loses nearly everything. Alphard was named the solitary one by observers with dark skies; under the Moon it earns the name twice over.",
+      "rank": 1.98
+    },
+    "HR4301": {
+      "step": 1,
+      "beat": "A point of color: yellow-orange giant",
+      "question": "Why does the Big Dipper look complete when the Moon has hidden so much else?",
+      "why": "The Big Dipper is the most familiar pattern in the northern sky, and Dubhe, its yellow-orange pointer star, shows why the Moon leaves such patterns whole.",
+      "look": "Dubhe is the upper pointer of the Dipper’s bowl, with Merak five degrees below it. Sweep between them a few times: Dubhe is yellow-orange and Merak white, both crisp, while the faint stars around the bowl are thinner than usual.",
+      "answer": "The Dipper is drawn entirely in bright stars, and moonlight removes only the faint ones. Dubhe and its partners each pack their light into a point far brighter than the glow behind it, so the outline you know stays exactly as it is.",
+      "story": "The sky's stars are not spread evenly across brightness: for every bright star there are several a step fainter, and several more for each step after that, so most of the stars a dark sky shows are faint ones. That is why a bright Moon empties the sky so dramatically while leaving the famous patterns whole, since it takes the crowded faint end and spares the rare bright stars that draw the constellations. Counting stars by brightness this way is also how astronomers first mapped the shape of our galaxy.",
+      "rank": 1.79
+    },
+    "HR5563": {
+      "step": 1,
+      "beat": "A point of color: orange giant",
+      "question": "Why does Kochab’s orange look stronger in binoculars than to your bare eye?",
+      "why": "Kochab, one of the two guardians of the pole, is just bright enough that its color is easy to miss by eye, which makes it the place to see what binoculars add.",
+      "look": "Between Polaris and the Big Dipper’s handle shine the pole's two guardian stars. In binoculars Kochab is clearly orange and Pherkad, a few degrees away, white, and a touch of defocus makes the colors easier still.",
+      "answer": "Binoculars gather far more of the star’s light than your pupil and pour it into the same point, pushing it further past what the color-seeing cones of your eye need. The moonlit sky gains nothing from the optics, so Kochab’s color stands out better through the glass.",
+      "story": "Binoculars have a hidden number called the exit pupil, the small disk of light you see floating in each eyepiece when you hold them at arm's length. Its width is the lens width divided by the magnification, and when it is narrower than your own pupil the sky in the view looks darker than to the naked eye, while a star loses nothing. On a moonlit night that slightly darker background is a gift, one reason the guardians of the pole look so vivid through the glass.",
+      "rank": 2.08
+    },
+    "STAR-Antares": {
+      "step": 1,
+      "beat": "A point of color: red supergiant",
+      "question": "Why does Antares blaze on while the cluster beside it fades away?",
+      "why": "Antares, the red heart of Scorpius, has a ball of ancient stars just beside it, and tonight that one field holds the whole contest between a point and a glow.",
+      "look": "Antares glows as the red heart of Scorpius, and slight defocus deepens its orange-red. Just over a degree to its west lies the globular cluster M4, a soft gray patch on dark nights; tonight it is probably gone, or at best a faint smudge.",
+      "answer": "All of Antares’ light arrives in one point, far brighter than the moonlit sky behind it. M4, by contrast, spreads the light of a whole swarm of stars over a patch nearly the width of the Moon, and that thin glow sinks under the glare.",
+      "story": "What separates a star from a globular cluster in moonlight is not total light but light per patch. The globular holds the combined light of an enormous number of stars, yet spread across its disk each tiny patch is far fainter than the single point of Antares, and moonlight is judged patch by patch. Under a dark sky the cluster's margin over the background is small but real, and tonight the Moon wipes it out.",
+      "rank": 0.96
+    },
+    "STAR-Vega": {
+      "step": 1,
+      "beat": "A point of color: blue-white star",
+      "question": "Where did Vega’s ring of faint stars go?",
+      "why": "Vega, the first star to appear overhead on summer evenings, is usually surrounded in binoculars by a scatter of faint stars, and tonight’s sky shows how many of them depend on darkness.",
+      "look": "Vega is the brilliant blue-white star of little Lyra. In binoculars it is a hard white spark, but count the faint stars around it: fewer than on a dark night, while the Double-Double and Lyra’s parallelogram nearby still show.",
+      "answer": "They are still there, only buried: moonlight raised the sky’s glow above the faintest of them, while Vega and Lyra’s brighter stars stand far above it. What vanished were the stars that needed a dark sky; what remains is everything bright enough to ignore it.",
+      "story": "Vega has a special place in how astronomers measure starlight: for decades it served as the zero point of the magnitude scale and the standard against which star colors were set. Every faint star around it is ranked by how much less light it sends, and five magnitudes is a factor of a hundred, so the faint stars that vanish tonight were already sending only a tiny fraction of Vega's light. That small margin over the dark sky is all the Moon has to erase.",
+      "rank": 0.03
+    },
+    "HR7525": {
+      "step": 1,
+      "beat": "A point of color: orange bright giant",
+      "question": "Why is Tarazed’s orange easier to see in binoculars than with your eyes alone?",
+      "why": "Tarazed sits two degrees from white Altair, and its orange is subtle to the eye, which makes it the place to see what binoculars add on a bright night.",
+      "look": "Put Altair and Tarazed in one field: crisp white against warm orange, about 2° apart in Aquila. To the naked eye under tonight’s sky Tarazed’s tint is faint; through the binoculars it is plain.",
+      "answer": "Your eye needs plenty of light to see color, and binoculars gather far more of Tarazed’s light into the same point while the sky glow, spread out by the magnification, gets no brighter. That pushes the star over the threshold of color.",
+      "story": "Color vision fades in a set order as light dims, and the physiologist Jan Purkinje noticed it in his garden in the 1820s: at dusk his red flowers turned dark while the blue ones still glowed. The reason is that the sensitive rods, which take over in dim light, barely respond to red. Warm-colored stars of modest brightness, like Tarazed, are the first to lose their tint to the naked eye, and the first to get it back through binoculars.",
+      "rank": 2.72
+    },
+    "HR6705": {
+      "step": 1,
+      "beat": "A point of color: orange giant",
+      "question": "How can Eltanin’s orange and Rastaban’s yellow still be told apart in moonlight?",
+      "why": "Eltanin and Rastaban sit side by side in the head of Draco, two bright stars of different tints, a fine test of how much color survives.",
+      "look": "From Vega, look about 14° north-west for the four-star head of Draco. Eltanin is the brightest of the four, at the head’s southern corner beside Rastaban; in binoculars it is clearly orange while Rastaban looks yellower.",
+      "answer": "Color is seen by the cones of your eye, which need bright light, and both stars deliver enough of it to a single point to wake them. The moonlit sky is far too dim for the cones, so it adds no tint of its own and the two colors stay distinct.",
+      "story": "Observatories plan their calendars around the Moon: the nights near full are bright time, handed to projects on bright stars, and the dark nights go to faint galaxies and nebulae. A star's color and spectrum can be measured under a full Moon by recording the sky beside the star and subtracting it, a routine the eye performs in its own rough way. The contrast between Eltanin and Rastaban is exactly the kind of measurement that bright time was made for.",
+      "rank": 2.23
+    },
+    "STAR-Rasalgethi": {
+      "step": 1,
+      "beat": "A point of color: red giant",
+      "question": "How faint can a star be and still keep its color under the Moon?",
+      "why": "Rasalgethi is much fainter than the night’s brilliant stars, yet deeply orange-red, so it probes the edge of color in a moonlit sky.",
+      "look": "Rasalgethi and Rasalhague, the heads of Hercules and Ophiuchus, sit about 5° apart and fit in one low-power sweep. In binoculars Rasalgethi is orange-red and Rasalhague white; by eye alone, under tonight’s sky, the difference is much harder to see.",
+      "answer": "Faint stars lose their color first because the cones of your eye need bright light, and moonlight does not help. Binoculars gather enough of Rasalgethi’s light to keep its orange-red alive, a reminder that the star never changed, only how much of it reaches your eye.",
+      "story": "Rasalgethi and Rasalhague make a fair comparison because they stand so close together: the same air, the same patch of moonlit glow and the same eye judge both, so any difference you see belongs to the stars. Astronomers rely on the same trick, called differential measurement, comparing a target with a nearby reference star so that the sky and the atmosphere cancel out.",
+      "rank": 3.48
+    },
+    "HR337": {
+      "step": 1,
+      "beat": "A point of color: red giant",
+      "question": "Why does Mirach shine on while the galaxy beside it nearly disappears?",
+      "why": "Mirach, the ruddy middle star of Andromeda, is the usual signpost to the Andromeda Galaxy, so one short sweep spans the easiest and hardest things for a moonlit sky.",
+      "look": "Mirach is the middle bright star of Andromeda’s chain, a ruddy orange point in binoculars, untroubled by the Moon. Hop north-west through μ Andromedae toward the Andromeda Galaxy and see how little of its glow is left.",
+      "answer": "Mirach’s light arrives in a single point, while the galaxy spreads its light over a patch of sky several times wider than the full Moon. Moonlight adds the same glow to every patch, so the point wins and the galaxy, bright in total but thin on any one patch, mostly loses.",
+      "story": "Astronomers measure this contest with a unit made for it, the magnitude per square arcsecond, the brightness of a patch of sky an arcsecond on a side. A dark country sky and the faint outer disk of a galaxy both score dim values on that scale, while a star, whose light lands in one tiny image, scores almost unimaginably bright. Moonlight raises the sky's score, and anything that does not beat the new value patch for patch disappears.",
+      "rank": 2.06
+    },
+    "HR168": {
+      "step": 1,
+      "beat": "A point of color: orange giant",
+      "question": "Does the Moon change the colors in Cassiopeia’s W, or only the sky around them?",
+      "why": "Schedar is the one orange star in Cassiopeia’s white W, a contrast that makes a quick test of what moonlight can and cannot touch.",
+      "look": "Schedar is the bright southern point of Cassiopeia’s W. Swing to γ Cassiopeiae at the center of the W and back: orange against white, as clear as on a dark night, while the Milky Way’s faint glow through the W has thinned.",
+      "answer": "The Moon only adds glow to the sky, the same amount behind both stars, so it cannot make Schedar less orange or γ Cassiopeiae less white. What it does take is the soft background of the Milky Way, which spreads its light too thinly to compete.",
+      "story": "The Milky Way's glow is starlight too, the blended light of stars too faint and too crowded to see one by one, as Galileo found when his first telescope broke the haze into stars. Spread together, those stars make a glow only a little brighter than the dark sky itself. Raise the sky's brightness and that small margin is gone, while a single bright star like Schedar keeps an enormous one.",
+      "rank": 2.23
+    },
+    "HR617": {
+      "step": 1,
+      "beat": "A point of color: orange giant",
+      "question": "How does a small constellation like Aries survive a bright Moon?",
+      "why": "Aries is little more than a short line of stars, and Hamal, its orange leader, shows why such modest patterns outlast moonlight while faint ones vanish.",
+      "look": "Hamal leads the short line of Aries, east of the Great Square of Pegasus. In binoculars it is a clear orange point; compare it with white Sheratan four degrees south-west, both still crisp in the glare.",
+      "answer": "Aries is drawn in a few bright stars, and moonlight removes only the faint. Hamal packs its light into a point far brighter than its patch of moonlit sky, so the little constellation keeps its shape and its colors.",
+      "story": "Moonlight works exactly like the glow over a town, light scattered by the air until it covers the whole sky, and the stars that survive it are the same stars that survive in a suburb. Observers grade skies by the faintest star they can see overhead, and a bright Moon can drop a fine country sky to the grade of a suburb for a few nights. The patterns drawn in second-magnitude stars, like the little line of Aries, are the ones that town dwellers and moonlit observers share.",
+      "rank": 2.0
+    },
+    "HR8775": {
+      "step": 1,
+      "beat": "A point of color: red giant",
+      "question": "Why can you still read Scheat’s orange beside Markab’s blue-white in moonlight?",
+      "why": "The Great Square of Pegasus has one orange corner, Scheat, and three white ones, a built-in color chart to read under a bright Moon.",
+      "look": "Scheat is the north-west corner of the Great Square. Swing to Markab, the corner directly south, and back: orange against blue-white, and a slight defocus makes both colors richer.",
+      "answer": "Your eye sees color only with its cones, which need plenty of light, and each corner of the Square sends plenty into a single point. The moonlit sky is far too dim per patch to wake the cones, so it adds no color and steals none.",
+      "story": "How much the Moon brightens the sky depends on where you look: haze scatters its light forward into a bright halo around it, and the air's own scattering leaves the sky darkest roughly a right angle away. Astronomers mapped this pattern with careful measurements and now predict the brightness of every patch of a moonlit sky before they observe. The colors of the Great Square's corners survive anywhere in that map; fainter quarry is best sought on the side of the sky away from the Moon.",
+      "rank": 2.42
+    },
+    "HR8308": {
+      "step": 1,
+      "beat": "A point of color: orange supergiant",
+      "question": "Why does Enif stay a sharp orange point while the globular cluster nearby turns faint?",
+      "why": "Enif, the orange nose of Pegasus, points to the Pegasus globular cluster, so the same short sweep holds one point of light and one ball of countless stars.",
+      "look": "Enif marks the nose of Pegasus, a clear orange point in binoculars. The Pegasus globular lies about four degrees north-west, a fuzzy round star on a dark night and smaller and fainter tonight.",
+      "answer": "Enif’s light comes in one point, while the cluster’s comes from a crowd of stars too distant to split, spread into a small glow. The Moon’s light lands on every patch alike, so the point keeps all its advantage and the glow loses some.",
+      "story": "No lens can make a glowing surface look brighter than it does to the naked eye, a firm rule of optics. Binoculars can only gather more of a surface's light and spread it over a bigger image, so the Pegasus globular's glow and the moonlit sky gain nothing per patch. Enif, being a point, gets all its gathered light poured into a single spot instead. That one rule is why every point in tonight's sky looks better through the glass and every glow looks no better at all.",
+      "rank": 2.39
+    },
+    "HR911": {
+      "step": 1,
+      "beat": "A point of color: red giant",
+      "question": "Why does defocusing make Menkar’s ruddy color clearer even in a bright sky?",
+      "why": "Menkar, at the head of Cetus, is a modest third-magnitude star with a ruddy tint, the kind of color that a small trick of the eyepiece can rescue.",
+      "look": "Menkar marks the head of Cetus, a ruddy point with a wide, faint blue-white star close by. Turn the focus slightly past sharp and Menkar swells into a small disk whose color is easier to judge.",
+      "answer": "A sharp star image is so small that it lands on very few of the cones that see color; spreading it a little lets more of them share the light. Even defocused, Menkar stays far brighter per patch than the moonlit sky, so the color holds.",
+      "story": "Your eye adapts to the dark in two stages: the cones settle within minutes, while the rods need far longer to rebuild their light-sensitive pigment. On a moonlit night the rods never fully recover, and one glance at the Moon sets them back, so faint stars come and go with where you have been looking. Color is seen by the cones alone, which is why Menkar's ruddy tint does not depend on how dark-adapted you are.",
+      "rank": 2.53
+    },
+    "HR4763": {
+      "step": 1,
+      "beat": "A point of color: red giant",
+      "question": "What fades first around the Southern Cross when the Moon is up?",
+      "why": "The Southern Cross normally sits in a bright stretch of the Milky Way, and Gacrux, its orange top, shows what moonlight takes away and what it leaves.",
+      "look": "Center Gacrux, the top star of the Southern Cross, and compare its warm orange with blue-white Acrux at the foot. Then notice the background: the Milky Way’s glow that usually fills the field behind the Cross is thin tonight.",
+      "answer": "The Milky Way’s glow goes first, because it is the light of countless distant stars spread thinly over the sky, and moonlight drowns thin light. Gacrux packs all its light into a point, so its orange survives while the river behind it fades.",
+      "story": "The river of light behind the Cross is made of stars, each too distant and faint to register on its own, and together their light per patch is only a little above a dark sky. A bright Moon adds more than that margin, so the river fades although not one of its stars has dimmed. A camera can still record it on a moonlit night, because a long exposure gathers light patiently and the smooth glow of the sky can be subtracted afterward, something the eye cannot do.",
+      "rank": 1.63
+    },
+    "HR4853": {
+      "step": 1,
+      "beat": "A point of color: blue-white star",
+      "question": "Why can you still see Mimosa’s blue when moonlight has drained the sky of color?",
+      "why": "Mimosa, the eastern arm of the Southern Cross, is a hot blue-white star, and its color is a direct test of what the eye can still see in a bright sky.",
+      "look": "Mimosa is the bright blue-white star on the Cross’s eastern arm. Hold it in the field and its icy color is unmistakable; compare it with orange Gacrux at the top of the Cross.",
+      "answer": "Only the cones of your eye see color, and they need bright light, which a faint sky never provides. Mimosa sends enough light to a single point to wake them, so its blue survives however pale the sky has become.",
+      "story": "In dim light the eye favors blue, because the rods, which take over as light fades, are most sensitive to blue-green light and nearly blind to red. So a blue star keeps more of its apparent brightness than an orange star that matches it in daylight. A moonlit sky is not dark enough to hand everything to the rods, so Mimosa still shows its color through the cones. It simply has the eye's own bias on its side as well.",
+      "rank": 1.25
+    },
+    "HR5459": {
+      "step": 1,
+      "beat": "A point of color: nearest bright star",
+      "question": "Why does Alpha Centauri look just as brilliant tonight as on a moonless night?",
+      "why": "Alpha Centauri is bright for a modest reason, being so close, and that makes it a good place to ask what the Moon actually responds to.",
+      "look": "Find the two Pointers beside the Southern Cross; Alpha Centauri is the one farther from the Cross. Binoculars show one brilliant, warm-tinted point, and blue-white Hadar, the other Pointer, makes a fine color comparison.",
+      "answer": "The Moon adds glow to the sky but takes nothing from a star, and Alpha Centauri packs all its light into one point far brighter than its patch of moonlit sky. Whether a star is bright because it is near, like this one, or because it is powerful, like Hadar beside it, makes no difference: both arrive as single bright points, and both shine through untouched.",
+      "story": "The full Moon sends us vastly more light than Alpha Centauri, but almost all of it goes into the Moon's own bright disk and the lit ground around you. Only the small share our air scatters becomes sky glow, and that share is spread across the whole dome of the sky. Divide it among patches the size of a star's image and each receives almost nothing, while Alpha Centauri puts all its light into one of them.",
+      "rank": -0.01
+    },
+    "HR5267": {
+      "step": 1,
+      "beat": "A point of color: blue-white giant",
+      "question": "Does moonlight change the contrast between the two Pointers?",
+      "why": "The two Pointers make a natural pair of colors, Hadar blue-white and Alpha Centauri warmer, and the Moon is a chance to see whether that difference survives.",
+      "look": "Swing between the two Pointers beside the Southern Cross: Hadar is blue-white, Alpha Centauri warmer and yellower. Both stay single brilliant points in binoculars, with the color difference as clear as on a dark night.",
+      "answer": "Moonlight cannot change it, because it adds the same faint glow behind both stars and leaves their own light alone. Their colors, set by surface temperatures far apart, reach you exactly as they left the stars.",
+      "story": "However brilliant a star, its image covers only a tiny patch of sky, a disk a few arcseconds wide blurred by the air. Divide the moonlit sky into patches that size and each one holds a negligible share of the glow, while Hadar delivers its entire light to just one of them. Two stars measured against such a dim background keep their colors and their difference exactly as they left them.",
+      "rank": 0.61
+    },
+    "HR2326": {
+      "step": 1,
+      "beat": "A point of color: white supergiant",
+      "question": "Why does the moonlit sky look gray behind Canopus when it is really blue?",
+      "why": "Canopus is the second-brightest star of the night, white and steady, and it is the place to notice that the sky around it has a color your eyes cannot see.",
+      "look": "Canopus is the brilliant star well south of Sirius. High in the sky it is a steady white point in binoculars; low down it flickers through colors as our air splits its light. The sky around it looks pale gray.",
+      "answer": "Moonlight is sunlight reflected, and the air scatters it just as it does by day, so the moonlit sky is genuinely blue. It is simply too faint for the cones that see color, while Canopus pours enough light into one point to show you its true tint.",
+      "story": "The glow that moonlight spreads across the sky is made by our air, which scatters a little of the Moon's light toward you from every direction. On the Moon itself there is no air to scatter anything, so the sky stays black even at noon and bright stars would shine right beside the sunlit ground. On Earth, the higher you stand and the cleaner the air, the less light is scattered, which is why mountain observatories suffer least from a bright Moon.",
+      "rank": -0.72
+    },
+    "HR472": {
+      "step": 1,
+      "beat": "A point of color: blue-white star",
+      "question": "Where did the river of Eridanus go, and why is Achernar still there?",
+      "why": "Achernar is the bright star at the end of Eridanus, a long, faint river of stars, and moonlight is unkind to faint rivers.",
+      "look": "Look for the lone brilliant blue-white star at the southern end of Eridanus. Binoculars show only a sharp, icy point; the dim stars that trace the river toward it are mostly gone tonight.",
+      "answer": "The river is drawn in faint stars, and moonlight raises the sky’s glow above them, so they sink out of sight. Achernar is bright enough to stand far above that glow, so the river’s mouth survives even when the river does not.",
+      "story": "A dark sky shows a few thousand stars to the naked eye, and only a small fraction of them are as bright as the stars that outline the constellations. Each step fainter on the magnitude scale holds several times as many stars as the step above, so when the Moon raises the sky's glow by a couple of steps, most of the sky's stars go at once. Long, faint constellations like Eridanus lose their whole outline, while their few bright stars stand alone.",
+      "rank": 0.46
+    },
+    "HR6217": {
+      "step": 1,
+      "beat": "A point of color: orange giant",
+      "question": "Why does defocusing Atria make its orange easier to see, even with the Moon up?",
+      "why": "Atria, the bright corner of the Southern Triangle, is a vivid orange giant, and a small trick of focus shows how color survives a bright sky.",
+      "look": "Atria is the brightest corner of the Southern Triangle, a vivid orange point. Defocus slightly and it swells into a small orange disk; compare it with the white stars at the triangle’s other corners.",
+      "answer": "A sharp star image falls on very few of the cones that see color, and spreading it slightly lets more of them share the light. Even blurred, Atria is far brighter per patch than the moonlit sky, so its color stands out.",
+      "story": "The cones that see color crowd into the center of your gaze, while the more sensitive rods spread around it, so the eye has two best directions. Look straight at a star to judge its color, and slightly to one side to catch something faint, a trick observers call averted vision that still works under a bright Moon. Atria needs only the first, since it is bright enough to wake the cones at the very center of your gaze.",
+      "rank": 1.92
+    },
+    "HR3307": {
+      "step": 1,
+      "beat": "A point of color: blended pair",
+      "question": "Can a color made by blending two stars survive moonlight as well as a pure one?",
+      "why": "Avior is the orange corner of the False Cross, and its color is a blend of two stars too close to split, a subtle mixture to test against the Moon.",
+      "look": "Avior is the brightest star of the False Cross and the only one with a clear orange tint. Compare it with white Delta Velorum and Aspidiske, the other corners.",
+      "answer": "A blended color survives just as well, because the two stars’ light arrives mixed into one point, and the Moon only adds glow behind it. The cool orange giant outshines its hot blue companion, and the moonlit sky cannot change that balance.",
+      "story": "Moonlight is sunlight, and the air scatters its blue far more than its red, so a moonlit sky is brightest in the blue and much darker in the red and infrared. Observatories make use of this: on nights near full Moon they turn to red and infrared work, where the glare matters least. An orange star like Avior puts most of its light where the moonlit sky is darkest, which helps its warm color come through.",
+      "rank": 1.86
+    },
+    "HR3634": {
+      "step": 1,
+      "beat": "A point of color: orange supergiant",
+      "question": "Why does Suhail look more colorful through binoculars than to your eye?",
+      "why": "Suhail, the bright orange star of Vela, shows what binoculars add to color on a night when the sky is fighting your eyes.",
+      "look": "Suhail is the bright orange star about 11° east-north-east of Gamma Velorum. Through binoculars its orange is clear; defocus a little to make it glow, then swing to blue-white Gamma Velorum.",
+      "answer": "Binoculars collect far more of Suhail’s light and still deliver it to one point, while the moonlit sky, spread out by the magnification, looks no brighter than before. More light on the same spot pushes the star further past the threshold for color.",
+      "story": "Your eyes adapt to darkness in two stages, a quick one by the cones and a slow one by the rods, which rebuild their light-sensitive pigment over the better part of half an hour. A bright Moon never lets the rods finish, and a single glance at it undoes much of their progress, so on moonlit nights it pays to keep the Moon out of your view. Color vision does not wait for that slow adaptation, which is why Suhail's orange is ready the moment you look.",
+      "rank": 2.21
+    },
+    "HR8636": {
+      "step": 1,
+      "beat": "A point of color: red giant",
+      "question": "Why is Tiaki’s orange-red as clear tonight as on a moonless night?",
+      "why": "Tiaki, the red star of the Crane, is a single bright point of strong color, the simplest kind of survivor in a moonlit sky.",
+      "look": "Put Tiaki and Alnair in turn at the center of your binoculars: Tiaki is a deep orange-red, Alnair a clean blue-white. Defocus slightly and the colors strengthen, untouched by the pale sky.",
+      "answer": "Moonlight is like switching on the lights in a room where someone holds up a lamp: the room grows brighter, but the lamp does not dim. Tiaki is the lamp, and all its light is gathered into one point that stands far above the brightened sky.",
+      "story": "Reds are the first colors to go as light dims, a pattern the physiologist Jan Purkinje noticed among his garden flowers at dusk two centuries ago. The rods that take over in faint light barely respond to red, so a red star must be brighter than a blue one to show its color at all. Tiaki is bright enough to clear that bar easily, which is why its deep tint is the same tonight as on a moonless night.",
+      "rank": 2.1
+    },
+    "HR8425": {
+      "step": 1,
+      "beat": "A point of color: blue-white star",
+      "question": "Why does Alnair keep its blue-white when the moonlit sky shows no color?",
+      "why": "Alnair is the blue-white partner of red Tiaki in the Crane, and its color asks why a star’s tint survives a sky that has none.",
+      "look": "Center Alnair, then Tiaki: one is blue-white, the other orange-red. Defocusing both slightly makes the colors richer, even against tonight’s pale sky.",
+      "answer": "Your eye sees color only with its cones, and they need bright light. Alnair sends enough to a single point to wake them, while the sky’s glow, spread over everything, stays below their threshold and looks colorless.",
+      "story": "Moonlight is sunlight reflected from gray-brown rock, very slightly warmer in tint than the Sun's own light, and our air spreads its blue share over the whole sky just as it does by day. A long camera exposure on a moonlit night shows a blue sky, sometimes with white clouds, as though the picture were taken at noon. Your eye calls that sky gray only because its glow is too faint for color vision, a limit Alnair's light never comes near.",
+      "rank": 1.74
+    },
+    "HR6527": {
+      "step": 1,
+      "beat": "A point of color: blue-white star",
+      "question": "Does moonlight dull the contrast between red Antares and blue-white Shaula?",
+      "why": "Shaula, the stinger of Scorpius, is blue-white at the opposite end of the constellation from red Antares, a contrast that spans the whole scorpion.",
+      "look": "Follow the tail of Scorpius to its hook: the bright stinger is Shaula, blue-white, with fainter Lesath just over half a degree away. Then glance back along the body to orange-red Antares.",
+      "answer": "The Moon adds the same faint glow behind every star, so it cannot shrink the difference between a hot blue-white star and a cool red one. Scorpius keeps both ends of its color range, while its fainter stars and the Milky Way behind them fade.",
+      "story": "Scorpius often hangs low, and low stars pay a double toll: their light crosses far more air, which dims and reddens it, and that thick air also scatters more moonlight into the sky around them. High in the sky the same stars would stand against a darker, cleaner background. Shaula is bright enough to shrug off both, but the fainter stars along the tail feel every degree of altitude.",
+      "rank": 1.63
+    },
+    "HR3165": {
+      "step": 1,
+      "beat": "A point of color: hottest star",
+      "question": "Why does one of the hottest stars you can see look merely blue-white?",
+      "why": "Naos is about as hot as a naked-eye star gets, and its color, which survives the Moon untouched, is a lesson in what the eye can and cannot read.",
+      "look": "In binoculars Naos is a sharp, steely blue-white point in Puppis, clear against the moonlit sky. Swing about 10° west to Pi Puppis, a deep yellow-orange star, for the other end of the color range.",
+      "answer": "Beyond a certain heat, extra temperature barely changes a star’s visible color, because most of the added light is ultraviolet your eyes cannot see. So Naos looks only a little bluer than cooler blue-white stars, and the Moon, which adds no color of its own, leaves that tint as it is.",
+      "story": "Moonlight does not spread evenly: the sky is brightest close to the Moon, where haze scatters its light forward, and darkest about a right angle away from it. Astronomers measured this on Mauna Kea and turned it into a formula that observatories still use to predict how bright each patch of a moonlit sky will be. A star's color survives anywhere, but on a moonlit night faint things are best hunted well away from the Moon.",
+      "rank": 2.25
+    },
+    "HR5288": {
+      "step": 1,
+      "beat": "A point of color: pale orange giant",
+      "question": "Does a pale tint like Menkent’s fade in moonlight before a strong one?",
+      "why": "Menkent is a pale orange giant among the blue-white stars of Centaurus, and its subtle color tests how fine a shade survives a bright sky.",
+      "look": "Menkent is a pale orange point in binoculars. Compare it with the blue-white stars of southern Centaurus; the tint is gentle but still there against tonight’s pale sky.",
+      "answer": "A pale tint fades sooner only when the star itself is faint, because color needs bright light at the eye. Menkent is bright enough that its gentle orange survives, since the Moon adds no color and takes none.",
+      "story": "Color vision fades gradually rather than switching off: as a star gets fainter its tint weakens, until only the colorblind rods are responding and it looks white whatever its true color. Observers who estimate star colors know the threshold well, because even deep-red stars look merely pale at the edge of naked-eye sight. Menkent sits comfortably above that threshold, and moonlight, which adds no color of its own, does nothing to move it.",
+      "rank": 2.06
+    },
+    "HR99": {
+      "step": 1,
+      "beat": "A point of color: orange giant",
+      "question": "Why does Ankaa’s pale orange show better through binoculars than by eye tonight?",
+      "why": "Ankaa stands alone between Achernar and Fomalhaut, a modest orange giant whose color is the kind binoculars rescue on a bright night.",
+      "look": "Ankaa is the brightest star of Phoenix, well clear of any bright neighbor. In binoculars its pale orange is clear; compare it with blue-white Achernar.",
+      "answer": "Binoculars gather far more of Ankaa’s light than your pupil and still deliver it to one point, while the moonlit sky gains nothing from the optics. That extra light carries the star’s color over your eye’s threshold.",
+      "story": "The Moon's height matters too: low near the horizon its light passes through thick air that dims and reddens it, so it brightens the sky less than the same Moon riding high. Observers who want the most from a moonlit night work the half of the sky opposite the Moon and save faint targets for the hours when it sinks low. Ankaa's color needs none of that care.",
+      "rank": 2.39
+    },
+    "DS-Albireo": {
+      "step": 2,
+      "beat": "Two points: gold and blue",
+      "question": "Does Albireo keep both its gold and its blue under a bright Moon?",
+      "why": "Albireo is the sky’s most famous color pair, and if moonlight could blur or wash out two close points, a gold star with a blue one beside it would show it first.",
+      "look": "Albireo marks the head of the swan in Cygnus. Brace your binoculars: at 10× it splits into a golden-orange star with a blue-white spark 34″ away, and at 7× it is tighter but still there with care. Both colors hold against tonight’s pale sky.",
+      "answer": "It keeps both, because each star is its own point of light, far brighter than the moonlit sky behind it, and the Moon adds no tint. What blurs a pair is your optics and the air, never the Moon.",
+      "story": "The eye judges a color by comparing how strongly the light excites three kinds of cones, tuned to red, green and blue, and Albireo's two stars excite them in very different proportions. Part of the famous contrast is your own eye as well: set side by side, each color makes the other look stronger, an effect painters exploit. The Moon adds nothing to either star's light, so neither the colors nor that contrast change.",
+      "rank": 5.1
+    },
+    "DS-61Cyg": {
+      "step": 2,
+      "beat": "Two points: twin orange dwarfs",
+      "question": "Why do binoculars show 61 Cygni more clearly than your eye, even in moonlight?",
+      "why": "61 Cygni is a pair of faint orange stars, too dim to enjoy by eye under the Moon, which makes it the place to see what magnification does for points of light.",
+      "look": "Find 61 Cygni about 8° south-east of Deneb. In steady 10× binoculars it splits into two warm orange points 32″ apart; at 7× brace them well. The pair stands out more clearly in the eyepiece than to the naked eye.",
+      "answer": "Magnification spreads the moonlit sky over a wider view, so it looks no brighter, while the stars stay points and gain all the light the lenses collect. The background effectively darkens around them, and the pair stands out.",
+      "story": "Double-star observers have always been fond of moonlit nights, because a split depends on the steadiness of the air and the quality of the optics, not on the darkness of the sky. Measuring pairs is classic bright-time work, done on nights astronomers cannot use for faint galaxies. What spoils a split is turbulence, which makes star images boil, and observers rate each night's seeing by how steady the stars look, whatever the Moon is doing.",
+      "rank": 6.0
+    },
+    "HR7735": {
+      "step": 2,
+      "beat": "Two points: orange and white, wide",
+      "question": "Which star near 31 Cygni will the Moon take first, and why that one?",
+      "why": "31 Cygni sits in a little group of stars of very different brightness, a ready-made gauge of where moonlight begins to swallow points of light.",
+      "look": "In Cygnus, binoculars show orange 31 Cygni with white 30 Cygni about 5½′ away and a much fainter star closer in. The bright pair stays vivid; the faint star is the one that may be hard to hold tonight.",
+      "answer": "The faintest one goes first: moonlight raises the sky’s glow evenly, and a star disappears when it no longer stands clearly above that glow. The orange and white stars are far brighter, so their colors survive while the faint companion fades.",
+      "story": "The Moon's cut is not fixed: a thin crescent barely brightens the sky and a half Moon brightens it a little more. The nights just before full raise it fastest, because the Moon's own brightness climbs steeply toward full. The same faint star near 31 Cygni can be easy a week before full Moon and gone on the night itself. The bright pair, far above either level, does not notice the difference.",
+      "rank": 7.0
+    },
+    "DS-DoubleDbl": {
+      "step": 2,
+      "beat": "Two points: an eyesight test",
+      "question": "Why is the Double-Double harder for the naked eye tonight but easy in binoculars?",
+      "why": "Sharp eyes can see the Double-Double as a stretched star on a dark night, so it is a classic test of what the eye can resolve, and the Moon makes that test harder.",
+      "look": "Put Vega at the edge of the field and look about 1.7° to the north-east: two matched white stars sit side by side in Lyra, split easily in any binoculars. By eye under tonight’s sky, the stretched look is much harder to catch.",
+      "answer": "These stars are faint to the naked eye, so moonlight steals much of their contrast against the sky. Binoculars gather more of their light into each point while the sky gets no brighter, so the two stars stand clear again, two points that stay two.",
+      "story": "Splitting a pair by eye takes contrast as well as sharpness: two points close together blur slightly into each other, and the eye must see a dip of darker sky between them. Moonlight fills that dip with glow, so the gap that sharp eyes catch on a dark night turns into an unbroken smear. In binoculars the gap is so much wider that the dip stays deep, Moon or no Moon.",
+      "rank": 5.2
+    },
+    "HR7056": {
+      "step": 2,
+      "beat": "Two points: bright and faint",
+      "question": "When the sky brightens, why does the fainter star of ζ Lyrae suffer more?",
+      "why": "ζ Lyrae is an unequal pair beside Vega, one star clearly brighter than the other, which makes it a neat gauge of how moonlight treats faint points.",
+      "look": "ζ Lyrae forms a small triangle with Vega and the Double-Double. Binoculars show a brighter white star with a fainter companion 44″ to the south-east; both are there tonight, the companion less vivid than on a dark night.",
+      "answer": "Moonlight adds the same glow behind both stars, and the brighter one towers over it while the fainter one stands only a little above it. Both survive, but the gap between them and the sky is where you can watch the Moon at work.",
+      "story": "If the companion looks weak, try looking slightly to one side of the pair. The edge of your gaze is packed with rods, the eye's most sensitive light cells, and they pick up faint points that the center of your gaze misses. Observers call this averted vision, and it still works under a bright Moon, although the brighter background leaves the rods less to gain than on a dark night.",
+      "rank": 5.7
+    },
+    "HR7139": {
+      "step": 2,
+      "beat": "Two points: red and blue-white",
+      "question": "How do binoculars keep δ Lyrae’s colors alive in a moonlit sky?",
+      "why": "δ Lyrae is a wide pair of opposite colors near Sheliak, and its fainter blue member shows how lenses help points of light hold out against the glow.",
+      "look": "About 3½° north of Sheliak in Lyra, δ² Lyrae glows orange-red, with fainter blue-white δ¹ about a third of a Moon-width to the west. Defocus slightly and both colors deepen.",
+      "answer": "The binocular lenses collect many times more light than your pupil and squeeze each star’s share into a point, while the sky’s glow is spread across the wider view. Both stars gain and the sky does not, which is what keeps the pair and its colors alive.",
+      "story": "δ² Lyrae is a cool red giant and δ¹ a hot blue star, so between them they sample both ends of the rainbow. Moonlight is mostly scattered blue, so in a color photograph taken under a full Moon the blue star loses a little more contrast than the red one; the eye, which sees the moonlit sky as gray, barely notices. Both stars stand so far above the glow that their colors come through regardless.",
+      "rank": 5.6
+    },
+    "DS-NuDra": {
+      "step": 2,
+      "beat": "Two points: equal twins",
+      "question": "Do two equally bright stars survive moonlight equally?",
+      "why": "ν Draconis is a pair of matched white stars in Draco’s head, a clean experiment in how the Moon treats two points of the same brightness.",
+      "look": "Find the four-star head of Draco north-west of Vega, then its faintest star. Binoculars split it into two equal white points 62″ apart, both clearly visible against tonight’s brightened sky.",
+      "answer": "Two equal stars fare equally, because the Moon adds the same glow behind each and they stand the same height above it. Whatever happens to one happens to the other, so the twins stay twins even in moonlight.",
+      "story": "Moonlight cannot pull two points together, because how sharp a star image is depends on your optics and the steadiness of the air, never on the sky's brightness. Astronomers grade each night's seeing by how much the air makes star images boil and spread, and a turbulent moonless night can blur a tight pair that a calm moonlit night splits cleanly. A pair as wide as ν Draconis is safe on almost any night.",
+      "rank": 4.9
+    },
+    "DS-16Dra": {
+      "step": 2,
+      "beat": "Two points: a faint, easy pair",
+      "question": "How faint can a pair be and still split easily under a bright Moon?",
+      "why": "16 and 17 Draconis are two modest white stars, fainter than most of tonight’s sights, which makes them a test of how far down binoculars can go in moonlight.",
+      "look": "In Draco, two matched white points sit 90″ apart, an easy split for any binoculars. Tonight they look a little less sparkling than on a dark night, but both are plainly there.",
+      "answer": "A pair can be quite faint, because binoculars gather far more light than your eye and keep each star a point while the moonlit sky gets no brighter in the view. These fifth-magnitude stars are hard to see by eye tonight, yet the pair is easy through the glass.",
+      "story": "On a dark night the naked eye reaches stars of about the sixth magnitude, but a bright Moon pulls that limit up by a step or two, and stars as faint as these sit right where the cut falls. Binoculars push the limit back down by several magnitudes, because they multiply every star's light while the sky in the view stays as it was. You can measure the difference yourself by counting the stars around Draco's head by eye and then again through the glass.",
+      "rank": 5.5
+    },
+    "DS-DeltaCep": {
+      "step": 2,
+      "beat": "Two points: a pulsing star and its partner",
+      "question": "Can you still judge a star’s brightness against its neighbors when the Moon is up?",
+      "why": "δ Cephei is the famous pulsing star, and its steady companion is a fixed yardstick, so the pair asks whether moonlight spoils comparisons between stars.",
+      "look": "δ Cephei marks the south-east corner of the house-shaped figure of Cepheus, with a fainter blue-white companion 41″ beside it. Compare δ with ζ and ε Cephei nearby; the comparison works under the Moon as well as on a dark night.",
+      "answer": "Comparisons still work, because the Moon adds the same glow behind every star in the field and leaves their own light alone, so their relative brightness is unchanged. Comparing stars side by side is one kind of observing a bright Moon cannot spoil.",
+      "story": "Variable-star observers estimate brightness exactly this way, by comparing a star with steady neighbors of known magnitude. They carry on under a full Moon, because the sky's glow lies equally behind every star they compare. Their estimates, collected by the hundreds of thousands, have traced the rise and fall of δ Cephei and its kind for more than a century. A bright Moon makes the faintest comparison stars harder to use, but the method itself is untouched.",
+      "rank": 6.3
+    },
+    "DS-MizarAlcor": {
+      "step": 2,
+      "beat": "Two points: the old eyesight test",
+      "question": "Why is Alcor harder to see by eye tonight, but easy in binoculars?",
+      "why": "Mizar and Alcor, in the Big Dipper’s handle, were a traditional eyesight test, and a bright Moon makes that test harder, which is exactly what makes them useful here.",
+      "look": "Look at the middle star of the Big Dipper’s handle. By eye under tonight’s sky, little Alcor beside Mizar may take effort; in binoculars the two sit well apart and both are crisp.",
+      "answer": "Alcor is a modest star close to a bright one, so against a moonlit sky it loses much of its contrast to the naked eye. Binoculars collect far more of its light and keep it a point while the sky in the view gets no brighter, so the pair comes back.",
+      "story": "Alcor is a fourth-magnitude star beside a second-magnitude one, and Mizar's own light spreads a little around it inside the eye, so on a moonlit night the faint star has two glows to beat at once. Alcor was long called an eyesight test, though under most country skies it is plain to the naked eye; a bright Moon, especially with the pair low or in haze, can push it toward the edge. The magnification of binoculars widens the gap until Mizar's halo no longer reaches Alcor.",
+      "rank": 4.0
+    },
+    "HR5763": {
+      "step": 2,
+      "beat": "Two points: orange and white",
+      "question": "Does moonlight dull the colors of a faint pair like ν Boötis?",
+      "why": "ν¹ and ν² Boötis are a matched pair of fifth-magnitude stars, one orange and one white, so they test color at the faint end of what moonlight allows.",
+      "look": "Start at Nekkar, the star at the top of the kite of Boötes, and sweep east. Binoculars show orange ν¹ and white ν² side by side, nearly equal in brightness; the colors are gentler than on bright stars but still there.",
+      "answer": "The colors fade a little, but because the stars are faint, not because of the Moon’s tint, which it does not have. Your eye needs bright light for color, and binoculars gather just enough of each star’s light to keep the orange and the white apart.",
+      "story": "At the faint end, color vision gives out before sight does, because the colorblind rods keep working after the cones have gone quiet. A fifth-magnitude star sits near the point where the cones still respond, which is why ν Boötis's orange and white look gentle even on a dark night. That is also why the extra light of binoculars matters more for faint stars' colors than for anything else.",
+      "rank": 5.0
+    },
+    "DS-AlpLib": {
+      "step": 2,
+      "beat": "Two points: a wide traveling pair",
+      "question": "Why do binoculars make Zubenelgenubi’s companion easier to see on a moonlit night?",
+      "why": "Zubenelgenubi is a bright star with a fainter partner well clear of it, a pair that shows how magnification fights a bright sky.",
+      "look": "Find Libra between Spica and Antares. Center Zubenelgenubi and look just north-west, where a fainter star stands clearly apart, easy even at 7×; the bright star is white, the companion a touch creamier.",
+      "answer": "Magnification spreads the sky’s glow over a wider view, so it looks no brighter, while each star stays a point and gains all the light the lenses collect. The faint companion, which competes with the Moon by eye, stands out once the binoculars are up.",
+      "story": "Contrast is the key: what lets you see a star is how much brighter it is than the sky right around it, and the eye judges that as a ratio. Moonlight raises the sky without touching the star, so the ratio falls for every star in the field, and it falls furthest for the faint ones, which had the smallest ratio to begin with. That is why Zubenelgenubi itself looks unchanged while its companion, by eye, grows harder.",
+      "rank": 5.2
+    },
+    "DS-AlpCap": {
+      "step": 2,
+      "beat": "Two points: a naked-eye pair",
+      "question": "Can you still split α Capricorni with your eyes alone in moonlight?",
+      "why": "α Capricorni is a pair keen eyes can split on a dark night, so it is a quick measure of how much the Moon takes from the naked eye and what binoculars give back.",
+      "look": "α Capricorni is the upper star of the Goat’s head in Capricornus. Try it by eye first, then raise the binoculars: two warm-colored stars about a fifth of a Moon’s width apart, an easy split.",
+      "answer": "By eye it is harder tonight, because both stars are fairly faint and the brighter sky lowers their contrast. In binoculars each becomes a stronger point against a sky no brighter than before, so the split is as clean as ever.",
+      "story": "Pairs like this have served as eyesight tests for centuries, because splitting them by eye depends on two things at once, the sharpness of your vision and the contrast of the stars against the sky. Moonlight leaves sharpness alone and takes away contrast, so a pair that sharp eyes divide on a dark night can merge into one fuzzy point by eye on a moonlit one. Yet nothing about the stars or the gap between them has changed.",
+      "rank": 4.3
+    },
+    "DS-ThetaTau": {
+      "step": 2,
+      "beat": "Two points: white and yellow-orange",
+      "question": "Do θ¹ and θ² Tauri keep their contrasting colors with the Moon up?",
+      "why": "θ Tauri is a wide pair inside the Hyades, one white and one yellow-orange, a color contrast right next to the cluster’s fading faint stars.",
+      "look": "Inside the Hyades V in Taurus, about 2° from Aldebaran, look for an obvious wide pair that binoculars split at a glance. θ² is white and θ¹ yellow-orange; a slight defocus makes the contrast stronger.",
+      "answer": "Both keep their colors, because each is a bright point well above the moonlit sky, and the Moon adds no color of its own. The cluster's faint members around them are the ones paying for the moonlight.",
+      "story": "Color in a star is a matter of proportion: a cool star sends relatively more red and yellow light, a hot one more blue. The eye reads that balance through its three kinds of cones, as long as each gets enough light to respond. Both stars of θ Tauri are comfortably above that level, so the balance reads as clearly as on a dark night. Astronomers built their first color thermometers on the same principle, measuring each star through a blue filter and a yellow one.",
+      "rank": 3.8
+    },
+    "HR1479": {
+      "step": 2,
+      "beat": "Two points: matched white stars",
+      "question": "Why does σ Tauri split as easily tonight as on a moonless night?",
+      "why": "σ Tauri is a pair of nearly equal white stars beside Aldebaran, wide enough that only moonlight, not optics, could make it hard.",
+      "look": "Look about 1° south-east of Aldebaran in Taurus. Binoculars split it into two white stars about 7.4 arcminutes apart (an arcminute is a sixtieth of a degree), nearly equal in brightness and both clear tonight.",
+      "answer": "A bright sky cannot pull two points together; it can only lower their contrast, and these stars are bright enough to keep plenty. The split depends on the gap and your optics, and the gap here is wide.",
+      "story": "Even a perfect lens turns a star into a tiny disk with faint rings, because light is a wave, and the wider the lens, the smaller the disk. Two stars split cleanly when their disks do not overlap, a matter of optics and geometry that the brightness of the sky never enters. A pair as wide as σ Tauri would split in lenses far narrower than your binoculars, and even the naked eye can manage it.",
+      "rank": 5.1
+    },
+    "HR1387": {
+      "step": 2,
+      "beat": "Two points: bright and fainter",
+      "question": "Which of κ Tauri’s two stars does the Moon dim more, and why?",
+      "why": "κ Tauri is an unequal pair just north of the Hyades, a bright white star with a fainter one, and the gap in brightness shows where moonlight bites.",
+      "look": "Look about 6° north of the Hyades V in Taurus. Binoculars split it into two white stars about 5.7 arcminutes apart, the fainter clearly less vivid against tonight’s sky.",
+      "answer": "Neither star gets dimmer; the sky gets brighter behind both. The fainter star simply had less to spare, so it stands closer to the glow and looks weaker, while the brighter one barely notices.",
+      "story": "Each step on the magnitude scale is a fixed ratio of brightness, about two and a half times, so a star one magnitude fainter than its partner sends well under half as much light. On a moonlit night that ratio becomes the whole story, because the sky has risen toward the fainter star's level while staying far below the brighter one's. The two stars have not changed relative to each other at all; only the floor beneath them has risen.",
+      "rank": 5.3
+    },
+    "DS-56And": {
+      "step": 2,
+      "beat": "Two points over a fading cluster",
+      "question": "Why does the 56 Andromedae pair survive when the cluster behind it fades?",
+      "why": "56 Andromedae is a pair of orange stars at the edge of the scattered cluster NGC 752, so one field holds two points and a faint crowd.",
+      "look": "In southern Andromeda, about five degrees south of Almach, the two orange stars of 56 Andromedae split clearly in any binoculars. Around them, where NGC 752’s faint stars usually scatter, the field is much emptier tonight.",
+      "answer": "The pair are each single points bright enough to stand above the moonlit sky, while NGC 752’s members are fainter stars that sink below it. Moonlight cuts by brightness, and a cluster of faint stars is the first to feel the cut.",
+      "story": "The faint stars of the cluster behind this pair are not all dimmer suns; some are orange giants just like the two in front, only several times farther away. Light fades with the square of distance, so each of them arrives with a fraction of the brightness. Tonight that fraction decides everything, for the near pair stays above the Moon's cut while the distant crowd falls below it. Distance, which binoculars cannot see, turns out to be one of the Moon's strongest allies.",
+      "rank": 6.0
+    },
+    "HR5993": {
+      "step": 2,
+      "beat": "Two points: blue-white and yellow",
+      "question": "Can moonlight blur ω¹ and ω² Scorpii back into one star?",
+      "why": "ω¹ and ω² Scorpii are a naked-eye pair of different colors near the head of Scorpius, a direct test of whether a bright sky can merge two points.",
+      "look": "In Scorpius, from β drop about one degree south. Two stars of similar brightness sit about half a Moon-width apart, easy even at 7×; the north-western one is blue-white, the other faintly yellow.",
+      "answer": "Moonlight cannot merge them, because blurring comes from the air and the optics, not from the sky's brightness. The Moon only lowers contrast, and these two stars are bright enough that both stay crisp, colors included.",
+      "story": "The eye can separate two points about a sixtieth of a degree apart, a limit set by the spacing of the cones at the center of your gaze and the blur of the eye's own lens. The two ω stars sit many times wider than that. Nothing about that limit depends on the sky, which is why a bright Moon can dull a pair's sparkle but never fuse it.",
+      "rank": 4.3
+    },
+    "HR6247": {
+      "step": 2,
+      "beat": "Two points: blue-white pair",
+      "question": "Why does μ Scorpii look so much cleaner in binoculars than by eye tonight?",
+      "why": "μ¹ and μ² Scorpii are a bright naked-eye pair in the curl of the scorpion’s tail, and they show how binoculars push back against a moonlit sky.",
+      "look": "Follow the tail of Scorpius down from Antares to where it starts to curl. μ¹ and μ² sit about a fifth of a Moon-width apart, two blue-white points that binoculars hold crisply against the pale sky.",
+      "answer": "Magnification spreads the sky’s glow over a wider view so it looks no brighter, while each star stays a point and gains the light the lenses gather. The contrast that moonlight took from your eye is handed back.",
+      "story": "On a moonlit night the faintest stars your eye can catch are not much fainter than the stars of Scorpius's tail, so pairs like μ¹ and μ² look thin to the naked eye. Binoculars move the limit several magnitudes deeper, because every star in the field gains the light the lenses collect while the sky's glow does not. The same pair that looks thin by eye is bold in the glass.",
+      "rank": 3.6
+    },
+    "HR6262": {
+      "step": 2,
+      "beat": "Two points: orange and pale",
+      "question": "Do ζ¹ and ζ² Scorpii keep their contrasting colors in moonlight?",
+      "why": "The ζ Scorpii pair in the scorpion’s tail is one orange and one paler star, and just beside it lies a compact cluster, a field that previews the rest of the night.",
+      "look": "Where the tail of Scorpius bends south, two stars sit a few arcminutes apart: orange ζ² and the fainter, paler ζ¹. Half a degree north the compact cluster NGC 6231 still shows its brightest stars tonight.",
+      "answer": "Both keep their colors, because each is a single point well above the moonlit glow, and the Moon adds no color. The cluster just north shows the next step, many points together, with only its brightest ones left.",
+      "story": "ζ¹ teaches a lesson about color: it is really a hot blue star, but its light crosses thousands of light-years of dusty space, and dust scatters blue light more than red, the same physics that turns sunsets red. What reaches you is paler and yellower than the star itself, a tint the Moon can neither add to nor take away. Its orange neighbor, much nearer, shows its true color almost untouched.",
+      "rank": 4.7
+    },
+    "HR3207": {
+      "step": 2,
+      "beat": "Two points: a bright star and its retinue",
+      "question": "Which members of the little Gamma Velorum group can the Moon take away?",
+      "why": "Gamma Velorum is a bright star with companions of very different brightness, a small ladder for measuring where moonlight starts to win.",
+      "look": "Steady your binoculars and Gamma Velorum splits into a bright white star with a fainter one 41″ beside it. Two much fainter stars farther out complete the group on a dark night; tonight expect to miss at least the fainter of them.",
+      "answer": "The faintest go first, because they stand only slightly above a dark sky and sink once the Moon brightens it. The bright star and its fourth-magnitude companion stay, each a point far above the glow.",
+      "story": "The stars of Gamma Velorum's group make a ladder of brightness, from second magnitude down toward the edge of binocular sight, and moonlight saws off the bottom rungs. Where the cut falls depends on more than the Moon's phase: its height in the sky, the haze in the air and how high Vela stands all move it. The same group can lose one member on one moonlit night and two on another.",
+      "rank": 4.3
+    },
+    "HR4621": {
+      "step": 2,
+      "beat": "Two points: a wide bright group",
+      "question": "How do binoculars hold Delta Centauri’s companions against a bright sky?",
+      "why": "Delta Centauri sits with two fainter stars in a wide little group, and on a moonlit night it shows what the lenses add to points of light.",
+      "look": "In binoculars Delta Centauri forms a wide group with two fainter stars close beside it, in Centaurus. All three are visible tonight, the faintest a little weaker than on a dark night.",
+      "answer": "The lenses collect far more light than your pupil and put each star’s share into one point, while the moonlit sky, spread over a wider view, looks no brighter. Each star gains and the sky does not, which keeps the group together.",
+      "story": "Seeing a star depends on a ratio, its light against the light of the sky just around it. Moonlight raises the sky behind all three stars of this little group by the same amount, so the ratio falls most for the faintest of them, which started with the least to spare. The lenses lift every ratio back up, because they add to each star's light and nothing to the sky's.",
+      "rank": 6.0
+    },
+    "HR4730": {
+      "step": 2,
+      "beat": "Two points: what splits and what cannot",
+      "question": "Does the Moon's glare make Acrux's faint companion harder to hold?",
+      "why": "Acrux, the foot of the Southern Cross, holds a pair binoculars can split and a pair they never will, which separates the Moon’s role from the optics’.",
+      "look": "Acrux is the bright star at the bottom of the Cross, and binoculars show a much fainter star beside it, clear even tonight. The two brilliant stars that make up Acrux itself stay merged in one point.",
+      "answer": "The companion stays, a little weaker than on a dark night, because it is a 5th-magnitude star a minute and a half from a brilliant one. The brighter sky lowers its contrast, but the gap is wide enough to keep it a point of its own. Whether two points stand apart is decided by your optics and the air, never by the Moon, which is why Acrux's own two stars stay merged on any night.",
+      "story": "The limit that keeps Acrux's own two stars merged is set by the width of the lenses: light is a wave, and a lens of a given width cannot shrink a star's image below a certain size, which grows as the lens narrows. A small telescope, wider and magnifying far more, separates them easily, on moonlit nights as well as dark ones.",
+      "rank": 4.9
+    },
+    "M45": {
+      "step": 3,
+      "beat": "A crowd: the Seven Sisters, counted",
+      "question": "How many Pleiades can you count tonight, and why fewer than usual?",
+      "why": "The Pleiades hold stars of every brightness, so they show the Moon’s cut at work.",
+      "look": "Find the little dipper of stars north-west of Aldebaran. Count the members by eye, then in binoculars: the bright blue-white stars are as crisp as ever, but the swarm of faint ones that fills the field on a dark night is thinner.",
+      "answer": "Moonlight brightens the sky behind every member alike, and the faintest Pleiades no longer stand above it. The cluster has not lost a star; you have lost the faint ones, and what is left is its bright skeleton.",
+      "story": "Ask people how many Pleiades they see and the answers range from six to a dozen or more, which made the cluster a test of eyesight and of the sky long before anyone had a light meter. The count drops on moonlit nights for the same reason it drops in towns, and observers who want to judge a sky still start by counting Pleiades.",
+      "rank": 440
+    },
+    "AST-Hyades": {
+      "step": 3,
+      "beat": "A crowd: a near family",
+      "question": "Why do the Hyades survive moonlight better than most star clusters?",
+      "why": "The Hyades are the nearest open cluster, a V of stars wide enough to need several binocular fields, and their nearness matters a great deal tonight.",
+      "look": "Sweep along each arm of the V of Taurus. Dozens of white and yellow stars and a few orange giants are still there, while faint background stars have thinned; Aldebaran at one tip is a foreground star.",
+      "answer": "Being so close, the Hyades’ members look bright, and bright points stand well above the moonlit sky. A more distant family of the same stars would look fainter and lose many more members to the glow.",
+      "story": "Over hundreds of millions of years the heavier stars of a cluster sink toward its middle while lighter ones drift outward, much as heavier objects settle in a shaken jar. In the Hyades this sorting is well measured, so the faint members a bright Moon removes are mostly from the cluster's outskirts. The heart of the V, drawn in its heaviest and brightest members, is exactly what survives.",
+      "rank": 154
+    },
+    "M44": {
+      "step": 3,
+      "beat": "A crowd: the glow that vanishes",
+      "question": "Why does the Beehive disappear to your eye tonight but not in binoculars?",
+      "why": "To the naked eye on a dark night the Beehive is a soft smudge, the blended light of many stars, and that makes it a perfect experiment for a moonlit sky.",
+      "look": "Look midway between Pollux and Regulus, in faint Cancer. By eye the smudge is probably gone tonight; in binoculars dozens of white and pale-yellow stars are still there, in little triangles and pairs.",
+      "answer": "By eye you saw the cluster’s combined glow, light spread thinly over a patch wider than the Moon, and the moonlit sky drowns it. Binoculars split that glow back into separate points, and points are what the Moon cannot hide.",
+      "story": "Until the telescope, the Beehive was known only as a small cloud, and Galileo was the first to see it break into stars, about forty of them, in 1610. Every cluster that looks like a soft patch to the naked eye is the same kind of illusion, a crowd of points too close together and too faint for the eye to separate. That blended glow is precisely the form of light moonlight steals.",
+      "rank": 598
+    },
+    "Mel111": {
+      "step": 3,
+      "beat": "A crowd: a loose near family",
+      "question": "Why does the Coma Star Cluster stay visible when fainter clusters vanish?",
+      "why": "The Coma Star Cluster is a loose sprawl of stars so close that each member is fairly bright, which matters more than anything else on a moonlit night.",
+      "look": "Look between Denebola and Cor Caroli. Binoculars show a sprawl of white stars across most of the field, sparser than on a dark night but unmistakable; the orange star at its northern edge is a foreground star.",
+      "answer": "Its members are near enough to look bright one by one, and each bright point stands above the moonlit sky by itself. A cluster whose stars were too faint to see singly would have only its blended glow to offer, and that would be lost.",
+      "story": "Imagine the Coma Star Cluster ten times farther away: each star would look a hundred times fainter, and the family would shrink to a patch a tenth as wide, a faint smudge a bright Moon would erase. Nearness is what turns its ordinary stars into separate points, and points are what the Moon cannot hide.",
+      "rank": 278
+    },
+    "Mel20": {
+      "step": 3,
+      "beat": "A crowd: a near family around Mirfak",
+      "question": "Why does the Alpha Persei Cluster look nearly as rich tonight as ever?",
+      "why": "The Alpha Persei Cluster is a near family spread around Mirfak, bright enough member by member to make it one of the best clusters for a moonlit night.",
+      "look": "Center Mirfak, the brightest star of Perseus, and dozens of blue-white stars spread around it in curving chains. Tonight the faintest have gone, but the chains are still clear.",
+      "answer": "Its stars are close enough to look bright individually, so most of them stand well above the moonlit sky. Only the faintest members drop out, which leaves the cluster’s pattern almost intact.",
+      "story": "The curving chains that the eye traces through this cluster are partly the eye's own invention, since the brain links bright points into lines and arcs wherever it can, which is how every constellation was born. With the faintest members gone there are fewer points to link, so on a moonlit night the chains can look cleaner than ever.",
+      "rank": 566
+    },
+    "NGC869": {
+      "step": 3,
+      "beat": "A crowd: a far family, thinned",
+      "question": "Why does h Persei lose so many stars to the Moon when Mirfak’s cluster loses few?",
+      "why": "h Persei is the richer half of the Double Cluster, a family thousands of light-years away, and its distance decides how it fares tonight.",
+      "look": "Sweep from Cassiopeia’s W toward Perseus to the two knots of the Double Cluster. The western one, h Persei, still shows a few dozen points tonight, but the fine grain of fainter stars that fills it on a dark night is mostly gone.",
+      "answer": "Its distance is to blame: seen from about 7,400 light-years, even powerful stars look faint, and faint points sink below the moonlit glow. A nearer family like the Alpha Persei Cluster keeps far more of its members.",
+      "story": "In a cluster this far away, the line the Moon draws runs through the middle of the family: the hot giants at the top stay, and ordinary blue-white members, each still far more powerful than the Sun, drop below it. Every family loses its smallest members first, so a moonlit view leaves a cluster looking younger and more brilliant than it really is.",
+      "rank": 7435
+    },
+    "NGC884": {
+      "step": 3,
+      "beat": "A crowd: colors that survive",
+      "question": "Why do the orange stars in χ Persei still show in moonlight?",
+      "why": "χ Persei, the eastern half of the Double Cluster, has a few orange supergiants among its blue-white members, and they stand out on a moonlit night.",
+      "look": "Keep both halves of the Double Cluster in the field and turn to χ Persei, the eastern one. Its orange-tinted stars are still there among the remaining blue-white points; defocus a touch to judge their color.",
+      "answer": "The orange stars are among the most luminous in the cluster, so they stay well above the moonlit sky while fainter members fade. Their color reaches you untouched, because the Moon adds glow, not tint.",
+      "story": "Orange supergiants are rare even in rich clusters, because a heavy star spends only a short final chapter of its life in that swollen state, and a cluster of the right age catches just a few of them at once. One of the clocks astronomers use to date the Double Cluster is the number and color of exactly these stars, the members most likely to outlast any Moon.",
+      "rank": 7479
+    },
+    "M7": {
+      "step": 3,
+      "beat": "A crowd: cleaner in moonlight",
+      "question": "Why can Ptolemy’s Cluster look cleaner under a bright Moon than on a dark night?",
+      "why": "Ptolemy’s Cluster sits on one of the richest stretches of the Milky Way, and the Moon changes how the cluster stands out from that background.",
+      "look": "From Shaula, go about five degrees north-east to Ptolemy’s Cluster, a big scatter of stars in Scorpius. Tonight the rich Milky Way glow behind it has faded, and its brightest members stand out crisply with chains, pairs and a yellowish star near the middle.",
+      "answer": "On a dark night the cluster competes with a crowd of faint Milky Way stars behind it; moonlight removes that background, along with the cluster’s own faintest members. What is left is mostly the cluster’s bright core of stars, a cleaner if sparser view.",
+      "story": "Star families are made with a handful of heavyweights and a great many small stars, a pattern Edwin Salpeter first measured in 1955 by counting how many stars of each mass a group contains. The few bright stars carry most of a cluster's light, so a bright Moon can take the majority of Ptolemy's members while leaving most of its light, and its shape, in place.",
+      "rank": 900
+    },
+    "M6": {
+      "step": 3,
+      "beat": "A crowd: one orange star",
+      "question": "Why does BM Scorpii, the orange star of the Butterfly Cluster, still stand out tonight?",
+      "why": "The Butterfly Cluster is a young cluster with one orange giant on its wingtip, and the Moon’s cut shows which kind of member keeps its place.",
+      "look": "From Shaula, go about five degrees north to the Butterfly Cluster in Scorpius. Fewer stars than on a dark night trace its butterfly wings, but on one wingtip BM Scorpii still glows clearly orange among blue-white members.",
+      "answer": "BM Scorpii is one of the brightest members, so it stays well above the moonlit sky, and the Moon adds no color to wash out its orange. The fainter members that shape the wings are the ones that thin out.",
+      "story": "The butterfly that gives this cluster its name was traced by observers under dark skies, linking bright and faint members alike into wings. A moonlit sky removes the faint links first, so the wings thin to a few bright chains while the brightest stars hold their places. A shape drawn in stars lasts only as long as the dimmest star it depends on.",
+      "rank": 1470
+    },
+    "M41": {
+      "step": 3,
+      "beat": "A crowd: thinned to its brightest",
+      "question": "What is left of M41 when the Moon takes its faint stars?",
+      "why": "M41, just south of Sirius, is a rich cluster of stars of many brightnesses, so the Moon shows clearly how a family is cut down to its brightest.",
+      "look": "Put Sirius at the top of the field and move about four degrees straight south. M41 is still there tonight as a smaller scatter of stars, with the orange star near its middle still visible.",
+      "answer": "Its brightest members remain, the orange giant among them, because each is a point that stands above the moonlit glow. The fainter stars, and the soft haze they make together, sink below it.",
+      "story": "A bright Moon acts on a cluster just as distance does: lifting the dimmest star you can see by a magnitude or two removes the members that would vanish if the cluster were a few times farther away. Astronomers use the reverse of this idea to measure cluster distances, matching a cluster's stars against a nearby family whose distance is known. Tonight the Moon has, in effect, moved M41 deeper into space.",
+      "rank": 2330
+    },
+    "M47": {
+      "step": 3,
+      "beat": "A crowd beside a fading neighbor",
+      "question": "Why does M47 survive the Moon while M46 next door nearly vanishes?",
+      "why": "M47 and M46 sit side by side in Puppis, one a scatter of bright stars and the other a misty swarm of faint ones, a contrast built for a moonlit night.",
+      "look": "Center M47, a coarse scatter of bright blue-white stars about the width of the full Moon. Then look just over a degree east for M46, a fine misty patch on dark nights; tonight it is faint at best, or gone.",
+      "answer": "M47’s stars look bright one by one and stand above the moonlit sky, while M46 is about three times farther away and its stars blur into a faint glow. Moonlight takes the glow and leaves the points.",
+      "story": "Whether a cluster reaches you as points or as a glow depends on the instrument as much as on the cluster. A telescope with wider lenses would split its neighbor's haze into many faint stars and rescue some of them from the Moon, while the naked eye turns even M47 into a single soft patch. Binoculars sit in between, which is why these two clusters land on opposite sides of tonight's line.",
+      "rank": 1527
+    },
+    "NGC6231": {
+      "step": 3,
+      "beat": "A crowd: far but brilliant",
+      "question": "How does a cluster this far away keep its stars in moonlight?",
+      "why": "NGC 6231 lies thousands of light-years away, yet it is full of some of the most powerful stars known, which makes it an exception worth seeing on a moonlit night.",
+      "look": "Follow Scorpius’s tail down to the pair ζ¹ and ζ² Scorpii, then go half a degree north to a compact knot of a dozen bright stars. They are still clear tonight, though the fainter stars between them have faded.",
+      "answer": "What counts is how bright a star looks, and NGC 6231’s members are so powerful that even from about 5,200 light-years they shine as clear points. The Moon cares about brightness at your eye, not about distance.",
+      "story": "A star like the Sun, moved to this cluster's distance, would be far beyond any binoculars even on the darkest night, while the heaviest stars here could be pushed farther still and remain in view. Power, not nearness, is what puts this distant family above the Moon's cut, and its light even survives a long passage through dusty space that dims it several times over.",
+      "rank": 5190
+    },
+    "IC2602": {
+      "step": 3,
+      "beat": "A crowd: the Southern Pleiades, counted",
+      "question": "How many stars of the Southern Pleiades can you count tonight?",
+      "why": "The Southern Pleiades are a near family of blue-white stars around Theta Carinae, and counting them under the Moon shows the cut moonlight makes.",
+      "look": "Find Theta Carinae, the brightest of a small spray of stars just south of the Carina Nebula. The naked eye catches a few; binoculars show a spray of mostly blue-white stars, fewer than the two or three dozen of a dark night.",
+      "answer": "You count fewer, because the faintest members no longer stand above the moonlit sky. The brightest stars, near enough to look bright one by one, keep the family’s shape.",
+      "story": "Counting the stars of a familiar cluster is one of the oldest ways to grade a night's sky: the more members you can count, the darker the sky. The count falls steeply as the sky brightens, because the faint members far outnumber the bright ones, so losing even one step on the magnitude scale costs more stars than all the brighter steps together hold.",
+      "rank": 491
+    },
+    "NGC3532": {
+      "step": 3,
+      "beat": "A crowd: chains against a faded river",
+      "question": "Why does the Wishing Well Cluster look sparser but sharper under the Moon?",
+      "why": "The Wishing Well Cluster is a rich swarm set against the southern Milky Way, and the Moon changes both the cluster and its background.",
+      "look": "From the Carina Nebula, move about three degrees east-north-east. Binoculars show an elongated swarm with curving chains and a few yellow-orange stars; tonight the faintest stars are gone and the Milky Way glow behind it is subdued.",
+      "answer": "The Moon removes the faintest members and the soft background glow at the same time, so the brightest stars stand out against a plainer sky. The cluster looks smaller, but each surviving star is crisp.",
+      "story": "Under a bright Moon a cluster looks much as it would from farther away, because raising the faintest visible star removes the same members that distance would remove first. Astronomers turn that idea around to measure cluster distances, sliding a cluster's stars up and down in brightness until they match a nearby family at a known distance. In effect, the Wishing Well has been pushed deeper into space for the night.",
+      "rank": 1539
+    },
+    "IC2391": {
+      "step": 3,
+      "beat": "A crowd: a near family",
+      "question": "Why does the Omicron Velorum Cluster hold up so well to a bright Moon?",
+      "why": "The Omicron Velorum Cluster is a near family, so even its modest stars look bright, which is exactly what a moonlit night rewards.",
+      "look": "It lies less than two degrees north of Delta Velorum, a corner of the False Cross. Binoculars show a loose, sparkling group of bright stars around Omicron Velorum, barely diminished by the moonlight.",
+      "answer": "At about 490 light-years its stars look bright one by one, and each stands as a point above the moonlit sky. Nearness turns ordinary stars into Moon-proof ones.",
+      "story": "A near cluster spreads its members over a wide patch of sky, which would be a weakness if it had to survive as a glow, because its light per patch is tiny. It does not need to: its stars are bright enough to stand one by one, and the Moon judges each point on its own. The farther away a cluster lies, the more it relies on the blended glow that moonlight erases.",
+      "rank": 490
+    },
+    "NGC2451": {
+      "step": 3,
+      "beat": "A crowd beside a fading neighbor",
+      "question": "Why does NGC 2451 survive the Moon while NGC 2477 beside it fades?",
+      "why": "NGC 2451 and NGC 2477 share a binocular field in Puppis, a bold scatter of bright stars next to a dense, misty swarm, so one view shows both sides of the Moon’s cut.",
+      "look": "Binoculars show a loose spray of bright stars around the orange giant c Puppis. About one and a half degrees east-south-east, NGC 2477’s misty glow is faint at best tonight.",
+      "answer": "NGC 2451’s members are near and bright, so they stay separate points above the moonlit sky. NGC 2477’s stars are far fainter and merge into a dim glow, which the Moon drowns.",
+      "story": "The neighboring cluster is old and rich, and its heaviest stars died long ago, so its light comes from a great many modest stars, none bright enough at its distance to stand alone. A young, near family like NGC 2451 is the opposite, with its light concentrated in a few bright members. How a family's light is shared out among its stars decides how it fares under the Moon.",
+      "rank": 620
+    },
+    "NGC2516": {
+      "step": 3,
+      "beat": "A crowd: the haze goes first",
+      "question": "What does the Moon take from the Southern Beehive?",
+      "why": "The Southern Beehive is a handful of bright stars over a fainter haze of members, two layers that react very differently to moonlight.",
+      "look": "In Carina, binoculars resolve a patch the width of the full Moon, a few brighter stars in a rough box. Tonight the fainter haze of members behind them is thin or gone.",
+      "answer": "The Moon takes the haze, the blended light of members too faint to see one by one, and leaves the box of bright stars. The cluster is still there, reduced to the members that are points in their own right.",
+      "story": "The haze you lose tonight is not a nebula but the cluster's own faint members, blended because each is too dim to register on its own; the eye adds up their light over a small patch and reports a glow. Star counts show that most of the cluster's stars are of this faint kind, so on a moonlit night the Southern Beehive keeps only a small fraction of its members, though most of its light.",
+      "rank": 1328
+    },
+    "NGC4755": {
+      "step": 3,
+      "beat": "A crowd beside a vanished Coalsack",
+      "question": "Why does the Jewel Box still sparkle while the Coalsack beside it disappears?",
+      "why": "The Jewel Box sits just beside the Coalsack, a dark cloud seen only as a hole in the Milky Way, so this one field shows a bright crowd and a dark one reacting to the Moon.",
+      "look": "Start at Mimosa and nudge just over a degree south-east to a compact clump shaped like a letter A, mostly blue-white with one orange star. The Coalsack’s dark patch beside the Cross is much harder to see tonight.",
+      "answer": "The Jewel Box’s brightest members are points above the moonlit sky, and its orange star keeps its color. The Coalsack is visible only as a gap in the Milky Way’s glow, and once moonlight drowns that glow, there is nothing for the gap to show against.",
+      "story": "For centuries the dark patches of the Milky Way were taken for gaps in the stars. It took E. E. Barnard's photographs in the early twentieth century to convince astronomers that they are clouds of dust standing in front of the starlight. Dust dims and reddens whatever lies behind it, so the Coalsack is a shadow cast on a glow, and a shadow can only be seen while there is light around it.",
+      "rank": 6453
+    },
+    "AST-OrionBelt": {
+      "step": 3,
+      "beat": "A crowd: the Belt’s family, thinned",
+      "question": "What happens to the chain of stars winding through Orion’s Belt in moonlight?",
+      "why": "Orion’s Belt is three bright stars set in a loose young family of fainter ones, so it shows how a group is pared down to its brightest.",
+      "look": "Put the middle Belt star in the center and let the outer two sit near the edges. The S-shaped chain of fainter stars winding through the field is thinner tonight, while the three blue-white Belt stars are untouched.",
+      "answer": "The faint members of the chain sink below the moonlit sky, and the three Belt stars, far brighter, stay. The family is the same; the Moon simply shows you only its brightest children.",
+      "story": "Nature makes stars the way it makes pebbles on a beach, a few big ones and a great many small, and Edwin Salpeter put numbers to that in 1955 by counting the stars of each mass near the Sun. Few as they are, the heavyweights give out most of a young group's light, so the Moon can remove most of the Belt family's members while taking only a small share of its total glow.",
+      "rank": 1230
+    },
+    "NGC2244": {
+      "step": 3,
+      "beat": "A crowd without its nebula",
+      "question": "Why can you see the Rosette Cluster tonight but not the Rosette Nebula?",
+      "why": "The Rosette is a young cluster wrapped in a faint ring of glowing gas, and the Moon separates the two cleanly.",
+      "look": "Go about a third of the way from Betelgeuse to Procyon and drop slightly south into Monoceros. A small rectangle of stars stands out, one of them yellow-orange; the faint ring of haze around it, glimpsed on very dark nights, is gone.",
+      "answer": "The cluster’s stars are points that stand above the moonlit sky, while the nebula’s glow is spread over a patch wider than the Moon and sinks below it. Points survive, thin glows do not.",
+      "story": "The Rosette's gas glows mostly in the deep red light of hydrogen, a color the rods that run night vision hardly register, so the ring is hard to see even on a dark night. Observers who chase it fit filters that pass only the nebula's few colors and block most other light, moonlight included, a trick that can rescue some nebulae even on bright nights. The cluster's stars, shining in every color at once, need no such help.",
+      "rank": 4620
+    },
+    "NGC2362": {
+      "step": 3,
+      "beat": "A crowd around one bright star",
+      "question": "Why does τ Canis Majoris stay bright while its little cluster fades?",
+      "why": "τ Canis Majoris is a bright star wrapped in a tiny knot of faint cluster members, the Moon’s cut squeezed into a few arcminutes.",
+      "look": "Find Wezen and Aludra in the Great Dog’s hindquarters, south-east of Sirius. τ Canis Majoris sits about three degrees north of the point midway between them, a bright star whose faint surrounding knot is barely there tonight.",
+      "answer": "τ Canis Majoris is a single bright point far above the moonlit glow, while the cluster members around it are faint and close together, blending into a dim haze the Moon drowns.",
+      "story": "Inside your binoculars every glass surface scatters a little of a bright star's light, and your eye adds its own scatter, so a brilliant star always sits in a small haze of its own making. In a cluster as compact as this one the faint members live inside that haze, and on a moonlit night they must outshine two glows at once.",
+      "rank": 4010
+    },
+    "Cr69": {
+      "step": 3,
+      "beat": "A crowd: a compact bright triangle",
+      "question": "Why does the λ Orionis Cluster survive the Moon when so much of Orion fades?",
+      "why": "The λ Orionis Cluster is a neat little triangle of stars at Orion’s head, with no visible nebula to lose, so it shows what a crowd of points keeps.",
+      "look": "Aim at the faint star that marks Orion’s head, above and between Betelgeuse and Bellatrix. Binoculars turn it into a neat little triangle with fainter stars around it; the triangle is clear tonight, the faintest stars thinner.",
+      "answer": "Its main stars are bright points that stand above the moonlit sky, and the faint ring of gas around them is beyond binoculars on any night, so the Moon has no nebula here to take. Only its faintest members drop out.",
+      "story": "Your eye adds up light for only about a tenth of a second before starting afresh, while a camera can add it up for minutes. That is why photographs show a vast, faint ring of glowing gas around this cluster that binoculars never show, even on the darkest night. It is also why the Moon's glow, which the camera adds up too, spoils long exposures as surely as it spoils the view. For the eye, the cluster has only ever been its stars.",
+      "rank": 1280
+    },
+    "M39": {
+      "step": 3,
+      "beat": "A crowd: counted against a faded river",
+      "question": "How many of M39’s stars can you count under a bright Moon?",
+      "why": "M39 is a loose triangle of stars in the Milky Way of Cygnus, few enough to count, which makes the Moon’s effect easy to measure.",
+      "look": "From Deneb, sweep about 9° east-north-east to a loose triangle of stars about the size of the full Moon. Count the members at low power; tonight the Milky Way glow around it is subdued and the faintest members are missing.",
+      "answer": "You count fewer than on a dark night, because only the brighter white stars stand above the moonlit sky. The triangle survives because its outline is drawn in bright stars.",
+      "story": "Looking toward Cygnus you look straight along our own spiral arm, so the sky behind M39 is packed with faint, distant stars whose light blends into the Milky Way's glow. On a dark night that backdrop crowds the cluster and blurs its edges; under the Moon the backdrop goes first, so the cluster's brighter members stand out against plainer sky even as its faint ones are lost.",
+      "rank": 965
+    },
+    "NGC457": {
+      "step": 3,
+      "beat": "A crowd: two eyes and a fading body",
+      "question": "Why do the Owl Cluster’s two eyes outlast its body under a bright Moon?",
+      "why": "The Owl Cluster is two bright stars at the end of a faint, elongated swarm, so it shows in one small field which members a moonlit sky lets you keep.",
+      "look": "Two degrees south of Ruchbah in Cassiopeia, find a pair of stars, one much brighter than the other; the bright one is φ Cassiopeiae. Those two eyes are clear tonight, while the faint spray of wings trailing from them is thin or gone.",
+      "answer": "The eyes are the brightest points in the field and stand well above the moonlit sky, while the body is made of stars about 9,000 light-years away, faint enough to sink below it. The Moon has cut the owl down to its eyes.",
+      "story": "Distance works on a cluster like a dimmer switch on every star at once: from this far away, even stars thousands of times as powerful as the Sun arrive faint. The Owl's body is built from such stars, and its eyes stand out only because one of them is either a supergiant, the most powerful kind of star, or simply a nearer star in front, a question the Moon is happy to ignore.",
+      "rank": 9132
+    },
+    "AST-Coathanger": {
+      "step": 3,
+      "beat": "A crowd that is not a family",
+      "question": "Does the Moon treat the Coathanger, a chance pattern, any differently from a true cluster?",
+      "why": "The Coathanger looks like a cluster but is a chance line-up of unrelated stars, which makes it a neat test of what moonlight cares about.",
+      "look": "Sweep a little less than halfway from Albireo toward Altair, into Vulpecula: a bar of six stars with a hook of four below its middle. A couple of the hook stars look orange; the whole pattern is easy tonight.",
+      "answer": "The Moon responds only to how bright each point looks, not to whether the stars belong together. Most of the Coathanger's stars are bright enough, so the pattern survives, its faintest members a little weaker.",
+      "story": "Whether a pattern survives moonlight depends on its faintest essential star, the one without which the shape falls apart. The Coathanger's bar and hook are drawn by stars of several brightnesses, and the faintest go first, while a true cluster would lose members in exactly the same order. The Moon sorts by brightness alone; telling family from strangers needs measured distances and motions.",
+      "rank": 1000
+    },
+    "NGC5139": {
+      "step": 4,
+      "beat": "A glow: millions of stars in one ball",
+      "question": "Why does Omega Centauri survive moonlight when it is not a point at all?",
+      "why": "Omega Centauri is a ball of millions of stars too distant to split, so it reaches your eye as a glow, and glows are the hardest things to keep in moonlight.",
+      "look": "In Centaurus, look for a fuzzy star that never sharpens. Binoculars show a round glow brightening toward the center; tonight its edge is pulled in and the grainy halo of dark nights is gone.",
+      "answer": "A glow survives only if it is bright patch for patch, and Omega Centauri packs so many stars into its core that the center outshines the moonlit sky. Its thinner outskirts do not, so tonight it is a ball of light trimmed to its densest part.",
+      "story": "Omega Centauri looks so much like a fuzzy star to the naked eye that Ptolemy listed it as one, and it still carries a star's Greek letter. Edmond Halley, observing from St Helena in 1677, was the first to record that it was not a star but a glow. On a moonlit night you can see why the confusion lasted, because the Moon trims the cluster down to its starlike core."
+    },
+    "NGC104": {
+      "step": 4,
+      "beat": "A glow beside a vanished galaxy",
+      "question": "Why does 47 Tucanae survive the Moon while the galaxy beside it fades?",
+      "why": "47 Tucanae sits at the edge of the Small Magellanic Cloud, a whole galaxy of stars, so one field holds the densest glow of the night and one of the thinnest.",
+      "look": "Binoculars show 47 Tucanae as a round glow brightening sharply to an intense, almost starlike core. The Small Magellanic Cloud beside it, an obvious patch on dark nights, is faint or gone tonight.",
+      "answer": "47 Tucanae packs its light into a small ball with a blazing core, so it outshines the moonlit sky patch for patch. The Small Magellanic Cloud has far more light in total, but spread over a wide patch of sky it is too thin to compete.",
+      "story": "Every glow in the sky is judged against the same floor, the faint natural light of the sky itself, and a bright Moon raises that floor across the whole field at once. Measure outward from the center of 47 Tucanae and its light falls steeply, while the galaxy beside it is faint and nearly flat all across. Raise the floor and the cluster loses only its edges, the galaxy nearly everything."
+    },
+    "M22": {
+      "step": 4,
+      "beat": "A glow: a bright ancient swarm",
+      "question": "Why does the Sagittarius Cluster come through moonlight when most fuzzy things in Sagittarius vanish?",
+      "why": "The Sagittarius Cluster is a glow of countless ancient stars, one of the brightest of its kind, in a part of the sky full of nebulae that a bright Moon erases.",
+      "look": "From Kaus Borealis, the top of the Teapot’s lid, move about two and a half degrees north-east. The cluster is a bright, slightly oval glow, smaller than on a dark night, its faint outer parts gone; M28 nearby is much harder tonight.",
+      "answer": "The Sagittarius Cluster concentrates its light, with so many stars crowded into its center that each patch of it shines brighter than the moonlit sky. Smaller, fainter M28 and the nebulae around Sagittarius spread their light too thinly, and the risen sky swallows them.",
+      "story": "Even without a Moon the night sky is never black: atoms high in the atmosphere glow faintly as they release energy stored by sunlight during the day, a light called airglow. Airglow sets the floor against which every faint glow is judged. Moonlight raises that floor many times over, and only the densest glows, like the heart of the Sagittarius Cluster, still clear it."
+    },
+    "M13": {
+      "step": 4,
+      "beat": "A glow: a fuzzy star",
+      "question": "Why can’t binoculars brighten the Hercules cluster against the Moon the way they brighten a star?",
+      "why": "The Hercules cluster is a ball of about half a million stars that binoculars cannot split, so it arrives as a glow, and glows play by different rules.",
+      "look": "In the Keystone of Hercules, about a third of the way from η to ζ Herculis, the cluster is still a fuzzy ball tonight, smaller and dimmer than on a dark night. Compare it with a star of similar brightness: one a point, the other a cloud.",
+      "answer": "Binoculars gather more light, but they also magnify, and for a glow the two cancel: each patch of the cluster looks no brighter than it does to your eye, just like each patch of the moonlit sky. Only its dense core outshines the sky, so that is all that survives.",
+      "story": "Catalogs give the Hercules cluster a single magnitude close to the limit of the naked eye, but that number is its total light, as if the whole cluster were squeezed into a point. Spread over its real size, its light per patch is far fainter than a star of the same magnitude, which is why a star that bright stays crisp tonight while the cluster dims and shrinks."
+    },
+    "M5": {
+      "step": 4,
+      "beat": "A glow: a core without its halo",
+      "question": "Why does M5 shrink to a fuzzy star under a bright Moon?",
+      "why": "M5 is a bright core fading into a broad halo of stars, so it shows clearly which part of a glow the Moon takes.",
+      "look": "From Unukalhai, the brightest star in the head of Serpens, sweep about eight degrees south-west. M5 is a small fuzzy star tonight, its bright center still there and its broad halo mostly gone.",
+      "answer": "Its center packs enough starlight into each patch to outshine the moonlit sky, but its halo spreads the same kind of light much more thinly, and that thin light sinks below the glow.",
+      "story": "M5's light drops from a bright core into a broad, gentle halo, a profile astronomers measure star by star near the edge and ring by ring through the glow toward the center. A bright Moon simply draws a line across that profile: everything brighter than the risen sky stays, everything fainter goes. That is why the cluster shrinks rather than fading evenly, keeping its core while losing its edge."
+    },
+    "M3": {
+      "step": 4,
+      "beat": "A glow at the edge of moonlight",
+      "question": "Is M3 the faintest thing the Moon leaves you tonight?",
+      "why": "M3 is a glow of hundreds of thousands of stars far out in the galaxy’s halo, faint enough that a bright Moon puts it right at the edge of sight.",
+      "look": "Aim a little past halfway from Cor Caroli toward Arcturus. M3 is a small round glow beside a yellowish field star, fainter and tighter than on a dark night; brace the binoculars and give it a patient look.",
+      "answer": "It is close to the limit: its core packs just enough light into each patch to rise above the moonlit sky, while everything thinner around it is lost. Galaxies and faint nebulae, spread out more thinly still, do not make it at all.",
+      "story": "Faint glows are a job for the rods, the eye's sensitive night cells, which crowd the edge of your gaze rather than its center. Look a little to one side of M3 and it brightens and swells, a trick called averted vision, though tonight the rods are partly dazzled and have less to give than on a moonless night."
+    },
+    "M15": {
+      "step": 4,
+      "beat": "A glow with a blazing core",
+      "question": "Why does the compact Pegasus globular hold up to moonlight better than larger, brighter-looking clusters?",
+      "why": "The Pegasus globular is a small ball of stars whose center has collapsed into a very dense core, and density is what a glow needs on a moonlit night.",
+      "look": "Draw a line from θ Pegasi through Enif and continue a little over half as far again to the north-west. The cluster sits beside a faint star: one stays a sharp point, the other a small round glow with a bright center, smaller than on a dark night.",
+      "answer": "What matters is light per patch, not total light, and this cluster crowds its stars into a tiny, dense center that outshines the moonlit sky. A larger cluster of the same total brightness spreads its light thinner and loses more to the glow.",
+      "story": "The Pegasus globular's center is one of the densest places in our galaxy. Over billions of years its stars have traded energy in close passes until the core collapsed into a tiny, crowded knot, which Hubble images resolve star by star. That knot gives the cluster its bright, almost starlike heart, and tonight it is the heart, not the cluster's total light, that stands above the moonlit sky."
+    },
+    "M2": {
+      "step": 4,
+      "beat": "A glow, less concentrated",
+      "question": "Why does M2 fade more than the Pegasus globular under the same Moon?",
+      "why": "M2 is a ball of stars much like the Pegasus globular but less sharply concentrated, which makes the pair a direct comparison of how glows survive moonlight.",
+      "look": "Start at Sadalsuud, the brightest star of Aquarius, and move about five degrees north. M2 shows as a small round fuzz tonight, fainter at the edges than on a dark night; nudge the focus and real stars snap to points while M2 never does.",
+      "answer": "Its light is spread a little more evenly, so its center is less intense than the Pegasus globular’s, and less of it stands above the moonlit sky. The difference between the two is not their total light but how tightly each packs it.",
+      "story": "Astronomers describe a globular cluster's shape by how quickly its light falls away from the center, measured by counting stars and scanning the glow ring by ring outward. Ivan King's fits in the 1960s gave every cluster a concentration, and the higher it is, the more of the light is crowded into the core, the very quantity that decides what survives a bright Moon."
+    },
+    "NGC6752": {
+      "step": 4,
+      "beat": "A glow with a starlike core",
+      "question": "Why does the Peacock globular’s core survive the Moon while its halo is lost?",
+      "why": "The Peacock globular has a core packed so tightly it looks almost like an out-of-focus star, with a faint halo around it, so it shows which part of a glow moonlight spares.",
+      "look": "In Pavo, binoculars show an obvious round glow with a bright, concentrated core. Tonight the halo that spreads with averted vision on dark nights is missing, and the cluster looks like a fuzzy star.",
+      "answer": "The core crowds its stars together until each patch outshines the moonlit sky, while the halo’s stars are spread too thinly to compete. Concentration, not total brightness, decides what remains.",
+      "story": "The eye's sensitivity to a glow depends on its size as well as its brightness, because it pools light over a patch, so a large faint halo can be seen on a dark night at a contrast that would hide a small spot. Moonlight raises the bar beyond what any pooling can reach, and the Peacock's thin halo drops out. Its core, packed so tightly that it behaves almost like a star, is the part that still clears it."
+    },
+    "M42": {
+      "step": 4,
+      "beat": "A glow of gas with a bright heart",
+      "question": "How can the Orion Nebula survive a bright Moon when other nebulae vanish?",
+      "why": "Most nebulae are the first casualties of moonlight, but the Orion Nebula is lit from inside by a handful of very hot young stars, which gives its heart unusual brightness.",
+      "look": "Find the three-star Sword below Orion’s Belt; its middle star looks fuzzy even tonight. Binoculars show a bright core with stubby wings and a dark notch; the faint outer wings of dark nights are gone, and the glow looks gray.",
+      "answer": "Its heart, close to the hot stars that light it, is bright patch for patch, enough to rise above the moonlit sky. The outer gas is lit more weakly and spread wider, so it sinks below the glow, leaving the core like a small flame.",
+      "story": "A glowing cloud has a surprising property: move it farther away and it shrinks, but each patch of it stays exactly as bright. That is because the light from the patch and the area it covers both fall with the square of the distance. So the Orion Nebula's heart would face the Moon on the same terms from twice as far, only smaller, and what decides its fate is how fiercely its gas is lit, not how near it is."
+    },
+    "M31": {
+      "step": 4,
+      "beat": "A glow: a galaxy trimmed to its core",
+      "question": "Why does the Andromeda Galaxy shrink to a small smudge in moonlight?",
+      "why": "The Andromeda Galaxy gives off as much light in total as a fairly bright star, yet it is spread across a huge patch of sky, the clearest case of how the Moon judges light.",
+      "look": "From Mirach, the middle bright star of Andromeda, climb two fainter stars to the north. Tonight you will probably see only the small oval core; the haze that stretches several Moon-widths on a dark night is lost in the glare.",
+      "answer": "The Moon judges light patch by patch, and only Andromeda’s crowded central bulge is bright enough per patch to rise above the moonlit sky. The rest of its hundreds of billions of stars are still shining there, spread too thinly to compete tonight.",
+      "story": "A galaxy's light falls off steadily from its center: the bulge of old stars at Andromeda's heart is many times brighter per patch than the spiral disk around it, and the disk itself fades outward. Astronomers map that fall-off by measuring the light in rings around the center, and the map tells you how big Andromeda will look under any sky. The edge you see is simply where its falling glow meets the risen sky."
+    },
+    "NGC3372": {
+      "step": 4,
+      "beat": "A glow of gas, reduced to its heart",
+      "question": "What is left of the great Carina Nebula when the Moon is up?",
+      "why": "The Carina Nebula is the brightest nebula of the southern sky, a vast glowing cloud, so it shows how much of even a great nebula moonlight can take.",
+      "look": "Sweep the Milky Way between the Southern Cross and the False Cross. Binoculars still show the bright heart around the small orange point of Eta Carinae, cut by a dark notch; the wide outer haze of a dark night is mostly gone.",
+      "answer": "The heart survives, lit fiercely by the young stars buried in it and bright patch for patch. The wider cloud is lit more weakly and spread over a patch many times the Moon, so it sinks below the moonlit glow.",
+      "story": "Much of a glowing nebula's light comes out in a few pure colors: deep red from hydrogen, to which the eye's night vision is almost blind, and a blue-green from oxygen, which it sees well. That is why big nebulae look gray-green to the eye rather than the red of photographs, and why observers fit filters that pass only those colors, cutting the moonlit sky's broad glow far more than the nebula's light."
+    },
+    "M11": {
+      "step": 4,
+      "beat": "A glow: a cluster too rich to split",
+      "question": "Why does the Wild Duck Cluster survive as a glow when sparser clusters lose their stars?",
+      "why": "The Wild Duck is an open cluster so rich and distant that binoculars barely split it, so its thousands of stars reach you mostly as a compact glow.",
+      "look": "Follow Aquila’s tail south into little Scutum, then go about two degrees south-east of β Scuti. The Wild Duck is a small, fan-shaped haze with a brighter star at its apex, more compact and less grainy than on a dark night.",
+      "answer": "Thousands of stars packed into a small fan make each patch of the Wild Duck brighter than the moonlit sky, even though its single stars are too faint to see one by one. A looser cluster of the same stars would spread that light too thin.",
+      "story": "The eye's threshold depends on size as well as brightness: Blackwell's wartime experiments showed that a large patch can be seen at a lower contrast than a small one, because the eye pools light over its area. That favors big, faint glows on dark nights, but under a bright Moon even a large patch needs real brightness per patch, and only a dense one like the Wild Duck still clears the bar."
+    },
+    "NGC3293": {
+      "step": 4,
+      "beat": "A glow: a compact bright knot",
+      "question": "Why does the tiny Gem Cluster hold up to moonlight so well?",
+      "why": "The Gem Cluster crowds its brightest stars into a patch much smaller than the Moon, the point where a crowd of stars starts to look like a glow.",
+      "look": "From the bright heart of the Carina Nebula, move about two degrees north-west. Binoculars show a compact, bright clump with a few stars resolved around a hazy center, still clear tonight.",
+      "answer": "Its light is packed into a very small patch, so the hazy center outshines the moonlit sky while its brightest stars stand out as points. Small and bright per patch is exactly what survives a bright Moon.",
+      "story": "How do we know the Gem's hazy center is stars rather than gas? In 1864 William Huggins turned a spectroscope on the sky's nebulae and found two kinds: some showed the bright lines of glowing gas, others the rainbow of starlight crossed by dark lines. The Gem's mist is of the second kind, the blended light of members too faint for binoculars, and like all light spread over a patch, it is judged by the Moon patch for patch."
+    }
+  }
+}

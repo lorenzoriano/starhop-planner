@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/vsx/vsx&-c=304.446675%2B38.032930&-c.rs=30&-out=Name,V,Type,max,n_max,f_min,min,n_min,Period,Sp&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tName\tV\tType\tmax\tn_max\tf_min\tmin\tn_min\tPeriod\tSp\narcsec\t \t \t \tmag\t \t \tmag\t \td\t\n-----\t------------------------------\t-\t------------------------------\t-------\t----------\t-\t-------\t--------\t-------------------\t-----------------------------\n 0.07\tP Cyg                         \t0\tSDOR                          \t  3.000\tV         \t \t  6.000\tV       \t                   \tB1Iapeq\n27.46\tGaia DR3 2061242976734453888  \t0\tL                             \t 17.230\tG         \t \t 17.460\tG       \t                   \tM\n29.03\tGaia DR3 2061242908014619264  \t0\tROT                           \t 14.720\tG         \t \t 14.740\tG       \t                   \tK\n\n"
+}

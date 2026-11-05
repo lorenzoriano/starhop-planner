@@ -1,0 +1,7916 @@
+{
+ "version": "object-list-v1",
+ "generatedBy": "script/journeys/make_object_list.py",
+ "counts": {
+  "autumn/dso": 33,
+  "autumn/star": 59,
+  "southern/dso": 44,
+  "southern/star": 48,
+  "spring/dso": 23,
+  "spring/star": 43,
+  "summer-north/dso": 26,
+  "summer-north/star": 54,
+  "summer-south/dso": 42,
+  "summer-south/star": 41,
+  "winter/dso": 41,
+  "winter/star": 68
+ },
+ "objects": [
+  {
+   "id": "NGC129",
+   "kind": "dso",
+   "name": "NGC 129",
+   "con": "Cas",
+   "ra": 7.475,
+   "dec": 60.23333,
+   "mag": 6.5,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M31",
+   "kind": "dso",
+   "name": "Andromeda Galaxy",
+   "con": "And",
+   "ra": 10.675,
+   "dec": 41.26667,
+   "mag": 3.4,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "M32",
+   "kind": "dso",
+   "name": "M32",
+   "con": "And",
+   "ra": 10.7,
+   "dec": 40.86667,
+   "mag": 8.1,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-EG"
+  },
+  {
+   "id": "NGC253",
+   "kind": "dso",
+   "name": "Sculptor Galaxy",
+   "con": "Scl",
+   "ra": 11.9,
+   "dec": -25.28333,
+   "mag": 7.1,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "GAL"
+  },
+  {
+   "id": "NGC457",
+   "kind": "dso",
+   "name": "ET Cluster",
+   "con": "Cas",
+   "ra": 19.775,
+   "dec": 58.33333,
+   "mag": 6.4,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M103",
+   "kind": "dso",
+   "name": "M103",
+   "con": "Cas",
+   "ra": 23.3,
+   "dec": 60.7,
+   "mag": 7.4,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "M33",
+   "kind": "dso",
+   "name": "Triangulum Galaxy",
+   "con": "Tri",
+   "ra": 23.475,
+   "dec": 30.65,
+   "mag": 5.7,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "NGC663",
+   "kind": "dso",
+   "name": "NGC 663",
+   "con": "Cas",
+   "ra": 26.5,
+   "dec": 61.25,
+   "mag": 7.1,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "Cr463",
+   "kind": "dso",
+   "name": "Cr 463",
+   "con": "Cas",
+   "ra": 27.1,
+   "dec": 71.95,
+   "mag": 5.7,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC752",
+   "kind": "dso",
+   "name": "NGC 752",
+   "con": "And",
+   "ra": 29.45,
+   "dec": 37.68333,
+   "mag": 5.7,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "Stock2",
+   "kind": "dso",
+   "name": "Stock 2",
+   "con": "Cas",
+   "ra": 33.75,
+   "dec": 59.26667,
+   "mag": 4.4,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC869",
+   "kind": "dso",
+   "name": "Double Cluster (h Per)",
+   "con": "Per",
+   "ra": 34.75,
+   "dec": 57.15,
+   "mag": 4.3,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC884",
+   "kind": "dso",
+   "name": "Double Cluster (χ Per)",
+   "con": "Per",
+   "ra": 35.6,
+   "dec": 57.11667,
+   "mag": 4.3,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "Mark6",
+   "kind": "dso",
+   "name": "Mark 6",
+   "con": "Cas",
+   "ra": 37.4,
+   "dec": 60.65,
+   "mag": 7.1,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "Mel15",
+   "kind": "dso",
+   "name": "Mel 15",
+   "con": "Cas",
+   "ra": 38.175,
+   "dec": 61.45,
+   "mag": 6.5,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "Tr2",
+   "kind": "dso",
+   "name": "Tr 2",
+   "con": "Per",
+   "ra": 39.325,
+   "dec": 55.98333,
+   "mag": 5.9,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M34",
+   "kind": "dso",
+   "name": "M34",
+   "con": "Per",
+   "ra": 40.5,
+   "dec": 42.78333,
+   "mag": 5.5,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "Tr3",
+   "kind": "dso",
+   "name": "Tr 3",
+   "con": "Cas",
+   "ra": 47.95,
+   "dec": 63.25,
+   "mag": 7.0,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "Mel20",
+   "kind": "dso",
+   "name": "Alpha Persei Cluster",
+   "con": "Per",
+   "ra": 50.37917,
+   "dec": 48.57917,
+   "mag": 1.2,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC1342",
+   "kind": "dso",
+   "name": "NGC 1342",
+   "con": "Per",
+   "ra": 52.9,
+   "dec": 37.33333,
+   "mag": 6.7,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC1528",
+   "kind": "dso",
+   "name": "NGC 1528",
+   "con": "Per",
+   "ra": 63.85,
+   "dec": 51.23333,
+   "mag": 6.4,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC1582",
+   "kind": "dso",
+   "name": "NGC 1582",
+   "con": "Per",
+   "ra": 68.0,
+   "dec": 43.85,
+   "mag": 7.0,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M15",
+   "kind": "dso",
+   "name": "Great Pegasus Globular",
+   "con": "Peg",
+   "ra": 322.5,
+   "dec": 12.16667,
+   "mag": 6.2,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M2",
+   "kind": "dso",
+   "name": "M2",
+   "con": "Aqr",
+   "ra": 323.375,
+   "dec": -0.81667,
+   "mag": 6.5,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "IC1396",
+   "kind": "dso",
+   "name": "IC 1396 and Trumpler 37 (Elephant's Trunk region)",
+   "con": "Cep",
+   "ra": 324.745,
+   "dec": 57.51389,
+   "mag": null,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "new"
+   ],
+   "simbad": "IC 1396"
+  },
+  {
+   "id": "M30",
+   "kind": "dso",
+   "name": "M30",
+   "con": "Cap",
+   "ra": 325.1,
+   "dec": -23.18333,
+   "mag": 7.2,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "NGC7160",
+   "kind": "dso",
+   "name": "NGC 7160",
+   "con": "Cep",
+   "ra": 328.425,
+   "dec": 62.6,
+   "mag": 6.1,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC7209",
+   "kind": "dso",
+   "name": "NGC 7209",
+   "con": "Lac",
+   "ra": 331.3,
+   "dec": 46.5,
+   "mag": 7.7,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC7235",
+   "kind": "dso",
+   "name": "NGC 7235",
+   "con": "Cep",
+   "ra": 333.15,
+   "dec": 57.28333,
+   "mag": 7.7,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC7243",
+   "kind": "dso",
+   "name": "NGC 7243",
+   "con": "Lac",
+   "ra": 333.825,
+   "dec": 49.88333,
+   "mag": 6.4,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC7293",
+   "kind": "dso",
+   "name": "Helix Nebula",
+   "con": "Aqr",
+   "ra": 337.4,
+   "dec": -20.8,
+   "mag": 7.3,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "PN"
+  },
+  {
+   "id": "M52",
+   "kind": "dso",
+   "name": "M52",
+   "con": "Cas",
+   "ra": 351.05,
+   "dec": 61.58333,
+   "mag": 7.3,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "NGC7789",
+   "kind": "dso",
+   "name": "NGC 7789",
+   "con": "Cas",
+   "ra": 359.25,
+   "dec": 56.73333,
+   "mag": 6.7,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "HR15",
+   "kind": "star",
+   "hr": 15,
+   "name": "Alpheratz",
+   "con": "And",
+   "ra": 2.09708,
+   "dec": 29.09056,
+   "mag": 2.06,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR21",
+   "kind": "star",
+   "hr": 21,
+   "name": "Caph",
+   "con": "Cas",
+   "ra": 2.29458,
+   "dec": 59.14972,
+   "mag": 2.27,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR39",
+   "kind": "star",
+   "hr": 39,
+   "name": "Algenib",
+   "con": "Peg",
+   "ra": 3.30917,
+   "dec": 15.18361,
+   "mag": 2.83,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HD1326",
+   "kind": "star",
+   "name": "Groombridge 34",
+   "con": "And",
+   "ra": 4.59535,
+   "dec": 44.02295,
+   "mag": 8.14,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:nearby"
+   ],
+   "simbad": "HD 1326"
+  },
+  {
+   "id": "HR168",
+   "kind": "star",
+   "hr": 168,
+   "name": "Schedar",
+   "con": "Cas",
+   "ra": 10.12708,
+   "dec": 56.53722,
+   "mag": 2.23,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3",
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "HR188",
+   "kind": "star",
+   "hr": 188,
+   "name": "Diphda",
+   "con": "Cet",
+   "ra": 10.8975,
+   "dec": -17.98667,
+   "mag": 2.04,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "DS-EtaCas",
+   "kind": "star",
+   "hr": 219,
+   "name": "η Cassiopeiae",
+   "con": "Cas",
+   "ra": 12.275,
+   "dec": 57.81667,
+   "mag": 3.4,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR264",
+   "kind": "star",
+   "hr": 264,
+   "name": "γ Cassiopeiae",
+   "con": "Cas",
+   "ra": 14.17708,
+   "dec": 60.71667,
+   "mag": 2.47,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "HD5679",
+   "kind": "star",
+   "name": "U Cephei",
+   "con": "Cep",
+   "ra": 15.57685,
+   "dec": 81.87558,
+   "mag": 6.92,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:eclipsing"
+   ],
+   "simbad": "HD 5679"
+  },
+  {
+   "id": "HR310",
+   "kind": "star",
+   "hr": 310,
+   "name": "ψ¹ Piscium",
+   "con": "Psc",
+   "ra": 16.42042,
+   "dec": 21.47333,
+   "mag": 5.34,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HR337",
+   "kind": "star",
+   "hr": 337,
+   "name": "Mirach",
+   "con": "And",
+   "ra": 17.43292,
+   "dec": 35.62056,
+   "mag": 2.06,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3",
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "HR403",
+   "kind": "star",
+   "hr": 403,
+   "name": "Ruchbah",
+   "con": "Cas",
+   "ra": 21.45417,
+   "dec": 60.23528,
+   "mag": 2.68,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR458",
+   "kind": "star",
+   "hr": 458,
+   "name": "υ Andromedae",
+   "con": "And",
+   "ra": 24.19917,
+   "dec": 41.40556,
+   "mag": 4.09,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:planet"
+   ]
+  },
+  {
+   "id": "HR509",
+   "kind": "star",
+   "hr": 509,
+   "name": "τ Ceti",
+   "con": "Cet",
+   "ra": 26.01708,
+   "dec": -15.9375,
+   "mag": 3.5,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:nearby"
+   ]
+  },
+  {
+   "id": "DS-GamAri",
+   "kind": "star",
+   "hr": 546,
+   "name": "γ Arietis",
+   "con": "Ari",
+   "ra": 28.375,
+   "dec": 19.3,
+   "mag": 4.6,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR553",
+   "kind": "star",
+   "hr": 553,
+   "name": "Sheratan",
+   "con": "Ari",
+   "ra": 28.66,
+   "dec": 20.80806,
+   "mag": 2.64,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "DS-56And",
+   "kind": "star",
+   "hr": 557,
+   "name": "56 Andromedae",
+   "con": "And",
+   "ra": 29.05,
+   "dec": 37.25,
+   "mag": 5.7,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "DS-AlmaakDS",
+   "kind": "star",
+   "hr": 603,
+   "name": "Almach",
+   "con": "And",
+   "ra": 30.975,
+   "dec": 42.33333,
+   "mag": 2.3,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR617",
+   "kind": "star",
+   "hr": 617,
+   "name": "Hamal",
+   "con": "Ari",
+   "ra": 31.79333,
+   "dec": 23.4625,
+   "mag": 2.0,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3",
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "DS-14Ari",
+   "kind": "star",
+   "hr": 623,
+   "name": "14 Arietis",
+   "con": "Ari",
+   "ra": 32.35542,
+   "dec": 25.93972,
+   "mag": 4.98,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR622",
+   "kind": "star",
+   "hr": 622,
+   "name": "β Tri",
+   "con": "Tri",
+   "ra": 32.38583,
+   "dec": 34.98722,
+   "mag": 3.0,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "STAR-Mira",
+   "kind": "star",
+   "hr": 681,
+   "name": "Mira",
+   "con": "Cet",
+   "ra": 34.83625,
+   "dec": -2.9775,
+   "mag": 3.04,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "DS-IotaCas",
+   "kind": "star",
+   "hr": 707,
+   "name": "ι Cassiopeiae",
+   "con": "Cas",
+   "ra": 37.275,
+   "dec": 67.4,
+   "mag": 4.5,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR753",
+   "kind": "star",
+   "hr": 753,
+   "name": "HD 16160 (Gliese 105)",
+   "con": "Cet",
+   "ra": 39.02042,
+   "dec": 6.88694,
+   "mag": 5.82,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:nearby"
+   ]
+  },
+  {
+   "id": "HR815",
+   "kind": "star",
+   "hr": 815,
+   "name": "RZ Cassiopeiae",
+   "con": "Cas",
+   "ra": 42.23125,
+   "dec": 69.63417,
+   "mag": 6.18,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:eclipsing"
+   ]
+  },
+  {
+   "id": "HR911",
+   "kind": "star",
+   "hr": 911,
+   "name": "Menkar",
+   "con": "Cet",
+   "ra": 45.57,
+   "dec": 4.08972,
+   "mag": 2.53,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3",
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "HR915",
+   "kind": "star",
+   "hr": 915,
+   "name": "γ Per",
+   "con": "Per",
+   "ra": 46.19917,
+   "dec": 53.50639,
+   "mag": 2.93,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "STAR-Algol",
+   "kind": "star",
+   "hr": 936,
+   "name": "Algol",
+   "con": "Per",
+   "ra": 47.04208,
+   "dec": 40.95556,
+   "mag": 2.12,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR1017",
+   "kind": "star",
+   "hr": 1017,
+   "name": "Mirfak",
+   "con": "Per",
+   "ra": 51.08083,
+   "dec": 49.86111,
+   "mag": 1.79,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3",
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR1203",
+   "kind": "star",
+   "hr": 1203,
+   "name": "ζ Per",
+   "con": "Per",
+   "ra": 58.53292,
+   "dec": 31.88361,
+   "mag": 2.85,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR1220",
+   "kind": "star",
+   "hr": 1220,
+   "name": "ε Per",
+   "con": "Per",
+   "ra": 59.46333,
+   "dec": 40.01028,
+   "mag": 2.89,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "DS-AlpCap",
+   "kind": "star",
+   "hr": 7747,
+   "name": "α Capricorni",
+   "con": "Cap",
+   "ra": 304.4,
+   "dec": -12.5,
+   "mag": 3.6,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HD202560",
+   "kind": "star",
+   "name": "Lacaille 8760 (AX Mic)",
+   "con": "Mic",
+   "ra": 319.31362,
+   "dec": -38.86736,
+   "mag": 6.68,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:nearby"
+   ],
+   "simbad": "V* AX Mic"
+  },
+  {
+   "id": "HR8162",
+   "kind": "star",
+   "hr": 8162,
+   "name": "Alderamin",
+   "con": "Cep",
+   "ra": 319.645,
+   "dec": 62.58556,
+   "mag": 2.44,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR8238",
+   "kind": "star",
+   "hr": 8238,
+   "name": "Alfirk (β Cep)",
+   "con": "Cep",
+   "ra": 322.165,
+   "dec": 70.56083,
+   "mag": 3.23,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:pulsator"
+   ]
+  },
+  {
+   "id": "HR8232",
+   "kind": "star",
+   "hr": 8232,
+   "name": "Sadalsuud",
+   "con": "Aqr",
+   "ra": 322.88958,
+   "dec": -5.57111,
+   "mag": 2.91,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HD206362",
+   "kind": "star",
+   "name": "S Cephei",
+   "con": "Cep",
+   "ra": 323.80343,
+   "dec": 78.6245,
+   "mag": 7.4,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:agb"
+   ],
+   "simbad": "V* S Cep"
+  },
+  {
+   "id": "STAR-MuCep",
+   "kind": "star",
+   "hr": 8316,
+   "name": "Garnet Star",
+   "con": "Cep",
+   "ra": 325.87667,
+   "dec": 58.78,
+   "mag": 4.08,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR8308",
+   "kind": "star",
+   "hr": 8308,
+   "name": "Enif",
+   "con": "Peg",
+   "ra": 326.04667,
+   "dec": 9.875,
+   "mag": 2.39,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3",
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR8322",
+   "kind": "star",
+   "hr": 8322,
+   "name": "Deneb Algedi",
+   "con": "Cap",
+   "ra": 326.76,
+   "dec": -16.12722,
+   "mag": 2.87,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR8383",
+   "kind": "star",
+   "hr": 8383,
+   "name": "VV Cephei",
+   "con": "Cep",
+   "ra": 329.16292,
+   "dec": 63.62556,
+   "mag": 4.91,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HD209458",
+   "kind": "star",
+   "name": "HD 209458",
+   "con": "Peg",
+   "ra": 330.79489,
+   "dec": 18.88432,
+   "mag": 7.63,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:planet"
+   ],
+   "simbad": "HD 209458"
+  },
+  {
+   "id": "HR8414",
+   "kind": "star",
+   "hr": 8414,
+   "name": "Sadalmelik",
+   "con": "Aqr",
+   "ra": 331.44583,
+   "dec": -0.31972,
+   "mag": 2.96,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HD212466",
+   "kind": "star",
+   "name": "RW Cephei",
+   "con": "Cep",
+   "ra": 335.77923,
+   "dec": 55.96323,
+   "mag": 6.65,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:supergiant"
+   ],
+   "simbad": "V* RW Cep"
+  },
+  {
+   "id": "DS-DeltaCep",
+   "kind": "star",
+   "hr": 8571,
+   "name": "δ Cephei",
+   "con": "Cep",
+   "ra": 337.3,
+   "dec": 58.41667,
+   "mag": 3.5,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR8622",
+   "kind": "star",
+   "hr": 8622,
+   "name": "10 Lacertae",
+   "con": "Lac",
+   "ra": 339.81542,
+   "dec": 39.05028,
+   "mag": 4.88,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR8650",
+   "kind": "star",
+   "hr": 8650,
+   "name": "Matar",
+   "con": "Peg",
+   "ra": 340.75042,
+   "dec": 30.22139,
+   "mag": 2.94,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR8673",
+   "kind": "star",
+   "hr": 8673,
+   "name": "τ Aquarii",
+   "con": "Aqr",
+   "ra": 341.92833,
+   "dec": -14.05639,
+   "mag": 5.66,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HR8729",
+   "kind": "star",
+   "hr": 8729,
+   "name": "51 Pegasi",
+   "con": "Peg",
+   "ra": 344.36625,
+   "dec": 20.76889,
+   "mag": 5.49,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:planet"
+   ]
+  },
+  {
+   "id": "STAR-Fomalhaut",
+   "kind": "star",
+   "hr": 8728,
+   "name": "Fomalhaut",
+   "con": "PsA",
+   "ra": 344.41292,
+   "dec": -29.62222,
+   "mag": 1.16,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "HR8775",
+   "kind": "star",
+   "hr": 8775,
+   "name": "Scheat",
+   "con": "Peg",
+   "ra": 345.94375,
+   "dec": 28.08278,
+   "mag": 2.42,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3",
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "HR8781",
+   "kind": "star",
+   "hr": 8781,
+   "name": "Markab",
+   "con": "Peg",
+   "ra": 346.19042,
+   "dec": 15.20528,
+   "mag": 2.49,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HD217987",
+   "kind": "star",
+   "name": "Lacaille 9352",
+   "con": "PsA",
+   "ra": 346.46682,
+   "dec": -35.85307,
+   "mag": 7.39,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:nearby"
+   ],
+   "simbad": "HD 217987"
+  },
+  {
+   "id": "DS-OmCep",
+   "kind": "star",
+   "hr": 8872,
+   "name": "ο Cephei",
+   "con": "Cep",
+   "ra": 349.65,
+   "dec": 68.11667,
+   "mag": 4.9,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR8974",
+   "kind": "star",
+   "hr": 8974,
+   "name": "Errai (γ Cep)",
+   "con": "Cep",
+   "ra": 354.83667,
+   "dec": 77.6325,
+   "mag": 3.21,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:planet"
+   ]
+  },
+  {
+   "id": "HR9004",
+   "kind": "star",
+   "hr": 9004,
+   "name": "TX Piscium (19 Psc)",
+   "con": "Psc",
+   "ra": 356.59792,
+   "dec": 3.48667,
+   "mag": 5.04,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "HR9018",
+   "kind": "star",
+   "hr": 9018,
+   "name": "6 Cassiopeiae",
+   "con": "Cas",
+   "ra": 357.20917,
+   "dec": 62.21444,
+   "mag": 5.43,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR9045",
+   "kind": "star",
+   "hr": 9045,
+   "name": "ρ Cassiopeiae",
+   "con": "Cas",
+   "ra": 358.59583,
+   "dec": 57.49944,
+   "mag": 4.54,
+   "existing": false,
+   "batch": "autumn",
+   "selection": [
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "DS-SigCas",
+   "kind": "star",
+   "hr": 9071,
+   "name": "σ Cassiopeiae",
+   "con": "Cas",
+   "ra": 359.75,
+   "dec": 55.75,
+   "mag": 5.0,
+   "existing": true,
+   "batch": "autumn",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "NGC104",
+   "kind": "dso",
+   "name": "47 Tucanae",
+   "con": "Tuc",
+   "ra": 6.025,
+   "dec": -72.08333,
+   "mag": 4.0,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "GC"
+  },
+  {
+   "id": "SMC",
+   "kind": "dso",
+   "name": "Small Magellanic Cloud",
+   "con": "Tuc",
+   "ra": 13.2,
+   "dec": -72.83333,
+   "mag": 2.7,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "GAL"
+  },
+  {
+   "id": "NGC362",
+   "kind": "dso",
+   "name": "NGC 362",
+   "con": "Tuc",
+   "ra": 15.8,
+   "dec": -70.85,
+   "mag": 6.6,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "GC"
+  },
+  {
+   "id": "NGC1851",
+   "kind": "dso",
+   "name": "NGC 1851",
+   "con": "Col",
+   "ra": 78.525,
+   "dec": -40.05,
+   "mag": 7.2,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "GC"
+  },
+  {
+   "id": "LMC",
+   "kind": "dso",
+   "name": "Large Magellanic Cloud",
+   "con": "Dor",
+   "ra": 80.9,
+   "dec": -69.75,
+   "mag": 0.9,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "GAL"
+  },
+  {
+   "id": "M47",
+   "kind": "dso",
+   "name": "M47",
+   "con": "Pup",
+   "ra": 114.15,
+   "dec": -14.5,
+   "mag": 5.2,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "M46",
+   "kind": "dso",
+   "name": "M46",
+   "con": "Pup",
+   "ra": 115.45,
+   "dec": -14.81667,
+   "mag": 6.0,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "NGC2438",
+   "kind": "dso",
+   "name": "NGC 2438 (planetary nebula in front of M46)",
+   "con": "Pup",
+   "ra": 115.4605,
+   "dec": -14.73541,
+   "mag": null,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "new"
+   ],
+   "simbad": "NGC 2438"
+  },
+  {
+   "id": "NGC2440",
+   "kind": "dso",
+   "name": "NGC 2440 (planetary nebula south of M46)",
+   "con": "Pup",
+   "ra": 115.48067,
+   "dec": -18.20847,
+   "mag": 9.4,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "new"
+   ],
+   "simbad": "NGC 2440"
+  },
+  {
+   "id": "M93",
+   "kind": "dso",
+   "name": "M93",
+   "con": "Pup",
+   "ra": 116.15,
+   "dec": -23.86667,
+   "mag": 6.0,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "NGC2451",
+   "kind": "dso",
+   "name": "NGC 2451",
+   "con": "Pup",
+   "ra": 116.35,
+   "dec": -37.96667,
+   "mag": 2.8,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2477",
+   "kind": "dso",
+   "name": "NGC 2477",
+   "con": "Pup",
+   "ra": 118.075,
+   "dec": -38.55,
+   "mag": 5.8,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2516",
+   "kind": "dso",
+   "name": "Southern Beehive",
+   "con": "Car",
+   "ra": 119.575,
+   "dec": -60.86667,
+   "mag": 3.8,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2527",
+   "kind": "dso",
+   "name": "NGC 2527",
+   "con": "Pup",
+   "ra": 121.24583,
+   "dec": -28.12194,
+   "mag": 6.5,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC",
+   "note": "position from SIMBAD (Harvard mirror) NGC 2527, ICRS 08 04 59.0 -28 07 19 (2021A&A...647A..19T); the binocular-catalog position is 33' off"
+  },
+  {
+   "id": "NGC2539",
+   "kind": "dso",
+   "name": "NGC 2539",
+   "con": "Pup",
+   "ra": 122.675,
+   "dec": -12.83333,
+   "mag": 6.5,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2547",
+   "kind": "dso",
+   "name": "NGC 2547",
+   "con": "Vel",
+   "ra": 122.675,
+   "dec": -49.26667,
+   "mag": 4.7,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2546",
+   "kind": "dso",
+   "name": "NGC 2546",
+   "con": "Pup",
+   "ra": 123.1,
+   "dec": -37.63333,
+   "mag": 6.3,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2571",
+   "kind": "dso",
+   "name": "NGC 2571",
+   "con": "Pup",
+   "ra": 124.725,
+   "dec": -29.73333,
+   "mag": 7.0,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "IC2391",
+   "kind": "dso",
+   "name": "Omicron Vel Cluster",
+   "con": "Vel",
+   "ra": 130.05,
+   "dec": -53.06667,
+   "mag": 2.5,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "IC2395",
+   "kind": "dso",
+   "name": "IC 2395",
+   "con": "Vel",
+   "ra": 130.275,
+   "dec": -48.2,
+   "mag": 4.6,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2808",
+   "kind": "dso",
+   "name": "NGC 2808",
+   "con": "Car",
+   "ra": 138.0,
+   "dec": -64.86667,
+   "mag": 6.3,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "GC"
+  },
+  {
+   "id": "NGC2910",
+   "kind": "dso",
+   "name": "NGC 2910",
+   "con": "Vel",
+   "ra": 142.6,
+   "dec": -52.9,
+   "mag": 7.2,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC3114",
+   "kind": "dso",
+   "name": "NGC 3114",
+   "con": "Car",
+   "ra": 150.675,
+   "dec": -60.11667,
+   "mag": 4.2,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC3132",
+   "kind": "dso",
+   "name": "Eight-Burst Nebula (NGC 3132)",
+   "con": "Vel",
+   "ra": 151.75721,
+   "dec": -40.43658,
+   "mag": 9.2,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "new"
+   ],
+   "simbad": "NGC 3132"
+  },
+  {
+   "id": "NGC3201",
+   "kind": "dso",
+   "name": "NGC 3201",
+   "con": "Vel",
+   "ra": 154.4,
+   "dec": -46.41667,
+   "mag": 6.7,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "GC"
+  },
+  {
+   "id": "NGC3228",
+   "kind": "dso",
+   "name": "NGC 3228",
+   "con": "Vel",
+   "ra": 155.45,
+   "dec": -51.71667,
+   "mag": 6.0,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC3293",
+   "kind": "dso",
+   "name": "NGC 3293",
+   "con": "Car",
+   "ra": 158.95,
+   "dec": -58.23333,
+   "mag": 4.7,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "IC2602",
+   "kind": "dso",
+   "name": "Southern Pleiades",
+   "con": "Car",
+   "ra": 160.8,
+   "dec": -64.4,
+   "mag": 1.9,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC3372",
+   "kind": "dso",
+   "name": "Eta Carinae Nebula",
+   "con": "Car",
+   "ra": 160.95,
+   "dec": -59.86667,
+   "mag": 4.8,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "EN"
+  },
+  {
+   "id": "NGC3532",
+   "kind": "dso",
+   "name": "Wishing Well Cluster",
+   "con": "Car",
+   "ra": 166.6,
+   "dec": -58.66667,
+   "mag": 3.0,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC3766",
+   "kind": "dso",
+   "name": "NGC 3766",
+   "con": "Cen",
+   "ra": 174.025,
+   "dec": -61.61667,
+   "mag": 5.3,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "IC2944",
+   "kind": "dso",
+   "name": "Running Chicken Nebula (IC 2944)",
+   "con": "Cen",
+   "ra": 174.58333,
+   "dec": -63.37278,
+   "mag": null,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "new"
+   ],
+   "simbad": "IC 2944"
+  },
+  {
+   "id": "NGC4463",
+   "kind": "dso",
+   "name": "NGC 4463",
+   "con": "Mus",
+   "ra": 187.5,
+   "dec": -64.8,
+   "mag": 7.2,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC4609",
+   "kind": "dso",
+   "name": "NGC 4609",
+   "con": "Cru",
+   "ra": 190.575,
+   "dec": -62.96667,
+   "mag": 6.9,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "DN-Coalsack",
+   "kind": "dso",
+   "name": "Coalsack",
+   "con": "Cru",
+   "ra": 192.5,
+   "dec": -62.5,
+   "mag": null,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "new"
+   ],
+   "simbad": "NAME Coalsack Nebula",
+   "note": "visual centre of the dark cloud (~12h50m -62.5 deg, curator); the SIMBAD 'NAME Coalsack Nebula' point (187.83, -63.74) lies near its western edge"
+  },
+  {
+   "id": "NGC4755",
+   "kind": "dso",
+   "name": "Jewel Box",
+   "con": "Cru",
+   "ra": 193.4,
+   "dec": -60.33333,
+   "mag": 4.2,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC5128",
+   "kind": "dso",
+   "name": "Centaurus A",
+   "con": "Cen",
+   "ra": 201.375,
+   "dec": -43.01667,
+   "mag": 7.0,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "GAL"
+  },
+  {
+   "id": "NGC5139",
+   "kind": "dso",
+   "name": "Omega Centauri",
+   "con": "Cen",
+   "ra": 201.7,
+   "dec": -47.48333,
+   "mag": 3.7,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "GC"
+  },
+  {
+   "id": "NGC5316",
+   "kind": "dso",
+   "name": "NGC 5316",
+   "con": "Cen",
+   "ra": 208.475,
+   "dec": -61.86667,
+   "mag": 6.0,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC5460",
+   "kind": "dso",
+   "name": "NGC 5460",
+   "con": "Cen",
+   "ra": 211.9,
+   "dec": -48.31667,
+   "mag": 5.6,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC5617",
+   "kind": "dso",
+   "name": "NGC 5617",
+   "con": "Cen",
+   "ra": 217.45,
+   "dec": -60.71667,
+   "mag": 6.3,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC5662",
+   "kind": "dso",
+   "name": "NGC 5662",
+   "con": "Cen",
+   "ra": 218.8,
+   "dec": -56.55,
+   "mag": 5.5,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC6025",
+   "kind": "dso",
+   "name": "NGC 6025",
+   "con": "TrA",
+   "ra": 240.925,
+   "dec": -60.5,
+   "mag": 5.1,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC6752",
+   "kind": "dso",
+   "name": "Great Peacock Globular",
+   "con": "Pav",
+   "ra": 287.725,
+   "dec": -59.98333,
+   "mag": 5.4,
+   "existing": true,
+   "batch": "southern",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "GC"
+  },
+  {
+   "id": "HR98",
+   "kind": "star",
+   "hr": 98,
+   "name": "β Hyi",
+   "con": "Hyi",
+   "ra": 6.43792,
+   "dec": -77.25417,
+   "mag": 2.8,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR99",
+   "kind": "star",
+   "hr": 99,
+   "name": "Ankaa",
+   "con": "Phe",
+   "ra": 6.57083,
+   "dec": -42.30611,
+   "mag": 2.39,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR472",
+   "kind": "star",
+   "hr": 472,
+   "name": "Achernar",
+   "con": "Eri",
+   "ra": 24.42875,
+   "dec": -57.23667,
+   "mag": 0.46,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "HR591",
+   "kind": "star",
+   "hr": 591,
+   "name": "Head of Hydrus",
+   "con": "Hyi",
+   "ra": 29.6925,
+   "dec": -61.56972,
+   "mag": 2.86,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HD33793",
+   "kind": "star",
+   "name": "Kapteyn's Star",
+   "con": "Pic",
+   "ra": 77.91912,
+   "dec": -45.01843,
+   "mag": 8.853,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "handpicked:nearby"
+   ],
+   "simbad": "HD 33793"
+  },
+  {
+   "id": "HR1956",
+   "kind": "star",
+   "hr": 1956,
+   "name": "Phact",
+   "con": "Col",
+   "ra": 84.91208,
+   "dec": -34.07417,
+   "mag": 2.64,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR1996",
+   "kind": "star",
+   "hr": 1996,
+   "name": "μ Columbae",
+   "con": "Col",
+   "ra": 86.49958,
+   "dec": -32.30639,
+   "mag": 5.17,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR2020",
+   "kind": "star",
+   "hr": 2020,
+   "name": "β Pictoris",
+   "con": "Pic",
+   "ra": 86.82125,
+   "dec": -51.06639,
+   "mag": 3.85,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "handpicked:planet"
+   ]
+  },
+  {
+   "id": "HR2326",
+   "kind": "star",
+   "hr": 2326,
+   "name": "Canopus",
+   "con": "Car",
+   "ra": 95.98792,
+   "dec": -52.69583,
+   "mag": -0.72,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3",
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR2553",
+   "kind": "star",
+   "hr": 2553,
+   "name": "τ Pup",
+   "con": "Pup",
+   "ra": 102.48417,
+   "dec": -50.61472,
+   "mag": 2.93,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR2748",
+   "kind": "star",
+   "hr": 2748,
+   "name": "L² Puppis",
+   "con": "Pup",
+   "ra": 108.385,
+   "dec": -44.63972,
+   "mag": 5.1,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "HR2773",
+   "kind": "star",
+   "hr": 2773,
+   "name": "π Pup",
+   "con": "Pup",
+   "ra": 109.28583,
+   "dec": -37.0975,
+   "mag": 2.7,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR3165",
+   "kind": "star",
+   "hr": 3165,
+   "name": "Naos",
+   "con": "Pup",
+   "ra": 120.89625,
+   "dec": -40.00333,
+   "mag": 2.25,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3",
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR3185",
+   "kind": "star",
+   "hr": 3185,
+   "name": "Tureis",
+   "con": "Pup",
+   "ra": 121.88583,
+   "dec": -24.30417,
+   "mag": 2.81,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR3207",
+   "kind": "star",
+   "hr": 3207,
+   "name": "γ² Velorum",
+   "con": "Vel",
+   "ra": 122.38333,
+   "dec": -47.33667,
+   "mag": 1.78,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3",
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR3307",
+   "kind": "star",
+   "hr": 3307,
+   "name": "Avior",
+   "con": "Car",
+   "ra": 125.62833,
+   "dec": -59.50972,
+   "mag": 1.86,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR3485",
+   "kind": "star",
+   "hr": 3485,
+   "name": "δ Vel",
+   "con": "Vel",
+   "ra": 131.17583,
+   "dec": -54.70833,
+   "mag": 1.96,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR3634",
+   "kind": "star",
+   "hr": 3634,
+   "name": "Suhail",
+   "con": "Vel",
+   "ra": 136.99917,
+   "dec": -43.4325,
+   "mag": 2.21,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR3685",
+   "kind": "star",
+   "hr": 3685,
+   "name": "Miaplacidus",
+   "con": "Car",
+   "ra": 138.3,
+   "dec": -69.71722,
+   "mag": 1.68,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR3699",
+   "kind": "star",
+   "hr": 3699,
+   "name": "Aspidiske",
+   "con": "Car",
+   "ra": 139.2725,
+   "dec": -59.27528,
+   "mag": 2.25,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR3734",
+   "kind": "star",
+   "hr": 3734,
+   "name": "κ Vel",
+   "con": "Vel",
+   "ra": 140.52833,
+   "dec": -55.01083,
+   "mag": 2.5,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4199",
+   "kind": "star",
+   "hr": 4199,
+   "name": "θ Car",
+   "con": "Car",
+   "ra": 160.73917,
+   "dec": -64.39444,
+   "mag": 2.76,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4210",
+   "kind": "star",
+   "hr": 4210,
+   "name": "η Carinae",
+   "con": "Car",
+   "ra": 161.265,
+   "dec": -59.68417,
+   "mag": 6.21,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR4216",
+   "kind": "star",
+   "hr": 4216,
+   "name": "μ Vel",
+   "con": "Vel",
+   "ra": 161.6925,
+   "dec": -49.42,
+   "mag": 2.69,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4621",
+   "kind": "star",
+   "hr": 4621,
+   "name": "δ Cen",
+   "con": "Cen",
+   "ra": 182.08958,
+   "dec": -50.7225,
+   "mag": 2.6,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4656",
+   "kind": "star",
+   "hr": 4656,
+   "name": "δ Cru",
+   "con": "Cru",
+   "ra": 183.78625,
+   "dec": -58.74889,
+   "mag": 2.8,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4730",
+   "kind": "star",
+   "hr": 4730,
+   "name": "Acrux",
+   "con": "Cru",
+   "ra": 186.64958,
+   "dec": -63.09917,
+   "mag": 1.33,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4731",
+   "kind": "star",
+   "hr": 4731,
+   "name": "α² Cru",
+   "con": "Cru",
+   "ra": 186.65208,
+   "dec": -63.09944,
+   "mag": 1.73,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4763",
+   "kind": "star",
+   "hr": 4763,
+   "name": "Gacrux",
+   "con": "Cru",
+   "ra": 187.79125,
+   "dec": -57.11333,
+   "mag": 1.63,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3",
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "HR4798",
+   "kind": "star",
+   "hr": 4798,
+   "name": "α Mus",
+   "con": "Mus",
+   "ra": 189.29583,
+   "dec": -69.13556,
+   "mag": 2.69,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4819",
+   "kind": "star",
+   "hr": 4819,
+   "name": "γ Cen",
+   "con": "Cen",
+   "ra": 190.37917,
+   "dec": -48.95972,
+   "mag": 2.17,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4853",
+   "kind": "star",
+   "hr": 4853,
+   "name": "Mimosa",
+   "con": "Cru",
+   "ra": 191.93,
+   "dec": -59.68861,
+   "mag": 1.25,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5028",
+   "kind": "star",
+   "hr": 5028,
+   "name": "ι Cen",
+   "con": "Cen",
+   "ra": 200.14917,
+   "dec": -36.71222,
+   "mag": 2.75,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5132",
+   "kind": "star",
+   "hr": 5132,
+   "name": "ε Cen",
+   "con": "Cen",
+   "ra": 204.97167,
+   "dec": -53.46639,
+   "mag": 2.3,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5231",
+   "kind": "star",
+   "hr": 5231,
+   "name": "ζ Cen",
+   "con": "Cen",
+   "ra": 208.885,
+   "dec": -47.28833,
+   "mag": 2.55,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5267",
+   "kind": "star",
+   "hr": 5267,
+   "name": "Hadar",
+   "con": "Cen",
+   "ra": 210.95583,
+   "dec": -60.37306,
+   "mag": 0.61,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5288",
+   "kind": "star",
+   "hr": 5288,
+   "name": "Menkent",
+   "con": "Cen",
+   "ra": 211.67083,
+   "dec": -36.37,
+   "mag": 2.06,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5440",
+   "kind": "star",
+   "hr": 5440,
+   "name": "η Cen",
+   "con": "Cen",
+   "ra": 218.87667,
+   "dec": -42.15778,
+   "mag": 2.31,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5459",
+   "kind": "star",
+   "hr": 5459,
+   "name": "Rigil Kentaurus",
+   "con": "Cen",
+   "ra": 219.89958,
+   "dec": -60.83528,
+   "mag": -0.01,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5460",
+   "kind": "star",
+   "hr": 5460,
+   "name": "α Centauri B",
+   "con": "Cen",
+   "ra": 219.90042,
+   "dec": -60.83556,
+   "mag": 1.33,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3",
+    "handpicked:nearby"
+   ]
+  },
+  {
+   "id": "HR5671",
+   "kind": "star",
+   "hr": 5671,
+   "name": "Gatria",
+   "con": "TrA",
+   "ra": 229.7275,
+   "dec": -68.67944,
+   "mag": 2.89,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5897",
+   "kind": "star",
+   "hr": 5897,
+   "name": "Betria",
+   "con": "TrA",
+   "ra": 238.78542,
+   "dec": -63.43056,
+   "mag": 2.85,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6217",
+   "kind": "star",
+   "hr": 6217,
+   "name": "Atria",
+   "con": "TrA",
+   "ra": 252.16625,
+   "dec": -69.02778,
+   "mag": 1.92,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR7790",
+   "kind": "star",
+   "hr": 7790,
+   "name": "Peacock",
+   "con": "Pav",
+   "ra": 306.41208,
+   "dec": -56.735,
+   "mag": 1.94,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR8387",
+   "kind": "star",
+   "hr": 8387,
+   "name": "ε Indi",
+   "con": "Ind",
+   "ra": 330.84,
+   "dec": -56.78611,
+   "mag": 4.69,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "handpicked:nearby"
+   ]
+  },
+  {
+   "id": "HR8425",
+   "kind": "star",
+   "hr": 8425,
+   "name": "Alnair",
+   "con": "Gru",
+   "ra": 332.05833,
+   "dec": -46.96111,
+   "mag": 1.74,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR8502",
+   "kind": "star",
+   "hr": 8502,
+   "name": "α Tuc",
+   "con": "Tuc",
+   "ra": 334.62542,
+   "dec": -60.25972,
+   "mag": 2.86,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR8636",
+   "kind": "star",
+   "hr": 8636,
+   "name": "Tiaki (β Gruis)",
+   "con": "Gru",
+   "ra": 340.66708,
+   "dec": -46.88472,
+   "mag": 2.1,
+   "existing": false,
+   "batch": "southern",
+   "selection": [
+    "bsc-v3",
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "AST-EngagementRing",
+   "kind": "dso",
+   "name": "Engagement Ring",
+   "con": "UMi",
+   "ra": 38.0,
+   "dec": 89.26667,
+   "mag": 2.0,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:steady"
+   ],
+   "cat": "AST"
+  },
+  {
+   "id": "M48",
+   "kind": "dso",
+   "name": "M48",
+   "con": "Hya",
+   "ra": 123.45,
+   "dec": -5.8,
+   "mag": 5.5,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "M44",
+   "kind": "dso",
+   "name": "Beehive Cluster",
+   "con": "Cnc",
+   "ra": 130.025,
+   "dec": 19.98333,
+   "mag": 3.7,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "M67",
+   "kind": "dso",
+   "name": "M67",
+   "con": "Cnc",
+   "ra": 132.6,
+   "dec": 11.81667,
+   "mag": 6.1,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "M81",
+   "kind": "dso",
+   "name": "Bode's Galaxy",
+   "con": "UMa",
+   "ra": 148.9,
+   "dec": 69.06667,
+   "mag": 6.9,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "M82",
+   "kind": "dso",
+   "name": "Cigar Galaxy",
+   "con": "UMa",
+   "ra": 148.95,
+   "dec": 69.68333,
+   "mag": 8.4,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-IG"
+  },
+  {
+   "id": "NGC3242",
+   "kind": "dso",
+   "name": "Ghost of Jupiter",
+   "con": "Hya",
+   "ra": 156.2,
+   "dec": -18.63333,
+   "mag": 8.6,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "PN"
+  },
+  {
+   "id": "M97",
+   "kind": "dso",
+   "name": "Owl Nebula",
+   "con": "UMa",
+   "ra": 168.7,
+   "dec": 55.01667,
+   "mag": 9.9,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:challenge",
+    "promoted"
+   ],
+   "cat": "M-PN"
+  },
+  {
+   "id": "M65",
+   "kind": "dso",
+   "name": "M65",
+   "con": "Leo",
+   "ra": 169.725,
+   "dec": 13.08333,
+   "mag": 9.3,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "M66",
+   "kind": "dso",
+   "name": "M66",
+   "con": "Leo",
+   "ra": 170.05,
+   "dec": 12.98333,
+   "mag": 8.9,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "M106",
+   "kind": "dso",
+   "name": "M106",
+   "con": "CVn",
+   "ra": 184.725,
+   "dec": 47.31667,
+   "mag": 8.4,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "Mel111",
+   "kind": "dso",
+   "name": "Coma Star Cluster",
+   "con": "Com",
+   "ra": 186.125,
+   "dec": 26.02278,
+   "mag": 1.8,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M49",
+   "kind": "dso",
+   "name": "M49",
+   "con": "Vir",
+   "ra": 187.45,
+   "dec": 8.0,
+   "mag": 8.4,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-EG"
+  },
+  {
+   "id": "M68",
+   "kind": "dso",
+   "name": "M68",
+   "con": "Hya",
+   "ra": 189.875,
+   "dec": -26.75,
+   "mag": 7.8,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M104",
+   "kind": "dso",
+   "name": "Sombrero Galaxy",
+   "con": "Vir",
+   "ra": 190.0,
+   "dec": -11.61667,
+   "mag": 8.0,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "M94",
+   "kind": "dso",
+   "name": "M94",
+   "con": "CVn",
+   "ra": 192.725,
+   "dec": 41.13333,
+   "mag": 8.2,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "M64",
+   "kind": "dso",
+   "name": "Black Eye Galaxy",
+   "con": "Com",
+   "ra": 194.175,
+   "dec": 21.68333,
+   "mag": 8.5,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "M53",
+   "kind": "dso",
+   "name": "M53",
+   "con": "Com",
+   "ra": 198.225,
+   "dec": 18.16667,
+   "mag": 7.6,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M63",
+   "kind": "dso",
+   "name": "Sunflower Galaxy",
+   "con": "CVn",
+   "ra": 198.95,
+   "dec": 42.03333,
+   "mag": 8.6,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "M51",
+   "kind": "dso",
+   "name": "Whirlpool Galaxy",
+   "con": "CVn",
+   "ra": 202.5,
+   "dec": 47.18333,
+   "mag": 8.4,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "M83",
+   "kind": "dso",
+   "name": "Southern Pinwheel",
+   "con": "Hya",
+   "ra": 204.25,
+   "dec": -29.86667,
+   "mag": 7.6,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "M3",
+   "kind": "dso",
+   "name": "M3",
+   "con": "CVn",
+   "ra": 205.55,
+   "dec": 28.38333,
+   "mag": 6.2,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M101",
+   "kind": "dso",
+   "name": "Pinwheel Galaxy",
+   "con": "UMa",
+   "ra": 210.8,
+   "dec": 54.35,
+   "mag": 7.9,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-SG"
+  },
+  {
+   "id": "HR424",
+   "kind": "star",
+   "hr": 424,
+   "name": "Polaris",
+   "con": "UMi",
+   "ra": 37.95292,
+   "dec": 89.26417,
+   "mag": 2.02,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3",
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR2784",
+   "kind": "star",
+   "hr": 2784,
+   "name": "19 Lyncis",
+   "con": "Lyn",
+   "ra": 110.71708,
+   "dec": 55.28139,
+   "mag": 5.45,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HR3522",
+   "kind": "star",
+   "hr": 3522,
+   "name": "55 Cancri",
+   "con": "Cnc",
+   "ra": 133.14917,
+   "dec": 28.33083,
+   "mag": 5.95,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:planet"
+   ]
+  },
+  {
+   "id": "HR3541",
+   "kind": "star",
+   "hr": 3541,
+   "name": "X Cancri",
+   "con": "Cnc",
+   "ra": 133.84542,
+   "dec": 17.23139,
+   "mag": 6.64,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "STAR-Alphard",
+   "kind": "star",
+   "hr": 3748,
+   "name": "Alphard",
+   "con": "Hya",
+   "ra": 141.89667,
+   "dec": -8.65861,
+   "mag": 1.98,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR3873",
+   "kind": "star",
+   "hr": 3873,
+   "name": "Ras Elased Australis",
+   "con": "Leo",
+   "ra": 146.46292,
+   "dec": 23.77417,
+   "mag": 2.98,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR3882",
+   "kind": "star",
+   "hr": 3882,
+   "name": "R Leonis",
+   "con": "Leo",
+   "ra": 146.88958,
+   "dec": 11.42889,
+   "mag": 6.02,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "HR3982",
+   "kind": "star",
+   "hr": 3982,
+   "name": "Regulus",
+   "con": "Leo",
+   "ra": 152.09292,
+   "dec": 11.96722,
+   "mag": 1.35,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "HR4057",
+   "kind": "star",
+   "hr": 4057,
+   "name": "Algieba",
+   "con": "Leo",
+   "ra": 154.99292,
+   "dec": 19.84167,
+   "mag": 2.61,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4277",
+   "kind": "star",
+   "hr": 4277,
+   "name": "47 Ursae Majoris",
+   "con": "UMa",
+   "ra": 164.86667,
+   "dec": 40.43028,
+   "mag": 5.05,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:planet"
+   ]
+  },
+  {
+   "id": "HR4295",
+   "kind": "star",
+   "hr": 4295,
+   "name": "Merak",
+   "con": "UMa",
+   "ra": 165.46042,
+   "dec": 56.3825,
+   "mag": 2.37,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3",
+    "handpicked:pivot"
+   ]
+  },
+  {
+   "id": "HD95735",
+   "kind": "star",
+   "name": "Lalande 21185",
+   "con": "UMa",
+   "ra": 165.83415,
+   "dec": 35.96988,
+   "mag": 7.52,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:nearby"
+   ],
+   "simbad": "HD 95735"
+  },
+  {
+   "id": "HR4301",
+   "kind": "star",
+   "hr": 4301,
+   "name": "Dubhe",
+   "con": "UMa",
+   "ra": 165.93208,
+   "dec": 61.75083,
+   "mag": 1.79,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3",
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "HR4357",
+   "kind": "star",
+   "hr": 4357,
+   "name": "Zosma",
+   "con": "Leo",
+   "ra": 168.52708,
+   "dec": 20.52361,
+   "mag": 2.56,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4534",
+   "kind": "star",
+   "hr": 4534,
+   "name": "Denebola",
+   "con": "Leo",
+   "ra": 177.265,
+   "dec": 14.57194,
+   "mag": 2.14,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "HR4550",
+   "kind": "star",
+   "hr": 4550,
+   "name": "Groombridge 1830",
+   "con": "UMa",
+   "ra": 178.245,
+   "dec": 37.71861,
+   "mag": 6.45,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:nearby"
+   ]
+  },
+  {
+   "id": "HR4554",
+   "kind": "star",
+   "hr": 4554,
+   "name": "Phecda",
+   "con": "UMa",
+   "ra": 178.4575,
+   "dec": 53.69472,
+   "mag": 2.44,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3",
+    "handpicked:pivot"
+   ]
+  },
+  {
+   "id": "HR4630",
+   "kind": "star",
+   "hr": 4630,
+   "name": "Minkar",
+   "con": "Crv",
+   "ra": 182.53125,
+   "dec": -22.61972,
+   "mag": 3.0,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4660",
+   "kind": "star",
+   "hr": 4660,
+   "name": "Megrez",
+   "con": "UMa",
+   "ra": 183.85667,
+   "dec": 57.0325,
+   "mag": 3.31,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:pivot"
+   ]
+  },
+  {
+   "id": "HR4662",
+   "kind": "star",
+   "hr": 4662,
+   "name": "Gienah",
+   "con": "Crv",
+   "ra": 183.95167,
+   "dec": -17.54194,
+   "mag": 2.59,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "DS-Winnecke4",
+   "kind": "star",
+   "name": "Winnecke 4",
+   "con": "UMa",
+   "ra": 185.55,
+   "dec": 58.08333,
+   "mag": 9.0,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR4737",
+   "kind": "star",
+   "hr": 4737,
+   "name": "γ Comae Berenices",
+   "con": "Com",
+   "ra": 186.73458,
+   "dec": 28.26833,
+   "mag": 4.36,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:pivot"
+   ]
+  },
+  {
+   "id": "HR4757",
+   "kind": "star",
+   "hr": 4757,
+   "name": "Algorab",
+   "con": "Crv",
+   "ra": 187.46625,
+   "dec": -16.51556,
+   "mag": 2.95,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR4785",
+   "kind": "star",
+   "hr": 4785,
+   "name": "Chara",
+   "con": "CVn",
+   "ra": 188.43542,
+   "dec": 41.3575,
+   "mag": 4.26,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "HR4786",
+   "kind": "star",
+   "hr": 4786,
+   "name": "Kraz",
+   "con": "Crv",
+   "ra": 188.59667,
+   "dec": -23.39667,
+   "mag": 2.65,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "STAR-LaSuperba",
+   "kind": "star",
+   "hr": 4846,
+   "name": "La Superba",
+   "con": "CVn",
+   "ra": 191.2825,
+   "dec": 45.44028,
+   "mag": 4.99,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR4905",
+   "kind": "star",
+   "hr": 4905,
+   "name": "Alioth",
+   "con": "UMa",
+   "ra": 193.50708,
+   "dec": 55.95972,
+   "mag": 1.77,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "DS-AlpCVn",
+   "kind": "star",
+   "hr": 4915,
+   "name": "Cor Caroli",
+   "con": "CVn",
+   "ra": 194.0,
+   "dec": 38.31667,
+   "mag": 2.9,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR4932",
+   "kind": "star",
+   "hr": 4932,
+   "name": "Vindemiatrix",
+   "con": "Vir",
+   "ra": 195.54417,
+   "dec": 10.95917,
+   "mag": 2.83,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5020",
+   "kind": "star",
+   "hr": 5020,
+   "name": "γ Hya",
+   "con": "Hya",
+   "ra": 199.73042,
+   "dec": -23.17167,
+   "mag": 3.0,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "DS-MizarAlcor",
+   "kind": "star",
+   "hr": 5054,
+   "name": "Mizar & Alcor",
+   "con": "UMa",
+   "ra": 200.975,
+   "dec": 54.93333,
+   "mag": 2.3,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR5056",
+   "kind": "star",
+   "hr": 5056,
+   "name": "Spica",
+   "con": "Vir",
+   "ra": 201.29833,
+   "dec": -11.16139,
+   "mag": 0.98,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5072",
+   "kind": "star",
+   "hr": 5072,
+   "name": "70 Virginis",
+   "con": "Vir",
+   "ra": 202.1075,
+   "dec": 13.77889,
+   "mag": 4.98,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:planet"
+   ]
+  },
+  {
+   "id": "HR5080",
+   "kind": "star",
+   "hr": 5080,
+   "name": "R Hydrae",
+   "con": "Hya",
+   "ra": 202.42833,
+   "dec": -23.28139,
+   "mag": 4.97,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "HR5185",
+   "kind": "star",
+   "hr": 5185,
+   "name": "τ Boötis",
+   "con": "Boo",
+   "ra": 206.81542,
+   "dec": 17.45667,
+   "mag": 4.5,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:planet"
+   ]
+  },
+  {
+   "id": "HR5191",
+   "kind": "star",
+   "hr": 5191,
+   "name": "Alkaid",
+   "con": "UMa",
+   "ra": 206.885,
+   "dec": 49.31333,
+   "mag": 1.86,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5235",
+   "kind": "star",
+   "hr": 5235,
+   "name": "Muphrid",
+   "con": "Boo",
+   "ra": 208.67125,
+   "dec": 18.39778,
+   "mag": 2.68,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "STAR-Arcturus",
+   "kind": "star",
+   "hr": 5340,
+   "name": "Arcturus",
+   "con": "Boo",
+   "ra": 213.91542,
+   "dec": 19.1825,
+   "mag": -0.04,
+   "existing": true,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR5506",
+   "kind": "star",
+   "hr": 5506,
+   "name": "Izar",
+   "con": "Boo",
+   "ra": 221.24667,
+   "dec": 27.07417,
+   "mag": 2.7,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5563",
+   "kind": "star",
+   "hr": 5563,
+   "name": "Kochab",
+   "con": "UMi",
+   "ra": 222.67625,
+   "dec": 74.15556,
+   "mag": 2.08,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "bsc-v3",
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "HR5681",
+   "kind": "star",
+   "hr": 5681,
+   "name": "δ Boötis",
+   "con": "Boo",
+   "ra": 228.87583,
+   "dec": 33.31472,
+   "mag": 3.47,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HR5733",
+   "kind": "star",
+   "hr": 5733,
+   "name": "Alkalurops (μ Boo)",
+   "con": "Boo",
+   "ra": 231.1225,
+   "dec": 37.37722,
+   "mag": 4.31,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HR5763",
+   "kind": "star",
+   "hr": 5763,
+   "name": "ν Boötis",
+   "con": "Boo",
+   "ra": 232.7325,
+   "dec": 40.83306,
+   "mag": 5.02,
+   "existing": false,
+   "batch": "spring",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "M13",
+   "kind": "dso",
+   "name": "Great Hercules Globular",
+   "con": "Her",
+   "ra": 250.425,
+   "dec": 36.46667,
+   "mag": 5.8,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M92",
+   "kind": "dso",
+   "name": "M92",
+   "con": "Her",
+   "ra": 259.275,
+   "dec": 43.13333,
+   "mag": 6.4,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "IC4665",
+   "kind": "dso",
+   "name": "IC 4665",
+   "con": "Oph",
+   "ra": 266.575,
+   "dec": 5.71667,
+   "mag": 4.2,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC6633",
+   "kind": "dso",
+   "name": "NGC 6633",
+   "con": "Oph",
+   "ra": 276.925,
+   "dec": 6.56667,
+   "mag": 4.6,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC6709",
+   "kind": "dso",
+   "name": "NGC 6709",
+   "con": "Aql",
+   "ra": 282.875,
+   "dec": 10.35,
+   "mag": 6.7,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M57",
+   "kind": "dso",
+   "name": "Ring Nebula",
+   "con": "Lyr",
+   "ra": 283.4,
+   "dec": 33.03333,
+   "mag": 8.8,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "M-PN"
+  },
+  {
+   "id": "M56",
+   "kind": "dso",
+   "name": "M56",
+   "con": "Lyr",
+   "ra": 289.15,
+   "dec": 30.18333,
+   "mag": 8.3,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "AST-Coathanger",
+   "kind": "dso",
+   "name": "Coathanger",
+   "con": "Vul",
+   "ra": 291.5,
+   "dec": 20.1,
+   "mag": 3.6,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "AST"
+  },
+  {
+   "id": "DN-BarnardE",
+   "kind": "dso",
+   "name": "Barnard's E (B142/B143)",
+   "con": "Aql",
+   "ra": 295.175,
+   "dec": 10.95,
+   "mag": null,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "new"
+   ],
+   "simbad": "LDN 694"
+  },
+  {
+   "id": "NGC6819",
+   "kind": "dso",
+   "name": "NGC 6819",
+   "con": "Cyg",
+   "ra": 295.325,
+   "dec": 40.18333,
+   "mag": 7.3,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC6823",
+   "kind": "dso",
+   "name": "NGC 6823",
+   "con": "Vul",
+   "ra": 295.775,
+   "dec": 23.3,
+   "mag": 7.1,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M71",
+   "kind": "dso",
+   "name": "M71",
+   "con": "Sge",
+   "ra": 298.45,
+   "dec": 18.78333,
+   "mag": 8.2,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M27",
+   "kind": "dso",
+   "name": "Dumbbell Nebula",
+   "con": "Vul",
+   "ra": 299.9,
+   "dec": 22.71667,
+   "mag": 7.4,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-PN"
+  },
+  {
+   "id": "MWF-CygnusRift",
+   "kind": "dso",
+   "name": "Cygnus Rift",
+   "con": "Cyg",
+   "ra": 300.0,
+   "dec": 35.0,
+   "mag": null,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "new"
+   ],
+   "note": "approximate centre of an extended Milky Way feature"
+  },
+  {
+   "id": "NGC6871",
+   "kind": "dso",
+   "name": "NGC 6871",
+   "con": "Cyg",
+   "ra": 301.475,
+   "dec": 35.78333,
+   "mag": 5.2,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC6888",
+   "kind": "dso",
+   "name": "Crescent Nebula",
+   "con": "Cyg",
+   "ra": 303.0,
+   "dec": 38.35,
+   "mag": 7.4,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "EN"
+  },
+  {
+   "id": "NGC6910",
+   "kind": "dso",
+   "name": "NGC 6910",
+   "con": "Cyg",
+   "ra": 305.775,
+   "dec": 40.78333,
+   "mag": 7.4,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M29",
+   "kind": "dso",
+   "name": "M29",
+   "con": "Cyg",
+   "ra": 305.975,
+   "dec": 38.53333,
+   "mag": 7.1,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "NGC6934",
+   "kind": "dso",
+   "name": "NGC 6934",
+   "con": "Del",
+   "ra": 308.55,
+   "dec": 7.4,
+   "mag": 8.7,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "GC"
+  },
+  {
+   "id": "NGC6940",
+   "kind": "dso",
+   "name": "NGC 6940",
+   "con": "Vul",
+   "ra": 308.65,
+   "dec": 28.3,
+   "mag": 6.3,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "AST-JobsCoffin",
+   "kind": "dso",
+   "name": "Job's Coffin",
+   "con": "Del",
+   "ra": 310.5,
+   "dec": 15.38333,
+   "mag": 3.6,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "AST"
+  },
+  {
+   "id": "NGC6960",
+   "kind": "dso",
+   "name": "West Veil Nebula",
+   "con": "Cyg",
+   "ra": 311.425,
+   "dec": 30.71667,
+   "mag": 7.0,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "SNR"
+  },
+  {
+   "id": "NGC6992",
+   "kind": "dso",
+   "name": "East Veil Nebula",
+   "con": "Cyg",
+   "ra": 314.1,
+   "dec": 31.71667,
+   "mag": 7.0,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "SNR"
+  },
+  {
+   "id": "NGC7000",
+   "kind": "dso",
+   "name": "North America Nebula",
+   "con": "Cyg",
+   "ra": 314.7,
+   "dec": 44.33333,
+   "mag": 4.0,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "EN"
+  },
+  {
+   "id": "NGC7063",
+   "kind": "dso",
+   "name": "NGC 7063",
+   "con": "Cyg",
+   "ra": 321.1,
+   "dec": 36.5,
+   "mag": 7.0,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M39",
+   "kind": "dso",
+   "name": "M39",
+   "con": "Cyg",
+   "ra": 323.05,
+   "dec": 48.43333,
+   "mag": 4.6,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "HR5744",
+   "kind": "star",
+   "hr": 5744,
+   "name": "Edasich (ι Dra)",
+   "con": "Dra",
+   "ra": 231.2325,
+   "dec": 58.96611,
+   "mag": 3.29,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:planet"
+   ]
+  },
+  {
+   "id": "HR5793",
+   "kind": "star",
+   "hr": 5793,
+   "name": "Alphecca",
+   "con": "CrB",
+   "ra": 233.67208,
+   "dec": 26.71472,
+   "mag": 2.23,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5880",
+   "kind": "star",
+   "hr": 5880,
+   "name": "R Coronae Borealis",
+   "con": "CrB",
+   "ra": 237.14333,
+   "dec": 28.15667,
+   "mag": 5.85,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:volatile"
+   ]
+  },
+  {
+   "id": "HR5958",
+   "kind": "star",
+   "hr": 5958,
+   "name": "T Coronae Borealis",
+   "con": "CrB",
+   "ra": 239.87583,
+   "dec": 25.92028,
+   "mag": 10.0,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:volatile"
+   ]
+  },
+  {
+   "id": "HR5968",
+   "kind": "star",
+   "hr": 5968,
+   "name": "ρ Coronae Borealis",
+   "con": "CrB",
+   "ra": 240.26125,
+   "dec": 33.30361,
+   "mag": 5.41,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:planet"
+   ]
+  },
+  {
+   "id": "HR6008",
+   "kind": "star",
+   "hr": 6008,
+   "name": "κ Herculis",
+   "con": "Her",
+   "ra": 242.01875,
+   "dec": 17.04694,
+   "mag": 5.0,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HD145675",
+   "kind": "star",
+   "name": "14 Herculis",
+   "con": "Her",
+   "ra": 242.60132,
+   "dec": 43.81764,
+   "mag": null,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:planet"
+   ],
+   "simbad": "* 14 Her"
+  },
+  {
+   "id": "HR6132",
+   "kind": "star",
+   "hr": 6132,
+   "name": "η Dra",
+   "con": "Dra",
+   "ra": 245.99792,
+   "dec": 61.51417,
+   "mag": 2.74,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6146",
+   "kind": "star",
+   "hr": 6146,
+   "name": "g Herculis (30 Her)",
+   "con": "Her",
+   "ra": 247.16042,
+   "dec": 41.88167,
+   "mag": 5.04,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "HR6148",
+   "kind": "star",
+   "hr": 6148,
+   "name": "Kornephoros",
+   "con": "Her",
+   "ra": 247.555,
+   "dec": 21.48972,
+   "mag": 2.77,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "DS-16Dra",
+   "kind": "star",
+   "hr": 6185,
+   "name": "16/17 Draconis",
+   "con": "Dra",
+   "ra": 249.05,
+   "dec": 52.91667,
+   "mag": 5.4,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR6212",
+   "kind": "star",
+   "hr": 6212,
+   "name": "ζ Her",
+   "con": "Her",
+   "ra": 250.32167,
+   "dec": 31.60306,
+   "mag": 2.81,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "STAR-Rasalgethi",
+   "kind": "star",
+   "hr": 6406,
+   "name": "Rasalgethi",
+   "con": "Her",
+   "ra": 258.66208,
+   "dec": 14.39028,
+   "mag": 3.48,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR6536",
+   "kind": "star",
+   "hr": 6536,
+   "name": "Rastaban",
+   "con": "Dra",
+   "ra": 262.60833,
+   "dec": 52.30139,
+   "mag": 2.79,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "DS-NuDra",
+   "kind": "star",
+   "hr": 6555,
+   "name": "ν Draconis",
+   "con": "Dra",
+   "ra": 263.05,
+   "dec": 55.16667,
+   "mag": 4.9,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR6556",
+   "kind": "star",
+   "hr": 6556,
+   "name": "Rasalhague",
+   "con": "Oph",
+   "ra": 263.73375,
+   "dec": 12.56,
+   "mag": 2.08,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3",
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "DS-PsiDra",
+   "kind": "star",
+   "hr": 6636,
+   "name": "ψ Draconis",
+   "con": "Dra",
+   "ra": 265.475,
+   "dec": 72.15,
+   "mag": 4.6,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR6603",
+   "kind": "star",
+   "hr": 6603,
+   "name": "Cebalrai",
+   "con": "Oph",
+   "ra": 265.86833,
+   "dec": 4.56722,
+   "mag": 2.77,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6705",
+   "kind": "star",
+   "hr": 6705,
+   "name": "Eltanin",
+   "con": "Dra",
+   "ra": 269.15167,
+   "dec": 51.48889,
+   "mag": 2.23,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "NAME-BarnardsStar",
+   "kind": "star",
+   "name": "Barnard's Star",
+   "con": "Oph",
+   "ra": 269.45208,
+   "dec": 4.69336,
+   "mag": 9.511,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:nearby"
+   ],
+   "simbad": "NAME Barnard's star"
+  },
+  {
+   "id": "HR6752",
+   "kind": "star",
+   "hr": 6752,
+   "name": "70 Ophiuchi",
+   "con": "Oph",
+   "ra": 271.36375,
+   "dec": 2.49944,
+   "mag": 4.03,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:nearby"
+   ]
+  },
+  {
+   "id": "DS-100Her",
+   "kind": "star",
+   "hr": 6781,
+   "name": "100 Herculis",
+   "con": "Her",
+   "ra": 271.95,
+   "dec": 26.1,
+   "mag": 5.8,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "DS-39Dra",
+   "kind": "star",
+   "hr": 6923,
+   "name": "39 Draconis",
+   "con": "Dra",
+   "ra": 275.975,
+   "dec": 58.8,
+   "mag": 5.0,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "NAME-TLyrae",
+   "kind": "star",
+   "name": "T Lyrae",
+   "con": "Lyr",
+   "ra": 278.08365,
+   "dec": 36.99879,
+   "mag": 7.84,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:agb"
+   ],
+   "simbad": "V* T Lyr"
+  },
+  {
+   "id": "STAR-Vega",
+   "kind": "star",
+   "hr": 7001,
+   "name": "Vega",
+   "con": "Lyr",
+   "ra": 279.23458,
+   "dec": 38.78361,
+   "mag": 0.03,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "DS-DoubleDbl",
+   "kind": "star",
+   "hr": 7051,
+   "name": "Double-Double",
+   "con": "Lyr",
+   "ra": 281.075,
+   "dec": 39.66667,
+   "mag": 4.7,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR7056",
+   "kind": "star",
+   "hr": 7056,
+   "name": "ζ Lyrae",
+   "con": "Lyr",
+   "ra": 281.19333,
+   "dec": 37.605,
+   "mag": 4.36,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HR7106",
+   "kind": "star",
+   "hr": 7106,
+   "name": "Sheliak (β Lyr)",
+   "con": "Lyr",
+   "ra": 282.52,
+   "dec": 33.36278,
+   "mag": 3.45,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:eclipsing"
+   ]
+  },
+  {
+   "id": "HR7139",
+   "kind": "star",
+   "hr": 7139,
+   "name": "δ Lyrae",
+   "con": "Lyr",
+   "ra": 283.62583,
+   "dec": 36.89889,
+   "mag": 4.3,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HR7220",
+   "kind": "star",
+   "hr": 7220,
+   "name": "V Aquilae",
+   "con": "Aql",
+   "ra": 286.10083,
+   "dec": -5.685,
+   "mag": 6.9,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "HR7235",
+   "kind": "star",
+   "hr": 7235,
+   "name": "Deneb el Okab",
+   "con": "Aql",
+   "ra": 286.3525,
+   "dec": 13.86333,
+   "mag": 2.99,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HD182989",
+   "kind": "star",
+   "name": "RR Lyrae",
+   "con": "Lyr",
+   "ra": 291.3663,
+   "dec": 42.78436,
+   "mag": null,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:pulsator"
+   ],
+   "simbad": "V* RR Lyr"
+  },
+  {
+   "id": "DS-Albireo",
+   "kind": "star",
+   "hr": 7417,
+   "name": "Albireo",
+   "con": "Cyg",
+   "ra": 292.675,
+   "dec": 27.96667,
+   "mag": 3.1,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR7503",
+   "kind": "star",
+   "hr": 7503,
+   "name": "16 Cygni A",
+   "con": "Cyg",
+   "ra": 295.45375,
+   "dec": 50.52528,
+   "mag": 5.96,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:planet"
+   ]
+  },
+  {
+   "id": "HR7504",
+   "kind": "star",
+   "hr": 7504,
+   "name": "16 Cygni B",
+   "con": "Cyg",
+   "ra": 295.46667,
+   "dec": 50.5175,
+   "mag": 6.2,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:planet"
+   ]
+  },
+  {
+   "id": "HR7528",
+   "kind": "star",
+   "hr": 7528,
+   "name": "Al Fawaris",
+   "con": "Cyg",
+   "ra": 296.24375,
+   "dec": 45.13083,
+   "mag": 2.87,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR7525",
+   "kind": "star",
+   "hr": 7525,
+   "name": "Tarazed",
+   "con": "Aql",
+   "ra": 296.565,
+   "dec": 10.61333,
+   "mag": 2.72,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR7564",
+   "kind": "star",
+   "hr": 7564,
+   "name": "χ Cygni",
+   "con": "Cyg",
+   "ra": 297.64125,
+   "dec": 32.91417,
+   "mag": 4.23,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "HR7557",
+   "kind": "star",
+   "hr": 7557,
+   "name": "Altair",
+   "con": "Aql",
+   "ra": 297.69583,
+   "dec": 8.86833,
+   "mag": 0.77,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "HR7570",
+   "kind": "star",
+   "hr": 7570,
+   "name": "η Aquilae",
+   "con": "Aql",
+   "ra": 298.11833,
+   "dec": 1.00556,
+   "mag": 3.9,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:pulsator"
+   ]
+  },
+  {
+   "id": "HD226868",
+   "kind": "star",
+   "name": "HDE 226868 (Cygnus X-1)",
+   "con": "Cyg",
+   "ra": 299.59032,
+   "dec": 35.20161,
+   "mag": 8.91,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:supergiant"
+   ],
+   "simbad": "HD 226868"
+  },
+  {
+   "id": "HD189733",
+   "kind": "star",
+   "name": "HD 189733",
+   "con": "Vul",
+   "ra": 300.18214,
+   "dec": 22.71085,
+   "mag": 7.648,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:planet"
+   ],
+   "simbad": "HD 189733"
+  },
+  {
+   "id": "HD192163",
+   "kind": "star",
+   "name": "WR 136",
+   "con": "Cyg",
+   "ra": 303.02726,
+   "dec": 38.35494,
+   "mag": 7.5,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:hot"
+   ],
+   "simbad": "HD 192163"
+  },
+  {
+   "id": "HD192443",
+   "kind": "star",
+   "name": "RS Cygni",
+   "con": "Cyg",
+   "ra": 303.34859,
+   "dec": 38.72902,
+   "mag": 6.5,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:agb"
+   ],
+   "simbad": "V* RS Cyg"
+  },
+  {
+   "id": "HR7735",
+   "kind": "star",
+   "hr": 7735,
+   "name": "31 Cygni (ο¹ Cyg)",
+   "con": "Cyg",
+   "ra": 303.40792,
+   "dec": 46.74139,
+   "mag": 3.79,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:eclipsing"
+   ]
+  },
+  {
+   "id": "HR7763",
+   "kind": "star",
+   "hr": 7763,
+   "name": "P Cygni",
+   "con": "Cyg",
+   "ra": 304.44667,
+   "dec": 38.03306,
+   "mag": 4.81,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR7796",
+   "kind": "star",
+   "hr": 7796,
+   "name": "Sadr",
+   "con": "Cyg",
+   "ra": 305.55708,
+   "dec": 40.25667,
+   "mag": 2.2,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3",
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "STAR-Deneb",
+   "kind": "star",
+   "hr": 7924,
+   "name": "Deneb",
+   "con": "Cyg",
+   "ra": 310.35792,
+   "dec": 45.28028,
+   "mag": 1.25,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR7949",
+   "kind": "star",
+   "hr": 7949,
+   "name": "ε Cyg",
+   "con": "Cyg",
+   "ra": 311.55292,
+   "dec": 33.97028,
+   "mag": 2.46,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR7948",
+   "kind": "star",
+   "hr": 7948,
+   "name": "γ Delphini",
+   "con": "Del",
+   "ra": 311.66458,
+   "dec": 16.12417,
+   "mag": 4.27,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "DS-61Cyg",
+   "kind": "star",
+   "hr": 8085,
+   "name": "61 Cygni",
+   "con": "Cyg",
+   "ra": 316.725,
+   "dec": 38.75,
+   "mag": 5.2,
+   "existing": true,
+   "batch": "summer-north",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR8262",
+   "kind": "star",
+   "hr": 8262,
+   "name": "W Cygni",
+   "con": "Cyg",
+   "ra": 324.01,
+   "dec": 45.37472,
+   "mag": 5.53,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "HR8297",
+   "kind": "star",
+   "hr": 8297,
+   "name": "V460 Cygni",
+   "con": "Cyg",
+   "ra": 325.50458,
+   "dec": 35.51028,
+   "mag": 6.07,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "HD206697",
+   "kind": "star",
+   "name": "SS Cygni",
+   "con": "Cyg",
+   "ra": 325.67835,
+   "dec": 43.58607,
+   "mag": 12.032,
+   "existing": false,
+   "batch": "summer-north",
+   "selection": [
+    "handpicked:volatile"
+   ],
+   "simbad": "V* SS Cyg"
+  },
+  {
+   "id": "NGC5822",
+   "kind": "dso",
+   "name": "NGC 5822",
+   "con": "Lup",
+   "ra": 226.3,
+   "dec": -54.35,
+   "mag": 6.5,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M5",
+   "kind": "dso",
+   "name": "M5",
+   "con": "Ser",
+   "ra": 229.65,
+   "dec": 2.08333,
+   "mag": 5.6,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "NGC6067",
+   "kind": "dso",
+   "name": "NGC 6067",
+   "con": "Nor",
+   "ra": 243.3,
+   "dec": -54.21667,
+   "mag": 5.6,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M80",
+   "kind": "dso",
+   "name": "M80",
+   "con": "Sco",
+   "ra": 244.25,
+   "dec": -22.98333,
+   "mag": 7.3,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "NGC6087",
+   "kind": "dso",
+   "name": "NGC 6087",
+   "con": "Nor",
+   "ra": 244.725,
+   "dec": -57.9,
+   "mag": 5.4,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M4",
+   "kind": "dso",
+   "name": "M4",
+   "con": "Sco",
+   "ra": 245.9,
+   "dec": -26.53333,
+   "mag": 5.6,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "NGC6124",
+   "kind": "dso",
+   "name": "NGC 6124",
+   "con": "Sco",
+   "ra": 246.4,
+   "dec": -40.66667,
+   "mag": 5.8,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC6134",
+   "kind": "dso",
+   "name": "NGC 6134",
+   "con": "Nor",
+   "ra": 246.925,
+   "dec": -49.15,
+   "mag": 7.2,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC6167",
+   "kind": "dso",
+   "name": "NGC 6167",
+   "con": "Nor",
+   "ra": 248.6,
+   "dec": -49.6,
+   "mag": 6.7,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M12",
+   "kind": "dso",
+   "name": "M12",
+   "con": "Oph",
+   "ra": 251.8,
+   "dec": -1.95,
+   "mag": 6.7,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "NGC6208",
+   "kind": "dso",
+   "name": "NGC 6208",
+   "con": "Ara",
+   "ra": 252.375,
+   "dec": -53.81667,
+   "mag": 7.2,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC6231",
+   "kind": "dso",
+   "name": "NGC 6231",
+   "con": "Sco",
+   "ra": 253.5,
+   "dec": -41.8,
+   "mag": 2.6,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M10",
+   "kind": "dso",
+   "name": "M10",
+   "con": "Oph",
+   "ra": 254.275,
+   "dec": -4.1,
+   "mag": 6.6,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M62",
+   "kind": "dso",
+   "name": "M62",
+   "con": "Oph",
+   "ra": 255.3,
+   "dec": -30.11667,
+   "mag": 6.5,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M19",
+   "kind": "dso",
+   "name": "M19",
+   "con": "Oph",
+   "ra": 255.65,
+   "dec": -26.26667,
+   "mag": 6.8,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M9",
+   "kind": "dso",
+   "name": "M9",
+   "con": "Oph",
+   "ra": 259.8,
+   "dec": -18.51667,
+   "mag": 7.7,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "IC4651",
+   "kind": "dso",
+   "name": "IC 4651",
+   "con": "Ara",
+   "ra": 261.175,
+   "dec": -49.95,
+   "mag": 6.9,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "DN-Pipe",
+   "kind": "dso",
+   "name": "Pipe Nebula (B59/B78)",
+   "con": "Oph",
+   "ra": 262.5,
+   "dec": -25,
+   "mag": null,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "new"
+   ],
+   "simbad": "NAME the Pipe Nebula"
+  },
+  {
+   "id": "M14",
+   "kind": "dso",
+   "name": "M14",
+   "con": "Oph",
+   "ra": 264.4,
+   "dec": -3.25,
+   "mag": 7.6,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M6",
+   "kind": "dso",
+   "name": "Butterfly Cluster",
+   "con": "Sco",
+   "ra": 265.025,
+   "dec": -32.21667,
+   "mag": 4.2,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "NGC6397",
+   "kind": "dso",
+   "name": "NGC 6397",
+   "con": "Ara",
+   "ra": 265.175,
+   "dec": -53.66667,
+   "mag": 5.7,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "GC"
+  },
+  {
+   "id": "M7",
+   "kind": "dso",
+   "name": "Ptolemy's Cluster",
+   "con": "Sco",
+   "ra": 268.475,
+   "dec": -34.81667,
+   "mag": 3.3,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "M23",
+   "kind": "dso",
+   "name": "M23",
+   "con": "Sgr",
+   "ra": 269.2,
+   "dec": -19.01667,
+   "mag": 6.9,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "NGC6520",
+   "kind": "dso",
+   "name": "NGC 6520",
+   "con": "Sgr",
+   "ra": 270.85,
+   "dec": -27.9,
+   "mag": 7.6,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M8",
+   "kind": "dso",
+   "name": "Lagoon Nebula",
+   "con": "Sgr",
+   "ra": 270.95,
+   "dec": -24.38333,
+   "mag": 6.0,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-DN"
+  },
+  {
+   "id": "M21",
+   "kind": "dso",
+   "name": "M21",
+   "con": "Sgr",
+   "ra": 271.15,
+   "dec": -22.5,
+   "mag": 6.5,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "NGC6530",
+   "kind": "dso",
+   "name": "NGC 6530",
+   "con": "Sgr",
+   "ra": 271.2,
+   "dec": -24.33333,
+   "mag": 4.6,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC6541",
+   "kind": "dso",
+   "name": "NGC 6541",
+   "con": "CrA",
+   "ra": 272.0,
+   "dec": -43.7,
+   "mag": 6.1,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "GC"
+  },
+  {
+   "id": "M24",
+   "kind": "dso",
+   "name": "Sagittarius Star Cloud",
+   "con": "Sgr",
+   "ra": 274.225,
+   "dec": -18.5,
+   "mag": 4.6,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-MW"
+  },
+  {
+   "id": "M16",
+   "kind": "dso",
+   "name": "Eagle Nebula",
+   "con": "Ser",
+   "ra": 274.7,
+   "dec": -13.78333,
+   "mag": 6.4,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "M18",
+   "kind": "dso",
+   "name": "M18",
+   "con": "Sgr",
+   "ra": 274.975,
+   "dec": -17.13333,
+   "mag": 7.5,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "M17",
+   "kind": "dso",
+   "name": "Omega Nebula",
+   "con": "Sgr",
+   "ra": 275.2,
+   "dec": -16.18333,
+   "mag": 7.0,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-DN"
+  },
+  {
+   "id": "M28",
+   "kind": "dso",
+   "name": "M28",
+   "con": "Sgr",
+   "ra": 276.125,
+   "dec": -24.86667,
+   "mag": 6.8,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M25",
+   "kind": "dso",
+   "name": "M25",
+   "con": "Sgr",
+   "ra": 277.9,
+   "dec": -19.25,
+   "mag": 6.5,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "M22",
+   "kind": "dso",
+   "name": "Sagittarius Cluster",
+   "con": "Sgr",
+   "ra": 279.1,
+   "dec": -23.9,
+   "mag": 5.1,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "IC4756",
+   "kind": "dso",
+   "name": "IC 4756",
+   "con": "Ser",
+   "ra": 279.75,
+   "dec": 5.45,
+   "mag": 4.6,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M26",
+   "kind": "dso",
+   "name": "M26",
+   "con": "Sct",
+   "ra": 281.3,
+   "dec": -9.4,
+   "mag": 8.0,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "M11",
+   "kind": "dso",
+   "name": "Wild Duck Cluster",
+   "con": "Sct",
+   "ra": 282.775,
+   "dec": -6.26667,
+   "mag": 6.3,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "NGC6716",
+   "kind": "dso",
+   "name": "NGC 6716",
+   "con": "Sgr",
+   "ra": 283.65,
+   "dec": -19.88333,
+   "mag": 7.5,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M54",
+   "kind": "dso",
+   "name": "M54",
+   "con": "Sgr",
+   "ra": 283.775,
+   "dec": -30.48333,
+   "mag": 7.6,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M55",
+   "kind": "dso",
+   "name": "M55",
+   "con": "Sgr",
+   "ra": 295.0,
+   "dec": -30.96667,
+   "mag": 6.3,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "M75",
+   "kind": "dso",
+   "name": "M75",
+   "con": "Sgr",
+   "ra": 301.525,
+   "dec": -21.91667,
+   "mag": 8.5,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "HR5469",
+   "kind": "star",
+   "hr": 5469,
+   "name": "α Lup",
+   "con": "Lup",
+   "ra": 220.4825,
+   "dec": -47.38833,
+   "mag": 2.3,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "DS-AlpLib",
+   "kind": "star",
+   "hr": 5531,
+   "name": "α Librae",
+   "con": "Lib",
+   "ra": 222.725,
+   "dec": -16.03333,
+   "mag": 2.7,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR5571",
+   "kind": "star",
+   "hr": 5571,
+   "name": "β Lup",
+   "con": "Lup",
+   "ra": 224.63292,
+   "dec": -43.13389,
+   "mag": 2.68,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5586",
+   "kind": "star",
+   "hr": 5586,
+   "name": "δ Librae",
+   "con": "Lib",
+   "ra": 225.24333,
+   "dec": -8.51889,
+   "mag": 4.92,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "handpicked:eclipsing"
+   ]
+  },
+  {
+   "id": "HR5685",
+   "kind": "star",
+   "hr": 5685,
+   "name": "Zubeneschamali",
+   "con": "Lib",
+   "ra": 229.25167,
+   "dec": -9.38306,
+   "mag": 2.61,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR5776",
+   "kind": "star",
+   "hr": 5776,
+   "name": "γ Lup",
+   "con": "Lup",
+   "ra": 233.78542,
+   "dec": -41.16694,
+   "mag": 2.78,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HD140283",
+   "kind": "star",
+   "name": "HD 140283 (Methuselah star)",
+   "con": "Lib",
+   "ra": 235.7629,
+   "dec": -10.9335,
+   "mag": 7.212,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "handpicked:halo"
+   ],
+   "simbad": "HD 140283"
+  },
+  {
+   "id": "HR5854",
+   "kind": "star",
+   "hr": 5854,
+   "name": "Unukalhai",
+   "con": "Ser",
+   "ra": 236.06708,
+   "dec": 6.42556,
+   "mag": 2.65,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3",
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "HR5944",
+   "kind": "star",
+   "hr": 5944,
+   "name": "π Scorpii",
+   "con": "Sco",
+   "ra": 239.71292,
+   "dec": -26.11417,
+   "mag": 2.89,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3",
+    "handpicked:pivot"
+   ]
+  },
+  {
+   "id": "HR5953",
+   "kind": "star",
+   "hr": 5953,
+   "name": "Dschubba",
+   "con": "Sco",
+   "ra": 240.08333,
+   "dec": -22.62167,
+   "mag": 2.32,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "HR5984",
+   "kind": "star",
+   "hr": 5984,
+   "name": "Acrab (β Sco)",
+   "con": "Sco",
+   "ra": 241.35917,
+   "dec": -19.80556,
+   "mag": 2.62,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3",
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HR5993",
+   "kind": "star",
+   "hr": 5993,
+   "name": "ω¹ Scorpii",
+   "con": "Sco",
+   "ra": 241.70167,
+   "dec": -20.66917,
+   "mag": 3.96,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HR6027",
+   "kind": "star",
+   "hr": 6027,
+   "name": "Jabbah (ν Sco)",
+   "con": "Sco",
+   "ra": 242.99875,
+   "dec": -19.46056,
+   "mag": 4.01,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HR6056",
+   "kind": "star",
+   "hr": 6056,
+   "name": "Yed Prior",
+   "con": "Oph",
+   "ra": 243.58625,
+   "dec": -3.69444,
+   "mag": 2.74,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6060",
+   "kind": "star",
+   "hr": 6060,
+   "name": "18 Scorpii",
+   "con": "Sco",
+   "ra": 243.90542,
+   "dec": -8.36944,
+   "mag": 5.5,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "handpicked:twin"
+   ]
+  },
+  {
+   "id": "HR6084",
+   "kind": "star",
+   "hr": 6084,
+   "name": "Alniyat (σ Sco)",
+   "con": "Sco",
+   "ra": 245.29708,
+   "dec": -25.59278,
+   "mag": 2.89,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3",
+    "handpicked:pivot"
+   ]
+  },
+  {
+   "id": "STAR-Antares",
+   "kind": "star",
+   "hr": 6134,
+   "name": "Antares",
+   "con": "Sco",
+   "ra": 247.35167,
+   "dec": -26.43194,
+   "mag": 0.96,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR6165",
+   "kind": "star",
+   "hr": 6165,
+   "name": "τ Scorpii",
+   "con": "Sco",
+   "ra": 248.97083,
+   "dec": -28.21611,
+   "mag": 2.82,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6175",
+   "kind": "star",
+   "hr": 6175,
+   "name": "ζ Ophiuchi",
+   "con": "Oph",
+   "ra": 249.28958,
+   "dec": -10.56722,
+   "mag": 2.56,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3",
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR6241",
+   "kind": "star",
+   "hr": 6241,
+   "name": "ε Sco",
+   "con": "Sco",
+   "ra": 252.54083,
+   "dec": -34.29333,
+   "mag": 2.29,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6247",
+   "kind": "star",
+   "hr": 6247,
+   "name": "μ¹ Scorpii",
+   "con": "Sco",
+   "ra": 252.9675,
+   "dec": -38.0475,
+   "mag": 3.08,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HR6262",
+   "kind": "star",
+   "hr": 6262,
+   "name": "ζ¹ Scorpii",
+   "con": "Sco",
+   "ra": 253.49875,
+   "dec": -42.36222,
+   "mag": 4.73,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR6378",
+   "kind": "star",
+   "hr": 6378,
+   "name": "Sabik",
+   "con": "Oph",
+   "ra": 257.59458,
+   "dec": -15.72472,
+   "mag": 2.43,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6401",
+   "kind": "star",
+   "hr": 6401,
+   "name": "36 Ophiuchi",
+   "con": "Oph",
+   "ra": 258.8375,
+   "dec": -26.60278,
+   "mag": 5.11,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "handpicked:nearby"
+   ]
+  },
+  {
+   "id": "HR6461",
+   "kind": "star",
+   "hr": 6461,
+   "name": "β Ara",
+   "con": "Ara",
+   "ra": 261.325,
+   "dec": -55.53,
+   "mag": 2.85,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6508",
+   "kind": "star",
+   "hr": 6508,
+   "name": "Lesath",
+   "con": "Sco",
+   "ra": 262.69083,
+   "dec": -37.29583,
+   "mag": 2.69,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6510",
+   "kind": "star",
+   "hr": 6510,
+   "name": "α Ara",
+   "con": "Ara",
+   "ra": 262.96042,
+   "dec": -49.87611,
+   "mag": 2.95,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6527",
+   "kind": "star",
+   "hr": 6527,
+   "name": "Shaula",
+   "con": "Sco",
+   "ra": 263.40208,
+   "dec": -37.10389,
+   "mag": 1.63,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6553",
+   "kind": "star",
+   "hr": 6553,
+   "name": "Sargas",
+   "con": "Sco",
+   "ra": 264.33,
+   "dec": -42.99778,
+   "mag": 1.87,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6580",
+   "kind": "star",
+   "hr": 6580,
+   "name": "Girtab",
+   "con": "Sco",
+   "ra": 265.62208,
+   "dec": -39.03,
+   "mag": 2.41,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6736",
+   "kind": "star",
+   "hr": 6736,
+   "name": "9 Sagittarii",
+   "con": "Sgr",
+   "ra": 270.96833,
+   "dec": -24.36056,
+   "mag": 5.97,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR6746",
+   "kind": "star",
+   "hr": 6746,
+   "name": "Alnasl",
+   "con": "Sgr",
+   "ra": 271.45208,
+   "dec": -30.42417,
+   "mag": 2.99,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6859",
+   "kind": "star",
+   "hr": 6859,
+   "name": "Kaus Media",
+   "con": "Sgr",
+   "ra": 275.24875,
+   "dec": -29.82806,
+   "mag": 2.7,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6879",
+   "kind": "star",
+   "hr": 6879,
+   "name": "Kaus Australis",
+   "con": "Sgr",
+   "ra": 276.04292,
+   "dec": -34.38472,
+   "mag": 1.85,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR6913",
+   "kind": "star",
+   "hr": 6913,
+   "name": "Kaus Borealis",
+   "con": "Sgr",
+   "ra": 276.9925,
+   "dec": -25.42167,
+   "mag": 2.81,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR7020",
+   "kind": "star",
+   "hr": 7020,
+   "name": "δ Scuti",
+   "con": "Sct",
+   "ra": 280.56833,
+   "dec": -9.0525,
+   "mag": 4.72,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "handpicked:pulsator"
+   ]
+  },
+  {
+   "id": "HR7066",
+   "kind": "star",
+   "hr": 7066,
+   "name": "R Scuti",
+   "con": "Sct",
+   "ra": 281.87083,
+   "dec": -5.705,
+   "mag": 5.2,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "handpicked:pulsator"
+   ]
+  },
+  {
+   "id": "HR7121",
+   "kind": "star",
+   "hr": 7121,
+   "name": "Nunki",
+   "con": "Sgr",
+   "ra": 283.81625,
+   "dec": -26.29667,
+   "mag": 2.02,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR7194",
+   "kind": "star",
+   "hr": 7194,
+   "name": "Ascella",
+   "con": "Sgr",
+   "ra": 285.65292,
+   "dec": -29.88028,
+   "mag": 2.6,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR7264",
+   "kind": "star",
+   "hr": 7264,
+   "name": "Albaldah",
+   "con": "Sgr",
+   "ra": 287.44083,
+   "dec": -21.02361,
+   "mag": 2.89,
+   "existing": false,
+   "batch": "summer-south",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "DS-OmSgr",
+   "kind": "star",
+   "hr": 7597,
+   "name": "ω Sagittarii",
+   "con": "Sgr",
+   "ra": 298.95,
+   "dec": -26.3,
+   "mag": 4.1,
+   "existing": true,
+   "batch": "summer-south",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "Stock23",
+   "kind": "dso",
+   "name": "Stock 23",
+   "con": "Cam",
+   "ra": 49.0,
+   "dec": 60.03333,
+   "mag": 6.2,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M45",
+   "kind": "dso",
+   "name": "Pleiades",
+   "con": "Tau",
+   "ra": 56.75,
+   "dec": 24.11667,
+   "mag": 1.6,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "AST-KemblesCascade",
+   "kind": "dso",
+   "name": "Kemble's Cascade",
+   "con": "Cam",
+   "ra": 60.0,
+   "dec": 62.76667,
+   "mag": 5.0,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "AST"
+  },
+  {
+   "id": "AST-DavisDog",
+   "kind": "dso",
+   "name": "Davis' Dog",
+   "con": "Tau",
+   "ra": 62.5,
+   "dec": 18.0,
+   "mag": 4.5,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "AST"
+  },
+  {
+   "id": "AST-Hyades",
+   "kind": "dso",
+   "name": "Hyades",
+   "con": "Tau",
+   "ra": 66.75,
+   "dec": 15.86667,
+   "mag": 0.5,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "AST"
+  },
+  {
+   "id": "NGC1647",
+   "kind": "dso",
+   "name": "NGC 1647",
+   "con": "Tau",
+   "ra": 71.5,
+   "dec": 19.06667,
+   "mag": 6.4,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC1662",
+   "kind": "dso",
+   "name": "Klingon Battlecruiser",
+   "con": "Ori",
+   "ra": 72.125,
+   "dec": 10.93333,
+   "mag": 6.4,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC1746",
+   "kind": "dso",
+   "name": "NGC 1746",
+   "con": "Tau",
+   "ra": 75.9,
+   "dec": 23.81667,
+   "mag": 6.1,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC1807",
+   "kind": "dso",
+   "name": "NGC 1807",
+   "con": "Tau",
+   "ra": 77.675,
+   "dec": 16.53333,
+   "mag": 7.0,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC1817",
+   "kind": "dso",
+   "name": "NGC 1817",
+   "con": "Tau",
+   "ra": 78.025,
+   "dec": 16.7,
+   "mag": 7.7,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "AST-FlyingMinnow",
+   "kind": "dso",
+   "name": "Leaping Minnow",
+   "con": "Aur",
+   "ra": 79.54583,
+   "dec": 33.36861,
+   "mag": 5.0,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "AST"
+  },
+  {
+   "id": "NGC1893",
+   "kind": "dso",
+   "name": "NGC 1893",
+   "con": "Aur",
+   "ra": 80.675,
+   "dec": 33.4,
+   "mag": 7.5,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M79",
+   "kind": "dso",
+   "name": "M79",
+   "con": "Lep",
+   "ra": 81.125,
+   "dec": -24.55,
+   "mag": 7.7,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-GC"
+  },
+  {
+   "id": "NGC1907",
+   "kind": "dso",
+   "name": "NGC 1907",
+   "con": "Aur",
+   "ra": 82.0,
+   "dec": 35.31667,
+   "mag": 8.2,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M38",
+   "kind": "dso",
+   "name": "M38",
+   "con": "Aur",
+   "ra": 82.175,
+   "dec": 35.83333,
+   "mag": 7.4,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "M1",
+   "kind": "dso",
+   "name": "Crab Nebula",
+   "con": "Tau",
+   "ra": 83.625,
+   "dec": 22.01667,
+   "mag": 8.4,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "M-SN"
+  },
+  {
+   "id": "Cr69",
+   "kind": "dso",
+   "name": "λ Orionis Cluster (Collinder 69)",
+   "con": "Ori",
+   "ra": 83.79208,
+   "dec": 9.81306,
+   "mag": 2.8,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "new"
+   ],
+   "simbad": "Cl Collinder 69"
+  },
+  {
+   "id": "NGC1981",
+   "kind": "dso",
+   "name": "NGC 1981",
+   "con": "Ori",
+   "ra": 83.8,
+   "dec": -4.43333,
+   "mag": 4.6,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC1977",
+   "kind": "dso",
+   "name": "Running Man Nebula",
+   "con": "Ori",
+   "ra": 83.815,
+   "dec": -4.81889,
+   "mag": null,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "new"
+   ],
+   "simbad": "NGC 1977"
+  },
+  {
+   "id": "M42",
+   "kind": "dso",
+   "name": "Great Nebula in Orion",
+   "con": "Ori",
+   "ra": 83.85,
+   "dec": -5.45,
+   "mag": 4.0,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-DN"
+  },
+  {
+   "id": "AST-OrionBelt",
+   "kind": "dso",
+   "name": "Orion’s Belt",
+   "con": "Ori",
+   "ra": 83.88333,
+   "dec": -1.06861,
+   "mag": 0.4,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "AST"
+  },
+  {
+   "id": "M43",
+   "kind": "dso",
+   "name": "De Mairan's Nebula",
+   "con": "Ori",
+   "ra": 83.9,
+   "dec": -5.26667,
+   "mag": 9.0,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "M-DN"
+  },
+  {
+   "id": "M36",
+   "kind": "dso",
+   "name": "M36",
+   "con": "Aur",
+   "ra": 84.025,
+   "dec": 34.13333,
+   "mag": 6.3,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "M78",
+   "kind": "dso",
+   "name": "M78",
+   "con": "Ori",
+   "ra": 86.675,
+   "dec": 0.05,
+   "mag": 8.3,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-DN"
+  },
+  {
+   "id": "M37",
+   "kind": "dso",
+   "name": "M37",
+   "con": "Aur",
+   "ra": 88.1,
+   "dec": 32.55,
+   "mag": 6.2,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "NGC2158",
+   "kind": "dso",
+   "name": "NGC 2158",
+   "con": "Gem",
+   "ra": 91.875,
+   "dec": 24.1,
+   "mag": 8.7,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2169",
+   "kind": "dso",
+   "name": "Number 37 Cluster",
+   "con": "Ori",
+   "ra": 92.1,
+   "dec": 13.95,
+   "mag": 5.9,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M35",
+   "kind": "dso",
+   "name": "M35",
+   "con": "Gem",
+   "ra": 92.225,
+   "dec": 24.33333,
+   "mag": 5.3,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "NGC2232",
+   "kind": "dso",
+   "name": "NGC 2232",
+   "con": "Mon",
+   "ra": 96.9,
+   "dec": -4.75,
+   "mag": 3.9,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2237",
+   "kind": "dso",
+   "name": "Rosette Nebula",
+   "con": "Mon",
+   "ra": 98.075,
+   "dec": 5.05,
+   "mag": 9.0,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "EN"
+  },
+  {
+   "id": "NGC2244",
+   "kind": "dso",
+   "name": "Rosette Cluster",
+   "con": "Mon",
+   "ra": 98.1,
+   "dec": 4.86667,
+   "mag": 4.8,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2251",
+   "kind": "dso",
+   "name": "NGC 2251",
+   "con": "Mon",
+   "ra": 98.675,
+   "dec": 8.36667,
+   "mag": 7.3,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2264",
+   "kind": "dso",
+   "name": "Christmas Tree Cluster",
+   "con": "Mon",
+   "ra": 100.275,
+   "dec": 9.9,
+   "mag": 3.9,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M41",
+   "kind": "dso",
+   "name": "M41",
+   "con": "CMa",
+   "ra": 101.75,
+   "dec": -20.73333,
+   "mag": 4.6,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "NGC2281",
+   "kind": "dso",
+   "name": "NGC 2281",
+   "con": "Aur",
+   "ra": 102.325,
+   "dec": 41.06667,
+   "mag": 5.4,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2301",
+   "kind": "dso",
+   "name": "NGC 2301",
+   "con": "Mon",
+   "ra": 102.95,
+   "dec": 0.46667,
+   "mag": 6.0,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "M50",
+   "kind": "dso",
+   "name": "M50",
+   "con": "Mon",
+   "ra": 105.8,
+   "dec": -8.33333,
+   "mag": 6.3,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:easy"
+   ],
+   "cat": "M-OC"
+  },
+  {
+   "id": "NGC2343",
+   "kind": "dso",
+   "name": "NGC 2343",
+   "con": "Mon",
+   "ra": 107.075,
+   "dec": -10.65,
+   "mag": 6.7,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2360",
+   "kind": "dso",
+   "name": "Caroline's Cluster",
+   "con": "CMa",
+   "ra": 109.45,
+   "dec": -15.61667,
+   "mag": 7.2,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:dark"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2362",
+   "kind": "dso",
+   "name": "τ CMa Cluster",
+   "con": "CMa",
+   "ra": 109.7,
+   "dec": -24.95,
+   "mag": 4.1,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "promoted"
+   ],
+   "cat": "OC"
+  },
+  {
+   "id": "NGC2403",
+   "kind": "dso",
+   "name": "NGC 2403",
+   "con": "Cam",
+   "ra": 114.225,
+   "dec": 65.6,
+   "mag": 8.4,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "guide:challenge"
+   ],
+   "cat": "GAL"
+  },
+  {
+   "id": "HR1084",
+   "kind": "star",
+   "hr": 1084,
+   "name": "ε Eridani",
+   "con": "Eri",
+   "ra": 53.2325,
+   "dec": -9.45833,
+   "mag": 3.73,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:nearby"
+   ]
+  },
+  {
+   "id": "HR1142",
+   "kind": "star",
+   "hr": 1142,
+   "name": "Electra",
+   "con": "Tau",
+   "ra": 56.21875,
+   "dec": 24.11333,
+   "mag": 3.7,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR1145",
+   "kind": "star",
+   "hr": 1145,
+   "name": "Taygeta",
+   "con": "Tau",
+   "ra": 56.30208,
+   "dec": 24.46722,
+   "mag": 4.3,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR1149",
+   "kind": "star",
+   "hr": 1149,
+   "name": "Maia",
+   "con": "Tau",
+   "ra": 56.45667,
+   "dec": 24.36778,
+   "mag": 3.87,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR1156",
+   "kind": "star",
+   "hr": 1156,
+   "name": "Merope",
+   "con": "Tau",
+   "ra": 56.58167,
+   "dec": 23.94833,
+   "mag": 4.18,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR1165",
+   "kind": "star",
+   "hr": 1165,
+   "name": "Alcyone",
+   "con": "Tau",
+   "ra": 56.87125,
+   "dec": 24.105,
+   "mag": 2.87,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR1178",
+   "kind": "star",
+   "hr": 1178,
+   "name": "Atlas",
+   "con": "Tau",
+   "ra": 57.29042,
+   "dec": 24.05333,
+   "mag": 3.63,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR1180",
+   "kind": "star",
+   "hr": 1180,
+   "name": "Pleione",
+   "con": "Tau",
+   "ra": 57.29667,
+   "dec": 24.13667,
+   "mag": 5.09,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR1231",
+   "kind": "star",
+   "hr": 1231,
+   "name": "Zaurak",
+   "con": "Eri",
+   "ra": 59.5075,
+   "dec": -13.50861,
+   "mag": 2.95,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR1239",
+   "kind": "star",
+   "hr": 1239,
+   "name": "λ Tauri",
+   "con": "Tau",
+   "ra": 60.17,
+   "dec": 12.49028,
+   "mag": 3.47,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:eclipsing"
+   ]
+  },
+  {
+   "id": "HR1325",
+   "kind": "star",
+   "hr": 1325,
+   "name": "40 Eridani (ο² Eri)",
+   "con": "Eri",
+   "ra": 63.81792,
+   "dec": -7.65278,
+   "mag": 4.43,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:nearby"
+   ]
+  },
+  {
+   "id": "HR1346",
+   "kind": "star",
+   "hr": 1346,
+   "name": "γ Tauri",
+   "con": "Tau",
+   "ra": 64.94833,
+   "dec": 15.6275,
+   "mag": 3.65,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "HD284419",
+   "kind": "star",
+   "name": "T Tauri",
+   "con": "Tau",
+   "ra": 65.49763,
+   "dec": 19.53512,
+   "mag": 10.12,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:volatile"
+   ],
+   "simbad": "V* T Tau"
+  },
+  {
+   "id": "HR1373",
+   "kind": "star",
+   "hr": 1373,
+   "name": "δ¹ Tauri",
+   "con": "Tau",
+   "ra": 65.73375,
+   "dec": 17.5425,
+   "mag": 3.76,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "HR1387",
+   "kind": "star",
+   "hr": 1387,
+   "name": "κ Tauri",
+   "con": "Tau",
+   "ra": 66.34208,
+   "dec": 22.29389,
+   "mag": 4.22,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HR1409",
+   "kind": "star",
+   "hr": 1409,
+   "name": "Ain (ε Tauri)",
+   "con": "Tau",
+   "ra": 67.15417,
+   "dec": 19.18028,
+   "mag": 3.53,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:giant"
+   ]
+  },
+  {
+   "id": "DS-ThetaTau",
+   "kind": "star",
+   "hr": 1412,
+   "name": "θ Tauri",
+   "con": "Tau",
+   "ra": 67.175,
+   "dec": 15.86667,
+   "mag": 3.4,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "STAR-Aldebaran",
+   "kind": "star",
+   "hr": 1457,
+   "name": "Aldebaran",
+   "con": "Tau",
+   "ra": 68.98,
+   "dec": 16.50917,
+   "mag": 0.85,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR1479",
+   "kind": "star",
+   "hr": 1479,
+   "name": "σ Tauri",
+   "con": "Tau",
+   "ra": 69.81875,
+   "dec": 15.91806,
+   "mag": 4.69,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:double"
+   ]
+  },
+  {
+   "id": "HD31293",
+   "kind": "star",
+   "name": "AB Aurigae",
+   "con": "Aur",
+   "ra": 73.94102,
+   "dec": 30.55119,
+   "mag": 7.05,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:volatile"
+   ],
+   "simbad": "V* AB Aur"
+  },
+  {
+   "id": "HR1577",
+   "kind": "star",
+   "hr": 1577,
+   "name": "Kabdhilinan",
+   "con": "Aur",
+   "ra": 74.24833,
+   "dec": 33.16611,
+   "mag": 2.69,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR1607",
+   "kind": "star",
+   "hr": 1607,
+   "name": "Hind's Crimson Star (R Lep)",
+   "con": "Lep",
+   "ra": 74.90208,
+   "dec": -14.80583,
+   "mag": 7.71,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "HR1605",
+   "kind": "star",
+   "hr": 1605,
+   "name": "ε Aurigae",
+   "con": "Aur",
+   "ra": 75.49208,
+   "dec": 43.82333,
+   "mag": 2.99,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR1612",
+   "kind": "star",
+   "hr": 1612,
+   "name": "ζ Aurigae",
+   "con": "Aur",
+   "ra": 75.61958,
+   "dec": 41.07583,
+   "mag": 3.75,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:eclipsing"
+   ]
+  },
+  {
+   "id": "HR1648",
+   "kind": "star",
+   "hr": 1648,
+   "name": "W Orionis",
+   "con": "Ori",
+   "ra": 76.34875,
+   "dec": 1.1775,
+   "mag": 6.17,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "HR1666",
+   "kind": "star",
+   "hr": 1666,
+   "name": "Cursa",
+   "con": "Eri",
+   "ra": 76.9625,
+   "dec": -5.08639,
+   "mag": 2.79,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR1713",
+   "kind": "star",
+   "hr": 1713,
+   "name": "Rigel",
+   "con": "Ori",
+   "ra": 78.63458,
+   "dec": -8.20167,
+   "mag": 0.12,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR1712",
+   "kind": "star",
+   "hr": 1712,
+   "name": "AE Aurigae",
+   "con": "Aur",
+   "ra": 79.07583,
+   "dec": 34.31194,
+   "mag": 5.96,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "STAR-Capella",
+   "kind": "star",
+   "hr": 1708,
+   "name": "Capella",
+   "con": "Aur",
+   "ra": 79.1725,
+   "dec": 45.99806,
+   "mag": 0.08,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR1790",
+   "kind": "star",
+   "hr": 1790,
+   "name": "Bellatrix",
+   "con": "Ori",
+   "ra": 81.28292,
+   "dec": 6.34972,
+   "mag": 1.64,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR1791",
+   "kind": "star",
+   "hr": 1791,
+   "name": "Elnath",
+   "con": "Tau",
+   "ra": 81.57292,
+   "dec": 28.6075,
+   "mag": 1.65,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR1829",
+   "kind": "star",
+   "hr": 1829,
+   "name": "Nihal",
+   "con": "Lep",
+   "ra": 82.06125,
+   "dec": -20.75944,
+   "mag": 2.84,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR1852",
+   "kind": "star",
+   "hr": 1852,
+   "name": "Mintaka",
+   "con": "Ori",
+   "ra": 83.00167,
+   "dec": -0.29917,
+   "mag": 2.23,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR1865",
+   "kind": "star",
+   "hr": 1865,
+   "name": "Arneb",
+   "con": "Lep",
+   "ra": 83.1825,
+   "dec": -17.82222,
+   "mag": 2.58,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR1879",
+   "kind": "star",
+   "hr": 1879,
+   "name": "Meissa",
+   "con": "Ori",
+   "ra": 83.78458,
+   "dec": 9.93417,
+   "mag": 3.54,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR1895",
+   "kind": "star",
+   "hr": 1895,
+   "name": "θ¹ Orionis C",
+   "con": "Ori",
+   "ra": 83.81875,
+   "dec": -5.38972,
+   "mag": 5.13,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR1897",
+   "kind": "star",
+   "hr": 1897,
+   "name": "θ² Orionis",
+   "con": "Ori",
+   "ra": 83.84542,
+   "dec": -5.41611,
+   "mag": 5.08,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR1899",
+   "kind": "star",
+   "hr": 1899,
+   "name": "ι Orionis",
+   "con": "Ori",
+   "ra": 83.85833,
+   "dec": -5.91,
+   "mag": 2.77,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HR1903",
+   "kind": "star",
+   "hr": 1903,
+   "name": "Alnilam",
+   "con": "Ori",
+   "ra": 84.05333,
+   "dec": -1.20194,
+   "mag": 1.7,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR1910",
+   "kind": "star",
+   "hr": 1910,
+   "name": "ζ Tauri",
+   "con": "Tau",
+   "ra": 84.41125,
+   "dec": 21.1425,
+   "mag": 3.0,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "HR1931",
+   "kind": "star",
+   "hr": 1931,
+   "name": "σ Orionis",
+   "con": "Ori",
+   "ra": 84.68667,
+   "dec": -2.6,
+   "mag": 3.81,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR1948",
+   "kind": "star",
+   "hr": 1948,
+   "name": "Alnitak",
+   "con": "Ori",
+   "ra": 85.18958,
+   "dec": -1.94278,
+   "mag": 2.05,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "NAME-FUOrionis",
+   "kind": "star",
+   "name": "FU Orionis",
+   "con": "Ori",
+   "ra": 86.34319,
+   "dec": 9.07008,
+   "mag": 9.6,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:volatile"
+   ],
+   "simbad": "V* FU Ori"
+  },
+  {
+   "id": "HR2004",
+   "kind": "star",
+   "hr": 2004,
+   "name": "Saiph",
+   "con": "Ori",
+   "ra": 86.93917,
+   "dec": -9.66972,
+   "mag": 2.06,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "STAR-Betelgeuse",
+   "kind": "star",
+   "hr": 2061,
+   "name": "Betelgeuse",
+   "con": "Ori",
+   "ra": 88.79292,
+   "dec": 7.40694,
+   "mag": 0.5,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR2088",
+   "kind": "star",
+   "hr": 2088,
+   "name": "Menkalinan",
+   "con": "Aur",
+   "ra": 89.88208,
+   "dec": 44.9475,
+   "mag": 1.9,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR2095",
+   "kind": "star",
+   "hr": 2095,
+   "name": "Mahasim",
+   "con": "Aur",
+   "ra": 89.93042,
+   "dec": 37.2125,
+   "mag": 2.62,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR2294",
+   "kind": "star",
+   "hr": 2294,
+   "name": "Mirzam",
+   "con": "CMa",
+   "ra": 95.675,
+   "dec": -17.95583,
+   "mag": 1.98,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR2286",
+   "kind": "star",
+   "hr": 2286,
+   "name": "Tejat Posterior",
+   "con": "Gem",
+   "ra": 95.74,
+   "dec": 22.51361,
+   "mag": 2.88,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "DS-BetMon",
+   "kind": "star",
+   "hr": 2356,
+   "name": "β Monocerotis",
+   "con": "Mon",
+   "ra": 97.2,
+   "dec": -7.03333,
+   "mag": 4.6,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "DS-NuGem",
+   "kind": "star",
+   "hr": 2343,
+   "name": "ν Geminorum",
+   "con": "Gem",
+   "ra": 97.24083,
+   "dec": 20.21222,
+   "mag": 4.15,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR2405",
+   "kind": "star",
+   "hr": 2405,
+   "name": "UU Aurigae",
+   "con": "Aur",
+   "ra": 99.13708,
+   "dec": 38.44528,
+   "mag": 5.29,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:agb"
+   ]
+  },
+  {
+   "id": "HR2421",
+   "kind": "star",
+   "hr": 2421,
+   "name": "Alhena",
+   "con": "Gem",
+   "ra": 99.42792,
+   "dec": 16.39917,
+   "mag": 1.93,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "DS-15Mon",
+   "kind": "star",
+   "hr": 2456,
+   "name": "15 Monocerotis",
+   "con": "Mon",
+   "ra": 100.25,
+   "dec": 9.9,
+   "mag": 4.6,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "existing-catalog-star"
+   ]
+  },
+  {
+   "id": "HR2473",
+   "kind": "star",
+   "hr": 2473,
+   "name": "Mebsuta",
+   "con": "Gem",
+   "ra": 100.98292,
+   "dec": 25.13111,
+   "mag": 2.98,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "STAR-Sirius",
+   "kind": "star",
+   "hr": 2491,
+   "name": "Sirius",
+   "con": "CMa",
+   "ra": 101.28708,
+   "dec": -16.71611,
+   "mag": -1.46,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "HR2618",
+   "kind": "star",
+   "hr": 2618,
+   "name": "Adhara",
+   "con": "CMa",
+   "ra": 104.65625,
+   "dec": -28.97222,
+   "mag": 1.5,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR2650",
+   "kind": "star",
+   "hr": 2650,
+   "name": "Mekbuda (ζ Gem)",
+   "con": "Gem",
+   "ra": 106.02708,
+   "dec": 20.57028,
+   "mag": 3.79,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:pulsator"
+   ]
+  },
+  {
+   "id": "HR2693",
+   "kind": "star",
+   "hr": 2693,
+   "name": "Wezen",
+   "con": "CMa",
+   "ra": 107.09792,
+   "dec": -26.39333,
+   "mag": 1.84,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR2782",
+   "kind": "star",
+   "hr": 2782,
+   "name": "τ Canis Majoris",
+   "con": "CMa",
+   "ra": 109.67667,
+   "dec": -24.95417,
+   "mag": 4.4,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:hot"
+   ]
+  },
+  {
+   "id": "HD58061",
+   "kind": "star",
+   "name": "VY Canis Majoris",
+   "con": "CMa",
+   "ra": 110.74303,
+   "dec": -25.76755,
+   "mag": 8.691,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:supergiant"
+   ],
+   "simbad": "V* VY CMa"
+  },
+  {
+   "id": "HR2827",
+   "kind": "star",
+   "hr": 2827,
+   "name": "Aludra",
+   "con": "CMa",
+   "ra": 111.02375,
+   "dec": -29.30306,
+   "mag": 2.45,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "handpicked:supergiant"
+   ]
+  },
+  {
+   "id": "HR2845",
+   "kind": "star",
+   "hr": 2845,
+   "name": "Gomeisa",
+   "con": "CMi",
+   "ra": 111.7875,
+   "dec": 8.28944,
+   "mag": 2.9,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HD59693",
+   "kind": "star",
+   "name": "U Monocerotis",
+   "con": "Mon",
+   "ra": 112.6978,
+   "dec": -9.77688,
+   "mag": 5.82,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "handpicked:pulsator"
+   ],
+   "simbad": "V* U Mon"
+  },
+  {
+   "id": "HR2890",
+   "kind": "star",
+   "hr": 2890,
+   "name": "Castor B",
+   "con": "Gem",
+   "ra": 113.65,
+   "dec": 31.88861,
+   "mag": 2.88,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3"
+   ]
+  },
+  {
+   "id": "HR2891",
+   "kind": "star",
+   "hr": 2891,
+   "name": "Castor",
+   "con": "Gem",
+   "ra": 113.65,
+   "dec": 31.88833,
+   "mag": 1.98,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "STAR-Procyon",
+   "kind": "star",
+   "hr": 2943,
+   "name": "Procyon",
+   "con": "CMi",
+   "ra": 114.82542,
+   "dec": 5.225,
+   "mag": 0.38,
+   "existing": true,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "existing-catalog-star",
+    "handpicked:ms"
+   ]
+  },
+  {
+   "id": "HR2990",
+   "kind": "star",
+   "hr": 2990,
+   "name": "Pollux",
+   "con": "Gem",
+   "ra": 116.32875,
+   "dec": 28.02611,
+   "mag": 1.14,
+   "existing": false,
+   "batch": "winter",
+   "selection": [
+    "bsc-v3",
+    "handpicked:giant"
+   ]
+  }
+ ]
+}

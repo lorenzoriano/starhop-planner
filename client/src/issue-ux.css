@@ -224,24 +224,10 @@
   .lunar-timeline input { min-height: 44px; }
 }
 
-/* Night vision uses a red-only conversion and lower display luminance. */
-.night-vision-interface[data-night-vision="on"] {
-  filter: url(#starhop-pure-red-night-vision) brightness(.62);
-}
-.night-vision-definitions {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
-/* The filter covers both the app and portaled dialogs with red-only output. */
-.red-light #root {filter:none;}
-.red-light [role="dialog"],.red-light [data-radix-popper-content-wrapper] {filter:url(#starhop-pure-red-night-vision) brightness(.62);}
 .skip-link {position:fixed;top:4px;left:4px;transform:translateY(-150%);z-index:1000;background:#152b36;padding:12px;color:#d5e8de;}
 .skip-link:focus {transform:none;}
 .upcoming-nights-disclosure,.offline-asset-controls {padding:18px;margin-top:24px;}
@@ -271,6 +257,12 @@
 
 @media(max-width:760px) {
   .main-content p,.object-story,.setup-hint,.chart-accuracy-note,.planner-method p,.lunar-feature-detail>p {font-size:16px;line-height:1.65;}
+  /* Captions, hints, notes and disclaimers stay on the small scale (never larger than the 16px body text above). */
+  .observatory-shell .main-content :is(.planner-add-status,.planner-inline-hint,.planner-free-gaps p,.planner-night-timeline>p,.planner-preview-label,
+    .planner-row-copy small,.binocular-image-explanation,.binocular-method-note,.binocular-collection-note,.binocular-target-body>small,
+    .catalog-focus-note,.catalog-focus-hidden,.catalog-match-time,.catalog-own-chart,.catalog-result-count,.object-location,.selected-graph-zone,
+    .night-altitude-unavailable,.night-moon-explanation,.moonlight-at-time,.moonlight-target-brightness,.lunar-separation-note,.lunar-preview-note,
+    .lunar-feature-scale,.lunar-chart-context,.astro-note,.offline-asset-note,.offline-asset-count,.target-photo-credit p,.twilight-note) {font-size:13px !important;line-height:1.55;}
   .session-timebar {font-size:12px;gap:4px;padding:10px 12px;}
   .session-timebar small,.session-timebar .text-action,.session-timebar .context-edit {font-size:12px;}
   .session-timebar > div:first-child {width:100%;gap:8px;}
@@ -537,12 +529,9 @@
 @media(min-width:1151px){
  .sky-workspace .tonight-hero:has(.featured-object){grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
  .sky-workspace .tonight-hero>.sky-panel{position:sticky;top:108px;align-self:start}
- .sky-workspace .featured-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 18px}
- .sky-workspace .featured-body>*{grid-column:1/-1;min-width:0}
- .sky-workspace .featured-body>.selected-target-story{grid-column:1;grid-row:8}
- .sky-workspace .featured-body>.binocular-assessment{grid-column:2;grid-row:8/11}
- .sky-workspace .featured-body>.selected-moon-more{grid-column:1}
- .sky-workspace .featured-body>.featured-actions{grid-column:1/-1}
+ /* One column in source order: hard-coded grid rows pushed "About this object & photograph" into half the width once
+    the shared action row and journey links joined the block (integration r5, UX 14). */
+ .sky-workspace .featured-body>*{min-width:0}
 }
 @media(max-width:760px){
  .planner-quick-nights{display:grid!important;grid-template-columns:1fr!important}

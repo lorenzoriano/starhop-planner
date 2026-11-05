@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=356.597985%2B3.486811&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.06\tHD223075                    \tTX PSC                      \t  9.00000\t       \t  0.5000\t706nm     \t1973PASP...85..109L\tHD223075\n 0.06\tHD223075                    \tTX PSC                      \t  8.00000\t 8.9000\t  1.0000\t712nm     \t1974A&A....34..457V\tHD223075\n 0.06\tHD223075                    \tTX PSC                      \t 10.00000\t       \t  3.0000\t754nm     \t1974PDAO...14..271M\tHD223075\n 0.06\tHD223075                    \tTX PSC                      \t  9.12400\t10.2000\t  2.4000\t694nm     \t1975MNRAS.173p..61D\tHD223075\n 0.06\tHD223075                    \tTX PSC                      \t  9.72000\t10.4000\t  0.7400\t712nm     \t1994A&A...285..541Q\tHD223075\n 0.06\tHD223075                    \tTX PSC                      \t  9.82000\t       \t  0.1000\t2.2       \t1995A&A...301..439R\tHD223075\n 0.06\tHD223075                    \tTX PSC                      \t 11.20000\t       \t  0.3000\t2.2       \t1996AJ....112..294D\tHD223075\n 0.06\tHD223075                    \tTX Psc                      \t 11.20000\t11.4400\t  0.3000\tK         \t1997AJ....112.294D \tHD223075\n 0.06\tHD223075                    \tTX PSC                      \t         \t10.2300\t  0.0036\t2.3       \t2013MNRAS.434..437C\tHD223075\n 0.06\tHD223075                    \tTX Psc                      \t 10.00000\t       \t  1.0000\t10 mu     \t2017A&A...600A.136P\tHD223075\n\n"
+}

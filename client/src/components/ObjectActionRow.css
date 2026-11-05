@@ -1,0 +1,28 @@
+/* Shared object-action row (integration r5). One order, two looks, one fixed gap per look (see ObjectActionRow.tsx).
+   Red-light safe: every state has text, nothing relies on hue. */
+.object-action-row { display: flex; flex-wrap: wrap; align-items: center; min-width: 0; margin: 0; }
+.object-action-row .object-action { display: inline-flex; align-items: center; gap: 6px; flex: none; min-width: 0; min-height: 32px; color: #a3c6bc; font-size: 12px; line-height: 1.3; white-space: nowrap; background: none; border: 0; padding: 0 2px; cursor: pointer; }
+.object-action-row .object-action:hover:not(:disabled) { color: #dceadf; }
+.object-action-row .object-action:disabled { opacity: .55; cursor: default; }
+.object-action-row .object-action > svg { flex: none; }
+.object-action-row .object-action.saved { color: #dceadf; }
+.object-action-row > .object-journey-links { flex-basis: 100%; margin: 2px 0 0; padding: 0; }
+
+/* compact: cards and list rows. */
+.object-action-row.compact { gap: 4px 14px; }
+.object-action-row.compact .object-action.primary { color: #c9e3d6; }
+
+/* full: detail panels and dialogs. Outlined buttons that wrap as whole buttons (never an icon above clipped text). */
+.object-action-row.full { gap: 6px; }
+.object-action-row.full .object-action { min-height: 36px; padding: 0 10px; border: 1px solid #38515d; border-radius: 6px; color: #c9dad3; background: #101e27; }
+.object-action-row.full .object-action.primary { border-color: #7fb8a4; background: #7fb8a426; color: #e4f1ea; }
+.object-action-row.full .object-action.saved { border-color: #91bda860; background: #91bda820; }
+.object-action-row.full .object-action:hover:not(:disabled) { border-color: #6f9c90; }
+@media (max-width: 760px) {
+  .object-action-row .object-action { min-height: 40px; }
+  .object-action-row.full .object-action { font-size: 12px; padding: 0 9px; }
+}
+
+/* Tonight's Best cards (TargetCard): the compact row under the card body. */
+.target-card-object-actions { border-top: 1px solid #2a414e80; padding: 4px 14px; min-width: 0; }
+@media (max-width: 760px) { .target-card-object-actions { padding: 2px 12px; } }

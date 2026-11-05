@@ -1,0 +1,1100 @@
+{
+  "archetype": "A7",
+  "storyline": "Every record in the sky is a number, and in astronomy each number has to be earned from the one before it, so this journey climbs one question at a time. It starts with how far, because a distance, caught by parallax, is what turns how bright a star looks into how much light it truly makes. Power raises the next question, whether a star makes its light by being hot or by being big, and color answers the first half. Divide the power by what each square meter of a surface that hot gives out and the size falls out, and the biggest stars turn out to be heavy stars swollen near their ends. Heavy stars die first, so the stars missing from a crowd tell its age, and dating a crowd means knowing exactly how bright each kind of star truly is. The climb ends where it began, at distance, run backward: a star of known power, seen faint, says how far away it is.",
+  "beats": [
+    {
+      "step": 1,
+      "label": "How far: the nearest",
+      "maxStops": 2
+    },
+    {
+      "step": 2,
+      "label": "How much light: the most powerful",
+      "maxStops": 1
+    },
+    {
+      "step": 3,
+      "label": "How hot: the hottest and coolest",
+      "maxStops": 2
+    },
+    {
+      "step": 4,
+      "label": "How big: the largest and smallest",
+      "maxStops": 1
+    },
+    {
+      "step": 5,
+      "label": "How old: the oldest stars and richest crowds",
+      "maxStops": 2
+    },
+    {
+      "step": 6,
+      "label": "How far, run backward: the farthest",
+      "maxStops": 1
+    }
+  ],
+  "minBeats": 3,
+  "narration": {
+    "title.A7-record-breakers": [
+      "The Record Holders of {region}",
+      "{region}'s Record Book",
+      "Where {region} Breaks the Records",
+      "{region}, One Record at a Time",
+      "How Extreme Can {region} Get?"
+    ],
+    "question.A7-record-breakers": [
+      "How can a point of light tell you a star is the biggest, hottest or oldest?",
+      "How do astronomers crown the sky's record holders from nothing but their light?",
+      "How far up the sky's record book can plain starlight take you?"
+    ],
+    "hook.A7-record-breakers": [
+      "Every record in the sky starts with one number: how far away the star is.",
+      "Know a star's distance, and its light starts answering questions it used to hide.",
+      "The sky's records form a chain, and the first link is always a distance."
+    ],
+    "story.A7-record-breakers": [
+      "Each record tonight answers a question the one before it raised and could not settle. Starting with {hook}, a distance turns brightness into power, and every number after that is built from the last.",
+      "A record means nothing without a measurement behind it, and tonight the measurements come in the order they depend on one another. Each stop takes what the one before it settled and asks what it left open.",
+      "Begin with {hook} and a single distance, and watch that one number unlock the next record and the one after it, until {name} closes the climb."
+    ],
+    "payoff.A7-record-breakers": [
+      "From {hook} to {name}, every record was crowned by measurement rather than by looks, and each measurement stood on the one before it. A distance turns brightness into power, power and color give size, and the lifespans of heavy stars date whole crowds. Run the chain backward and stars of known power measure the farthest light, so a few honest numbers, earned in order, reach from the Sun's neighbors to other galaxies.",
+      "The night's records ran from {hook} to {name}, and none of them could have been read on its own. Behind every one stands the same short chain: a parallax, then a brightness, then a power, then whatever that power, joined to a color, reveals. That ordinary binoculars reach all of them is a quiet record of its own, the reach of one human eye stretched by a few centuries of careful measuring.",
+      "{name} capped a ladder of records that began with {hook}, and every rung was a measurement resting on the one below it. What makes a star a record holder is never how it looks but what the numbers hidden in its light reveal once they are read in the right order. The same ladder keeps climbing, out to galaxies whose distances rest on exactly these steps."
+    ],
+    "story.A7-record-breakers.end3": [
+      "Tonight climbs the first rungs of the record book: how far a star is, then how much light it truly makes, then how hot its surface runs. Starting with {hook}, each answer opens the next question, and by {name} a star's color has become a thermometer.",
+      "A record means nothing without a measurement behind it, and tonight's records come in the order the measurements depend on one another: how far, how powerful, how hot. By the end, brightness alone will have been unmasked as the poor judge it is.",
+      "Begin with {hook} and a distance, turn brightness into power, and then ask how a star makes all that light. {name} closes a short climb in which every rung stands on the one below it."
+    ],
+    "story.A7-record-breakers.end4": [
+      "Nobody has ever laid a ruler across a star, yet tonight ends with a star's size, built from nothing but its light. Starting with {hook}, each record hands the next one a number, until {name} turns those numbers into a body.",
+      "Tonight's records climb one question at a time, each answer opening the next, until the night ends among the bodies of stars. Their sizes are measured rather than guessed, built from nothing but the light that reaches you.",
+      "Begin with {hook} and follow the records upward until {name}, where the question is no longer how far or how bright but how big, and the answer has to come from light alone."
+    ],
+    "story.A7-record-breakers.end5": [
+      "Tonight's climb runs from single stars to whole crowds, where the record is written in time. Starting with {hook}, each answer opens the next question, until {name} is dated by the stars it has already lost.",
+      "A record means nothing without a measurement behind it, and tonight's measurements climb from single stars to the age of whole crowds. The rule that dates them is the simplest in astronomy: heavy stars burn out first.",
+      "Begin with {hook} and a measurement, and each record hands its number to the next, until {name}, where the stars that are missing become a clock."
+    ],
+    "story.A7-record-breakers.end6": [
+      "The last record of the night is distance again, the question astronomy answered first, now answered the other way round. Starting with {hook}, each record hands its number up the ladder until {name}, whose distance could only be read once the rungs beneath it held.",
+      "A record means nothing without a measurement behind it, and tonight's climb ends with the record that needs the most of them, the farthest light your eyes can catch, measured by running the first rung backward.",
+      "Begin with {hook}, climb through what each measurement unlocks, and arrive at {name}, where stars whose true output is already known, seen faint, hand the distance back."
+    ],
+    "payoff.A7-record-breakers.end3": [
+      "From {hook} to {name}, every record rested on the one before it: a distance first, then the true power it reveals, and finally a temperature read from color. Brightness alone would have misjudged tonight's stars badly, crowning near, modest stars over distant giants. Put power and temperature together and the next number falls out, a star's size, and from there the same arithmetic climbs to the ages of star cities and the distances of galaxies.",
+      "Tonight's ladder had three rungs, a distance, a power and a temperature, and each could only be climbed from the one below. A star's glow mixes how much light it makes with how far that light has traveled, and its color says how much of that light leaves each square meter of its surface. Divide one by the other and you have the size of a star nobody could ever measure with a ruler, the rung that waits just above the three you climbed.",
+      "{name} capped a short climb that began with {hook}: first a distance, then a power, then the heat that helps explain it. The most powerful stars often look far less impressive than they are, because their light has the longest road to travel. That gap between looks and truth is the whole reason astronomers measure, and it widens with every rung above this one."
+    ],
+    "payoff.A7-record-breakers.end4": [
+      "From {hook} to {name}, every record rested on the measurements below it, and the last of them, the size of a star, needs all of them at once. A star's width comes from how much light it pours out and how hot each patch of its surface glows, and those two numbers in turn need its distance and its color. The largest stars turn out to be heavy ones swollen near the ends of their lives, and because heavy stars die first, the same ladder climbs on from here to the ages of whole crowds of stars.",
+      "Tonight's records climbed to a star's body, and the climb was the point: a width cannot be worked out without a distance, a power and a temperature, each of which has to be earned first. Interferometers now check those sizes directly, combining telescopes to see disks a few thousandths of an arcsecond across, and the two methods agree. That agreement is what makes a size record trustworthy, and the same ladder keeps climbing, out to the ages of star cities and the distances of galaxies.",
+      "{name} closed a ladder of records that began with {hook}, and the last rung asked the hardest question, how big a star truly is. The answer came from light alone, without anyone ever holding a ruler to a star. Seen this way, the points of light in any sky become bodies, from crushed cores about the size of the Earth to swollen giants wider than the orbit of Mars."
+    ],
+    "payoff.A7-record-breakers.end5": [
+      "From {hook} to {name}, every record rested on the measurements below it, and the last turned from light to time. Because heavy stars burn out first, a crowd's age is written in which of its members are already gone. Applied to the oldest clusters in the galaxy, the same rule gives ages within a whisker of the age of the universe itself, a match between starlight and cosmology that no one planned.",
+      "Tonight's ladder ended with time, where records are set in years and in numbers of stars rather than in brightness. A crowd is dated by the rule that heavy stars burn out first, so the richest and oldest are measured with the same physics as the single stars before them. The oldest of them formed when the galaxy was young, and their light is the nearest thing to a fossil that binoculars can show.",
+      "{name} closed a climb that began with {hook}, and its record is one no single glance can read: an age, counted from the stars that are missing rather than seen in those that remain. Every such number stands on the ones beneath it, the distances that give true power and the colors that give heat and size. Some crowds dated this way were already old when the Sun was born, and their stars are still shining for you tonight."
+    ],
+    "payoff.A7-record-breakers.end6": [
+      "From {hook} to {name}, the climb ended with the question astronomy answered first, how far. Parallax settled it for the nearest stars, and everything else followed from there, power, heat, size and age, until each kind of star had a known true brightness. Turned around, that knowledge measures the farthest light, a star of known power seen faint, which is how a smudge in your binoculars came to have a distance at all.",
+      "Tonight's ladder ended at its top rung, the farthest light, and that light carries a record of time as well, since it left its source long before most of human history. Measuring that distance took every method below it, each one calibrated on the last, from the yearly shift of nearby stars to the rhythm of pulsing ones. None of tonight's record holders was ranked by its looks, and the farthest of them looks least of all like what it is.",
+      "{name} capped a ladder of records that began with {hook}, and its distance is the one that leans on the most rungs at once. A parallax gave the first distances, those gave the true power of stars of every kind, and stars of known power, found far away, gave the rest. The ladder does not stop here, for the same reasoning reaches galaxies so remote that their light set out before the Earth existed."
+    ]
+  },
+  "transitions": {
+    "pairs": {
+      "1>1": [
+        "One distance is a single point; {next}, farther off than {prev}, adds a second, and setting how bright each looks against how far it lies is the first step from nearness to power.",
+        "{prev} gave one distance and {next} gives a second, and two stars at known distances can be compared fairly, which is exactly what the power records need."
+      ],
+      "3>3": [
+        "One color is one reading; set {next} beside {prev} and the gap in tint is a gap in how much light each square meter gives out, the scale a star's size is read from.",
+        "Before a size can be worked out the thermometer needs more than one mark, and {next}, read after {prev}, adds a second, so the color gap between them becomes a temperature gap you can see."
+      ],
+      "5>5": [
+        "Before a crowd's stars can be lent out as rulers, its clock has to be trusted, and {next}, which has had at least as long as {prev} to lose its heavy stars, is a second reading of the same rule.",
+        "One age is only as good as the rule behind it, so before any crowd is turned into a ruler, {next}, at least as old as {prev}, puts that rule to work on a second family."
+      ],
+      "1>2": [
+        "{prev} supplied a distance, and a distance is what turns how bright a star looks into how much light it really makes, so the question at {next} is no longer how far but how powerful.",
+        "With a distance settled at {prev}, a star's glow can finally be split into nearness and power, and at {next} the power is what the glow was hiding."
+      ],
+      "1>3": [
+        "A distance like that of {prev} turns brightness into power, but power cannot say how a star makes its light, by heat or by sheer surface, and the color of {next} reads the heat.",
+        "Once {prev} has fixed a distance, a star's light can be measured as power; what that power hides is how hot the surface runs, and {next} carries its temperature in its color."
+      ],
+      "1>4": [
+        "{prev} gave a distance, and a distance turns brightness into power; set that power against the heat written in a star's color and you get its size, which is how {next} was measured.",
+        "From a distance like that of {prev} the ladder reaches a star's body: distance gives power, color gives heat, and the two together give the width of {next}."
+      ],
+      "1>5": [
+        "Distances like that of {prev} reveal which stars are truly the most powerful, and those are the heaviest and shortest-lived, so a crowd like {next} is dated by which stars it has lost.",
+        "Once {prev} has fixed a distance, power follows, and power has a price: heavy stars burn out first, which turns the missing stars of {next} into a clock."
+      ],
+      "1>6": [
+        "{prev} was measured by geometry, distance first; {next} lies far beyond geometry's reach, so its distance has to be read the other way round, from stars whose power is already known.",
+        "From {prev}, where the distance came first, the ladder turns around, and in {next} stars of known power, seen very faint, give the distance back."
+      ],
+      "2>3": [
+        "{prev} pours out a measured amount of light, but not how: a hotter surface shines more from every square meter, a bigger one has more of them, and the color of {next} reads the first.",
+        "Power like that of {prev} comes either from a scorching surface or from a vast one, and telling which takes a temperature, written in the color of {next}."
+      ],
+      "2>4": [
+        "Power like that of {prev} comes from heat or from sheer surface, and once a star's color gives the heat, what remains is size, which is how {next} was given a width.",
+        "Set a star's power, like that of {prev}, against how hot its surface glows, and the surface it must have follows, the arithmetic that sizes {next}."
+      ],
+      "2>5": [
+        "The power of {prev} has a price, since the heaviest stars burn hardest and die first, and that rule is the clock that dates a crowd like {next}.",
+        "Stars as powerful as {prev} spend themselves fast, so a crowd that has lost all of its powerful stars must be old, and {next} is dated by exactly that loss."
+      ],
+      "2>6": [
+        "{prev} turned a known distance into a power; {next} runs the same arithmetic backward, using stars whose power is already known to find a distance far beyond parallax.",
+        "Once the power of stars like {prev} is known, the reasoning can be reversed: find such stars in {next}, see how faint they look, and the distance follows."
+      ],
+      "3>4": [
+        "Color gave the temperature of {prev}, and so how much light each square meter of a star sends out; divide a star's whole power by that, and you have the surface that gives {next} its width.",
+        "A temperature like that of {prev} says how brightly each patch of a surface shines, so a star's total light tells how many patches it must have, and that is how {next} was sized."
+      ],
+      "3>5": [
+        "Color told how hot {prev} burns, and in a crowd born together, color also tells which stars are gone, since the hot heavy ones die first; that is how {next} is dated.",
+        "The color scale that read {prev} also sorts a crowd by weight, since the hottest stars are the heaviest and the first to die, so a crowd with none of them left, like {next}, is an old one."
+      ],
+      "3>6": [
+        "Color and power together say what kind of star you are seeing, as at {prev}, and a star of a known kind has a known power, which is how {next} got a distance far beyond parallax.",
+        "Once color reveals a star's kind, as it did at {prev}, its true power is known too, and in {next} stars of known power, seen faint, give the distance."
+      ],
+      "4>5": [
+        "A size like that of {prev} belongs to the late stages of a star's life, and heavy stars reach them first, which is why the stars a crowd like {next} has already lost tell how old it is.",
+        "Stars swell or collapse into record sizes like that of {prev} sooner the heavier they are, so a crowd born together keeps time by which stars have got there, and {next} runs on that clock."
+      ],
+      "4>6": [
+        "{prev} needed a distance before it could be sized; {next} lies too far for any parallax, so its distance comes the other way, from stars whose power the lower rungs taught us to read.",
+        "From the body of {prev} the ladder turns around: once each kind of star has a known power, stars of that kind in {next}, seen faint, give the distance."
+      ],
+      "5>6": [
+        "Dating {prev} took knowing how bright each kind of star truly is, and turned around, that measures distance: find such stars in {next}, see how faint they look, and the distance follows.",
+        "Every kind of star in a dated crowd like {prev} has a measured true power, and stars of known power, seen very faint in {next}, are how its distance was found."
+      ]
+    },
+    "arrive": {
+      "2": [
+        "After {prev}, the next question is how much light {next} truly makes, a number only its distance can unlock."
+      ],
+      "3": [
+        "After {prev}, the question turns to how {next} makes its light, and its color is the thermometer."
+      ],
+      "4": [
+        "From {prev} the ladder climbs to size, which comes from setting a star's power against its heat, and {next} was measured that way."
+      ],
+      "5": [
+        "From {prev} the ladder turns to time, read from which stars a crowd has already lost, and {next} keeps that kind of clock."
+      ],
+      "6": [
+        "From {prev} the ladder runs backward, using stars of known power to find the distance of {next}."
+      ]
+    }
+  },
+  "objects": {
+    "HR5459": {
+      "step": 1,
+      "rank": 4.37,
+      "beat": "How far: the nearest star you can see",
+      "question": "How do we know Alpha Centauri is the closest star you can see?",
+      "why": "A star's brightness mixes how much light it makes with how far that light has come, so the climb begins by fixing the distance, at the nearest star the eye can find.",
+      "look": "Find the two Pointers beside the Southern Cross and take the one farther from the Cross. Binoculars show a single brilliant yellow-white point, its two Sun-like stars far too close to split, and beside it blue-white Hadar, which looks nearly as bright from roughly eighty times farther away.",
+      "answer": "Its yearly shift puts it about 4.4 light-years away, and Proxima, the system's faint red third star, is closer still, the nearest single star of all. With the distance fixed, the glare becomes a measurement: the brighter of its two suns makes about one and a half times the Sun's light, and any star with a distance can now be asked how much light it truly makes.",
+      "story": "Alpha Centauri's distance can be checked by a second route that needs no yearly shift at all. Its two Sun-like stars circle each other in about a human lifetime, and the orbit's size can be measured twice, once as an angle on the sky and once in kilometers from the Doppler speeds of the stars in their spectra. Only one distance makes the two sizes agree, and it lands on the parallax result, which is how astronomers know the first rung of the ladder is sound."
+    },
+    "STAR-Sirius": {
+      "step": 1,
+      "rank": 8.6,
+      "beat": "How far: the brightest star, and why",
+      "question": "Is the brightest star in the night sky also the most powerful one?",
+      "why": "Brightness is the record your eye awards for free, and before it can mean anything you need the one number the eye cannot judge, how far away the star is.",
+      "look": "Follow Orion's Belt down and to the left to the most brilliant star in the sky. Low down it flashes red and green, which is our air at work rather than the star; then glance up at Rigel and Betelgeuse, two far more powerful stars that look fainter.",
+      "answer": "Sirius lies about 8.6 light-years away, one of the Sun's nearest neighbors, and at that range its glare works out to only about 25 times the Sun's light, a modest output for so dazzling a star. Brightness mostly rewards closeness, so the real powerhouses are stars that look fainter from much farther off, and only their distances can expose them.",
+      "story": "The brightness record is kept on a scale that runs backward, inherited from Greek astronomers who called the brightest stars first magnitude. Photometers later turned it into arithmetic, five steps for every hundredfold in light, and the scale had to run below zero to fit the brilliant few. Sirius sits lowest of all, nearly twice as bright as Canopus in second place, and the meter that ranks them says nothing at all about why."
+    },
+    "DS-61Cyg": {
+      "step": 1,
+      "rank": 11.4,
+      "beat": "How far: the first distance ever measured",
+      "question": "How far away is the first star whose distance anyone ever measured?",
+      "why": "No record in the sky means anything until you can say how far away its holder is, and the very first such number was won here, in 1838.",
+      "look": "About 8° south-east of Deneb, in Cygnus, a faint star splits in 10× binoculars into two matched orange points. Nothing in the view says near, and that is the surprise: this unassuming pair is well over a hundred times closer than Deneb, the bright star nearby.",
+      "answer": "61 Cygni lies about 11 light-years away, which makes it one of the nearest stars you can see without optics, and still its light needs more than a decade to arrive. With that one number, how bright a star looks could at last be turned into how much light it truly makes, and every record of power begins with the same conversion.",
+      "story": "Bessel won a race that astronomers had been losing for centuries: within a couple of years Thomas Henderson announced a parallax for Alpha Centauri and Friedrich Struve one for Vega. The difficulty was the sheer smallness of the shift, which forced them to beat the sag of the telescope, the bending of starlight by the air and the warmth of the instrument itself. Bessel's heliometer, a telescope with its lens sawn in two, let him measure the pair against fainter background stars night after night, and the yearly swing he found has survived every check since."
+    },
+    "HR509": {
+      "step": 1,
+      "rank": 11.9,
+      "beat": "How far: the nearest lone Sun-like star",
+      "question": "How close is the nearest lone star of the Sun's own kind?",
+      "why": "Records need a baseline, and the fairest one is a star like the Sun, so the first distance here is measured on the nearest lone star of that kind.",
+      "look": "About fifteen degrees east of Diphda, the brightest star of Cetus, look for a steady pale-yellow point. The Sun moved out to the same distance would look much like this, only a little brighter, a picture worth carrying through the rest of the records.",
+      "answer": "τ Ceti lies about 11.9 light-years away, and from there a star a little dimmer than the Sun is a point you could easily walk past. Hold that picture, because with distances known it becomes a scale: a star that looks this bright from a hundred times farther must be making about ten thousand times as much light.",
+      "story": "A star's spectrum works like a label: two stars with matching lines, at matching temperatures, give out similar amounts of light. Nearby stars like this one, whose distances come straight from parallax, are how those labels were calibrated, and with that calibration a Sun-like star too far for parallax can be ranged from its faintness alone. The method, known as spectroscopic parallax, was one of the first ways astronomers reached beyond the stars whose shifts they could measure."
+    },
+    "HR1084": {
+      "step": 1,
+      "rank": 10.5,
+      "beat": "How far: a near neighbor with a planet",
+      "question": "How close is the nearest star with both a giant planet and a comet belt?",
+      "why": "Nearness is a record that pays off in detail, since the closer a star, the more of it we can study, and this neighbor is close enough for its planet and dust ring to be found.",
+      "look": "From Zaurak (γ Eridani), in Eridanus, move about 7° west-north-west. You pass δ Eridani first, a shade brighter, and ε Eridani is the next star along, about 2½° beyond it. It is a soft yellow-orange point, unremarkable among its neighbors, which is exactly how one of the closest stars to the Sun looks when it is a little smaller and cooler than the Sun.",
+      "answer": "ε Eridani lies about 10.5 light-years away, which makes it one of the nearest stars of any kind you can see without optics. Its distance also gives away how feeble it is, about a third of the Sun's light, and that turning of how bright into how powerful is the step every bigger record needs.",
+      "story": "Nearness turns distance into detail by simple geometry. At this range one Earth-Sun distance spans about a third of an arcsecond, so a belt of icy debris as far out as our own outer solar system opens to roughly forty arcseconds across, wide enough for telescopes working in submillimeter light to photograph it as a ring. Put the same system much farther away and the ring shrinks to a smudge, which is why the closest stars hold most of the records for what we know about other planetary systems."
+    },
+    "HR8387": {
+      "step": 1,
+      "rank": 11.87,
+      "beat": "How far: a faint neighbor, a bright stranger",
+      "question": "Why does one of the Sun's closest neighbors look fainter than Alnair?",
+      "why": "Nearness alone does not make a star bright, and this close neighbor, host to a planet photographed by the Webb telescope, shows the gap between the two records.",
+      "look": "Ten degrees from Alnair, the bright blue-white star of Grus, Epsilon Indi is a modest orange point in faint Indus. Keep the two side by side in your mind: the dim orange one is the near neighbor, and the bright blue-white one is the distant powerhouse.",
+      "answer": "Epsilon Indi gives out about a fifth of the Sun's light, so even at about 12 light-years it is a modest point, while Alnair, roughly eight times farther, outshines it by sheer power. Only the two distances could sort these stars out, and once a distance is known, the light of any star can be weighed the same way.",
+      "story": "Pulling the two apart takes one piece of arithmetic. Alnair looks about three magnitudes brighter, which means roughly sixteen times more light reaching you, and by the time its light arrives it has spread over a sphere some seventy times larger in area. Multiply the two and Alnair turns out to make over a thousand times what this neighbor does, a gap the eye alone would never guess."
+    },
+    "AST-Hyades": {
+      "step": 1,
+      "rank": 154,
+      "beat": "How far: the nearest star cluster",
+      "question": "How far away is the nearest star cluster, and why does that matter?",
+      "why": "A cluster is a family whose members share one distance, so the nearest family of all is where stars of many kinds can be compared side by side at a known range.",
+      "look": "The V of the Bull's face in Taurus is too big for one view, so sweep along each arm. Every family member you pass sits at nearly the same distance, which makes their differences in brightness and color real; Aldebaran, the bright orange star at one tip, lies in front and does not count.",
+      "answer": "The core of the Hyades lies about 150 light-years away, closer than any other true cluster, so its stars spill past the edges of your field. Because every member shares that distance, their differences in brightness are differences in real power, the number every later record rests on: how much light a star truly makes.",
+      "story": "Long before satellites, the Hyades gave up their distance through perspective. The members move through space in parallel, so their paths across the sky seem to converge on one point, the way railway tracks meet at the horizon, and the angle to that point, combined with each star's speed toward us read from its spectrum, turns a drift in arcseconds into a speed in kilometers per second. Set the two side by side and the distance falls out, and for most of the twentieth century this was the rung on which brighter, farther yardsticks were calibrated."
+    },
+    "Mel111": {
+      "step": 1,
+      "rank": 278,
+      "beat": "How far: one of the nearest clusters",
+      "question": "Why does one of the nearest star clusters look so loose and spread out?",
+      "why": "A cluster's apparent size is a nearness record of its own, and the Coma Star Cluster, among the closest families to the Sun, sprawls across most of a binocular field.",
+      "look": "Between Denebola and Cor Caroli a faint glittery patch to the eye becomes a sprawl of white stars across most of the binocular field. Its width on the sky is its distance speaking, while γ Comae, the orange star at its northern edge, is a foreground star and not part of the family.",
+      "answer": "At about 278 light-years its stars are spread over a patch some ten Moon-widths wide, and they are also drifting apart, so nearness and old age together make it look thin. Seen from ten times farther, the same family would shrink to a small knot and sink toward invisibility, so before any of its stars can be ranked by power, the distance has to come first.",
+      "story": "The Coma Star Cluster sits almost exactly toward the north pole of the galaxy, looking straight up out of the dusty disk, so its light reaches us nearly undimmed. That makes its distance one of the cleanest in the sky: parallaxes for its members agree with distances from their brightness without any correction for dust. Few clusters are so straightforward, and astronomers use clear sightlines like this one to check the corrections they must apply everywhere else."
+    },
+    "IC2391": {
+      "step": 1,
+      "rank": 490,
+      "beat": "How far: one of the nearest clusters",
+      "question": "How near is the bright little family around Omicron Velorum?",
+      "why": "A star family at a known distance is a ruler for every family farther out, and this one, among the nearest clusters to the Sun, spreads wider than the full Moon.",
+      "look": "Less than two degrees north of Delta Velorum, a corner of the False Cross, a knot of five or six naked-eye stars opens into a few dozen in binoculars. A family looks this loose and bright only from close by; the same stars from ten times farther would huddle into a small hazy spot.",
+      "answer": "The Omicron Velorum Cluster lies about 490 light-years away, which places it among the nearest clusters of all and explains why its members look bright and widely scattered. With the distance known, each member's brightness becomes a measure of its true power, and the blue-white stars at its heart turn out to outshine the Sun many times over.",
+      "story": "A cluster's distance is sturdier than any one star's because it is an average: Gaia measures the tiny yearly shift of every member, and pooling hundreds of them shrinks the error far below what a single star allows. That pooled distance then becomes a calibration, since the cluster's ordinary stars, now of known power, can be matched against the same kinds of star in clusters too far for parallax. Lining up the two families and reading the gap in brightness is how many farther clusters were first placed."
+    },
+    "IC2602": {
+      "step": 1,
+      "rank": 491,
+      "beat": "How far: one of the nearest clusters",
+      "question": "Why does the Southern Pleiades look so big and bright to the naked eye?",
+      "why": "Among the nearest star families to the Sun, the Southern Pleiades shows what nearness does to a cluster before any other record can be read.",
+      "look": "Find Theta Carinae, the brightest of a small spray of stars just south of the Carina Nebula. The eye counts five or six stars and binoculars two or three dozen, spread over about a degree, and that generous spread is the mark of a family on our doorstep.",
+      "answer": "Its stars lie only about 491 light-years away, so even modest members shine to the naked eye and the family spreads wider than the full Moon. Nearness is doing much of the work here, and only with the distance in hand can you ask how much light each of these stars really makes.",
+      "story": "Star families come in a fairly narrow range of true sizes, so how wide one looks is a rough gauge of how far it is, and the Southern Pleiades sprawl because they are near. In 1930 Robert Trumpler compared such size distances with distances from how faint each cluster's stars appeared, and found that the far clusters looked too faint for their size. Something between the stars was dimming their light, and that discovery of interstellar dust is a correction every distance record since has had to make."
+    },
+    "Mel20": {
+      "step": 1,
+      "rank": 566,
+      "beat": "How far: one of the nearest young clusters",
+      "question": "Why does this young star family fill your whole binocular field?",
+      "why": "Nearness changes how everything looks, and the Alpha Persei Cluster, one of the closest young families to the Sun, is the place to see that before chasing records farther out.",
+      "look": "Center Mirfak, the brightest star of Perseus, and let the field fill with the curving chains of blue-white stars around it. Most clusters on a star chart are small knots; this one overflows the view because it is one of the closest young families to the Sun.",
+      "answer": "It lies only about 566 light-years away, so its members scatter over several Moon-widths around Mirfak. With that distance known, Mirfak's glow becomes a true output far beyond the Sun's, and turning brightness into power this way is the step every later record needs.",
+      "story": "Distance dims a family as well as shrinking it. Each time the distance doubles, every member arrives four times fainter, so a family moved far enough to huddle into a knot also sinks into a faint grainy glow, Mirfak and all. Astronomers run this in reverse: they find the same kinds of star in a distant cluster, measure how much fainter they look, and read off how much farther it must lie."
+    },
+    "HR2990": {
+      "step": 1,
+      "rank": 33.8,
+      "beat": "How far: the nearest giant",
+      "question": "How close is the nearest giant star to the Sun?",
+      "why": "Giants are rare near the Sun, so the closest of them is a record holder, and its nearness is what lets astronomers take the measure of a star that has already swollen.",
+      "look": "Put Pollux and Castor in one field in Gemini: Pollux is the warm orange one, a giant late in life, while white Castor beside it is still in its long, steady prime.",
+      "answer": "Pollux lies about 33.8 light-years away, with Arcturus next among the giants at about 37. With the distance fixed, its glow becomes a real output of about 41 times the Sun's light, and that conversion from how bright to how powerful is the step every bigger record needs.",
+      "story": "Giants are scarce near the Sun for a simple reason of timing: a star spends only a small fraction of its life swollen, so at any moment only a few of its kind are caught in that stage. That scarcity is why the nearest giant lies several times farther than dozens of ordinary stars. Being near still pays, because a disk under a hundredth of an arcsecond wide is big enough for an interferometer to measure, and with the distance known that angle becomes a true width."
+    },
+    "HR424": {
+      "step": 1,
+      "rank": 448,
+      "beat": "How far: the nearest Cepheid",
+      "question": "Why does it matter that the North Star is the nearest Cepheid?",
+      "why": "The farthest records in the sky are measured with pulsing stars called Cepheids, and the whole method stands on the nearest of them, which happens to sit at the pole.",
+      "look": "Follow the two end stars of the Big Dipper's bowl up to Polaris, at the tip of the Little Dipper's handle. It looks perfectly steady because its pulse is far too slight for the eye, and the little ring of fainter stars it sits on, the Engagement Ring, makes it easy to frame.",
+      "answer": "Its distance, about 448 light-years, is close enough to measure directly, and it turns the North Star's modest glow into about 2,200 times the Sun's light. Pinning down the true power of a pulsing star like this one is what later lets the same kind of star measure distances far beyond any parallax.",
+      "story": "A Cepheid ruler has two parts: the rule that slower pulsers are brighter, which can be read anywhere, and its zero point, which can only be set by Cepheids whose distances are measured directly. Polaris is the closest of those, yet careful studies of its distance have differed by roughly a quarter, enough to matter for the whole ruler. That argument is how the farthest records stay honest, for a galaxy's distance is only as firm as the nearby Cepheids it leans on."
+    },
+    "STAR-Arcturus": {
+      "step": 1,
+      "rank": 36.7,
+      "beat": "How far: the brightest northern star",
+      "question": "Why is Arcturus the brightest star of the northern half of the sky?",
+      "why": "Brightness is the record your eye judges on its own, so the brightest star north of the celestial equator is the place to ask how much of that brightness is mere nearness.",
+      "look": "Follow the curve of the Big Dipper's handle away from the bowl to the first bright star, orange-gold Arcturus in Boötes. Nothing north of the celestial equator outshines it, and its warm color already hints that it is a cool, swollen giant.",
+      "answer": "Closeness and power share the credit: at about 37 light-years it is one of the nearer bright stars, and as a swollen giant it outshines the Sun many times over. A star's glow in our sky always mixes those two, and with the distance settled, the power can at last be pulled out on its own.",
+      "story": "Astronomers compare stars fairly by imagining each one moved to a standard distance of about 33 light-years and quoting the brightness it would have there. Arcturus happens to sit only a little beyond that mark, so its brightness in our sky is nearly its standard brightness, and what you see is close to a fair measure of its power. Sirius, moved out to the same mark, would fade to about the brightness of Regulus, while Rigel would outshine everything in the night sky except the Moon."
+    },
+    "HR2326": {
+      "step": 1,
+      "rank": 309,
+      "beat": "How far: the second-brightest star",
+      "question": "Is Canopus bright because it is near, like Sirius, or for another reason?",
+      "why": "Second place in the brightness record goes to Canopus, and the gap between its distance and that of Sirius, the winner, is the best puzzle in the sky about what that record measures.",
+      "look": "Canopus needs no finder: it is the brilliant white star well south of Sirius, in Carina. Sweep about 6° west to faint Beta Pictoris, a star five times closer, and you have brightness and nearness pointing in opposite directions.",
+      "answer": "Canopus is bright for the opposite reason to Sirius, since it is about 36 times farther away and so must be several hundred times more powerful to come so close in our sky. Brightness can hide two opposite stories, and only once a distance says which one a star is telling can its true power be read.",
+      "story": "For most of the twentieth century nobody knew how far Canopus was, and published estimates ranged from about a hundred light-years to more than a thousand, so its power could have been anything from modest to colossal. The Hipparcos satellite, measuring parallax above the blur of the atmosphere, finally pinned the yearly shift down to about a hundredth of an arcsecond, and only then did its brightness become a firm number. A record for power is never stronger than the distance underneath it, and Canopus spent decades as the sky's best example."
+    },
+    "HD95735": {
+      "step": 1,
+      "rank": 8.3,
+      "beat": "How far: a near red dwarf you cannot see",
+      "question": "How can the brightest red dwarf in the northern sky still need binoculars?",
+      "why": "Most of the Sun's neighbors are red dwarfs, and the brightest of them in the northern sky shows how far brightness and nearness can drift apart.",
+      "look": "Below the Big Dipper's bowl, about four and a half degrees south of 47 Ursae Majoris, a chart picks out a dim, faintly orange point. Sirius, which blazes in the winter sky, lies a little farther away than this.",
+      "answer": "It gives out only about a thirtieth of the Sun's light, so even from about 8.3 light-years, a little nearer than Sirius, it stays below naked-eye view. The sky's bright stars are rare, powerful ones seen from afar, and only their distances can say how much light they truly make.",
+      "story": "Turning a faint point into a true output takes two steps: measure how much light arrives across all wavelengths, then scale it up by the square of the distance. For a red dwarf the first step holds a surprise, because its cool surface sends most of its energy out as infrared, and the eye catches only a thin slice of an already modest output. In visible light alone it falls nearly two hundred times short of the Sun, so the figure the eye would guess and the figure the instruments give are very far apart."
+    },
+    "HD202560": {
+      "step": 1,
+      "rank": 12.9,
+      "beat": "How far: the brightest red dwarf",
+      "question": "If the brightest red dwarf in the sky is this faint, what about the rest?",
+      "why": "Red dwarfs are the commonest stars in the galaxy, and the record for the brightest of them all belongs to this faint orange point in Microscopium.",
+      "look": "About twenty degrees west-south-west of Fomalhaut, in Microscopium, a faint, slightly orange point sits among other faint stars, so use the chart to be sure. From mid-northern sites it stays low and rewards a clear southern horizon.",
+      "answer": "The rest are fainter still: Lacaille 8760 gives out about a ninth of the Sun's light and sits just below naked-eye reach from only about 13 light-years. Brightness in our sky is a poor guide to what stars are like, so the powerful stars that dominate it have to be weighed with their distances attached.",
+      "story": "Astronomers learned how misleading the bright sky is by counting stars out to a fixed distance instead of down to a fixed brightness. Inside a sphere a few dozen light-years across, roughly three stars in four turn out to be red dwarfs, and hardly any of them can be seen without optics. A count by brightness gets it the other way round, filled with rare powerful stars gathered from enormous volumes of space, which is why a record like this one has to be read with its distance attached."
+    },
+    "M42": {
+      "step": 1,
+      "rank": 1350,
+      "beat": "How far: the nearest heavy-star nursery",
+      "question": "How far away is the nearest place still making heavy stars?",
+      "why": "The heaviest stars are born in only a few places, and the nearest of these nurseries hangs in Orion's Sword, close enough for its distance to be measured well.",
+      "look": "Find the three-star Sword below Orion's Belt; its middle star looks fuzzy even to the eye. Binoculars show gray wings of glowing gas around a bright knot, and that knot is where the heaviest newborn stars sit.",
+      "answer": "The Orion Nebula, the nearest of them, lies more than a hundred times farther than Sirius, which is why the heaviest stars never look as bright as they really are. Once that distance is known, the bright knot at the nebula's heart can be weighed in light, and it turns out to hold some of the most powerful stars in this part of the galaxy.",
+      "story": "Heavy stars are rare from birth: for every star of twenty Suns a cloud makes something like five hundred smaller ones, and only giant clouds make them at all. So the nurseries of the hottest stars are few and far apart, and the nearest one active today is this one. Being the nearest makes it the reference for the rest, because the spectra of its young heavyweights, studied close up, are how astronomers recognize the same kind of star when it is too distant and too buried to study well."
+    },
+    "HR3165": {
+      "step": 3,
+      "rank": -40000,
+      "beat": "How hot: one of the hottest stars you can see",
+      "question": "How hot is one of the hottest stars your eyes can see?",
+      "why": "Naos sits near the top of the color thermometer, among the hottest surfaces the naked eye can reach, so it is the place to see what a star's color can and cannot say.",
+      "answer": "Naos's surface runs at about 40,000 K, close to seven times the Sun's, yet it looks only steely blue-white. Past a certain heat a star's visible color stops changing and the rest of its glare pours out as ultraviolet. Each square meter that hot shines thousands of times more fiercely than the Sun's, so a star like this needs surprisingly little surface to be enormously powerful.",
+      "story": "Most of Naos's light never reaches the ground, because the air absorbs ultraviolet, so the full measure of its heat had to wait for telescopes in orbit. Instruments in space recorded that ultraviolet directly and found it crossed by lines of highly charged atoms streaming outward in a fast wind, a wind driven by the very light whose heat it reveals. Joining that ultraviolet to the visible spectrum is how the top of the temperature scale was finally tied down."
+    },
+    "HD192163": {
+      "step": 3,
+      "rank": -70000,
+      "beat": "How hot: one of the hottest exposed surfaces",
+      "question": "How can a plain white point in Cygnus have a 70,000-degree surface?",
+      "why": "Among the hottest surfaces binoculars can reach is this plain point in Cygnus, a heavy star stripped down to its scorching interior.",
+      "look": "Drift about 2.7° south-west of Sadr, the star at the heart of the Northern Cross, and use the chart to pick out a plain white point among the Milky Way stars. Its color gives nothing away, which is the lesson of the hottest stars: past a certain heat the eye sees only white, while most of the light has moved into the ultraviolet.",
+      "answer": "Strip a heavy star of its hydrogen and what remains is hotter than any ordinary surface, nearly twice as hot as Naos, one of the hottest stars the naked eye can see. It looks faint and plainly white because it lies far away and sends most of its energy out as ultraviolet, and a surface this fierce means the star itself can be small, a size only its power and heat together can reveal.",
+      "story": "A Wolf-Rayet star hides its own surface inside a dense, fast wind, so its temperature cannot simply be read off like an ordinary star's. Astronomers model the wind and check the result against the gas around it, because the Crescent Nebula glows only where the star's ultraviolet is energetic enough to strip electrons from its atoms. How hard that stripping is, shown by which elements lose how many electrons, is a thermometer read at second hand from light the eye never sees."
+    },
+    "HR8622": {
+      "step": 3,
+      "rank": -34550,
+      "beat": "How hot: the standard for the hottest stars",
+      "question": "Why does one of the hottest stars you can see look only faintly blue?",
+      "why": "The hottest stars set the top of the color thermometer, and 10 Lacertae is so standard an example that astronomers use it to define its class.",
+      "look": "Lacerta's faint zigzag lies between Cygnus and Andromeda, and 10 Lacertae sits at its southern end. Look for at best a hint of blue in a plain white point; for a star with one of the hottest surfaces you can see, that faint tint is all the eye can register.",
+      "answer": "Most of its light is ultraviolet, and the visible part that reaches you has nearly the same blue-white tint as stars far cooler, so the eye's thermometer simply runs out of scale. The spectrum still gives the heat, and heat says how much light each square meter sends out, which is half of what it takes to work out how big the star is.",
+      "story": "Past about twenty thousand degrees, a star's visible light comes from the long, gently sloping tail of its glow, where the balance of blue and red barely changes however much hotter the surface gets. Double the temperature of such a star and its color shifts by only a shade, while its ultraviolet soars. That is why astronomers rank the hottest stars by their spectral lines, the way this star's own lines set the standard for its type."
+    },
+    "HR1879": {
+      "step": 3,
+      "rank": -35200,
+      "beat": "How hot: the hottest class of star",
+      "question": "How hot is the star at the head of Orion?",
+      "why": "Orion is full of hot blue stars, and the little triangle at its head holds one from the hottest class of all, a fair place to calibrate the thermometer.",
+      "look": "At Orion's head, above and between Betelgeuse and Bellatrix, binoculars turn a faint smudge into a small triangle of stars. The brightest is Meissa, a crisp blue-white, and its color is the first, rough reading of a very hot surface.",
+      "answer": "Meissa's surface runs at about 35,200 K, some six times the Sun's, a figure read from lines in its spectrum that only very hot gas can produce. In binoculars that heat comes through as nothing more than a crisp blue-white, yet it fixes how much light each square meter sends out, and from there a star's power gives away how much surface it must have.",
+      "story": "Meissa is one of the reference stars for its spectral type, a star whose spectrum others are compared against when they are sorted into classes. The sorting itself is a thermometer: the classes from O through M follow falling temperature, and within each class a number marks finer steps, so placing a new star means finding the standard its lines match best. Hot standards like this one anchor the top of the scale, where the eye's judgment of color has long since given out."
+    },
+    "DS-15Mon": {
+      "step": 3,
+      "rank": -35200,
+      "beat": "How hot: the hottest class of star",
+      "question": "How hot is the star at the foot of the Christmas Tree Cluster?",
+      "why": "The Christmas Tree Cluster's brightest star belongs to the hottest class there is, and the gap between its color and Betelgeuse's, on the way there, is a temperature gap you can see.",
+      "look": "Sweep about 11° east of Betelgeuse to the small, upside-down triangle of the Christmas Tree Cluster, with 15 Monocerotis as the bright star at its base. Compare its crisp white light with orange Betelgeuse on the way: the color gap between them is a temperature gap of tens of thousands of degrees.",
+      "answer": "Published values run from about 25,000 to 45,000 K, a reminder that even the thermometer has error bars when a star sits inside a cloud of its own glowing gas. Either way each square meter of it outshines the Sun's many times over, so its power needs far less surface than a cool star's would.",
+      "story": "For the hottest stars the thermometer is a balance between spectral lines. Helium that still holds both its electrons absorbs at some colors, helium stripped of one absorbs at others, and the hotter the surface, the more the stripped kind wins, so the ratio places a star on the scale. The same balance defines the hottest class itself, the O stars, and 15 Monocerotis is a member in good standing."
+    },
+    "HR5191": {
+      "step": 3,
+      "rank": -17870,
+      "beat": "How hot: the hottest Big Dipper star",
+      "question": "Which of the seven Big Dipper stars is the hottest, and how can you tell?",
+      "why": "The Big Dipper is a ready-made thermometer test, seven bright stars under one sky with a single winner for heat at the end of the handle.",
+      "look": "Sweep from Dubhe, at the far corner of the bowl, along the handle to Alkaid at its tip. Dubhe has a yellow-orange cast, Alkaid a crisp blue-white, and the five stars between are plain white, so the whole Dipper spans the color scale in one sweep.",
+      "answer": "Alkaid wins, and your eye can call the result before any spectrograph does: the bluer the tint, the hotter the surface, and nothing in the Dipper is bluer. Heat says how much light pours from each square meter, so once a star's power is known as well, the only thing left to find is how many square meters it has.",
+      "story": "Ranking by color works because every glowing surface follows the same curve: as the temperature climbs, the peak of its light slides from red through yellow toward blue, so the balance between blue and red light tells the heat. A poker in a fire, a stove ring and a lightbulb filament obey the same rule, and so do the stars of the Dipper. Measured through two colored filters, the Dipper's seven stars line up in an order that puts Dubhe at the warm end and Alkaid at the cold one, as your eye does."
+    },
+    "HR4199": {
+      "step": 3,
+      "rank": -31346,
+      "beat": "How hot: the hottest star of its family",
+      "question": "Which star leads the Southern Pleiades in heat, and how hot is it?",
+      "why": "Inside one family every star shares a distance, so its brightest member is also its most powerful, and Theta Carinae's crisp blue-white says how much of that power is heat.",
+      "look": "Theta Carinae is the brightest of the loose group of blue-white stars just south of the Carina Nebula. In binoculars its color is the crispest in the field, and since its neighbors share its distance, its lead in brightness is a lead in heat and power.",
+      "answer": "Theta Carinae leads the family at about 31,300 K, more than five times the Sun's surface temperature. That heat is also why it is the family's brightest member, and since each square meter of it outshines the Sun's hundreds of times over, its power needs only a small body.",
+      "story": "In a young cluster the members line up along a single sequence on a chart of color against brightness, hotter stars brighter, because a star's mass sets both. Theta Carinae sits at the top of that sequence, which is why heat and brightness point at the same star. By some reckonings it is also a blue straggler, a star that may have gained mass from a partner and so looks younger and hotter than its family's age allows."
+    },
+    "HR1607": {
+      "step": 3,
+      "rank": -2390,
+      "beat": "How cold: one of the reddest stars",
+      "question": "Is the reddest star in binocular reach also the coolest one?",
+      "why": "At the cold end of the thermometer the color record and the temperature record nearly coincide, and Hind's Crimson Star sits near the bottom of both.",
+      "answer": "Hind's Crimson Star comes close, for its surface is among the coolest of any star you can find with binoculars, yet carbon soot in its atmosphere deepens the red further still, so its color overstates the chill. A surface that cool gives out little light from each square meter, so for the star to be seen from about 1,500 light-years at all, it must have an enormous number of them.",
+      "story": "Hind's Crimson Star does not hold its color steadily. Over its slow cycle of swelling and shrinking its surface cools as it dims, and the cooler gas forms more of the carbon molecules and soot that strip out blue light, so it looks reddest near its faintest. John Russell Hind, who noticed it in 1845, compared it to a drop of blood, and observers still try to catch it near minimum, when its color record is at its strongest."
+    },
+    "NAME-TLyrae": {
+      "step": 3,
+      "rank": -2377,
+      "beat": "How cold: one of the reddest stars",
+      "question": "How can a star beside Vega look redder than almost anything in binocular range?",
+      "why": "Vega and T Lyrae share one binocular field and sit at opposite ends of the color record, which makes them the cleanest color test in the northern sky.",
+      "answer": "At about 2,400 K its surface is among the coolest measured, but most of the redness is a filter, carbon molecules in its atmosphere stripping out the blue. Even so, a surface that cool sheds only a sliver of the Sun's light from each square meter, so a star still visible from well over a thousand light-years must be vast.",
+      "story": "The two stars are linked by more than the field. Vega is the star astronomers chose as the zero of the color scale: by definition it is equally bright through the blue filter and the yellow one, and every other star's color index is how far it departs from Vega. T Lyrae departs about as far as any star binoculars can show, so in one view you are looking at the scale's origin and very nearly its far end."
+    },
+    "HR9004": {
+      "step": 3,
+      "rank": -3125,
+      "beat": "How cold: one of the reddest naked-eye stars",
+      "question": "What gives one of the reddest naked-eye stars its color?",
+      "why": "The cold end of the color record belongs to carbon stars, and TX Piscium is one of the few bright enough to see without optics.",
+      "answer": "Its surface is cool enough to glow orange on its own, and the spare carbon in its atmosphere then filters out the blue and violet, leaving a deep ruddy red. A star that cool can only be seen from about 800 light-years because it gives out thousands of Suns' worth of light, and a cool surface can manage that only by being immense.",
+      "story": "TX Piscium is near enough for its disk to be measured, and that gives a temperature the soot cannot fool. An interferometer finds the disk's width on the sky, instruments across the infrared collect all the light the star sends, and the law that ties a glowing body's output to its size and heat says how hot a surface that wide must be to give off that much. Done this way the answer does not depend on color at all, and it confirms that the reddest naked-eye stars really are among the coolest."
+    },
+    "STAR-LaSuperba": {
+      "step": 3,
+      "rank": -2720,
+      "beat": "How cold: a rare naked-eye carbon star",
+      "question": "How cool is the star Angelo Secchi named the superb one?",
+      "why": "Temperature records at the cold end are written in red, and La Superba, one of the very few carbon stars the unaided eye can catch, writes it boldly.",
+      "answer": "La Superba's surface runs at less than half the Sun's temperature, which puts it near the cold end of all the stars you can see. A surface that cool sheds little light per square meter, so for La Superba to reach your eye from about 800 light-years it must be spread over a vast area, and how vast takes its power and its temperature together.",
+      "story": "Angelo Secchi, sorting several thousand stars by their spectra in the 1860s, set the red stars with strange dark bands apart in a class of their own, and this was the finest example he found, hence the name. His classes were the first step toward reading temperature from starlight, long before anyone could say what the bands meant. They are now known to be carbon molecules, and the star's place at the cold end follows from the physics that Secchi's sorting first hinted at."
+    },
+    "HR3541": {
+      "step": 3,
+      "rank": -2625,
+      "beat": "How cold: red beside the Beehive",
+      "question": "Why does X Cancri stand out from the Beehive's white stars by color alone?",
+      "why": "Color records are easiest to judge beside a neutral reference, and X Cancri sits a few degrees from the Beehive, one of the redder stars within binocular reach.",
+      "answer": "It is cool and sooty at once, so its light starts out orange and then loses its blue on the way out, while the white stars around it are thousands of degrees hotter. A surface that cool gives out little light per square meter, so a star this far away that still shows up in binoculars must be spread over an enormous area.",
+      "story": "Astronomers turned the eye's color judgment into a number by measuring stars through a blue filter and a yellow one and taking the difference. For ordinary stars that difference rises smoothly as the surface cools, from slightly below zero for the hottest to near plus two for the coolest ordinary giants, so it reads like a thermometer scale. X Cancri runs well past the end of it, because carbon in its atmosphere removes blue light that temperature alone would leave, and the number overstates the chill."
+    },
+    "HR7220": {
+      "step": 3,
+      "rank": -2611,
+      "beat": "How cold: a deep-red carbon star",
+      "question": "How cool is the vividly red star in southern Aquila?",
+      "why": "The summer sky's cold end is held by a handful of carbon stars, and V Aquilae is the easiest of them to catch beside a white neighbor.",
+      "answer": "V Aquilae's surface sits at about 2,600 K, less than half the Sun's temperature, and its carbon makes it look redder still. A surface that cool must be enormous to be seen from about 1,400 light-years, and how enormous follows from setting its power against its heat.",
+      "story": "Carbon stars were recognized by their spectra long before anyone knew why they existed. Their light is crossed by bands from molecules of two carbon atoms, the same bands that give a candle flame's base its blue and many comets their green glow, and the strength of those bands sets a star's place in the carbon sequence. The reason came only with the physics of late stellar life: deep shell flashes make the carbon, and churning currents carry it up."
+    },
+    "HR1648": {
+      "step": 3,
+      "rank": -2680,
+      "beat": "How cold: Orion's red ember",
+      "question": "Which star in Orion runs even cooler than Betelgeuse?",
+      "why": "Betelgeuse is famous for its cool red glow, yet a much fainter star near Bellatrix runs cooler still, the best place in Orion to read the cold end of the thermometer.",
+      "look": "About 7° south-west of Bellatrix, Orion's western shoulder, look for an orange-red star among white field stars; a slight defocus boosts the color. Then glance at Betelgeuse: the famous red star looks paler orange beside this one, though it is far brighter.",
+      "answer": "W Orionis is roughly 900 degrees cooler than Betelgeuse at the surface, and the carbon in its atmosphere reddens it further. Each square meter that cool gives out only about a twentieth of the Sun's light, so a red star still visible in binoculars from well over a thousand light-years must be huge, as Betelgeuse is.",
+      "story": "Betelgeuse and W Orionis are cool in different chemistries. In Betelgeuse oxygen outnumbers carbon, so its spectrum is striped with bands of titanium oxide; in W Orionis carbon has won, and bands of carbon molecules take their place. Each set of bands deepens in a known way as the gas cools, which is how two red stars of different makeup can still be put on one thermometer."
+    },
+    "HR2405": {
+      "step": 3,
+      "rank": -2830,
+      "beat": "How cold: the carbon star of Auriga",
+      "question": "How cool is the orange-red star glowing between Capella and Gemini?",
+      "why": "Every color record needs a star whose temperature has actually been measured, and UU Aurigae, a carbon star in eastern Auriga, gives the winter sky a cold reading you can see.",
+      "look": "Between Capella and the Gemini twins, in eastern Auriga, one star among the white ones glows orange-red. Judge it with short glances, then swing to golden Capella to set the two colors side by side.",
+      "answer": "UU Aurigae's surface runs roughly half as hot as the Sun's, which is cold for a star, and its carbon pushes the color deeper red than heat alone would. At half the Sun's temperature each square meter gives out only about a sixteenth of the Sun's light, so a star bright enough to see from about 1,600 light-years must make up for it with an enormous surface.",
+      "story": "Your eye is an awkward thermometer at night. The cells that see color need a fair amount of light, while the night-vision cells that take over in the dark see only gray, so a star's tint shows best when it is bright enough to wake the color cells. Red stars add a twist, since if stared at for long they seem to gain on white neighbors, which is why observers judge them in short glances and why astronomers trust instruments, not eyes, for the number."
+    },
+    "HR8297": {
+      "step": 3,
+      "rank": -2847,
+      "beat": "How cold: a bright summer carbon star",
+      "question": "How cool is one of the brightest carbon stars of the summer sky?",
+      "why": "Carbon stars hold the cold end of the color record, and V460 Cygni is bright enough to show it in almost any binoculars.",
+      "answer": "V460 Cygni's surface sits at about 2,850 K, roughly half the Sun's temperature, and the carbon it has dredged up reddens its glow further. From about 1,900 light-years a star that cool reaches binoculars only by pouring out a great deal of light from a vast surface, and its power and heat together say how vast.",
+      "story": "A carbon star has no sharp surface. Its atmosphere fades out over a depth comparable to its own width, and the light we receive comes from different layers at different colors, so there is no single place to hold the thermometer. Astronomers define its temperature as that of a simple glowing ball with the same size and total output, and it is that figure, not any one layer's, that places a cool star on the record."
+    },
+    "HR9045": {
+      "step": 4,
+      "rank": 628,
+      "beat": "How big: a yellow hypergiant",
+      "question": "How big must a faint yellow star be to outshine half a million Suns?",
+      "why": "ρ Cassiopeiae looks like a faint yellowish star beside Caph, yet its power is among the greatest the eye can reach, and its plain color is what turns that power into a size.",
+      "look": "Start at Caph, the western end of Cassiopeia's W, and slide about two and a half degrees west-south-west to a faint yellowish star. Nothing in the view says that this is one of the most powerful stars your eye will ever catch, and its yellow, close to the Sun's own tint, is the clue that sizes it.",
+      "answer": "Its yellow says the surface runs nearly as hot as the Sun's, so each square meter shines about as brightly, and the only way to pour out some 676,000 Suns' worth of light is to have that much more surface. Measurements put it at about 630 times the Sun's width, a heavy star swollen near the end of its life, and since heavy stars burn out first, swollen giants like this are already a kind of clock.",
+      "story": "Rho Cassiopeiae sits in an awkward place for a star so luminous, a band of temperatures where the outer layers of a swollen hypergiant turn unstable. Every few decades it seems to bounce off that boundary, cooling and dimming as it throws off a shell, then warming again, and astronomers caught such episodes in the 1940s and more than once in recent decades. Its size is therefore a moving target, swelling and shrinking a little with each episode."
+    },
+    "STAR-Deneb": {
+      "step": 2,
+      "rank": 196000,
+      "beat": "How much light: the Summer Triangle's powerhouse",
+      "question": "How much more powerful is Deneb than Vega, the brighter-looking star?",
+      "why": "With distances known, the Summer Triangle's three corners can be ranked by the light they really make, and the faintest-looking corner wins by a margin the eye would never guess.",
+      "look": "Deneb marks the tail of Cygnus and the faintest-looking corner of the Summer Triangle. Hold it in the field, then glance at Vega, plainly brighter: you are comparing a nearby lamp with a lighthouse seen from across a sea.",
+      "answer": "Deneb pours out about 196,000 Suns' worth of light against Vega's roughly 51, close to four thousand times as much. A star can make that much light by running very hot or by being very large, and the number alone cannot say which.",
+      "story": "When parallax runs out, a star's spectrum can still vouch for its power. A supergiant's outer layers are so thin and so loosely held that its absorption lines come out unusually narrow, a trait Antonia Maury flagged in the 1890s and Ejnar Hertzsprung soon recognized as the mark of the most luminous stars. Deneb's lines are as narrow as they come, which places it among the brightest class of stars whatever its exact distance turns out to be."
+    },
+    "HR6262": {
+      "step": 2,
+      "rank": 851000,
+      "beat": "How much light: the faint star that wins",
+      "question": "How powerful is the fainter star of the pair in Scorpius' tail?",
+      "why": "Two stars sit side by side in the Scorpion's tail, and once their distances are known, the record for power goes to the one that looks fainter.",
+      "answer": "ζ¹ pours out about 851,000 Suns' worth of light, which makes it one of the most luminous stars the eye can see and one of the most massive in the Milky Way, about 36 Suns by one estimate. Power on that scale has to come from a fiercely hot surface, a vast one or both, and the light itself has to say which.",
+      "story": "ζ¹ Scorpii's own parallax is too small to measure well, so it borrows a distance from its family, the compact young cluster just to its north, whose many members pin down the range together. Dust along the way then has to be subtracted, since it dims the star by well over a magnitude and tints it toward pale yellow-white, and the size of the tint tells how much light was lost. Distance, dust and brightness together turn a modest-looking point into one of the galaxy's beacons."
+    },
+    "HR1713": {
+      "step": 2,
+      "rank": 83000,
+      "beat": "How much light: a powerhouse at Orion's foot",
+      "question": "How much light must Rigel pour out to rival Sirius from a hundred times farther?",
+      "why": "Brightness alone would crown Sirius, but once distances are known the power record looks very different, and Rigel, Orion's blue-white foot, is where the difference shows.",
+      "look": "Rigel is Orion's brilliant blue-white foot, diagonally across from Betelgeuse. Sirius, low to the south-east, outshines it only a few times over, even though Rigel lies about a hundred times farther away.",
+      "answer": "Rigel pours out about 83,000 times the Sun's light, thousands of times what Sirius manages, and nothing less would let it come so close to Sirius in our sky across a hundred times the distance. That number says how much light leaves the star but not how, by a hotter surface or a bigger one, and color is the clue that tells them apart.",
+      "story": "The arithmetic behind that number is the inverse-square law: light spreading from a star thins out over the surface of an ever larger sphere, so at three times the distance each square meter of your eye receives nine times less. Run the law backward with Rigel's measured faintness and distance and out comes its output, after one more correction for the ultraviolet the eye misses. The step is simple, but every power record on this ladder is built from it."
+    },
+    "HR6736": {
+      "step": 2,
+      "rank": 1000000,
+      "beat": "How much light: the lamp of the Lagoon",
+      "question": "How heavy are the stars that light the Lagoon Nebula?",
+      "why": "Power climbs steeply with mass, and the lamp inside the Lagoon Nebula, once its distance is known, turns out to be a pair of true heavyweights.",
+      "answer": "The heavier of the two holds over 50 Suns' worth of matter, and that weight is the engine of the pair's enormous output, enough to light up much of the nebula around it. Weight explains how much light a star makes, and how hot its surface must run to let all that light out is the next thing its light can tell.",
+      "story": "Heavy stars rarely live alone: surveys of the hottest stars find that most have a close companion, and more than two in three will swap matter with it at some point. That is a gift for the record books, because a pair is the only way to weigh a star directly, through its orbit. It also means many of the heaviest stars do not end as they began, since a partner can strip one star or feed the other."
+    },
+    "HD226868": {
+      "step": 2,
+      "rank": 427000,
+      "beat": "How much light: a giant beside a black hole",
+      "question": "What can be as heavy as twenty Suns and give off no light?",
+      "why": "Behind every power record stands a mass, and here the mass can be weighed twice, once in a visible giant star and once in the dark object it circles.",
+      "answer": "The dark partner is a black hole, the collapsed core of a massive star, and Cygnus X-1 was the first X-ray source widely accepted as one. Its visible partner, about 40 Suns' worth of star, pours out hundreds of thousands of Suns' worth of light, and whether that light comes from heat or from size is something only its spectrum can settle.",
+      "story": "The case rested on a minimum weight. The visible star's swing, timed from the Doppler shifts in its spectrum, sets a lower limit on the mass of whatever pulls it, and once the giant's own weight was estimated, the unseen partner came out heavier than any neutron star can be. Nothing that heavy and that dark could be an ordinary star, and Stephen Hawking, who had bet against the black hole, conceded in 1990."
+    },
+    "HR4210": {
+      "step": 2,
+      "rank": 5000000,
+      "beat": "How much light: a star near its limit",
+      "question": "Why does one of the most massive stars known look so modest tonight?",
+      "why": "At the top of the power records sit stars so heavy they can barely hold together, and Eta Carinae, a star that once nearly tore itself apart in a great eruption, is the most famous of them.",
+      "answer": "It hides behind its own wreckage, for the gas it threw off in the 1840s has cooled into dust that dims and reddens the star. Underneath, it is so luminous that its own light nearly overpowers its gravity, and because the dust hides its true color, how hot that buried surface runs is far harder to read than how much light it makes.",
+      "story": "The dust that hides Eta Carinae also gives its power away. The starlight it absorbs warms it, and it glows in the infrared, so adding up that infrared glow recovers nearly the whole output of the hidden star. Measured this way it comes to several million Suns, and in the late 1960s this patch of sky turned out to be the brightest source of mid-infrared light beyond the solar system."
+    },
+    "HR7763": {
+      "step": 2,
+      "rank": 600000,
+      "beat": "How much light: a heavyweight on a knife edge",
+      "question": "Why does a star as powerful as P Cygni live on a knife edge?",
+      "why": "Past a certain power a star's own light starts to push it apart, and P Cygni, a luminous blue variable, sits right on that edge.",
+      "look": "From Sadr, at the center of the Northern Cross, slide about 2½° south-west toward Albireo to a plain white point against the Milky Way. That faint, steady glow, reaching you from more than 5,000 light-years, is the measure of its power.",
+      "answer": "P Cygni makes nearly as much light as a star of its weight can make and still keep its outer layers, so its grip on them keeps slipping, and in 1600 it slipped far enough to flare to third magnitude. Whether all that light pours from heat or from sheer surface is a question its color can start to answer.",
+      "story": "P Cygni gave its name to a line shape that astronomers now look for in every windy star. Its spectral lines show bright emission from gas flowing out on all sides, with a dark notch on the blue edge where gas rushing toward us absorbs the star's light, and the width of that notch gives the wind's speed. Reading the same shape in distant stars is how astronomers measure how fast the heaviest stars are losing themselves."
+    },
+    "HR3207": {
+      "step": 2,
+      "rank": 300000,
+      "beat": "How much light: a pair with a stripped star",
+      "question": "What has Gamma Velorum's power already cost its smaller star?",
+      "why": "Weighing a star needs a partner swinging around it, and the brightest point of Vela is just such a pair, one of them already changed by its own power.",
+      "answer": "Its own fierce winds blew away its hydrogen, so what remains is the hot inner core of a once much heavier star. Power on this scale has a cost, since the stars that shine hardest also lose themselves fastest, and a star stripped to its core runs hotter than any color the eye can judge.",
+      "story": "Light pushes. Each photon carries a tiny momentum, and in the outer layers of a star this luminous, atoms soak up so many of them that the gas is driven off in a wind moving well over a thousand kilometers a second. Over a few million years such a wind can strip away much of a star's mass, and Gamma Velorum's Wolf-Rayet member, the brightest of its kind in the sky, is what remains after that stripping."
+    },
+    "HR2782": {
+      "step": 2,
+      "rank": 500000,
+      "beat": "How much light: one knot outshines a cluster",
+      "question": "How can one knot of stars outshine its entire cluster?",
+      "why": "Power climbs steeply with mass, and once the cluster's distance is known, τ Canis Majoris shows it at a glance, one bright point drowning out the family around it.",
+      "answer": "A few very heavy stars in one spot give out more light than all the lighter members together, enough to reach naked-eye brightness from about 4,000 light-years. That much light can come from a blazing surface or from a huge one, and the blue-white of this knot already hints which.",
+      "story": "The rule behind it is one of the steepest in astronomy: for stars in their steady adult life, output climbs roughly as the third or fourth power of mass. Double a star's mass and it shines about ten times brighter; make it twenty times heavier than the Sun and it outshines the Sun tens of thousands of times. The rule was found by weighing stars in pairs, from their orbits, and comparing their light, and this field shows its consequence at a glance."
+    },
+    "HR2827": {
+      "step": 2,
+      "rank": 40000,
+      "beat": "How much light: winter's hidden powerhouse",
+      "question": "How much light does the star at the tip of the Great Dog's tail give out?",
+      "why": "Power records depend on distance, and Aludra, one of the mightiest stars of the winter sky, shows how much an uncertain distance can move the total.",
+      "look": "Aludra is the blue-white star at the tip of the Great Dog's tail, south-east of Sirius. It looks like a supporting player beside Sirius, and only its distance, roughly two hundred times greater, says otherwise.",
+      "answer": "Aludra gives out about 40,000 times the Sun's light by one estimate, though its distance spans roughly 1,600 to 2,600 light-years and power grows with the square of it. Even at the low end it outshines Sirius around a thousand times over, and its crisp blue-white color hints that much of that power comes from heat.",
+      "story": "Measuring Aludra's parallax is harder than its brightness suggests. Its yearly shift is close to the limit of the Hipparcos satellite, and Gaia, far more precise for fainter stars, handles stars this bright poorly, because their light overflows its detectors. So the power of one of winter's mightiest stars still hangs on an older, rougher measurement, and the honest way to quote it is as a range."
+    },
+    "HR1895": {
+      "step": 2,
+      "rank": 200000,
+      "beat": "How much light: the Orion Nebula's power plant",
+      "question": "Which single star system lights most of the Orion Nebula?",
+      "why": "A nebula's glow is a meter for the power of the stars inside it, and once the nebula's distance is known, that meter points to one bright knot in the core.",
+      "answer": "θ¹ Orionis C does, a heavyweight pair at the heart of the nebula that supplies most of the ultraviolet keeping the cloud alight. Ultraviolet that strong can only pour from a very hot surface, so here the power record already points to the next number, a temperature, which a star's color is the first way to read.",
+      "story": "Every hydrogen atom the star strips must sooner or later recapture an electron and glow, so the nebula's total hydrogen light, or its radio glow, counts how many atom-stripping photons the star pours out each second. That count is a measure of power in the ultraviolet, where the eye sees nothing, and for the Orion Nebula it points to one star of the hottest kind. Astronomers use the same bookkeeping on nebulae in other galaxies to weigh up stars they cannot see one by one."
+    },
+    "HR5056": {
+      "step": 2,
+      "rank": 20500,
+      "beat": "How much light: Virgo's brightest star",
+      "question": "How powerful is the brightest star in Virgo?",
+      "why": "Within one constellation the brightness record is a fair place to start measuring power, and Virgo's goes to Spica, a lone blue-white light whose distance is well known.",
+      "answer": "Spica gives out about 20,500 times the Sun's light from about 250 light-years, most of it from the heavier of its two hot stars. A star can earn that output with heat or with size, and Spica's icy blue-white is the first clue to which.",
+      "story": "Spica's two stars are far too close to split in any ordinary telescope, yet the pair has been weighed, one of the first to be done this way. In the early 1970s an instrument in Australia that compared the flicker of starlight at two separate mirrors traced the orbit on the sky, while the shifting lines in the spectrum gave the speeds, and together they fixed the masses and the distance at once. With mass and distance in hand the power follows, and it confirms what the mass predicts."
+    },
+    "STAR-MuCep": {
+      "step": 4,
+      "rank": 970,
+      "beat": "How big: one of the largest naked-eye stars",
+      "question": "How wide is one of the largest stars you can see without optics?",
+      "why": "The Garnet Star is cool, deep red and still bright from far beyond the Sun's neighborhood, the combination that can only mean an enormous surface.",
+      "answer": "The Garnet Star spans somewhere between about 600 and 1,300 times the Sun's width, depending on its still-uncertain distance, which makes it one of the largest stars in the naked-eye sky. Stars swell like this only after a heavy core has burned through its hydrogen, and because heavier stars get there sooner, which stars have already swollen or vanished is a way of telling time.",
+      "story": "The Garnet Star's own parallax is too small and too unsteady to trust, since its vast, churning surface makes the center of its light wander, so its distance is usually borrowed from the group of young hot stars in Cepheus it travels with. That borrowed distance scales everything else: double it and the star's width doubles too. Its place in the size record therefore comes as a range, and it will narrow only as the family's distance does."
+    },
+    "HR8383": {
+      "step": 4,
+      "rank": 779,
+      "beat": "How big: a giant with an eclipsing partner",
+      "question": "How wide is the giant star that hides its partner for over a year?",
+      "why": "Sizes usually come from power and heat, but VV Cephei offers a second ruler, a partner star that disappears behind the giant every twenty years.",
+      "answer": "VV Cephei spans about 779 times the Sun's width, measured with an interferometer, which places it among the largest stars binoculars can show in the northern sky. Like every star near the top of this list it is a heavy star swollen in old age, and since heavy stars swell and die first, the giants a crowd has or has lost are a record of its age.",
+      "story": "Eclipses of this kind also let astronomers probe the giant from the inside. Before and after the full eclipse the blue star shines through the giant's thin outer layers, and its light picks up absorption from gas at one height after another, like a lamp seen through a thickening fog. Those spectra show how gradually the giant's edge fades away, which is why a supergiant's width depends on which layer one decides to call its surface."
+    },
+    "HD212466": {
+      "step": 4,
+      "rank": 1100,
+      "beat": "How big: one of the largest stars known",
+      "question": "Can binoculars show one of the largest stars in the whole galaxy?",
+      "why": "The galaxy's size record is shared by a few swollen supergiants, and one of them sits in southern Cepheus, plain and orange in binoculars.",
+      "look": "About two and a half degrees south-south-west of δ Cephei, binoculars show a modest orange point. The orange says cool, and a cool star that reaches binocular brightness from deep across the Milky Way can only be doing it with a vast surface.",
+      "answer": "RW Cephei is among the largest stars known anywhere in the Milky Way, and it looks this ordinary only because it lies so far away, deep in the dusty disk of the galaxy. Like all such giants it is a heavy star near its end, and that link between weight and a short life is what lets astronomers read the age of whole crowds of stars.",
+      "story": "There seems to be a ceiling on how big a star can get. Surveys of the most luminous stars find no cool supergiants above a certain output, a boundary named for Roberta Humphreys and Kris Davidson, because the very heaviest stars lose their outer layers in winds and eruptions before they can swell that far. The size record therefore belongs to stars just under that boundary, such as this one, and not to the heaviest stars of all."
+    },
+    "STAR-Betelgeuse": {
+      "step": 4,
+      "rank": 764,
+      "beat": "How big: the most famous giant",
+      "question": "Is Betelgeuse the largest star you can see, or only the most famous?",
+      "why": "Orion's red shoulder is cool yet brilliant, exactly the mix that forces an enormous surface, and it is the size record most people know.",
+      "answer": "It is one of the largest the naked eye can reach, but not the champion: VY Canis Majoris, a binocular star in the Great Dog, is nearly twice as wide, and the Garnet Star may also be bigger. Like them, Betelgeuse is a heavy star swollen late in life, and because heavy stars burn out first, which of them a crowd still holds tells how old the crowd is.",
+      "story": "Betelgeuse was the first star beyond the Sun whose width was ever measured. In 1920 Albert Michelson and Francis Pease mounted a steel beam across the top of the great Mount Wilson telescope, with mirrors that could be slid apart along it, and watched the interference pattern vanish when the mirrors stood about three meters apart, the separation that matched the star's disk. Every size record since descends from that experiment."
+    },
+    "STAR-Antares": {
+      "step": 4,
+      "rank": 680,
+      "beat": "How big: the red heart of Scorpius",
+      "question": "How does Antares measure up against the other giant stars of the sky?",
+      "why": "The summer sky's size record belongs to the red heart of Scorpius, a supergiant whose cool color and fierce brightness, taken together, can only mean a vast body.",
+      "answer": "Antares spans about 680 times the Sun's width, a close rival to Betelgeuse among the largest stars the naked eye can see. In the Sun's place its surface would reach beyond the orbit of Mars, and stars only swell like this in the last stretch of a heavy star's life, a short fuse that turns the stars of any crowd into a clock.",
+      "story": "Antares lies close to the path of the Moon, which every so often passes in front of it, and those occultations make a natural ruler. A point-like star vanishes behind the Moon's edge almost instantly, but a star with a measurable disk fades over a fraction of a second, and the timing of that fade, recorded with fast detectors, gives its width on the sky. Combine the width with the distance and the true size follows, an old method that interferometers have since confirmed."
+    },
+    "HD58061": {
+      "step": 4,
+      "rank": 1420,
+      "beat": "How big: the largest star in binocular reach",
+      "question": "Where is the largest star your binoculars can reach?",
+      "why": "Every size record so far has a bigger rival, and the chain ends here, at a faint orange point near τ Canis Majoris.",
+      "answer": "It is right here in Canis Major: VY Canis Majoris is about 1,420 times the Sun's width, nearly twice Betelgeuse, and in the Sun's place it would reach beyond Jupiter's orbit. Like every star this swollen it is heavy and near its end, for heavy stars live fast, and that rule turns the stars missing from a crowd into a measure of its age.",
+      "story": "Its size has swung widely as methods improved. Estimates of around two thousand times the Sun's width fell to a few hundred when one study found its surface warmer than assumed, and interferometer measurements later settled on a figure in between. A warmer surface shines more per square meter, so the same total light needs less surface, which means a size record leans on a temperature as much as on a distance."
+    },
+    "HR472": {
+      "step": 3,
+      "rank": -14840,
+      "beat": "How hot: hot poles, cool waist",
+      "question": "Is a star that spins this fast hotter at its poles than at its waist?",
+      "why": "Achernar spins so close to its limit that its outline is stretched, and a stretched star cannot have one temperature, a hard test for the color thermometer.",
+      "answer": "It is, because spin lifts its equator farther from the center, where gravity is weaker and the gas glows cooler, while the poles stay hot and bright. The temperature read from its color is an average over that lopsided surface, so turning it into a size needs a ruler laid in more than one direction.",
+      "story": "Hugo von Zeipel predicted in 1924 that a spinning star should glow hotter at its poles than at its stretched waist, but seeing it needs a star wide enough on the sky to show both. Achernar, near, bright and flattened, is one of the few, and interferometers in Chile, combining telescopes many meters apart, traced how its brightness falls away from pole to equator."
+    },
+    "HR3982": {
+      "step": 3,
+      "rank": -11535,
+      "beat": "How hot: a star with two temperatures",
+      "question": "Why does Regulus run hotter at its poles than at its waist?",
+      "why": "Regulus spins so fast that no single color describes it, which makes it the sharpest test of reading a temperature from starlight.",
+      "answer": "Spin flings its equator outward, farther from the star's center, where gravity is weaker and the gas runs thousands of degrees cooler than at the poles. A spinning star's temperature is an average over a lopsided surface, so its size, which comes from dividing its power by that heat, depends on where you lay the ruler too.",
+      "story": "In 1924 Hugo von Zeipel worked out that a spinning star must glow hotter and brighter where its gravity is strongest, at the poles, and dimmer at its stretched equator. Interferometers at the CHARA array confirmed it for Regulus in 2005, measuring both its squashed outline and the heat falling away from pole to waist. We see Regulus from the side, so its cooler waist fills more of the view and the star looks cooler overall than its poles really are."
+    },
+    "HR7557": {
+      "step": 3,
+      "rank": -7600,
+      "beat": "How hot: a star with two temperatures",
+      "question": "How can one star be two temperatures at once?",
+      "why": "Altair spins so fast that its surface has no single temperature, a puzzle for anyone trying to read heat from a star's color.",
+      "answer": "Its poles run hotter than its stretched equator, because gravity is weaker out at the waist and the gas there glows cooler and dimmer. The pictures of its surface that showed that difference also showed that a size can depend on where you lay the ruler, for Altair is wider across its waist than from pole to pole.",
+      "story": "Altair's disk is only about three thousandths of an arcsecond across, far too small for any single telescope. Interferometers get around that by combining light from telescopes hundreds of meters apart, which then see detail as fine as one giant mirror of that width would, and by moving the telescopes around they build up an image piece by piece. Altair, near and bright, was one of the first stars on which the trick produced an actual picture rather than a single size."
+    },
+    "HR1325": {
+      "step": 4,
+      "rank": 0.013,
+      "beat": "How big: the smallest star in reach",
+      "question": "What is the smallest star you can see with binoculars?",
+      "why": "Power and heat give size at the small end too, and the classic tiny star within binocular reach is the dead core that orbits 40 Eridani.",
+      "answer": "The smallest is 40 Eridani B, a white dwarf, the crushed core a star leaves after shedding its giant envelope, and its cooling clock says it became one only about 122 million years ago. Every white dwarf began as a star that ran out of fuel, and how soon that happens depends on its weight, which is why the dead and the swollen together tell the age of a crowd.",
+      "story": "Its smallness was confirmed by a test of Einstein's gravity. Light climbing out of a very compact star loses a little energy and is shifted toward the red, by an amount that depends on the star's mass divided by its radius, and in the 1950s Daniel Popper measured that shift in 40 Eridani B. With the mass known from the orbit, the shift gave a radius close to the Earth's, the same answer its faintness and heat had already implied."
+    },
+    "NGC5139": {
+      "step": 5,
+      "rank": 11500,
+      "beat": "How old: the heaviest ball of stars",
+      "question": "How heavy is the heaviest ball of stars in our galaxy?",
+      "why": "The richest crowd the Milky Way owns is the fuzzy star in Centaurus that the eye alone can find, and every one of its millions of stars is ancient.",
+      "answer": "Omega Centauri holds about 3.9 million Suns' worth of stars, more than four times the mass of 47 Tucanae, the runner-up in brightness. Every one of its heavy stars burned out billions of years ago, and among the survivors are pulsing stars that all shine with nearly the same true power, so finding their kind far away gives a distance.",
+      "story": "A cluster is weighed by how fast its stars move. In a heavy crowd, stars must swarm faster to avoid falling inward, so the spread of their speeds, measured from Doppler shifts along our line of sight and from their drift across the sky, gives the total mass inside their orbits. Omega Centauri's random speeds are among the highest of any globular, and the mass they imply is a record none of the galaxy's other clusters matches."
+    },
+    "NGC104": {
+      "step": 5,
+      "rank": 11750,
+      "beat": "How old: the second-brightest globular",
+      "question": "How old are the stars in the sky's second-brightest globular cluster?",
+      "why": "47 Tucanae, second only to Omega Centauri in brightness, packs its ancient stars so tightly that its core looks almost like a single star.",
+      "answer": "47 Tucanae is about 11.75 billion years old, an age read from the heaviest stars still burning core hydrogen, which are only now running out, since everything heavier burned out long before. Its brightest red giants have reached a limit every old star hits at nearly the same true power, and that shared ceiling, seen in a far galaxy, tells how far away it is.",
+      "story": "A crowd this rich is a place where stars meet. Near its packed center, stars pass close enough to swap partners, and dead stars captured into tight pairs are spun up by the matter they draw from their companions until they turn hundreds of times a second; radio telescopes have found dozens of these millisecond pulsars here. Such encounters are so rare in thin crowds that their number is itself a record of how densely the cluster is packed."
+    },
+    "NGC7789": {
+      "step": 5,
+      "rank": 1600,
+      "beat": "How old: the heaviest nearby open cluster",
+      "question": "Why has the heaviest open cluster near us survived for over a billion years?",
+      "why": "Most star families dissolve within a few hundred million years, so the open clusters that last are record holders, and none within thousands of light-years is heavier than Caroline's Rose.",
+      "answer": "Its own gravity is the reason, for nearly 18,000 Suns' worth of stars hold each other against the galactic tides that unravel lighter families. A census that complete also gives every kind of star in it a measured output, and stars of a known kind, found far beyond parallax, give their distances away.",
+      "story": "No one can weigh every member of a cluster, so its mass is built up from a census. Gaia counts the members bright enough to measure, and the well-known proportion of small, faint stars to large, bright ones, roughly the same in every family, fills in the many too faint to see. The total is then checked against how tightly the members are held, and for this cluster both routes point to an unusually heavy family."
+    },
+    "M11": {
+      "step": 5,
+      "rank": 310,
+      "beat": "How rich: one of the richest open clusters",
+      "question": "How many stars crowd into the Wild Duck Cluster?",
+      "why": "The record for crowding among open clusters goes to a handful of families, and the Wild Duck, so rich it is often mistaken for a globular, is one of them.",
+      "answer": "Gaia counts about 1,900 members bright enough to detect, packed into a fan only about 30 light-years across, and the true number is larger still. Its heaviest stars have already begun to swell and die, which dates it to a few hundred million years, and so many kinds of star at one distance make it a reference for stars too far for parallax.",
+      "story": "Counting a cluster's members is harder than it sounds when it lies in front of the Scutum star cloud, one of the densest stretches of the Milky Way. Gaia does it by motion: true members drift across the sky together, at the same rate and in the same direction, while background stars wander every which way, so the cluster stands out in a plot of motions even where it is lost among the stars. The spread of those shared motions then shows how strongly the members are held, a weight read from their speeds."
+    },
+    "M67": {
+      "step": 5,
+      "rank": 3870,
+      "beat": "How old: the oldest open cluster in Messier's list",
+      "question": "How old is the oldest open cluster in Messier's catalog?",
+      "why": "Among the open clusters in Messier's list, M67 has lost the most: every star much heavier than the Sun is already gone, and the family is still together.",
+      "answer": "M67 is about 3.9 billion years old, close to the Sun's own age, so its surviving stars are a family portrait of stars like ours. Stars of a known kind and a known age shine with a known power, and that is what lets the same kind of star, found much farther away, give away its own distance.",
+      "story": "This cluster owes its long life partly to its address. It sits well above the thin disk of the galaxy, out of the layer where giant gas clouds drift, and since passing clouds are what tear most clusters apart, a cluster that spends much of its time above them is spared most of the damage. Its orbit has kept it out of harm's way for billions of years, long enough for every heavy member to burn out while the family stayed together."
+    },
+    "M92": {
+      "step": 5,
+      "rank": 13800,
+      "beat": "How old: among the oldest clusters known",
+      "question": "How old are the stars in one of the oldest clusters in the Milky Way?",
+      "why": "M92, a compact glow in Hercules often passed over for its famous neighbor, has been losing its heavy stars for longer than almost anything in the galaxy.",
+      "answer": "M92 comes out at about 13.8 billion years by one careful study and 12.75 by another, so the safe claim is among the very oldest anywhere. Old crowds like this one also hold pulsing stars whose true power is fixed by their kind, and those stars carry distances out to other galaxies.",
+      "story": "An age this great is a test for cosmology as well as for stars. The universe itself, timed from the faint afterglow of the Big Bang, comes out at about the same figure, so the oldest clusters must have formed within its first few hundred million years, or the models of stars or of the universe are wrong somewhere. So far the two clocks, one read from starlight and one from the early universe, leave just enough room for each other."
+    },
+    "M30": {
+      "step": 5,
+      "rank": 13000,
+      "beat": "How old: among the oldest clusters dated",
+      "question": "How old is the small glow beside 41 Capricorni?",
+      "why": "Among 55 globular clusters dated in one large study, M30 came out among the oldest, so this small glow sits near the top of the age record.",
+      "answer": "M30 is about 13 billion years old, nearly three times the age of the Sun and Earth. Every star even a little heavier than the Sun has had time to live and die here, and the giants that remain all top out at nearly the same true brightness, a ceiling that serves as a ruler wherever old stars can be seen.",
+      "story": "Comparing clusters with one another is more precise than dating any one of them alone. If two clusters share the same chemistry, the difference between their turnoffs depends only on age, so a survey with a single camera and a single method can rank dozens of clusters even where the absolute ages remain uncertain. In such rankings the clusters poorest in heavy elements come out almost the same age, a hint that the galaxy built its first star cities in one early burst."
+    },
+    "M13": {
+      "step": 5,
+      "rank": 12000,
+      "beat": "How old: the great Hercules cluster",
+      "question": "How old are the half million stars of the great Hercules cluster?",
+      "why": "The age records of northern skies are held by globular clusters, and the Great Hercules Cluster, the brightest of them in the far-northern sky, is the grand example.",
+      "answer": "The Great Hercules Cluster is about 12 billion years old, dated from the point where its stars are just now leaving their steady middle age. Old stars of a known kind shine with a predictable power, and spotting their kind in another galaxy is how that galaxy's distance can be read.",
+      "story": "In the 1990s globular clusters caused a crisis: their turnoffs implied ages of fifteen billion years or more, older than the universe was thought to be. Part of the fix came from Hipparcos, whose parallaxes of nearby old stars showed the clusters to be somewhat farther, and so their stars brighter, than assumed; brighter turnoff stars are heavier, and heavier stars mean a younger cluster. The cluster ages came down, the universe turned out older than thought, and the two now agree."
+    },
+    "M22": {
+      "step": 5,
+      "rank": 12500,
+      "beat": "How old: the first globular cluster found",
+      "question": "How old is the first globular cluster anyone ever discovered?",
+      "why": "Abraham Ihle stumbled on this ball of stars in 1665, and it holds two records at once, the first globular ever found and one of the nearest and brightest.",
+      "answer": "The Sagittarius Cluster is nearly three times as old as the Sun, a figure read from the faintest stars still burning hydrogen. Its old giants and pulsing stars shine with a power the cluster's distance pins down, and stars of known power are exactly what it takes to measure much farther things.",
+      "story": "This cluster is a harder clock to read than its brightness suggests. It lies toward the crowded center of the galaxy behind a patchy veil of dust that dims some of its stars more than others, and its members may not all share one chemistry, since some studies find two groups with different amounts of heavy elements. Astronomers correct for the dust star by star before reading the turnoff, and the age that survives those corrections is what the record rests on."
+    },
+    "NGC6397": {
+      "step": 5,
+      "rank": 11470,
+      "beat": "How old: a clock of dead stars",
+      "question": "Why does being the second-nearest globular make this cluster such a good clock?",
+      "why": "Nearness and age meet here, since NGC 6397 is the second-nearest globular cluster, close enough for its faintest dead stars to be seen and timed.",
+      "answer": "Only in a cluster this close, about 8,100 light-years away, can the very faintest white dwarfs be found, the ones that have been cooling longest. They have been fading for about 11.5 billion years, and the same nearness that makes the clock readable also shows how bright old stars truly are, a ruler for crowds much farther away.",
+      "story": "White dwarfs make a good clock because they are simple. With no fuel left, each one just radiates away the heat it was born with, at a rate physics can predict, and deep inside the oldest ones the carbon and oxygen slowly freeze into a crystal, releasing heat that briefly slows their fading. Models must include that delay, and Gaia has since seen its signature among nearby white dwarfs, which is why the cooling clock is trusted for clusters like this one."
+    },
+    "M4": {
+      "step": 5,
+      "rank": 11500,
+      "beat": "How old: the nearest globular cluster",
+      "question": "How far is the nearest globular cluster, and how old are its stars?",
+      "why": "The age records belong to globular clusters, and the nearest one of all sits about a degree from Antares, a perfect place to measure one up close.",
+      "answer": "M4 lies about 6,000 light-years away, roughly ten times farther than Antares beside it, and its stars are about 11.5 billion years old, dated both from the stars now leaving middle age and from the coolest white dwarfs. Two clocks agreeing is what makes the age trustworthy, and stars this well measured show what old stars truly shine like, which is how much farther ones are ranged.",
+      "story": "Being the nearest does not make it easy to measure. It lies behind the dusty clouds around Antares, and that dust is unusual, dimming light more for the reddening it causes than ordinary dust does, so the standard correction would put the cluster at the wrong distance. Its pulsing stars, measured in infrared light where dust matters little, helped settle the figure, and with the distance firm the turnoff gives a trustworthy age."
+    },
+    "M15": {
+      "step": 5,
+      "rank": 12750,
+      "beat": "How old: one of the most iron-poor globulars",
+      "question": "What does a star cluster's lack of iron say about its age?",
+      "why": "Iron is made in stars and scattered when they die, so a cluster with almost none is a record of how early it formed, and the Great Pegasus Globular is one of the poorest known.",
+      "answer": "It says the cluster formed early, and the dying of its stars agrees, putting it at about 12.75 billion years. Old, iron-poor stars like these shine with a predictable power, and a star of known power, seen faint, tells you how far away it is.",
+      "story": "A star's iron is counted from the strength of the iron lines in its spectrum: the fewer iron atoms in its atmosphere, the fainter those lines, and stars in this cluster show them so weakly that they barely register beside the Sun's. Because each generation of stars adds iron to the galaxy's gas, a low count is a calendar, though only a relative one: it says early, and the turnoff says how early."
+    },
+    "HD140283": {
+      "step": 5,
+      "rank": 12000,
+      "beat": "How old: one of the oldest single stars",
+      "question": "How old is one of the oldest stars whose age is well measured?",
+      "why": "Age records usually belong to whole clusters, but this lone faint star in Libra rivals the oldest of them, a visitor from the galaxy's youth.",
+      "answer": "HD 140283 is about 12 billion years old, give or take half a billion, as old as the most ancient globular clusters and far older than any star around it. Its age hangs on its distance, and the reasoning can also run backward: once old stars of its kind have a known power, finding them far away gives a distance.",
+      "story": "Most lone stars cannot be dated well, but this one is caught at a revealing moment. It has just left its steady hydrogen-burning life and is crossing the brief subgiant stage, where a star's brightness depends sharply on how long it has lived, so a precise distance, and therefore a precise true brightness, translates almost directly into an age. That is why its age record rests on a parallax as much as on any model."
+    },
+    "M37": {
+      "step": 5,
+      "rank": 500,
+      "beat": "How old: the richest of Auriga's three",
+      "question": "Which of Auriga's three Messier clusters is the richest, and the oldest?",
+      "why": "Auriga holds three clusters in a short sweep, and M37 takes both local records, the most stars and the most years.",
+      "answer": "M37 wins both, and binoculars show the age as a grainy glow where its younger neighbors sparkle: its bright blue stars are long gone, leaving thousands of modest stars under a few orange giants. A family that large at one known distance is a full set of reference lamps, every kind with its true output measured, ready to be recognized where parallax cannot reach.",
+      "story": "Richness and age go together for a reason. A cluster loses members steadily to passing clouds and the galaxy's tides, and a poor one is gone within a few hundred million years, so only families born rich survive long enough to grow old. This cluster started with enough stars to outlast that erosion, which is why the oldest of Auriga's three is also the most populous."
+    },
+    "M3": {
+      "step": 5,
+      "rank": 11750,
+      "beat": "How old: a crowd full of pulsing stars",
+      "question": "Why are M3's many pulsing stars a sign of its great age?",
+      "why": "M3 holds a record for the number of its stars caught in the act of pulsing, and those throbbing stars matter far beyond the cluster itself.",
+      "answer": "At least 274 of its stars are known to vary, most of them RR Lyrae stars. Each was born a little lighter than the Sun, has already been a giant and now burns helium, a stage that stars so light reach only in the oldest crowds. So their presence dates the cluster, and since stars of their kind all shine with nearly one true brightness, each of them is a ruler wherever it is found.",
+      "story": "Solon Bailey sorted this cluster's pulsers by the shapes of their light curves around 1900, and his classes are still in use. The stars throb because a layer of their outer gas acts like a valve, trapping heat as it is squeezed and letting it go as it expands, the same engine that drives the brighter Cepheids."
+    },
+    "M31": {
+      "step": 6,
+      "rank": 2482000,
+      "beat": "How far, run backward: the farthest naked-eye object",
+      "question": "How far away is the most distant thing most people can see unaided?",
+      "why": "Every rung so far turned a distance into something else, and the last one runs backward, using stars of known power to reach a distance no parallax could.",
+      "answer": "The Andromeda Galaxy lies about 2.5 million light-years away, so the light reaching you set out before our species existed. Its pulsing stars, whose power the lower rungs taught astronomers to read, look so faint that only a distance in the millions of light-years could explain them.",
+      "story": "The figure doubled once. In the early 1950s Walter Baade found that astronomers had been mixing two kinds of pulsing stars with different brightness rules, and that Andromeda's Cepheids were brighter than assumed; brighter stars that look equally faint must be farther away, so the galaxy's distance, along with the size of the known universe, roughly doubled. Today eclipsing pairs of stars in Andromeda give a geometric check that agrees with the Cepheids."
+    },
+    "M33": {
+      "step": 6,
+      "rank": 2740000,
+      "beat": "How far, run backward: the eye's farthest reach",
+      "question": "How far can the unaided eye reach on the very darkest night?",
+      "why": "Stars of known power, seen faint, give a distance, and Triangulum, Andromeda's smaller neighbor, is the farthest place the unaided eye can follow that rule.",
+      "answer": "The Triangulum Galaxy lies about 2.7 million light-years away, a little beyond Andromeda, a distance measured from 154 Cepheids timed by Hubble. Only an exceptionally dark site lets the eye pick it up, so the farthest record you can claim depends as much on your sky as on the galaxy.",
+      "story": "Triangulum has also been ranged without any pulsing stars. Radio telescopes linked across continents followed clouds of water vapor glowing like natural lasers in two of its star-forming regions, and as the galaxy turned, their drift across the sky could be compared with their speeds from the Doppler effect. The two match at only one distance, and it lands close to the Cepheid figure, the kind of agreement that makes a distance record trustworthy."
+    },
+    "LMC": {
+      "step": 6,
+      "rank": 162000,
+      "beat": "How far, run backward: the anchor galaxy",
+      "question": "How far away is the galaxy that anchors the whole cosmic distance ladder?",
+      "why": "A star of known power, seen faint, gives a distance, and every such ruler beyond our galaxy is anchored on one well-measured neighbor, the Large Magellanic Cloud.",
+      "answer": "The Large Magellanic Cloud lies about 162,000 light-years away, roughly ten times as far as the bright globular clusters around our galaxy, yet binoculars still pick out its clusters and the Tarantula Nebula. Those knots are star cities of another galaxy, and the Tarantula is the brightest star-forming region in our whole galactic neighborhood.",
+      "story": "The Cloud's distance has also been measured with a single exploding star. When the supernova of 1987 lit up a ring of gas around it, the ring did not brighten all at once: light reached its near side first and its far side later, and the delay gave the ring's true size in light-days. Comparing that with the ring's size in Hubble's images gave a distance, a geometric check on the anchor of the cosmic ladder."
+    },
+    "SMC": {
+      "step": 6,
+      "rank": 204000,
+      "beat": "How far, run backward: where the rule was found",
+      "question": "Where did astronomers learn to measure the farthest distances of all?",
+      "why": "The ladder's last step needs stars whose power can be read from afar, and the rule that made that possible was found in this faint cloud of stars in 1912.",
+      "answer": "In the Small Magellanic Cloud, about 204,000 light-years away, where Henrietta Leavitt found that a Cepheid's rhythm gives away its power. With that rule, the faintness of a pulsing star became a measure of its distance, and the distance record could finally leave the Milky Way.",
+      "story": "Leavitt's rule told how much brighter one Cepheid was than another, but not how bright any of them truly was, so the Cloud's distance was still unknown. Within a year Ejnar Hertzsprung calibrated it with Cepheids in our own galaxy, and his first figure came out far too small, partly from a slip and partly from dust no one yet allowed for. The rule was right from the start; it took decades of better calibration to make the ruler read true."
+    },
+    "NGC5128": {
+      "step": 6,
+      "rank": 12390000,
+      "beat": "How far, run backward: a giant elliptical",
+      "question": "How far away is the faint glow just north of Omega Centauri?",
+      "why": "From a star city of our own galaxy to a whole giant galaxy is one binocular hop, and Centaurus A is ranged the backward way, from dying stars whose true brightness is known.",
+      "answer": "Centaurus A lies about 700 times farther than Omega Centauri, which looks so much brighter beside it, so the faint smudge must be a giant indeed, the nearest giant elliptical galaxy in the sky. The two glows in one sweep span the whole ladder, from a cluster inside our galaxy to a galaxy far beyond our own group.",
+      "story": "One of the ways to range a galaxy of old stars uses their dying shells. In any large galaxy the brightest planetary nebulae, glowing in the green light of oxygen, top out at nearly the same true brightness, so finding the bright end of their numbers gives a distance, and for Centaurus A it agrees with the other methods. A galaxy with no pulsing stars of the usual kind can still be measured, as long as its stars keep dying in a recognizable way."
+    },
+    "M81": {
+      "step": 6,
+      "rank": 11840000,
+      "beat": "How far, run backward: beyond our own group",
+      "question": "How far beyond Andromeda can binoculars reach to find a whole galaxy?",
+      "why": "Andromeda belongs to our own small group of galaxies, and Bode's Galaxy, one of the brightest beyond it, is ranged by stars whose power is already known.",
+      "answer": "Bode's Galaxy lies about 11.8 million light-years away, nearly five times as far as Andromeda, and it still shows as a clear oval with a starlike core. Its light set out about 12 million years ago, so the farthest record here is also the oldest light your eyes will catch tonight.",
+      "story": "The supernova that flared in this galaxy in the early 1990s gave a distance of its own. Radio telescopes linked across the Earth watched its expanding shell grow month by month, while spectra gave the speed of the expanding gas, and a speed matched to a growth on the sky fixes the distance. It broadly agrees with the Cepheids and the red giants, three independent rungs landing close to one number."
+    },
+    "NGC253": {
+      "step": 6,
+      "rank": 11400000,
+      "beat": "How far, run backward: a starburst galaxy",
+      "question": "How far away is the silvery streak low in Sculptor?",
+      "why": "The top rung of the ladder in this part of the sky lies beyond our own group of galaxies, in an edge-on spiral ranged by stars of known power seen very faint.",
+      "answer": "The Sculptor Galaxy lies about 11.4 million light-years away, more than four times the distance of Andromeda, so the light in your binoculars left it long before the first humans. It shows so well because it is a big spiral, and its core is also making stars at a furious rate.",
+      "story": "The Sculptor Galaxy belongs to one of the nearest groups of galaxies beyond our own, a loose gathering strung out along our line of sight. It also lies almost exactly toward the south pole of the Milky Way, where little of our galaxy's dust is in the way, so its light reaches us with hardly any dimming to correct for. That clean view makes its distance one of the steadier ones at this range."
+    },
+    "M83": {
+      "step": 6,
+      "rank": 16050000,
+      "beat": "How far, run backward: the Southern Pinwheel",
+      "question": "How far away is the first galaxy ever found beyond our own group?",
+      "why": "Found in 1752, long before anyone knew what galaxies were, this face-on spiral turned out to lie far beyond Andromeda, once stars of known power could be picked out in it.",
+      "answer": "The Southern Pinwheel lies about 16 million light-years away, more than six times as far as Andromeda, a distance measured with its brightest red giants and its Cepheids. Its discoverer saw only a faint round glow, and it took the whole ladder of records, from parallax to pulsing stars, to put a number on it.",
+      "story": "Galaxies gather in groups held by their mutual gravity, and ours, the Local Group, is dominated by the Milky Way and Andromeda. The Southern Pinwheel belongs to a different gathering, the group around Centaurus A, whose members share a distance and move together through space. Recognizing that a galaxy lies in another group needs its distance first, which is why the maps of nearby groups came only after the ladder reached this far."
+    },
+    "M49": {
+      "step": 6,
+      "rank": 54470000,
+      "beat": "How far, run backward: into the Virgo Cluster",
+      "question": "How far does the light of this faint round glow in Virgo travel?",
+      "why": "The distance record ends in a crowd of galaxies, the Virgo Cluster, and M49, the first of its members ever found, was ranged by rulers each calibrated on the rung below.",
+      "answer": "M49 lies about 55 million light-years away, more than twenty times as far as Andromeda, and it still shows as a small round glow because it is a giant, one of the largest galaxies in the Virgo Cluster. Few things binoculars can show lie farther.",
+      "story": "Galaxies this far are ranged by rungs that each lean on the one below. The Hubble Space Telescope found Cepheids in spiral galaxies of the Virgo Cluster in the 1990s, and those calibrated the smoother methods that work for giant ellipticals like this one, whose old stars do not pulse. The whole cluster lies at roughly one distance, so a ruler checked on one member serves for the rest."
+    },
+    "M54": {
+      "step": 6,
+      "rank": 85700,
+      "beat": "How far, run backward: a cluster from another galaxy",
+      "question": "How far away is the faint smudge near the bottom of the Teapot?",
+      "why": "On summer nights the distance record needs no bright galaxy, for this small globular belongs to another galaxy, ranged by old stars whose true power is known.",
+      "answer": "M54 lies about 86,000 light-years away, so its light passes beneath the galaxy's crowded central bulge on its way to you, and it is visible at all only because it is enormous. The galaxy it belongs to is being torn apart by our own, so tonight's farthest record is a cluster caught in the act of changing galaxies.",
+      "story": "This cluster's membership in another galaxy rests on its motion. Its stars recede from us at about the same speed as the stars of the faint dwarf galaxy around it, far faster than the Milky Way's own stars in that direction, and it lies at the same distance, deep behind our galaxy's center. A cluster that matches a galaxy in both distance and speed belongs to it, which is how a summer globular turned out to be a visitor."
+    },
+    "M53": {
+      "step": 6,
+      "rank": 60300,
+      "beat": "How far, run backward: the galaxy's outskirts",
+      "question": "How far out in the galaxy's halo does this small glow in Coma lie?",
+      "why": "Not every distance record needs another galaxy: M53 orbits in the outer halo of our own, so far out that only old stars of known power can range it.",
+      "answer": "M53 lies about 60,000 light-years out, roughly two and a half times as far as the Great Hercules Cluster, so even its half a million Suns' worth of stars shrink to a small haze. The spring sky looks out of the Milky Way's disk here, and M53 marks how far our galaxy's outskirts reach into that darkness.",
+      "story": "Clusters like this one first showed astronomers where the center of the galaxy is. In 1918 Harlow Shapley measured the distances of dozens of globulars and found them gathered around a point far off in Sagittarius rather than around the Sun, and he reasoned that they swarm around the galaxy's true center. This cluster, far above the plane of the galaxy, is one of the outlying ones that showed how far the swarm extends."
+    },
+    "M94": {
+      "step": 6,
+      "rank": 15200000,
+      "beat": "How far, run backward: a galaxy beyond our group",
+      "question": "How far away is the fuzzy star three degrees north of Cor Caroli?",
+      "why": "In the spring sky the distance record leaves our galaxy altogether, and M94 is ranged the backward way, by stars of known power seen very faint.",
+      "answer": "M94 lies about 15 million light-years away, roughly six times as far as Andromeda, so the faint fuzzy star in your binoculars is a whole spiral galaxy seen across that gulf. It shows at all because so much of its light is gathered into a small, bright center.",
+      "story": "Its distance comes from its old red giants. A red giant brightens as it ages until its core grows hot enough to ignite helium, and that ignition happens at nearly the same core mass in every old star, so the brightest red giants in any galaxy top out at one true brightness. Hubble picked out where this galaxy's red giants stop climbing, and how faint that ceiling looks gives the distance."
+    },
+    "NGC3532": {
+      "step": 5,
+      "rank": 300,
+      "beat": "How rich: the Wishing Well Cluster",
+      "question": "How rich is the Wishing Well Cluster, and why is it still a cluster at all?",
+      "why": "Three degrees from the Carina Nebula lies one of the richest open clusters known, and its record is less about any single star than about how many have stayed together.",
+      "answer": "Gaia counts about 3,400 members, some 4,900 Suns' worth of stars, and that sheer weight has kept the family recognizable for about 300 million years, long after a lighter cluster would have dissolved. Its heavy blue stars are already gone, which is how that age is read, and the survivors, all at one known distance, show what each kind of star truly shines like.",
+      "story": "Every cluster has a boundary set by a tug of war: inside it the family's own gravity wins, and outside it the galaxy's tides take over and pull stragglers away. The heavier the cluster, the wider that boundary, so a rich family can keep members that have wandered far from its center. Astronomers find the boundary by counting how the density of members falls off with distance from the middle and where it stops falling."
+    },
+    "HR4763": {
+      "step": 4,
+      "rank": 82,
+      "beat": "How big: one of the widest-looking stars",
+      "question": "Why does Gacrux show one of the widest star disks in the whole sky?",
+      "why": "Gacrux, the orange star at the top of the Southern Cross, adds a twist to the size record: how big a star looks depends on its distance as well as its body.",
+      "look": "Gacrux is the head of the Cross, the one star of the five with a clear orange tint. Its disk is under a thirtieth of an arcsecond across, far too small for any binoculars, so what you see is a point, and the record has to be read from its light.",
+      "answer": "Gacrux is the nearest of the cool red giants, and that rare pairing of a swollen body with a short distance makes it look wider from here than almost any other star in the sky. Like every giant it is a star in its later years, swollen once its core ran out of hydrogen, and when that happens depends on its weight, which is how the giants of a crowd help date it.",
+      "story": "Even the widest-looking stars are points to a single telescope, so astronomers measure them by combining telescopes many meters apart, or by timing how quickly a star winks out when the Moon passes in front of it. Gacrux lies too far south for the Moon ever to cover it, so its width rests on its brightness and its temperature, which together fix how much glowing surface it must have."
+    },
+    "HR1612": {
+      "step": 4,
+      "rank": 130,
+      "beat": "How big: a giant with a passing partner",
+      "question": "How wide is the orange giant that hides its partner in the Kids?",
+      "why": "Sizes usually come from power and heat, but ζ Aurigae, in the little triangle of the Kids beside Capella, offers a second ruler in its eclipses.",
+      "answer": "The giant spans about 130 times the Sun's width, and the eclipses check that figure directly: the small star's known speed, multiplied by the time it stays hidden, gives the width of whatever hides it. Like every giant this size it is a heavy star in its later years, and because heavy stars reach that stage first, the giants a crowd still holds help date it.",
+      "story": "An eclipse measures a star in kilometers rather than in angles on the sky, so it needs no distance at all, a welcome check on sizes built from power and heat. ζ Aurigae gave its name to a small family of such pairs, among them VV Cephei and 31 Cygni, that astronomers use to test how far a supergiant's thin outer layers really reach."
+    },
+    "HR1790": {
+      "step": 2,
+      "rank": 7120,
+      "beat": "How much light: Orion's nearer shoulder",
+      "question": "Do Orion's two shoulders, so alike in brightness, make the same amount of light?",
+      "why": "Bellatrix and Betelgeuse look nearly equal in brightness, and only their distances can say which one is working harder.",
+      "answer": "They do not, for Bellatrix pours out about 7,000 times the Sun's light, while Betelgeuse, about twice as far, must make many times more to look as bright. Two stars can match in looks and differ widely in power, and whether that power comes from heat or from size is written in their colors, blue-white for one and orange for the other.",
+      "story": "Comparing two stars' power takes more than their distances. Betelgeuse sends much of its light out as infrared and Bellatrix much of its as ultraviolet, both invisible, so each visible glow has to be scaled up before the totals can be compared, and the corrections run in opposite directions."
+    },
+    "HR2693": {
+      "step": 4,
+      "rank": 191,
+      "beat": "How big: the Great Dog's yellow supergiant",
+      "question": "How big must Wezen be, with a surface barely hotter than the Sun's?",
+      "why": "Wezen, the creamy star of the Great Dog's hindquarters, has a surface close to the Sun's in heat, so its great power has to come from somewhere else.",
+      "answer": "Each square meter of Wezen shines only a little more than the Sun's, so its 37,000 Suns' worth of light has to pour from a vast surface, and the arithmetic gives a body roughly 190 times the Sun's width. Like every swollen supergiant it is a heavy star late in life, and because heavy stars reach that stage first, giants like it are a clock for any crowd that holds them.",
+      "story": "Yellow supergiants are caught in passage. A heavy star swelling from a hot blue youth toward a cool red old age crosses this band of temperatures quickly, so few stars are seen in it at any moment, which is why most of the sky's largest stars are red and a yellow one this bright is worth a long look."
+    },
+    "HR2773": {
+      "step": 4,
+      "rank": 235,
+      "beat": "How big: the orange supergiant of Puppis",
+      "question": "How large is the deep orange star that glows beside Naos?",
+      "why": "Pi Puppis glows deep orange about ten degrees from Naos, a cool star beside a hot one, and that coolness is what turns its power into a size.",
+      "answer": "Put in the Sun's place, its surface would reach a little past the orbit of the Earth, which is what a surface that cool needs to give out as much light as it does. Because heavier stars reach this swollen stage sooner, which stars a crowd has swollen or lost is a measure of its age.",
+      "story": "When a heavy star's core runs out of hydrogen, the core shrinks and heats while the layers above it do the opposite, swelling and cooling, as if the star were turning itself inside out. The energy still has to escape, so the surface grows until enough cool square meters can carry it, and the star turns from blue-white to orange in a brief chapter of its life."
+    },
+    "HR7796": {
+      "step": 2,
+      "rank": 33800,
+      "beat": "How much light: the heart of the Northern Cross",
+      "question": "How much light does Sadr, at the heart of the Northern Cross, really make?",
+      "why": "Sadr looks like an ordinary second-magnitude star, and only its distance, read against its brightness, shows what it really is.",
+      "look": "Sadr is the star where the long and short bars of the Northern Cross meet, a pale yellowish point in a field crowded with fainter Milky Way stars. Its tint is close to the Sun's, which makes what it is doing all the more surprising.",
+      "answer": "Sadr pours out roughly 34,000 times the Sun's light, a figure its faintness hides until the distance is known. Power on that scale might come from heat or from size, and Sadr's yellowish tint, close to the Sun's own, already hints which.",
+      "story": "Turning a glow into a power takes two corrections besides the distance. Dust in the crowded plane of the galaxy dims and reddens Sadr's light on its way to you, so some of the loss has to be added back, and the light the eye cannot see, ultraviolet and infrared, has to be counted too. For a yellow star like Sadr the second correction is small, since its light peaks close to where our eyes are most sensitive."
+    },
+    "HR8262": {
+      "step": 3,
+      "rank": -3373,
+      "beat": "How cold: a pulsing red giant",
+      "question": "How cool is the reddish star pulsing beside ρ Cygni?",
+      "why": "A cool surface is where color says the most, and W Cygni, a red giant about ten degrees east of Deneb, wears its temperature openly.",
+      "look": "Center ρ Cygni, about ten degrees east of Deneb, and W Cygni is the reddish star just to its south-east. Set its orange-red against yellowish ρ Cygni beside it, and the color gap you see is a temperature gap.",
+      "answer": "Its surface runs at about 3,400 K, a little over half the Sun's temperature, so each square meter of it gives out only about a tenth of the Sun's light. A star that cool still shining in binoculars from about 630 light-years must be spread over a vast surface, and its power and heat together say how vast.",
+      "story": "A star like this does not hold one temperature for long. As W Cygni swells and shrinks, its surface warms and cools with it, and in the cooler phases the bands of molecules in its spectrum deepen and dim its visible light. A single temperature quoted for it is an average over the cycle, read from how deep those bands run."
+    },
+    "M35": {
+      "step": 5,
+      "rank": 150,
+      "beat": "How old: the cluster at Gemini's feet",
+      "question": "How old is M35, and do two different clocks agree on it?",
+      "why": "M35, at Gemini's feet, is young enough that its age has been read two ways, from the stars it has lost and from how fast its Sun-like stars still spin.",
+      "answer": "Both clocks agree that it is a young crowd, a little older than the Pleiades: its heaviest blue stars are already gone, and its Sun-like stars have only begun to brake. With M35's stars at one known distance, each kind has a measured output, and the same kinds looking much fainter in NGC 2158 are one way that cluster's distance is read.",
+      "story": "The faint patch beside it, NGC 2158, looks like a junior companion but lies several times farther away and is roughly ten times older. Side by side they show the age rule at work: M35 still holds hot blue-white stars, while its old neighbor's brightest members have long since turned yellow and orange."
+    },
+    "M39": {
+      "step": 5,
+      "rank": 430,
+      "beat": "How old: a loose crowd near Deneb",
+      "question": "How long can a small, loose crowd like M39 hold together?",
+      "why": "M39, a short sweep from Deneb, is a light and loosely held family, a useful contrast to the rich crowds that last for billions of years.",
+      "answer": "M39 has already held together for a few hundred million years, but a family this light is being pulled apart by the galaxy's tides and will probably scatter long before the rich crowds grow old. Until it does, its roughly five hundred members, all at one measured distance, are a ready-made sample of what each kind of star gives out.",
+      "story": "A cluster keeps only the members its own gravity can hold against the galaxy's pull, and that tug of war sets an edge around it. Each close passage between two members flings one of them a little faster, and stars nudged past the edge drift off in long trails, which Gaia has traced around the Hyades and the Beehive. The lighter the cluster, the nearer its edge and the faster it leaks."
+    },
+    "M44": {
+      "step": 5,
+      "rank": 637,
+      "beat": "How old: the Beehive",
+      "question": "Is the Beehive the same age as the Hyades, and how could anyone tell?",
+      "why": "The Beehive is one of the nearest and brightest crowds in the sky, close enough that binoculars show the very stars its age is read from.",
+      "answer": "It very nearly is, for in both families the stars now swelling into orange giants have the same weight, and stars of one weight take the same time to reach that stage. With its distance pinned down, the Beehive also gives each of its kinds of star a true output, a standard that any farther cluster holding the same kinds can be measured against.",
+      "story": "Nearly every age record is read from a chart of color against brightness. A cluster's stars lie along one band until, at a certain brightness, the band bends off toward the giants, and that bend marks the heaviest stars still burning hydrogen in their cores. The older the cluster, the fainter and redder the bend, and for the Beehive it falls among white stars two to three times as heavy as the Sun."
+    },
+    "M93": {
+      "step": 5,
+      "rank": 740,
+      "beat": "How old: the arrowhead of Puppis",
+      "question": "How long ago did M93 lose its blue stars?",
+      "why": "M93 is a compact arrowhead of stars in Puppis, old enough that its brightest members are no longer the blue-white stars a young family shows.",
+      "answer": "Its family is about 740 million years old, long enough for every star much heavier than two Suns to burn out. With both its age and its distance measured, its survivors serve as reference stars, each kind with a known output, for families too far away for parallax.",
+      "story": "A heavier star carries more fuel but burns it so much faster that it dies far sooner, so in a family born together the stars drop out from the top down, heaviest first. As the family ages the top of its range keeps sinking, from blue giants to white stars and on toward stars like the Sun, and wherever the top stands now is the reading on its clock."
+    }
+  }
+}

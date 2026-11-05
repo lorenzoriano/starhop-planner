@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/wds/wds&WDS=02291%2B6724&-out=WDS,Disc,Comp,Obs2,pa2,sep2,mag1,mag2,SpType,pmRA1,pmDE1,pmRA2,pmDE2,Notes",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\nWDS\tDisc\tComp\tObs2\tpa2\tsep2\tmag1\tmag2\tSpType\tpmRA1\tpmDE1\tpmRA2\tpmDE2\tNotes\n \t \t \tyr\tdeg\tarcsec\tmag\tmag\t \tmas/yr\tmas/yr\tmas/yr\tmas/yr\t\n----------\t-------\t-----\t----\t---\t------\t------\t-----\t----------\t----\t----\t----\t----\t----\n02291+6724\tCHR   6\tAa,Ab\t2021\t 18\t  0.60\t 4.660\t 7.88\tA4V+F9V   \t -18\t  12\t    \t    \tNO\n02291+6724\tSTF 262\tAB   \t2022\t231\t  3.00\t 4.660\t 6.92\tA4V+F5V   \t -18\t  12\t -18\t  12\tNO\n02291+6724\tSTF 262\tAC   \t2022\t117\t  6.90\t 4.630\t 9.05\tA4V       \t -18\t  12\t    \t    \tNU\n02291+6724\tSTF 262\tAD   \t2016\t 60\t210.90\t 4.630\t 8.48\tA4V       \t -28\t  37\t  -8\t   2\tN\n02291+6724\tSTF 262\tBC   \t2016\t 99\t  8.60\t 6.920\t 9.05\tF5V       \t -18\t  12\t    \t    \tN\n02291+6724\tCTU   2\tCa,Cb\t2018\t101\t  0.20\t 4.500\t 6.10\tK3        \t -18\t  12\t    \t    \tN  K\n02291+6724\tSTF 262\tCD   \t2015\t 58\t207.10\t 9.050\t 8.48\tK3        \t -18\t  12\t  -3\t   0\tN\n\n"
+}

@@ -1,0 +1,906 @@
+{
+  "archetype": "A11",
+  "storyline": "We can never step outside the Milky Way to look at it, so we have to work out where we live the way you might map a forest from one clearing. You notice which way the trees crowd together, where the haze thickens, and what shows beyond the last trunks. This journey walks outward from home. The Sun's nearest neighbors surround us in every direction, the first sign that we sit deep inside something much larger. Farther out, the stars pile up into the band of the Milky Way and dark clouds of dust start to cut it, and that something turns out to be a thin, dusty disk. Young clusters and glowing nurseries strung along the band trace the spiral arm we live in. Beyond them lies the next arm, inward toward Sagittarius and Carina or outward toward Perseus, with the dense star clouds of the inner galaxy showing through gaps in the dust. Then the view lifts out of the disk to the globular clusters, ancient swarms whose lopsided crowding toward Sagittarius revealed that the Sun lives far from the center. Finally it leaves the galaxy altogether, for other galaxies that show what our home would look like from outside.",
+  "beats": [
+    {
+      "step": 1,
+      "label": "Home: the Sun's neighbors",
+      "maxStops": 1
+    },
+    {
+      "step": 2,
+      "label": "Dust in the disk",
+      "maxStops": 1
+    },
+    {
+      "step": 3,
+      "label": "Our own spiral arm",
+      "maxStops": 2
+    },
+    {
+      "step": 4,
+      "label": "Deeper in the disk",
+      "maxStops": 2
+    },
+    {
+      "step": 5,
+      "label": "The ancient halo",
+      "maxStops": 2
+    },
+    {
+      "step": 6,
+      "label": "Beyond our galaxy",
+      "maxStops": 1
+    }
+  ],
+  "minBeats": 3,
+  "endSteps": [
+    4,
+    5,
+    6
+  ],
+  "narration": {
+    "title.A11-inside-our-galaxy": [
+      "Finding Our Place in the Galaxy from {region}",
+      "{region}'s Map of the Milky Way",
+      "Mapping the Galaxy through {region} from Inside",
+      "{region}, a Window on Our Own Galaxy",
+      "Can {region} Show Where We Live?"
+    ],
+    "question.A11-inside-our-galaxy": [
+      "Where are we in the Milky Way?",
+      "How can you tell where we live in a galaxy you can never leave?",
+      "What does our galaxy look like from the inside, and where do we sit in it?"
+    ],
+    "hook.A11-inside-our-galaxy": [
+      "We live inside the Milky Way, so its map has to be drawn from within.",
+      "No one has seen our galaxy from outside, yet binoculars can show where we sit in it.",
+      "The Milky Way's band is our own galaxy's disk, seen edge-on from the inside."
+    ],
+    "story.A11-inside-our-galaxy": [
+      "We can never step outside the Milky Way, so we map it the way you might map a forest from one clearing, by noticing where the trees crowd, where the haze thickens and what shows beyond the last trunks. Starting at {hook}, the night works outward from home, and every stop is one more clue to where we live.",
+      "The faint band across the sky is our own galaxy, a flat disk of stars seen edge-on from inside. From {hook} out to {name}, each view reaches farther from home, and the pattern of what you find gives away our place in the galaxy.",
+      "Every star you can see without a telescope belongs to the Milky Way, almost all of them to its thin disk. Read in order from near to far, the night's stops become a survey of the galaxy carried out from the inside."
+    ],
+    "payoff.A11-inside-our-galaxy": [
+      "We live in the thin, dusty disk of the Milky Way, inside a modest spiral arm far out from a center that lies hidden behind the star clouds of Sagittarius. No one has ever seen our galaxy from outside, yet every line of that map was read from within. The clues were the kind you met between {hook} and {name}: which way the stars crowd and how far each landmark really lies. Around the disk an ancient halo of star swarms wraps the whole of it, and beyond the halo other galaxies show what our home would look like from afar.",
+      "Our address is a quiet stretch of a minor spiral arm, out in the suburbs of a flat disk of stars whose crowded center lies toward Sagittarius. Every family, cloud and swarm you can point binoculars at fits somewhere on that map, and each stop tonight added a line to it. It is a strange kind of geography, drawn entirely from the inside, and it took astronomers generations to get it right.",
+      "The Sun sits in the disk, among the clusters and nurseries of its own arm and far from the hub. The band across the sky is that home seen edge-on from within, and each stop from {hook} onward added one line to a map of a place nobody has ever seen from outside. That we can draw it at all, from one small clearing in the forest, is the quiet triumph behind every chart of the galaxy."
+    ],
+    "story.A11-inside-our-galaxy.end4": [
+      "We can never step outside the Milky Way, so its map has to be read from within, one clue at a time. Starting at {hook}, the night works outward from our own neighborhood, across the disk, to {name}, beyond the arm the Sun calls home.",
+      "The faint band across the sky is our own galaxy's disk, seen edge-on from inside. Tonight's stops run from near to far along it, until the view reaches past our own spiral arm into the wider disk."
+    ],
+    "story.A11-inside-our-galaxy.end5": [
+      "Starting at {hook}, the night works outward through the disk and then lifts out of it altogether, to {name}, one of the ancient swarms of the halo. Each stop is a clue to where we live, and swarms like the last one are how astronomers first found the galaxy's center.",
+      "The flat disk of the Milky Way is only part of our galaxy, because around it lies a round halo of old star swarms. Tonight's path runs outward through the disk and into that halo, and together the stops show where the Sun really sits."
+    ],
+    "story.A11-inside-our-galaxy.end6": [
+      "From {hook} the night walks outward from the Sun's corner of the galaxy, and it ends beyond the Milky Way altogether, at {name}. Along the way each stop adds a line to the map of a galaxy we can only see from inside.",
+      "Every star you can see without a telescope belongs to the Milky Way, and tonight's path leaves it behind at the very end, for another galaxy seen across intergalactic space. Everything before that last view is a survey of our own galaxy, carried out from the inside."
+    ],
+    "payoff.A11-inside-our-galaxy.end4": [
+      "We live in the thin disk of the Milky Way, inside one modest spiral arm, and {name}, tonight's farthest view, already lies well beyond it in the wider disk. The map behind that sentence was read entirely from within. Near stars surround us in every direction, distant ones pile up into the band, and young families placed by measured distances line up into lanes that are the arms. No one has ever seen our galaxy from outside, yet tonight you swept across a real piece of its map.",
+      "Our place is a quiet stretch of a minor spiral arm, out in the disk's suburbs, with the next arms lying thousands of light-years inward and outward. Astronomers drew that map from inside, by measuring how far the young families and nurseries along the band really are and watching them fall into lanes. Tonight's sweep reached past our own arm into the wider disk, the same journey their measurements took, only in starlight instead of numbers."
+    ],
+    "payoff.A11-inside-our-galaxy.end5": [
+      "The Sun lives far out in the Milky Way's thin disk, inside a minor spiral arm, while the center lies about 26,000 light-years away behind the star clouds of Sagittarius. The halo told astronomers so: ancient swarms like {name} orbit the true center, and a century ago their lopsided crowding toward Sagittarius showed that the Sun is nowhere near the middle. We live, in other words, in the galaxy's suburbs, and on a dark night you can see the lights of downtown.",
+      "Our home is the disk, a thin, spinning layer of stars, gas and dust, with the Sun inside one of its arms and far from the center. Around that disk lies the halo, a round, ancient swarm whose old clusters orbit the true center, and their crowding toward Sagittarius is how astronomers first learned that the Sun lives in the suburbs. Every globular you catch in binoculars is a witness from that older, rounder galaxy inside which the disk grew."
+    ],
+    "payoff.A11-inside-our-galaxy.end6": [
+      "We live inside a great spiral galaxy, in its thin disk, out in a minor arm far from the crowded center, with a halo of ancient star swarms wrapped around it all. Tonight's last stop, {name}, lies outside our galaxy entirely, and from there the whole Milky Way could be seen at once as a single great disk of light. Everything we know about our home's shape was worked out from inside, from clues like the ones on tonight's path, and then checked against galaxies seen whole from far away.",
+      "The Milky Way is a barred spiral, and we live in its thin disk, in a modest arm about halfway out, with a halo of ancient swarms around everything. Nobody can step outside to check, so astronomers built that picture from inside and then compared it with other galaxies, seen whole across intergalactic space. Tonight you did the same, ending on a galaxy beyond our own, which means you have looked at our home from both sides of its edge."
+    ]
+  },
+  "transitions": {
+    "arrive": {
+      "2": [
+        "Beyond {prev}, the first thing that interrupts the view along the disk is not a star but a shadow, and {next} is one of them.",
+        "Look past {prev} and along the band, and before long something starts blocking the light: {next}.",
+        "Neighbors like {prev} shine with nothing in the way, but a little deeper into the disk the dust begins, and {next} is where it shows."
+      ],
+      "3": [
+        "From {prev} the view moves out along the disk to {next}, in the stretch of the galaxy the Sun calls home.",
+        "Farther out than {prev}, {next} belongs to the Sun's own stretch of the disk.",
+        "{next} takes the view past the Sun's near neighbors into the wider stretch of our own arm, where its landmarks lie hundreds to a few thousand light-years away."
+      ],
+      "4": [
+        "Past {prev}, the view leaves the stretch of disk around the Sun, and {next} lies farther along the band, beyond our own arm.",
+        "{next} lies well beyond {prev}, out past our own arm, where the disk shows its larger shape.",
+        "From {prev} the view runs deeper into the disk, to {next}, a landmark far enough away to show where the galaxy goes beyond our own arm."
+      ],
+      "5": [
+        "Everything up to {prev} belongs to the flat disk, while {next} belongs to something else, the round halo of ancient star swarms that surrounds it.",
+        "From {prev} the view lifts out of the disk altogether, to {next}, one of the old star swarms that circle the galaxy's center.",
+        "{next} breaks the pattern of everything before it, an ancient swarm on a long orbit through the halo rather than a member of the flat disk like {prev}."
+      ],
+      "6": [
+        "Past {prev} the view leaves our own galaxy behind and crosses the empty gulf outside it to {next}.",
+        "After {prev}, the view leaves the Milky Way behind: {next} is another galaxy, its light crossing intergalactic space to reach you.",
+        "{next} lies outside the Milky Way altogether, so after {prev} the night's last clue comes from a galaxy seen from the outside."
+      ]
+    },
+    "pairs": {
+      "1>2": [
+        "{prev} is close enough that nothing stands between it and us, but farther out the disk begins to fill with dust, and {next} is where you see it."
+      ],
+      "1>3": [
+        "Leave the neighbors around {prev} behind and look farther out, to {next}, in the Sun's own stretch of the disk."
+      ],
+      "1>5": [
+        "From {prev}, a near neighbor, the view lifts straight out of the disk to {next}, an ancient swarm of the halo."
+      ],
+      "2>3": [
+        "Dust like {prev} is the raw material of stars, and {next} shows what our own arm makes of it.",
+        "Past clouds like {prev}, the view reaches the landmarks of our own arm, and {next} is one of them."
+      ],
+      "2>4": [
+        "Clouds like {prev} hide most of the disk, but through the gaps the view reaches far deeper, to {next}."
+      ],
+      "3>3": [
+        "Like {prev}, {next} belongs to the Sun's own stretch of the disk, and together they show how far that stretch reaches along the band.",
+        "{next} is another landmark of the arm that holds {prev}, seen in a different stretch of the band."
+      ],
+      "3>4": [
+        "Past {prev} the Sun's own stretch of the disk runs out, and {next} lies beyond it, deeper along the band.",
+        "{prev} belongs to the arm we live in, while {next} lies beyond it, farther along the band."
+      ],
+      "4>4": [
+        "{next} belongs to the same deep stretch of the disk as {prev}, another landmark beyond our own arm.",
+        "Stay beyond our own arm a little longer: like {prev}, {next} shows the disk thousands of light-years from home."
+      ],
+      "4>5": [
+        "Everything up to {prev} lies in the flat disk, while {next} belongs to the halo, an old, round swarm of star clusters that surrounds it."
+      ],
+      "3>5": [
+        "{prev} lives in the thin disk with the Sun, while {next} swarms in the halo, an older, rounder population that wraps the whole disk."
+      ],
+      "5>5": [
+        "{next} is another of the halo's ancient swarms, and like {prev} it rides an orbit that has nothing to do with the flat disk.",
+        "Like {prev}, {next} is a globular cluster of the halo, old enough to have watched the disk take shape."
+      ],
+      "5>6": [
+        "Past the halo's last swarms there is nothing more of our galaxy, so after {prev} the view leaves home entirely for {next}."
+      ],
+      "4>6": [
+        "{prev} still lies in our galaxy's disk, while {next} is a galaxy of its own, far beyond every star of ours."
+      ],
+      "3>6": [
+        "{prev} still belongs to our own stretch of the disk, and from there the view leaves the galaxy altogether, for {next}."
+      ]
+    }
+  },
+  "objects": {
+    "AST-Hyades": {
+      "step": 1,
+      "beat": "Home: the nearest star family",
+      "question": "Why does the nearest star cluster sit well away from the Milky Way's band?",
+      "why": "The Hyades are the nearest star cluster of all, close enough that the V spills over a binocular field, and where they sit in the sky says something about where we sit in the disk.",
+      "look": "Sweep the V of the Bull's face in Taurus one arm at a time, with Aldebaran at one tip. Then notice where you are: the faint winter Milky Way runs off to the north-east and east, through Auriga and Gemini, so the Hyades shine on a sparse background rather than on the band.",
+      "answer": "The cluster lies well within the thickness of the disk, and at that range star families can turn up in any direction. Only at thousands of light-years does the thinness of the disk show, which is why the clusters that do crowd the band are the distant ones.",
+      "story": "Star counts made the disk's thickness measurable. Count stars of one kind at greater and greater heights above or below the midplane and their numbers drop to about a third with every thousand light-years or so, while along the midplane they go on and on. The Sun sits a few dozen light-years above the middle of that layer, close enough to its center that the band runs almost exactly around a great circle of our sky."
+    },
+    "DN-Coalsack": {
+      "step": 2,
+      "beat": "Dust in the disk",
+      "question": "How much of the Milky Way can a single nearby cloud hide?",
+      "why": "The Coalsack is not a star field but an absence of one, and it explains why we cannot simply look across our galaxy and see its far side.",
+      "look": "With the eye alone, find the dark blot tucked against the south-east side of the Southern Cross. Sweep across it with low-power binoculars and watch the rich star fields thin out at its edge; the stars that remain inside it are mostly dimmed background stars, with a few in front of the cloud.",
+      "answer": "One dark cloud can hide a surprising amount: this one, some 54 light-years across, dims the stars behind it several-fold, and the band thins to a shadow. The disk is laced with clouds like it, and together they hide the galaxy's far side and its center, so most of our map has to be pieced together from what shines through the gaps.",
+      "story": "Dust is only about a hundredth of the matter between the stars, tiny grains of soot and rock, yet it blocks visible light far better than the gas it floats in. One cloud like this dims what lies behind it a few times over, but along the disk the clouds stack up and their losses multiply. Toward the galaxy's center, only about one photon of visible light in a trillion gets through."
+    },
+    "DN-Pipe": {
+      "step": 2,
+      "beat": "Dust toward the center",
+      "question": "What is a dark cloud doing in front of the Milky Way's brightest stretch?",
+      "why": "The Pipe Nebula is one of the few dark clouds you can trace by eye, and it lies across the very direction where the galaxy's stars crowd most densely.",
+      "look": "Under a truly dark sky, start at Antares and look east toward the bright heart of the Milky Way for a dark stem with a bowl at its eastern end. Sweep slowly along the stem at low power: the background stars thin out abruptly at its edges, and the glow brightens again beyond it toward Sagittarius.",
+      "answer": "It belongs to our own stretch of the disk, because dust and gas gather in the same thin layer as the stars. Wherever you look along the band, clouds like this stand in front of the distant glow, and the farther you try to see, the more of them get in the way.",
+      "story": "For more than a century astronomers argued over whether dark patches like the Pipe were holes in the star clouds or something standing in front of them. A hole would have to be a tunnel through thousands of light-years of stars aimed precisely at Earth, and hundreds of such tunnels all pointing our way made no sense. Barnard's long-exposure photographs and Max Wolf's star counts settled it early in the twentieth century in favor of dark clouds that swallow the light."
+    },
+    "DS-61Cyg": {
+      "step": 1,
+      "beat": "Home: the first yardstick",
+      "question": "How did anyone first measure a distance inside our galaxy?",
+      "why": "Before you can map where we are, you need one honest yardstick, and 61 Cygni is where astronomers first got one.",
+      "look": "From Deneb, sweep about 8° south-east to 61 Cygni, which 10× binoculars split into two warm orange points 32″ apart. White Deneb, far brighter and over a hundred times farther, is a good reminder that brightness alone says nothing about distance.",
+      "answer": "Its distance, about 11 light-years, was the first ever measured for a star, and every map of the galaxy has rested on that kind of measurement since. Today the Gaia satellite catches the same yearly shift for stars and clusters thousands of light-years out, which is how we know where the clusters and clouds of the disk really lie.",
+      "story": "Before 1838 every chart of the Milky Way was drawn without a scale bar. William Herschel, sounding the depth of the star system in the 1780s, could give its size only in units of the distance to Sirius, a distance nobody knew. Bessel's tiny angle supplied the first true scale, and the parallaxes that followed for Sirius and other bright stars turned Herschel's sketch into a map with real sizes."
+    },
+    "HR1790": {
+      "step": 1,
+      "beat": "Home: the near side of Orion",
+      "question": "How deep into our own spiral arm does the figure of Orion reach?",
+      "why": "Bellatrix, the hunter's western shoulder, is the nearest of Orion's bright stars, and it lets you measure how deep the constellation runs into the galaxy.",
+      "look": "Center Bellatrix, blue-white at the hunter's western shoulder, then sweep down past the Belt to the misty Sword. All of these lie in one direction on the sky, but nowhere near one distance.",
+      "answer": "It reaches from the Sun's neighborhood to the heart of our arm: Bellatrix is a near star, while the Orion Nebula in the Sword lies more than five times farther, in the great cloud complex that gives our arm its name. The hunter is a slice through our own stretch of the galaxy, with nearby stars in front and newborn ones at the back.",
+      "story": "In 2020 a three-dimensional map of dust built from Gaia's data showed Orion's clouds as part of the Radcliffe Wave, a slender chain of star-forming clouds roughly nine thousand light-years long. The chain undulates above and below the disk's midplane like a ripple. Many astronomers suspect the chain is the backbone of our local arm, so looking at Orion you look across the Sun's neighborhood toward one of the structures that define it."
+    },
+    "HR5459": {
+      "step": 1,
+      "beat": "Home: the nearest star",
+      "question": "How empty is the stretch of galaxy around the Sun?",
+      "why": "A map has to start where you stand, and Alpha Centauri is the nearest point of light outside our own solar system, so it sets the scale for everything farther out.",
+      "look": "Find the two Pointers beside the Southern Cross and take the one farther from the Cross. Binoculars show a single brilliant point with a warm tint, and right behind it runs the Milky Way of Centaurus, a glow made of stars hundreds to thousands of times farther away.",
+      "answer": "It is mostly empty space, for even the nearest star system lies about 4.4 light-years away, and gaps of a few light-years between stars are normal in this part of the disk. The band behind it looks crowded only because your line of sight runs through thousands of light-years of such sparse stars, stacked one behind another, the first hint that we live inside a vast, flat layer.",
+      "story": "Neighbors are temporary. The Sun and Alpha Centauri both circle the galaxy's center, each lap taking about a quarter of a billion years, but on slightly different paths. In some twenty-eight thousand years Alpha Centauri will pass closest, at about three light-years, and then slowly fall behind. The company around the Sun changes completely over a few million years, while the thin layer we all travel in stays the same."
+    },
+    "HR6401": {
+      "step": 1,
+      "beat": "Home: facing the center",
+      "question": "How near the galaxy's center is a star seen in front of it?",
+      "why": "36 Ophiuchi is a little family of orange dwarfs that lies close to the direction of the Milky Way's center, which makes it a good place to feel how deep that direction runs.",
+      "look": "About ten degrees east of Antares, find 36 Ophiuchi and its fainter orange companion about a fifth of a degree to the east-north-east. Farther east, the Milky Way swells into the bright star clouds of Sagittarius, the direction of the galaxy's center.",
+      "answer": "It lies almost on our doorstep, one of the Sun's close neighbors, while the center sits far beyond the star clouds behind it, hidden by dust. Every object you meet in this direction is a step along that line, and the steps grow longer the farther you look.",
+      "story": "The center's direction was found long before anyone could see it, because the globular clusters bunch toward Sagittarius. Radio telescopes later found a bright, compact source there, and infrared cameras watched stars whip around an unseen mass at that spot. All of those clues point to a place about seven degrees from 36 Ophiuchi on the sky."
+    },
+    "HR7557": {
+      "step": 1,
+      "beat": "Home: a neighbor on the band",
+      "question": "Altair shines right in the Milky Way's band, so is it part of that glow?",
+      "why": "Altair is the nearest of the Summer Triangle's stars, and it happens to sit on the band itself, which makes it the perfect place to sort the near from the far.",
+      "look": "Center Altair with orange Tarazed about 2° to one side and fainter Alshain to the other, the short line that marks Aquila. On a dark night the same field is dusted with the faint stars of the Milky Way, which Altair outshines by far.",
+      "answer": "It only looks that way, because Altair is a near neighbor standing in front of the band, while the glow behind it comes from stars hundreds to thousands of times farther. From inside a disk, the nearest members surround you and the distant multitudes pile up along one line, and to read the shape of the disk you have to follow that line outward.",
+      "story": "The band is the sum of a vast number of distant stars, each too faint to see alone, and the proof is old: Galileo's first telescope broke the Milky Way into stars in 1610. Binoculars do the same on a smaller scale, turning the glow around Altair into a dusting of faint points."
+    },
+    "HR98": {
+      "step": 1,
+      "beat": "Home: a neighbor beside the Clouds",
+      "question": "How much of the Milky Way lies between Beta Hydri and the Clouds beside it?",
+      "why": "Beta Hydri is a near neighbor of the Sun in the far southern sky, and it shares a sweep of sky with the Magellanic Clouds.",
+      "look": "Beta Hydri sits near the south celestial pole, roughly between the Small Magellanic Cloud and the pole. Binoculars show a soft yellow star, the tint the Sun would show at night, and about 5° away lies the Small Cloud's misty glow.",
+      "answer": "Only a thin veil of our galaxy lies between them, since Beta Hydri, about 24 light-years away, is a neighbor in the disk and this part of the sky points well out of that disk. Beyond it the line of sight crosses only the thin outskirts of the galaxy and its scattered halo. That emptiness is what makes this corner of the sky a window out of the Milky Way.",
+      "story": "Astronomers describe directions in the galaxy with a grid of their own, galactic latitude, measured up or down from the Milky Way's midline. Beta Hydri and the Clouds lie far down that grid, where the line of sight leaves the midline at a steep angle rather than running along it."
+    },
+    "IC2602": {
+      "step": 1,
+      "beat": "Home: a young family",
+      "question": "Is the Sun's corner of the galaxy still making new stars?",
+      "why": "The Southern Pleiades are one of the nearest star families to the Sun, and their youth tells you what kind of neighborhood we live in.",
+      "look": "Find Theta Carinae, just south of the Carina Nebula, and let binoculars show the two or three dozen stars around it, mostly blue-white. Blue-white means hot and heavy, and heavy stars never last long.",
+      "answer": "It made this family very recently: the Southern Pleiades, about 491 light-years away, formed after the dinosaurs had already died out, which is yesterday in the life of a galaxy. Families this young are the signature of a spiral arm, and the Sun lives inside one.",
+      "story": "The Sun itself sits inside the Local Bubble, a cavity of thin, hot gas about a thousand light-years across, blown out by a string of supernovae over the last fifteen million years or so. Gaia's maps show nearly all the star-forming clouds within about six hundred light-years sitting on the bubble's expanding wall, so our neighborhood is still being reshaped, not merely passed through by old stars."
+    },
+    "LMC": {
+      "step": 6,
+      "beat": "Beyond: our galaxy's companion",
+      "question": "Why do the Magellanic Clouds look like torn-off pieces of the Milky Way?",
+      "why": "The Large Magellanic Cloud is the brightest galaxy in the sky apart from our own, and to the eye it looks like a stray patch of the band.",
+      "look": "From a dark site it looks like a lost cloud of Milky Way. Sweep it slowly with wide, low-power binoculars: the long central bar is grainy and knotted, and off one end sits a small, bright, fuzzy patch, the Tarantula Nebula.",
+      "answer": "They are made of the same stuff, stars, clusters and glowing nurseries, but they lie far outside our galaxy. The Large Cloud is about 162,000 light-years away, far beyond even the most distant globulars a binocular can show. Seen from there, our galaxy would spread across a wide stretch of sky as a great tilted spiral.",
+      "story": "The Clouds orbit the Milky Way, and Hubble's measurements of their motion across the sky showed them moving so fast that they may be on their first approach. If so, they are falling in from afar rather than circling for billions of years. They also pull on our disk, and some astronomers think that tug helps explain why its outer edge is warped."
+    },
+    "M103": {
+      "step": 4,
+      "rank": 8241,
+      "beat": "The next arm out, facing away",
+      "question": "Which way is the galaxy's center when you face Cassiopeia?",
+      "why": "M103 is one of a crowd of young clusters around Ruchbah, and their direction in the galaxy matters as much as their number.",
+      "look": "Put Ruchbah at the edge of the field and look one degree east-north-east for a small hazy wedge with a few stars sparkling in it. Glance around, because other faint knots share this stretch of the Milky Way.",
+      "answer": "It lies mostly behind you: Cassiopeia sits far around the sky from Sagittarius, so facing it you look outward, away from the center, and M103 lies on the outer side of the Sun. Everything here is farther from the galaxy's heart than we are, out where the disk's stars slowly thin toward its edge.",
+      "story": "In 1927 Jan Oort found the direction of the center from the motions of stars around the Sun. The galaxy does not turn like a solid wheel: stars nearer the hub complete their laps sooner, so inner neighbors slowly pull ahead of us and outer ones fall behind. That shearing pattern lines up along one axis, through Sagittarius."
+    },
+    "M11": {
+      "step": 4,
+      "rank": 7280,
+      "beat": "Deeper in: the Scutum star cloud",
+      "question": "What is the bright patch of Milky Way that holds the Wild Duck Cluster?",
+      "why": "The Wild Duck is one of the richest clusters in the sky, but the glow it sits in is the bigger clue to where we are.",
+      "look": "Follow Aquila's tail south into little Scutum and find the Wild Duck about two degrees south-east of β Scuti, a compact, fan-shaped haze. Around it the Milky Way brightens into the Scutum Star Cloud, one of the brightest patches of the whole band.",
+      "answer": "It is a stretch of the inner disk seen through a thinning in the dust, a crowd of stars lying nearer the galaxy's center than we do. The Wild Duck itself belongs to that inner region, a reminder that the farther in you look, the richer the disk becomes.",
+      "story": "Astronomers have measured how deep this view runs by counting stars of known brightness at fainter and fainter levels. In a window like this one the counts keep rising for many thousands of light-years before the dust closes in, while a few degrees away they stop almost at once."
+    },
+    "M13": {
+      "step": 5,
+      "rank": 24201,
+      "beat": "The halo, high above the disk",
+      "question": "Why does the Great Hercules Cluster sit so high above the Milky Way?",
+      "why": "The Great Hercules Cluster is the showpiece globular of the northern summer, and it hangs in Hercules, well away from the band that holds the open clusters.",
+      "look": "Find the Keystone of Hercules and look about a third of the way from η to ζ Herculis for a fuzzy ball that is clearly not a star, brightening toward its middle. Then lower the binoculars: the Milky Way's band runs well to the east, through Cygnus and Aquila.",
+      "answer": "It is not part of the disk at all: it lies in a direction far from the band, thousands of light-years above the disk's plane, on a long orbit through the halo. Globulars are scattered over the whole sky for this reason, while young open clusters stay pinned to the band, and that difference in where they live is a difference in when they were born.",
+      "story": "The height is plain geometry: the cluster sits about forty degrees from the band, and at its distance that angle lifts it some sixteen thousand light-years above the midplane. That is many times the thickness of the layer that holds the Sun and nearly all the open clusters."
+    },
+    "M15": {
+      "step": 5,
+      "rank": 34930,
+      "beat": "The halo: the galaxy's raw material",
+      "question": "What was our galaxy made of when the Pegasus cluster's stars were born?",
+      "why": "The Great Pegasus Globular is the bright globular of the autumn sky, shining beside Pegasus far from the band, and its starlight carries a chemical record.",
+      "look": "Draw a line from θ Pegasi through Enif, the orange nose of Pegasus, and continue a little over half as far again. The cluster sits beside a faint star: one stays a sharp point, the other a round glow with a bright center that never focuses down.",
+      "answer": "It was almost pure hydrogen and helium. The cluster's stars formed when the galaxy's gas held barely any of the heavier elements that stars later forged and scattered, so they preserve the raw material of the young Milky Way. The disk's stars, the Sun among them, formed afterward from gas enriched by many generations of stellar deaths, which is why a planet like ours could be made of rock and iron.",
+      "story": "In 1962 Olin Eggen, Donald Lynden-Bell and Allan Sandage noticed that the poorer a star is in heavy elements, the more elongated and steeply tilted its orbit around the galaxy tends to be. They read it as history: the oldest stars formed while the young galaxy's gas was still falling inward on wild paths, and the gas later settled into the flat, spinning disk. Much of the halo is now known to have arrived in mergers, but that link between chemistry and orbit still guides how the galaxy's past is read."
+    },
+    "M16": {
+      "step": 4,
+      "rank": 5680,
+      "beat": "The next arm in: beads on a string",
+      "question": "Why do the great nurseries of Sagittarius and Serpens line up along the band?",
+      "why": "The Eagle Nebula is the northernmost of three great nurseries, with the Omega and the Lagoon, that run up the Milky Way from Sagittarius into Serpens, and the pattern they make is the point.",
+      "look": "Sweep north from the Sagittarius Star Cloud past the Omega into Serpens. The Eagle shows as a tight scatter of a dozen or so stars in a soft glow, brighter on one side; the famous pillars are far too small for binoculars.",
+      "answer": "They are beads on one string: the Eagle, about 5,680 light-years away, lies at broadly the same distance as the Omega and the Lagoon, all three nurseries of the same spiral arm seen from our place just outside it. An arm is a lane where gas piles up and stars switch on, and seen from the side it shows as exactly this kind of chain along the band.",
+      "story": "In face-on galaxies, arms are traced by exactly these objects: knots of glowing gas and blue young clusters spaced along a curve. From inside our disk the same curve is foreshortened into a strip, so nurseries that sit hundreds of light-years apart along the arm crowd together into a few binocular fields."
+    },
+    "M17": {
+      "step": 4,
+      "rank": 5480,
+      "beat": "The next arm in: freshly lit",
+      "question": "How do astronomers trace spiral arms they can never see from above?",
+      "why": "The Omega Nebula is lit by stars less than a million years old, and stars that young are still standing where they were born.",
+      "look": "Sweep less than half a binocular field north of the Sagittarius Star Cloud for a small, bright, elongated glow like a chalk streak; under a dark sky a fainter curl appears at one end. That glow is gas lit by massive newborn stars still hidden in their dust.",
+      "answer": "They plot the youngest things they can find, nurseries like the Omega and their hot stars, with distances from radio and Gaia parallaxes. Objects this young have had no time to drift away from the arm that made them. Put enough of them on a chart and the arms appear as lanes of newborn stars, with the Omega, about 5,480 light-years away, on the inner arm in Sagittarius.",
+      "story": "Nurseries hidden behind too much dust for any telescope's light can still be found by their radio glow, since the hot gas around young stars also gives off radio waves that pass through dust untouched. Radio surveys have catalogued thousands of such glowing clouds across the disk, and plotted by distance they trace the same lanes the Omega belongs to."
+    },
+    "M19": {
+      "step": 5,
+      "rank": 27200,
+      "beat": "The halo: finding the center",
+      "question": "How far away is the center of our galaxy?",
+      "why": "M19 is a small oval glow in Ophiuchus, and it is one of the nearest things to the galaxy's center that a binocular observer can point to.",
+      "look": "From Antares go about seven and a half degrees east to M19, a small, bright, distinctly oval patch. Brace the binoculars and compare it with round-looking M62 about four degrees south; the stretch shows even at low power.",
+      "answer": "It is roughly as far as M19 itself: since the cluster lies close to the hub, the center must sit in nearly the same direction at a broadly similar distance, hidden behind the dust of Sagittarius. That puts the Sun far out in the disk, nowhere near the middle of the galaxy it lives in.",
+      "story": "The center's distance has been measured several ways, first from the swarm of globular clusters, whose middle it must be. Later came the motions of stars around the black hole at the galaxy's heart, tracked for decades with infrared telescopes, and the parallaxes of masers near the center. The methods now agree to within a few percent, a century after star clusters first suggested where to look."
+    },
+    "M2": {
+      "step": 5,
+      "rank": 38130,
+      "beat": "The halo, far below the disk",
+      "question": "How far out into the halo does M2 lie?",
+      "why": "M2 is one of the brightest globulars of the autumn sky, shining where there is no Milky Way at all.",
+      "look": "Start at Sadalsuud, the brightest star of Aquarius, and move about five degrees north to a clear, round fuzz that never snaps to a point when you nudge the focus. Around it the field is sparse, far from the band of the Milky Way.",
+      "answer": "It lies farther away than the galaxy's center itself, well below the plane of the disk, a reminder that the halo is far larger than the bright disk you see as the band. From out there, the whole disk would look like a tilted spiral, much as Andromeda looks to us.",
+      "story": "Its depth below the disk is simple trigonometry. The cluster sits more than thirty degrees from the band, so at its distance it hangs over twenty thousand light-years beneath the midplane, far beyond where the disk's stars thin out. Clusters like it spend most of their long orbits far from the disk, crossing it only briefly, which is why the halo's swarms are scattered over the whole sky."
+    },
+    "M22": {
+      "step": 5,
+      "rank": 10800,
+      "beat": "The halo, toward the hub",
+      "question": "Is the Sagittarius Cluster closer to the galaxy's center than we are?",
+      "why": "The Sagittarius Cluster is one of the brightest globulars in the sky, and it shines right in front of the crowded star fields of Sagittarius.",
+      "look": "From Kaus Borealis, the top of the Teapot's lid, move about two and a half degrees north-east to a bright, slightly oval glow that fades smoothly outward. Unlike the open clusters of the band, it shows no sparkle of separate stars, only a dense, even glow.",
+      "answer": "The cluster lies about 10,800 light-years away toward Sagittarius, partway between the Sun and the center, so it already sits deeper into the galaxy than the Sun ever goes. It belongs to the region where the halo's clusters crowd most thickly, and still the hub lies far behind it.",
+      "story": "The cluster's orbit is worked out from its motion across the sky and its speed toward us. It loops in and out through the inner galaxy and rises well above and below the disk, never settling into the flat, orderly rotation of the disk's stars. Orbits like that are the signature of the halo, whatever a cluster's distance happens to be."
+    },
+    "M23": {
+      "step": 3,
+      "rank": 2330,
+      "beat": "Our arm: a family that moved on",
+      "question": "Do stars stay in the spiral arm where they were born?",
+      "why": "M23 is an older family of the Sagittarius Milky Way, and its age turns a spiral arm from a thing into a process.",
+      "look": "From μ Sagittarii, hop about four and a half degrees north-west to M23, a broad, slightly elongated cloud of faint stars crossed by curving chains. There is no glowing gas and no brilliant blue star in it, only an even scatter of ordinary suns.",
+      "answer": "Stars do not stay put: a spiral arm is more like a slow wave sweeping through the disk than a fixed street, so stars are born where the wave piles up gas and then drift on as it moves past. M23 has had time to leave its birthplace behind, and in time its stars will dissolve into the general crowd of the disk.",
+      "story": "Other galaxies show this sorting plainly. In photographs of face-on spirals, dark dust lanes and pink nurseries sit along the inner edge of each arm, while older, yellower clusters spread downstream, carried out of the arm by their own orbits. A family like this one, its blue stars gone, is one of those downstream families in our own galaxy."
+    },
+    "M24": {
+      "step": 4,
+      "rank": 10000,
+      "beat": "Toward the center: a window",
+      "question": "Why can't we see the galaxy's center, even looking straight toward it?",
+      "why": "The Sagittarius Star Cloud is the deepest view along the disk that binoculars can give, in the direction of the galaxy's inner regions, not far from the center itself.",
+      "look": "Look about seven degrees north of the Teapot's lid for a bright knot in the Milky Way, visible to the naked eye. Binoculars break it into a sparkling sheet of countless faint stars with dark notches around its edges, the dust that hides almost everything else in this direction.",
+      "answer": "Dust gets in the way: almost everywhere toward the center, clouds like the dark notches around this one swallow the light, and only through gaps like this one does the view run as deep as the stars you see here. The center itself lies well beyond even those, visible only to infrared and radio telescopes, whose light slips through the dust.",
+      "story": "This star cloud is not the only gap. A smaller one, Baade's Window, lies beside Alnasl at the tip of the Teapot's spout, only a few degrees from the center, and through it the view reaches the galaxy's central bulge. Around 1950 Walter Baade timed pulsing stars seen through that window and used them to measure how far away the bulge lies, one of the first direct distances to the galaxy's heart."
+    },
+    "M25": {
+      "step": 3,
+      "rank": 2100,
+      "beat": "Our arm: a measuring star",
+      "question": "How can a pulsing star in M25 help map the Milky Way?",
+      "why": "Every map needs distances you can trust, and M25 holds one of the few pulsing stars whose true brightness can be checked against a cluster's distance.",
+      "look": "From μ Sagittarii, hop about four and a half degrees east-north-east to M25, a loose group of bright stars. U Sagittarii is one of the central ones; compare it with its neighbors on several nights and watch it change.",
+      "answer": "Once M25's distance, about 2,100 light-years, fixes the true power of U Sagittarii, every Cepheid with the same beat becomes a lamp of known wattage. Such lamps have been charted across thousands of light-years of the disk. That is how the galaxy's young stars, and the arms they line, get put in their proper places on the map.",
+      "story": "Cepheids are bright enough to be seen across much of the disk and young enough to trace the parts of it that are still making stars, which makes them ideal markers of its shape. In 2019 astronomers placed more than two thousand of them on a three-dimensional map and found the young disk bending up on one side of the galaxy and down on the other, like a warped record."
+    },
+    "M29": {
+      "step": 3,
+      "rank": 5570,
+      "beat": "Our arm, seen end-on",
+      "question": "How can a cluster over five thousand light-years away still lie in our own arm?",
+      "why": "M29 is a small young cluster just south of Sadr, much farther away than its modest look suggests, and it tests how far our own arm reaches.",
+      "look": "Center Sadr, at the heart of the Northern Cross, and drop about 2° south to a compact box of five or six stars, faint but distinct against the rich Milky Way of Cygnus.",
+      "answer": "In Cygnus the arm runs away from us, so its young stars keep coming for thousands of light-years, like the trees of an orchard row seen from one end. M29, about 5,570 light-years away and only about 5 million years old, is one of them, a young family far down the same row.",
+      "story": "Distances to the young families of Cygnus come from Gaia's parallaxes and from matching their stars against nearer families, and in this direction they keep coming, one behind another. Dust makes the work harder, because the Cygnus Rift dims these clusters, and astronomers correct for it by how much redder their hot stars look than they should."
+    },
+    "M3": {
+      "step": 5,
+      "rank": 33200,
+      "beat": "The halo's heartbeats",
+      "question": "How do astronomers measure distances across the galaxy's halo?",
+      "why": "M3 is one of the best globulars of the spring sky, and astronomers prize it for its crowd of pulsing stars.",
+      "look": "Aim a little past halfway from Cor Caroli toward Arcturus for an obvious round glow, brighter toward the middle, beside a yellowish field star. It will not break into stars in binoculars, and the sky around it is nearly empty of Milky Way.",
+      "answer": "They time pulsing stars like the ones in M3: its RR Lyrae stars are old, small stars that all shine with nearly the same true brightness, so the beat identifies them and their faintness gives their distance. Maps of the halo, including the first one that placed the Sun far from the center, rest on stars like these.",
+      "story": "Around 1900 Solon Bailey, combing photographic plates at Harvard, found more than a hundred variable stars in M3, each brightening and fading in well under a day. They pulse because they are all passing through one particular stage of life, quietly burning helium in their cores after the giant phase, and stars at that stage carry cores of nearly the same weight."
+    },
+    "M31": {
+      "step": 6,
+      "beat": "Beyond: a galaxy like ours",
+      "question": "What would the Milky Way look like from far outside?",
+      "why": "The Andromeda Galaxy is the nearest big spiral to ours, and it is the one place in the sky where you can take in the whole shape of a galaxy like our own.",
+      "look": "From Mirach, climb two fainter stars to the north and the glow appears: an oval core with a haze stretching about three degrees under averted vision. That haze is a tilted disk of stars, the same kind of disk we live inside.",
+      "answer": "From far outside, the Milky Way would look much like Andromeda: a flattened spiral disk around a bright central bulge, wrapped in a faint halo. From Andromeda, about 2.5 million light-years away, our own galaxy would be a similar smudge with the Sun lost about halfway out in its disk. Every clue you can gather from inside, the disk, the arms, the halo, is laid out here in one glance.",
+      "story": "Andromeda lets astronomers check from outside what they infer from inside: its dust lanes, the young clusters along its arms and its old central bulge show up plainly in photographs. Its halo of globular clusters is there too, a few hundred of them, two to three times as many as ours."
+    },
+    "M33": {
+      "step": 6,
+      "beat": "Beyond: a smaller neighbor",
+      "question": "How does our galaxy compare with the faint spiral in Triangulum?",
+      "why": "The Triangulum Galaxy is the third big member of our small family of galaxies, and seeing it at all is a test of how dark your sky is.",
+      "look": "Sweep slowly from Mirach toward α Trianguli and, a little past halfway, look for a pale patch about twice the Moon's width, slightly brighter toward the middle. Low power and gently moving the binoculars help; in a suburban sky it may not show at all.",
+      "answer": "The Milky Way is the bigger of the two: the Triangulum Galaxy, about 2.74 million light-years away, is a loosely wound spiral roughly half our galaxy's width, seen face-on so that its light spreads thin. With Andromeda and the Milky Way it makes up the big three of the Local Group, a small family of galaxies held together by their mutual pull.",
+      "story": "Triangulum has hardly any central bulge and only a modest halo of old globular clusters, far poorer than ours, which shows that a bulge and a rich halo are not inevitable parts of a spiral. Galaxies of different weights build different structures, and ours is one of the heavier spirals of the neighborhood."
+    },
+    "M35": {
+      "step": 3,
+      "rank": 2730,
+      "beat": "Our arm, facing the rim",
+      "question": "Why is the winter Milky Way so much fainter than the summer one?",
+      "why": "M35 sits in Gemini, close to the point in our sky that faces directly away from the center of the Milky Way.",
+      "look": "Find Gemini's feet, η and μ Geminorum, and move about two degrees north-west to M35, a round, grainy glow sprinkled with resolved stars. Just south-west of it lies a much smaller, fainter smudge, NGC 2158, another cluster in the same direction.",
+      "answer": "In winter you face outward, toward the thinner outer disk, while summer evenings face the crowded inner galaxy and its star clouds. M35, about 2,730 light-years away, is a family of our own arm, and the little smudge of NGC 2158 beside it lies more than four times farther, out where the disk's stars begin to run thin.",
+      "story": "The winter view faces the galactic anticenter, the point directly opposite the hub, in Taurus near its borders with Gemini and Auriga. Counts of stars in that direction fall off much faster with distance than counts toward Sagittarius, and that falloff is how astronomers measure how the disk thins with distance from the center."
+    },
+    "M37": {
+      "step": 4,
+      "rank": 4570,
+      "beat": "Deeper outward: past the Sun's orbit",
+      "question": "Is M37 closer to the galaxy's center than the Sun, or farther out?",
+      "why": "M37 is the richest of the three Auriga clusters, and its place in the sky makes it a clean test of where the Sun sits in the disk.",
+      "look": "From M36 in Auriga, move about four degrees south-east toward Gemini. M37 looks like a ball of fine sugar, rich and even, with only a handful of points resolved, and the Milky Way around it is a thin veil compared with the summer star clouds.",
+      "answer": "M37 is farther out: Auriga sits almost exactly opposite the galaxy's center, so M37, about 4,570 light-years from us, lies roughly that much farther from the center than the Sun does. Beyond the Sun's orbit the disk carries on, thinner and quieter, toward an edge too faint for any binocular to reach.",
+      "story": "Directions in the galaxy are measured with galactic longitude, which runs from zero toward the center, through ninety in Cygnus, to one hundred eighty at the point directly opposite. An object's longitude and its distance are enough to place it on a map of the disk seen from above, which is how every cluster on such a map got its spot."
+    },
+    "M39": {
+      "step": 3,
+      "rank": 965,
+      "beat": "Our arm, looking along it",
+      "question": "Which way does our own spiral arm run across the sky?",
+      "why": "M39 is a nearby family in Cygnus, and Cygnus is the one direction where the arm we live in stretches out ahead of us instead of across our view.",
+      "look": "From Deneb, sweep about 9° east-north-east to a loose triangle of stars about the size of the full Moon. Behind it the Cygnus Milky Way is unusually rich, crowded with faint stars and young clusters far into the distance.",
+      "answer": "It runs from Cygnus through our neighborhood to Orion and Monoceros in the winter sky, so in Cygnus you look along its length rather than across it. M39 is near the start of that view, and young clusters and nurseries continue in the same direction for thousands of light-years, all still in our own arm, which is why this stretch of the band is so dense.",
+      "story": "The arm's direction comes from plotting young objects by distance on a map of the disk seen from above, so that nurseries and young clusters fall into lanes. Recent measurements of that kind have shown our arm to be longer and more substantial than astronomers once thought, less a short spur than a real arm."
+    },
+    "M4": {
+      "step": 5,
+      "rank": 6030,
+      "beat": "The halo, passing through",
+      "question": "What is an ancient halo cluster doing so close to the Sun?",
+      "why": "M4 is the nearest globular cluster of all, sitting right beside Antares, and it belongs to a population that does not live in the disk.",
+      "look": "Put Antares near the edge of the field and look just over a degree west. M4 is a pale, round patch with little central brightening, a ball of stars too far away to resolve in binoculars, and keeping Antares just out of view helps.",
+      "answer": "It is passing through, because globular clusters ride long, looping orbits that carry them far above and below the disk and back down through it. M4, about 6,030 light-years away, happens to be near us on one of those plunges. The halo is not somewhere else; it surrounds the disk and threads through it, and its oldest members cross our part of the galaxy on their way around the center.",
+      "story": "Each plunge through the disk costs a cluster some stars, pulled away by the disk's gravity and the massive clouds it holds, so globulars on orbits like this one slowly lose weight over billions of years. The swarms we see today are the toughest survivors of a once larger population, much of which has dissolved into the halo's scattered stars."
+    },
+    "M41": {
+      "step": 3,
+      "rank": 2330,
+      "beat": "Our arm: a family in the plane",
+      "question": "Why do star clusters like M41 gather along the Milky Way's band?",
+      "why": "M41 lies a few degrees south of Sirius, and unlike that bright neighbor it belongs to the population that marks out the disk itself.",
+      "look": "Put Sirius at the top of the field and move about four degrees straight south. M41 breaks into dozens of stars, one near the middle tinted orange, and under a dark sky the faint winter Milky Way of Canis Major fills the background.",
+      "answer": "Clusters gather along the band because they were born there: stars form from gas, and the galaxy's gas lies in a thin layer along the middle of the disk, so young families start out in that layer. M41, some 150 million years old, has not had time to wander far from it, and the clusters of the band trace the disk the way streetlights trace a road at night.",
+      "story": "Where the galaxy's gas lies can be measured directly: radio telescopes map the disk's hydrogen by the faint glow it gives off at a wavelength of twenty-one centimeters, which passes through dust untouched. Those maps show the gas in a remarkably thin, flat layer that flares a little toward the disk's outer edge."
+    },
+    "M42": {
+      "step": 3,
+      "rank": 1350,
+      "beat": "Our arm: its namesake nursery",
+      "question": "Why is the spiral arm we live in named after Orion?",
+      "why": "Spiral arms are where a galaxy makes its stars, so to find our own arm you look for the nearest place where stars are being born, and that place hangs in Orion's Sword.",
+      "look": "Find the Sword below Orion's Belt; its middle star looks fuzzy even to the naked eye. Binoculars open it into a gray glow with two curved wings around a bright core, the near face of a cloud that is still making stars.",
+      "answer": "The arm takes its name from these clouds: the Orion Nebula is the nearest big star factory in the arm that holds the Sun, which astronomers call the Orion Arm or Orion Spur. Trace that arm along the band and it runs toward the nurseries of Monoceros one way and of Cygnus the other, with the Sun inside it.",
+      "story": "Radio astronomers can measure nurseries across the whole galaxy by tracking masers, tiny, brilliant spots of microwave light from molecules in star-forming clouds. Their yearly shifts give distances accurate to a few percent through any amount of dust. Dozens of nurseries measured this way, clouds in Orion among them, are what pinned down the shapes of the arms near the Sun."
+    },
+    "M44": {
+      "step": 1,
+      "beat": "Home: a scattered family",
+      "question": "Could the Beehive and the Hyades have been born side by side?",
+      "why": "The Beehive is one of the nearest star clusters, a smudge to the naked eye in Cancer, and it shares more with the Hyades than its looks.",
+      "look": "Look midway between Pollux and Regulus, in faint Cancer, for a smudge visible to the eye on a dark night. Binoculars break it into dozens of white and pale-yellow stars, with a few warmer orange points among them, and the sky around it lies well away from the band of the Milky Way.",
+      "answer": "Astronomers suspect they were: the two clusters have nearly the same age and move through space in nearly the same way, yet today the Beehive shines in Cancer and the Hyades far across the sky in Taurus. If they were born together, the galaxy's slow churning has pulled them hundreds of light-years apart, the same stirring that mixes every star family into the disk.",
+      "story": "Astronomers trace a family's past by running its motion backward. Gaia gives each cluster's position and velocity in three dimensions, and the galaxy's gravity is known well enough to wind the orbits back hundreds of millions of years. Done for the Beehive and the Hyades, it shows two families that have traveled on similar paths for a very long time."
+    },
+    "M49": {
+      "step": 6,
+      "beat": "Beyond: a city of galaxies",
+      "question": "Is the Milky Way part of something larger than itself?",
+      "why": "M49 is a faint round glow in western Virgo, and it is one of the giants of the nearest great cluster of galaxies.",
+      "look": "In western Virgo, between Denebola and Spica, use a chart to hop about six degrees east of ο Virginis. Under dark skies M49 is a small round haze, brighter toward the middle, with no structure at all.",
+      "answer": "The Milky Way belongs to something far larger, for our small family of galaxies lies on the outskirts of a vast gathering. Its heart is the Virgo Cluster, where giant ellipticals like M49 sit among a great crowd of galaxies. Your address does not end at the Milky Way; it runs on, galaxy, group and cluster, the way a street address runs on to a city and a country.",
+      "story": "The Local Group is not just drifting apart from Virgo with the expanding universe; it is also being pulled toward the cluster, and that extra tug shows up as a slowdown in how fast Virgo recedes from us. Measuring that slowdown is one of the ways astronomers weigh the great gathering our galaxy belongs to."
+    },
+    "M53": {
+      "step": 5,
+      "rank": 60300,
+      "beat": "The halo's far reaches",
+      "question": "Does the halo end where the bright disk ends?",
+      "why": "M53 is a faint, compact glow near the star α Comae, and it is one of the most remote clusters a binocular can catch.",
+      "look": "Find α Comae, at the south-east corner of Coma Berenices, and look about one degree north-east for a compact, round haze with a starlike middle, smaller and fainter than M3.",
+      "answer": "The halo reaches well beyond the disk: the bright disk fades out long before the orbit of M53, yet the cluster is still bound to the Milky Way, so the halo is a far bigger, far dimmer sphere than the band suggests. Past the farthest globulars, the next lights of any size are other galaxies.",
+      "story": "A cluster this far out stays in the Milky Way's grip only if it moves more slowly than the escape speed at that distance, and Gaia's measurements of its motion show that M53 does, with room to spare. Tracers like it, followed outward to the faintest swarms hundreds of thousands of light-years away, are how astronomers map where the galaxy's pull finally gives out."
+    },
+    "M54": {
+      "step": 5,
+      "rank": 85700,
+      "beat": "The halo: a galaxy being swallowed",
+      "question": "Is every globular cluster in our sky a native of the Milky Way?",
+      "why": "M54 looks like an ordinary faint globular near the Teapot's handle, but it is one of the most distant a binocular can reach.",
+      "look": "From Ascella, at the bottom of the Teapot's handle, move less than two degrees west-south-west to a small, round haze like an out-of-focus star; tap the binoculars gently and it stays soft while real stars sharpen.",
+      "answer": "Some are newcomers, and M54 is one: about 85,700 light-years away, far beyond the galaxy's center, it sits at the heart of the Sagittarius dwarf galaxy, which the Milky Way is slowly tearing apart. In time those stars will join the halo, and M54 will be one more globular whose birthplace was another galaxy.",
+      "story": "Each time the dwarf galaxy has swung through the Milky Way's disk, our galaxy's tides have stripped off more of its stars, and those stars now trail ahead of it and behind it in streams that loop right around the sky. Infrared surveys traced that loop in 2003 through its cool red giants, and some astronomers think the dwarf's passages through the disk also stirred up bursts of star birth there."
+    },
+    "M6": {
+      "step": 3,
+      "rank": 1470,
+      "beat": "Our arm: a family like the Sun's",
+      "question": "Was the Sun born in a family of stars like this one?",
+      "why": "The Butterfly Cluster is a young family of our own arm, and families like it are where stars like the Sun begin.",
+      "look": "From Shaula, go about five degrees north to the Butterfly, two loose wings of stars spreading from a central body, with one clearly orange star on a wingtip. Every star you see in it was born from the same cloud at the same time.",
+      "answer": "The Sun very probably began in a family like this: most stars form in clusters, and the Butterfly, about 1,470 light-years away, shows what such a family looks like while it is young. Over billions of years the Sun's family drifted apart as it circled the galaxy, its siblings scattered around the disk, which is why the Sun now travels alone.",
+      "story": "That the Sun had siblings is written in its meteorites, which hold the decay products of short-lived radioactive elements. Those must have been forged by massive stars nearby just before the planets formed, and a star born alone would rarely have such neighbors. Young families like the Butterfly are exactly the kind of crowd where that happens."
+    },
+    "M62": {
+      "step": 5,
+      "rank": 19700,
+      "beat": "The halo: Shapley's clue",
+      "question": "How did star clusters first show that the Sun is not at the galaxy's center?",
+      "why": "M62 sits among the globulars of Ophiuchus and Scorpius, the corner of the sky where these ancient swarms bunch together most tightly.",
+      "look": "From ε Scorpii, sweep about five degrees north-north-east to M62, a compact glow whose brightest part sits off-center. Then sweep the surrounding sky: M19, M4 and several other globulars lie within a few binocular fields, an unusual crowd in one stretch.",
+      "answer": "They gave it away by where they crowd. In 1918 Harlow Shapley mapped the distances of the globulars and found the swarm centered on a point far off in Sagittarius, not on the Sun, as it would be if they orbit the true center. The Sun turned out to live in the galaxy's suburbs, moved from the middle much as Earth had been moved from the middle of the planets.",
+      "story": "Shapley's work rested on measuring how far each globular lies, using pulsing stars in the nearer clusters and, for the farther ones, how bright their brightest stars looked and how large the clusters appeared. His scale came out roughly twice too large, because no one yet knew that dust dims the light between the stars, yet the direction he found was right, and the direction was the discovery."
+    },
+    "M64": {
+      "step": 6,
+      "beat": "Beyond: a galaxy that ate another",
+      "question": "Can one galaxy swallow another and keep its spiral shape?",
+      "why": "The Black Eye Galaxy is a modest spiral in Coma Berenices, but the gas inside it moves in a way that tells of a past meal.",
+      "look": "The Black Eye lies about seven degrees south-south-west of β Comae, between Arcturus and Denebola; use a chart for the last hop. Look for an oval glow with a bright, almost starlike center.",
+      "answer": "The Black Eye Galaxy seems to have done exactly that, absorbing a small, gas-rich galaxy that was orbiting the wrong way, whose gas still circles backward in its outer disk. The Milky Way's halo carries the same kind of scars, clusters and streams of stars from galaxies it swallowed, so the galaxy we live in was built by meals like this one.",
+      "story": "Our own galaxy has its version of this story, found in 2018 in Gaia's measurements of stars near the Sun. Thousands of halo stars move on long orbits that plunge toward the center and out again, the remains of a sizable galaxy, now called Gaia-Enceladus, that merged with the young Milky Way roughly ten billion years ago. Our disk survived the collision, probably puffed up into a thicker layer, and a new thin disk went on forming inside it."
+    },
+    "M67": {
+      "step": 3,
+      "rank": 2731,
+      "beat": "Our part of the disk: a survivor",
+      "question": "How did M67 survive for billions of years when most star families fall apart?",
+      "why": "M67 is about as old as the Sun, and where it sits in the galaxy is part of the reason it is still here at all.",
+      "look": "From Acubens, the star at the bottom of Cancer south of the Beehive, drift about two degrees west to a misty patch peppered with a handful of faint stars. The sky around it is thin in stars, well away from the band of the Milky Way.",
+      "answer": "Its orbit lifted it out of harm's way: M67, about 2,731 light-years from us, rides high above the thin middle layer of the disk, where the massive gas clouds and spiral arms that tear clusters apart are rare. Families that stay in the busy midplane, the Sun's own among them, dissolve long before they reach such an age.",
+      "story": "Astronomers know its orbit because Gaia measures its motion across the sky and spectra measure its speed toward us. With the galaxy's gravity, those wind into a path that carries the cluster well above and below the midplane. Some have even asked whether the Sun was born here, since the two are so alike in age and makeup, but the Sun's orbit is too flat to have come from there."
+    },
+    "M7": {
+      "step": 3,
+      "rank": 900,
+      "beat": "Our arm, in front of the center",
+      "question": "What is the rich glow behind Ptolemy's Cluster?",
+      "why": "Ptolemy's Cluster is one of the nearest clusters in the direction of the galaxy's center, a foreground family set against some of the deepest star fields in the sky.",
+      "look": "From Shaula, the Scorpion's stinger, go about five degrees north-east. The cluster spreads dozens of stars over more than a degree, and behind them the Milky Way is so dense it looks like fine sand, with dark notches of dust cutting into it.",
+      "answer": "The glow behind it is the inner galaxy, for the cluster is a near neighbor in our own arm while the background stars lie thousands of light-years beyond it. They pile up along a line of sight that crosses the next arm on its way toward the hub. In one field you see our neighborhood and, behind it, a crowd of stars much closer to the center than we are.",
+      "story": "Ptolemy's Cluster is near enough that Gaia measures the shift of its bright members directly, so its place in front of the glow is a matter of geometry rather than inference. The stars behind it are mostly too faint and too far for single parallaxes, and their depths come instead from star counts and from stars of known brightness."
+    },
+    "M79": {
+      "step": 5,
+      "rank": 42700,
+      "beat": "The halo: an immigrant",
+      "question": "What is a globular cluster doing in the winter sky, opposite the galaxy's center?",
+      "why": "M79 is a small, round glow below Orion's feet, and it lies almost as far from the crowd of globulars as it can get.",
+      "look": "Go to Lepus, the Hare, below Orion. From Nihal (β Leporis) move about four degrees south; M79 looks like a small, round, slightly fuzzy star that will not focus to a point.",
+      "answer": "It may be an immigrant: the orbit of M79 ties it to a smaller galaxy that the Milky Way swallowed long ago, though which one is still debated. Part of the halo was built this way, from the clusters and stars of devoured neighbors, so the galaxy you live in is partly made of others.",
+      "story": "A swallowed galaxy's stars spread across the sky within a few orbits, but each keeps the energy and the spin around the center that it had when it arrived. Astronomers sort clusters by those two quantities, and clusters that came in together still bunch up on such a chart billions of years later. The boundaries between the groups are blurry, though, and some clusters fit more than one."
+    },
+    "M8": {
+      "step": 4,
+      "rank": 4360,
+      "beat": "The next arm in",
+      "question": "How far is it to the next spiral arm toward the center?",
+      "why": "The Lagoon is the brightest nursery of the Sagittarius Milky Way, and nurseries are the lamps astronomers use to find spiral arms.",
+      "look": "About six degrees north of the tip of the Teapot's spout, find a misty knot in the Milky Way. Binoculars show an oval gray glow split by a dark lane, with a ragged young cluster on one side, a glow from well beyond our own arm.",
+      "answer": "The next arm in lies a few thousand light-years off, as far as the Lagoon and the young cluster beside it, and the Omega and Eagle nebulae nearby sit at broadly similar depths. Between our arm and this one lies a gap where far fewer nurseries glow, and beyond it the Sagittarius arm curves around the galaxy on the inner side of ours.",
+      "story": "The Lagoon's distance comes from Gaia's parallaxes of the young stars in its cluster, which is how astronomers know it sits beyond our own arm. The space between arms is not empty of stars, only of the young bright ones: older stars fill the whole disk fairly evenly, while new ones switch on where an arm gathers the gas."
+    },
+    "M81": {
+      "step": 6,
+      "beat": "Beyond: through a clear window",
+      "question": "Why are galaxies easiest to find far from the Milky Way's band?",
+      "why": "Bode's Galaxy is one of the brightest galaxies beyond our own little family, and it shines in the Great Bear, well away from the band.",
+      "look": "Extend the line from Phecda through Dubhe by the same distance again, near the faint star 24 Ursae Majoris. Brace the binoculars: Bode's Galaxy is an oval haze with a starlike core, and the Cigar Galaxy shares the field as a thin silvery streak.",
+      "answer": "Away from the band you look out of our dusty disk instead of through it: toward the band, the same dust that splits the Milky Way into dark lanes hides almost every galaxy behind it. Here the view is clear, and even a spiral as distant as Bode's Galaxy, about 11.8 million light-years away, comes through as a soft oval in binoculars.",
+      "story": "Astronomers call the band's hiding effect the zone of avoidance: in old catalogs, galaxies seemed to shun a strip along the Milky Way, until infrared and radio surveys found them there, dimmed by dust rather than absent. Ursa Major lies far from that strip, which is why its galaxies show up even in binoculars."
+    },
+    "M83": {
+      "step": 6,
+      "beat": "Beyond: our galaxy from above",
+      "question": "What would our galaxy look like from directly above its disk?",
+      "why": "The Southern Pinwheel is a barred spiral seen almost face-on, the view of a galaxy that we can never have of our own.",
+      "look": "Catch it due south, well below Spica: the Southern Pinwheel lies about 7° south-south-east of γ Hydrae, toward the border with Centaurus, so use a chart for the last hop. In 10×50s it is a soft, round glow with a brighter middle.",
+      "answer": "From above, our galaxy would look something like the Southern Pinwheel: a bright central bar with arms winding out from its ends, strung with young clusters and glowing nurseries like the ones that line our own arm. The Milky Way has a bar of its own across its middle, and somewhere out in one of its arms, between the bright lanes, sits the Sun.",
+      "story": "Our own galaxy's bar was found from inside, because stars near its center move as a bar would make them move. Infrared counts of stars toward the bulge are lopsided too, more on one side than the other, as if a long bar were tilted toward us. Seen face-on, the Southern Pinwheel's bar and arms are the pattern those clues describe."
+    },
+    "M92": {
+      "step": 5,
+      "rank": 27723,
+      "beat": "The halo: the oldest layer",
+      "question": "How old is the oldest layer of our galaxy?",
+      "why": "M92 looks like a smaller, fainter Great Hercules Cluster, but its stars are even poorer in heavy elements, and among the oldest anyone has dated.",
+      "look": "From π Herculis, the Keystone's north-east corner, go about 6° north to M92, an almost starlike center wrapped in a small glow. Flip back and forth between it and the Hercules cluster to compare them.",
+      "answer": "The halo is older than anything else in the galaxy, and M92 shows it: its age comes out between about 12.75 and 13.8 billion years, depending on the method. The disk you see along the band, with its nurseries and young families, is the younger part of the galaxy, built inside a halo that was already ancient.",
+      "story": "Dated with the same method, the globulars poorest in heavy elements, M92 among them, share a single great age within the errors, while richer clusters spread toward younger ages by up to a couple of billion years. Astronomers read the first group as the galaxy's own earliest generation and many of the younger ones as later arrivals, brought in by small galaxies the Milky Way swallowed."
+    },
+    "M94": {
+      "step": 6,
+      "beat": "Beyond: weighing a galaxy",
+      "question": "Is most of our own galaxy's mass in the stars we can see?",
+      "why": "M94 is one of the easier galaxies near Cor Caroli, and the way it spins puts the weight of our own galaxy in a new light.",
+      "look": "From Cor Caroli, below the Big Dipper's handle, move about three degrees north. M94's compact, bright core makes it one of the easier galaxies here, a fuzzy star wrapped in a soft halo.",
+      "answer": "Most of our galaxy's mass is not in the stars you can see, because the Milky Way is one of the many spirals whose outskirts spin too fast. The stars and gas along the band are only the bright part of a far heavier, invisible halo that wraps the disk and the globulars alike. M94, which seems to need so little dark matter, is the exception that keeps astronomers testing the rule.",
+      "story": "Weighing our own galaxy is harder than weighing M94, because we ride along inside the disk we are trying to measure. Astronomers combine the Sun's speed around the center, about two hundred thirty kilometers every second, with the motions of globular clusters and small companion galaxies far out in the halo. The total comes to somewhere around a trillion Suns."
+    },
+    "MWF-CygnusRift": {
+      "step": 2,
+      "beat": "Dust along the midplane",
+      "question": "Why does a dark lane run down the middle of the summer Milky Way?",
+      "why": "The Cygnus Rift splits the summer band lengthwise, and its shape is a clue to how dust is spread through the whole disk.",
+      "look": "Under a dark sky, follow the Milky Way from Deneb past Sadr toward Albireo, where a dark band splits it into two streams. Sweep binoculars slowly across the boundary, and the star-rich fields give way to dim, nearly empty ones.",
+      "answer": "The dust lies in a thin sheet along the middle of the disk, and from inside that sheet we see it edge-on as a lane, here a chain of cold clouds a couple of thousand light-years away. From outside, our galaxy would show the same dark stripe that edge-on spiral galaxies show, and behind the stripe its arms go on making stars.",
+      "story": "Dust is confined even more tightly than the stars: most of it lies within a few hundred light-years above or below the midplane, a thinner layer than the one that holds the disk's stars. Astronomers measured that thickness by checking how much stars at different heights are reddened: stars a few hundred light-years up shine through almost clean, while stars as far off along the midplane are badly dimmed."
+    },
+    "Mel111": {
+      "step": 1,
+      "beat": "Home: looking straight up",
+      "question": "What lies straight up, out of the plane of our galaxy?",
+      "why": "The Coma Star Cluster is one of the nearest star families, and by chance it sits almost exactly where the view points out of the disk, so it is the foreground for everything that way.",
+      "look": "Look between Denebola and Cor Caroli for a faint glittery patch, and let binoculars spread it into a loose sprawl of white stars. Around it the background is noticeably sparse compared with any stretch of the Milky Way, and that sparseness is the clue.",
+      "answer": "Very little of our galaxy lies that way, only the thin outskirts of the disk and the scattered old clusters of the halo. This cluster, about 278 light-years away, sits close to the north pole of the Milky Way's disk. Beyond that the line of sight leaves home, which is why Coma and neighboring Virgo are thick with faint galaxies.",
+      "story": "The galaxy's north pole sits in Coma Berenices, a point found by tracing the Milky Way's midline around the whole sky and taking the spot a quarter-turn from it in every direction. Astronomers measure every star's height above the disk from that grid, the way a surveyor measures from sea level."
+    },
+    "Mel20": {
+      "step": 1,
+      "beat": "Home: a young family",
+      "question": "Is the Sun's neighborhood still turning out young star families?",
+      "why": "The Alpha Persei Cluster is one of the nearest young star families to the Sun, and it is still rich in the kind of stars that cannot be old.",
+      "look": "Center Mirfak, the brightest star of Perseus, and dozens of blue-white stars spread around it in curving chains, too wide for most telescopes but just right for binoculars. Blue-white stars burn out fast, so a crowd of them is a young crowd.",
+      "answer": "Our neighborhood made this family only recently, since the Alpha Persei Cluster, about 566 light-years away, still holds hot blue-white members that burn through their fuel quickly. Stars were being born in our part of the disk not long ago by a galaxy's standards. A disk that still makes families around us is a sign that the Sun lives inside a spiral arm, and beyond Perseus, thousands of light-years farther in the same direction, lies the next one.",
+      "story": "Families this young are not scattered evenly around the Sun: Gaia's census of young stars within a few thousand light-years shows them gathered into long lanes and waves, and the Alpha Persei Cluster sits on one of them. Tracing those lanes is how astronomers outline the arm the Sun lives in."
+    },
+    "NGC104": {
+      "step": 5,
+      "rank": 14740,
+      "beat": "The halo's edge, beside another galaxy",
+      "question": "Is 47 Tucanae part of the Small Magellanic Cloud right beside it?",
+      "why": "47 Tucanae and the Small Magellanic Cloud share a single binocular view, and the pair is the best place in the sky to see where our galaxy ends.",
+      "look": "To the eye it is a fuzzy star at the edge of the Small Magellanic Cloud. Binoculars show a round glow brightening sharply to an intense core, and wide binoculars hold the cluster and the Cloud's edge in one view.",
+      "answer": "47 Tucanae belongs to our own halo, while the Cloud behind it lies nearly fourteen times farther, a separate galaxy far outside ours. In one field you see the Milky Way's old outer swarm and, far behind it, the next galaxy over.",
+      "story": "Distance is one test of belonging and motion is another. Spectra show the Small Cloud receding from us at about a hundred and fifty kilometers per second, while 47 Tucanae drifts toward us at less than twenty. Whatever the two share on the sky, they are not traveling through space together."
+    },
+    "NGC2244": {
+      "step": 4,
+      "rank": 4620,
+      "beat": "Deeper outward: star birth beyond the Sun",
+      "question": "Does the galaxy still make stars farther from its center than the Sun?",
+      "why": "The Rosette Cluster lies in Monoceros, on the side of the sky that faces away from the galaxy's center, and its stars are newborns.",
+      "look": "Go about a third of the way from Betelgeuse to Procyon and drop slightly south into Monoceros. A small rectangle of stars stands out, one of them yellow-orange, and on a very dark night a faint ring of haze may show around the group, gas the young stars are still lighting.",
+      "answer": "The galaxy still makes stars out here. The Rosette's young stars lie in a direction pointing away from the hub, so they sit farther from the center than the Sun, and the gas around them glows because they switched on so recently. The outer disk is thinner and quieter than the inner one, but its arms are still at work.",
+      "story": "Radio maps show the disk's hydrogen reaching well beyond the Sun's orbit, thinning but not gone. Out there the disk also warps, bending up on one side of the galaxy and down on the other like the brim of a hat."
+    },
+    "NGC2264": {
+      "step": 3,
+      "rank": 2280,
+      "beat": "Our arm, farther along",
+      "question": "Where does our spiral arm go beyond Orion?",
+      "why": "The Christmas Tree Cluster is a nursery a little deeper along the band than Orion's, so it shows which way our own arm runs.",
+      "look": "Go a little under halfway from Betelgeuse to Procyon, then north into Monoceros. Bright S Monocerotis marks the trunk of an upside-down tree of fainter stars, a family still sitting in the cloud that made it.",
+      "answer": "Our arm runs on through Monoceros: this cluster, about 2,280 light-years away, is still forming stars at the tip of its tree, which marks it as another working nursery of the same arm. Line up nurseries like it by their measured distances and the arm appears as a lane of young stars curving away from us through the winter sky.",
+      "story": "The direction of the arm shows up when nurseries are plotted on a map seen from above: Orion's clouds, then the Christmas Tree's farther along, step outward on a gently curving line. Each distance comes from Gaia's parallaxes of the young stars themselves, so the curve is measured, not drawn by eye."
+    },
+    "NGC2362": {
+      "step": 4,
+      "rank": 4010,
+      "beat": "Deeper in, beyond Sirius",
+      "question": "How far beyond Sirius does the Milky Way of Canis Major run?",
+      "why": "The τ Canis Majoris Cluster is a tiny knot of young stars in the Great Dog's hindquarters, and its bright central star is not what it seems.",
+      "look": "Find Wezen and Aludra in the Great Dog's hindquarters, south-east of Sirius. τ Canis Majoris sits about three degrees north of the point midway between them, looking slightly fuzzy, wrapped in a tiny knot of faint stars.",
+      "answer": "It runs on for thousands of light-years, for this little cluster lies about 4,010 light-years away, nearly five hundred times as far as Sirius. τ Canis Majoris at its heart is a heavyweight that only looks ordinary because of that distance. The faint winter band here is made of suns as remote as this one, out on the side of the disk that faces away from the center.",
+      "story": "The winter band is faint for two reasons that pull in opposite directions. Fewer stars lie out this way, since we look toward the disk's thinner outer regions, but less dust does too, so a cluster thousands of light-years off reaches us only a little dimmed. Here the disk is thin enough to see through, and only rare heavyweights like τ Canis Majoris stand out of it."
+    },
+    "NGC253": {
+      "step": 6,
+      "beat": "Beyond: a disk seen edge-on",
+      "question": "What would our galaxy look like seen edge-on from far away?",
+      "why": "The Sculptor Galaxy is a big spiral seen nearly edge-on, the angle from which we see our own disk, only from outside instead of inside.",
+      "look": "Find Diphda, the brightest star of Cetus, and sweep about 7° almost due south for a faint elongated streak about the Moon's width long. From mid-northern latitudes it stays low, and averted vision lengthens it.",
+      "answer": "From a great distance, side-on, our galaxy would look like this thin streak, a bright, flattened spindle of stars that photographs show threaded with dark dust along its middle. Our Milky Way band is that same edge seen from inside it, which is why it wraps all the way around the sky.",
+      "story": "Its dark lanes are the same kind of dust that splits our own band, seen from far enough away to show its full sweep along the disk. In infrared light the dust glows and the stars behind it shine through, the same trick astronomers use to see through our own disk toward its center."
+    },
+    "NGC3201": {
+      "step": 5,
+      "rank": 15460,
+      "beat": "The halo, against the flow",
+      "question": "Why is NGC 3201 rushing away from us faster than any other globular?",
+      "why": "NGC 3201 is a loose, soft glow in Vela, and its motion sets it apart from almost everything else in the galaxy.",
+      "look": "In Vela, look for a soft, roundish glow about half the width of the full Moon, only slightly brighter toward the middle and much looser-looking than most globulars; moonlight easily washes it out.",
+      "answer": "It circles the galaxy the wrong way: the disk, the Sun included, swings around the center in one direction, and NGC 3201 orbits against that flow, so much of its speed relative to us is our own motion added to its. A cluster on such an orbit has never shared the orderly spin of the disk, a member of the halo in the fullest sense.",
+      "story": "Its strange orbit points to a strange origin. A cluster born in the spinning disk would share the disk's direction of rotation, so clusters that circle backward are thought to have arrived with small galaxies the Milky Way swallowed. Gaia's measurements of its motion tie this cluster to the debris of an ancient merger, though which one is still debated."
+    },
+    "NGC3293": {
+      "step": 4,
+      "rank": 7600,
+      "beat": "The next arm in: a production line",
+      "question": "How long does one stretch of spiral arm keep making stars?",
+      "why": "The Gem Cluster and the young clusters inside the Carina Nebula came from one star-forming region at different times, so together they record a history.",
+      "look": "From the bright heart of the Carina Nebula, move about two degrees north-west. Binoculars show a compact, bright clump much smaller than the Moon, a few stars resolved around a hazy center, standing in clear space with no glow around it.",
+      "answer": "It goes on for well over ten million years: the Gem Cluster is roughly 15 million years old, while the nurseries beside it are still making stars, so this patch of the arm has turned gas into families batch after batch. A spiral arm is not one event but a long production line, and Carina is one of its busiest stretches.",
+      "story": "Star birth in a giant cloud complex rarely happens all at once. The winds of one generation's heaviest stars, and later their supernovae, squeeze the gas around them and can set off the next batch. In Carina those generations run across the sky, from cleared clusters like this one to infant stars still hidden in dusty pillars."
+    },
+    "NGC3372": {
+      "step": 4,
+      "rank": 7660,
+      "beat": "The next arm in, seen end-on",
+      "question": "Why is the Milky Way in Carina so crowded with nurseries and clusters?",
+      "why": "The Carina Nebula is the brightest nursery of the southern sky, and its setting tells as much as its glow.",
+      "look": "Sweep the Milky Way between the Southern Cross and the False Cross, where the glow is plain to the eye. Binoculars show a bright, irregular haze cut by a dark notch of dust, with the orange point of Eta Carinae beside it and young clusters scattered all around.",
+      "answer": "Here our line of sight runs along the next arm in rather than across it, so its nurseries and young clusters stack up one behind another, and the Carina Nebula is the grandest of them. The same arm, followed the other way around the sky, is the one you see glowing in Sagittarius.",
+      "story": "Directions like this one, where the line of sight grazes an arm, show up in radio maps of the galaxy's gas as places where the signal suddenly strengthens, and astronomers call them arm tangents. They are among the most reliable markers of where the arms run, because they do not depend on any single distance."
+    },
+    "NGC3532": {
+      "step": 3,
+      "rank": 1539,
+      "beat": "Our arm, beside the next",
+      "question": "How many spiral arms lie between the Wishing Well and the Carina Nebula?",
+      "why": "The Wishing Well Cluster sits only a few degrees from the Carina Nebula, and the two look like neighbors until you ask how far each one is.",
+      "look": "From the Carina Nebula, move about three degrees east-north-east to an elongated swarm of dozens of stars in curving chains. Keep both in one sweep and compare: the cluster is crisp and resolved, the nebula a hazy glow set deeper in the band.",
+      "answer": "You cross the gap between two arms. The Wishing Well lies about 1,540 light-years away in our own arm, while the Carina Nebula sits about five times farther, in the arm that runs inward of ours through Carina and Sagittarius. Looking toward Carina, a single sweep spans the space between two arms of the galaxy.",
+      "story": "The Carina Nebula's distance comes from the expanding shell around Eta Carinae, and the Wishing Well's from Gaia's parallaxes of hundreds of members, two independent methods for two very different objects. Plotted on a map of the disk seen from above, distances like these are what reveal the lanes of the arms and the quieter gaps between them."
+    },
+    "NGC457": {
+      "step": 4,
+      "rank": 9132,
+      "beat": "The next arm out, to the naked eye",
+      "question": "Can you see a single star in another spiral arm with your own eyes?",
+      "why": "The Owl Cluster's bright eye, φ Cassiopeiae, shows to the naked eye on a dark night, and whether it belongs to the cluster decides how far away that eye is.",
+      "look": "Two degrees south of Ruchbah, find the bright star φ Cassiopeiae with a fainter partner beside it, and the faint spray of the Owl's wings trailing away from them. Then look at φ Cassiopeiae with the naked eye alone.",
+      "answer": "φ Cassiopeiae is probably just that, since Gaia's measurement puts it at the cluster's distance, out in the Perseus arm. That would make it one of the most luminous stars in the galaxy, bright enough to reach your naked eye across the gap between two arms. The case is not quite closed, which only makes that pinpoint more intriguing.",
+      "story": "Distance is not the only toll on this light, for the dust along this line of sight soaks up roughly three quarters of it on the way. A star still bright enough for the naked eye after crossing that much distance and that much dust would have to shine well over a hundred thousand times as brightly as the Sun."
+    },
+    "NGC4755": {
+      "step": 4,
+      "rank": 6453,
+      "beat": "The next arm in, beside the dark",
+      "question": "How can the Jewel Box sparkle right at the edge of the Coalsack's shadow?",
+      "why": "The Jewel Box sits just outside the Coalsack's edge, and the two together show two depths of the disk in one field.",
+      "look": "Start at Mimosa on the eastern arm of the Cross and nudge just over a degree south-east to a compact letter A of stars, one of them orange. Sweep a little south and the star fields fade into the Coalsack's darkness.",
+      "answer": "The two are nowhere near each other: the Coalsack is a dust cloud about 500 light-years away, while the Jewel Box lies more than twelve times farther, in the next arm in. From here the young cluster just peeks out past the cloud's edge, one of the many lamps of the inner arm that the dust lets through.",
+      "story": "Its distance comes from Gaia's parallaxes, averaged over hundreds of members, and from matching its hot stars against nearer young families. Both put it on the arm that runs inward of ours through Centaurus and Carina. Clusters as young as this one are the most trusted markers of an arm, because they have not had time to drift away from it."
+    },
+    "NGC5128": {
+      "step": 6,
+      "beat": "Beyond: a different kind of galaxy",
+      "question": "Is every galaxy a flat spiral like the Milky Way?",
+      "why": "Centaurus A is a faint oval glow a few degrees north of Omega Centauri, and it is built quite differently from our own galaxy.",
+      "look": "Start at Omega Centauri and move about four and a half degrees north. Under a dark sky binoculars show a small, slightly oval glow that swells with averted vision.",
+      "answer": "Centaurus A is a giant elliptical, a vast rounded swarm of stars rather than a thin spinning disk, and the nearest galaxy of its kind. Spirals like ours, with their arms and nurseries, are only one of the ways a galaxy can be built.",
+      "story": "Giant ellipticals are thought to grow by mergers, and Centaurus A shows the evidence: a lane of dust and young stars cuts across its middle, the remains of a gas-rich spiral it swallowed. Our own galaxy has eaten only small neighbors so far, but its merger with Andromeda, billions of years from now, may leave something rather like this."
+    },
+    "NGC5139": {
+      "step": 5,
+      "rank": 17710,
+      "beat": "The halo: a lost galaxy's heart",
+      "question": "Could the grandest globular in our sky be what is left of another galaxy?",
+      "why": "Omega Centauri is the biggest and brightest globular cluster of the Milky Way, and its stars do not follow the rules that ordinary globulars keep.",
+      "look": "To the eye it is a fuzzy star in Centaurus that never sharpens. Binoculars turn it into a large, round glow brightening steadily toward the center, like a snowball, grainy at the edge under a dark sky.",
+      "answer": "Omega Centauri, about 17,700 light-years from us, may well be just that. Its several generations of stars and its backward orbit around the galaxy fit the core of a small galaxy that merged with the young Milky Way and was stripped of everything but its dense heart. If so, the halo holds the remains of the galaxies ours has eaten, and Omega Centauri is the largest of them you can see by eye.",
+      "story": "In 2019 astronomers sifting Gaia's measurements found a faint river of stars, named Fimbulthul, stretching across tens of degrees of the southern sky. Its stars share Omega Centauri's motion and, as later spectra showed, its unusual mix of chemistry. It is a tail pulled off the cluster by the Milky Way's tides, still tracing the orbit the cluster has followed for billions of years."
+    },
+    "NGC6231": {
+      "step": 4,
+      "rank": 5190,
+      "beat": "The next arm in, behind our own",
+      "question": "Which of the bright stars around NGC 6231 belong to the next spiral arm?",
+      "why": "NGC 6231 is a compact knot of brilliant young stars at the tail of Scorpius, and the bright stars around it come from two very different depths.",
+      "look": "Follow Scorpius's tail to the naked-eye pair ζ¹ and ζ² Scorpii, then go half a degree north to a compact knot of a dozen bright stars over fainter ones. Compare the two ζ stars: one orange, one pale.",
+      "answer": "NGC 6231 and the paler ζ¹ do, both about 5,190 light-years away at the core of a group of hot young stars in the next arm in, while orange ζ² is a nearby giant in our own stretch of the disk. ζ¹ looks pale rather than blue because dust along that long road reddens its light, and a single glance here spans the gap between two spiral arms.",
+      "story": "This cluster is the core of a sprawling association of hot young stars spread over a few hundred light-years along the next arm in. Associations like it are so young that they still sit where their birth clouds were, which makes them the brightest markers astronomers have for plotting where an arm runs."
+    },
+    "NGC6397": {
+      "step": 5,
+      "rank": 8090,
+      "beat": "The halo, dated by its embers",
+      "question": "How old is the galaxy's halo, judged by its dying embers?",
+      "why": "NGC 6397 is one of the nearest globular clusters, a bright, ragged glow in Ara, close enough for Hubble to see its dimmest dead stars.",
+      "look": "From β Arae, below Scorpius' tail, sweep about three degrees north-east to a bright, irregular glow with a concentrated core and a ragged halo. From mid-northern latitudes it barely clears the horizon, while from the southern hemisphere it is a highlight.",
+      "answer": "The embers say about 11.5 billion years: the faintest white dwarfs Hubble found in NGC 6397 have been cooling that long, and fits to its living stars give an even older figure. The halo's clusters formed in the galaxy's first few billion years, and the disk is the younger structure that grew inside them.",
+      "story": "NGC 6397 also carries a clock of a stranger kind, the rare element beryllium, made when cosmic rays from the galaxy's first exploding stars shattered atoms of carbon, nitrogen and oxygen. Its amount built up steadily as time passed, and in 2004 astronomers used the beryllium in this cluster's stars to estimate that it formed only a few hundred million years after the galaxy's first stars."
+    },
+    "NGC7000": {
+      "step": 3,
+      "rank": 2639,
+      "beat": "Our arm: a working nursery",
+      "question": "What does a working stretch of our own spiral arm look like?",
+      "why": "The North America Nebula is one of the nurseries of the Cygnus Milky Way, and it shows what our own arm is doing in our era rather than long ago.",
+      "look": "Put Deneb at the edge of a wide field and look about 3° east. On a dark, transparent night the area looks slightly brighter than the surrounding Milky Way, with a sharper dark edge on its southern side. A nebula filter helps, and rich star fields should not be mistaken for the glow.",
+      "answer": "A working stretch of arm looks much like this faint glow: a cloud of hydrogen about 2,640 light-years away, lit by hot young stars that have switched on inside it and still wrapped in lanes of dust. Glowing gas, fresh stars and dark dust together are the signature of a spiral arm, and from inside one, that mixture is what the band of Cygnus is made of.",
+      "story": "Nurseries glow red in photographs because hydrogen gives off a deep red light when electrons fall back into atoms that ultraviolet starlight had torn apart. That color is how astronomers find nurseries across a galaxy. In face-on spirals the red knots line up along the arms like beads; in ours they crowd the band of Cygnus because we look along the arm."
+    },
+    "NGC752": {
+      "step": 3,
+      "rank": 1414,
+      "beat": "Our arm: an old drifter",
+      "question": "Why does an old cluster like NGC 752 sit so far from the Milky Way's band?",
+      "why": "NGC 752 is far older than the clusters strung along the band, and its position is a record of what time does to a star family's orbit.",
+      "look": "Start at the wide orange pair 56 Andromedae in southern Andromeda and look just north-east for a large, loose patch of faint, similar stars. Then notice where you are: the band of the Milky Way runs well to the north, through Cassiopeia and Perseus.",
+      "answer": "Time has pushed it there, because every passage near a massive cloud or through a spiral arm gives a cluster a small kick. Over more than a billion years those kicks have let NGC 752, about 1,414 light-years away, bob far above and below the thin layer where it was born. Young clusters hug the band and old ones wander, so a cluster's height above the plane is a rough clock of its age.",
+      "story": "Astronomers call this disk heating, and they measure it by comparing families and single stars of different ages. The spread of their up-and-down speeds grows steadily with age, so the oldest members of the disk bob highest above its midplane. This cluster's place far from the band, and the motion Gaia measures for it, fit that pattern."
+    },
+    "NGC869": {
+      "step": 4,
+      "rank": 7435,
+      "beat": "The next arm out",
+      "question": "What lies across the quiet gap beyond our own spiral arm?",
+      "why": "The Double Cluster is one of the finest binocular sights of the northern sky, and it lies much farther away than its brightness suggests.",
+      "look": "Sweep from Cassiopeia's W toward Perseus and two glittering knots appear in one field, each crowded with dozens of points, a few of them orange. Lower the binoculars and the naked eye still shows them as a hazy patch in the Milky Way.",
+      "answer": "The Perseus arm does, and the Double Cluster is its brightest landmark in our sky: these clusters belong to the next arm out from the center, across a gap where far fewer young stars shine. Past Perseus the disk thins toward its outer edge, so in this direction the rich clusters give out sooner than they do toward Sagittarius.",
+      "story": "The distance to the arm beyond the gap was one of the early triumphs of radio parallaxes. In 2006 a maser in a nursery in this part of the sky gave a distance by pure geometry, and it settled a long argument by showing that arm to be nearer than older estimates based on the speed of its gas. Gaia's distance to the Double Cluster now fits the same lane."
+    },
+    "NGC884": {
+      "step": 4,
+      "rank": 7479,
+      "beat": "The next arm out: one burst",
+      "question": "How big a stretch of spiral arm can light up in one burst of star birth?",
+      "why": "χ Persei is the eastern twin of the Double Cluster, and its twin is only the start of its family.",
+      "look": "Keep both clusters in the field and compare: χ Persei is a little looser than h. Then sweep slowly around the pair at low power, where a sprinkling of bright stars spreads across the surrounding field.",
+      "answer": "A whole region of the arm can switch on together: both clusters and a wide halo of stars around them share one age, so a large patch of the Perseus arm formed its stars in a single burst. Bursts like this are how spiral arms light up, and seen from outside they would be the bright knots that mark an arm in a photograph of a galaxy.",
+      "story": "A burst that big needs a big cloud. A giant cloud usually turns only a few percent of its gas into stars, so two rich clusters and the scattered family around them point to a parent of hundreds of thousands of Suns' worth of gas. Clouds that heavy gather mostly where a spiral arm sweeps gas together."
+    },
+    "SMC": {
+      "step": 6,
+      "beat": "Beyond: the galaxy that measured ours",
+      "question": "How did this little galaxy help map our own?",
+      "why": "The Small Magellanic Cloud is a companion galaxy of the Milky Way, and in the story of finding our place it plays a surprising part.",
+      "look": "Under a dark sky it looks like a small torn-off cloud; binoculars show a soft, uneven glow, brighter along one side, with 47 Tucanae and NGC 362, two globulars of our own halo, as fuzzy stars beside it.",
+      "answer": "Leavitt's rule gave astronomers lamps of known power, and Harlow Shapley used that kind of yardstick to measure the distances of globular clusters and place the center of the galaxy far off in Sagittarius. The Cloud itself is one of the small companion galaxies that circle our own, near enough that its brightest stars could be timed one by one.",
+      "story": "Leavitt's rule said only which Cepheids were truly brighter than others, not how bright any of them actually was, so the scale still floated free. In 1913 Ejnar Hertzsprung pinned it down from the slow drift of a dozen or so nearby Cepheids across the sky, and with that one fixed point the rule became a working yardstick."
+    },
+    "STAR-Arcturus": {
+      "step": 1,
+      "beat": "Home: a visitor passing through",
+      "question": "Is every star near the Sun a local, or are some just passing through?",
+      "why": "Arcturus is a near neighbor and one of the brightest stars of the sky, yet it does not move like the stars around it, and that difference opens a window on the galaxy's layers.",
+      "look": "Follow the curve of the Big Dipper's handle to Arcturus, the brightest star in Boötes, and hold it in the field: its orange-gold is obvious. It sits far from the Milky Way's band, in a part of the sky that looks up and out of the disk rather than along it.",
+      "answer": "Some are just passing through, and Arcturus is the brightest of them. It only happens to be crossing our neighborhood now, on an orbit that climbs higher above and below the disk's thin middle layer than the Sun ever goes. The galaxy is layered, a young thin disk inside an older, thicker one and an ancient halo around both, and the Sun belongs to the thin, young layer.",
+      "story": "Arcturus does not travel alone, for dozens of other old stars share its unusual motion, a group astronomers call the Arcturus stream. They still debate whether it is debris from a small galaxy swallowed long ago or stars stirred into step by the bar at the galaxy's center. Either way, the Sun's neighborhood turns out to be a crossroads where stars of very different origins pass through."
+    },
+    "STAR-Fomalhaut": {
+      "step": 1,
+      "beat": "Home: looking out of the disk",
+      "question": "Why does Fomalhaut stand so alone in its part of the sky?",
+      "why": "Fomalhaut is a close neighbor of the Sun, but what makes it useful here is the empty sky around it.",
+      "look": "Follow the west side of the Great Square of Pegasus about 45° south to Fomalhaut, the only bright star in that stretch. Sweep the binoculars around it and compare the sparse field with any patch of the Milky Way: far fewer faint stars fill the view.",
+      "answer": "That part of the sky points well away from the plane of the disk, so after a few neighbors like Fomalhaut, about 25 light-years away, the line of sight runs out of stars quickly. Where the disk thins out the universe beyond opens up, and faint galaxies such as the Sculptor Galaxy hide not far to the east.",
+      "story": "You can test this with nothing but a count: a binocular field near Fomalhaut holds only a fraction of the faint stars that crowd an equal field in Cygnus or Sagittarius. William Herschel made the same count with a telescope in the 1780s, sampling the sky field by field, and concluded that we live inside a flattened system of stars, the first rough map of the Milky Way."
+    },
+    "STAR-Procyon": {
+      "step": 1,
+      "beat": "Home: a neighbor at the band's edge",
+      "question": "Procyon sits at the edge of the winter Milky Way, so is it part of it?",
+      "why": "Procyon is one of the closest bright stars to the Sun, and it shines right beside the faint river of the winter Milky Way in Canis Minor and Monoceros.",
+      "look": "Find Procyon, the eastern corner of the Winter Triangle with Sirius and Betelgeuse. On a dark night the faint band of the winter Milky Way runs just to its west through Monoceros, a soft glow beside a brilliant point.",
+      "answer": "It belongs to the galaxy, as every star you see does, but not to that glow: Procyon is a close neighbor, while the band beside it is made of stars hundreds of times farther along the disk. Near stars lie all over our sky because we sit inside the disk's thickness, and only the distant ones pile up into a band.",
+      "story": "From Procyon our Sun would be a modest star, a little fainter than Polaris looks to us, in what we call Aquila, on the opposite side of the sky, and the Milky Way would look almost exactly as it does to us. A few light-years barely change the view of the galaxy, which is the clearest sign that the band is very far away and the neighbors are very close."
+    },
+    "STAR-Sirius": {
+      "step": 1,
+      "beat": "Home: the brightest neighbor",
+      "question": "Why are the Sun's nearest neighbors scattered all over the sky instead of along the band?",
+      "why": "Sirius outshines every other star of the night, yet it is not a giant beacon but a neighbor, and neighbors are the first clue to the shape of the thing we live in.",
+      "look": "Follow Orion's Belt down and to the left to Sirius, and park it near the edge of the field to tame the glare. Then lower the binoculars and notice where the brightest winter stars lie: Sirius, Procyon, Capella and Aldebaran are spread widely, some well away from the faint winter band of the Milky Way.",
+      "answer": "They are too close to show it: Sirius and the other near stars lie well within the thickness of the disk, so from where we sit they surround us in every direction, like the trees right around you in a forest. Only stars thousands of light-years off crowd into a band, and that crowding is the next clue to the shape of our galaxy.",
+      "story": "Astronomers have counted the Sun's neighbors with care, and out to about twenty light-years there are roughly a hundred known stars, most of them faint red dwarfs no eye can see. Infrared surveys still turn up new ones, cool brown dwarfs only a few light-years away. The neighbors we can see by eye are the rare bright exceptions, Sirius chief among them."
+    },
+    "Stock2": {
+      "step": 3,
+      "rank": 1208,
+      "beat": "Our arm, next to the next arm",
+      "question": "Stock 2 and the Double Cluster share a sweep, but do they share an arm?",
+      "why": "Stock 2 is a big, loose family just north of the Double Cluster, and the pair is the clearest demonstration in the northern sky of how deep the band runs.",
+      "look": "From the Double Cluster, nudge about two degrees north until a large, loose group fills much of the view, the stick figure some call the Muscleman. Sweep back and forth between them: Stock 2's stars look bright and coarse, the Double Cluster's small and densely packed.",
+      "answer": "Stock 2 belongs to our own arm, while the Double Cluster lies across the gap in the Perseus arm, the next one out from the center. The difference in sparkle you just saw is the gap between two spiral arms, squeezed by perspective into two degrees of sky.",
+      "story": "Plot the young clusters in this part of the sky by their Gaia distances and they fall into two groups, one nearer than about three thousand light-years and one from about six to nine thousand, with few in between. Young families mark where arms are because they have had no time to wander away, so a stretch of distance with almost none of them is a landmark in its own right."
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=78.634467-8.201638&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD34085                     \tBET ORI                     \t  2.57000\t 2.6900\t        \t4385A     \t1967MNRAS.137..393H\tHD34085\n 0.00\tHD34085                     \tBET ORI                     \t  2.43000\t 2.5500\t  0.0500\t4385A     \t1974MNRAS.167..121H\tHD34085\n 0.00\tHD34085                     \tBET ORI                     \t 50.00000\t       \t        \t650nm     \t1977Icar...32..450W\tHD34085\n 0.00\tHD34085                     \t                            \t  2.56000\t       \t  0.0100\t550 to 850\t2014SPIE.9146E..0WB\tHD34085\n 0.00\tHD34085                     \tbet Ori                     \t  2.52600\t 2.6060\t  0.0090\t550..850nm\t2018AJ....155...30B\tHD34085\n\n"
+}

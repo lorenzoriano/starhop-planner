@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/gcvs/gcvs_cat&-c=34.836634-2.977638&-c.rs=60&-out=GCVS,VarType,magMax,Min1,n_Min1,flt,Period,SpType&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tGCVS\tVarType\tmagMax\tMin1\tn_Min1\tflt\tPeriod\tSpType\narcsec\t \t \tmag\tmag\t \t \td\t\n-----\t----------\t----------\t------\t------\t--\t--\t----------------\t-----------------\n 0.03\tomi Cet   \tM         \t 2.000\t10.100\t  \tV \t  331.9600000000\tM5e-M9e\n 0.60\tVZ Cet    \t*         \t 9.500\t12.000\t  \tV \t 4750.0000000000\tBeq\n\n"
+}

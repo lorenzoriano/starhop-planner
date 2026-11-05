@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=88.792939%2B7.407064&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD39801                     \tALF ORI                     \t 34.00000\t       \t        \t          \t1931...............\tHD39801\n 0.00\tHD39801                     \tALF ORI                     \t 47.00000\t       \t  6.0000\t5024A     \t1974ApJ...187..131C\tHD39801\n 0.00\tHD39801                     \tALF ORI                     \t 51.00000\t       \t        \t650nm     \t1977Icar...32..450W\tHD39801\n 0.00\tHD39801                     \tALF ORI                     \t 37.00000\t       \t  3.0000\t535nm     \t1983ApJ...270L..23R\tHD39801\n 0.00\tHD39801                     \tALF ORI                     \t 49.40100\t       \t  0.2370\t800nm     \t1991AJ....101.2207M\tHD39801\n 0.00\tHD39801                     \tALF ORI                     \t 46.00000\t       \t  0.2000\t2.2       \t1992AJ....104.1982D\tHD39801\n 0.00\tHD39801                     \tALF ORI                     \t 53.00000\t       \t  3.0000\t11mu      \t1995Ap&SS.224..447D\tHD39801\n 0.00\tHD39801                     \tHR2061                      \t 44.20000\t       \t  0.2000\t2.2mu     \t1998AJ....116..981D\tHD39801\n 0.00\tHD39801                     \tAlpha Ori                   \t 41.01000\t42.2800\t  0.4100\tK         \t2014A&A...572A..17M\tHD39801\n 0.00\tHD39801                     \tBetelgeuse                  \t         \t43.1500\t  0.5000\tH         \t2016A&A...588A.130M\tHD39801\n\n"
+}

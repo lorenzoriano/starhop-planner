@@ -1,0 +1,358 @@
+{
+ "version": "sources-canonical-2026-11-02",
+ "notes": "Canonical registry of catalog/paper sources that more than one KB input cites. build_kb.ts (1) applies `renames` to a single input file (a curator reused an id for a DIFFERENT work), then (2) rewrites every id in `aliases` to its canonical id everywhere (facts, sources lists, edges, contexts, story seeds), and (3) replaces every input record whose id is listed in `sources` with the canonical record below. Sources not listed here pass through unchanged; two different records under one id that is not listed here are a build error. URLs checked 2026-11-02 (ADS abstract pages refuse scripted requests; their bibcodes are authoritative).",
+ "sources": [
+  {
+   "id": "al-binocular-deepsky",
+   "title": "Binocular Deep Sky Observing Program: object list",
+   "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+   "publisher": "Astronomical League",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "al-binocular-messier",
+   "title": "Binocular Messier Observing Program, Appendix A (object list with binocular difficulty)",
+   "url": "https://www.astroleague.org/binocular-messier-program-appendix-a/",
+   "publisher": "Astronomical League",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "al-southern-binocular",
+   "title": "Southern Skies Binocular Observing Program: object list",
+   "url": "https://www.astroleague.org/southern-sky-binocular-program-list/",
+   "publisher": "Astronomical League",
+   "kind": "web",
+   "citation": "Astronomical League Southern Skies Binocular Program (73 objects south of −40°, 7×50)",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "andriantsaralaza2022",
+   "title": "Distance estimates for AGB stars from parallax measurements",
+   "url": "https://ui.adsabs.harvard.edu/abs/2022A%26A...667A..74A/abstract",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "paper",
+   "citation": "Andriantsaralaza et al. 2022, A&A 667, A74 (DEATHSTAR distance catalogue, VizieR J/A+A/667/A74)",
+   "bibcode": "2022A&A...667A..74A",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "aschenbrenner2023",
+   "title": "Quantitative spectroscopy of late O-type main-sequence stars with a hybrid non-LTE method",
+   "url": "https://ui.adsabs.harvard.edu/abs/2023A%26A...671A..36A/abstract",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "paper",
+   "citation": "Aschenbrenner et al. 2023, A&A 671, A36",
+   "bibcode": "2023A&A...671A..36A",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "baines2018",
+   "title": "Fundamental parameters of 87 stars from the Navy Precision Optical Interferometer",
+   "url": "https://ui.adsabs.harvard.edu/abs/2018AJ....155...30B/abstract",
+   "publisher": "The Astronomical Journal",
+   "kind": "paper",
+   "citation": "Baines et al. 2018, AJ 155, 30 (NPOI angular diameters; also compiled in JMDC, VizieR II/345)",
+   "bibcode": "2018AJ....155...30B",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "bh18",
+   "title": "Mean proper motions, space orbits, and velocity dispersion profiles of Galactic globular clusters derived from Gaia DR2 data (masses from N-body fits, Baumgardt globular cluster database)",
+   "url": "https://people.smp.uq.edu.au/HolgerBaumgardt/globular/",
+   "publisher": "Monthly Notices of the RAS / H. Baumgardt (University of Queensland)",
+   "kind": "catalog",
+   "citation": "Baumgardt & Hilker 2018, MNRAS 478, 1520; masses from N-body fits (Baumgardt 2017, MNRAS 464, 2174) as tabulated in the online database",
+   "bibcode": "2018MNRAS.478.1520B",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "bsc5",
+   "title": "Bright Star Catalogue, 5th Revised Ed.",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=V/50",
+   "publisher": "Yale University Observatory / VizieR (IDIA mirror)",
+   "kind": "catalog",
+   "citation": "Hoffleit & Warren 1991, VizieR V/50",
+   "bibcode": "1991bsc..book.....H",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "bv21",
+   "title": "Accurate distances to Galactic globular clusters through a combination of Gaia EDR3, HST and literature data (with the Baumgardt globular cluster database, combined table)",
+   "url": "https://people.smp.uq.edu.au/HolgerBaumgardt/globular/",
+   "publisher": "Monthly Notices of the RAS / H. Baumgardt (University of Queensland)",
+   "kind": "catalog",
+   "citation": "Baumgardt & Vasiliev 2021, MNRAS 505, 5957",
+   "bibcode": "2021MNRAS.505.5957B",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "catalog-extents",
+   "title": "StarHop catalog-extents.json (observing extents)",
+   "url": "https://github.com/mattiaverga/OpenNGC",
+   "publisher": "StarHop Planner",
+   "kind": "catalog",
+   "citation": "client/src/lib/catalog-extents.json (OpenNGC where available, otherwise included observing extents)"
+  },
+  {
+   "id": "cg2020",
+   "title": "Painting a portrait of the Galactic disc with its stellar clusters",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/A%2BA/640/A1",
+   "publisher": "Astronomy & Astrophysics / VizieR (IDIA mirror)",
+   "kind": "catalog",
+   "citation": "Cantat-Gaudin et al. 2020, A&A 640, A1",
+   "bibcode": "2020A&A...640A...1C",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "gaia-dr2",
+   "title": "Gaia Data Release 2: Summary of the contents and survey properties",
+   "url": "https://www.cosmos.esa.int/web/gaia/dr2",
+   "publisher": "ESA / Gaia DPAC",
+   "license": "CC BY-SA 3.0 IGO",
+   "kind": "catalog",
+   "citation": "Gaia Collaboration, Brown et al. 2018, A&A 616, A1 (parallaxes read via SIMBAD, Harvard mirror)",
+   "bibcode": "2018A&A...616A...1G",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "gaia-edr3",
+   "title": "Gaia Early Data Release 3: Summary of the contents and survey properties",
+   "url": "https://www.cosmos.esa.int/web/gaia/earlydr3",
+   "publisher": "ESA / Gaia DPAC",
+   "license": "CC BY-SA 3.0 IGO (credit ESA/Gaia/DPAC)",
+   "kind": "catalog",
+   "citation": "Gaia Collaboration, Brown et al. 2021, A&A 649, A1 (catalogue I/350; parallaxes also read through SIMBAD; distance = 1/parallax unless a note says otherwise)",
+   "bibcode": "2021A&A...649A...1G",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "gaiadr3",
+   "title": "Gaia Data Release 3: Summary of the content and survey properties",
+   "url": "https://www.cosmos.esa.int/web/gaia/dr3",
+   "publisher": "ESA / Gaia DPAC",
+   "license": "CC BY-SA 3.0 IGO",
+   "kind": "catalog",
+   "citation": "Gaia Collaboration, Vallenari et al. 2023, A&A 674, A1",
+   "bibcode": "2023A&A...674A...1G",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "gcvs",
+   "title": "General Catalogue of Variable Stars (GCVS 5.1)",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=B/gcvs",
+   "publisher": "Sternberg Astronomical Institute / VizieR (IDIA mirror)",
+   "kind": "catalog",
+   "citation": "Samus et al. 2017, Astron. Rep. 61, 80",
+   "bibcode": "2017ARep...61...80S",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "harris2010",
+   "title": "Catalog of Parameters for Milky Way Globular Clusters (2010 edition)",
+   "url": "https://physics.mcmaster.ca/~harris/mwgc.dat",
+   "publisher": "W. E. Harris (McMaster University)",
+   "kind": "catalog",
+   "citation": "Harris 1996, AJ 112, 1487 (2010 edition, arXiv:1012.3224)",
+   "bibcode": "1996AJ....112.1487H",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "hip2007",
+   "title": "Validation of the new Hipparcos reduction",
+   "url": "https://ui.adsabs.harvard.edu/abs/2007A%26A...474..653V/abstract",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "catalog",
+   "citation": "van Leeuwen 2007, A&A 474, 653 (VizieR I/311)",
+   "bibcode": "2007A&A...474..653V",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "hr24",
+   "title": "Improving the open cluster census. III. Using cluster masses, radii, and dynamics",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/A%2BA/686/A42",
+   "publisher": "Astronomy & Astrophysics / VizieR (IDIA mirror)",
+   "license": "CDS terms; cite the paper",
+   "kind": "catalog",
+   "citation": "Hunt & Reffert 2024, A&A 686, A42",
+   "bibcode": "2024A&A...686A..42H",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "jmdc",
+   "title": "JMMC Measured Stellar Diameters Catalogue (JMDC)",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=II/345",
+   "publisher": "JMMC / VizieR (IDIA mirror)",
+   "kind": "catalog",
+   "citation": "Duvert 2016, VizieR II/345",
+   "bibcode": "2016yCat.2345....0D",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "jsdc2",
+   "title": "JMMC Stellar Diameters Catalogue, version 2 (JSDC)",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=II/346",
+   "publisher": "JMMC / VizieR (IDIA mirror)",
+   "kind": "catalog",
+   "citation": "Bourgès et al. 2017, VizieR II/346; method: Chelli et al. 2016, A&A 589, A112 (photometric angular-diameter estimates)",
+   "bibcode": "2016A&A...589A.112C",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "kasikov2026",
+   "title": "Painting a family portrait of the yellow super- and hypergiants in the Milky Way. I. Constraining the distances and luminosities",
+   "url": "https://arxiv.org/abs/2602.02449",
+   "publisher": "Astronomy & Astrophysics (arXiv:2602.02449)",
+   "kind": "paper",
+   "citation": "Kasikov, Mehner, Kolka & Aret 2026, A&A (doi:10.1051/0004-6361/202558527; arXiv:2602.02449)",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "lambert1986",
+   "title": "The chemical composition of carbon stars. I. Carbon, nitrogen and oxygen in 30 cool carbon stars in the Galactic disk",
+   "url": "https://ui.adsabs.harvard.edu/abs/1986ApJS...62..373L/abstract",
+   "publisher": "The Astrophysical Journal Supplement",
+   "kind": "paper",
+   "citation": "Lambert et al. 1986, ApJS 62, 373",
+   "bibcode": "1986ApJS...62..373L",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "metcalfe2024",
+   "title": "Weakened Magnetic Braking in the Exoplanet Host Star 51 Peg",
+   "url": "https://arxiv.org/abs/2401.01944",
+   "publisher": "The Astrophysical Journal Letters",
+   "kind": "paper",
+   "citation": "Metcalfe et al. 2024, ApJL 960, L6",
+   "bibcode": "2024ApJ...960L...6M",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "metcalfe2024-bhyi",
+   "title": "TESS asteroseismology of β Hydri: a subgiant with a born-again dynamo",
+   "url": "https://arxiv.org/abs/2408.05482",
+   "publisher": "The Astrophysical Journal",
+   "kind": "paper",
+   "citation": "Metcalfe et al. 2024, ApJ 974, 31",
+   "bibcode": "2024ApJ...974...31M",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "nasa-exoplanet-archive",
+   "title": "NASA Exoplanet Archive: Planetary Systems Composite Parameters (pscomppars)",
+   "url": "https://exoplanetarchive.ipac.caltech.edu/",
+   "publisher": "NASA Exoplanet Science Institute / IPAC",
+   "kind": "catalog",
+   "citation": "Akeson et al. 2013, PASP 125, 989",
+   "bibcode": "2013PASP..125..989A",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "ned-d",
+   "title": "NED-D: redshift-independent distances in the NASA/IPAC Extragalactic Database",
+   "url": "https://ned.ipac.caltech.edu/Library/Distances/",
+   "publisher": "NASA/IPAC Extragalactic Database",
+   "kind": "catalog",
+   "citation": "Steer et al. 2017, AJ 153, 37 (NED-D); values are the median or a named primary measurement as stated in each fact note",
+   "bibcode": "2017AJ....153...37S",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "openngc",
+   "title": "OpenNGC (pinned be3cd6c) via catalog-extents.json",
+   "url": "https://github.com/mattiaverga/OpenNGC",
+   "publisher": "Mattia Verga",
+   "license": "CC BY-SA 4.0",
+   "kind": "catalog"
+  },
+  {
+   "id": "simbad",
+   "title": "SIMBAD astronomical database (Harvard mirror)",
+   "url": "https://simbad.harvard.edu/simbad/",
+   "publisher": "CDS Strasbourg",
+   "kind": "catalog",
+   "citation": "Wenger et al. 2000, A&AS 143, 9",
+   "bibcode": "2000A&AS..143....9W",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "simbad-mesfeh",
+   "title": "SIMBAD mesFe_h measurement table (compilation of published Teff, log g and [Fe/H] values)",
+   "url": "https://simbad.harvard.edu/simbad/sim-tap",
+   "publisher": "CDS Strasbourg (Harvard mirror)",
+   "kind": "catalog",
+   "citation": "SIMBAD measurement table mesFe_h; each value traces to the paper named in the fact note",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "vandenberg2013",
+   "title": "The Ages of 55 Globular Clusters as Determined Using an Improved ΔV(TO,HB) Method Along with Color-Magnitude Diagram Constraints",
+   "url": "https://arxiv.org/abs/1308.2257",
+   "publisher": "The Astrophysical Journal",
+   "kind": "paper",
+   "citation": "VandenBerg, Brogaard, Leaman & Casagrande 2013, ApJ 775, 134",
+   "bibcode": "2013ApJ...775..134V",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "vsx",
+   "title": "AAVSO International Variable Star Index (VSX)",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=B/vsx",
+   "publisher": "AAVSO / VizieR (IDIA mirror)",
+   "kind": "catalog",
+   "citation": "Watson, Henden & Price 2006, SASS 25, 47 (VizieR B/vsx)",
+   "bibcode": "2006SASS...25...47W",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "wds",
+   "title": "The Washington Visual Double Star Catalog (WDS)",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=B/wds",
+   "publisher": "US Naval Observatory / VizieR (IDIA mirror)",
+   "kind": "catalog",
+   "citation": "Mason et al. 2001, AJ 122, 3466 (VizieR B/wds, continuously updated)",
+   "bibcode": "2001AJ....122.3466M",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "zorec2009",
+   "title": "Fundamental parameters of B supergiants from the BCD system. I. Calibration of the (λ1, D) parameters into Teff",
+   "url": "https://ui.adsabs.harvard.edu/abs/2009A%26A...501..297Z/abstract",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "paper",
+   "citation": "Zorec et al. 2009, A&A 501, 297",
+   "bibcode": "2009A&A...501..297Z",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "zucker2020",
+   "title": "A compendium of distances to molecular clouds in the Star Formation Handbook",
+   "url": "https://ui.adsabs.harvard.edu/abs/2020A%26A...633A..51Z/abstract",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "paper",
+   "citation": "Zucker et al. 2020, A&A 633, A51",
+   "bibcode": "2020A&A...633A..51Z",
+   "retrieved": "2026-11-02"
+  }
+ ],
+ "aliases": {
+  "al-binodsky": "al-binocular-deepsky",
+  "al-binomessier": "al-binocular-messier",
+  "andriantsaralaza2022-agb": "andriantsaralaza2022",
+  "astroleague-bino": "al-binocular-messier",
+  "baines2018-npoi": "baines2018",
+  "baumgardt-gc-catalogue": "bh18",
+  "baumgardt2021": "bv21",
+  "cg2020portrait": "cg2020",
+  "gaia-edr3-simbad": "gaia-edr3",
+  "gaiadr2": "gaia-dr2",
+  "gaiaedr3": "gaia-edr3",
+  "jsdc": "jsdc2",
+  "nasa-exoarchive": "nasa-exoplanet-archive",
+  "yshg2026-phicas": "kasikov2026"
+ },
+ "renames": {
+  "southern-stars": { "metcalfe2024": "metcalfe2024-bhyi" }
+ }
+}

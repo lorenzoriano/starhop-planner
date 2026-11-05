@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/wds/wds&WDS=07041%2B2034&-out=WDS,Disc,Comp,Obs2,pa2,sep2,mag1,mag2,SpType,pmRA1,pmDE1,pmRA2,pmDE2,Notes",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\nWDS\tDisc\tComp\tObs2\tpa2\tsep2\tmag1\tmag2\tSpType\tpmRA1\tpmDE1\tpmRA2\tpmDE2\tNotes\n \t \t \tyr\tdeg\tarcsec\tmag\tmag\t \tmas/yr\tmas/yr\tmas/yr\tmas/yr\t\n----------\t-------\t-----\t----\t---\t------\t------\t-----\t----------\t----\t----\t----\t----\t----\n07041+2034\tOCC 293\tAa,Ab\t1973\t -1\t  0.10\t 4.500\t 4.50\tF7-G3Ib   \t  -6\t  -2\t    \t    \tN\n07041+2034\tSHJ  77\tAB   \t2017\t 85\t 87.30\t 4.050\t11.46\tF7-G3Ib   \t  -7\t   0\t  -5\t  -4\tN\n07041+2034\tSHJ  77\tAC   \t2017\t347\t101.50\t 4.050\t 7.66\tF7-G3Ib   \t  -7\t   0\t -81\t  39\tNL\n07041+2034\tSHJ  77\tAD   \t2017\t355\t 67.00\t 4.050\t12.46\tF7-G3Ib   \t  -7\t   0\t    \t    \tN\n07041+2034\tSHJ  77\tBC   \t2015\t309\t142.20\t11.460\t 7.66\tF5V       \t  -5\t  -4\t -81\t  39\tN\n07041+2034\tSHJ  77\tCD   \t2015\t154\t 35.00\t 7.660\t12.46\tG0        \t -81\t  39\t -97\t  45\tN\n07041+2034\tTOB  46\tCE   \t2015\t323\t 95.40\t 7.660\t14.80\tG0        \t -81\t  39\t  12\t -11\tN\n\n"
+}

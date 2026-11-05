@@ -1,0 +1,634 @@
+{
+  "archetype": "A9",
+  "storyline": "Nobody can put a star on a scale, yet astronomers know what stars weigh, and nearly every one of those weights was read from a pair in orbit. The time two stars take to circle each other and the size of their orbit fix the mass that holds them, by the same rule that weighs the Sun from Earth's year. That is why every split tonight ends in a verdict: partners, siblings or strangers. First one point becomes two. Then colors tell the two kinds of star apart, though not whether they belong together. Then comes the twist: many pairs are strangers, lined up only from where we stand, or siblings born together and drifting side by side without an orbit, and neither can weigh anything. Partners held in an orbit, proven by an orbit caught turning or by a shared distance and drift that no cluster explains, are the real scales, and their orbits show the Sun's weight to be an ordinary one. Last come the crowds, pairs within pairs, which is how most heavy stars live.",
+  "beats": [
+    {
+      "step": 1,
+      "label": "One point becomes two",
+      "maxStops": 1
+    },
+    {
+      "step": 2,
+      "label": "Colors tell the kinds apart",
+      "maxStops": 2
+    },
+    {
+      "step": 3,
+      "label": "Strangers and siblings",
+      "maxStops": 2
+    },
+    {
+      "step": 4,
+      "label": "Partners: proven to belong together",
+      "maxStops": 2
+    },
+    {
+      "step": 5,
+      "label": "Crowds: pairs within pairs",
+      "maxStops": 2
+    }
+  ],
+  "minBeats": 3,
+  "endSteps": [
+    4,
+    5
+  ],
+  "keySteps": [
+    3
+  ],
+  "narration": {
+    "title.A9-seeing-double": [
+      "Who Belongs Together in {region}?",
+      "{region}, Counted in Pairs",
+      "Telling {region}'s Pairs Apart",
+      "The Company Stars Keep in {region}",
+      "{region}'s Pairs Put to the Test"
+    ],
+    "title.A9-seeing-double.end4": [
+      "Finding {region}'s True Partners",
+      "Which of {region}'s Pairs Could Weigh a Star?",
+      "{region}'s Pairs and the Weight of Stars",
+      "{region}, Counted in Pairs",
+      "The Pairs That Weigh Stars in {region}"
+    ],
+    "title.A9-seeing-double.end5": [
+      "Finding {region}'s True Partners",
+      "Which of {region}'s Pairs Could Weigh a Star?",
+      "{region}'s Pairs and the Weight of Stars",
+      "{region}, Counted in Pairs",
+      "The Pairs That Weigh Stars in {region}"
+    ],
+    "title.A9-seeing-double.end5.no4": [
+      "Who Belongs Together in {region}?",
+      "{region}, Counted in Pairs",
+      "Telling {region}'s Pairs Apart",
+      "The Company Stars Keep in {region}",
+      "{region}'s Pairs Put to the Test"
+    ],
+    "question.A9-seeing-double": [
+      "Which double stars are real partners, and which only look close?",
+      "How can two points of light end up weighing a star?",
+      "When a star splits in two, how do you tell partners from strangers?"
+    ],
+    "hook.A9-seeing-double": [
+      "The only scale that can weigh a star is a second star in orbit around it.",
+      "Some pairs in the sky are partners in orbit, and some are strangers lined up by chance.",
+      "Every star's weight we trust was read from an orbit, so the night hunts for partners."
+    ],
+    "story.A9-seeing-double": [
+      "Nobody can lift a star onto a scale, but a partner circling it does the weighing, and nearly every star mass we know was read from such an orbit. Starting at {hook}, every split tonight puts the same question to a pair, whether its two stars are truly held together, and each one gets a verdict.",
+      "Binoculars turn single points into pairs, and astronomers sort such pairs by color, by distance and by motion. Only the pairs that pass every test are held in an orbit, and only an orbit can weigh a star.",
+      "A double star may be a couple in orbit, two stars that merely line up, or siblings drifting side by side, and the view alone never says which. From {hook} onward you split the pairs yourself and watch the evidence decide, until the real partners are left."
+    ],
+    "story.A9-seeing-double.end4": [
+      "Starting at {hook}, each split ends in a verdict, partners, siblings or strangers, and only partners held in orbit can weigh a star. The night ends at {name}, a pair whose stars are proven to belong together, the kind of partnership that becomes a scale.",
+      "Binoculars turn single points into pairs, and the night asks of each pair whether its stars truly belong together. It finishes on a partnership that passes the test, which is where the weighing of stars begins.",
+      "A double star can be a couple in orbit or a coincidence of perspective, and the view gives no hint which. From {hook} onward you split the pairs yourself, hear each verdict, and end on a pair whose orbit could weigh its stars."
+    ],
+    "story.A9-seeing-double.end5": [
+      "Starting at {hook}, every split puts the same question to a pair, whether its stars are truly held together, since only a pair held in orbit can weigh a star. The night ends at {name}, where such partnerships crowd inside a single point of light.",
+      "Binoculars turn single points into pairs, and each pair poses the one test that matters, whether an orbit holds its stars together, because only an orbit can weigh a star. By the end the count climbs past two, to single points that hold more bound stars than any binoculars can show.",
+      "A double star may be partners in orbit or two stars that only share a line of sight, and only measurement says which. From {hook} to {name} the night follows that evidence, until a single point turns out to hold more partners than any binoculars can split."
+    ],
+    "payoff.A9-seeing-double": [
+      "{tally} Every verdict came from the same three-way rule. Stars at clearly different distances are strangers, however close they look, and stars that share a distance or a cluster's drift without an orbit are siblings, related but not a couple. Only a pair held in an orbit is a partnership that can weigh a star: time the orbit, measure its size, and Kepler's rule gives the mass that holds the two together.",
+      "{tally} Closeness on the sky proved nothing along the way, and measurement sorted every pair into one of three kinds. Strangers sit at distances that clearly disagree, and siblings share a distance or a cluster's drift with no orbit between them. Only partners held to each other in an orbit can weigh a star.",
+      "{tally} Every one of those verdicts came from distances and motions. Stars at clearly different distances only share a direction, and stars of one family with no orbit between them are siblings rather than a couple. Only a pair held in an orbit can weigh a star, the way Earth's year weighs the Sun."
+    ],
+    "payoff.A9-seeing-double.end4": [
+      "{tally} Each verdict followed one rule you can carry home. Stars at clearly different distances are strangers, however close they look, and stars that share a distance or a cluster's drift without an orbit are siblings, related but not a couple. Only a pair held in an orbit is a partnership that can weigh a star: time that orbit and measure its size, and Kepler's rule turns the pair into a scale, as Earth's year weighs the Sun.",
+      "{tally} A shared position on the sky costs nothing, while a shared depth and a shared path are hard to fake, so strangers fail at once. Siblings can pass without being a couple, because a whole cluster shares one drift. Only partners held in an orbit can weigh a star, by the same rule that weighs the Sun from Earth's year, and nearly every star mass we trust was read that way.",
+      "{tally} Weighing a star takes a partner, and every verdict came from the same three-way test. Distances that clearly disagree mark strangers, a shared birthplace without an orbit marks siblings, and only a pair held in an orbit is a partnership that can weigh a star. Orbits like that show stars running from small red dwarfs to blue heavyweights, with the Sun an unremarkable weight between them."
+    ],
+    "payoff.A9-seeing-double.end5": [
+      "{tally} Each verdict followed one rule you can carry home. Stars at clearly different distances are strangers, however close they look, and stars that share a distance or a cluster's drift without an orbit are siblings, related but not a couple. Only a pair held in an orbit is a partnership that can weigh a star, and the crowds showed how many such partnerships one point of light can hide, so a single star like the Sun is only one of the ways a star can live.",
+      "{tally} The eye counts one, binoculars count two, and astronomers keep counting long after, always with the same test. Strangers sit at distances that clearly disagree, siblings share a distance or a drift with no orbit between them, and only stars held in an orbit can weigh each other. Most of the star masses astronomers trust were read from pairs too close to split, timed by their eclipses or by the swing of their spectral lines.",
+      "{tally} Under every verdict sat the same test. Distances that clearly disagree unmask strangers however close they look, a shared birthplace without an orbit marks siblings rather than a couple, and only partners caught in an orbit can weigh a star. The crowds add a last surprise, pairs nested inside single points, which makes a lone star like the Sun just one way among several for a star to live."
+    ],
+    "payoff.A9-seeing-double.end5.no4": [
+      "{tally} Each verdict followed one rule you can carry home. Stars at clearly different distances are strangers, however close they look, and stars that share a distance or a cluster's drift without an orbit are siblings, related but not a couple. Only a pair held in an orbit is a partnership that can weigh a star. None of the pairs you split tonight has been caught turning in its orbit, so the night's scales stayed hidden inside single points, too tight for any binoculars.",
+      "{tally} The test never changed. Strangers sit at distances that clearly disagree, siblings share a distance or a drift with no orbit between them, and only a pair held in an orbit can weigh a star. Tonight no pair you split showed such an orbit in the open; the partnerships that do the weighing hid inside single points, where only telescopes, eclipses and spectra can follow them.",
+      "{tally} Under every verdict sat the same test. Distances that clearly disagree unmask strangers however close they look, a shared birthplace without an orbit marks siblings rather than a couple, and only partners caught in an orbit can weigh a star. Tonight's splits never showed such a partnership in the open, though the last point you visited hides several, too close for binoculars and waiting for a telescope or a spectrum."
+    ],
+    "switch.A9-seeing-double": [
+      "Some of these stars are worth a second look for reasons that have nothing to do with their partners. {themeQuestion}",
+      "A pair is only one way to read a star, and the stars ahead tell a different story. {themeQuestion}"
+    ]
+  },
+  "transitions": {
+    "pairs": {
+      "1>2": [
+        "The split at {prev} gave you two stars, and at {next} their colors start to tell what kinds they are, since color is a surface temperature.",
+        "Two points of light are not yet two known stars, so at {next} color sorts them into kinds, something the plain split at {prev} could not do."
+      ],
+      "1>3": [
+        "A split like the one at {prev} shows two stars, but only measured distances and motions say whether they belong together, and at {next} those measurements expose a pair that is not the couple it seems.",
+        "Seeing two stars, as at {prev}, proves nothing about their depth, so at {next} each star's measured distance and motion decide whether the pair is real."
+      ],
+      "1>4": [
+        "After the first split at {prev}, {next} is a pair whose partnership has been tested and confirmed, the first condition for weighing its stars.",
+        "From the split at {prev} the night moves to a pair that has passed every test, because only proven partners like {next} can ever weigh a star."
+      ],
+      "1>5": [
+        "{prev} split into two stars, and at {next} that count keeps climbing, as telescopes, spectra and eclipses find bound pairs inside the points.",
+        "Where {prev} stopped at two, {next} shows how many partners in orbit a single point of light can hold."
+      ],
+      "2>2": [
+        "A second color pair at {next} reads the same thermometer as {prev} in another part of the sky: one split can join stars of very different temperatures.",
+        "Like {prev}, {next} pairs stars of different colors, a second reminder that one split can join stars living very different lives."
+      ],
+      "2>3": [
+        "Colors told what the stars of {prev} are but not whether they belong together, so at {next} the test turns to distance and motion, where many pretty pairs fail.",
+        "Color says nothing about where a star is or where it is going, which is why {next}, after {prev}, is judged by measured distances and motions alone."
+      ],
+      "2>4": [
+        "The colors at {prev} named two kinds of star; at {next} the bond itself is settled by measurement, and the two stars are partners, the step before any weighing.",
+        "From the kinds of star at {prev} the night moves to {next}, a pair whose stars are known partners, and partners are what a scale for stars needs."
+      ],
+      "2>5": [
+        "After the two colors of {prev}, {next} takes partnership further, one point holding pairs within pairs.",
+        "Color split {prev} into two kinds of star; at {next} it is the number of bound stars in one point that keeps growing."
+      ],
+      "3>3": [
+        "One false pair could be bad luck, and {next}, like {prev}, is a reminder of why no pairing is believed until each star has been measured.",
+        "Neither {prev} nor {next} is the couple it seems, and each fails the test in its own way, which is exactly what the test is for."
+      ],
+      "3>4": [
+        "Where {prev} turned out not to be a couple, {next} passes every test, two stars held to each other rather than merely traveling side by side, and that is what lets an orbit act as a scale.",
+        "{prev} could not serve as a scale, but {next} can, because its stars share a distance and a path and are held to each other."
+      ],
+      "3>5": [
+        "After {prev}, a pair that turned out not to be a couple, {next} is the opposite extreme, a single point where several stars are truly bound.",
+        "{prev} could weigh nothing, because no orbit joins its stars; at {next} one point holds stars that do circle each other, layer within layer."
+      ],
+      "4>4": [
+        "{next}, like {prev}, passes the partnership test, and setting the two side by side shows how much the pace of an orbit decides whether it can be read.",
+        "After {prev}, {next} is a second proven partnership, built on a very different scale."
+      ],
+      "4>5": [
+        "{prev} showed one proven partnership; at {next} the partnerships nest, pairs inside pairs within a single point of light.",
+        "Partners like {prev} are the simplest bound system, and {next} shows how far gravity can stack them."
+      ],
+      "5>5": [
+        "After {prev}, {next} is a second crowd in a single point, with its own way of hiding its members.",
+        "Like {prev}, {next} holds more bound stars than binoculars show, and its count has a story of its own."
+      ]
+    },
+    "arrive": {
+      "1": [
+        "Weighing a star starts with finding its partner, and at {next} binoculars pull one point of light into two.",
+        "{next} looks like a single star until binoculars arrive, and that first split is where any weighing has to begin."
+      ],
+      "2": [
+        "At {next} a split shows two colors, and each color is a temperature, the first thing that tells the two stars apart.",
+        "The two stars at {next} differ in color, which says they are different kinds of star before anything is known about their bond."
+      ],
+      "3": [
+        "Two stars side by side can still be strangers, and at {next} the test is each star's own distance and motion, measured one star at a time.",
+        "Closeness on the sky proves nothing about closeness in space, and {next} is a pair where measured distances and motions tell the real story."
+      ],
+      "4": [
+        "{next} is a partnership astronomers have proven rather than assumed, and proof is where any weighing of stars has to start.",
+        "{next} is a pair whose stars have been measured well enough to show they are bound to each other, not merely traveling together, the condition for weighing them."
+      ],
+      "5": [
+        "At {next} the counting does not stop at the split, because the point you split hides more bound stars that only telescopes, spectra or eclipses reveal.",
+        "{next} looks like one star with a companion, but the partnerships inside it go on past two."
+      ]
+    }
+  },
+  "objects": {
+    "DS-NuDra": {
+      "step": 1,
+      "beat": "First split: matched twins",
+      "verdict": "a matched pair that very likely belongs together",
+      "question": "Are the matched twins of Nu Draconis a real pair, or a lucky alignment?",
+      "why": "Weighing a star takes a second star, so the night begins by finding one, and Nu Draconis gives that moment at its cleanest: two stars so alike that the split looks like a reflection, and very likely a real pair.",
+      "look": "Find the lozenge of four stars that forms Draco's head, north-west of Vega, and aim at its faintest corner. Even 7× binoculars split it into two white points, equal in brightness and color, like a pair of eyes looking back at you.",
+      "answer": "They are very likely a real pair: Gaia measures the same distance for both stars to within a fraction of a percent, and the two drift across the sky and move toward us at the same pace, which strangers almost never do. Their gap spans nearly two thousand times the Earth–Sun distance, though, so one orbit takes tens of thousands of years, and this pair proves company long before it could ever give a weight.",
+      "story": "Your eye blends ν Draconis into one point because of how the retina is built: the two images fall on neighboring cones, the eye's sharpest light cells, and the brain reports a single spot. Robert Hooke noticed in the 1670s that hardly anyone could separate two stars much closer than a sixtieth of a degree, a limit set by the spacing of those cells and the blur of the eye's own lens. That limit is why the sky's double stars stayed hidden until the telescope, and why a pair just past the eye's reach is a gift to the smallest binoculars."
+    },
+    "DS-16Dra": {
+      "step": 1,
+      "beat": "First split: a wide matched pair",
+      "verdict": "a wide pair that very probably belongs together",
+      "question": "Do 16 and 17 Draconis belong together, or only share a direction?",
+      "why": "To weigh a star you first need a second one close beside it, and 16 and 17 Draconis make an easy start: two nearly equal white points so far apart that no steadying is needed, and very probably partners.",
+      "look": "Start at Rastaban, the second-brightest star of the lozenge that forms Draco's head, and move about eight degrees due west. Binoculars show two matched white points split at a glance at any magnification, with a generous gap of dark sky between them. Neither shows a tint against the other, so for now they look like a perfectly ordinary pair.",
+      "answer": "They very probably belong together: Gaia puts both stars a little over 400 light-years away, at the same distance within its errors, and the two drift across the sky in step. Seeing two stars was the easy part; knowing they are partners took measurement, and even then their orbit is far too slow to read.",
+      "story": "In 1767 the clergyman John Michell asked a simple question about pairs like this one: if stars were scattered across the sky at random, how often would two of them land this close together? His answer was far less often than the sky actually shows, so he argued that most close pairs must be real companions, decades before anyone saw a single one move in its orbit. The argument works for the sky as a whole, never for one pair, which is why every split still has to be tested star by star."
+    },
+    "DS-PsiDra": {
+      "step": 1,
+      "beat": "First split: a tighter pair",
+      "verdict": "very likely partners on a slow orbit",
+      "question": "Are the two stars of ψ Draconis partners, or neighbors only by chance?",
+      "why": "A scale for weighing stars needs two stars you can tell apart, and ψ Draconis, a pair that turns out to belong together, makes that first split a small test of steady hands.",
+      "look": "In Draco, toward the Little Dipper, ψ Draconis splits at 10× into a yellow-white star with a fainter companion just to its north, about 30 arcseconds away. At 7× the two usually blur into one, so this split belongs to 10× and a braced pair of hands.",
+      "answer": "They are very likely partners: Gaia and Hipparcos both measure the same distance for the two, about 74 light-years, and the stars travel across the sky together. Splitting them took steady hands; proving them a pair took a spacecraft, and their orbit, thousands of years long, is still too slow to weigh them.",
+      "story": "Every lens has a limit set by the wave nature of light, which turns each star into a tiny disk with faint rings around it, and the wider the lens, the smaller the disk. In the 19th century the English observer William Dawes found by long trial how close two equal stars could be and still split in a telescope of a given width. By his rule, binocular lenses could divide pairs many times tighter than ψ Draconis. The binoculars have resolving power to spare; what they lack is magnification and a steady platform, and that is what makes this pair the right size for a first test."
+    },
+    "HR6247": {
+      "step": 1,
+      "beat": "First split: a naked-eye pair",
+      "verdict": "a pair of siblings without an orbit",
+      "question": "Are μ¹ and μ² Scorpii a couple, or two members of one family?",
+      "why": "Weighing a star starts with finding its partner, and in the curl of the Scorpion's tail your own eyes already show a double, μ¹ and μ² Scorpii, a pair that turns out to be family rather than a couple.",
+      "look": "Follow the tail of Scorpius down from Antares to where it begins to curl. μ¹ and μ² sit about six minutes of arc apart, a pair sharp eyes split without help, and binoculars spread them into two blue-white points of nearly equal brightness with clear sky between.",
+      "answer": "They are most likely siblings rather than partners: both lie roughly 500 light-years away and drift the same way, as all members of the young Scorpius–Centaurus family do. Yet no orbit has ever been seen between them, and at that spacing one would take a couple of million years. So the first split already shows that sharing a direction and a drift is not the same as sharing an orbit.",
+      "story": "The hot blue-white stars scattered from Scorpius to the Southern Cross share a slow common drift. In the 1990s the Hipparcos satellite traced it star by star, revealing a family of hundreds born in the same region over several million years. Two members of such a family can sit close together on the sky and move alike without ever orbiting each other, the way two cousins can walk in the same crowd without holding hands."
+    },
+    "HR4621": {
+      "step": 1,
+      "beat": "First split: a little triangle",
+      "verdict": "a bright star with relatives but no partners",
+      "question": "Do Delta Centauri's two neighbors belong to it, or only to its family?",
+      "why": "A night spent looking for stars that can weigh each other can start beside the Southern Cross, where one bright point in Centaurus opens into a little triangle. The triangle turns out to be relatives rather than partners.",
+      "look": "Center Delta Centauri, north-west of the Southern Cross. It splits at once into a blue-white star with a fainter companion about four and a half minutes of arc to the north-west and a dimmer third star to the south-west, an easy little triangle at any magnification.",
+      "answer": "The two fainter stars are family but not partners of Delta Centauri, all three belonging to the young star family around the Southern Cross. Gaia puts the faint pair about 360 and 380 light-years away, close to the bright star's own rougher distance, yet Delta Centauri crosses the sky noticeably faster, too fast for either to hold it. The two faint stars, meanwhile, move together and may form a very wide pair of their own.",
+      "story": "Gravity has a strict rule for groups of three: three stars at similar distances from one another cannot stay together for long, because sooner or later one of them is flung out. Systems that last are built in tiers, a close pair with a third star circling far outside it, so a little triangle like this one is either such a hierarchy flattened by perspective or a mix of partners and passers-by. Telling which takes each star's distance and its motion across the sky, measured one star at a time."
+    },
+    "HR1387": {
+      "step": 1,
+      "beat": "First split: a wide white pair",
+      "verdict": "cluster siblings probably too far apart to orbit",
+      "question": "Are κ Tauri's two white stars partners, or just members of one family?",
+      "why": "Before any star can be weighed it needs a partner, and κ Tauri, a pair keen eyes can just divide, opens wide in binoculars: two white stars of the same family, though probably not of the same orbit.",
+      "look": "About six degrees north of the V of the Hyades, κ Tauri splits into two white stars nearly six minutes of arc apart, the fainter one to the south. Even 7× shows a wide gap, and their matching color is easy to judge side by side.",
+      "answer": "They are siblings rather than a proven couple, for both belong to the Hyades, the cluster around Aldebaran, and share its drift at about 150 light-years. Gaia, though, places them several light-years apart in depth, probably too far for an orbit to hold them. Matching color told you what they are; only distance could tell you whether they belong together.",
+      "story": "White is a temperature, not a power: white stars range from modest dwarfs to brilliant supergiants, so two stars of the same color can give out wildly different amounts of light. A faint white star nearby and a powerful one far behind it can therefore look exactly alike, and the eye, superb at comparing colors, has no sense of depth at all at these distances. That is why matching colors are a clue to what two stars are, and never to where they are."
+    },
+    "HR2773": {
+      "step": 1,
+      "beat": "First split: an orange star's attendant",
+      "verdict": "a pair probably related but not yet proven",
+      "question": "Is the faint star beside π Puppis a companion, or only a neighbor in the view?",
+      "why": "A star can only be weighed by a partner, and π Puppis brings the first split of the night to the southern sky, a deep yellow-orange star with a faint point beside it that very likely shares its journey.",
+      "look": "π Puppis glows deep yellow-orange in binoculars, and at 10× it splits into the bright star and a much fainter one about a minute of arc to its south-west, easier still on a tripod. At 7× the faint star is usually lost in the glare.",
+      "answer": "The faint star is very likely related to π Puppis: it crosses the sky at almost exactly the same rate and in the same direction, and its distance, about 970 light-years, comes close to the bright star's rougher one. Whether it is a bound partner or a sibling from the same young cluster is still open, the usual state of a fresh split.",
+      "story": "Settling a case like this needs a distance and a motion for both stars, and the bright star is the obstacle: space astrometry, the precise mapping of star positions, falters when its light swamps the detectors. Motion is the easier witness, and here it speaks clearly, the two points drifting in lockstep. Stars of one cluster share a drift too, though, and π Puppis leads a loose young cluster, so a shared motion alone cannot say whether these two are partners or siblings."
+    },
+    "HR1897": {
+      "step": 1,
+      "beat": "First split: a pair in a nebula's glow",
+      "verdict": "nursery-mates whose bond is still an open case",
+      "question": "Are the two stars of θ² Orionis partners, or only nursery-mates?",
+      "why": "Weighing stars begins with finding pairs, and θ² Orionis offers a first split at the edge of the Orion Nebula: two young stars that share a birthplace, though nobody yet knows whether they share an orbit.",
+      "look": "Center the bright core of the Orion Nebula in Orion's Sword and look just south-east of it. θ² Orionis A and B sit about 52 arcseconds apart, a split that steady 10× binoculars make at the edge of the brightest glow; at 7×, brace the binoculars and look for two blue-white points rather than one.",
+      "answer": "Nobody knows yet whether they are partners, though both are hot young members of the cluster that lights the Orion Nebula, about 1,350 light-years away. The nebula's glow spoils the precise distances and motions that could settle it. For now they are nursery-mates, an honest open case, and a reminder that a split is only the start of the question.",
+      "story": "Stars are seldom born alone. When a collapsing cloud breaks into pieces, the fragments that become stars often end up bound in pairs and small groups, and surveys of young nurseries find companions around a large share of their stars. Some of those young groups are unstable and fling members out as they settle, so a pair inside a nursery may be a lasting partnership or two newborns that simply have not drifted apart yet."
+    },
+    "HR7735": {
+      "step": 2,
+      "rank": 2,
+      "beat": "Two colors: orange and white",
+      "verdict": "a likely real pair with a stranger alongside",
+      "question": "Why does 31 Cygni glow orange beside white 30 Cygni, and are they a pair?",
+      "why": "In the 31 Cygni group one point glows orange while its neighbor shines white, and a weight means little until you know what kind of star carries it. The colors also hide a twist: the white star is a stranger, while a fainter point beside the orange one is very likely its real companion.",
+      "look": "About five degrees west-north-west of Deneb, binoculars show orange 31 Cygni with white 30 Cygni about five and a half minutes of arc away and a fainter star closer in, under two minutes from the orange one. The gaps are wide, so the colors come easily even at 7×.",
+      "answer": "Orange means a cool surface and white a much hotter one, so these are different kinds of star, and the white one is no partner: 30 Cygni lies about 640 light-years away, while 31 Cygni is nearly twice as far. The faint star close beside the orange one sits at the same distance as 31 Cygni and drifts much the same way, very likely a true companion, which is why color tells you what a star is, never whose company it keeps.",
+      "story": "Starlight is a broad rainbow, not a single color, and a star's temperature only shifts where the peak of that rainbow falls. A cool star like 31 Cygni peaks near the red end, so it looks orange, while a much hotter star such as its white neighbor spreads its light across the colors evenly enough that the eye blends them into white. That is also why no star ever looks green: a star whose light peaks in the green still shines strongly in red and blue, and the mixture reads as white."
+    },
+    "HR7139": {
+      "step": 2,
+      "rank": 1.5,
+      "beat": "Two colors: orange-red and blue-white",
+      "verdict": "a near star beside a far stranger",
+      "question": "What do δ Lyrae's two colors say about its stars, and are they a pair?",
+      "why": "A split hands you two stars, and the first clue to what they are is their color. At δ Lyrae, the north-east corner of Lyra's parallelogram, it runs from orange-red to blue-white within one binocular field, though the two turn out to be strangers.",
+      "look": "About three and a half degrees north of Sheliak, δ² Lyrae glows orange-red, and blue-white δ¹ sits about a third of a Moon-width to its west. The gap is wide for any binoculars, and a slight defocus turns both stars into small disks and deepens the contrast.",
+      "answer": "The two are strangers: orange-red δ² is a cool giant swollen late in life and lies less than 800 light-years away, while δ¹, a hot blue star, is about 1,160. Hundreds of light-years separate them, and only your line of sight joins them. Color told you what each star is; it took distance to show that they are not a couple.",
+      "story": "Color alone does not tell you what a star weighs. A cool red star can be a swollen giant like δ², born heavier than the Sun, or a small red dwarf with a fraction of the Sun's mass, and both glow the same shade. Astronomers sorted that out by weighing stars in pairs and finding that, among stars in the steady middle of their lives, the heavier ones are always the hotter and bluer, a rule giants do not follow."
+    },
+    "DS-DeltaCep": {
+      "step": 2,
+      "rank": 3,
+      "beat": "Two colors: yellow and blue-white",
+      "verdict": "a real and very wide pair",
+      "question": "Does δ Cephei's blue-white companion really belong to the yellow star?",
+      "why": "Color is the first thing a split can measure, and δ Cephei, famous for its rhythm, pairs a yellow star with a blue-white companion close beside it, a small color study in one field that is also a real partnership.",
+      "look": "δ Cephei marks the south-east corner of the house-shaped figure of Cepheus. Binoculars split it into a yellowish star with a fainter blue-white companion about 41 arcseconds to the south, clear at 10× with a steady hand. At 7× the companion is usually lost beside the yellow star.",
+      "answer": "It does, very probably: Gaia finds the companion at the same distance as δ Cephei, about 900 light-years, and drifting across the sky with it, so the two form a real, very wide pair. Their colors say they are different kinds of star, the yellow supergiant near 5,800 K like the Sun and its companion far hotter; their shared distance and drift say they belong together.",
+      "story": "Your eye judges color by comparing light in a few broad bands, but a spectrum reads temperature far more exactly, from the dark lines that atoms stamp into a star's light. At Harvard a century ago Annie Jump Cannon sorted hundreds of thousands of spectra by those lines, and her sequence turned out to be a temperature scale running from hot blue stars to cool red ones. On that scale δ Cephei does not even sit still: as it swells and shrinks, its surface cools and warms, and its spectrum slides back and forth along her sequence with every pulse."
+    },
+    "DS-ThetaTau": {
+      "step": 2,
+      "rank": 1,
+      "beat": "Two colors: white and orange",
+      "verdict": "two Hyades stars in different colors but not partners",
+      "question": "Can two stars of one family shine in different colors without being a pair?",
+      "why": "Telling stars apart comes before weighing them, and inside the V of the Hyades θ Tauri is a pair even the eye can split: two stars of one cluster in two different colors, though not partners in one orbit.",
+      "look": "About two degrees from Aldebaran, inside the Hyades V, θ Tauri splits at a glance into two stars about five and a half minutes of arc apart. θ² is white and θ¹ yellow-orange, and a slight defocus makes the contrast stronger.",
+      "answer": "Siblings often wear different colors, and these two are siblings rather than partners, sharing the drift of the Hyades about 150 light-years away. No orbit links them, though, and their measured distances probably put them light-years apart. Their colors work as a clock instead, since θ¹ has already become an orange giant while θ² still shines white.",
+      "story": "Astronomers turned the eye's impression of color into a number by measuring each star twice, once through a blue filter and once through a yellow one. The difference between the two readings, called the color index, works as a thermometer: a hot star is brighter in the blue, a cool one in the yellow. The scale is calibrated on stars whose temperatures are known from their spectra. Your eye makes a rough version of the same comparison every time it calls one star white and its neighbor orange."
+    },
+    "DS-Albireo": {
+      "step": 3,
+      "rank": 4.5,
+      "beat": "Not a couple: siblings drifting apart",
+      "verdict": "most likely siblings that have drifted apart",
+      "question": "Is Albireo, the sky's favorite gold-and-blue pair, really a couple in orbit?",
+      "why": "Albireo is the double that makes people fall for doubles, and for generations astronomers took it for granted that its gold and blue stars circle each other; the modern verdict is that they almost certainly do not.",
+      "look": "Albireo marks the swan's head at the foot of the Northern Cross. Brace your binoculars and at 10× it splits into a golden-orange star with a blue-white companion about 34 arcseconds away. At 7× the blue star hugs the gold one, so let the image drift and watch for the blue point trailing behind.",
+      "answer": "The blue star is unlikely to be bound to the gold one, at best a one-in-eight chance, for although both lie about 400 light-years away, their motions differ by more than an orbit can allow. The pair the eye adores cannot weigh either star. The only orbit here hides inside the gold point, where a close companion circles it about every 121 years, a scale no binoculars can show.",
+      "story": "Settling it took more than a century of numbers: speeds toward us read from spectra, careful measurements of the gap, and finally the motions measured from space. In 2021 a team combined them all and found that the blue star's motion is very hard to fit to any orbit around the gold one, even though the two lie at about the same distance. A chance alignment of two such stars is wildly improbable, so the likeliest reading, though not a closed case, is two stars of one birth that have since slipped out of each other's grip."
+    },
+    "HR5763": {
+      "step": 3,
+      "rank": 3,
+      "beat": "Strangers: a perfect-looking pair",
+      "verdict": "a trick of perspective rather than a couple",
+      "question": "Is the best-matched pair in Boötes a real couple, or a trick of perspective?",
+      "why": "ν Boötis is the pair the eye takes for granted, two stars of nearly equal brightness side by side in northern Boötes, one orange and one white, which is exactly why it has to be checked, and why its verdict surprises.",
+      "look": "From Nekkar, at the top of the kite of Boötes, sweep east. Binoculars show orange ν¹ and white ν² about a third of a Moon-width apart, so close in brightness that they look like a matched set, with a color contrast to tempt you further.",
+      "answer": "It is a trick of perspective: the white star is less than half as far as the orange one, and more than 500 light-years separate them along your line of sight, more than the distance from us to the nearer star. No orbit links them, so as a scale for weighing stars this pretty pair is worthless.",
+      "story": "Telling these two apart in depth needs angles no eye can judge: the orange star's yearly parallax shift is about three thousandths of an arcsecond, a human hair seen from about five kilometers away. Telescopes peering through shimmering air could not pin such angles down; the Hipparcos satellite measured them for the bright stars in the 1990s, and Gaia now does it for well over a billion. With those shifts in hand, a pair like this one comes apart in an instant."
+    },
+    "HR5993": {
+      "step": 3,
+      "rank": 1,
+      "beat": "Strangers: going separate ways",
+      "verdict": "one of two strangers on separate paths",
+      "question": "Do the two ω stars below the Scorpion's head belong together?",
+      "why": "ω Scorpii looks like an obvious couple, two stars of similar brightness so close that sharp eyes split them without optics, yet the two are strangers.",
+      "look": "From β Scorpii, the top star of the Scorpion's head, drop about a degree south. Two stars sit about a quarter of a degree apart, easy at any magnification, and binoculars show the contrast: ω¹, to the north-west, is blue-white, and ω² is faintly yellow.",
+      "answer": "The two ω stars are strangers, one about half again as far away as the other and each on its own path. A shared position is the cheapest coincidence in astronomy, and without a shared distance and a shared path there is no orbit, and nothing to weigh.",
+      "story": "Every star follows its own orbit around the center of the Galaxy, so two unrelated stars almost never cross our sky at the same speed in the same direction. That makes motion a sharp test: give it a few decades and even a small difference in drift opens or closes a gap that can be measured. By that test the ω stars part company at once, their tracks across the sky pointing different ways."
+    },
+    "HR6262": {
+      "step": 3,
+      "rank": 8,
+      "beat": "Strangers: near giant, far hypergiant",
+      "verdict": "a far hypergiant aligned by chance with a near giant",
+      "question": "Is the bright pair low in the Scorpion's tail a real pair?",
+      "why": "ζ Scorpii, an orange star beside a paler one low in the Scorpion's tail, looks like a pair and is one of the most extreme tricks the sky plays with pairs.",
+      "look": "Where the tail of Scorpius bends south, two stars sit about six and a half minutes of arc apart: orange ζ² and the fainter, paler ζ¹. Any binoculars split them widely and show the contrast well; from mid-northern sites the pair hugs the horizon, so you need a clear southern view.",
+      "answer": "It is no pair at all: the orange star is a neighbor by the Galaxy's standards, while the pale one sits thousands of light-years beyond it, so far back that the gap between them dwarfs the distance to the nearer star. A pair this unequal in depth looks matched only because the far star is so powerful, and that is the trap every chance alignment sets.",
+      "story": "Look toward the heart of the Milky Way, as the Scorpion's tail does, and you look through thousands of light-years of crowded disk, so bright stars at very different depths stack up along the same lines of sight. A nearby giant and a distant powerhouse ending up a few minutes of arc apart is far less unlikely here than in the emptier sky overhead. Rich star fields make the best traps, which is why every pair here has to show its distances before it is believed."
+    },
+    "DS-AlpCap": {
+      "step": 3,
+      "rank": 5,
+      "beat": "Strangers: near and far",
+      "verdict": "two strangers at very different depths",
+      "question": "Are the two warm stars at the Goat's head neighbors in space?",
+      "why": "α Capricorni looks so naturally paired, two warm stars you can almost split with your eyes alone, that it is the ideal place to ask whether a pretty pair is a real one, and the answer is no.",
+      "look": "α Capricorni is the upper star of the Goat's head in Capricornus. Binoculars split it into two warm yellow-orange stars about six minutes of arc apart, the brighter one to the east, with β Capricorni, another wide pair, about two and a half degrees south.",
+      "answer": "The two are strangers: α² is an orange giant about 110 light-years away, while α¹ lies roughly 700 light-years farther, a yellow supergiant that looks dim only because of that distance. Nothing but a line of sight joins them, an optical double, as astronomers call it, with no orbit and nothing to weigh.",
+      "story": "Chance pairs plagued the first double-star hunters, who had no parallaxes and could only wait. A true pair changes slowly as its stars circle each other, while a chance pair changes along a straight line, the nearer star sliding past the farther one like a car passing a distant tree. Plot the gap over a century or two and the shape of the track gives the verdict."
+    },
+    "HR4763": {
+      "step": 3,
+      "rank": 7,
+      "beat": "Strangers: a background star",
+      "verdict": "a near star with a background stranger",
+      "question": "Is the faint white point near Gacrux its companion?",
+      "why": "Gacrux, the orange crown of the Southern Cross, keeps a faint white star close beside it that looks every bit like a companion and is not.",
+      "look": "Center Gacrux at the top of the Southern Cross. A 6th-magnitude white star sits about two minutes of arc to the north-north-east, easy in binoculars once the orange glare is moved slightly off-center, and the color contrast between the two is striking.",
+      "answer": "The faint white star is a background star, about 580 light-years away, lying only by chance in the same direction as Gacrux, which at under 90 light-years is by far the closest of the Cross's bright stars. Double-star catalogs call such a pair optical: two stars side by side at wildly different depths, which only a measured distance for each can reveal.",
+      "story": "A star's spectrum reveals its true power as well as its temperature, which gives a distance without any parallax at all. Work out how bright the star really is, compare that with how bright it looks, and only one distance fits. The faint white star beside Gacrux fails that test as a partner, because a hot white star at Gacrux's distance would be easy to see with the naked eye, not a speck that needs binoculars. Its faintness alone says that it lies far behind."
+    },
+    "HR1165": {
+      "step": 3,
+      "rank": 2,
+      "beat": "Strangers among family",
+      "verdict": "fellow travelers plus one stranger in front",
+      "question": "Which of the faint stars beside Alcyone are family, and which are strangers?",
+      "why": "Alcyone, the brightest of the Pleiades, sets a ready-made test, a tiny group of faint stars just to its west that look like its own small family, and mostly are.",
+      "look": "Center Alcyone, the bright star in the middle of the Pleiades' little dipper. Just to its west and north-west, binoculars show a small group of three faint stars two to three minutes of arc from it. The brightest, of 6th magnitude, is easy, while the other two, near 8th and 9th, need a steady view and a reasonably dark sky.",
+      "answer": "Two of the three share Alcyone's motion through space and travel with the Pleiades. The third, though it sits right among them, is a stranger in front of the cluster, roughly 300 light-years away against the Pleiades' 440 or so, drifting at its own pace. One binocular field holds fellow travelers and a stranger side by side, and only their motions and distances tell them apart.",
+      "story": "Cluster stars travel together, so over the years they drift across the sky in one direction at one pace, like a flock seen from far below. Astronomers once caught that drift by comparing photographs taken decades apart, and Gaia now measures it for every star in the field within a few years. A stranger sitting among the Pleiades gives itself away by not joining the flock, however well placed it looks."
+    },
+    "HR5072": {
+      "step": 3,
+      "rank": 6,
+      "beat": "Strangers: a fast star and a slow one",
+      "verdict": "a near star with a distant chance neighbor",
+      "question": "Is the faint star near 70 Virginis its companion, or a background star?",
+      "why": "70 Virginis, a Sun-like star in northern Virgo, keeps a faint star a few minutes of arc away that looks like company until someone measures it, and then turns out to be a stranger.",
+      "look": "About six degrees west-south-west of τ Boötis, 70 Virginis is a pale yellow point. Binoculars show a faint, nearly 9th-magnitude star about four and a half minutes of arc to its south-east, best seen at 10× under a reasonably dark sky.",
+      "answer": "The faint star is a background star, about 1,250 light-years away, some twenty times farther than 70 Virginis, what double-star catalogs call optical. 70 Virginis crosses the sky at roughly a minute of arc per century, so a true companion would have to keep pace with it, and this faint star barely moves.",
+      "story": "The fainter you look, the more stars there are, since each step down the magnitude scale brings several times as many as the step before. By the ninth magnitude the sky is crowded enough that almost any bright star collects a faint neighbor or two by chance. Catalogs of double stars are full of pairs logged by observers who measured every faint point near a bright one. A faint companion therefore starts out as a suspect rather than a partner, and only its motion can clear it."
+    },
+    "HR1479": {
+      "step": 3,
+      "rank": 1.5,
+      "beat": "Not a couple: sisters of one cluster",
+      "verdict": "two sisters without an orbit",
+      "question": "Are σ Tauri's two matched white stars a couple circling each other?",
+      "why": "σ Tauri, an easy pair a degree from Aldebaran, is so evenly matched that the eye assumes its two stars circle each other, yet they are sisters, not a couple.",
+      "look": "Put Aldebaran near the edge of the field and look about a degree to its south-east. σ Tauri appears as two white stars of almost equal brightness, roughly seven minutes of arc apart, an easy split at any magnification.",
+      "answer": "σ Tauri's stars are sisters rather than strangers: both count as members of the Hyades, sharing the cluster's drift across the sky. Sharing a family is not sharing an orbit, though, and none has ever been measured between them, so this pair can tell you where the Hyades lie but not what its stars weigh.",
+      "story": "The Hyades gave astronomers one of their cleverest distance tricks. Because the cluster's stars move in parallel through space, their paths across the sky seem to converge on a single point, the way parallel rails meet at the horizon. From that perspective and each star's speed toward us, read from its spectrum, the distance of every member follows. Lewis Boss worked it out for the Hyades in 1908, and it was the first way to show that a star in this direction belongs to the family rather than lying in front of it."
+    },
+    "DS-NuGem": {
+      "step": 3,
+      "rank": 2.5,
+      "beat": "Strangers: a faint star in front",
+      "verdict": "a bright star with a nearer stranger",
+      "question": "Is the faint star beside ν Geminorum its companion, or a stranger?",
+      "why": "ν Geminorum, at Gemini's feet, keeps a faint star close beside it that catalogs list as its companion, and measurement shows that it is nothing of the kind.",
+      "look": "Find ν Geminorum at Gemini's feet, near Alhena. A much fainter star sits about two minutes of arc to its north-north-west, an easy split because the gap is wide even though the companion is dim; the bright star itself shines blue-white.",
+      "answer": "The faint star is a stranger: it lies about 400 light-years away, more than a hundred light-years in front of ν Geminorum, and drifts across the sky on a path of its own. A dim star beside a bright one is easily taken for the lesser partner, when it can simply be a nearer star seen in the same direction.",
+      "story": "The two stars here are known unequally well. The faint one's yearly parallax shift comes from Gaia, the bright one's from the older Hipparcos satellite, since very bright stars swamp Gaia's detectors. Even with that handicap the two distances disagree by far more than their errors, and the motions across the sky point different ways as well. Two independent witnesses telling the same story is what turns a suspicion into a verdict."
+    },
+    "HR2827": {
+      "step": 3,
+      "rank": 7.5,
+      "beat": "Strangers: a lopsided pair",
+      "verdict": "a distant supergiant with an unrelated nearer star",
+      "question": "Is the faint star beside Aludra a companion, or much nearer to us?",
+      "why": "Aludra, which closes the Great Dog's tail, offers a lopsided pair, a brilliant star with a much fainter point standing off to one side, and the two are strangers.",
+      "look": "Aludra is the blue-white star at the tip of Canis Major's tail, south-east of Sirius. About three minutes of arc to its west-north-west, binoculars show a 7th-magnitude star, clear of the glare at any magnification once you let Aludra sit slightly off-center.",
+      "answer": "The faint star is a stranger, and the nearer of the two: it lies about 630 light-years away, while Aludra is roughly three times farther, so only perspective puts them side by side. A star some fifty times fainter can still be the closer one, which is the trap a lopsided pair sets.",
+      "story": "A faint star beside a bright one is easily taken for the weaker partner, but how bright a star looks depends on its distance as much as on its power. Aludra is a supergiant, one of the most luminous kinds of star, and shines brightly from very far away, while its neighbor is an ordinary hot star much closer to us. The neighbor's yearly parallax shift, measured by Gaia, is about three times Aludra's, which settles at once which of the two is near."
+    },
+    "HR7056": {
+      "step": 1,
+      "beat": "First split: a real pair",
+      "verdict": "a real pair",
+      "question": "Is ζ Lyrae a real pair, or two stars that only look close?",
+      "why": "A star can only be weighed by a partner that circles it, so the hunt starts with the simplest discovery of all, that one point is two. ζ Lyrae, a corner of Lyra's little parallelogram, makes that discovery easy and turns out to be the real thing, a genuine pair.",
+      "look": "ζ Lyrae makes a small triangle with Vega and the Double-Double. Binoculars split it into a white star with a fainter companion just to its south-east, clear at 10× and still separate at 7× if you hold steady.",
+      "answer": "ζ Lyrae is a real pair: Gaia puts both stars about 158 light-years away, the same within Gaia's errors, well under one percent, and they drift across the sky together and approach us at the same speed. A shared distance and a shared motion, not mere closeness on the sky, are what make a double genuine, and the rest of the night puts every other pair to the same test.",
+      "story": "Three independent measurements agree for the two stars of ζ Lyrae: Gaia's yearly parallax shifts, their drift across the sky, and the speed toward us read from their spectra. Strangers almost never match on all three. Their orbit, though, takes tens of thousands of years, far too slow to time, unlike that of nearby Sheliak, whose two stars, too close for any binoculars, circle each other every 12.9 days."
+    },
+    "DS-61Cyg": {
+      "step": 4,
+      "rank": 8,
+      "beat": "Partners: a nearby pair on the scale",
+      "verdict": "true partners already on the scale",
+      "question": "How do we know 61 Cygni's two orange stars belong together, and what they weigh?",
+      "why": "61 Cygni is the partnership where the scale finally reads: two orange stars proven to circle each other, near enough that their slow orbit has been followed for two centuries.",
+      "look": "About eight degrees south-east of Deneb, 61 Cygni splits at 10× into two warm orange points about half a minute of arc apart, nearly equal in brightness. At 7× the two usually stay merged into one warm point.",
+      "answer": "Both stars show the same yearly parallax shift, so they sit at the same distance, about 11 light-years, and both cross the sky at the same brisk pace, side by side. Their orbit takes many centuries, yet the arc followed since the 1800s already weighs the pair, and two nearly equal stars sharing that total each come out lighter than the Sun.",
+      "story": "Partners in orbit obey the rule Kepler found for the planets, as Newton later explained it: the time a pair takes to go around and the size of its orbit fix the total mass holding it together. Double the orbit's size at the same pace and the mass must be eight times greater, so a period and a size, both read off the sky once the distance is known, give a weight. The same rule, applied to Earth's year and Earth's distance, is how the Sun itself was weighed."
+    },
+    "HR7504": {
+      "step": 4,
+      "rank": 4,
+      "beat": "Partners: twin suns",
+      "verdict": "a proven pair on a very slow orbit",
+      "question": "What proves that the faint twins of 16 Cygni are a real pair?",
+      "why": "16 Cygni, a pair of twin Sun-like stars, is a proven partnership, passing the tests about as cleanly as any pair in the sky, which makes it the clearest place to see what those tests are worth.",
+      "look": "About five degrees north of δ Cygni, look for two equal 6th-magnitude stars about 40 arcseconds apart, split at 10× on a steady mount, while 7× usually leaves them merged. Both share the same soft yellow-white tint; 16 Cygni B is the slightly fainter one, to the south-east.",
+      "answer": "Gaia finds both at the same distance, about 69 light-years, to within a fraction of a percent, and the two drift across the sky together, so coincidence runs out of room. Their orbit is far too slow to time in a lifetime, though, so this proven pair is a scale nobody can read yet, and the masses quoted for its stars lean on stars weighed in faster pairs.",
+      "story": "Twins born from one cloud should share the same recipe, and spectra show that the two stars of 16 Cygni are made of almost exactly the same mix of elements. Several studies find B very slightly poorer in heavy elements than A, a difference some astronomers link to the giant planet that formed around B. Either way the match is close enough to be a family trait, a third witness beside the shared distance and drift."
+    },
+    "DS-AlpLib": {
+      "step": 4,
+      "rank": 1,
+      "beat": "Partners: a slow, wide orbit",
+      "verdict": "a likely pair on a vast slow orbit",
+      "question": "Are Libra's two claw stars partners, and how long would one orbit take?",
+      "why": "Zubenelgenubi, Libra's southern claw, is a pair whose stars share a distance and travel together, very likely partners, measured closely enough to put at least a rough clock on their orbit.",
+      "look": "Find Libra between Spica and Antares and center Zubenelgenubi. A fainter star stands clearly apart to the north-west, nearly four minutes of arc away, easy even at 7×; the bright star is white and the companion a touch creamier.",
+      "answer": "They are very likely partners, at one distance and moving the same way across the sky, though hidden companions inside each point blur the measured motions a little. Their projected gap is about 5,400 times the Earth–Sun distance, so one orbit, if they complete one at all, would take well over a hundred thousand years, a scale far too slow to read.",
+      "story": "Pairs this wide live dangerously. Every passing star and the slow tidal pull of the whole Galaxy tug at them, and over billions of years the widest pairs are pulled apart, so a pair still together is either young or has led a quiet life. Gaia has found more than a million pairs of stars moving in lockstep, many as wide as this one. Astronomers now study their slow orbits as a test of gravity itself, in a regime where it is too weak to measure any other way."
+    },
+    "HR6401": {
+      "step": 4,
+      "rank": 2,
+      "beat": "Partners: a companion far afield",
+      "verdict": "partners even a fifth of a degree apart",
+      "question": "Can two stars a fifth of a degree apart still be partners?",
+      "why": "36 Ophiuchi is a proven family whose third member sits so far out that it looks like an unrelated neighbor in the binocular field, yet it is a true partner.",
+      "look": "36 Ophiuchi lies about ten degrees east of Antares. Binoculars show it as a single orange point, since its two closest stars are only five arcseconds apart, and about a fifth of a degree to its east-north-east sits a fainter orange star, 36 Ophiuchi C.",
+      "answer": "36 Ophiuchi C shows they can: at this distance its gap spans about 4,400 times the space between Earth and the Sun, yet it keeps the same distance and the same path through space as the bright pair. An orbit that slow weighs nothing in a human lifetime; the scale here is the tight inner pair, whose two stars circle each other far faster.",
+      "story": "A companion this far out takes well over a hundred thousand years to circle the inner pair, so in all of recorded history it has moved through only a sliver of its orbit. No one will ever watch it complete a lap; the case for partnership rests entirely on measurement, a distance and a drift that agree to a fraction of a percent, which is precise enough to rule out a stranger. Pairs this wide are the easiest kind to split and the hardest kind to prove."
+    },
+    "HR5681": {
+      "step": 4,
+      "rank": 5,
+      "beat": "Partners: a giant and a Sun-like star",
+      "verdict": "a giant with a true Sun-like partner",
+      "question": "Why is δ Boötis's faint companion called its partner rather than a background star?",
+      "why": "Partners make the fairest comparisons in the sky, because they share a birth, and δ Boötis is a lopsided pair whose companion, so faint it could pass for a background star, is a true partner.",
+      "look": "δ Boötis sits north-east of Arcturus on the kite's eastern edge. At 10× a much fainter point stands about a minute and three-quarters of arc to the east of the yellowish giant and splits cleanly once you hold steady. At 7×, brace the binoculars, since the faint star is easy to lose in the glare.",
+      "answer": "It passes both tests that separate partners from strangers, the same distance and the same motion across the sky. With the two at one distance the comparison is fair: the difference of more than four magnitudes means the giant pours out roughly fifty times the light of its partner. Their orbit, though, is far too slow to weigh either.",
+      "story": "Pairs born together are astronomy's controlled experiments: the two stars share an age and the same raw material, so only their masses differ. Here the heavier star has already used up the hydrogen in its core and swollen into a giant, while its lighter partner is still in the steady middle of its life. The giant is a preview of what the Sun-like companion, and the Sun itself, will one day become, and it shows why the masses that orbits measure decide a star's whole life."
+    },
+    "HR310": {
+      "step": 4,
+      "rank": 3,
+      "beat": "Partners: 270 years of watching",
+      "verdict": "a pair proven by centuries of watching",
+      "question": "How can watching a pair for centuries prove that its stars travel together?",
+      "why": "ψ¹ Piscium, a matched pair of white stars in Pisces, has proved its partnership the slow way, by being watched for centuries.",
+      "look": "ψ¹ Piscium lies in Pisces, well south of Mirach. Brace your binoculars or use a tripod: at 10× the two white stars, 30 arcseconds apart and nearly equal, just split, touching like a figure eight. At 7× they usually stay merged into one point.",
+      "answer": "Over 270 years of measurements the pair has crept about 18 arcseconds across the sky, more than half its own width, while the gap between the two stars has changed by less than half an arcsecond. Gaia now places both near 300 light-years. Two stars that move that far in lockstep at one distance are partners, though their orbit is still too slow to weigh them.",
+      "story": "Unrelated stars almost never share a motion, because each one follows its own path around the Galaxy and drifts across our sky at its own speed and in its own direction. Two stars that stay locked together while both move are therefore partners or siblings born together, but proving an orbit takes far longer than proving company. A pair this wide and this far away needs tens of thousands of years to complete a single lap, so the record so far shows the two moving together, not yet turning."
+    },
+    "HR3982": {
+      "step": 4,
+      "rank": 6,
+      "beat": "Partners: a faint fellow traveler",
+      "verdict": "a real pair hiding a third star inside",
+      "question": "Does the faint star near Regulus travel with it, or just happen to be there?",
+      "why": "A partner proves itself by keeping pace, and Regulus, the bright heart of Leo, has a true companion most people never notice, a dim point just beside it.",
+      "look": "Regulus marks the foot of the backward question mark of Leo's head, crisp and blue-white. Brace your binoculars and look about three minutes of arc to the north-west for Regulus B, a faint 8th-magnitude star; keep Regulus slightly off-center so its glare does not swallow the companion.",
+      "answer": "It travels with Regulus: the two share the same distance, about 79 light-years, and the same motion across the sky, so the faint star, an orange dwarf, is a true companion about 4,300 times the Earth–Sun distance out. An orbit that wide would take ages to read, and the partner that has actually been weighed here hides in Regulus's own light, a small remnant star of about a third of the Sun's mass.",
+      "story": "A partner too close or too faint to see still betrays itself, because two stars circle their shared balance point and the bright one is tugged toward us and away in turn. That swing shifts the dark lines of its spectrum back and forth, and timing the shifts gives an orbit even when the partner is invisible. Friedrich Bessel first caught an unseen partner by its pull in 1844, from a wobble in Sirius's path across the sky, eighteen years before anyone saw the companion."
+    },
+    "HR1325": {
+      "step": 4,
+      "rank": 7,
+      "beat": "Partners: a dead star in tow",
+      "verdict": "partners with a dead star among them",
+      "question": "Is the faint point beside 40 Eridani really traveling with it?",
+      "why": "40 Eridani holds a partnership with a remarkable passenger, a faint point beside a modest yellow-orange star that is bound to it and is not an ordinary star at all.",
+      "look": "Find 40 Eridani about 15 degrees west of Rigel, a yellow-orange star in Eridanus. Under a dark sky, braced 10×50 binoculars can split off a very faint point about a minute and a half of arc to its east-south-east, right at their limit, so treat it as a challenge rather than a sure sight.",
+      "answer": "The faint point and its small red companion are bound to the bright star, all three about 16 light-years away and crossing the sky together at about four arcseconds a year. A partner that keeps pace with a motion that fast cannot be a background star, and the orbit it shares with its red companion is one of the few that weigh a dead star directly.",
+      "story": "An orbit gives the total weight of a pair, and splitting that total takes one more measurement. Both stars circle a shared balance point like children on a seesaw: the heavier one sits closer to it and swings less, so the ratio of their swings is the ratio of their masses. For the faint pair beside 40 Eridani, that ratio and their orbit together are how the weight of a dead star was found."
+    },
+    "DS-DoubleDbl": {
+      "step": 5,
+      "rank": 6,
+      "beat": "A crowd: four stars in two pairs",
+      "verdict": "a family of four suns in two pairs",
+      "question": "How many stars are hiding in the little point beside Vega?",
+      "why": "The Double-Double, a modest point beside Vega, breaks into two in binoculars, and every layer below that split is a real partnership.",
+      "look": "Put Vega at the edge of the field and look about 1.7 degrees to the north-east: two matched white stars sit side by side about three and a half minutes of arc apart, split at any magnification. Neither half shows anything more in binoculars, however steady you hold them.",
+      "answer": "There are four suns in two close pairs, each pair certainly bound and slowly tracing an orbit that will one day give its weight. The wide link between the pairs turns too slowly to measure yet, so the case that all four form one system rests on their shared distance and drift.",
+      "story": "Gravity tolerates crowds only in tiers. Three or four stars at similar distances from one another cannot stay together for long, because their pulls keep changing until one is flung out. A system lasts when it is built from close pairs that keep far apart from each other. Two tight pairs, each circling on its own while the pair of pairs wheels slowly around a common center, is that architecture in its plainest form."
+    },
+    "DS-MizarAlcor": {
+      "step": 5,
+      "rank": 9,
+      "beat": "A crowd: six stars in one glance",
+      "verdict": "six stars whose grouping is still argued",
+      "question": "How many stars are really at the bend of the Big Dipper's handle?",
+      "why": "Once you know what a bound pair is, the next surprise is how many can share one place. Mizar and Alcor, a pair your eyes alone can split, hold more than any eye or binocular has ever shown, though whether the two belong to each other is still argued.",
+      "look": "Find the middle star of the Big Dipper's handle, and keen eyes catch little Alcor beside it. Binoculars spread the two about twelve minutes of arc apart, with a fainter star making a small triangle; Mizar's own companion, 14 arcseconds away, needs a telescope.",
+      "answer": "There are most likely six, in two groups: Mizar's four stars and Alcor's two, each group held together by orbits. The groups lie at nearly the same distance, but their motions agree only marginally. Whether the six form one system or two neighboring families is still debated, an open case hiding in plain sight at the bend of the Dipper.",
+      "story": "Mizar has led the way more than once. In the 1600s it was among the first double stars ever seen through a telescope, and in 1857 it became the first double star caught on a photograph. Each new instrument since has found another layer inside it, so the whole history of double stars can be read in this one point of light."
+    },
+    "HR5733": {
+      "step": 5,
+      "rank": 3,
+      "beat": "A crowd: a pair within a pair",
+      "verdict": "three partners nested in two tiers",
+      "question": "How many suns are inside Alkalurops and its faint companion?",
+      "why": "A partnership can hold more than two, and Alkalurops, a bright white star in northern Boötes, has a faint companion that is a true partner and where the counting gets interesting.",
+      "look": "Alkalurops lies near the top of Boötes, about four and a half degrees north-north-east of δ Boötis. At 10× a much fainter star sits just south of it, nearly two minutes of arc away; hold steady and it separates cleanly from the white primary.",
+      "answer": "There are three, in two tiers: the faint companion is itself a tight pair about two arcseconds wide, and it shares the bright star's distance and drift. The binocular gap spans nearly 4,000 times the Earth–Sun distance, a nest of orbits within orbits.",
+      "story": "The faint companion is the part astronomers can weigh: two Sun-like stars that circle each other in a few centuries, slow by human standards and quick by the sky's. The bright star far out takes so long to go around them that its share of the system's weight is estimated from its color and brightness instead, using rules first calibrated on pairs like the inner one."
+    },
+    "HR1931": {
+      "step": 5,
+      "rank": 8,
+      "beat": "A crowd: heavy stars in one point",
+      "verdict": "a bound crowd of heavy young stars",
+      "question": "How many heavy stars are packed into the point of light below Orion's Belt?",
+      "why": "σ Orionis, just below the eastern end of Orion's Belt, is where doubles meet a young cluster, a bright point whose core is a weighed, bound crowd and whose binocular companion is a fellow member of that cluster.",
+      "look": "From Alnitak, drop about a degree south-west to a small knot of stars. At 10× σ Orionis splits into the bright star and a fainter companion about 42 arcseconds to its east-north-east, clear with a steady hand. At 7× the companion is usually lost in the glare, and a closer star due east, and many more, need a telescope.",
+      "answer": "At least three heavy stars are bound together in the central point, two so close that only interferometers resolve them, and their orbit has put both on the scale. The companion your binoculars split belongs to the same young cluster at about the same distance, though no orbit yet ties it to the center.",
+      "story": "The heavier a star is born, the more likely it is to have company, because the dense clumps that make massive stars tend to break into tight groups as they collapse. In a cluster this young those groups have had no time to drift apart or be torn up by passing stars. σ Orionis shows what a heavyweight's home looks like in its first few million years, a close pair at the heart with more stars wheeling around it."
+    },
+    "HR6027": {
+      "step": 5,
+      "rank": 7,
+      "beat": "A crowd: the southern double-double",
+      "verdict": "at least five partners in nested pairs",
+      "question": "Is ν Scorpii the southern sky's answer to the Double-Double?",
+      "why": "Bound pairs can nest several layers deep, and ν Scorpii, a modest star in the Scorpion's head, is a hard split with a big reward. Its faint companion is a true partner, and only steady binoculars can tease it from the glare.",
+      "look": "From β Scorpii, nudge about one and a half degrees east-north-east to ν. On a tripod at 10× or more, binoculars split off a much fainter star about 41 arcseconds to the north-north-west. Hand-held, or at 7×, the companion usually drowns in the glare.",
+      "answer": "ν Scorpii outdoes the original: like ε Lyrae it is a pair of close pairs, at one distance and drifting together, and one of its members is double yet again, betrayed only by its spectrum, for at least five suns.",
+      "story": "Young families like the Scorpius stars are where crowds like this are common, because a cloud collapsing into heavy stars breaks into knots, and each knot tends to become a pair or a pair of pairs. Over hundreds of millions of years passing stars and the Galaxy's pull strip the widest links away, so a crowd this intact is partly a sign of youth."
+    },
+    "HR3207": {
+      "step": 5,
+      "rank": 4,
+      "beat": "A crowd: a rare star at the heart",
+      "verdict": "three or more stars very likely all bound",
+      "question": "How many stars, and what strange kinds, hide in Vela's brightest point?",
+      "why": "γ Velorum opens into a little group in binoculars, and inside its brilliant main point hides one of the strangest pairs in the sky, while the companion beside it is very likely a partner too.",
+      "look": "Steady your binoculars on γ Velorum, Vela's brightest star, and at 10× it splits into a brilliant white star with a fainter one about 41 arcseconds away. At 7× the pair is a close call, so brace the binoculars. A little farther out, a 7th-magnitude star completes a small group.",
+      "answer": "At least three stars share it. The brilliant point is itself a close pair, a heavy hot giant and a stripped Wolf–Rayet star told apart by their spectra. The companion you split, γ¹, lies at about the same distance and drifts the same way, very likely a wide partner.",
+      "story": "Pairs of heavy stars do not just share a home; they change each other's lives. Many of the heaviest stars trade or lose gas to a close partner at some point, and a Wolf–Rayet star like the one here may owe part of its bareness to such a companion as well as to its own winds. The heaviest stars in the sky are shaped by their partners nearly as much as by the weight they were born with."
+    },
+    "HR4730": {
+      "step": 5,
+      "rank": 2,
+      "beat": "A crowd: the foot of the Cross",
+      "verdict": "a bound crowd probably four strong",
+      "question": "How many suns make up the brightest star of the Southern Cross?",
+      "why": "Acrux, the brightest point in the south's most famous pattern, gives binoculars only the first hint of how crowded that point is, and its faint neighbor is probably part of the crowd.",
+      "look": "Center Acrux at the foot of the Cross. Binoculars show a much fainter 5th-magnitude star about a minute and a half of arc to the south-south-west. The two brilliant blue-white stars that make up Acrux itself, only 3.5 arcseconds apart, stay merged until a small telescope separates them.",
+      "answer": "Two brilliant stars share the bright point, so close that only a small telescope divides them, and the brighter is double again. The faint star your binoculars show lies at nearly the same distance, about 350 light-years against roughly 320, and drifts the same way, so it probably makes a fourth.",
+      "story": "Surveys of hot, heavy stars find that most of them have at least one close partner, often near enough to trade gas. A star like the Sun is about as likely to be single as not, while for blue heavyweights like those inside Acrux living alone is the exception. By that measure Acrux is a perfectly ordinary heavyweight."
+    },
+    "HR1852": {
+      "step": 5,
+      "rank": 5,
+      "beat": "A crowd: a family of heavy stars",
+      "verdict": "a bound crowd with a likely sibling nearby",
+      "question": "What is hiding inside the westernmost star of Orion's Belt?",
+      "why": "Partnerships nest even inside the plainest points, and Mintaka is a Belt star worth looking at twice. Look once for the faint companion beside it, which very likely belongs to the same family, and once for what its single bright point conceals.",
+      "look": "Center Mintaka, the Belt star nearest Rigel's side. About 52 arcseconds due north sits a much fainter companion, clear at 10× once you hold the binoculars steady, or better still brace them. The bright star itself stays a single blue-white point however hard you look.",
+      "answer": "Several hot, heavy suns are blended into the bright point, a group whose inner pair announces itself by its eclipses, and the timing of those eclipses is how that pair was weighed. The faint companion lies at about the same distance, roughly 1,200 light-years, among the same young Belt stars, so it is very likely family, though no orbit has yet tied it to the group.",
+      "story": "Eclipses are how astronomers count stars too close for any telescope to split. If two stars orbit edge-on to us, each passes in front of the other once per lap, and their combined light dips on a strict timetable; the depth and shape of each dip even give the stars' relative sizes. John Goodricke, a deaf young astronomer watching Algol in 1782, was the first to suggest that regular dimming meant a companion crossing in front, and Mintaka's small dips are the same signature.",
+      "minMagnification": 10
+    }
+  }
+}

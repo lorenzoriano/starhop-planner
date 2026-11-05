@@ -8,10 +8,11 @@ import { isDeepSky, altitudeRingFraction, skyObjectKind } from '@/lib/planetariu
 import { stellarColor,stellarRadius } from '@/lib/stellar-appearance';
 import { useFinderStars } from '@/hooks/use-finder-stars';
 import { orientChartPoint } from '@/lib/observing';
-import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom } from '@/lib/chart-view';
+import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom, observerUpRotation } from '@/lib/chart-view';
 import { milkyWayPaths as projectMilkyWay } from '@/lib/sky-polygons';
 import { angularRing, RETICLE_DIAMETERS, type FinderReticle } from '@/lib/finder-view';
 import { boxesOverlap,labelFits,labelPointLookup,constellationSymbolBox,pointSegmentDistanceSquared,type LabelBox } from '@/lib/chart-labels';
+import { placeStopLabels, type PlacerStar } from './journeys/map-label-placer';
 import { useChartPreferences } from './ChartPreferences';
 import { memo, useMemo, useRef, useState, useCallback, useEffect, useLayoutEffect, useId, type ReactNode } from 'react';
 import {
@@ -52,6 +53,72 @@ interface SkyChartProps {
   fieldNavigation?: ReactNode;
   maxCatalogMagnitude?:number;
   targetDiameter?:number|null;
+  /** Sky Journeys overlay: numbered stops, arrowed path, region outline, Moon keep-out ring, minimum-altitude ring. */
+  journey?: JourneyOverlay;
+}
+
+/** Visit state of a journey stop. Encoded by fill, stroke width and dash pattern, never by hue alone (red light). */
+export type JourneyOverlayStopState = 'todo' | 'current' | 'done' | 'skipped';
+export interface JourneyOverlayStop { id: string; ra: number; dec: number; label: string; state: JourneyOverlayStopState;
+  /** The stop's magnitude: its label may never cover a star brighter than the stop. */
+  mag?: number | null;
+  /** Star stops: drawn inside the ring at a visible size even beyond the chart's limiting magnitude. */
+  kind?: 'star' | 'dso';
+  /** Star colour (effective temperature, K) for the stop's own dot. */
+  teffK?: number | null;
+  /** Angular extent of a cluster or nebula, degrees: its label is placed outside it, not across its stars. */
+  sizeDeg?: number | null }
+export interface JourneyOverlay {
+  stops: JourneyOverlayStop[];
+  /** Highlighted stop (hover or tap from the story list). */
+  highlight?: number | null;
+  onStopSelect?: (index: number) => void;
+  onStopHover?: (index: number | null) => void;
+  /** Moon keep-out circle (dashed) when the Moon is up. */
+  moon?: { ra: number; dec: number; radiusDeg: number } | null;
+  /** Emphasised minimum-altitude ring (overview only). */
+  minAlt?: number;
+  /** Buffer around the stops for the dashed region outline, degrees (default 6). */
+  regionBufferDeg?: number;
+  /** Overview: open framed on the stops instead of the whole sky. */
+  fit?: boolean;
+  /** Field chart (non-overview, no route): stop indices to frame; default all stops. */
+  focus?: number[];
+  /** Field chart: force the view radius in degrees (e.g. ~20° for a naked-eye jump). */
+  fieldRadiusDeg?: number;
+  /** Route map: 'all' labels every stop by name (default: only the highlighted/current stop). */
+  labels?: 'focus' | 'all';
+  /** Route map: draw the binocular true field (fovWidth) around this stop index. */
+  fieldAt?: number | null;
+  /** Route map in a full-screen viewer: plain wheel zooms (default: Ctrl/⌘ + wheel, so the page can scroll). */
+  wheelZoom?: boolean;
+  /** Field mode: turn the chart so the zenith is up (the frame of the get-there directions); hides Rotate. */
+  observerUp?: boolean;
+  /** Field mode: the naked-eye anchor star the directions start from ("Find Alderamin by eye"), marked and named. */
+  anchor?: { id: string; ra: number; dec: number; label: string } | null;
+  /** No dashed region outline (Star hop shows the stops over a hop route). */
+  hideRegion?: boolean;
+  /** No straight stop-to-stop legs (Star hop: the hop route itself shows the way). */
+  hideLegs?: boolean;
+  /**
+   * Star hop chain (route + stops together): the hop indices of the current leg. The chart frames that leg (north,
+   * view radius) instead of the whole chained route, which can span a large part of the sky.
+   */
+  routeLeg?: { start: number; end: number } | null;
+}
+const JOURNEY_INK = '#e9d29a';
+const JOURNEY_REGION = '#9fd6c4';
+/** Radius of a journey stop ring in screen pixels: small enough that the star it circles stays visible. */
+const JOURNEY_RING = 7;
+/** Convex hull (monotone chain) of 2D points, counter-clockwise. */
+function convexHull(points: { x: number; y: number }[]) {
+  const pts = points.slice().sort((a, b) => a.x - b.x || a.y - b.y);
+  if (pts.length < 3) return pts;
+  const cross = (o: { x: number; y: number }, a: { x: number; y: number }, b: { x: number; y: number }) => (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+  const lower: typeof pts = [], upper: typeof pts = [];
+  for (const p of pts) { while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) lower.pop(); lower.push(p); }
+  for (let i = pts.length - 1; i >= 0; i--) { const p = pts[i]; while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop(); upper.push(p); }
+  return [...lower.slice(0, -1), ...upper.slice(0, -1)];
 }
 
 const CHART_SIZE = 600;
@@ -89,6 +156,7 @@ export function SkyChart({
   lat, lon, date,
   overview = false,
   onSelect, onFovChange, onEditSetup, setupSummary, isBinocular=false, fieldNavigation, maxCatalogMagnitude=8, targetDiameter,
+  journey,
 }: SkyChartProps) {
   const chartId=`sky-${useId().replaceAll(':','')}`;
   const [showObjects,setShowObjects]=useState(true);
@@ -105,7 +173,7 @@ export function SkyChart({
   const activeFinderReticle=isBinocular&&(finderReticle==="telrad"||finderReticle==="rigel")?"field":finderReticle;
 
   const mirrored=overview?false:preferences.mirrored;
-  const rotation=overview?0:preferences.rotation;
+  const userRotation=overview?0:preferences.rotation;
   const starsOnly=overview?false:preferences.starsOnly;
 
   // Zoom and pan state
@@ -151,35 +219,63 @@ export function SkyChart({
   const brightMul = starBrightness / 5; // 0.2 … 2.0, default 1.4
   const navMul = navStarSize / 5; // 0.2 … 2.0, default 1.0
 
+  // A journey field chart (no hop route) frames the focused stops: e.g. the previous and the current stop of a leg.
+  const journeyFocus = useMemo(() => {
+    if (!journey || overview || route || !journey.stops.length) return null;
+    const picked: { ra: number; dec: number }[] = journey.focus?.length ? journey.focus.map((index) => journey.stops[index]).filter(Boolean) : journey.stops;
+    // The anchor the directions start from belongs in the frame, so "find X by eye" can be followed on the map.
+    if (picked.length && journey.anchor) picked.push(journey.anchor);
+    return picked.length ? picked : null;
+  }, [journey, overview, route]);
+  const journeyFrame = useMemo(() => journeyFocus ? chartFrame(journeyFocus) : null, [journeyFocus]);
+  const journeySpan = useMemo(() => journeyFocus ? Math.max(0, ...journeyFocus.map(a => Math.max(...journeyFocus.map(b => angularDistance(a.ra, a.dec, b.ra, b.dec))))) : 0, [journeyFocus]);
+
   const center = useMemo(() => {
     if (overview) return skyZenith(lat, lon, date);
     if (currentHop) {
       return { ra: currentHop.center.ra, dec: currentHop.center.dec };
     }
+    if (journeyFrame) return journeyFrame;
     if (targetNode) {
       return { ra: targetNode.ra, dec: targetNode.dec };
     }
     return { ra: 0, dec: 25 };
-  }, [currentHop, targetNode, overview, lat, lon, date]);
+  }, [currentHop, targetNode, overview, lat, lon, date, journeyFrame]);
   // The destination fixes north across its finder and every alternative route.
-  const fixedFrame=useMemo(()=>targetNode??(route?chartFrame(route.hops.map(hop=>hop.center)):{ra:0,dec:25}),[targetNode,route]);
+  // A chained hop (route + journey stops) frames its current leg; a single route keeps its destination's frame.
+  const legHops = useMemo(() => route && journey?.routeLeg ? route.hops.slice(Math.max(0, journey.routeLeg.start), journey.routeLeg.end + 1) : null, [route, journey?.routeLeg]);
+  const legFrame = useMemo(() => legHops?.length ? chartFrame(legHops.map(hop => hop.center)) : null, [legHops]);
+  const fixedFrame=useMemo(()=>legFrame??journeyFrame??targetNode??(route?chartFrame(route.hops.map(hop=>hop.center)):{ra:0,dec:25}),[targetNode,route,journeyFrame,legFrame]);
   const projectionFrame=overview?center:fixedFrame;
+  // Sky Journeys field mode: the chart turns so the zenith is up, the frame its directions use ("move left…").
+  const observerRotation = useMemo(() => (journey?.observerUp && !overview && !route ? observerUpRotation(projectionFrame, skyZenith(lat, lon, date), mirrored) : null),
+    // Rounded to whole degrees, so the live clock does not re-render the chart every tick.
+    [journey?.observerUp, overview, route, projectionFrame.ra, projectionFrame.dec, lat, lon, Math.floor(date.getTime() / 120000), mirrored]); // eslint-disable-line react-hooks/exhaustive-deps
+  const rotation = observerRotation ?? userRotation;
 
   const viewRadius = useMemo(() => {
     if (overview) return 90;
     if (currentHop) {
-      const routeSpan = route
-        ? Math.max(0, ...route.hops.map((hop) =>
-            Math.max(...route.hops.map((other) =>
+      const spanHops = legHops?.length ? legHops : route?.hops;
+      const routeSpan = spanHops
+        ? Math.max(0, ...spanHops.map((hop) =>
+            Math.max(...spanHops.map((other) =>
               angularDistance(hop.center.ra, hop.center.dec, other.center.ra, other.center.dec),
             )),
           ))
         : 0;
       return Math.max(12, Math.min(70, Math.max(fovWidth * 3.1, routeSpan + fovWidth * 1.5)));
     }
+    if (journeyFrame) {
+      // Every framed point (stops of the leg, the anchor) sits well inside the frame: at least ~12% padding plus a
+      // ring's width, never on the edge (design review r4: the anchor's ring was cut off at the bottom).
+      const far = journeyFocus ? Math.max(0, ...journeyFocus.map((p) => angularDistance(p.ra, p.dec, journeyFrame.ra, journeyFrame.dec))) : 0;
+      const need = Math.min(70, far * 1.14 + fovWidth * 0.5);
+      return Math.max(journey?.fieldRadiusDeg ?? Math.max(fovWidth * 1.2, Math.min(70, journeySpan / 2 + fovWidth * 1.4)), need);
+    }
     if (targetNode) return Math.max(2, fovWidth * 0.85);
     return 40;
-  }, [currentHop, targetNode, fovWidth, route, overview]);
+  }, [currentHop, targetNode, fovWidth, route, overview, journeyFrame, journeySpan, journeyFocus, journey?.fieldRadiusDeg, legHops]);
 
   const planeRadius = 2 * Math.tan(viewRadius * Math.PI / 360) * 180 / Math.PI;
   const scale = (Math.min(chartWidth,CHART_SIZE) / 2 - CHART_PAD) / planeRadius;
@@ -232,7 +328,7 @@ export function SkyChart({
 
   // ───── Mouse wheel zoom ─────
   const handleWheel = useCallback((e: React.WheelEvent) => {
-    if(!e.ctrlKey&&!e.metaKey)return;
+    if(!e.ctrlKey&&!e.metaKey&&!journey?.wheelZoom)return;
     if((e.deltaY>0&&zoom<=MIN_ZOOM)||(e.deltaY<0&&zoom>=zoomLimit))return;
     e.stopPropagation();
     setZoom((prev) => {
@@ -242,7 +338,7 @@ export function SkyChart({
       setPanY((py) => clampPan(0, py, next).y);
       return next;
     });
-  }, [clampPan,zoom,zoomLimit]);
+  }, [clampPan,zoom,zoomLimit,journey?.wheelZoom]);
 
   // ───── Pointer (mouse/single-touch) drag ─────
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
@@ -361,6 +457,8 @@ export function SkyChart({
   }, [panX, panY]);
 
   // Prevent default on the container to avoid browser zoom on pinch
+  const wheelZoomRef = useRef(false);
+  wheelZoomRef.current = !!journey?.wheelZoom;
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -369,7 +467,7 @@ export function SkyChart({
     };
     const preventWheel = (e: WheelEvent) => {
       // The modifier always belongs to chart zoom; never resize the browser at a limit.
-      if((e.ctrlKey||e.metaKey)&&svgRef.current?.contains(e.target as Node))e.preventDefault();
+      if((e.ctrlKey||e.metaKey||wheelZoomRef.current)&&svgRef.current?.contains(e.target as Node))e.preventDefault();
     };
     el.addEventListener('touchmove', preventZoom, { passive: false });
     el.addEventListener('wheel', preventWheel, { passive: false });
@@ -478,7 +576,9 @@ export function SkyChart({
     if(!viewport.measured)return [];
     return nodes.filter((node) => {
       const distFromCenter = angularDistance(node.ra, node.dec, center.ra, center.dec);
-      if (distFromCenter > viewRadius) return false;
+      // viewRadius is the vertical half-height; a wide chart (full-screen route map) reaches further sideways, and
+      // projection clips anything past the frame. Without this, stars and DSO symbols vanish at the sides.
+      if (distFromCenter > (overview ? viewRadius : viewRadius * Math.max(1.25, chartAspect * 1.35))) return false;
 
       if(overview&&!showObjects&&(node.type==='binocular'||node.type==='messier'))return false;
       // Always show highlighted, planets, binoculars
@@ -489,7 +589,7 @@ export function SkyChart({
       // Show all stars up to the user's limiting magnitude
       return node.mag <= limitingMag;
     });
-  }, [viewport.measured,nodes, center.ra, center.dec, viewRadius, highlightedIds, limitingMag, overview, showObjects]);
+  }, [viewport.measured,nodes, center.ra, center.dec, viewRadius, highlightedIds, limitingMag, overview, showObjects, chartAspect]);
 
   // Background star layer from dense Hipparcos catalog — pure rendering, no routing
   const backgroundStarLayer = useMemo(() => {
@@ -605,6 +705,62 @@ export function SkyChart({
     return d;
   }, [route, animStep, project]);
 
+  // ───── Sky Journeys overlay geometry ─────
+  const journeyGeometry = useMemo(() => {
+    if (!journey?.stops.length) return null;
+    const points = journey.stops.map((stop) => project(stop.ra, stop.dec));
+    const visible = points.filter((point): point is { x: number; y: number } => !!point);
+    // Buffered hull: circles of `buffer` degrees around each stop, then their convex hull (a rounded outline).
+    const buffer = (journey.regionBufferDeg ?? 6) * scale;
+    const ring = visible.flatMap((point) => Array.from({ length: 24 }, (_, i) => ({ x: point.x + buffer * Math.cos(i * Math.PI / 12), y: point.y + buffer * Math.sin(i * Math.PI / 12) })));
+    const hull = convexHull(ring);
+    const region = !journey.hideRegion && hull.length > 2 ? `M${hull.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' L')} Z` : null;
+    const legs = journey.hideLegs ? [] : journey.stops.slice(1).flatMap((stop, index) => {
+      const a = points[index], b = points[index + 1];
+      if (!a || !b) return [];
+      const angle = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+      const travelled = stop.state === 'done' || stop.state === 'skipped';
+      return [{ key: `${journey.stops[index].id}>${stop.id}`, a, b, d: `M${a.x.toFixed(1)},${a.y.toFixed(1)} L${b.x.toFixed(1)},${b.y.toFixed(1)}`, mid: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }, angle, travelled, length: Math.hypot(b.x - a.x, b.y - a.y) }];
+    });
+    let moon: string | null = null;
+    if (journey.moon) {
+      let d = '', open = false;
+      for (const point of angularRing(journey.moon, journey.moon.radiusDeg, 120)) {
+        const p = project(point.ra, point.dec);
+        if (!p) { open = false; continue; }
+        d += `${open ? ' L' : ' M'}${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+        open = true;
+      }
+      moon = d.trim() || null;
+    }
+    const moonCenter = journey.moon ? project(journey.moon.ra, journey.moon.dec) : null;
+    return { points, region, legs, moon, moonCenter };
+  }, [journey, project, scale]);
+  // Overview "fit journey": zoom and pan so the stops (plus a margin) fill the dome view.
+  const journeyFit = useMemo(() => {
+    if (!overview || !journeyGeometry) return null;
+    const visible = journeyGeometry.points.filter((point): point is { x: number; y: number } => !!point);
+    if (!visible.length) return null;
+    const xs = visible.map((point) => point.x), ys = visible.map((point) => point.y);
+    const margin = Math.max(12 * scale, 40);
+    const width = Math.max(...xs) - Math.min(...xs) + 2 * margin, height = Math.max(...ys) - Math.min(...ys) + 2 * margin;
+    const z = Math.max(1, Math.min(zoomLimit, 4, Math.min(chartWidth / width, CHART_SIZE / height)));
+    const pan = clampPan(cx - (Math.max(...xs) + Math.min(...xs)) / 2, cy - (Math.max(...ys) + Math.min(...ys)) / 2, z);
+    return { zoom: Math.round(z * 100) / 100, x: Math.round(pan.x), y: Math.round(pan.y) };
+  }, [overview, journeyGeometry, scale, zoomLimit, chartWidth, clampPan, cx, cy]);
+  // Re-fit only when the journey, the chart width or the base view changes, never on the live clock tick.
+  const journeyFitRef = useRef(journeyFit);
+  journeyFitRef.current = journeyFit;
+  const journeyFitKey = journey?.fit && overview ? journey.stops.map((stop) => stop.id).join('|') : null;
+  const applyJourneyFit = useCallback(() => {
+    const fit = journeyFitRef.current;
+    if (!fit) return;
+    setZoom(fit.zoom); setPanX(fit.x); setPanY(fit.y);
+  }, []);
+  useLayoutEffect(() => {
+    if (journeyFitKey) applyJourneyFit();
+  }, [journeyFitKey, applyJourneyFit, chartWidth, viewport.measured, initialZoom, viewRadius]);
+
   const plottedStars = useMemo(() => {
     return visibleStars
       .map((star) => {
@@ -647,6 +803,90 @@ export function SkyChart({
     return '';  // skip labels for HR-only stars
   },[overview]);
 
+  // ───── Sky Journeys stop labels (owner feedback r2/r3) ─────
+  // Placed BEFORE the background names: each "N Name" label sits beside its own hairline ring (8 directions, nearest
+  // first, a short leader when it must move away), never over a star brighter than the stop, another stop label or a
+  // ring. Constellation and star names are placed afterwards around these boxes, or dropped. Sizes are screen pixels.
+  type JourneyLabel = { box: LabelBox; leader: { x1: number; y1: number; x2: number; y2: number } | null; fs: number; text: string; strong: boolean };
+  const journeyLabelCache = useRef<{ stops: (JourneyLabel | null)[]; anchor: JourneyLabel | null; reserved: LabelBox[] }>({ stops: [], anchor: null, reserved: [] });
+  const journeyAnchorPoint = useMemo(() => journey?.anchor ? project(journey.anchor.ra, journey.anchor.dec) : null, [journey?.anchor, project]);
+  const journeyLabels = useMemo(() => {
+    void dragVersion;
+    if (isDragging.current) return journeyLabelCache.current;
+    const empty = { stops: [] as (JourneyLabel | null)[], anchor: null as JourneyLabel | null, reserved: [] as LabelBox[] };
+    if (!journey || !journeyGeometry || !viewport.measured) return empty;
+    const u = screenUnit;
+    const measure = typeof document !== 'undefined' ? document.createElement('canvas').getContext('2d') : null;
+    const family = (typeof document !== 'undefined' ? getComputedStyle(svgRef.current ?? document.body).getPropertyValue('--font-sans') : '') || 'sans-serif';
+    const textWidth = (text: string, weight: number, fs: number) => {
+      if (!text) return 0;
+      if (measure) { measure.font = `${weight} ${fs}px ${family}`; return measure.measureText(text).width; }
+      return text.length * fs * 0.56;
+    };
+    type Req = { x: number; y: number; ring: number; width: number; height: number; mag: number | null; priority: number; fs: number; text: string; strong: boolean };
+    const reqs: (Req | null)[] = journeyGeometry.points.map((point, index) => {
+      if (!point) return null;
+      const stop = journey.stops[index];
+      const strong = journey.highlight === index || stop.state === 'current';
+      const named = strong || journey.labels === 'all';
+      // Larger on large charts (design review r4: 11 px labels on a full-screen 1440 px map).
+      const fs = (strong ? 12.5 : 11.5) * (viewportPixels >= 700 ? 1.18 : 1) * u;
+      const text = named ? stop.label : '';
+      const num = `${stop.state === 'done' ? '✓' : ''}${index + 1}`;
+      const width = textWidth(num, 800, fs) + (text ? 4 * u + textWidth(text, strong ? 700 : 500, fs) : 0) + 2 * u;
+      // A cluster's label goes outside its stars (design review r4: "Alpha Persei Cluster" ran across its members).
+      const extent = stop.sizeDeg && stop.sizeDeg > 0 ? Math.min(44 * u, (stop.sizeDeg / 2) * scale) : 0;
+      return { x: point.x, y: point.y, ring: Math.max((JOURNEY_RING + (strong ? 3.5 : 0)) * u, extent), width, height: fs * 1.25, mag: stop.mag ?? null, priority: strong ? 0 : 1, fs, text, strong };
+    });
+    const anchorReq: Req | null = journey.anchor && journeyAnchorPoint ? (() => {
+      const fs = 12 * u, text = `${journey.anchor!.label} · by eye`;
+      return { x: journeyAnchorPoint.x, y: journeyAnchorPoint.y, ring: 9 * u, width: textWidth(text, 700, fs) + 2 * u, height: fs * 1.25, mag: null, priority: 0.5, fs, text, strong: true };
+    })() : null;
+    const all = [...reqs, anchorReq].filter((r): r is Req => !!r);
+    const rings = all.map((r) => ({ x: r.x, y: r.y, r: r.ring }));
+    // Obstacles near the labels only: catalog stars as drawn, DSO and planet symbols, and the dense background field.
+    const reach = Math.max(0, ...all.map((r) => r.width)) + 50 * u;
+    const near = (x: number, y: number) => all.some((r) => Math.abs(x - r.x) < reach && Math.abs(y - r.y) < reach);
+    const atRing = (x: number, y: number) => all.some((r) => Math.hypot(x - r.x, y - r.y) < r.ring);
+    const stars: PlacerStar[] = [];
+    for (const item of plottedStars) {
+      const { x, y } = item.point;
+      if (!near(x, y) || atRing(x, y)) continue;
+      if (item.star.type === 'star') stars.push({ x, y, r: Math.max(.65, stellarRadius(item.star.mag) * Math.min(1.8, brightMul) * catalogPointScale) * u, mag: item.star.mag });
+      else stars.push({ x, y, r: 7 * u, mag: item.star.type === 'planet' ? -3 : 3 });
+    }
+    // The dense field repeats the catalog's bright stars: count each dot once.
+    const seen = new Set(stars.map((st) => `${Math.round(st.x / (2 * u))},${Math.round(st.y / (2 * u))}`));
+    for (const star of backgroundStarLayer) {
+      if (star.mag > 6 || !near(star.x, star.y) || atRing(star.x, star.y) || seen.has(`${Math.round(star.x / (2 * u))},${Math.round(star.y / (2 * u))}`)) continue;
+      stars.push({ x: star.x, y: star.y, r: Math.max(.55, bgStarSize(star.mag) * brightMul * backgroundPointScale) * u, mag: star.mag });
+    }
+    const view = { l: labelViewport.left, t: labelViewport.top, r: labelViewport.right, b: labelViewport.bottom };
+    // The orientation compass (top right, HTML over the chart) is furniture a stop label may not hide.
+    const blocked = !overview ? [{ l: viewBoxX + viewBoxWidth - 76 * u, t: viewBoxY, r: viewBoxX + viewBoxWidth, b: viewBoxY + 76 * u }] : [];
+    const placed = placeStopLabels({ labels: all, rings, stars, segments: journeyGeometry.legs.map((leg) => ({ a: leg.a, b: leg.b })), blocked, view, unit: u });
+    const toLabel = (req: Req, i: number): JourneyLabel | null => {
+      const p = placed[i];
+      return p ? { box: { left: p.box.l, top: p.box.t, right: p.box.r, bottom: p.box.b }, leader: p.leader, fs: req.fs, text: req.text, strong: req.strong } : null;
+    };
+    let k = 0;
+    const stopsOut = reqs.map((req) => req ? toLabel(req, k++) : null);
+    const anchorOut = anchorReq ? toLabel(anchorReq, k++) : null;
+    // Stop labels and their leaders, padded so a background name never sits flush against them.
+    const reserved: LabelBox[] = [...stopsOut, anchorOut].flatMap((l) => {
+      if (!l) return [];
+      const box = { left: l.box.left - 4 * u, right: l.box.right + 4 * u, top: l.box.top - 2 * u, bottom: l.box.bottom + 2 * u };
+      if (!l.leader) return [box];
+      const { x1, y1, x2, y2 } = l.leader;
+      return [box, { left: Math.min(x1, x2) - 2 * u, right: Math.max(x1, x2) + 2 * u, top: Math.min(y1, y2) - 2 * u, bottom: Math.max(y1, y2) + 2 * u }];
+    });
+    // Background names keep a little air around every stop ring, so no name reads as a stop's.
+    for (const r of rings) reserved.push({ left: r.x - r.r - 6 * u, right: r.x + r.r + 6 * u, top: r.y - r.r - 6 * u, bottom: r.y + r.r + 6 * u });
+    const result = { stops: stopsOut, anchor: anchorOut, reserved };
+    journeyLabelCache.current = result;
+    return result;
+  }, [journey, journeyGeometry, journeyAnchorPoint, viewport.measured, dragVersion, screenUnit, plottedStars, backgroundStarLayer, brightMul, catalogPointScale, backgroundPointScale, labelViewport, scale, overview, viewBoxX, viewBoxY, viewBoxWidth, viewportPixels]);
+
   type PlacedSkyLabel={star:SkyNode;x:number;y:number;anchor:'start'|'end'|'middle';width:number;isAnchor:boolean;isTarget:boolean;isPatternAnchor:boolean;box:LabelBox;leader:{x:number;y:number}|null};
   const labelCache=useRef<PlacedSkyLabel[]>([]);
   const constellationCache=useRef<Array<typeof constellationLabels[number]&{box:LabelBox}>>([]);
@@ -655,8 +895,14 @@ export function SkyChart({
     void dragVersion;
     if(isDragging.current)return labelCache.current;
     if (!viewport.measured) return [];
+    // A journey stop is named by the journey overlay beside its ring; a second, background name would collide with it.
+    const stopIds = new Set(journey?.stops.map((stop) => stop.id) ?? []);
+    const isJourneyStop = (star: SkyNode) => !!journey && (stopIds.has(star.id) || star.id === journey.anchor?.id || journey.stops.some((stop) => Math.abs(stop.dec - star.dec) < 0.03 && angularDistance(stop.ra, stop.dec, star.ra, star.dec) < 0.03));
+    // Stop labels win: a background name never covers a stop's label or ring (it moves, or is dropped).
+    const stopReserved = journeyLabels.reserved;
     const candidates = plottedStars
       .filter(({ star, isAnchor, isTarget, isPatternAnchor, isGuide }) => {
+        if (isJourneyStop(star)) return false;
         if(labelSize===0)return isTarget;
         if (isTarget || isAnchor || isPatternAnchor || star.type==='planet') return true;
         if(overview&&isDeepSky(star.category))return true;
@@ -702,13 +948,15 @@ export function SkyChart({
       let placed=false;
       // Short leaders are preferred. Longer choices are reserved for priority
       // names in rich fields, where an adjacent name would cover another target.
-      for(const distance of (priority?[10,17,25,36,50,70,95]:[9,16,25])){
+      // On a journey map the stops own the story: a background name that cannot sit near its star is dropped
+      // rather than led across the chart.
+      for(const distance of (journey&&!overview?[9,16]:priority?[10,17,25,36,50,70,95]:[9,16,25])){
         for(const angle of [0,Math.PI,-Math.PI/4,Math.PI/4,-3*Math.PI/4,3*Math.PI/4,-Math.PI/2,Math.PI/2,...Array.from({length:16},(_,i)=>i*Math.PI/8)]){
           const x=candidate.point.x+Math.cos(angle)*(distance*screenUnit+width/2+pad);
           const midY=candidate.point.y+Math.sin(angle)*(distance*screenUnit+height/2+pad);
           const y=midY+labelUnits*.36;
           const box={left:x-width/2-pad,right:x+width/2+pad,top:midY-height/2,bottom:midY+height/2};
-          if(!labelFits(box,labelViewport,labelCircle)||reservedLabels.some(area=>boxesOverlap(box,area))||accepted.some(label=>boxesOverlap(box,label.box,2*screenUnit)))continue;
+          if(!labelFits(box,labelViewport,labelCircle)||reservedLabels.some(area=>boxesOverlap(box,area))||stopReserved.some(area=>boxesOverlap(box,area,2*screenUnit))||accepted.some(label=>boxesOverlap(box,label.box,2*screenUnit)))continue;
           if(nearby(box,14*screenUnit).some(point=>{
             if(point.id===candidate.star.id)return false;
             if(priority&&!(point as typeof protectedPoints[number]).blocksPriority)return false;
@@ -725,12 +973,12 @@ export function SkyChart({
 
     labelCache.current=accepted;
     return accepted;
-  }, [viewport.measured,dragVersion,plottedStars, activeConstellationIds, focusPoint, localRadius, labelSize, labelUnits, screenUnit, overview, viewportPixels,brightMul,catalogPointScale,chartLabel,labelCircle,labelViewport,reservedLabels]);
+  }, [viewport.measured,dragVersion,plottedStars, activeConstellationIds, focusPoint, localRadius, labelSize, labelUnits, screenUnit, overview, viewportPixels,brightMul,catalogPointScale,chartLabel,labelCircle,labelViewport,reservedLabels,journey,journeyLabels]);
 
   const placedConstellationLabels=useMemo(()=>{
     void dragVersion;
     if(isDragging.current)return constellationCache.current;
-    const occupied=[...reservedLabels,...labels.map(label=>label.box),...plottedStars.flatMap(item=>{const box=constellationSymbolBox(item.star,item.point,screenUnit,item.isTarget);return box?[box]:[];})];
+    const occupied=[...reservedLabels,...journeyLabels.reserved,...labels.map(label=>label.box),...plottedStars.flatMap(item=>{const box=constellationSymbolBox(item.star,item.point,screenUnit,item.isTarget);return box?[box]:[];})];
     const accepted:Array<typeof constellationLabels[number]&{box:LabelBox}>=[];
     const font=Math.max(12,labelSize*.85)*screenUnit;
     // Uppercase names vary considerably in width (e.g. SERPENS). Measure
@@ -773,7 +1021,7 @@ export function SkyChart({
     }
     constellationCache.current=accepted;
     return accepted;
-  },[highlightedFigure,dragVersion,constellationPaths,constellationLabels,labels,plottedStars,labelSize,screenUnit,viewportPixels,cx,cy,labelCircle,labelViewport,overview,reservedLabels]);
+  },[highlightedFigure,dragVersion,constellationPaths,constellationLabels,labels,plottedStars,labelSize,screenUnit,viewportPixels,cx,cy,labelCircle,labelViewport,overview,reservedLabels,journeyLabels]);
 
 
 
@@ -1081,12 +1329,40 @@ export function SkyChart({
           </text>
         ))}
 
+        {/* Constellation tap targets: at least 32 px each way, drawn under the stars and journey stops so those win. */}
+        {!starsOnly&&labelSize>0&&showConstellations&&placedConstellationLabels.map(label=>{
+          const min=32*screenUnit,w=Math.max(min,label.box.right-label.box.left),h=Math.max(min,label.box.bottom-label.box.top),mx=(label.box.left+label.box.right)/2,my=(label.box.top+label.box.bottom)/2;
+          return <rect key={`figure-hit-${label.key}`} data-constellation-hit-for={label.key.split('-')[0]} x={mx-w/2} y={my-h/2} width={w} height={h} fill="transparent" role="button" tabIndex={0} aria-label={`Highlight ${label.name}`} onClick={()=>{if(!didDrag.current)setHighlightedFigure(current=>current===label.key.split('-')[0]?null:label.key.split('-')[0]);}} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();setHighlightedFigure(label.key.split('-')[0]);}}}><title>{label.name}</title></rect>;
+        })}
+
         {/* Dense background star field from Hipparcos catalog */}
         <BatchedStarLayer points={backgroundPoints} />
         <BatchedStarLayer points={catalogPoints} />
 
         {!starsOnly && routePath && <path d={routePath} stroke="#ad8f58" vectorEffect="non-scaling-stroke" strokeWidth="1.2" fill="none" opacity="0.26" strokeDasharray="5 4" />}
         {!starsOnly && routeProgressPath && <path d={routeProgressPath} stroke="#e4ba72" vectorEffect="non-scaling-stroke" strokeWidth="1.8" fill="none" opacity="0.88" />}
+
+        {/* Sky Journeys: min-altitude ring, region outline, Moon keep-out, arrowed path (under the stars) */}
+        {journey && overview && journey.minAlt !== undefined && <g data-journey-min-alt={journey.minAlt} pointerEvents="none">
+          <circle cx={cx} cy={cy} r={260 * altitudeRingFraction(journey.minAlt)} fill="none" stroke={JOURNEY_INK} strokeWidth="1.6" vectorEffect="non-scaling-stroke" strokeDasharray="10 5" opacity=".75"/>
+          <text x={cx - 4 * screenUnit} y={cy + 260 * altitudeRingFraction(journey.minAlt) - 5 * screenUnit} textAnchor="end" fontSize={12 * screenUnit} fill={JOURNEY_INK} paintOrder="stroke" stroke="#080a12" strokeWidth={3 * screenUnit}>{journey.minAlt}° minimum</text>
+        </g>}
+        {journeyGeometry?.region && <path data-journey-region="true" d={journeyGeometry.region} fill={JOURNEY_REGION} fillOpacity=".04" stroke={JOURNEY_REGION} strokeOpacity=".45" strokeWidth="1" vectorEffect="non-scaling-stroke" strokeDasharray="6 5" strokeLinejoin="round" pointerEvents="none"/>}
+        {journeyGeometry?.moon && <g data-journey-moon-ring={journey?.moon?.radiusDeg} pointerEvents="none">
+          <path d={journeyGeometry.moon} fill="none" stroke="#d9dfeb" strokeWidth="1.4" vectorEffect="non-scaling-stroke" strokeDasharray="2 5" strokeLinecap="round" opacity=".8"/>
+          {journeyGeometry.moonCenter && <text x={journeyGeometry.moonCenter.x} y={journeyGeometry.moonCenter.y + 22 * screenUnit} textAnchor="middle" fontSize={12 * screenUnit} fill="#d9dfeb" paintOrder="stroke" stroke="#080a12" strokeWidth={3 * screenUnit}>Moon · keep-out {Math.round(journey?.moon?.radiusDeg ?? 0)}°</text>}
+        </g>}
+        {/* Hop lines: hairlines, semi-transparent, stopping short of the rings so they never run over a star. */}
+        {journeyGeometry?.legs.map((leg) => {
+          const trim = (JOURNEY_RING + 3) * screenUnit;
+          if (leg.length <= trim * 2.2) return null;
+          const ux = (leg.b.x - leg.a.x) / leg.length, uy = (leg.b.y - leg.a.y) / leg.length;
+          const d = `M${(leg.a.x + ux * trim).toFixed(2)},${(leg.a.y + uy * trim).toFixed(2)} L${(leg.b.x - ux * trim).toFixed(2)},${(leg.b.y - uy * trim).toFixed(2)}`;
+          return <g key={leg.key} data-journey-leg={leg.key} data-travelled={leg.travelled || undefined} pointerEvents="none">
+            <path d={d} stroke={JOURNEY_INK} strokeWidth={1.2} vectorEffect="non-scaling-stroke" fill="none" strokeDasharray={leg.travelled ? '1 4' : undefined} strokeLinecap="round" opacity={leg.travelled ? .4 : .55}/>
+            {leg.length > 46 * screenUnit && <polygon points={`${-3.5 * screenUnit},${-3 * screenUnit} ${4 * screenUnit},0 ${-3.5 * screenUnit},${3 * screenUnit}`} transform={`translate(${leg.mid.x} ${leg.mid.y}) rotate(${leg.angle})`} fill={JOURNEY_INK} opacity={leg.travelled ? .45 : .7}/>}
+          </g>;
+        })}
 
         {/* Ghost pattern shapes for upcoming hops */}
         {!starsOnly && ghostPatternShapes}
@@ -1274,8 +1550,56 @@ export function SkyChart({
           </g>
         ))}
 
+        {/* Sky Journeys stops (owner feedback r2): a hairline ring AROUND the object, never a disc over it; the number and
+            name sit beside the ring. Current = double ring, seen = ✓ before the number, skipped = dashed ring. */}
+        {journey && journeyGeometry?.points.map((point, index) => {
+          if (!point) return null;
+          const stop = journey.stops[index];
+          const highlighted = journey.highlight === index;
+          const r = JOURNEY_RING * screenUnit;
+          const label = journeyLabels.stops[index];
+          const strong = highlighted || stop.state === 'current';
+          return <g key={`journey-stop-${stop.id}`} data-journey-stop={index + 1} data-state={stop.state} data-highlighted={highlighted || undefined}
+            role={journey.onStopSelect ? 'button' : undefined} tabIndex={journey.onStopSelect ? 0 : undefined}
+            aria-label={`Stop ${index + 1}: ${stop.label}${stop.state === 'current' ? ' (current)' : stop.state === 'done' ? ' (seen)' : stop.state === 'skipped' ? ' (skipped)' : ''}`}
+            onClick={() => { if (!didDrag.current) journey.onStopSelect?.(index); }}
+            onKeyDown={(event) => { if (journey.onStopSelect && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); journey.onStopSelect(index); } }}
+            onMouseEnter={() => journey.onStopHover?.(index)} onMouseLeave={() => journey.onStopHover?.(null)}
+            onFocus={() => journey.onStopHover?.(index)} onBlur={() => journey.onStopHover?.(null)}
+            style={{ cursor: journey.onStopSelect ? 'pointer' : undefined }}>
+            {journey.fieldAt === index && <g data-journey-field={fovWidth}>
+              <circle cx={point.x} cy={point.y} r={fovRadius} fill={JOURNEY_INK} fillOpacity=".04" stroke={JOURNEY_INK} strokeWidth="1" vectorEffect="non-scaling-stroke" strokeDasharray="5 4" opacity=".7"/>
+              {fovRadius > 30 * screenUnit && <text x={point.x} y={point.y - fovRadius - 5 * screenUnit} textAnchor="middle" fontSize={11 * screenUnit} fontFamily="var(--font-sans)" fill={JOURNEY_INK} opacity=".85" paintOrder="stroke" stroke="#080a12" strokeWidth={3 * screenUnit} pointerEvents="none">your {fovWidth.toFixed(1)}° field</text>}
+            </g>}
+            {/* generous invisible tap target; the visible mark stays small */}
+            <circle cx={point.x} cy={point.y} r={22 * screenUnit} fill="transparent"/>
+            {/* The stop's own star, drawn after the field stars at a visible size (design review r4: a ring around an
+                invisible dot reads as a marker hiding the star, and "everything claimed visible must be visible"). */}
+            {stop.kind === 'star' && <circle data-journey-stop-star={index + 1} cx={point.x} cy={point.y}
+              r={Math.min(r - 2 * screenUnit, Math.max(2.5, stellarRadius(stop.mag ?? 5) * Math.min(1.8, brightMul)) * screenUnit)}
+              fill={stellarColor(stop.teffK ?? undefined)} opacity={stop.state === 'done' || stop.state === 'skipped' ? .8 : .98} pointerEvents="none"/>}
+            <circle className="journey-stop-ring" cx={point.x} cy={point.y} r={r} fill="none" stroke={JOURNEY_INK} strokeWidth={strong ? 1.5 : 1.1} vectorEffect="non-scaling-stroke" strokeDasharray={stop.state === 'skipped' ? '2 2.5' : undefined} opacity={stop.state === 'done' || stop.state === 'skipped' ? .6 : .9}/>
+            {strong && <circle cx={point.x} cy={point.y} r={r + 3.5 * screenUnit} fill="none" stroke={JOURNEY_INK} strokeWidth={1} vectorEffect="non-scaling-stroke" strokeDasharray={highlighted && stop.state !== 'current' ? '2 2' : undefined} opacity=".75"/>}
+            {label?.leader && <line x1={label.leader.x1} y1={label.leader.y1} x2={label.leader.x2} y2={label.leader.y2} stroke={JOURNEY_INK} strokeWidth={1} vectorEffect="non-scaling-stroke" opacity=".7" pointerEvents="none" data-journey-label-leader={index + 1}/>}
+            {label && <text x={label.box.left + screenUnit} y={label.box.top + label.fs * 0.98} textAnchor="start" fontSize={label.fs} fontFamily="var(--font-sans)" fill="#f4ead0" paintOrder="stroke" stroke="#080a12" strokeWidth={3 * screenUnit} strokeLinejoin="round" pointerEvents="none" data-journey-stop-label={index + 1}
+              data-box={`${label.box.left.toFixed(1)},${label.box.top.toFixed(1)},${label.box.right.toFixed(1)},${label.box.bottom.toFixed(1)}`}>
+              <tspan fontWeight="800" fill={JOURNEY_INK}>{stop.state === 'done' ? '✓' : ''}{index + 1}</tspan>
+              {label.text && <tspan dx={4 * screenUnit} fontWeight={label.strong ? 700 : 500} opacity={label.strong ? 1 : .88}>{label.text}</tspan>}
+            </text>}
+          </g>;
+        })}
+        {/* Field mode: the naked-eye anchor the directions start from, marked with four ticks (not a ring, so it never
+            reads as a stop) and named beside it. */}
+        {journey?.anchor && journeyAnchorPoint && (() => {
+          const { x, y } = journeyAnchorPoint, a = 5 * screenUnit, b = 10 * screenUnit, label = journeyLabels.anchor;
+          return <g data-journey-anchor={journey.anchor.id} pointerEvents="none">
+            <path d={`M${x - b},${y}H${x - a}M${x + a},${y}H${x + b}M${x},${y - b}V${y - a}M${x},${y + a}V${y + b}`} stroke={JOURNEY_REGION} strokeWidth={1.6} vectorEffect="non-scaling-stroke" strokeLinecap="round"/>
+            {label?.leader && <line x1={label.leader.x1} y1={label.leader.y1} x2={label.leader.x2} y2={label.leader.y2} stroke={JOURNEY_REGION} strokeWidth={1} vectorEffect="non-scaling-stroke" opacity=".7"/>}
+            {label && <text x={label.box.left + screenUnit} y={label.box.top + label.fs * 0.98} fontSize={label.fs} fontWeight={700} fontFamily="var(--font-sans)" fill={JOURNEY_REGION} paintOrder="stroke" stroke="#080a12" strokeWidth={3 * screenUnit} strokeLinejoin="round" data-journey-anchor-label="true">{label.text}</text>}
+          </g>;
+        })()}
+
         {onSelect&&visibleLabels.map(label=><rect key={`hit-${label.star.id}`} data-label-hit-for={label.star.id} x={label.box.left} y={label.box.top} width={label.box.right-label.box.left} height={label.box.bottom-label.box.top} fill="transparent" role="button" tabIndex={0} aria-label={`Select ${chartLabel(label.star)}`} onClick={()=>{if(!didDrag.current)onSelect(label.star.id);}} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();onSelect(label.star.id);}}}/>)}
-        {!starsOnly&&labelSize>0&&showConstellations&&placedConstellationLabels.map(label=><rect key={`figure-hit-${label.key}`} data-constellation-hit-for={label.key.split('-')[0]} x={label.box.left} y={label.box.top} width={label.box.right-label.box.left} height={label.box.bottom-label.box.top} fill="transparent" role="button" tabIndex={0} aria-label={`Highlight ${label.name}`} onClick={()=>setHighlightedFigure(current=>current===label.key.split('-')[0]?null:label.key.split('-')[0])} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();setHighlightedFigure(label.key.split('-')[0]);}}}><title>{label.name}</title></rect>)}
         {hoveredStar && (() => {
           const point = project(hoveredStar.ra, hoveredStar.dec);
           if (!point) return null;
@@ -1325,11 +1649,13 @@ export function SkyChart({
           <button aria-label="Zoom out" title="Zoom out" data-testid="button-zoom-out" onClick={() => { const z = Math.max(MIN_ZOOM, zoom / 1.2); setZoom(z); setPanX(px => clampPan(px, 0, z).x); setPanY(py => clampPan(0, py, z).y); }}>−</button>
           <button onClick={handleResetView} data-testid="button-zoom-reset">{overview?'Whole sky':`Reset ${zoom!==1?`${zoom.toFixed(1)}×`:''}`}</button>
           <button disabled={!overview&&!fovCenter} onClick={fitOpticalField} data-testid="button-fit-field">Fit field</button>
+          {overview && journeyFit && <button onClick={applyJourneyFit} data-testid="button-fit-journey">Fit journey</button>}
+          {!overview && !route && journeyFrame && <button onClick={handleResetView} data-testid="button-fit-route">Fit route</button>}
           {route && <button onClick={() => {const points=route.hops.map(hop=>project(hop.center.ra,hop.center.dec)).filter((point):point is {x:number;y:number}=>!!point);if(!points.length)return;const xs=points.map(point=>point.x),ys=points.map(point=>point.y),left=Math.min(...xs),right=Math.max(...xs),top=Math.min(...ys),bottom=Math.max(...ys),padding=Math.max(fovWidth,fovHeight)*scale;const z=Math.max(MIN_ZOOM,Math.min(zoomLimit,(chartWidth-80)/(right-left+padding),(CHART_SIZE-80)/(bottom-top+padding)));setZoom(z);const pan=clampPan(cx-(left+right)/2,cy-(top+bottom)/2,z);setPanX(pan.x);setPanY(pan.y);}} data-testid="button-route-overview">Route overview</button>}
         </div>
         <div className="chart-toolbar-group">
           {!overview&&<><button className={mirrored ? 'active' : ''} aria-pressed={mirrored} onClick={() => updateDisplay({ mirrored: !mirrored })} data-testid="button-mirror-chart">Mirror</button>
-          <button onClick={() => updateDisplay({ rotation: ((rotation + 90) % 360) as 0 | 90 | 180 | 270 })} data-testid="button-rotate-chart">Rotate · {rotation}°</button></>}
+          {observerRotation === null && <button onClick={() => updateDisplay({ rotation: ((userRotation + 90) % 360) as 0 | 90 | 180 | 270 })} data-testid="button-rotate-chart">Rotate · {userRotation}°</button>}</>}
           <button type="button" title={isFullscreen?"Exit full screen":"View chart full screen"} aria-label={isFullscreen?"Exit chart full screen":"View chart full screen"} onClick={()=>{if(isFullscreen)void document.exitFullscreen();else void containerRef.current?.requestFullscreen();}}>{isFullscreen?<Minimize2 size={16}/>:<Maximize2 size={16}/>}<span>{isFullscreen?"Exit full screen":"Full screen"}</span></button>
         </div>
       </div>

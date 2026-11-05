@@ -136,7 +136,7 @@
     "mag2": 3.8,
     "sep": 337,
     "con": "Tau",
-    "desc": "Wide optical double in the Hyades cluster",
+    "desc": "Wide naked-eye pair of Hyades siblings, not an orbiting couple.",
     "binoTip": "Easy naked-eye pair within the beautiful Hyades cluster field"
   },
   {
@@ -333,7 +333,7 @@
     "sep": 30.3,
     "con": "Dra",
     "desc": "Nice pair in far northern sky",
-    "binoTip": "Good binocular split — circumpolar from northern latitudes"
+    "binoTip": "A 10× split for steady hands; circumpolar from northern latitudes"
   },
   {
     "id": "DS-39Dra",
@@ -2262,7 +2262,7 @@
     "id": "STAR-Capella",
     "cat": "STAR",
     "name": "Capella",
-    "altId": "HR 1708",
+    "altId": "α Aur",
     "ra": "05h 16m 41.4s",
     "dec": "+45° 59′ 53″",
     "mag": 0.08,
@@ -2274,7 +2274,7 @@
     "id": "STAR-Sirius",
     "cat": "STAR",
     "name": "Sirius",
-    "altId": "HR 2491",
+    "altId": "α CMa",
     "ra": "06h 45m 08.9s",
     "dec": "-16° 42′ 58″",
     "mag": -1.46,
@@ -2286,7 +2286,7 @@
     "id": "STAR-Procyon",
     "cat": "STAR",
     "name": "Procyon",
-    "altId": "HR 2943",
+    "altId": "α CMi",
     "ra": "07h 39m 18.1s",
     "dec": "+05° 13′ 30″",
     "mag": 0.38,
@@ -2298,7 +2298,7 @@
     "id": "STAR-Vega",
     "cat": "STAR",
     "name": "Vega",
-    "altId": "HR 7001",
+    "altId": "α Lyr",
     "ra": "18h 36m 56.3s",
     "dec": "+38° 47′ 01″",
     "mag": 0.03,
@@ -2310,7 +2310,7 @@
     "id": "STAR-Deneb",
     "cat": "STAR",
     "name": "Deneb",
-    "altId": "HR 7924",
+    "altId": "α Cyg",
     "ra": "20h 41m 25.9s",
     "dec": "+45° 16′ 49″",
     "mag": 1.25,
@@ -2322,7 +2322,7 @@
     "id": "STAR-Fomalhaut",
     "cat": "STAR",
     "name": "Fomalhaut",
-    "altId": "HR 8728",
+    "altId": "α PsA",
     "ra": "22h 57m 39.1s",
     "dec": "-29° 37′ 20″",
     "mag": 1.16,
@@ -2334,7 +2334,7 @@
     "id": "STAR-Alphard",
     "cat": "STAR",
     "name": "Alphard",
-    "altId": "HR 3748",
+    "altId": "α Hya",
     "ra": "09h 27m 35.2s",
     "dec": "-08° 39′ 31″",
     "mag": 1.98,
@@ -2346,7 +2346,7 @@
     "id": "STAR-LaSuperba",
     "cat": "STAR",
     "name": "La Superba",
-    "altId": "HR 4846",
+    "altId": "Y CVn",
     "ra": "12h 45m 07.8s",
     "dec": "+45° 26′ 25″",
     "mag": 4.99,
@@ -2379,7 +2379,7 @@
     "mag2": 8.0,
     "sep": 113,
     "con": "Gem",
-    "desc": "Wide stellar pair with a substantially fainter companion.",
-    "binoTip": "Support 10×50 binoculars and use a dark sky to distinguish the faint companion."
+    "desc": "Bright star with a much fainter, nearer star in the same direction: a chance pair, not a couple.",
+    "binoTip": "Support 10×50 binoculars and use a dark sky to pick out the faint star 113″ to the north-north-west."
   }
 ]

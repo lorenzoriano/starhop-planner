@@ -20,3 +20,5 @@
  .observatory-shell .binocular-guide .section-heading { align-items:start; gap:5px; flex-direction:column; }
  .binocular-detail-chart { max-height:450px; }
 }
+/* Card notes stay captions (they inherited the large body size). */
+.binocular-target-body > small { display:block; margin-top:4px; font-size:12px; line-height:1.45; color:#8fa6ad; }

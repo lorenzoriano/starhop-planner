@@ -11,13 +11,16 @@ export function HopViewDirection({ route, step }: { route: Route; step: number }
   return direction && <span className="hop-view-direction" data-testid="hop-view-direction">Chart: {direction.direction} · {direction.clock} o’clock</span>;
 }
 
-export function HopFieldNavigation({ route, step, observed, onPrevious, onNext }: {
+export function HopFieldNavigation({ route, step, observed, onPrevious, onNext, checkpoint }: {
   route: Route; step: number; observed: boolean; onPrevious: () => void; onNext: () => void;
+  /** Chained hop: this field reaches a stop ("Stop 3 · Hyades", lib/hop-chain chainCheckpoint). */
+  checkpoint?: string | null;
 }) {
   const hop = route.hops[step], last = step === route.hops.length - 1;
   return <div className="chart-hop-navigation" role="group" aria-label="Field navigation beside the chart">
     <div className="chart-hop-heading">
       <div><span className="eyebrow">FIELD {step + 1} OF {route.hops.length}</span>
+        {checkpoint && <span className="chart-hop-checkpoint" data-testid="hop-chain-checkpoint">{checkpoint}</span>}
         <p>{step === 0 ? `Start at ${formatRouteNodeName(route.startAnchor)}` : `Sky: ${hop.distanceDeg.toFixed(1)}° ${hop.direction}`}</p>
         <HopViewDirection route={route} step={step}/>
       </div>

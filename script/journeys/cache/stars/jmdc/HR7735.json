@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=303.407951%2B46.741323&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.04\tHD192577                    \t31 CYG                      \t  5.49000\t       \t  0.6000\t2.2       \t1990A&A...236..449D\tHD192577\n 0.04\tHD192577                    \t31 Cyg                      \t  5.90000\t 6.0000\t  0.6000\tK         \t1996AJ....111.1705D\tHD192577\n 0.04\tHD192577                    \tHR7735                      \t  5.90000\t       \t  0.6000\t2.2mu     \t1998AJ....116..981D\tHD192577\n 0.04\tHD192577                    \tHR7735                      \t  4.17000\t       \t  0.0300\t740nm     \t2001AJ....122.2707N\tHD192577\n 0.04\tHD192577                    \tHR7735                      \t  4.08600\t 4.3620\t  0.0440\t800nm     \t2003AJ....126.2502M\tHD192577\n\n"
+}

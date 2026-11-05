@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=146.462807%2B23.774254&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.01\tHD84441                     \tHR3873                      \t  2.56000\t       \t  0.0900\t740nm     \t2001AJ....122.2707N\tHD84441\n 0.01\tHD84441                     \tHR3873                      \t  2.44600\t 2.5750\t  0.0780\t800nm     \t2003AJ....126.2502M\tHD84441\n 0.01\tHD84441                     \t                            \t  2.59900\t 1.0170\t  0.0150\tH,K       \t2009MNRAS.394.1925V\tHD84441\n 0.01\tHD84441                     \t                            \t  2.46000\t       \t  0.0200\t550 to 850\t2014SPIE.9146E..0WB\tHD84441\n 0.01\tHD84441                     \teps Leo                     \t  2.46900\t 2.5870\t  0.0250\t550..850nm\t2018AJ....155...30B\tHD84441\n\n"
+}

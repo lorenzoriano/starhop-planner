@@ -1,0 +1,5731 @@
+{
+ "batch": "spring",
+ "kind": "dso",
+ "version": "spring-dso-2026-11-01",
+ "curator": "curator-spring-dso",
+ "storySeeds": [
+  {
+   "id": "spring-cluster-clock",
+   "title": "The cluster clock of Cancer and Hydra",
+   "stops": [
+    "M44",
+    "M48",
+    "M67",
+    "HR3522"
+   ],
+   "archetypes": [
+    "A5",
+    "A6"
+   ],
+   "drivingQuestion": "How can you tell a star family's age by looking at it?",
+   "notes": "Beehive (~640 Myr) → M48 (~420 Myr, four times farther) → M67 (~3.9 Gyr, Sun's age); optional coda at 55 Cancri, a nearby planet host, because the Beehive was the first cluster with planets around Sun-like stars. Span about 26°. Mirrors doc 03 story S1 and BinocularSky's M44/M67 notes.",
+   "sourceIds": [
+    "binocularsky-m44",
+    "binocularsky-m67",
+    "binocularsky-m48",
+    "morales2022",
+    "castro2011",
+    "sun2023",
+    "quinn2012"
+   ]
+  },
+  {
+   "id": "spring-galaxies-in-conversation",
+   "title": "Galaxies in conversation (Ursa Major)",
+   "stops": [
+    "M81",
+    "M82",
+    "M51",
+    "M63",
+    "M101"
+   ],
+   "archetypes": [
+    "A6",
+    "A11"
+   ],
+   "drivingQuestion": "What happens when galaxies get too close?",
+   "notes": "M81 stirs M82 into a starburst (CAUSE); M51's companion sculpts crisp arms; M63 shows a spiral with no companion; M101 closes on surface brightness. M81→M51 is ~25° from the circumpolar pair to the handle. Grounded in Harrington's 'A Galactic Dynamic Duo' binocular column, BinocularSky notes, NASA/ESA Hubble pages.",
+   "sourceIds": [
+    "binocularsky-m81",
+    "binocularsky-m51",
+    "binocularsky-m101",
+    "demello2008",
+    "nasa-messier-m82",
+    "esahubble-heic0506a"
+   ]
+  },
+  {
+   "id": "spring-window-out-of-the-galaxy",
+   "title": "A window out of the Milky Way (Coma Berenices)",
+   "stops": [
+    "Mel111",
+    "M53",
+    "M64",
+    "M3"
+   ],
+   "archetypes": [
+    "A3",
+    "A11"
+   ],
+   "drivingQuestion": "How far can binoculars reach?",
+   "notes": "Look up out of the disk near the north Galactic pole: a dissolving nearby cluster (280 ly) → a halo globular (60,000 ly) → a galaxy (~15 Mly) → back to M3 as a richer globular. Each step 100–1,000× farther. Span ~22°.",
+   "sourceIds": [
+    "binocularsky-mel111",
+    "tang2019",
+    "bv21",
+    "ned-d",
+    "nasa-messier-m53"
+   ]
+  },
+  {
+   "id": "spring-measuring-the-universe",
+   "title": "Measuring the universe from the Big Dipper",
+   "stops": [
+    "DS-MizarAlcor",
+    "M101",
+    "M106",
+    "M51"
+   ],
+   "archetypes": [
+    "A3"
+   ],
+   "drivingQuestion": "How do we know how far away a galaxy is?",
+   "notes": "Mizar (stellar parallax) → M101 (Cepheids and supernovae) → M106 (the geometric maser anchor that calibrates the Cepheids) → M51 (red-giant-branch distance). Tells the distance ladder with real targets. Span ~15°.",
+   "sourceIds": [
+    "reid2019",
+    "ned-d",
+    "binocularsky-m101",
+    "hiramatsu2023"
+   ]
+  }
+ ],
+ "sources": [
+  {
+   "id": "hr24",
+   "title": "Improving the open cluster census. III. Using cluster masses, radii, and dynamics",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/A%2BA/686/A42",
+   "publisher": "Astronomy & Astrophysics / VizieR (IDIA mirror)",
+   "kind": "catalog",
+   "citation": "Hunt & Reffert 2024, A&A 686, A42",
+   "bibcode": "2024A&A...686A..42H",
+   "license": "CDS terms; cite the paper",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "openngc",
+   "title": "OpenNGC (pinned be3cd6c) via catalog-extents.json",
+   "url": "https://github.com/mattiaverga/OpenNGC",
+   "publisher": "Mattia Verga",
+   "kind": "catalog",
+   "license": "CC BY-SA 4.0"
+  },
+  {
+   "id": "catalog-extents",
+   "title": "StarHop catalog-extents.json (observing extents)",
+   "url": "https://github.com/mattiaverga/OpenNGC",
+   "publisher": "StarHop Planner",
+   "kind": "catalog",
+   "citation": "client/src/lib/catalog-extents.json (OpenNGC where available, otherwise included observing extents)"
+  },
+  {
+   "id": "bv21",
+   "title": "Fundamental parameters of Galactic globular clusters (combined table)",
+   "url": "https://people.smp.uq.edu.au/HolgerBaumgardt/globular/combined_table.txt",
+   "publisher": "H. Baumgardt (University of Queensland)",
+   "kind": "catalog",
+   "citation": "Baumgardt & Vasiliev 2021, MNRAS 505, 5957 (online table, 4th edition)",
+   "bibcode": "2021MNRAS.505.5957B",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "harris2010",
+   "title": "Catalog of Parameters for Milky Way Globular Clusters (2010 edition)",
+   "url": "https://physics.mcmaster.ca/~harris/mwgc.dat",
+   "publisher": "W. E. Harris (McMaster University)",
+   "kind": "catalog",
+   "citation": "Harris 1996, AJ 112, 1487 (2010 edition)",
+   "bibcode": "1996AJ....112.1487H",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "vandenberg2013",
+   "title": "The Ages of 55 Globular Clusters as Determined Using an Improved ΔV(TO,HB) Method Along with Color-Magnitude Diagram Constraints",
+   "url": "https://arxiv.org/abs/1308.2257",
+   "publisher": "The Astrophysical Journal",
+   "kind": "paper",
+   "citation": "VandenBerg, Brogaard, Leaman & Casagrande 2013, ApJ 775, 134",
+   "bibcode": "2013ApJ...775..134V",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "ned-d",
+   "title": "NED Redshift-Independent Distances (NED-D)",
+   "url": "https://ned.ipac.caltech.edu/",
+   "publisher": "NASA/IPAC Extragalactic Database",
+   "kind": "catalog",
+   "citation": "NED-D, queried via nDistance",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "reid2019",
+   "title": "An Improved Distance to NGC 4258 and its Implications for the Hubble Constant",
+   "url": "https://arxiv.org/abs/1908.05625",
+   "publisher": "The Astrophysical Journal Letters",
+   "kind": "paper",
+   "citation": "Reid, Pesce & Riess 2019, ApJL 886, L27",
+   "bibcode": "2019ApJ...886L..27R",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "castro2011",
+   "title": "Solar twins in M67: evolutionary status and lithium abundance",
+   "url": "https://arxiv.org/abs/1011.1276",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "paper",
+   "citation": "Castro et al. 2011, A&A 526, A17",
+   "bibcode": "2011A&A...526A..17C",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "morales2022",
+   "title": "The Interferometric Binary ε Cancri in Praesepe: Precise Masses and Age",
+   "url": "https://arxiv.org/abs/2205.10690",
+   "publisher": "The Astronomical Journal",
+   "kind": "paper",
+   "citation": "Morales et al. 2022, AJ 164, 34",
+   "bibcode": "2022AJ....164...34M",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "quinn2012",
+   "title": "Two 'b's in the Beehive: The Discovery of the First Hot Jupiters in an Open Cluster",
+   "url": "https://arxiv.org/abs/1207.0818",
+   "publisher": "The Astrophysical Journal Letters",
+   "kind": "paper",
+   "citation": "Quinn et al. 2012, ApJL 756, L33",
+   "bibcode": "2012ApJ...756L..33Q",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "tang2019",
+   "title": "Discovery of Tidal Tails in Disrupting Open Clusters: Coma Berenices and a Neighbor Stellar Group",
+   "url": "https://arxiv.org/abs/1902.01404",
+   "publisher": "The Astrophysical Journal",
+   "kind": "paper",
+   "citation": "Tang et al. 2019, ApJ 877, 12",
+   "bibcode": "2019ApJ...877...12T",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "sun2023",
+   "title": "WIYN Open Cluster Study 89. M48 (NGC 2548) 2: Lithium Abundances in the 420 Myr Open Cluster M48 From Giants Through K Dwarfs",
+   "url": "https://arxiv.org/abs/2303.09783",
+   "publisher": "The Astrophysical Journal",
+   "kind": "paper",
+   "citation": "Sun, Deliyannis, Steinhauer, Anthony-Twarog & Twarog 2023, ApJ 952, 71",
+   "bibcode": "2023ApJ...952...71S",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "gaia-edr3-simbad",
+   "title": "Gaia EDR3 parallaxes as listed in SIMBAD (Harvard mirror)",
+   "url": "https://simbad.harvard.edu/simbad/sim-tap",
+   "publisher": "ESA Gaia / CDS",
+   "kind": "catalog",
+   "citation": "Gaia Collaboration 2021, A&A 649, A1 (EDR3), via SIMBAD basic.plx_value / mesDistance",
+   "bibcode": "2021A&A...649A...1G",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "guerrero2003",
+   "title": "Physical Structure of Planetary Nebulae. I. The Owl Nebula",
+   "url": "https://arxiv.org/abs/astro-ph/0303056",
+   "publisher": "The Astronomical Journal",
+   "kind": "paper",
+   "citation": "Guerrero, Chu, Manchado & Kwitter 2003, AJ 125, 3213",
+   "bibcode": "2003AJ....125.3213G",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "demello2008",
+   "title": "Star formation in the HI bridge between M81 and M82",
+   "url": "https://arxiv.org/abs/0711.2685",
+   "publisher": "The Astronomical Journal",
+   "kind": "paper",
+   "citation": "de Mello et al. 2008, AJ 135, 548",
+   "bibcode": "2008AJ....135..548D",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "hiramatsu2023",
+   "title": "From Discovery to the First Month of the Type II Supernova 2023ixf: High and Variable Mass Loss in the Final Year before Explosion",
+   "url": "https://arxiv.org/abs/2307.03165",
+   "publisher": "The Astrophysical Journal Letters",
+   "kind": "paper",
+   "citation": "Hiramatsu et al. 2023, ApJL 955, L8",
+   "bibcode": "2023ApJ...955L...8H",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "jardel2011",
+   "title": "Orbit-Based Dynamical Models of the Sombrero Galaxy (NGC 4594)",
+   "url": "https://arxiv.org/abs/1107.1238",
+   "publisher": "The Astrophysical Journal",
+   "kind": "paper",
+   "citation": "Jardel et al. 2011, ApJ 739, 21",
+   "bibcode": "2011ApJ...739...21J",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "bhardwaj2020",
+   "title": "Near-infrared Census of RR Lyrae variables in the Messier 3 globular cluster and the Period–Luminosity Relations",
+   "url": "https://arxiv.org/abs/2008.11745",
+   "publisher": "The Astronomical Journal",
+   "kind": "paper",
+   "citation": "Bhardwaj et al. 2020, AJ 160, 220",
+   "bibcode": "2020AJ....160..220B",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "esahubble-heic0604a",
+   "title": "Hubble's sharpest view of the Cigar Galaxy (M82)",
+   "url": "https://esahubble.org/images/heic0604a/",
+   "publisher": "ESA/Hubble",
+   "kind": "image",
+   "license": "CC BY 4.0",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "esahubble-heic0506a",
+   "title": "The Whirlpool Galaxy (M51) and companion galaxy",
+   "url": "https://esahubble.org/images/heic0506a/",
+   "publisher": "ESA/Hubble",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "al-binocular-messier",
+   "title": "Binocular Messier Observing Program, Appendix A",
+   "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+   "publisher": "Astronomical League",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "featured-m97",
+   "title": "M97 (Owl Nebula) optical telescope photograph",
+   "url": "https://commons.wikimedia.org/wiki/File:M97.jpg",
+   "publisher": "Wikimedia Commons (Fryns)",
+   "kind": "image",
+   "license": "Public domain",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "featured-m64",
+   "title": "Black Eye Galaxy, Hubble Heritage composite",
+   "url": "https://commons.wikimedia.org/wiki/File:Blackeyegalaxy.jpg",
+   "publisher": "NASA and the Hubble Heritage Team (AURA/STScI)",
+   "kind": "image",
+   "license": "Public domain",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m3",
+   "title": "Messier 3 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-3/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m49",
+   "title": "Messier 49 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-49/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m51",
+   "title": "Messier 51 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-51/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m53",
+   "title": "Messier 53 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-53/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m63",
+   "title": "Messier 63 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-63/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m64",
+   "title": "Messier 64 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-64/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m65",
+   "title": "Messier 65 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-65/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m66",
+   "title": "Messier 66 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-66/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m68",
+   "title": "Messier 68 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-68/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m81",
+   "title": "Messier 81 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-81/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m82",
+   "title": "Messier 82 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-82/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m83",
+   "title": "Messier 83 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-83/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m94",
+   "title": "Messier 94 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-94/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m101",
+   "title": "Messier 101 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-101/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m104",
+   "title": "Messier 104 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-104/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "nasa-messier-m106",
+   "title": "Messier 106 (Hubble's Messier Catalog)",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-106/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m3",
+   "title": "Messier Object 3 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m003.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m44",
+   "title": "Messier Object 44 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m044.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m48",
+   "title": "Messier Object 48 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m048.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m49",
+   "title": "Messier Object 49 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m049.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m51",
+   "title": "Messier Object 51 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m051.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m53",
+   "title": "Messier Object 53 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m053.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m63",
+   "title": "Messier Object 63 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m063.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m64",
+   "title": "Messier Object 64 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m064.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m65",
+   "title": "Messier Object 65 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m065.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m66",
+   "title": "Messier Object 66 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m066.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m67",
+   "title": "Messier Object 67 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m067.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m68",
+   "title": "Messier Object 68 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m068.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m81",
+   "title": "Messier Object 81 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m081.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m82",
+   "title": "Messier Object 82 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m082.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m83",
+   "title": "Messier Object 83 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m083.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m94",
+   "title": "Messier Object 94 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m094.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m97",
+   "title": "Messier Object 97 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m097.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m101",
+   "title": "Messier Object 101 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m101.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m104",
+   "title": "Messier Object 104 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m104.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "seds-m106",
+   "title": "Messier Object 106 (SEDS Messier Database)",
+   "url": "http://www.messier.seds.org/m/m106.html",
+   "publisher": "SEDS / H. Frommert & C. Kronberg",
+   "kind": "web",
+   "citation": "Secondary historical compilation; used for discovery history and observing notes",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "binocularsky-mel111",
+   "title": "BinocularSky object file: Melotte 111",
+   "url": "https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=Mel111",
+   "publisher": "BinocularSky (S. Tonkin)",
+   "kind": "web",
+   "citation": "Published binocular observing notes (finder and appearance)",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "binocularsky-m44",
+   "title": "BinocularSky object file: M44",
+   "url": "https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=M44",
+   "publisher": "BinocularSky (S. Tonkin)",
+   "kind": "web",
+   "citation": "Published binocular observing notes (finder and appearance)",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "binocularsky-m81",
+   "title": "BinocularSky object file: M81 and M82",
+   "url": "https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=M81",
+   "publisher": "BinocularSky (S. Tonkin)",
+   "kind": "web",
+   "citation": "Published binocular observing notes (finder and appearance)",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "binocularsky-m67",
+   "title": "BinocularSky object file: M67",
+   "url": "https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=M67",
+   "publisher": "BinocularSky (S. Tonkin)",
+   "kind": "web",
+   "citation": "Published binocular observing notes (finder and appearance)",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "binocularsky-m3",
+   "title": "BinocularSky object file: M3",
+   "url": "https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=M3",
+   "publisher": "BinocularSky (S. Tonkin)",
+   "kind": "web",
+   "citation": "Published binocular observing notes (finder and appearance)",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "binocularsky-m51",
+   "title": "BinocularSky object file: M51",
+   "url": "https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=M51",
+   "publisher": "BinocularSky (S. Tonkin)",
+   "kind": "web",
+   "citation": "Published binocular observing notes (finder and appearance)",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "binocularsky-m101",
+   "title": "BinocularSky object file: M101",
+   "url": "https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=M101",
+   "publisher": "BinocularSky (S. Tonkin)",
+   "kind": "web",
+   "citation": "Published binocular observing notes (finder and appearance)",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "binocularsky-m104",
+   "title": "BinocularSky object file: M104",
+   "url": "https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=M104",
+   "publisher": "BinocularSky (S. Tonkin)",
+   "kind": "web",
+   "citation": "Published binocular observing notes (finder and appearance)",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "binocularsky-m83",
+   "title": "BinocularSky object file: M83",
+   "url": "https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=M83",
+   "publisher": "BinocularSky (S. Tonkin)",
+   "kind": "web",
+   "citation": "Published binocular observing notes (finder and appearance)",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "binocularsky-m48",
+   "title": "BinocularSky object file: M48",
+   "url": "https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=M48",
+   "publisher": "BinocularSky (S. Tonkin)",
+   "kind": "web",
+   "citation": "Published binocular observing notes (finder and appearance)",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "binocularsky-m97",
+   "title": "BinocularSky object file: M97",
+   "url": "https://binocularsky.com/binoc_object_file.php?aperture=50&object_id=M97",
+   "publisher": "BinocularSky (S. Tonkin)",
+   "kind": "web",
+   "citation": "Published binocular observing notes (finder and appearance)",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "openngc-2026",
+   "title": "OpenNGC NGC.csv (master branch)",
+   "url": "https://github.com/mattiaverga/OpenNGC/blob/master/database_files/NGC.csv",
+   "publisher": "Mattia Verga",
+   "kind": "catalog",
+   "license": "CC BY-SA 4.0",
+   "citation": "OpenNGC: positions, V/B magnitudes, major axes and Gaia parallaxes (Pax column) of planetary nebulae and their central stars",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "astronomy-ghost-jupiter",
+   "title": "The Southern Pleiades, the Ghost of Jupiter, and dwarf spheroidal galaxy Leo I",
+   "url": "https://www.astronomy.com/science/the-southern-pleiades-the-ghost-of-jupiter-and-dwarf-spheroidal-galaxy-leo-i/",
+   "publisher": "Astronomy magazine",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "noirlab-ngc3242",
+   "title": "Ghost of Jupiter, NGC 3242",
+   "url": "https://noirlab.edu/public/images/noao-ngc3242",
+   "publisher": "NOIRLab",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  }
+ ],
+ "objects": [
+  {
+   "id": "M44",
+   "kind": "dso",
+   "names": {
+    "display": "Beehive Cluster",
+    "designation": "M44",
+    "aliases": [
+     "Praesepe",
+     "NGC 2632",
+     "Manger",
+     "Mel 88",
+     "Cr 189"
+    ],
+    "simbadId": "NGC 2632"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 598,
+     "min": 598,
+     "max": 599,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "183.49 pc (Gaia DR3 cluster parallax; 16–84% 183.45–183.53 pc, statistical only)"
+    },
+    "ageMyr": {
+     "value": 637,
+     "min": 618,
+     "max": 656,
+     "unit": "Myr",
+     "sourceId": "morales2022",
+     "method": "model",
+     "note": "637 ± 19 Myr from the interferometric binary ε Cnc + MIST isochrones; literature ages span ~590–790 Myr; HR24 NN age 346 Myr is biased low"
+    },
+    "memberCount": {
+     "value": 1314,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members (HDBSCAN), not every star"
+    },
+    "massMsun": {
+     "value": 945,
+     "unit": "Msun",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "mass within the Jacobi radius (13.7 pc)"
+    },
+    "angularSizeArcmin": {
+     "value": 95,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 16.5,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "95′ observing extent at 598 ly"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "traits": [
+    "naked-eye",
+    "contains-red-giants"
+   ],
+   "extent": {
+    "majorArcmin": 95,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 4,
+     "dark": 4
+    },
+    "10x50": {
+     "suburban": 4,
+     "dark": 4
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "binocularsky-m44"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "high",
+    "resolves": "stars",
+    "bestFieldDeg": 3,
+    "colorVisible": true
+   },
+   "evoStage": 3,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 3
+    },
+    {
+     "conceptId": "PERC.binoculars",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.cluster-birth",
+     "strength": 2
+    },
+    {
+     "conceptId": "DIST.light-year",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "adult-cluster"
+   ],
+   "wow": 4,
+   "insight": 4,
+   "obsDifficulty": 1,
+   "superlatives": [
+    {
+     "claim": "the first star cluster where planets were found orbiting Sun-like stars",
+     "scope": "open clusters, as announced in 2012",
+     "sourceId": "quinn2012",
+     "tag": "first-cluster-planets"
+    }
+   ],
+   "misconceptions": [
+    "MC13"
+   ],
+   "historyHook": {
+    "text": "Galileo turned his first telescope on this 'cloud' and counted more than forty stars in it.",
+    "sourceId": "seds-m44"
+   },
+   "showpiece": true,
+   "interest": 0.85,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M44-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the whole Beehive; bright members are saturated disks.",
+      "fieldDeg": 3.17,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M44-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view: the cooler giant members stand out more than in visible light.",
+      "fieldDeg": 3.17,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "distance-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6
+     }
+    ]
+   },
+   "card": {
+    "question": "How can missing stars tell a cluster’s age?",
+    "answer": "The gaps are the clock: the heavy blue stars have all burned out while the next heaviest are only now swelling into giants, a moment that comes roughly 600 to 700 million years after birth.",
+    "glance": "A swarm of several dozen stars, wider than the full Moon, in the dim patch of sky between Gemini and Leo.",
+    "whyHere": "The Beehive is a star family in middle age, one of the finest binocular clusters in the sky.",
+    "see": "Look midway between Pollux and Regulus, in faint Cancer, for a smudge visible to the eye on a dark night. Binoculars break it into dozens of white and pale-yellow stars in little triangles and pairs; hunt for a few warmer, yellow-orange points.",
+    "understand": "All these stars were born together about 600 light-years away, and Gaia counts more than 1,300 of them. The heaviest, bluest stars run out of fuel first, and here they are long gone; the brightest survivors are white stars a few times the Sun’s mass, plus a handful of orange giants that have just begun to swell. One survivor, the binary ε Cancri, has been weighed with an interferometer, and its two stars pin the age at about 637 million years.",
+    "wonder": "In 2012 giant planets were found circling two of its stars, the first known around Sun-like stars in a cluster.",
+    "connect": "A short hop south, M67 is a family nearly as old as the Sun.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members found by Gaia",
+      "factRef": "memberCount"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "Survey photo of the full cluster; binoculars show crisper points and a little more color than this plate.",
+    "notSee": "No glowing gas and no bright blue stars: what you see is all there is.",
+    "deeper": "Gaia DR3 membership (Hunt & Reffert 2024) puts Praesepe at 183.5 pc with about 1,300 members and roughly 950 solar masses inside its tidal radius. Ages depend on method and model physics: published values run from about 590 to 790 Myr, and the interferometric binary ε Cancri gives 637 ± 19 Myr (Morales et al. 2022). Quinn et al. (2012) found hot Jupiters around the members Pr0201 and Pr0211 by radial velocity, with periods of 4.4 and 2.1 days. Its age and space motion resemble the Hyades, which has led to suggestions of a shared origin.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "hr24",
+    "morales2022",
+    "catalog-extents",
+    "quinn2012",
+    "seds-m44",
+    "binocularsky-m44"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M67",
+   "kind": "dso",
+   "names": {
+    "display": "M67",
+    "designation": "M67",
+    "aliases": [
+     "NGC 2682",
+     "King Cobra Cluster",
+     "Golden Eye Cluster"
+    ],
+    "simbadId": "NGC 2682"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 2731,
+     "min": 2729,
+     "max": 2733,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "837.3 pc (Gaia DR3; statistical 16–84%)"
+    },
+    "ageMyr": {
+     "value": 3870,
+     "min": 3210,
+     "max": 4420,
+     "unit": "Myr",
+     "sourceId": "castro2011",
+     "method": "model",
+     "note": "3.87 (+0.55/−0.66) Gyr from three solar twins; HR24 NN age 1.7 Gyr is biased low for old clusters"
+    },
+    "memberCount": {
+     "value": 1844,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members"
+    },
+    "massMsun": {
+     "value": 2779,
+     "unit": "Msun",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "mass within the Jacobi radius (20.6 pc)"
+    },
+    "angularSizeArcmin": {
+     "value": 30,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 23.8,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "30′ observing extent at 2,731 ly"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "traits": [
+    "contains-red-giants",
+    "contains-white-dwarfs"
+   ],
+   "extent": {
+    "majorArcmin": 30,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "10x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "binocularsky-m67"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "partly",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 4,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 3
+    },
+    {
+     "conceptId": "STAR.mass-fate",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.giant",
+     "strength": 2
+    },
+    {
+     "conceptId": "MW.families",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "old-cluster"
+   ],
+   "wow": 2,
+   "insight": 5,
+   "obsDifficulty": 2,
+   "superlatives": [
+    {
+     "claim": "the oldest open cluster in Messier's catalog, about as old as the Sun",
+     "scope": "Messier open clusters",
+     "sourceId": "seds-m67",
+     "tag": "oldest"
+    }
+   ],
+   "misconceptions": [
+    "MC13"
+   ],
+   "showpiece": false,
+   "interest": 0.8,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M67-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph: a dense knot of faint stars that binoculars blend into a grainy glow.",
+      "fieldDeg": 1.0,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M67-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view, where its many cool giants and dwarfs dominate.",
+      "fieldDeg": 1.0,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Can a star cluster survive for billions of years?",
+    "answer": "Rarely, but M67 has, while most star families break apart within a few hundred million years.",
+    "glance": "A soft, grainy glow about the size of the full Moon, with a few faint stars sparkling on top.",
+    "whyHere": "M67 looks like a modest misty patch south of the Beehive, but its stars are close cousins of the Sun.",
+    "see": "From Acubens, the star at the bottom of Cancer south of the Beehive, drift about two degrees west. M67 is a misty patch peppered with a handful of faint stars, smaller and dimmer than the Beehive because it is more than four times farther away.",
+    "understand": "Its heavier stars died long ago, so its brightest survivors are yellow and orange giants, stars a little heavier than the Sun that have used up the hydrogen in their cores. Its age comes from an elegant comparison: astronomers found stars in M67 that are near-perfect twins of the Sun and compared their spectra with the Sun’s own, which gives about four billion years. That makes the cluster a family album of stars much like the Sun at nearly its present age.",
+    "wonder": "Odd stars called blue stragglers live here too, stars that look too young because they gained mass from a partner or formed in a merger.",
+    "connect": "Stars like these will eventually shed their outer layers, a gentle ending on display in the Owl Nebula.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members found by Gaia",
+      "factRef": "memberCount"
+     },
+     {
+      "label": "Mass",
+      "factRef": "massMsun"
+     }
+    ],
+    "photoCaption": "The survey photo resolves hundreds of faint members that 50 mm binoculars merge into haze.",
+    "notSee": "Individual faint members and their colors: binoculars catch only the brightest dozen or so.",
+    "deeper": "Hunt & Reffert (2024) list 1,844 Gaia DR3 members at 837 pc and about 2,800 solar masses within the tidal radius. Their neural-network age (about 1.7 Gyr) is known to be biased low for old clusters, so the KB uses the solar-twin analysis of Castro et al. (2011): 3.87 (+0.55/−0.66) Gyr at solar metallicity. The cluster also contains blue stragglers, stars that look too young because they gained mass from a companion or formed in a merger.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "hr24",
+    "castro2011",
+    "catalog-extents",
+    "seds-m67",
+    "binocularsky-m67"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M48",
+   "kind": "dso",
+   "names": {
+    "display": "M48",
+    "designation": "M48",
+    "aliases": [
+     "NGC 2548",
+     "Missing Messier"
+    ],
+    "simbadId": "NGC 2548"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 2437,
+     "min": 2434,
+     "max": 2439,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "747.1 pc (Gaia DR3); Sun et al. 2020 give 729 ± 26 pc"
+    },
+    "ageMyr": {
+     "value": 420,
+     "min": 390,
+     "max": 450,
+     "unit": "Myr",
+     "sourceId": "sun2023",
+     "method": "model",
+     "note": "420 ± 30 Myr (WOCS isochrone age adopted in the lithium study); HR24 NN 379 Myr"
+    },
+    "memberCount": {
+     "value": 778,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members"
+    },
+    "massMsun": {
+     "value": 1476,
+     "unit": "Msun",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "mass within the Jacobi radius (16.4 pc)"
+    },
+    "angularSizeArcmin": {
+     "value": 54,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 38,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "54′ observing extent at 2,437 ly"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "traits": [
+    "contains-red-giants"
+   ],
+   "extent": {
+    "majorArcmin": 54,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "10x50": {
+     "suburban": 3,
+     "dark": 4
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "binocularsky-m48"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "stars",
+    "bestFieldDeg": 2.5,
+    "colorVisible": false
+   },
+   "evoStage": 3,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.cluster-birth",
+     "strength": 2
+    },
+    {
+     "conceptId": "PERC.binoculars",
+     "strength": 2
+    }
+   ],
+   "roles": [
+    "adult-cluster"
+   ],
+   "wow": 3,
+   "insight": 3,
+   "obsDifficulty": 2,
+   "superlatives": [],
+   "misconceptions": [
+    "MC13"
+   ],
+   "historyHook": {
+    "text": "Messier logged it in 1771 but wrote down the wrong position, so 'M48' stayed lost until it was matched to NGC 2548 in the twentieth century.",
+    "sourceId": "seds-m48"
+   },
+   "showpiece": false,
+   "interest": 0.5,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M48-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of M48's rich central swarm.",
+      "fieldDeg": 1.8,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M48-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view of the same field.",
+      "fieldDeg": 1.8,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Where does M48 fit on the cluster clock?",
+    "answer": "It sits right in the middle: at about 420 million years it has lost its blue giants but kept a crowd of white stars, a family in its middle years.",
+    "glance": "A rich spray of faint stars, nearly as wide as the full Moon, on the border of Hydra and Monoceros.",
+    "whyHere": "M48 is a rich spray of stars that Messier logged in the wrong place, and its brightest members carry a clock.",
+    "see": "Start at ζ Monocerotis, about 11 degrees south-east of Procyon, and sweep about three degrees south-south-east. In 10×50s roughly two dozen stars stand out of a misty background, richer on the eastern side, with no glow of gas.",
+    "understand": "A young cluster’s brightest stars are hot blue giants, and as it ages those burn out one weight class at a time. In M48 the brightest remaining stars are white, a couple of times the Sun’s mass, and a few have already become yellow giants. A second clock agrees: its Sun-like stars have destroyed an amount of their fragile lithium that falls between the Pleiades and the Hyades.",
+    "wonder": "Messier logged it in 1771 with a position several degrees off, and for over a century nobody knew which cluster he meant.",
+    "connect": "The Beehive tells the same story a chapter later.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members found by Gaia",
+      "factRef": "memberCount"
+     }
+    ],
+    "photoCaption": "Survey photograph of the central swarm; binoculars show the same bright stars on a fainter haze.",
+    "deeper": "Gaia DR3 (Hunt & Reffert 2024): 747 pc, 778 members and about 1,500 solar masses inside the tidal radius. WIYN spectroscopy shows a lithium pattern intermediate between the Pleiades and the Hyades/Praesepe, consistent with an age of 420 Myr (Sun et al. 2023). Messier's 1771 position was off in declination; Caroline Herschel found the cluster independently in 1783, and Oswald Thomas (1934) and T. F. Morris (1959) identified it with NGC 2548 (SEDS).",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "hr24",
+    "sun2023",
+    "catalog-extents",
+    "seds-m48",
+    "binocularsky-m48"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "Mel111",
+   "kind": "dso",
+   "names": {
+    "display": "Coma Star Cluster",
+    "designation": "Melotte 111",
+    "aliases": [
+     "Mel 111",
+     "Coma Berenices Cluster",
+     "Cr 256"
+    ],
+    "simbadId": "Cl Melotte 111"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 278,
+     "min": 278,
+     "max": 278.1,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "85.25 pc (Gaia DR3); Tang et al. 2019 give a mean member distance of 85.8 pc"
+    },
+    "ageMyr": {
+     "value": 750,
+     "min": 700,
+     "max": 800,
+     "unit": "Myr",
+     "sourceId": "tang2019",
+     "method": "model",
+     "note": "~700–800 Myr; older literature ages of 400–600 Myr; HR24 NN 654 Myr"
+    },
+    "memberCount": {
+     "value": 271,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members incl. outskirts; only 94 inside the Jacobi radius"
+    },
+    "massMsun": {
+     "value": 49,
+     "unit": "Msun",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "mass within the Jacobi radius (5.0 pc); the cluster is dissolving"
+    },
+    "angularSizeArcmin": {
+     "value": 300,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 24,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "300′ observing extent at 278 ly; tidal tails extend ~50 pc each side (Tang et al. 2019)"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "traits": [
+    "naked-eye",
+    "dissolving"
+   ],
+   "extent": {
+    "majorArcmin": 300,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 4,
+     "dark": 4
+    },
+    "10x50": {
+     "suburban": 3,
+     "dark": 4
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "binocularsky-mel111"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "high",
+    "resolves": "stars",
+    "bestFieldDeg": 6,
+    "colorVisible": false
+   },
+   "evoStage": 3,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "MW.families",
+     "strength": 3
+    },
+    {
+     "conceptId": "PERC.binoculars",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 1
+    },
+    {
+     "conceptId": "SKY.projection",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "adult-cluster"
+   ],
+   "wow": 4,
+   "insight": 4,
+   "obsDifficulty": 1,
+   "superlatives": [
+    {
+     "claim": "one of the nearest star clusters to the Sun (often ranked third)",
+     "scope": "open clusters and moving-group cores",
+     "sourceId": "binocularsky-mel111",
+     "tag": "nearest"
+    }
+   ],
+   "misconceptions": [
+    "MC13",
+    "MC9"
+   ],
+   "showpiece": true,
+   "interest": 0.75,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/Mel111-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Wide survey view of the Coma Star Cluster; the field is about six degrees across.",
+      "fieldDeg": 6.0,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/Mel111-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view of the same wide field.",
+      "fieldDeg": 6.0,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6
+     },
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "What happens to a star cluster over time?",
+    "answer": "It slowly falls apart as the Milky Way’s tides keep tugging members away, and the Coma Star Cluster is already more stream than cluster, the fate of almost every star family.",
+    "glance": "A loose scatter of a few dozen fairly bright stars spread over about five degrees, too big for telescopes and perfect for binoculars.",
+    "whyHere": "The Coma Star Cluster is one of the nearest star families to us, close enough for Gaia to watch what is happening to it.",
+    "see": "Look between Denebola and Cor Caroli for a faint glittery patch to the eye. Binoculars turn it into a sprawl of white stars across most of the field, and the orange star γ Comae at its northern edge is a foreground star.",
+    "understand": "These stars were born together some 700 to 800 million years ago, but the family is only loosely held. Gaia measured the motions of the members and found two long streams of stars trailing ahead of and behind the cluster, like smoke drawn from a chimney. Only about 50 Suns’ worth of stars remain inside the region where the cluster’s own gravity still wins.",
+    "wonder": "Gaia has found escaped members streaming roughly 160 light-years out on each side, far wider than the patch you see.",
+    "connect": "Behind this cluster lies a clear window out of our galaxy, crowded with distant galaxies.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members found by Gaia",
+      "factRef": "memberCount"
+     },
+     {
+      "label": "Mass still bound",
+      "factRef": "massMsun"
+     }
+    ],
+    "photoCaption": "A wide survey field; binoculars show the same bright stars, which the plate renders as soft disks.",
+    "notSee": "The tidal tails: they are a statistical result from Gaia motions, invisible to any eye.",
+    "deeper": "Hunt & Reffert (2024) place it at 85.25 pc (278 ly) with 271 Gaia members, but only about 50 solar masses remain inside its 5 pc tidal (Jacobi) radius, a sign of advanced dissolution. Tang et al. (2019) found leading and trailing tidal tails each about 50 pc long and an age of roughly 700–800 Myr, older than the 400–600 Myr often quoted. The cluster lies close to the north Galactic pole, so the view here points almost straight out of the Milky Way's disk.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "hr24",
+    "tang2019",
+    "catalog-extents",
+    "binocularsky-mel111"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M81",
+   "kind": "dso",
+   "names": {
+    "display": "Bode's Galaxy",
+    "designation": "M81",
+    "aliases": [
+     "NGC 3031",
+     "Bode's Nebula"
+    ],
+    "simbadId": "M 81"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 11840000.0,
+     "min": 11320000.0,
+     "max": 12170000.0,
+     "unit": "ly",
+     "sourceId": "ned-d",
+     "method": "measured",
+     "note": "NED-D median 3.63 Mpc (Cepheid + TRGB; e.g. Freedman et al. 2001 3.55 Mpc, TRGB 3.6–3.7 Mpc)"
+    },
+    "angularSizeArcmin": {
+     "value": 21.63,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "21.63′ × 11.25′"
+    },
+    "sizeLy": {
+     "value": 74500,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "21.63′ OpenNGC major axis at 3.63 Mpc"
+    },
+    "surfaceBrightness": {
+     "value": 22.78,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "galaxy-spiral",
+   "traits": [
+    "interacting"
+   ],
+   "morphology": {
+    "hubble": "Sab",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 21.63,
+    "minorArcmin": 11.25,
+    "paDeg": 157,
+    "sourceId": "openngc"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "nasa-messier-m81"
+    ],
+    "note": "central black hole of ~70 million solar masses (NASA)"
+   },
+   "view": {
+    "7x50": {
+     "suburban": 1,
+     "dark": 3
+    },
+    "10x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "binocularsky-m81"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "contextIds": [
+    "ctx:M81Group"
+   ],
+   "teaches": [
+    {
+     "conceptId": "GAL.other",
+     "strength": 3
+    },
+    {
+     "conceptId": "TIME.lookback",
+     "strength": 2
+    },
+    {
+     "conceptId": "SCALE.cosmic",
+     "strength": 2
+    },
+    {
+     "conceptId": "PERC.night-eyes",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "galaxy"
+   ],
+   "wow": 3,
+   "insight": 5,
+   "obsDifficulty": 3,
+   "superlatives": [
+    {
+     "claim": "one of the brightest and nearest galaxies beyond the Local Group",
+     "scope": "galaxies visible from mid-northern latitudes",
+     "sourceId": "seds-m81",
+     "tag": "brightest-galaxy"
+    }
+   ],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "Johann Bode found it, together with M82, on the last night of 1774.",
+    "sourceId": "seds-m81"
+   },
+   "showpiece": true,
+   "interest": 0.9,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M81-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of M81; the spiral arms are far fainter than the core binoculars show.",
+      "fieldDeg": 0.7,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M81-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view dominated by the old stars of its bulge.",
+      "fieldDeg": 0.7,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 2
+     }
+    ]
+   },
+   "card": {
+    "question": "Can you see another galaxy with binoculars?",
+    "answer": "That oval haze is one, a whole spiral galaxy of billions of stars whose light left it about 12 million years ago.",
+    "glance": "A small oval glow with a brighter center, about half a degree from the fainter streak of M82.",
+    "whyHere": "Bode’s Galaxy is one of the brightest galaxies beyond our own neighborhood, and half of a pair locked in a gravitational dance.",
+    "see": "Extend the line from Phecda through Dubhe, in the Big Dipper’s bowl, by the same distance again, near the faint star 24 Ursae Majoris. Brace the binoculars: M81 is an oval haze with a starlike core, and M82 shares the field as a thin silvery streak.",
+    "understand": "This is a whole spiral galaxy, a disk of billions of stars like our Milky Way. Its distance comes from stars bright enough to pick out one by one: Cepheids, whose pulse reveals their true brightness, and the brightest red giants, which all top out at about the same brightness. Radio telescopes also see streams of gas linking it to M82, pulled out when the two swung close a few hundred million years ago.",
+    "wonder": "In 1993 an amateur astronomer found a supernova in it that reached about magnitude 10.5, bright enough for a small telescope.",
+    "connect": "Its smaller companion, M82, took the encounter far harder.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     }
+    ],
+    "photoCaption": "Long exposures reveal spiral arms and dust lanes; binoculars show only the bright core and inner disk.",
+    "notSee": "The spiral arms: they need long exposures or a large telescope.",
+    "deeper": "Distances from Cepheids and the tip of the red-giant branch cluster around 3.6 Mpc (NED-D median 3.63 Mpc). Radio maps of neutral hydrogen show tidal bridges linking M81, M82 and NGC 3077; stars and clusters in the M81–M82 bridge point to a tidal passage roughly 200–300 Myr ago (de Mello et al. 2008). NASA lists a central black hole of about 70 million solar masses. Supernova 1993J, found by amateur Francisco García Díaz, peaked near magnitude 10.5 (SEDS).",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "ned-d",
+    "openngc",
+    "nasa-messier-m81",
+    "seds-m81",
+    "demello2008",
+    "binocularsky-m81"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M82",
+   "kind": "dso",
+   "names": {
+    "display": "Cigar Galaxy",
+    "designation": "M82",
+    "aliases": [
+     "NGC 3034",
+     "Ursa Major A",
+     "3C 231"
+    ],
+    "simbadId": "M 82"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 11510000.0,
+     "min": 11320000.0,
+     "max": 12720000.0,
+     "unit": "ly",
+     "sourceId": "ned-d",
+     "method": "measured",
+     "note": "TRGB 3.53 Mpc (Dalcanton et al. 2009 via NED-D); TRGB range 3.47–3.9 Mpc"
+    },
+    "angularSizeArcmin": {
+     "value": 10.99,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "10.99′ × 5.11′"
+    },
+    "sizeLy": {
+     "value": 36800,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "10.99′ OpenNGC major axis at 3.53 Mpc"
+    },
+    "surfaceBrightness": {
+     "value": 22.22,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "galaxy-irregular",
+   "traits": [
+    "starburst",
+    "interacting",
+    "edge-on"
+   ],
+   "morphology": {
+    "hubble": "S? (irregular/disk starburst)",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 10.99,
+    "minorArcmin": 5.11,
+    "paDeg": 66,
+    "sourceId": "openngc"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "nasa-messier-m82"
+    ],
+    "note": "central starburst forming stars ~10× faster than the whole Milky Way (NASA)"
+   },
+   "view": {
+    "7x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 3
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "binocularsky-m81"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "contextIds": [
+    "ctx:M81Group"
+   ],
+   "teaches": [
+    {
+     "conceptId": "GAL.other",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.nursery",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.supernova",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "galaxy"
+   ],
+   "wow": 3,
+   "insight": 5,
+   "obsDifficulty": 3,
+   "superlatives": [
+    {
+     "claim": "the brightest galaxy in the sky at infrared wavelengths",
+     "scope": "whole sky, infrared light",
+     "sourceId": "seds-m82",
+     "tag": "starburst"
+    }
+   ],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "In January 2014 a supernova flared in M82 and climbed to about magnitude 11, within reach of a modest telescope.",
+    "sourceId": "seds-m82"
+   },
+   "showpiece": false,
+   "interest": 0.85,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M82-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph: a bright spindle crossed by dark dust.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "https://esahubble.org/media/archives/images/large/heic0604a.jpg",
+      "credit": "NASA, ESA and the Hubble Heritage Team (STScI/AURA)",
+      "license": "CC BY 4.0",
+      "caption": "Hubble mosaic: red plumes of hydrogen blasting out of the starburst core, invisible in binoculars.",
+      "variant": "featured",
+      "sourceUrl": "https://esahubble.org/images/heic0604a/"
+     },
+     {
+      "src": "data/binocular-images/M82-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view: dust becomes transparent and the bright starburst core shows through.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "What happens to a galaxy after a close pass with a bigger one?",
+    "answer": "It can burst into star birth: M81’s pull funneled gas into M82’s core, which now forms stars about ten times faster than our entire Milky Way.",
+    "glance": "A thin, slightly mottled sliver of light, sharing the binocular field with rounder M81.",
+    "whyHere": "The Cigar Galaxy has had a close brush with its big neighbor, M81, and it still bears the marks.",
+    "see": "With M81 in view, look a little over half a degree north for a narrow streak about a third as long as the Moon is wide. On a steady, dark night it can look patchy along its length, a hint of its dust lanes.",
+    "understand": "M82 is a disk galaxy seen edge-on. The encounter with M81 funneled gas into its center, where it collapsed into crowds of new star clusters, and dust warmed by all those young stars makes M82 the brightest galaxy in the sky at infrared wavelengths. The young stars, and the explosions of the heaviest ones, drive a wind that blows gas out above and below the disk, seen in photographs as red plumes.",
+    "wonder": "In January 2014 a supernova flared in M82, bright enough to see in a small telescope.",
+    "connect": "The Whirlpool, under the Big Dipper’s handle, shows the same sculpting in a face-on spiral.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     }
+    ],
+    "photoCaption": "Hubble's colors show glowing hydrogen streaming out of the core; binoculars show a gray sliver.",
+    "notSee": "The red outflow plumes and individual star clusters.",
+    "deeper": "TRGB distances put M82 at about 3.5 Mpc (Dalcanton et al. 2009, via NED-D). NASA describes its central star formation as about ten times the Milky Way's total rate. It is the brightest galaxy in the sky in the infrared and a strong radio source (3C 231). SN 2014J, a Type Ia, was discovered on 21 January 2014 by S. J. Fossey and peaked near magnitude 10.9 (SEDS). The tidal passage with M81 is dated at roughly 200–300 Myr ago from stellar populations in the HI bridge (de Mello et al. 2008); other studies give up to several hundred Myr.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "ned-d",
+    "openngc",
+    "nasa-messier-m82",
+    "seds-m82",
+    "esahubble-heic0604a",
+    "demello2008",
+    "binocularsky-m81"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M51",
+   "kind": "dso",
+   "names": {
+    "display": "Whirlpool Galaxy",
+    "designation": "M51",
+    "aliases": [
+     "NGC 5194",
+     "M51A",
+     "Lord Rosse's Nebula",
+     "Arp 85"
+    ],
+    "simbadId": "M 51"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 27980000.0,
+     "min": 27590000.0,
+     "max": 28380000.0,
+     "unit": "ly",
+     "sourceId": "ned-d",
+     "method": "measured",
+     "note": "TRGB 8.58 ± 0.10 Mpc (McQuinn et al. 2016, 2016ApJ...826...21M, via NED-D); NED median 7.9 Mpc"
+    },
+    "angularSizeArcmin": {
+     "value": 13.71,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "13.71′ × 11.67′"
+    },
+    "sizeLy": {
+     "value": 111600,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "13.71′ OpenNGC major axis at 8.58 Mpc"
+    },
+    "surfaceBrightness": {
+     "value": 22.9,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "galaxy-spiral",
+   "traits": [
+    "interacting"
+   ],
+   "morphology": {
+    "hubble": "SABb",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 13.71,
+    "minorArcmin": 11.67,
+    "paDeg": 163,
+    "sourceId": "openngc"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "nasa-messier-m51"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "binocularsky-m51"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "contextIds": [
+    "ctx:M51Group"
+   ],
+   "teaches": [
+    {
+     "conceptId": "GAL.other",
+     "strength": 3
+    },
+    {
+     "conceptId": "PERC.night-eyes",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.nursery",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "galaxy"
+   ],
+   "wow": 2,
+   "insight": 5,
+   "obsDifficulty": 4,
+   "superlatives": [
+    {
+     "claim": "the first galaxy in which spiral structure was seen",
+     "scope": "history of astronomy (Lord Rosse, 1845)",
+     "sourceId": "seds-m51",
+     "tag": "first-spiral"
+    }
+   ],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "In spring 1845 Lord Rosse sketched its spiral pattern by eye through his giant reflector, the first spiral ever seen.",
+    "sourceId": "seds-m51"
+   },
+   "showpiece": false,
+   "interest": 0.8,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M51-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the Whirlpool and its companion NGC 5195 at the tip of one arm.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M51-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view: the two galactic cores stand out, the arms fade.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "What draws the spiral arms of the Whirlpool?",
+    "answer": "The passing companion draws them, and the arms are not fixed structures at all but more like traffic jams, places where gas and stars slow and crowd together before moving on.",
+    "glance": "A faint, round glow, perhaps with a smaller knot touching it, south-west of Alkaid.",
+    "whyHere": "The Whirlpool is the first galaxy in which anyone saw spiral arms.",
+    "see": "From Alkaid, the end of the Big Dipper’s handle, hop about three and a half degrees south-west. Under a dark sky M51 is a small hazy patch, its companion perhaps a slight bulge on one side; in suburban skies it often vanishes.",
+    "understand": "M51 is a spiral galaxy seen face-on, about 28 million light-years away, a distance found from its brightest red giants. A small companion galaxy has been gliding past behind it, and Hubble images show it tucked behind the end of one arm. Its gravity sends waves through M51’s disk, and gas piling up in those waves forms new stars that outline the arms in blue.",
+    "wonder": "Lord Rosse sketched its spiral by eye in 1845, decades before anyone knew spirals were galaxies.",
+    "connect": "A few degrees away, M101 is an even bigger face-on spiral that is harder to see.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     }
+    ],
+    "photoCaption": "Long exposures show two curving arms and the companion; binoculars show a small gray glow.",
+    "notSee": "Spiral arms and the bridge to the companion.",
+    "deeper": "The tip-of-the-red-giant-branch distance is 8.58 Mpc (McQuinn et al. 2016, via NED-D). Hubble imaging shows the companion NGC 5195 passing behind the Whirlpool (ESA/Hubble heic0506a). Three supernovae (1994I, 2005cs and 2011dh) have been found in M51, two of them by amateurs (SEDS). Its OpenNGC surface brightness, 22.9 mag/arcsec², is about one magnitude brighter than M101's, which is why this smaller galaxy is the easier binocular target.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "ned-d",
+    "openngc",
+    "nasa-messier-m51",
+    "seds-m51",
+    "esahubble-heic0506a",
+    "binocularsky-m51"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M101",
+   "kind": "dso",
+   "names": {
+    "display": "Pinwheel Galaxy",
+    "designation": "M101",
+    "aliases": [
+     "NGC 5457",
+     "Arp 26"
+    ],
+    "simbadId": "M 101"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 21890000.0,
+     "min": 21200000.0,
+     "max": 22500000.0,
+     "unit": "ly",
+     "sourceId": "ned-d",
+     "method": "measured",
+     "note": "Cepheids 6.71 Mpc (Riess et al. 2016, 2016ApJ...826...56R, via NED-D); TRGB 6.87 Mpc (Jang & Lee 2017)"
+    },
+    "angularSizeArcmin": {
+     "value": 23.99,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "23.99′ × 23.07′"
+    },
+    "sizeLy": {
+     "value": 170000,
+     "min": 152700,
+     "max": 170000,
+     "unit": "ly",
+     "sourceId": "nasa-messier-m101",
+     "method": "literature",
+     "note": "NASA quotes ~170,000 ly; OpenNGC 24′ at 6.71 Mpc gives ~153,000 ly"
+    },
+    "surfaceBrightness": {
+     "value": 23.97,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "galaxy-spiral",
+   "morphology": {
+    "hubble": "SABc",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 23.99,
+    "minorArcmin": 23.07,
+    "paDeg": 28,
+    "sourceId": "openngc"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "nasa-messier-m101"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "binocularsky-m101"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "PERC.night-eyes",
+     "strength": 3
+    },
+    {
+     "conceptId": "GAL.other",
+     "strength": 2
+    },
+    {
+     "conceptId": "SCALE.cosmic",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.supernova",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "galaxy"
+   ],
+   "wow": 2,
+   "insight": 4,
+   "obsDifficulty": 4,
+   "superlatives": [
+    {
+     "claim": "one of the largest disk galaxies near us, nearly twice the Milky Way's diameter",
+     "scope": "bright nearby spiral galaxies",
+     "sourceId": "nasa-messier-m101",
+     "tag": "largest"
+    }
+   ],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "On 19 May 2023 Koichi Itagaki, an amateur astronomer in Japan, discovered a supernova in one of its arms, SN 2023ixf.",
+    "sourceId": "hiramatsu2023"
+   },
+   "showpiece": false,
+   "interest": 0.7,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M101-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph: the full face-on disk, far larger than the faint glow binoculars catch.",
+      "fieldDeg": 0.73,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M101-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view: the old central stars dominate and the arms almost vanish.",
+      "fieldDeg": 0.73,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Why is a big, bright galaxy so hard to see?",
+    "answer": "Its light is spread thin, and your eye detects contrast, not total light, so a galaxy as bright as a binocular star can still slip past unseen.",
+    "glance": "A very faint, large round glow, almost as wide as the full Moon, that is easy to sweep right past.",
+    "whyHere": "The Pinwheel is one of the biggest spirals near us, and one of the hardest to spot in binoculars.",
+    "see": "Picture an equilateral triangle with Mizar and Alkaid, in the Big Dipper’s handle, as two corners; M101 sits just inside the third, to the north. Look slightly to one side and gently tap the binoculars, and a broad, ghostly brightening may appear.",
+    "understand": "M101 is a spiral roughly 170,000 light-years across, nearly twice the Milky Way’s width, and Cepheids in its arms give its distance precisely. Its total light equals a star you could see in binoculars, but it is spread over an area nearly as big as the Moon. The same rule makes big faint nebulae harder than small bright ones.",
+    "wonder": "In May 2023 an amateur in Japan spotted a supernova in one arm, seen about 22 million years after it happened.",
+    "connect": "Its distance is known precisely thanks to a yardstick calibrated in another spiral nearby, M106.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     },
+     {
+      "label": "Surface brightness",
+      "factRef": "surfaceBrightness"
+     }
+    ],
+    "photoCaption": "Long exposures pile up the faint arms; binoculars at best show a large, soft glow around the core.",
+    "notSee": "The arms and bright knots of star formation.",
+    "deeper": "Hubble Cepheids give 6.71 Mpc (Riess et al. 2016, via NED-D) and the red-giant-branch tip about 6.9 Mpc. NASA quotes a diameter of about 170,000 ly; the 24′ OpenNGC isophote at 6.71 Mpc gives about 153,000 ly. Its OpenNGC surface brightness, 23.97 mag/arcsec², is one of the lowest among bright Messier galaxies. Two famous supernovae: SN 2011fe (Type Ia, about magnitude 9.9 at peak, SEDS) and SN 2023ixf (Type II), found by Koichi Itagaki on 19 May 2023 and studied from the first day (Hiramatsu et al. 2023).",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "ned-d",
+    "openngc",
+    "nasa-messier-m101",
+    "seds-m101",
+    "hiramatsu2023",
+    "binocularsky-m101"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M104",
+   "kind": "dso",
+   "names": {
+    "display": "Sombrero Galaxy",
+    "designation": "M104",
+    "aliases": [
+     "NGC 4594"
+    ],
+    "simbadId": "M 104"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 31150000.0,
+     "min": 30720000.0,
+     "max": 31570000.0,
+     "unit": "ly",
+     "sourceId": "ned-d",
+     "method": "measured",
+     "note": "TRGB 9.55 ± 0.13 Mpc (McQuinn et al. 2016, 2016AJ....152..144M, via NED-D)"
+    },
+    "angularSizeArcmin": {
+     "value": 8.45,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "8.45′ × 4.91′"
+    },
+    "sizeLy": {
+     "value": 76600,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "8.45′ OpenNGC major axis at 9.55 Mpc"
+    },
+    "memberCount": {
+     "value": 2000,
+     "unit": "globular clusters",
+     "sourceId": "nasa-messier-m104",
+     "method": "literature",
+     "note": "estimated number of globular clusters (NASA: nearly 2,000, ~10× the Milky Way)"
+    },
+    "surfaceBrightness": {
+     "value": 22.26,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "galaxy-spiral",
+   "traits": [
+    "edge-on"
+   ],
+   "morphology": {
+    "hubble": "Sa",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 8.45,
+    "minorArcmin": 4.91,
+    "paDeg": 90,
+    "sourceId": "openngc"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "nasa-messier-m104",
+     "jardel2011"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "binocularsky-m104"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "GAL.other",
+     "strength": 3
+    },
+    {
+     "conceptId": "MW.halo",
+     "strength": 1
+    },
+    {
+     "conceptId": "TIME.lookback",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "galaxy"
+   ],
+   "wow": 2,
+   "insight": 4,
+   "obsDifficulty": 4,
+   "superlatives": [
+    {
+     "claim": "about 2,000 globular clusters, roughly ten times as many as the Milky Way",
+     "scope": "compared with our own galaxy",
+     "sourceId": "nasa-messier-m104",
+     "tag": "most-globulars"
+    }
+   ],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "In 1912 Vesto Slipher found it receding at about 1,000 km/s, far too fast to belong to the Milky Way.",
+    "sourceId": "seds-m104"
+   },
+   "showpiece": false,
+   "interest": 0.7,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M104-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph: the bright bulge and the dark lane across it.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M104-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view: the dust lane fades and the huge bulge of old stars dominates.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Why does the Sombrero look like a hat?",
+    "answer": "We see it almost edge-on, so a ring of dark dust cuts across that huge bright bulge like the brim of a hat.",
+    "glance": "A small, bright spindle of light with a brighter middle, on the border of Virgo and Corvus.",
+    "whyHere": "The Sombrero is an edge-on galaxy with a giant bulge and about ten times our galaxy’s number of globular clusters.",
+    "see": "From δ Corvi, the north-east corner of the Crow south-west of Spica, sweep a little over five degrees north-north-east. M104 is a small spindle with a bright center; its dark dust lane is beyond most 50 mm binoculars.",
+    "understand": "The bulge is enormous, a swarm of old stars around a black hole of several hundred million Suns, weighed from how fast the stars near the center move. Around it orbit roughly 2,000 globular clusters, ancient balls of stars like those that circle our own galaxy. In 1912 Vesto Slipher measured its spectrum and found it rushing away at about 1,000 kilometers per second, far too fast to belong to the Milky Way.",
+    "wonder": "Slipher’s measurement was one of the first clues that the universe is expanding.",
+    "connect": "Our own galaxy’s globular clusters are binocular targets too, and one waits in Hydra.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     },
+     {
+      "label": "Globular clusters",
+      "factRef": "memberCount"
+     }
+    ],
+    "photoCaption": "Telescope photos show the knife-edge dust lane; binoculars show the bright bulge as a small spindle.",
+    "notSee": "The dark dust lane and the halo of globulars.",
+    "deeper": "TRGB distance 9.55 ± 0.13 Mpc (McQuinn et al. 2016, via NED-D), so it lies in front of the Virgo Cluster rather than in it. Orbit-based stellar-dynamical models give a central black hole of (6.6 ± 0.4) × 10⁸ solar masses (Jardel et al. 2011); older estimates were about 10⁹. NASA quotes nearly 2,000 globular clusters. Slipher's 1912 velocity of about 1,000 km/s was the first large redshift measured for a galaxy (SEDS).",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "ned-d",
+    "openngc",
+    "nasa-messier-m104",
+    "seds-m104",
+    "jardel2011",
+    "binocularsky-m104"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M106",
+   "kind": "dso",
+   "names": {
+    "display": "M106",
+    "designation": "M106",
+    "aliases": [
+     "NGC 4258"
+    ],
+    "simbadId": "M 106"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 24710000.0,
+     "min": 24340000.0,
+     "max": 25070000.0,
+     "unit": "ly",
+     "sourceId": "reid2019",
+     "method": "measured",
+     "note": "7.576 ± 0.082 (stat) ± 0.076 (sys) Mpc, geometric water-maser distance"
+    },
+    "angularSizeArcmin": {
+     "value": 16.98,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "16.98′ × 7.24′"
+    },
+    "sizeLy": {
+     "value": 122000,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "16.98′ OpenNGC major axis at 7.576 Mpc"
+    },
+    "surfaceBrightness": {
+     "value": 23.36,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "galaxy-spiral",
+   "traits": [
+    "active-nucleus"
+   ],
+   "morphology": {
+    "hubble": "Sbc",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 16.98,
+    "minorArcmin": 7.24,
+    "paDeg": 150,
+    "sourceId": "openngc"
+   },
+   "poweredBy": {
+    "kind": "agn-plus-stars",
+    "sourceIds": [
+     "nasa-messier-m106",
+     "seds-m106"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 1
+    },
+    "10x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "DIST.standard-candle",
+     "strength": 3
+    },
+    {
+     "conceptId": "GAL.other",
+     "strength": 2
+    },
+    {
+     "conceptId": "TIME.lookback",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "galaxy"
+   ],
+   "wow": 1,
+   "insight": 5,
+   "obsDifficulty": 4,
+   "superlatives": [
+    {
+     "claim": "a geometric 'anchor' for the cosmic distance ladder, its distance known to about 1.5%",
+     "scope": "galaxies with water-maser distances",
+     "sourceId": "reid2019",
+     "tag": "distance-anchor"
+    }
+   ],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "In the mid-1990s radio astronomers caught water clouds orbiting its central black hole, a natural ruler for its distance.",
+    "sourceId": "seds-m106"
+   },
+   "showpiece": false,
+   "interest": 0.6,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M106-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the long, tilted spiral.",
+      "fieldDeg": 0.63,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M106-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view of the central bulge and inner disk.",
+      "fieldDeg": 0.63,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "How can you measure a galaxy’s distance with pure geometry?",
+    "answer": "Watch something orbit and measure it two ways, as M106’s water clouds allow, and the distance falls out of geometry alone; astronomers then use it to calibrate Cepheids, the pulsing stars that reach much farther galaxies.",
+    "glance": "A faint elongated glow with a slightly brighter middle, in empty-looking sky between the Big Dipper and Cor Caroli.",
+    "whyHere": "M106 is the galaxy measured by pure geometry, a cornerstone for measuring the universe.",
+    "see": "Sweep about halfway from Phecda, in the Big Dipper’s bowl, to Cor Caroli. Under dark skies M106 is a faint oval smear with a slightly brighter center, and bracing the binoculars helps.",
+    "understand": "Deep in M106’s core, clouds of water molecules circle a black hole and beam out microwaves like natural lasers. Radio telescopes track them two ways: how fast they move, from the shift in their frequency, and how far they creep across the sky each year. A speed in kilometers and a drift in angle can only match at one distance, the same trick a surveyor uses, and it gives about 25 million light-years with an uncertainty of about 1.5%.",
+    "wonder": "Its restless core is linked to two ghostly extra arms of hot gas that ordinary spirals lack.",
+    "connect": "That yardstick reaches straight to the giant Pinwheel, M101, near the Big Dipper’s handle.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     }
+    ],
+    "photoCaption": "The survey photo shows the bright inner spiral; binoculars catch only the core and a hint of the disk.",
+    "notSee": "The spiral arms, and the 'anomalous' arms seen only in hydrogen-alpha, radio and X-ray images.",
+    "deeper": "Reid, Pesce & Riess (2019) modeled VLBI observations of the nuclear water masers to get 7.576 ± 0.082 (stat) ± 0.076 (sys) Mpc, about 1.5% total uncertainty. Cepheids in M106 then anchor the calibration of Type Ia supernova host galaxies, including M101 (SN 2011fe), and hence the Hubble constant. Earlier VLBA work traced about 36 million solar masses inside a fraction of a light-year of the center (SEDS). NASA attributes the anomalous gaseous arms to activity around the central black hole.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "reid2019",
+    "openngc",
+    "nasa-messier-m106",
+    "seds-m106"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M97",
+   "kind": "dso",
+   "names": {
+    "display": "Owl Nebula",
+    "designation": "M97",
+    "aliases": [
+     "NGC 3587"
+    ],
+    "simbadId": "M 97"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 2640,
+     "min": 2540,
+     "max": 2740,
+     "unit": "ly",
+     "sourceId": "gaia-edr3-simbad",
+     "method": "measured",
+     "note": "central-star parallax 1.235 ± 0.046 mas → 810 ± 30 pc (Gaia EDR3); older estimates 0.4–1.4 kpc"
+    },
+    "ageMyr": {
+     "value": 0.0096,
+     "min": 0.006,
+     "max": 0.012,
+     "unit": "Myr",
+     "sourceId": "guerrero2003",
+     "method": "derived",
+     "note": "kinematic: ~1.6′ outer-shell radius at 810 pc (≈0.39 pc) divided by the ~40 km/s expansion (Guerrero et al. 2003) ≈ 9,600 yr; SEDS quotes ~6,000 yr"
+    },
+    "angularSizeArcmin": {
+     "value": 3.58,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 2.8,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "3.58′ at 810 pc"
+    }
+   },
+   "dsoClass": "planetary-nebula",
+   "extent": {
+    "majorArcmin": 3.58,
+    "sourceId": "openngc"
+   },
+   "poweredBy": {
+    "kind": "central-star-uv",
+    "sourceIds": [
+     "guerrero2003"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 1
+    },
+    "10x50": {
+     "suburban": 0,
+     "dark": 1
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "binocularsky-m97"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 1.5,
+    "colorVisible": false,
+    "filterHelps": "OIII"
+   },
+   "evoStage": 6,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.pn-wd",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 1
+    },
+    {
+     "conceptId": "PERC.night-eyes",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "pn"
+   ],
+   "wow": 1,
+   "insight": 4,
+   "obsDifficulty": 4,
+   "superlatives": [],
+   "misconceptions": [
+    "MC8",
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "Lord Rosse drew it in 1848 and saw two dark eyes in the disk, so he called it the Owl.",
+    "sourceId": "seds-m97"
+   },
+   "showpiece": false,
+   "interest": 0.5,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M97-primary.jpg",
+      "credit": "Fryns · Wikimedia Commons",
+      "license": "Public domain",
+      "caption": "Telescope photograph of the Owl's round disk and its two dark 'eyes'; not a binocular expectation.",
+      "variant": "featured",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:M97.jpg"
+     },
+     {
+      "src": "data/binocular-images/M97-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view; the nebula is faint at these wavelengths.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "How does a Sun-like star end?",
+    "answer": "Gently, by puffing its outer layers into space, where the hot core left behind lights them up for a brief cosmic moment before everything fades.",
+    "glance": "A tiny, round, even ghost of light, a few arcminutes across, below the bowl of the Big Dipper.",
+    "whyHere": "The Owl Nebula is a Sun-like star’s last breath, lit by the hot core it left behind.",
+    "see": "From Merak, the Big Dipper’s lower pointer star, go about two degrees south-east to a modest star, then just under half a degree east-north-east. Under a dark sky it is at best a faint round smudge; an OIII filter, which passes oxygen’s green glow, helps.",
+    "understand": "When a star like the Sun runs low on fuel, it swells into a red giant and gently sheds its outer layers. The exposed core is small and very hot, and its ultraviolet light makes the gas glow, mostly green from oxygen; the name ‘planetary nebula’ is an old mistake, since no planets are involved. The Owl’s age comes from simple division: the shell’s size, known from Gaia’s distance to the central star, divided by its expansion speed of about 40 kilometers per second, gives roughly ten thousand years.",
+    "wonder": "In a few billion years the Sun will make a shell like this, and anyone watching from 2,600 light-years away might see a ghost just as faint.",
+    "connect": "Stars still on their way to this ending shine across the spring sky, like the pulsing giant R Leonis.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age of the shell",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "Telescope photograph showing the round shell and its two dark 'eyes'; binoculars show at most a faint round spot.",
+    "notSee": "The eyes, the faint outer halo and any color.",
+    "deeper": "Gaia EDR3 measures a central-star parallax of 1.235 ± 0.046 mas (about 810 pc, 2,640 ly). Guerrero et al. (2003) mapped three shells: an inner shell with a bipolar cavity that produces the eyes, an outer envelope expanding with it at about 40 km/s, and a faint bow-shaped halo slowed by its motion through interstellar gas. Dividing the shell's ~0.4 pc radius by that speed gives a rough kinematic age near 10,000 years; published values span about 6,000–13,000 years because the distance was long uncertain.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "gaia-edr3-simbad",
+    "guerrero2003",
+    "openngc",
+    "seds-m97",
+    "featured-m97",
+    "binocularsky-m97",
+    "al-binocular-messier"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M3",
+   "kind": "dso",
+   "names": {
+    "display": "M3",
+    "designation": "M3",
+    "aliases": [
+     "NGC 5272"
+    ],
+    "simbadId": "M 3"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 33200,
+     "min": 32940,
+     "max": 33460,
+     "unit": "ly",
+     "sourceId": "bv21",
+     "method": "measured",
+     "note": "10.18 ± 0.08 kpc"
+    },
+    "ageMyr": {
+     "value": 11750,
+     "min": 11500,
+     "max": 12000,
+     "unit": "Myr",
+     "sourceId": "vandenberg2013",
+     "method": "model",
+     "note": "11.75 ± 0.25 Gyr (relative-age error; systematic uncertainty is larger)"
+    },
+    "massMsun": {
+     "value": 409000,
+     "unit": "Msun",
+     "sourceId": "bv21",
+     "method": "model",
+     "note": "4.09 × 10⁵ M☉ (N-body fit)"
+    },
+    "feH": {
+     "value": -1.5,
+     "unit": "dex",
+     "sourceId": "harris2010",
+     "method": "catalog"
+    },
+    "angularSizeArcmin": {
+     "value": 16.2,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 157,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "16.2′ at 10.18 kpc"
+    }
+   },
+   "dsoClass": "globular-cluster",
+   "extent": {
+    "majorArcmin": 16.2,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "bv21"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "10x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "binocularsky-m3"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "glow",
+    "bestFieldDeg": 1.5,
+    "colorVisible": false
+   },
+   "evoStage": 4,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "MW.halo",
+     "strength": 3
+    },
+    {
+     "conceptId": "VAR.pulsating",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "globular",
+    "old-cluster"
+   ],
+   "wow": 3,
+   "insight": 4,
+   "obsDifficulty": 2,
+   "superlatives": [
+    {
+     "claim": "one of the globular clusters richest in known variable stars (at least 274)",
+     "scope": "Milky Way globular clusters",
+     "sourceId": "nasa-messier-m3",
+     "tag": "most-variables"
+    }
+   ],
+   "misconceptions": [],
+   "historyHook": {
+    "text": "M3 was Charles Messier's first original discovery, in May 1764; William Herschel first resolved it into stars around 1784.",
+    "sourceId": "seds-m3"
+   },
+   "showpiece": true,
+   "interest": 0.75,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M3-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph: a dense ball of stars, saturated at the core.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M3-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view: the cluster's red giants shine through.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "distance-bar"
+     },
+     {
+      "type": "light-curve",
+      "shape": "pulsating"
+     }
+    ]
+   },
+   "card": {
+    "question": "What is that fuzzy ‘star’ between Arcturus and Cor Caroli?",
+    "answer": "A globular cluster, so far out in the galaxy’s halo that hundreds of thousands of ancient stars blend into one soft glow.",
+    "glance": "A round, fuzzy ‘star’ with a brighter center, between Arcturus and Cor Caroli.",
+    "whyHere": "M3 is an ancient ball of hundreds of thousands of stars in the halo around our galaxy.",
+    "see": "Aim a little past halfway from Cor Caroli toward Arcturus. M3 is an obvious round glow, brighter toward the middle, beside a yellowish field star; it will not break into stars in binoculars.",
+    "understand": "A globular cluster is a tight ball of very old stars, and M3 holds about 400,000 Suns’ worth of them. Globulars do not circle in the flat disk with the Sun but loop through a vast halo far above and below it, and M3 is about 33,000 light-years away, farther than the galaxy’s center. Its age, about 12 billion years, comes from the point where its stars begin to swell into giants, which sits among stars lighter than the Sun.",
+    "wonder": "More than two hundred of its stars brighten and fade every half day or so, so the whole cluster flickers.",
+    "connect": "M53, in Coma Berenices, is nearly twice as far and even poorer in heavy elements.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Mass",
+      "factRef": "massMsun"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "The survey photo resolves the outer stars that binoculars blend into haze.",
+    "notSee": "Individual stars: you need a telescope of about 10 cm or more.",
+    "deeper": "Baumgardt & Vasiliev (2021): 10.18 ± 0.08 kpc and 4.1 × 10⁵ solar masses. Harris (2010): [Fe/H] = −1.50, about 1/30 of the solar iron fraction. VandenBerg et al. (2013) derive 11.75 ± 0.25 Gyr (relative error; systematic uncertainties are larger). Bhardwaj et al. (2020) analyzed 233 RR Lyrae stars in M3, the largest single-cluster sample with near-infrared time series. NASA counts at least 274 variable stars in the cluster.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "bv21",
+    "vandenberg2013",
+    "harris2010",
+    "catalog-extents",
+    "nasa-messier-m3",
+    "seds-m3",
+    "bhardwaj2020",
+    "binocularsky-m3"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M53",
+   "kind": "dso",
+   "names": {
+    "display": "M53",
+    "designation": "M53",
+    "aliases": [
+     "NGC 5024"
+    ],
+    "simbadId": "M 53"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 60300,
+     "min": 59750,
+     "max": 60930,
+     "unit": "ly",
+     "sourceId": "bv21",
+     "method": "measured",
+     "note": "18.50 ± 0.18 kpc from the Sun; 19.0 kpc from the Galactic Centre"
+    },
+    "ageMyr": {
+     "value": 12250,
+     "min": 12000,
+     "max": 12500,
+     "unit": "Myr",
+     "sourceId": "vandenberg2013",
+     "method": "model",
+     "note": "12.25 ± 0.25 Gyr (relative)"
+    },
+    "massMsun": {
+     "value": 502000,
+     "unit": "Msun",
+     "sourceId": "bv21",
+     "method": "model",
+     "note": "5.02 × 10⁵ M☉"
+    },
+    "feH": {
+     "value": -2.1,
+     "unit": "dex",
+     "sourceId": "harris2010",
+     "method": "catalog"
+    },
+    "angularSizeArcmin": {
+     "value": 12.6,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 221,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "12.6′ at 18.5 kpc"
+    }
+   },
+   "dsoClass": "globular-cluster",
+   "extent": {
+    "majorArcmin": 12.6,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "bv21"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "glow",
+    "bestFieldDeg": 1.5,
+    "colorVisible": false
+   },
+   "evoStage": 4,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "MW.halo",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 2
+    },
+    {
+     "conceptId": "TIME.lookback",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "globular",
+    "old-cluster"
+   ],
+   "wow": 2,
+   "insight": 3,
+   "obsDifficulty": 3,
+   "superlatives": [
+    {
+     "claim": "one of the most distant globular clusters in Messier's catalog",
+     "scope": "Messier globular clusters",
+     "sourceId": "nasa-messier-m53",
+     "tag": "farthest"
+    }
+   ],
+   "misconceptions": [],
+   "historyHook": {
+    "text": "Johann Bode found it in February 1775 and called it a 'rather vivid and round' nebula.",
+    "sourceId": "seds-m53"
+   },
+   "showpiece": false,
+   "interest": 0.5,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M53-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the compact cluster; its faint neighbor NGC 5053 is just outside the frame.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M53-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view of the cluster core.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "How can you tell a star cluster formed very early?",
+    "answer": "By what its stars lack: a cluster this poor in heavy elements must have formed before much of that recycling had happened, more than 12 billion years ago.",
+    "glance": "A small, round glow with a brighter center, about a degree from the star α Comae Berenices.",
+    "whyHere": "M53 is one of the most distant globular clusters in Messier’s catalog, built from nearly pristine gas.",
+    "see": "Find α Comae, at the south-east corner of Coma Berenices between Arcturus and Denebola, and look about one degree north-east. M53 is a compact, round haze with a starlike middle, smaller and fainter than M3.",
+    "understand": "Every element heavier than helium was forged inside stars and spread when they died, so the galaxy’s gas has grown steadily richer, like a soup that thickens as ingredients are added. Spectra of M53’s stars show only about a hundredth of the Sun’s share of these elements. It orbits far out in the halo, roughly as far from the galaxy’s center as it is from us.",
+    "wonder": "The light you see left M53 about 60,000 years ago, during the last Ice Age.",
+    "connect": "A few degrees north-west, M64 is not a cluster in our halo but a whole galaxy, hundreds of times farther away.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Mass",
+      "factRef": "massMsun"
+     }
+    ],
+    "photoCaption": "The survey photo resolves its outer stars; binoculars show a small round glow.",
+    "notSee": "Individual stars and the faint neighbor NGC 5053 (usually).",
+    "deeper": "Baumgardt & Vasiliev (2021): 18.5 ± 0.2 kpc from the Sun and 19.0 kpc from the Galactic Center, with 5.0 × 10⁵ solar masses. Harris (2010): [Fe/H] = −2.10, under one percent of the solar iron fraction. VandenBerg et al. (2013): 12.25 ± 0.25 Gyr. Hubble images show an unusual number of blue stragglers, stars probably rejuvenated by close encounters or mergers in the crowded core (NASA).",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "bv21",
+    "vandenberg2013",
+    "harris2010",
+    "catalog-extents",
+    "nasa-messier-m53",
+    "seds-m53",
+    "al-binocular-messier"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M64",
+   "kind": "dso",
+   "names": {
+    "display": "Black Eye Galaxy",
+    "designation": "M64",
+    "aliases": [
+     "NGC 4826",
+     "Sleeping Beauty Galaxy"
+    ],
+    "simbadId": "M 64"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 15200000.0,
+     "min": 14870000.0,
+     "max": 17190000.0,
+     "unit": "ly",
+     "sourceId": "ned-d",
+     "method": "measured",
+     "note": "TRGB 4.66 Mpc (Jacobs et al. 2009, 2009AJ....138..332J) to 5.27 Mpc (2008ApJ...686L..75M), via NED-D"
+    },
+    "angularSizeArcmin": {
+     "value": 10.52,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "10.52′ × 5.33′"
+    },
+    "sizeLy": {
+     "value": 46500,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "10.52′ OpenNGC major axis at 4.66 Mpc"
+    },
+    "surfaceBrightness": {
+     "value": 22.68,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "galaxy-spiral",
+   "morphology": {
+    "hubble": "SABa",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 10.52,
+    "minorArcmin": 5.33,
+    "paDeg": 114,
+    "sourceId": "openngc"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "nasa-messier-m64"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "GAL.other",
+     "strength": 3
+    },
+    {
+     "conceptId": "SCALE.cosmic",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "galaxy"
+   ],
+   "wow": 2,
+   "insight": 4,
+   "obsDifficulty": 3,
+   "superlatives": [],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "William Herschel saw its dark patch in the 1780s and already compared it to a black eye.",
+    "sourceId": "seds-m64"
+   },
+   "showpiece": false,
+   "interest": 0.6,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M64-primary.jpg",
+      "credit": "NASA and the Hubble Heritage Team (AURA/STScI)",
+      "license": "Public domain",
+      "caption": "Hubble view of the dark dust band across the bright core; binoculars show only the core.",
+      "variant": "featured",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Blackeyegalaxy.jpg"
+     },
+     {
+      "src": "data/binocular-images/M64-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the whole galaxy.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Why does M64’s outer gas circle the wrong way?",
+    "answer": "M64 probably swallowed a smaller, gas-rich galaxy that was orbiting backwards, and where the two streams of gas now meet they collide and set off new stars along the dark dust band.",
+    "glance": "A small oval glow with a noticeably bright, concentrated core.",
+    "whyHere": "The Black Eye Galaxy is a bright spiral in Coma Berenices whose gas does not move the way its stars do.",
+    "see": "M64 lies about seven degrees south-south-west of β Comae, in Coma Berenices between Arcturus and Denebola; use a chart for the last hop. Look for an oval glow with a bright, almost starlike center.",
+    "understand": "The Black Eye is a spiral galaxy roughly 15 to 17 million light-years away. In the early 1990s spectra showed something strange: in the inner region stars and gas orbit one way, while in the outer disk the gas circles the other way. The Doppler shift gives it away, since gas coming toward us looks bluer and gas moving away looks redder, and the pattern flips between the inner and outer disk.",
+    "wonder": "William Herschel already likened its dark patch to a ‘black eye’ in the 1780s.",
+    "connect": "Galaxies grow by swallowing smaller ones, and our own galaxy’s halo carries similar debris.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     }
+    ],
+    "photoCaption": "Hubble shows the dark dust band over the core; in binoculars expect a small oval with a bright middle.",
+    "notSee": "The dark dust 'eye' and any sign of the counter-rotating gas.",
+    "deeper": "Red-giant-branch tip distances range from 4.66 Mpc (Jacobs et al. 2009) to 5.27 Mpc (via NED-D). Spectroscopy in the early 1990s showed two nested gas disks rotating in opposite senses: the inner one, with the stars, reaches about 3,000 ly in radius, and the outer counter-rotating one extends to at least 40,000 ly (SEDS). NASA notes that a merger with a satellite galaxy more than a billion years ago is a possible cause.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "ned-d",
+    "openngc",
+    "nasa-messier-m64",
+    "seds-m64",
+    "featured-m64",
+    "al-binocular-messier"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M83",
+   "kind": "dso",
+   "names": {
+    "display": "Southern Pinwheel",
+    "designation": "M83",
+    "aliases": [
+     "NGC 5236"
+    ],
+    "simbadId": "M 83"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 16050000.0,
+     "min": 14680000.0,
+     "max": 16440000.0,
+     "unit": "ly",
+     "sourceId": "ned-d",
+     "method": "measured",
+     "note": "TRGB 4.92 Mpc (Jacobs et al. 2009, via NED-D); Cepheids 4.5 Mpc (Thim et al. 2003)"
+    },
+    "angularSizeArcmin": {
+     "value": 13.61,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "13.61′ × 13.21′"
+    },
+    "sizeLy": {
+     "value": 63500,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "13.61′ OpenNGC major axis at 4.92 Mpc"
+    },
+    "surfaceBrightness": {
+     "value": 22.2,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "galaxy-barred-spiral",
+   "morphology": {
+    "hubble": "Sc (SAB(s)c in de Vaucouleurs' system)",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 13.61,
+    "minorArcmin": 13.21,
+    "paDeg": 45,
+    "sourceId": "openngc"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "nasa-messier-m83"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 3
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "binocularsky-m83"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "GAL.other",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.supernova",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.nursery",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "galaxy"
+   ],
+   "wow": 2,
+   "insight": 4,
+   "obsDifficulty": 3,
+   "superlatives": [
+    {
+     "claim": "the first galaxy discovered beyond the Local Group",
+     "scope": "history of astronomy (Lacaille, 1752)",
+     "sourceId": "seds-m83",
+     "tag": "first"
+    }
+   ],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "Nicolas-Louis de Lacaille found it from the Cape of Good Hope in 1752; from Paris, Messier could barely see it.",
+    "sourceId": "seds-m83"
+   },
+   "showpiece": false,
+   "interest": 0.6,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M83-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the face-on barred spiral.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M83-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view of the bar and inner arms.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Why has M83 had so many supernovae?",
+    "answer": "It makes stars fast, and the heaviest newborn stars live only a few million years before exploding, so a galaxy busy making stars is also busy making supernovae.",
+    "glance": "A large, round, faint glow, low in the south for northern observers and much easier from southern skies.",
+    "whyHere": "M83 is a nearby face-on spiral with six recorded supernovae, a busy star factory you can find in binoculars.",
+    "see": "From mid-northern latitudes it stays low, so catch it due south, well below Spica. Follow a chain of faint stars from γ or π Hydrae to just north of where the two lines meet; in 10×50s it is a soft, round glow with a brighter middle.",
+    "understand": "M83 is a barred spiral, with a straight bar of stars across its center, about 16 million light-years away and seen almost face-on. Its arms are strung with young star clusters and glowing gas clouds where stars are forming fast. Hubble’s wide-field images show the bubbles left by nearly 300 supernovae.",
+    "wonder": "When Lacaille found it from the Cape of Good Hope in 1752, it became the first galaxy discovered beyond our own Local Group.",
+    "connect": "A much older companion of our own galaxy waits nearby in Hydra: the globular cluster M68.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     }
+    ],
+    "photoCaption": "Survey photograph of the arms and bar; binoculars show the bright core region as a round glow.",
+    "notSee": "The arms and the pink knots of star formation.",
+    "deeper": "Red-giant-branch tip 4.92 Mpc (Jacobs et al. 2009) and Cepheids 4.5 Mpc (Thim et al. 2003), via NED-D. Lacaille's 1752 discovery from the Cape made it the first galaxy found beyond the Local Group (SEDS). Supernovae 1923A, 1945B, 1950B, 1957D, 1968L and 1983N were recorded (SEDS), and Hubble's wide-field images show bubbles from nearly 300 supernovae (NASA). It belongs to a small group with Centaurus A (NGC 5128).",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "ned-d",
+    "openngc",
+    "nasa-messier-m83",
+    "seds-m83",
+    "binocularsky-m83"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "AST-EngagementRing",
+   "kind": "dso",
+   "hr": 424,
+   "names": {
+    "display": "Engagement Ring",
+    "designation": "Polaris asterism",
+    "aliases": [
+     "Polaris Ring",
+     "Diamond Ring"
+    ]
+   },
+   "facts": {
+    "angularSizeArcmin": {
+     "value": 60,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog",
+     "note": "observing extent of the ring"
+    }
+   },
+   "dsoClass": "asterism",
+   "extent": {
+    "majorArcmin": 60,
+    "sourceId": "catalog-extents"
+   },
+   "view": {
+    "7x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "stars",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": null,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "SKY.projection",
+     "strength": 3
+    },
+    {
+     "conceptId": "PERC.binoculars",
+     "strength": 1
+    }
+   ],
+   "roles": [],
+   "wow": 2,
+   "insight": 3,
+   "obsDifficulty": 2,
+   "superlatives": [],
+   "misconceptions": [
+    "MC9"
+   ],
+   "showpiece": false,
+   "interest": 0.45,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/AST-EngagementRing-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the Polaris field; the ring stars are the fainter points looping away from it.",
+      "fieldDeg": 2.0,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "binocular-field",
+      "fieldDeg": 2
+     }
+    ]
+   },
+   "card": {
+    "question": "Is the ring of stars around Polaris a family?",
+    "answer": "The ring is only a lucky arrangement of strangers around the pole.",
+    "glance": "Polaris with a small loop of fainter stars hanging from it, like a diamond set on a ring.",
+    "whyHere": "The Engagement Ring frames Polaris so neatly that it looks designed, which makes it a good test of what counts as a family.",
+    "see": "Find Polaris by following the Big Dipper’s pointer stars, center it, and steady the binoculars against something solid. A loop of faint stars about two Moon-widths across curves away from it, with Polaris sitting on the ring like the gem.",
+    "understand": "The ring is an asterism, a pattern that exists only from our viewpoint. Its stars lie at different distances and travel in different directions. Seen from elsewhere in the galaxy the ring would vanish, just as constellations would.",
+    "wonder": "The ‘diamond’ itself is a supergiant star that gently pulses in brightness.",
+    "connect": "Real star families share an age and a motion, and the Coma Star Cluster is one, slowly coming apart.",
+    "numbers": [
+     {
+      "label": "Width of the ring",
+      "factRef": "angularSizeArcmin"
+     }
+    ],
+    "photoCaption": "Survey photograph of the field; the ring is easier to trace in steady binoculars than on the plate.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "catalog-extents"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M65",
+   "kind": "dso",
+   "names": {
+    "display": "M65",
+    "designation": "M65",
+    "aliases": [
+     "NGC 3623",
+     "Leo Triplet"
+    ],
+    "simbadId": "M 65"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 35220000.0,
+     "min": 34570000.0,
+     "max": 35880000.0,
+     "unit": "ly",
+     "sourceId": "ned-d",
+     "method": "literature",
+     "note": "adopted from M66's TRGB distance (10.8 Mpc, Jang & Lee 2017, via NED-D); same Leo Triplet group"
+    },
+    "angularSizeArcmin": {
+     "value": 7.64,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "7.64′ × 1.97′"
+    },
+    "sizeLy": {
+     "value": 78300,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "7.64′ OpenNGC major axis at 10.8 Mpc"
+    },
+    "surfaceBrightness": {
+     "value": 22.73,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    }
+   },
+   "morphology": {
+    "hubble": "Sa",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 7.64,
+    "minorArcmin": 1.97,
+    "paDeg": 173,
+    "sourceId": "openngc"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "roles": [
+    "galaxy"
+   ],
+   "showpiece": false,
+   "dsoClass": "galaxy-spiral",
+   "traits": [
+    "edge-on"
+   ],
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "seds-m65"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 1
+    },
+    "10x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "contextIds": [
+    "ctx:LeoTriplet"
+   ],
+   "teaches": [
+    {
+     "conceptId": "GAL.other",
+     "strength": 2
+    }
+   ],
+   "wow": 1,
+   "insight": 3,
+   "obsDifficulty": 4,
+   "superlatives": [],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "Messier missed this pair in 1773 when a comet passed between them; he logged both in March 1780.",
+    "sourceId": "seds-m66"
+   },
+   "interest": 0.4,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M65-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the tilted spiral M65.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Why does M65 look calm beside its twisted neighbor?",
+    "answer": "It seems to have come through the group’s encounters largely unscathed, a nearly edge-on spiral of older stars, while M66 took the brunt.",
+    "glance": "A faint, thin sliver of light, the western one of Leo’s galaxy pair.",
+    "whyHere": "M65 is a calm spiral in a busy neighborhood, the quiet member of the Leo Triplet.",
+    "see": "Under a dark sky, look below Leo’s hindquarters, between Chertan and ι Leonis. M65 and M66 sit about a third of a degree apart in the same field, two small gray slivers, M65 the narrower and fainter.",
+    "understand": "M65 is a spiral seen nearly edge-on, about 35 million light-years away. Its disk is dominated by older stars and shows little star formation. It also shows little sign of the tidal damage, the stretching by a neighbor’s gravity, so obvious in M66.",
+    "wonder": "Messier missed both galaxies in 1773 while following a comet that passed right between them.",
+    "connect": "M66, in the same field, shows what a neighbor’s pull can do.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     }
+    ],
+    "photoCaption": "Survey photograph; the dust lane along one edge is invisible in binoculars.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "ned-d",
+    "openngc",
+    "seds-m65",
+    "seds-m66",
+    "nasa-messier-m65",
+    "al-binocular-messier"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M66",
+   "kind": "dso",
+   "names": {
+    "display": "M66",
+    "designation": "M66",
+    "aliases": [
+     "NGC 3627",
+     "Leo Triplet",
+     "Arp 16"
+    ],
+    "simbadId": "M 66"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 35220000.0,
+     "min": 34570000.0,
+     "max": 35880000.0,
+     "unit": "ly",
+     "sourceId": "ned-d",
+     "method": "measured",
+     "note": "TRGB 10.8 Mpc (Jang & Lee 2017, 2017ApJ...836...74J, via NED-D; range 10.6–11.0)"
+    },
+    "angularSizeArcmin": {
+     "value": 10.28,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "10.28′ × 4.61′"
+    },
+    "sizeLy": {
+     "value": 105300,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "10.28′ OpenNGC major axis at 10.8 Mpc"
+    },
+    "surfaceBrightness": {
+     "value": 22.96,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    }
+   },
+   "morphology": {
+    "hubble": "Sb",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 10.28,
+    "minorArcmin": 4.61,
+    "paDeg": 168,
+    "sourceId": "openngc"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "roles": [
+    "galaxy"
+   ],
+   "showpiece": false,
+   "dsoClass": "galaxy-spiral",
+   "traits": [
+    "interacting"
+   ],
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "nasa-messier-m66"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 1
+    },
+    "10x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "contextIds": [
+    "ctx:LeoTriplet"
+   ],
+   "teaches": [
+    {
+     "conceptId": "GAL.other",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.supernova",
+     "strength": 1
+    }
+   ],
+   "wow": 1,
+   "insight": 3,
+   "obsDifficulty": 4,
+   "superlatives": [],
+   "misconceptions": [
+    "MC7"
+   ],
+   "interest": 0.45,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M66-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of M66 and its lopsided arms.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "What bent the arms of M66?",
+    "answer": "Its neighbors bent them, for close passes by the other two galaxies of the Leo Triplet have pulled its arms lopsided and its core off-center.",
+    "glance": "A slightly brighter, broader oval glow just east of M65.",
+    "whyHere": "M66 is the brighter, more disturbed member of the Leo Triplet.",
+    "see": "Below Leo’s hindquarters, in the same field as M65, M66 is the brighter of the two, a short oval with a brighter middle. The third member, NGC 3628, is beyond most 50 mm binoculars.",
+    "understand": "M66’s spiral arms are lopsided and its core looks off-center. A neighbor passing close pulls harder on a galaxy’s near side than on its far side and stretches it, the same tidal effect the Moon has on Earth’s oceans. Encounters like this also squeeze gas clouds and set off bursts of star formation.",
+    "wonder": "Five supernovae have been seen in M66 since 1973, a sign of all that fresh star birth.",
+    "connect": "In the Big Dipper, M81 and M82 are another famous interacting pair.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     }
+    ],
+    "photoCaption": "Survey photograph showing the asymmetric arms that binoculars cannot reveal.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "ned-d",
+    "openngc",
+    "nasa-messier-m66",
+    "seds-m66",
+    "al-binocular-messier"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M49",
+   "kind": "dso",
+   "names": {
+    "display": "M49",
+    "designation": "M49",
+    "aliases": [
+     "NGC 4472",
+     "Arp 134"
+    ],
+    "simbadId": "M 49"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 54470000.0,
+     "min": 52840000.0,
+     "max": 55770000.0,
+     "unit": "ly",
+     "sourceId": "ned-d",
+     "method": "measured",
+     "note": "SBF 16.7 Mpc (Blakeslee et al. 2009, 2009ApJ...694..556B, via NED-D); NED median 16.2 Mpc"
+    },
+    "angularSizeArcmin": {
+     "value": 10.21,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "10.21′ × 8.38′"
+    },
+    "sizeLy": {
+     "value": 161800,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "10.21′ OpenNGC major axis at 16.7 Mpc"
+    },
+    "surfaceBrightness": {
+     "value": 23.25,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    },
+    "memberCount": {
+     "value": 6000,
+     "unit": "globular clusters",
+     "sourceId": "nasa-messier-m49",
+     "method": "literature",
+     "note": "NASA: nearly 6,000 globular clusters; Harris lists 6,300 ± 1,900 (via SEDS)"
+    }
+   },
+   "morphology": {
+    "hubble": "E",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 10.21,
+    "minorArcmin": 8.38,
+    "paDeg": 156,
+    "sourceId": "openngc"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "roles": [
+    "galaxy"
+   ],
+   "showpiece": false,
+   "dsoClass": "galaxy-elliptical",
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "nasa-messier-m49"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "contextIds": [
+    "ctx:VirgoCluster"
+   ],
+   "teaches": [
+    {
+     "conceptId": "GAL.other",
+     "strength": 3
+    },
+    {
+     "conceptId": "SCALE.cosmic",
+     "strength": 2
+    }
+   ],
+   "wow": 1,
+   "insight": 4,
+   "obsDifficulty": 3,
+   "superlatives": [
+    {
+     "claim": "the first member of the Virgo galaxy cluster ever discovered",
+     "scope": "history of astronomy (Messier, 1771)",
+     "sourceId": "nasa-messier-m49",
+     "tag": "first"
+    }
+   ],
+   "misconceptions": [
+    "MC7"
+   ],
+   "interest": 0.5,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M49-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the smooth elliptical glow.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "What is a giant elliptical galaxy?",
+    "answer": "A huge, featureless ball of old stars that has used up its gas, with M49 among the largest nearby.",
+    "glance": "A small, round, evenly bright glow in the empty-looking sky of western Virgo.",
+    "whyHere": "M49 is a giant elliptical galaxy and the first member of the vast Virgo Cluster ever found.",
+    "see": "In western Virgo, between Denebola and Spica, use a chart to hop about six degrees east of the star ο Virginis. Under dark skies M49 is a small round haze, brighter toward the middle, with no structure at all.",
+    "understand": "Elliptical galaxies are smooth swarms of old stars with little gas left to make new ones. M49 is one of the biggest in the cluster, a great city of galaxies about 55 million light-years away. Its distance comes from a statistical trick: the farther a galaxy, the smoother its starlight looks, because more stars blend into each pixel.",
+    "wonder": "About 6,000 globular clusters swarm around M49.",
+    "connect": "Closer to us, the Sombrero is a spiral with a giant bulge of old stars.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     },
+     {
+      "label": "Globular clusters",
+      "factRef": "memberCount"
+     }
+    ],
+    "photoCaption": "Survey photograph; the galaxy looks the same featureless oval in binoculars, only fainter.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "ned-d",
+    "openngc",
+    "nasa-messier-m49",
+    "seds-m49",
+    "al-binocular-messier"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M94",
+   "kind": "dso",
+   "names": {
+    "display": "M94",
+    "designation": "M94",
+    "aliases": [
+     "NGC 4736",
+     "Croc's Eye Galaxy"
+    ],
+    "simbadId": "M 94"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 15200000.0,
+     "min": 13700000.0,
+     "max": 15660000.0,
+     "unit": "ly",
+     "sourceId": "ned-d",
+     "method": "measured",
+     "note": "TRGB 4.66 Mpc (Jacobs et al. 2009, 2009AJ....138..332J, via NED-D); TRGB 4.2 Mpc (Radburn-Smith et al. 2011)"
+    },
+    "angularSizeArcmin": {
+     "value": 7.74,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "7.74′ × 6.68′"
+    },
+    "sizeLy": {
+     "value": 34200,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "7.74′ OpenNGC major axis at 4.66 Mpc (deep images show faint outer arms ~3× larger, NASA)"
+    },
+    "surfaceBrightness": {
+     "value": 21.79,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    }
+   },
+   "morphology": {
+    "hubble": "SABa",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 7.74,
+    "minorArcmin": 6.68,
+    "paDeg": 105,
+    "sourceId": "openngc"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "roles": [
+    "galaxy"
+   ],
+   "showpiece": false,
+   "dsoClass": "galaxy-spiral",
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "nasa-messier-m94"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "GAL.other",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.nursery",
+     "strength": 1
+    }
+   ],
+   "wow": 2,
+   "insight": 3,
+   "obsDifficulty": 3,
+   "superlatives": [],
+   "misconceptions": [
+    "MC7"
+   ],
+   "interest": 0.4,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M94-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph: a bright core inside a fainter ring.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Why is M94 puzzling astronomers?",
+    "answer": "It seems to hold far less dark matter than other spirals, and no one yet knows why.",
+    "glance": "A small, bright, round glow with a starlike center, north of Cor Caroli.",
+    "whyHere": "M94 has a bright ring of newborn stars around its core and a quieter puzzle in its outskirts.",
+    "see": "From Cor Caroli, below the Big Dipper’s handle, move about three degrees north. M94’s compact, bright core makes it one of the easier galaxies here: a fuzzy star wrapped in a soft halo.",
+    "understand": "A wave of star formation has spread outward from M94’s center into a ring where gas is squeezed into new stars. Astronomers weigh a galaxy by how fast its outer parts orbit, as the planets’ speeds weigh the Sun. In most spirals the outskirts move too fast for the visible matter alone, betraying dark matter, the invisible mass that outweighs the stars, but M94’s barely do.",
+    "wonder": "Deep images revealed faint outer arms that roughly triple its known width.",
+    "connect": "Across the border in Coma Berenices, M64 hides another strange inner life.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     }
+    ],
+    "photoCaption": "Survey photograph of the bright core and inner ring; the faint outer arms need deep images.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "ned-d",
+    "openngc",
+    "nasa-messier-m94",
+    "seds-m94",
+    "al-binocular-messier"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M63",
+   "kind": "dso",
+   "names": {
+    "display": "Sunflower Galaxy",
+    "designation": "M63",
+    "aliases": [
+     "NGC 5055"
+    ],
+    "simbadId": "M 63"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 28930000.0,
+     "min": 28510000.0,
+     "max": 29350000.0,
+     "unit": "ly",
+     "sourceId": "ned-d",
+     "method": "measured",
+     "note": "TRGB 8.87 Mpc (McQuinn et al. 2017, 2017AJ....154...51M, via NED-D)"
+    },
+    "angularSizeArcmin": {
+     "value": 11.83,
+     "unit": "arcmin",
+     "sourceId": "openngc",
+     "method": "catalog",
+     "note": "11.83′ × 7.16′"
+    },
+    "sizeLy": {
+     "value": 99600,
+     "unit": "ly",
+     "sourceId": "openngc",
+     "method": "derived",
+     "note": "11.83′ OpenNGC major axis at 8.87 Mpc"
+    },
+    "surfaceBrightness": {
+     "value": 23.04,
+     "unit": "mag/arcsec2",
+     "sourceId": "openngc",
+     "method": "catalog"
+    }
+   },
+   "morphology": {
+    "hubble": "Sbc",
+    "sourceId": "openngc"
+   },
+   "extent": {
+    "majorArcmin": 11.83,
+    "minorArcmin": 7.16,
+    "paDeg": 103,
+    "sourceId": "openngc"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 8,
+   "roles": [
+    "galaxy"
+   ],
+   "showpiece": false,
+   "dsoClass": "galaxy-spiral",
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "nasa-messier-m63"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "contextIds": [
+    "ctx:M51Group"
+   ],
+   "teaches": [
+    {
+     "conceptId": "GAL.other",
+     "strength": 2
+    }
+   ],
+   "wow": 1,
+   "insight": 2,
+   "obsDifficulty": 3,
+   "superlatives": [],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "It was Pierre Méchain's very first discovery for Messier's catalog, on 14 June 1779.",
+    "sourceId": "seds-m63"
+   },
+   "interest": 0.35,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M63-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the Sunflower's patchy disk.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Why are the Sunflower’s arms broken into patches?",
+    "answer": "Without a wave to organize it, star formation flickers on patch by patch, and the disk’s rotation smears each patch into a short arc, a sunflower rather than a pinwheel.",
+    "glance": "A faint oval glow with a brighter center, in the northern part of Canes Venatici.",
+    "whyHere": "The Sunflower Galaxy is a spiral whose arms are broken into short patches instead of two clean curves.",
+    "see": "From Cor Caroli, below the Big Dipper’s handle, sweep about five degrees north-east. Under dark skies M63 is a small oval smudge with a brighter middle; the ‘petals’ belong to long-exposure photographs.",
+    "understand": "M63 is a flocculent spiral, its young stars scattered in many short, fluffy arm segments rather than a grand two-armed design. In the Whirlpool, a companion’s pull drives a wave around the disk that herds star birth into two long arms. M63 has no such companion close by.",
+    "wonder": "It was the very first object Pierre Méchain found for Messier’s catalog, in 1779.",
+    "connect": "The Whirlpool, a few degrees away, has crisp arms stirred by a companion.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy",
+      "comparisonKey": "size.milky-way"
+     }
+    ],
+    "photoCaption": "Survey photograph of the patchy disk; binoculars show only the bright inner oval.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "ned-d",
+    "openngc",
+    "nasa-messier-m63",
+    "seds-m63",
+    "al-binocular-messier"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "M68",
+   "kind": "dso",
+   "names": {
+    "display": "M68",
+    "designation": "M68",
+    "aliases": [
+     "NGC 4590"
+    ],
+    "simbadId": "M 68"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 33900,
+     "min": 33590,
+     "max": 34250,
+     "unit": "ly",
+     "sourceId": "bv21",
+     "method": "measured",
+     "note": "10.40 ± 0.10 kpc"
+    },
+    "ageMyr": {
+     "value": 12000,
+     "min": 11750,
+     "max": 12250,
+     "unit": "Myr",
+     "sourceId": "vandenberg2013",
+     "method": "model",
+     "note": "12.00 ± 0.25 Gyr (relative)"
+    },
+    "massMsun": {
+     "value": 128000,
+     "unit": "Msun",
+     "sourceId": "bv21",
+     "method": "model",
+     "note": "1.28 × 10⁵ M☉"
+    },
+    "feH": {
+     "value": -2.23,
+     "unit": "dex",
+     "sourceId": "harris2010",
+     "method": "catalog"
+    },
+    "angularSizeArcmin": {
+     "value": 12,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 118,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "12′ at 10.4 kpc"
+    }
+   },
+   "dsoClass": "globular-cluster",
+   "extent": {
+    "majorArcmin": 12,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "bv21"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "glow",
+    "bestFieldDeg": 1.5,
+    "colorVisible": false
+   },
+   "evoStage": 4,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "MW.halo",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "globular",
+    "old-cluster"
+   ],
+   "wow": 1,
+   "insight": 3,
+   "obsDifficulty": 4,
+   "superlatives": [],
+   "misconceptions": [],
+   "showpiece": false,
+   "interest": 0.35,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M68-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the loose southern globular.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "How old are the stars of M68?",
+    "answer": "About 12 billion years, close to the age of the universe itself, which makes them among the oldest stars you can see.",
+    "glance": "A small, faint round glow low in the south, in Hydra just below Corvus.",
+    "whyHere": "M68 is an ancient globular cluster made of some of the most metal-poor stars in Messier’s catalog.",
+    "see": "From Kraz, the south-east corner of Corvus south-west of Spica, drop about three and a half degrees south. M68 is a small, faint round haze, and from the north it needs a clear southern horizon.",
+    "understand": "Globular clusters are tight balls of very old stars orbiting through the galaxy’s halo, far from the disk where the Sun lives. M68’s stars hold under one percent of the Sun’s share of heavy elements, so they formed from barely enriched gas. Models of aging stars, fitted to their colors and brightnesses, give the age.",
+    "wonder": "It swings around the galaxy roughly every 400 million years.",
+    "connect": "Hydra also hosts a galaxy where stars are being born at a furious pace: M83.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Mass",
+      "factRef": "massMsun"
+     }
+    ],
+    "photoCaption": "Survey photograph resolving the outer stars; binoculars show a small soft glow.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "bv21",
+    "vandenberg2013",
+    "harris2010",
+    "catalog-extents",
+    "seds-m68",
+    "nasa-messier-m68",
+    "al-binocular-messier"
+   ],
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-spring-dso"
+   }
+  },
+  {
+   "id": "NGC3242",
+   "kind": "dso",
+   "names": {
+    "display": "Ghost of Jupiter",
+    "designation": "NGC 3242",
+    "aliases": [
+     "Jupiter's Ghost Nebula",
+     "Caldwell 59",
+     "C59",
+     "PN G261.0+32.0"
+    ],
+    "simbadId": "NGC 3242"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 4400,
+     "min": 4000,
+     "max": 5300,
+     "unit": "ly",
+     "sourceId": "openngc-2026",
+     "method": "measured",
+     "note": "1/parallax of the central star, 0.7452 mas (Gaia, OpenNGC Pax column) = 1.34 kpc; other estimates reach 4,800 ± 500 ly"
+    },
+    "angularSizeArcmin": {
+     "value": 0.42,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog",
+     "note": "OpenNGC NGC3242, the bright inner shell; the faint outer shell is about 40″ (Astronomy magazine)"
+    },
+    "sizeLy": {
+     "value": 0.5,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "0.42′ at 1.34 kpc"
+    }
+   },
+   "dsoClass": "planetary-nebula",
+   "traits": [
+    "contains-white-dwarfs"
+   ],
+   "extent": {
+    "majorArcmin": 0.42,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "central-star-uv",
+    "sourceIds": [
+     "astronomy-ghost-jupiter",
+     "noirlab-ngc3242"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 2,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false,
+    "filterHelps": "OIII"
+   },
+   "evoStage": 6,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.pn-wd",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 2
+    },
+    {
+     "conceptId": "STAR.white-dwarf",
+     "strength": 2
+    }
+   ],
+   "roles": [
+    "pn",
+    "wd"
+   ],
+   "wow": 2,
+   "insight": 4,
+   "obsDifficulty": 3,
+   "superlatives": [],
+   "misconceptions": [
+    "MC8",
+    "MC7"
+   ],
+   "showpiece": false,
+   "interest": 0.75,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC3242-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the Ghost of Jupiter field, 0.6° wide: the nebula is the small bright oval at the center; binoculars show it as a point.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "size-comparison"
+     },
+     {
+      "type": "distance-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "How can a dying star’s last breath look like a planet?",
+    "glance": "An 8th-magnitude ‘star’ a couple of degrees south of μ Hydrae that is really the glowing shell of a dying Sun-like star.",
+    "whyHere": "Most dying Sun-like stars are too small or too faint for binoculars, but the Ghost of Jupiter shines brightly enough to find, so you can point to the end of a star’s life even from a suburban sky.",
+    "see": "Find μ Hydrae, a 4th-magnitude star about 16° east-south-east of orange Alphard, and drop about 2° south, a touch west. At 10× the Ghost is an 8th-magnitude point among ordinary stars, and only your chart says which; braced and studied, it may look a shade softer than its neighbors.",
+    "understand": "When a star like the Sun runs out of fuel it swells into a giant and lets its outer layers drift away. The exposed core, on its way to becoming a white dwarf, is so hot that its ultraviolet light makes the shed gas glow, mostly in a green line of oxygen. Gaia’s parallax for that central star puts the shell about 4,400 light-years away.",
+    "wonder": "Its glowing shell is hundreds of times wider than Neptune’s orbit, yet from here it shrinks to a disk no bigger than Jupiter looks.",
+    "connect": "The Eight-Burst Nebula in Vela shows the same ending farther south, with a surprise at its center.",
+    "answer": "In a small telescope its shell shows a round, pale disk close to the size Jupiter appears, hence its name and the misleading term planetary nebula; in binoculars that disk shrinks back into a star.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "Telescope photos show a pale blue-green oval with an inner ‘eye’; binoculars show a starlike point.",
+    "notSee": "No disk, no inner eye and no color in binoculars; a small telescope at about 50× shows the disk.",
+    "deeper": "OpenNGC lists V 7.7 (B 8.6) and a 0.42′ bright inner shell; the central star (V 12.3) has a Gaia parallax of 0.745 mas, about 1.34 kpc, while other estimates reach 4,800 ± 500 light-years. Astronomy magazine finds it 1.8° south of μ Hydrae and describes a 16″ pale blue-green disk in a 4-inch telescope inside a faint 40″ outer shell. William Herschel discovered it in 1785.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "openngc-2026",
+    "catalog-extents",
+    "astronomy-ghost-jupiter",
+    "noirlab-ngc3242"
+   ],
+   "con": "Hya",
+   "ra": 156.192,
+   "dec": -18.64222,
+   "mag": 7.7,
+   "provenance": {
+    "status": "curated",
+    "batch": "spring",
+    "curatedBy": "curator-kb-facts-r3"
+   }
+  }
+ ],
+ "edges": [
+  {
+   "from": "M44",
+   "to": "M67",
+   "type": "LIFE_NEXT",
+   "subtype": "older-analog",
+   "strength": 0.9,
+   "reasonKey": "edge.M44>M67",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M44",
+     "fact": "ageMyr"
+    },
+    {
+     "objectId": "M67",
+     "fact": "ageMyr"
+    }
+   ],
+   "sourceIds": [
+    "morales2022",
+    "castro2011"
+   ]
+  },
+  {
+   "from": "M48",
+   "to": "M44",
+   "type": "CONTRAST",
+   "subtype": "similar-age-different-distance",
+   "strength": 0.6,
+   "reasonKey": "edge.M48>M44",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M48",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M44",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M48",
+     "fact": "ageMyr"
+    },
+    {
+     "objectId": "M44",
+     "fact": "ageMyr"
+    }
+   ],
+   "directed": false,
+   "sourceIds": [
+    "hr24",
+    "sun2023",
+    "morales2022"
+   ]
+  },
+  {
+   "from": "M48",
+   "to": "M67",
+   "type": "LIFE_NEXT",
+   "subtype": "older-analog",
+   "strength": 0.7,
+   "reasonKey": "edge.M48>M67",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M48",
+     "fact": "ageMyr"
+    },
+    {
+     "objectId": "M67",
+     "fact": "ageMyr"
+    }
+   ],
+   "sourceIds": [
+    "sun2023",
+    "castro2011"
+   ]
+  },
+  {
+   "from": "M44",
+   "to": "AST-Hyades",
+   "type": "CONTRAST",
+   "subtype": "same-age-different-distance",
+   "strength": 0.8,
+   "reasonKey": "edge.M44>AST-Hyades",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M44",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M44",
+     "fact": "ageMyr"
+    }
+   ],
+   "directed": false,
+   "sourceIds": [
+    "hr24",
+    "morales2022",
+    "seds-m44"
+   ]
+  },
+  {
+   "from": "M44",
+   "to": "HR3522",
+   "type": "SAME_PHYSICS",
+   "subtype": "planet-hosts",
+   "strength": 0.6,
+   "reasonKey": "edge.M44>HR3522",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "quinn2012"
+   ]
+  },
+  {
+   "from": "M67",
+   "to": "M97",
+   "type": "LIFE_NEXT",
+   "subtype": "fate-low-mass",
+   "strength": 0.7,
+   "reasonKey": "edge.M67>M97",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M67",
+     "fact": "ageMyr"
+    },
+    {
+     "objectId": "M97",
+     "fact": "ageMyr"
+    }
+   ],
+   "sourceIds": [
+    "castro2011",
+    "guerrero2003"
+   ]
+  },
+  {
+   "from": "Mel111",
+   "to": "M44",
+   "type": "CONTRAST",
+   "subtype": "dissolving-vs-bound",
+   "strength": 0.7,
+   "reasonKey": "edge.Mel111>M44",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "Mel111",
+     "fact": "massMsun"
+    },
+    {
+     "objectId": "M44",
+     "fact": "massMsun"
+    }
+   ],
+   "directed": false,
+   "sourceIds": [
+    "hr24",
+    "tang2019"
+   ]
+  },
+  {
+   "from": "Mel111",
+   "to": "M64",
+   "type": "SCALE",
+   "subtype": "galactic-pole-window",
+   "strength": 0.7,
+   "reasonKey": "edge.Mel111>M64",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "Mel111",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M64",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "hr24",
+    "ned-d"
+   ]
+  },
+  {
+   "from": "M53",
+   "to": "M64",
+   "type": "SCALE",
+   "subtype": "halo-to-galaxy",
+   "strength": 0.7,
+   "reasonKey": "edge.M53>M64",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M53",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M64",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "bv21",
+    "ned-d"
+   ]
+  },
+  {
+   "from": "M3",
+   "to": "M53",
+   "type": "CONTRAST",
+   "subtype": "metallicity-and-distance",
+   "strength": 0.7,
+   "reasonKey": "edge.M3>M53",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M3",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M53",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M3",
+     "fact": "feH"
+    },
+    {
+     "objectId": "M53",
+     "fact": "feH"
+    }
+   ],
+   "directed": false,
+   "sourceIds": [
+    "bv21",
+    "harris2010"
+   ]
+  },
+  {
+   "from": "STAR-Arcturus",
+   "to": "M3",
+   "type": "SCALE",
+   "subtype": "same-kind-of-star-farther",
+   "strength": 0.6,
+   "reasonKey": "edge.STAR-Arcturus>M3",
+   "curated": true,
+   "sourceIds": [
+    "bv21"
+   ]
+  },
+  {
+   "from": "M81",
+   "to": "M82",
+   "type": "CAUSE",
+   "subtype": "tidal-trigger",
+   "strength": 1.0,
+   "reasonKey": "edge.M81>M82",
+   "curated": true,
+   "sourceIds": [
+    "demello2008",
+    "nasa-messier-m82",
+    "seds-m82"
+   ]
+  },
+  {
+   "from": "M81",
+   "to": "NGC2403",
+   "type": "NEIGHBOR",
+   "subtype": "same-group",
+   "strength": 0.5,
+   "reasonKey": "edge.M81>NGC2403",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "seds-m81"
+   ]
+  },
+  {
+   "from": "M82",
+   "to": "M51",
+   "type": "SAME_PHYSICS",
+   "subtype": "tidal-interaction",
+   "strength": 0.7,
+   "reasonKey": "edge.M82>M51",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "nasa-messier-m82",
+    "esahubble-heic0506a"
+   ]
+  },
+  {
+   "from": "M51",
+   "to": "M101",
+   "type": "CONTRAST",
+   "subtype": "surface-brightness",
+   "strength": 0.8,
+   "reasonKey": "edge.M51>M101",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M51",
+     "fact": "surfaceBrightness"
+    },
+    {
+     "objectId": "M101",
+     "fact": "surfaceBrightness"
+    },
+    {
+     "objectId": "M51",
+     "fact": "angularSizeArcmin"
+    },
+    {
+     "objectId": "M101",
+     "fact": "angularSizeArcmin"
+    }
+   ],
+   "directed": false,
+   "sourceIds": [
+    "openngc"
+   ]
+  },
+  {
+   "from": "M63",
+   "to": "M51",
+   "type": "CONTRAST",
+   "subtype": "flocculent-vs-grand-design",
+   "strength": 0.7,
+   "reasonKey": "edge.M63>M51",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "nasa-messier-m63",
+    "esahubble-heic0506a"
+   ]
+  },
+  {
+   "from": "M106",
+   "to": "M101",
+   "type": "SAME_PHYSICS",
+   "subtype": "distance-ladder",
+   "strength": 0.8,
+   "reasonKey": "edge.M106>M101",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M106",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M101",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "reid2019",
+    "ned-d"
+   ]
+  },
+  {
+   "from": "DS-MizarAlcor",
+   "to": "M101",
+   "type": "SCALE",
+   "subtype": "scale-step",
+   "strength": 0.6,
+   "reasonKey": "edge.DS-MizarAlcor>M101",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M101",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "ned-d"
+   ]
+  },
+  {
+   "from": "HR4301",
+   "to": "M97",
+   "type": "LIFE_NEXT",
+   "subtype": "giant-to-pn",
+   "strength": 0.6,
+   "reasonKey": "edge.HR4301>M97",
+   "curated": true,
+   "sourceIds": [
+    "guerrero2003"
+   ]
+  },
+  {
+   "from": "M94",
+   "to": "M82",
+   "type": "SAME_PHYSICS",
+   "subtype": "starburst",
+   "strength": 0.5,
+   "reasonKey": "edge.M94>M82",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "nasa-messier-m94",
+    "nasa-messier-m82"
+   ]
+  },
+  {
+   "from": "M49",
+   "to": "M104",
+   "type": "CONTRAST",
+   "subtype": "elliptical-vs-spiral",
+   "strength": 0.6,
+   "reasonKey": "edge.M49>M104",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M49",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M104",
+     "fact": "distanceLy"
+    }
+   ],
+   "directed": false,
+   "sourceIds": [
+    "ned-d"
+   ]
+  },
+  {
+   "from": "M104",
+   "to": "M68",
+   "type": "SAME_PHYSICS",
+   "subtype": "globular-systems",
+   "strength": 0.6,
+   "reasonKey": "edge.M104>M68",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M104",
+     "fact": "memberCount"
+    }
+   ],
+   "sourceIds": [
+    "nasa-messier-m104"
+   ]
+  },
+  {
+   "from": "M68",
+   "to": "M83",
+   "type": "SCALE",
+   "subtype": "halo-to-galaxy",
+   "strength": 0.6,
+   "reasonKey": "edge.M68>M83",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M68",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M83",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "bv21",
+    "ned-d"
+   ]
+  },
+  {
+   "from": "M65",
+   "to": "M66",
+   "type": "CONTRAST",
+   "subtype": "calm-vs-disturbed",
+   "strength": 0.7,
+   "reasonKey": "edge.M65>M66",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "seds-m65",
+    "seds-m66",
+    "nasa-messier-m66"
+   ]
+  },
+  {
+   "from": "AST-EngagementRing",
+   "to": "Mel111",
+   "type": "CONTRAST",
+   "subtype": "asterism-vs-cluster",
+   "strength": 0.6,
+   "reasonKey": "edge.AST-EngagementRing>Mel111",
+   "curated": true,
+   "sourceIds": [
+    "tang2019"
+   ]
+  },
+  {
+   "from": "HR4301",
+   "to": "M81",
+   "type": "TIME_MACHINE",
+   "subtype": "lookback-step",
+   "strength": 0.7,
+   "reasonKey": "edge.HR4301>M81",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M81",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "ned-d"
+   ]
+  },
+  {
+   "from": "M104",
+   "to": "M64",
+   "type": "SAME_PHYSICS",
+   "subtype": "dust-lane",
+   "strength": 0.5,
+   "reasonKey": "edge.M104>M64",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "nasa-messier-m104",
+    "nasa-messier-m64"
+   ]
+  },
+  {
+   "from": "M106",
+   "to": "M104",
+   "type": "SAME_PHYSICS",
+   "subtype": "weighing-black-holes",
+   "strength": 0.5,
+   "reasonKey": "edge.M106>M104",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "seds-m106",
+    "jardel2011"
+   ]
+  },
+  {
+   "from": "HR3541",
+   "to": "M97",
+   "type": "LIFE_NEXT",
+   "subtype": "agb-to-pn",
+   "strength": 0.6,
+   "reasonKey": "edge.HR3541>M97",
+   "curated": true,
+   "sourceIds": [
+    "guerrero2003"
+   ]
+  },
+  {
+   "from": "M3",
+   "to": "M68",
+   "type": "CONTRAST",
+   "subtype": "same-distance-different-metallicity",
+   "strength": 0.6,
+   "reasonKey": "edge.M3>M68",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M3",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M68",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M3",
+     "fact": "feH"
+    },
+    {
+     "objectId": "M68",
+     "fact": "feH"
+    }
+   ],
+   "directed": false,
+   "sourceIds": [
+    "bv21",
+    "harris2010"
+   ]
+  },
+  {
+   "from": "M83",
+   "to": "M101",
+   "type": "SAME_FAMILY",
+   "subtype": "face-on-spiral",
+   "strength": 0.6,
+   "reasonKey": "edge.M83>M101",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M83",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M101",
+     "fact": "distanceLy"
+    }
+   ],
+   "directed": false,
+   "sourceIds": [
+    "ned-d",
+    "nasa-messier-m83"
+   ]
+  }
+ ],
+ "contexts": [
+  {
+   "id": "ctx:M81Group",
+   "kind": "galaxy-group",
+   "name": "M81 Group",
+   "memberIds": [
+    "M81",
+    "M82",
+    "NGC2403"
+   ],
+   "facts": {},
+   "text": "A small group of galaxies about 12 million light-years away; M81, M82 and NGC 3077 are linked by streams of hydrogen gas from a close encounter.",
+   "sources": [
+    "demello2008",
+    "seds-m81"
+   ]
+  },
+  {
+   "id": "ctx:M51Group",
+   "kind": "galaxy-group",
+   "name": "M51 Group",
+   "memberIds": [
+    "M51",
+    "M63"
+   ],
+   "facts": {},
+   "text": "A loose group dominated by the Whirlpool Galaxy; the Sunflower Galaxy appears to belong to it.",
+   "sources": [
+    "seds-m51",
+    "seds-m63"
+   ]
+  },
+  {
+   "id": "ctx:LeoTriplet",
+   "kind": "galaxy-group",
+   "name": "Leo Triplet",
+   "memberIds": [
+    "M65",
+    "M66"
+   ],
+   "facts": {},
+   "text": "Three interacting spirals (M65, M66 and NGC 3628) about 35 million light-years away.",
+   "sources": [
+    "seds-m65",
+    "nasa-messier-m66"
+   ]
+  },
+  {
+   "id": "ctx:VirgoCluster",
+   "kind": "galaxy-cluster",
+   "name": "Virgo Cluster",
+   "memberIds": [
+    "M49"
+   ],
+   "facts": {},
+   "text": "The nearest large cluster of galaxies; M49 was the first of its members to be discovered.",
+   "sources": [
+    "nasa-messier-m49",
+    "seds-m49"
+   ]
+  }
+ ],
+ "narration": {
+  "edge.M44>M67": [
+   "{prev} is middle-aged, while {next} is about six times older, nearly the Sun’s age, and you can watch the bright white stars disappear as the glow turns golden.",
+   "From a 600-million-year-old family to a four-billion-year-old one, {next} shows what a cluster looks like when only Sun-like stars and their giants are left."
+  ],
+  "edge.M48>M44": [
+   "{prev} and {next} are roughly the same kind of middle-aged family, but {prev} lies about four times farther away, which is why it looks smaller and fainter."
+  ],
+  "edge.M48>M67": [
+   "{prev} has lost its hottest stars, while {next} has lost almost everything heavier than the Sun: the same clock, with many more hours on it."
+  ],
+  "edge.M44>AST-Hyades": [
+   "{prev} and {next} are near-twins in age and chemistry, but {next} is several times closer, so the same kind of family fills far more of the sky."
+  ],
+  "edge.M44>HR3522": [
+   "{prev} was the first star cluster where planets were found around Sun-like stars, and {next}, a nearby single star, hosts a whole family of planets."
+  ],
+  "edge.M67>M97": [
+   "The Sun-like stars of {prev} will one day swell, puff off their outer layers and leave a glowing shell like {next}."
+  ],
+  "edge.Mel111>M44": [
+   "{prev} and {next} are similar in age, but {prev} has kept only a tiny fraction of the mass that still binds {next}, so one family is dissolving while the other holds on."
+  ],
+  "edge.Mel111>M64": [
+   "Look past {prev} and you are looking out of the Milky Way’s disk, a clear view to other galaxies like {next}, tens of thousands of times farther away."
+  ],
+  "edge.M53>M64": [
+   "{prev} sits at the far edge of our own galaxy’s halo, while {next}, a few degrees away, is a whole galaxy hundreds of times farther still."
+  ],
+  "edge.M3>M53": [
+   "Both are ancient globulars, but {next} is nearly twice as far as {prev} and even poorer in the heavy elements that stars forge over time."
+  ],
+  "edge.STAR-Arcturus>M3": [
+   "{prev} is an old orange giant close to us, and the brightest stars of {next} are the same kind of star, so far away that they blend into a soft glow."
+  ],
+  "edge.M81>M82": [
+   "The gravity of {prev} is what set {next} ablaze: their close pass a few hundred million years ago drove gas into the smaller galaxy’s core and triggered its burst of star birth.",
+   "These two are partners in a slow collision, with the bigger spiral, {prev}, stirring up its smaller companion, {next}."
+  ],
+  "edge.M81>NGC2403": [
+   "{next} belongs to the same small group of galaxies as {prev}."
+  ],
+  "edge.M82>M51": [
+   "Like {prev}, {next} has a companion that is reshaping it, but here the result is two crisp spiral arms instead of a starburst core."
+  ],
+  "edge.M51>M101": [
+   "{next} is bigger and gives off about as much light as {prev}, yet it is much harder to see, because its light is spread over a far larger area and each patch is fainter."
+  ],
+  "edge.M63>M51": [
+   "The arms of {prev} are short, fluffy patches while those of {next} are two clean curves stirred by a companion, the same kind of galaxy driven by different engines."
+  ],
+  "edge.M106>M101": [
+   "The distance of {prev} is measured by geometry, and it calibrates the pulsating-star yardsticks that measure galaxies like {next}."
+  ],
+  "edge.DS-MizarAlcor>M101": [
+   "{prev} lies in our stellar neighborhood, while {next}, in the same corner of the Dipper, is a whole galaxy hundreds of thousands of times farther away."
+  ],
+  "edge.HR4301>M97": [
+   "{prev} is an aging giant, and stars like it end by puffing off their outer layers, leaving a glowing shell like {next}."
+  ],
+  "edge.M94>M82": [
+   "{prev} forms new stars in a bright ring around its core, while {next} does it in a crowded, violent burst at its center."
+  ],
+  "edge.M49>M104": [
+   "{prev} is a smooth ball of old stars, {next} a disk galaxy with a giant bulge and a dark dust lane, and {next} is also the nearer of the two."
+  ],
+  "edge.M104>M68": [
+   "{prev} is circled by about two thousand globular clusters, and {next} is one of the much smaller crowd that circles our own galaxy."
+  ],
+  "edge.M68>M83": [
+   "From a star cluster in our galaxy’s halo you leap to a whole spiral galaxy, hundreds of times farther away, in the same part of Hydra."
+  ],
+  "edge.M65>M66": [
+   "{prev} and {next} share a binocular field and a neighborhood, but {prev} looks undisturbed while {next} has been pulled out of shape by its neighbors."
+  ],
+  "edge.HR4301>M81": [
+   "The light from {prev} set out within the last couple of centuries, while the faint glow of {next}, a few hops away, set out about 12 million years ago."
+  ],
+  "edge.M104>M64": [
+   "Both {prev} and {next} are famous for a dark band of dust crossing a bright core, though in binoculars both show only the bright part."
+  ],
+  "edge.M106>M104": [
+   "The black hole of {prev} was weighed with orbiting water clouds and that of {next} with the motions of its stars, two ways to weigh the invisible."
+  ],
+  "edge.HR3541>M97": [
+   "{prev} is a cool, bloated star near the end of its life, shedding gas into space, and {next} shows the next step, a shell of that gas lit up by the exposed core."
+  ],
+  "edge.M3>M68": [
+   "{prev} and {next} lie at almost the same distance and are about the same age, but {next} holds several times less of the heavy elements, so it formed from even less recycled gas."
+  ],
+  "edge.M83>M101": [
+   "{prev} and {next} are both big spirals seen face-on, and both have hosted bright supernovae, but {prev} is the more compact and the easier of the two."
+  ],
+  "edge.AST-EngagementRing>Mel111": [
+   "{prev} is a pattern made by chance, while {next} is a real family whose stars share an age, a distance and a motion."
+  ]
+ }
+}

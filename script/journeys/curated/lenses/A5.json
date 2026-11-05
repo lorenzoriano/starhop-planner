@@ -1,0 +1,890 @@
+{
+  "archetype": "A5",
+  "storyline": "Stars are never born alone. A collapsing cloud makes hundreds or thousands of them in one burst, siblings that share a birthday, a makeup and a motion through space, and an open cluster is simply such a family seen while it is still together. Every journey of this theme follows what time does to a family. Siblings born on the same day do not age at the same pace: the heaviest burn through their fuel first, so the first member to swell into an orange giant becomes the family's clock. Meanwhile passing clouds and the steady tidal pull of the Milky Way peel members away, until old families are thin, wide or dissolving, and only the heaviest last for billions of years. In the end the siblings are scattered across whole constellations, and the only tie left is that they still travel the same way, which is exactly how the Sun's own family, long since dispersed, would look today.",
+  "beats": [
+    {
+      "step": 1,
+      "label": "Born together",
+      "maxStops": 2
+    },
+    {
+      "step": 2,
+      "label": "The heaviest age first",
+      "maxStops": 2
+    },
+    {
+      "step": 3,
+      "label": "The family thins out",
+      "maxStops": 2
+    },
+    {
+      "step": 4,
+      "label": "Scattered siblings",
+      "maxStops": 2
+    }
+  ],
+  "minBeats": 3,
+  "narration": {
+    "title.A5-families": [
+      "The Star Families of {region}",
+      "{region}, a Family Album",
+      "How Families of Stars Grow Apart in {region}",
+      "{region}'s Star Families, Young and Old",
+      "Are the Stars of {region} Born in Families?"
+    ],
+    "question.A5-families": [
+      "Are stars born alone, or into families?",
+      "Do star families stay together, or do they drift apart?",
+      "Where are the Sun's brothers and sisters now?"
+    ],
+    "hook.A5-families": [
+      "Stars are born in litters from one cloud, and time slowly scatters every litter.",
+      "Every star cluster is a family photograph, and the older the photo, the fewer remain.",
+      "The Sun lost its siblings long ago, and tonight's star families show how that happens."
+    ],
+    "story.A5-families": [
+      "Stars are never born alone: a collapsing cloud makes hundreds at once, siblings that share a birthday and a motion through space. Starting at {hook}, tonight's families each stand at a different point on the road every family travels, and together they show what time does to a family of stars.",
+      "Somewhere in the galaxy the Sun's brothers and sisters are still out there, scattered beyond recognition. Tonight's star families show how a family changes with time, and why the Sun can no longer pick out its own.",
+      "A star cluster is a family photograph in which every member is the same age, and binoculars let you leaf through the album. From {hook} to {name}, each family you meet is a little further along the same road, and each shows one more thing that time does to a family."
+    ],
+    "payoff.A5-families": [
+      "Stars are born in families, hundreds at a time from one cloud, and they do not stay together. The heaviest siblings age first, the pull of the Milky Way peels the others away, and in the end only a shared motion through space remembers the family. The Sun's own family went through all of this long ago, so its brothers and sisters are still out there, scattered around the galaxy and impossible to pick out by eye. Gaia has already found strings of stars stretched along the galaxy that were clusters once, families still traveling together long after they stopped looking like one.",
+      "From {hook} to {name}, every family you met shared one thing beneath its looks, a common birth, and what set them apart was mostly what time and the galaxy had done to them since. Every star you can see, the Sun included, was born into such a family, and the Sun's own siblings, long since dispersed, are still circling the galaxy somewhere among the stars. Astronomers hunt for them by chemistry, looking for stars whose makeup matches the Sun's as closely as a family likeness.",
+      "Star families begin as tight litters and end as strangers who happen to share a direction of travel, and every family you saw tonight sits somewhere on that road. The Sun's family came apart the same way so long ago that its siblings are now spread around the Milky Way, still out there but no longer recognizable as kin. Even the loosest of them still carry two marks of the family, a shared age and a shared chemistry, and with patience and good spectra both can be read."
+    ],
+    "story.A5-families.end3": [
+      "Stars are born in families, and tonight follows them from the years when they are still close-knit to the long stretch when the galaxy begins to pull them apart. Starting at {hook}, each family you meet is further along the same road, and the last of them, {name}, shows how a family fares once time and the Milky Way have worked on it.",
+      "A star family begins as a tight litter and spends most of its life in a contest with the galaxy around it. Tonight's families stand at different points on that road, and the night ends on the contest itself, the Milky Way's steady pull against a family's own weight.",
+      "Every cluster you will see tonight is a family whose members were born together, and each has been worked on by time for a different stretch. From {hook} to {name}, you watch the heaviest siblings age first and then the family itself begin to thin."
+    ],
+    "story.A5-families.end4": [
+      "Stars are born in families, but they do not stay in them. Starting at {hook}, tonight follows families still held together by their own gravity out to siblings so widely scattered that only the way they move shows they are kin.",
+      "Somewhere in the galaxy the Sun's brothers and sisters are still out there, scattered beyond recognition. Tonight's families show how that happens, from clusters still holding together to siblings strewn across the sky, recognized only by their motions.",
+      "A star cluster is a family photograph, but the photograph does not last. From {hook} to {name}, each family you meet is further along the same road, and the last have come so far apart that no binocular field can hold them."
+    ],
+    "payoff.A5-families.end3": [
+      "Tonight's families were all still families, but not equally so. The heaviest siblings aged first and set each family's clock, and the older clusters showed what the galaxy's slow pull does to a family, and how much a family's weight decides. Given enough time nearly every one of them will dissolve, its stars drifting off along its orbit until the cluster is a stream and then not even that. The Sun's family went this way long ago, which is why its siblings are now scattered around the galaxy, beyond the reach of any binocular field.",
+      "From {hook} to {name}, each family was further along the same road, from siblings still close together to clusters thinning under the Milky Way's pull. Only the richest families hold out for billions of years; most give their members back to the galaxy within a few hundred million, one quiet escape at a time. The escaped siblings do not vanish, though, for they keep traveling in the family's direction, and the galaxy is full of such streams, families that outlived their clusters.",
+      "A family of stars is held together by nothing but its own gravity, and tonight you saw that grip at work in families of different ages and weights, and saw how much the weight decides. The galaxy wins in the end, peeling members away until only a shared drift through space remembers the family. That is the fate the Sun's own family met long ago, and its brothers and sisters are still out there somewhere, traveling on their own."
+    ],
+    "payoff.A5-families.end4": [
+      "Tonight's families ran from clusters still held by their own gravity to siblings spread so far apart that only their motions give them away. That is the road every family of stars travels: born together, its heaviest members aging first, then thinned by the Milky Way's steady pull until no cluster is left. The Sun took that road long ago, and its own brothers and sisters are still out there among the stars, scattered past recognition but still, in principle, findable.",
+      "From {hook} to {name}, the night ended where every family of stars ends, scattered across the sky and tied together only by the way its members move. Astronomers can still find such siblings because a shared birth leaves two lasting marks, a common motion that fades only slowly and a common chemistry that never fades at all. The Sun's family dispersed so long ago that its motion has been forgotten, so the search for its siblings now rests on chemistry alone.",
+      "Families of stars do not die so much as dissolve, and the last stop tonight showed that ending under way: siblings drifting apart, kin only by birth and by motion. The same thing happened to the Sun's family billions of years ago, so the Sun, too, is a scattered sibling, one star among many whose kin are spread around the galaxy. Gaia is already tracing such scattered families across the sky, families that dissolved long ago but still travel as one."
+    ],
+    "title.A5-families.end3": [
+      "The Star Families of {region}",
+      "{region}, a Family Album",
+      "How Families of Stars Grow Apart in {region}",
+      "{region}'s Star Families, Young and Old",
+      "Are the Stars of {region} Born in Families?"
+    ],
+    "title.A5-families.end4": [
+      "The Star Families of {region}",
+      "{region}'s Scattered Siblings",
+      "How Families of Stars Grow Apart in {region}",
+      "{region}, a Family Album",
+      "Who Are the Lost Siblings of {region}?"
+    ]
+  },
+  "transitions": {
+    "pairs": {
+      "1>1": [
+        "{next} is another family born in a single burst, like {prev}, and two litters seen one after the other make it plain that this is simply how stars arrive.",
+        "Like {prev}, {next} is a family whose members are still together, so take in what the two share before time starts to change them."
+      ],
+      "1>2": [
+        "{prev} showed siblings born together; {next} shows that siblings born together do not grow old together.",
+        "A family shares a birthday but not a lifespan, and at {next} that difference has started to show.",
+        "From {prev}, where the siblings still share one look, you come to {next}, where the eldest members have already left their prime while the rest carry on."
+      ],
+      "1>3": [
+        "{prev} is a family still close together; at {next} the question becomes how well a family stands up to the steady pull of the Milky Way.",
+        "From the close-knit family of {prev} you come to {next}, where what matters is how a family holds up against the galaxy's slow tug."
+      ],
+      "1>4": [
+        "{prev} is a family still bound together, and {next} shows the other way a family can end up: siblings spread so widely that only their motions still tie them together.",
+        "Where {prev} keeps its siblings close, {next} belongs to a family whose members are strewn across the sky and known as kin only by how they move."
+      ],
+      "2>2": [
+        "{next} keeps the same clock as {prev}: in both families the heaviest siblings went first, and what has aged tells you how long each family has lived.",
+        "Like {prev}, {next} is a family whose heaviest members have already aged, so together they give two readings of one clock."
+      ],
+      "2>3": [
+        "Once the heaviest siblings have aged, as at {prev}, the next test is for the family as a whole, and {next} shows how a family fares against the galaxy's steady pull.",
+        "At {prev} the family lost its eldest to old age; {next} faces a slower threat, the pull of the Milky Way on every member at once."
+      ],
+      "2>4": [
+        "After {prev}, where the eldest have aged inside a family that is still together, {next} takes you past the cluster stage to siblings spread so widely that their motions are the clearest tie between them.",
+        "{prev} is a family aging in one place; {next} belongs to a family that no longer stays in one place at all."
+      ],
+      "3>3": [
+        "{next} has spent longer under the galaxy's pull than {prev}, so the two together show how that contest goes as the years pile up.",
+        "{prev} is still early in its long contest with the Milky Way's pull, and {next}, older, shows how much further that contest can go, and how much a family's own weight decides it."
+      ],
+      "3>4": [
+        "{prev} is still a cluster; at {next} the family has already come apart, and only the way its members move still ties them together.",
+        "Where {prev} still holds its family together, at least in part, {next} belongs to one whose members are scattered across the sky and tied together only by the way they move."
+      ],
+      "4>4": [
+        "Like {prev}, {next} belongs to a family whose members are spread far beyond your field, and its kinship is written in its motion rather than in the view.",
+        "{next}, like {prev}, is a sibling far from most of its family, and only measurements of how it moves reveal where it came from.",
+        "From {prev} to {next} the family ties stay invisible to the eye, recorded only in the paths the stars follow through space."
+      ]
+    },
+    "arrive": {
+      "1": [
+        "{next} is a young family, siblings born together and still close.",
+        "{next} takes you back to the start of a family's life, while its members are still together.",
+        "From {prev} the story goes back to the start, to {next}, a litter whose siblings still share one birthday, one place and one motion."
+      ],
+      "2": [
+        "At {next} the family clock is easy to read, because its heaviest siblings have already aged.",
+        "{next} is a family whose eldest members have already aged, while the rest carry on.",
+        "From {prev} the story moves to {next}, where a shared birthday has not meant a shared lifespan: the heaviest siblings have aged first."
+      ],
+      "3": [
+        "At {next} the question is how well a family stands up to the steady pull of the Milky Way.",
+        "{next} has spent a long time under the galaxy's steady pull, and its shape shows how it has fared.",
+        "After {prev}, {next} shows the slow part of family life, the galaxy's pull drawing members away a few at a time."
+      ],
+      "4": [
+        "{next} belongs to a family that no single cluster can hold, its members spread across the sky and tied together by how they move.",
+        "With {next} the family is no longer a cluster at all, only siblings whose motions betray their common birth.",
+        "From {prev} the story reaches {next}, a family so spread out that only its members' motions still hold it together."
+      ]
+    }
+  },
+  "objects": {
+    "NGC869": {
+      "step": 1,
+      "rank": 14,
+      "beat": "Born together: twin litters",
+      "question": "What makes a few hundred points of light one family rather than a crowd?",
+      "why": "h Persei is about the cleanest picture of a star family the sky offers: hundreds of stars from one cloud and one burst, still packed tightly enough to look like what they are.",
+      "look": "Keep both halves of the Double Cluster in one field and settle on h Persei, the western knot, a little richer in the middle. Dozens of blue-white points crowd together, nearly all of one color, and that sameness is the first clue to a shared origin.",
+      "answer": "What makes them one is a shared birth, which astronomers can test: the members' parallaxes put them all at one distance, and the clocks read from different kinds of member all land near 14 million years. Its twin χ Persei and a wider halo of stars around both share that birthday, so this family even has cousins.",
+      "story": "The two cores are only the densest part of the family. Around them spreads a crowd of thousands of stars with the same age and motion, reaching tens of light-years out, and studies of their motions suggest that the cores are bound while much of the outer crowd is not. The Double Cluster is therefore a family caught between two fates, part of it built to last and part already on its way out."
+    },
+    "NGC663": {
+      "step": 1,
+      "rank": 27.5,
+      "beat": "Born together: the biggest litter",
+      "question": "How many siblings can one cloud produce in a single burst of star birth?",
+      "why": "NGC 663 is a young family on the grand scale, the largest cluster of a whole association strung along Cassiopeia, and it shows how big a litter a cloud can make at once.",
+      "look": "Look for a grainy patch a little larger and richer than M103 nearby, with a few brighter stars sparkling on a haze of fainter ones. That haze is the bulk of the family, too faint to separate one by one.",
+      "answer": "Gaia counts over a thousand members here, nearly 8,000 Suns' worth of stars, all born about 27 million years ago. Litters this big are the exception, since most clouds make far smaller families, and the size of the litter will decide how long the family can stay together.",
+      "story": "Litter size matters because the forces that break families are steady and indifferent. Tides and passing clouds remove members at a rate that a heavier family resists better, so the time a cluster survives grows with the mass it is born with. Models give a small family a hundred million years or so before it dissolves, and a family as rich as this one a billion or more, if the galaxy is kind."
+    },
+    "M103": {
+      "step": 1,
+      "rank": 47,
+      "beat": "Born together: one of a brood of clusters",
+      "question": "Can whole star clusters be born together, like siblings themselves?",
+      "why": "M103 is one of several young clusters that the Perseus spiral arm made in the same stretch of gas, so it lets you see family on two scales at once: stars that are siblings, in clusters that are cousins.",
+      "look": "Find the small, wedge-shaped knot a degree from Ruchbah, then sweep east toward NGC 663. Several small grainy patches share this part of the Milky Way, each a separate family born from the same arm.",
+      "answer": "Whole clusters can be born together, and M103 is traditionally grouped with NGC 654, NGC 659 and NGC 663 as one association. These are clusters born from neighboring parts of a single star-forming complex, all within a few tens of millions of years. That looser, larger family is held together by nothing, and it is the first to come apart.",
+      "story": "Star formation is clumpy at every scale: a giant cloud breaks into dense knots, each knot into smaller cores, and each core into a few stars, so siblings come grouped within groups. The tightest knots, rich enough to stay bound, become clusters like this one, while the looser material between them makes stars that drift off almost at once. That is why clusters born together sit in a wider haze of scattered stars of the same age, a family tree you can see as a pattern on the sky."
+    },
+    "NGC7160": {
+      "step": 1,
+      "rank": 10,
+      "beat": "Born together: just out of the nest",
+      "question": "What does a star family look like ten million years after its birth?",
+      "why": "NGC 7160 lies a few degrees from IC 1396, a cloud that is still making stars, so it shows the next frame of the same film: siblings that have already left their nest behind.",
+      "look": "Look for a small knot of a few brightish stars with fainter ones nearby, sparse and with no glow around them. Compare it in your mind with the hazy, star-forming field around IC 1396 to the south.",
+      "answer": "It looks clean and compact, with no gas left at all: ten million years have been enough to clear the nest. The siblings are still close enough to read as a group, but with the gas gone nothing holds them except their own modest gravity, about 320 Suns' worth.",
+      "story": "This family may be the elder of the whole Cepheus complex. Its heaviest members, long since gone, are thought to have blown a vast bubble in the surrounding gas. The compressed rim of that bubble is where the younger family in the nebula to its south later formed, so the two may be parent and child as well as neighbors. Families seeding the next family's birth is one of the ways a region keeps making stars in waves."
+    },
+    "IC1396": {
+      "step": 1,
+      "rank": 4,
+      "beat": "Born together: still in the nest",
+      "question": "Is a star family born all at once, or does it arrive in waves?",
+      "why": "Trumpler 37, the cluster at the heart of IC 1396, is a family caught while it is still being born, the earliest frame of a family's life that binoculars can reach.",
+      "look": "Put the deep-orange Garnet Star at the north edge of the field and find the scatter of stars around HD 206267 to its south-south-west. Under a dark sky a faint glow may hang around them, the remains of the family's cloud.",
+      "answer": "It arrives in waves. Its sub-clusters have slightly different ages averaging about 4 million years, and at the cloud's edge the youngest siblings are still forming, squeezed into being by their elders. A family's birthday is really a birth season, short beside everything that comes after.",
+      "story": "Telling a birth season from a single birthday needs a clock for stars only a few million years old. Newborn stars of modest mass are still contracting toward their adult size, so at a given temperature a younger one is larger and brighter. Plotting the members' brightness against their color therefore shows how much their ages differ. In this family the scatter is real, a sign that its siblings arrived over a stretch of time rather than all at once."
+    },
+    "Mel15": {
+      "step": 1,
+      "rank": 3.5,
+      "beat": "Born together: newborns in their cloud",
+      "question": "What do the heaviest newborns of a star family do to their own nest?",
+      "why": "The cluster at the heart of the Heart Nebula is a family so young that it is still inside the cloud that made it, and its biggest siblings are already reshaping that cloud.",
+      "look": "Sweep east-south-east of Segin, the eastern end of Cassiopeia's W, for a loose group of a dozen faint stars. A nebula filter may add a hint of glow under a very dark sky; without one you see only the family itself.",
+      "answer": "They light it up and then drive it away, and once the gas is gone the gravity holding the siblings together drops sharply. This cluster is the core of a much wider association of young stars, a sign of how loosely newborn families are tied.",
+      "story": "Whether a young family will hold together can be tested by weighing it with its own motions. If its members swarm faster than the visible mass can restrain, the family is already unbound and drifting apart. Measurements of this kind in many young groups find exactly that, with most expanding outward from where they formed. Gaia has even timed some of that expansion, running the motions back to the moment the stars were closest together."
+    },
+    "M45": {
+      "step": 1,
+      "rank": 125,
+      "beat": "Born together: the family portrait",
+      "question": "How can anyone tell that the Seven Sisters really are sisters?",
+      "why": "The Pleiades are the sky's best-known star family, near enough that you can see its members one by one, so they set the standard every other family is measured against.",
+      "look": "Let the cluster fill the field: the bright members share one blue-white, and dozens of fainter stars gather around the little dipper rather than spreading evenly across the view.",
+      "answer": "They pass every test of kinship: Gaia counts more than 1,700 members, and the bright sisters and all the rest share one distance, one drift across the sky and one age. Their matching color is the visible part of it, since stars born on the same day differ mainly in mass, and mass is what time acts on first.",
+      "story": "A shared drift across the sky is only half of a family's motion; the other half, toward or away from us, is read from the Doppler shift of each star's spectral lines, and the Pleiades share that too. A chance passer-by might match one of these tests, but almost never all of them. Their spectra add a last check, since siblings from one cloud carry its recipe of elements down to small details that set one family apart from another."
+    },
+    "NGC1981": {
+      "step": 1,
+      "rank": 4.6,
+      "beat": "Born together: fresh out of the cloud",
+      "question": "What does a star family look like once its birth cloud has just gone?",
+      "why": "NGC 1981 sits just north of the Orion Nebula, where siblings are still being born, so it shows the very next stage: a young family standing in clear space.",
+      "look": "Center the top of Orion's Sword, a degree north of the nebula. A sparse group of about a dozen stars stands clean against a dark background, with none of the glow that wraps the nebula just south.",
+      "answer": "It looks bare and a little ragged: a few million years have been enough for its hottest stars to blow the gas away. It is one of several waves of star birth in Orion's great family, each wave a litter of its own.",
+      "story": "Orion's great family was born in a sequence. Its subgroups grow younger from the north-west toward the Sword, as if star birth had been sweeping through the cloud, perhaps set off each time by the light and blasts of the generation before. This little group belongs to one of the younger waves, near the front of that sweep, with the youngest of all still forming in the nebula just south."
+    },
+    "Cr69": {
+      "step": 1,
+      "rank": 5.2,
+      "beat": "Born together: a family in a swept bubble",
+      "question": "What might happen to a young star family if one of its members explodes?",
+      "why": "The little cluster around Meissa, at Orion's head, is a young family that has already lost its cloud, and it shows that a family's early life can be violent as well as shared.",
+      "look": "Aim at Orion's head, above and between Betelgeuse and Bellatrix, and the faint smudge becomes a neat triangle with a dozen fainter siblings around it. There is no glow at all; the space around this family has been swept clean.",
+      "answer": "It is left standing in the open. An explosion like that, together with the light of the hot young stars, may well be what drove the leftover gas out into a ring wide enough to frame Orion's head in photographs. A family stripped of its gas has only its own gravity, about 360 Suns' worth, to keep it together.",
+      "story": "A cloud turns only a small share of its gas into stars, often less than a third, so in its first few million years a young family is held together mostly by gas that is not stars at all. When that gas is blown away, the gravity holding the siblings drops suddenly, and stars that were orbiting comfortably are left moving too fast to be held. Most newborn families come apart this way, and the survivors are those that turned an unusually large share of their cloud into stars."
+    },
+    "HR1931": {
+      "step": 1,
+      "rank": 3,
+      "beat": "Born together: a household within a family",
+      "question": "Is the bright star σ Orionis one sibling, or a whole household of them?",
+      "why": "σ Orionis sits at the center of one of Orion's youngest families, about three million years old, and it shows how tightly some newborn siblings stay bound.",
+      "look": "From Alnitak drop about a degree south-west to a small knot of stars. At 10× σ Orionis shows a fainter companion to its east-north-east, and the scatter of faint stars around it is the rest of its family.",
+      "answer": "It is a whole household. At least three heavy siblings are locked in orbit within that one point, while the cluster's lighter members spread around them. The tighter such a bond, the longer it survives what time does to the rest of the family.",
+      "story": "Telling σ Orionis's siblings from the stars in front of and behind it relies on the marks of youth. Very young stars of modest mass still hold the lithium they were born with, flare brightly in X-rays and are often still wrapped in dusty disks that glow in the infrared. A faint star near σ Orionis that shows all three is almost certainly kin. Counted this way the family runs to a few hundred members, most of them far too faint for binoculars."
+    },
+    "NGC2264": {
+      "step": 1,
+      "rank": 5,
+      "beat": "Born together: a family still arriving",
+      "question": "Can a star family still be gaining members while its older siblings shine?",
+      "why": "The Christmas Tree Cluster is a family still sitting in its cloud, the earliest stage of family life, and its youngest members have not finished arriving.",
+      "look": "Find bright S Monocerotis at the base and the narrow triangle of fainter stars pointing south from it. Those are siblings of very different weights, from far heavier than the Sun to much lighter, all born within the last few million years.",
+      "answer": "The family is still growing: at the tree's tip the Cone Nebula is a dark pillar of gas still collapsing into new stars, even as the siblings below erode it. A family's birth takes a few million years, a short season beside the hundreds of millions it will take to come apart.",
+      "story": "The youngest siblings give themselves away by feeding. Stars still gathering gas from the disks around them glow strongly in the red light of hydrogen as that gas crashes onto their surfaces. Surveying this region in the 1950s, George Herbig found dozens of such stars, one of the first proofs that stars were forming here and now. Comparing the feeding stars with those that have stopped shows that the family's arrivals are spread over several million years."
+    },
+    "M36": {
+      "step": 1,
+      "rank": 22,
+      "beat": "Born together: nobody has aged yet",
+      "question": "What does a star family look like before any of its members has grown old?",
+      "why": "M36 is the youngest of Auriga's three bright clusters and the baseline for the other two: a family photographed before time has changed any of its members.",
+      "look": "Find the small, compact patch with several stars popping out of it. Its brightest members share one blue-white, with no warmer, orange point among them.",
+      "answer": "It looks exactly like this: a tight knot whose brightest stars are still hot and in their prime, because even the heaviest siblings have not yet run out of hydrogen in their cores. A few degrees away in Auriga, older families show what comes next.",
+      "story": "Neighbors on the sky are not necessarily kin. M36 and the other two bright clusters of Auriga lie at broadly similar depths, yet their ages differ by hundreds of millions of years. They are separate families sharing a stretch of the galaxy's disk, not sisters from one cloud. Age is the test that separates neighbors from relatives, and the youngest of the three shows what the other two looked like when they were new."
+    },
+    "M35": {
+      "step": 1,
+      "rank": 150,
+      "beat": "Born together: a Pleiades-age family far away",
+      "question": "Would a family like the Pleiades still look like a family from six times farther?",
+      "why": "M35 was born at about the same time as the Pleiades, so it is the same kind of family seen from much farther off, a test of what we can still recognize as kin at a distance.",
+      "look": "Find the round, grainy glow at Gemini's feet with resolved stars sprinkled across it. The sprinkle is the family's brightest members; the grain behind them is hundreds more, too faint to separate.",
+      "answer": "Such a family would still read as one, though only just: at about 2,700 light-years only the brightest siblings stand out, and the rest blur into a glow. The small smudge of NGC 2158 beside it shows how much depth one field can hide, for it is a much older family far behind and no relation at all.",
+      "story": "At this distance a single star's parallax is too small to settle whether it belongs, but motion is more forgiving. Members drift across the sky together, so in a plot of every star's motion the family stands out as a tight clump while foreground and background stars scatter widely. That is how Gaia picked hundreds of siblings out of a crowded winter field. The same plot shows the small cluster beside it drifting another way, the mark of a stranger."
+    },
+    "M47": {
+      "step": 1,
+      "rank": 109,
+      "beat": "Born together: a bright young family",
+      "question": "Why do M47's brightest stars all share the same icy blue-white?",
+      "why": "M47 is a young family close enough to show its members one by one, so it shows plainly what a family looks like while its brightest siblings are all still in their prime.",
+      "look": "Center the coarse scatter of bright stars, about the width of the full Moon. Its brightest members share one icy blue-white; then glance just over a degree east at M46, whose soft mist belongs to a different, older family.",
+      "answer": "They are siblings of one age, about 100 million years, and in a family that young a star's color follows its mass, so all the heaviest members glow hot together. None of them has yet used up its core hydrogen, which is exactly what the older family of M46 next door has had time to do.",
+      "story": "In a family still in its prime, every member sits on one line on a chart of color against brightness, the line of stars steadily burning hydrogen, and where a star sits on it is set almost entirely by its mass. Heavier stars squeeze their cores harder, burn hotter and shine bluer and brighter, so the brightest members are also the bluest. The moment the first of them steps off that line is when the family clock becomes readable."
+    },
+    "IC2602": {
+      "step": 1,
+      "rank": 46,
+      "beat": "Born together: one of a pair of litters",
+      "question": "Was the Southern Pleiades born alone, or alongside other star families?",
+      "why": "The Southern Pleiades are one of the nearest star families to the Sun, a spray of young siblings around Theta Carinae, and they open the family story in the far-southern sky.",
+      "look": "Center Theta Carinae and let the two or three dozen members spread over about a degree around it. They are nearly all blue-white, with no orange point among the bright ones, the look of a family that is still young.",
+      "answer": "It was born alongside others. The Omicron Velorum Cluster in Vela lies at the same distance, about 490 light-years, and has nearly the same age, so the two families probably came out of the same corner of one star-forming region. Clouds tend to make families in batches, and batches drift apart.",
+      "story": "Clouds big enough to make star families are themselves clumpy, with many dense knots scattered through a complex hundreds of light-years across, and each knot can collapse into a family of its own. Families born from one complex share a chemistry and a general drift through the galaxy, so astronomers look for clusters with matching ages, distances and motions as signs of a common origin. Over tens of millions of years the galaxy's rotation stretches such a batch apart, until the sibling clusters lie in different constellations."
+    },
+    "NGC2547": {
+      "step": 1,
+      "rank": 35,
+      "beat": "Born together: a family and its younger neighbor",
+      "question": "Is the young cluster just below Gamma Velorum that bright star's own family?",
+      "why": "NGC 2547 is a compact young family about 1,250 light-years away, sitting so close below Gamma Velorum, the brightest star of the Sails, that the star looks like its head.",
+      "look": "Start at Gamma Velorum and drop about two degrees south to a compact group of perhaps two dozen stars, a few bright ones over a fainter scatter, in a rich Milky Way field.",
+      "answer": "It is not quite that, for Gamma Velorum has a family of its own, a little nearer and only about 5 to 10 million years old. NGC 2547 formed about 35 million years ago, so these are two litters from one region of the galaxy, born tens of millions of years apart. Star birth in a region tends to come in waves like this, each wave a separate family.",
+      "story": "Gaia has turned this region into a family tree. Sorting thousands of young stars by their motions and distances, astronomers found several distinct populations spread through Vela, each with its own age and its own drift. Some are expanding away from where they formed, and all are products of one long-lived star-forming region. The bright stars you see here are only the tops of those populations."
+    },
+    "NGC3766": {
+      "step": 1,
+      "rank": 42,
+      "beat": "Born together: a tight young clump",
+      "question": "How tightly does a star family hold together forty million years after birth?",
+      "why": "The Pearl Cluster is past the nursery stage of the glowing cloud beside it but still compact, the shape a family keeps while it is young and heavy.",
+      "look": "Find the tight, bright clump north of Lambda Centauri, with several stars resolved over a soft glow. Its compactness is the point: these siblings are still crowded close together.",
+      "answer": "It holds together quite firmly. Gaia counts about 770 members weighing some 3,500 Suns together, packed into a clump about 22 light-years across, enough gravity to keep the family whole for a long while yet. Time will still win, but it starts with the heaviest siblings, not with the family's shape.",
+      "story": "In families packed this tightly, members tug on one another constantly, and over time the heavy siblings sink toward the center while the light ones drift outward, as if the family were sorting itself by weight. That sorting matters for survival, because the light members pushed to the outskirts are the ones the galaxy can pick off first. A compact young family is strong for now, but the seeds of its thinning are already being sown inside it."
+    },
+    "NGC6231": {
+      "step": 1,
+      "rank": 4,
+      "beat": "Born together: a family of giants",
+      "question": "Which of the two bright ζ Scorpii stars belongs to this young family?",
+      "why": "NGC 6231 is one of the youngest families binoculars can show, about 4 million years old and still full of its heaviest members, and two bright stars beside it look like part of the scene.",
+      "look": "Find the naked-eye pair ζ¹ and ζ² Scorpii in the Scorpion's tail, then the compact knot of a dozen bright stars half a degree north. Compare the two ζ stars: one is orange, the other paler and fainter.",
+      "answer": "The paler one belongs: ζ¹ Scorpii is a hypergiant whose light is yellowed by dust, one of the most luminous members of this family, while orange ζ² is a foreground giant far nearer to us. In a family this young, an orange star is a stranger until proven otherwise.",
+      "story": "Deciding which star belongs takes two measurements the eye cannot make. The parallax of orange ζ² is large, the shift of a star close by, while ζ¹'s is tiny and matches the cluster's. The light of ζ¹ is also dimmed and tinted by the same thickness of dust as the cluster's other members, a sign that it sits at the same depth behind the same veil. Matching dust turns out to be a surprisingly good fingerprint for family members far away."
+    },
+    "NGC6530": {
+      "step": 1,
+      "rank": 2,
+      "beat": "Born together: a litter still in its cloud",
+      "question": "How many siblings does a newborn star family start out with?",
+      "why": "The cluster in the Lagoon Nebula is a family caught at birth, its stars only a few million years old and still sitting on the glowing gas that made them.",
+      "look": "Center the Lagoon and look at the half away from its brightest patch, where a loose group of a dozen or more stars sits on the glow. Fainter siblings flicker in and out with averted vision.",
+      "answer": "It starts with hundreds at the least: Gaia counts about 680 members here, together weighing over 2,000 Suns, and fainter ones are still hidden in the gas. That is a typical litter for a cloud like the Lagoon, and it will not keep all of its members for long.",
+      "story": "Every litter seems to come with roughly the same proportions: for each star of ten Suns or more, a cloud makes something like a dozen of about the Sun's weight and a couple of hundred smaller ones still. That pattern, called the initial mass function, was first measured in the 1950s and has held up in family after family. It is why astronomers can count the bright members of a young cluster and estimate the faint ones they cannot see."
+    },
+    "M16": {
+      "step": 1,
+      "rank": 6.3,
+      "beat": "Born together: a family racing its own light",
+      "question": "Can a family keep having siblings while its eldest tear the nursery apart?",
+      "why": "The cluster in the Eagle Nebula is a family a few million years old whose heaviest members are already eroding the cloud they came from, the most hurried stage of family life.",
+      "look": "Find the tight scatter of a dozen or so stars in a soft glow; under a dark sky averted vision shows the haze brighter on one side. You are looking at the family and the remains of its nest together.",
+      "answer": "The family keeps growing for a while: inside the dense pillars that resist the glare, stars are still forming, and they must finish before the light boils their cradle away. A family's birth is a few million years of overlapping arrivals, and then the doors close for good.",
+      "story": "Inside the pillars, infrared cameras that see through dust have found young stars still wrapped in their cocoons. At the pillar tips sit small dense knots, nicknamed evaporating gaseous globules, some of them holding a forming star. A star caught in one of those knots when the light strips it bare stops growing where it is, so the cluster's glare may decide not only how many siblings the family gets but how heavy they end up."
+    },
+    "IC4665": {
+      "step": 1,
+      "rank": 55,
+      "beat": "Born together: a young family near home",
+      "question": "How young is the family of white stars beside Cebalrai compared with its neighbors?",
+      "why": "IC 4665 is a young family only about 1,100 light-years away, and it begins a line of three clusters along the Milky Way from Ophiuchus into Serpens that differ mainly in age.",
+      "look": "Center Cebalrai, the orange shoulder star of Ophiuchus, and move a degree north-east to a ragged group of white stars wider than the full Moon. Count the brighter members: none has the warm tint of an aged star.",
+      "answer": "It is young, somewhere between 30 and 60 million years old, about a tenth the age of NGC 6633 ten degrees to the east. The two lie at similar distances, so the difference between them is time alone, and IC 4665 is the version before time has done its work.",
+      "story": "A family's age can be read from the top of its membership. The heaviest stars burn through their core hydrogen soonest, so the heaviest member still in its steady adult life marks how long the family has lived. Here, hot blue-white stars several times the Sun's mass are still in their prime. That caps the family's age, and the faint end, where small stars slowly destroy their lithium, gives a matching answer from below."
+    },
+    "M29": {
+      "step": 1,
+      "rank": 5,
+      "beat": "Born together: newborns behind dust",
+      "question": "How much of a brilliant newborn family can a cloud of dust hide?",
+      "why": "M29 is a young family of hot, heavy stars, but it lies behind the dust of the Cygnus Rift.",
+      "look": "Center Sadr, at the middle of the Northern Cross, and drop about two degrees south. A compact knot of five or six stars sits in a small box shape, faint but distinct against the Milky Way.",
+      "answer": "It can hide most of its glory: the Rift's dust dims M29 more than tenfold, turning a family of brilliant young stars into a faint little box. Behind the veil, though, it is a textbook newborn litter, every bright member still hot and in its prime.",
+      "story": "The surest sign of a very young family is that its heaviest members are still alive. Stars a dozen or more times the Sun's mass last only some tens of millions of years, so a cluster whose brightest members are of that hot kind cannot be old, however faint the dust makes it look. Spectra cut through the dimming, since the lines that mark a hot star survive the reddening, and that is how a faint little box was recognized as a newborn family."
+    },
+    "Tr2": {
+      "step": 1,
+      "rank": 90,
+      "beat": "Born together: a stranger beside the twins",
+      "question": "Is Trumpler 2 a younger or older sibling of the Double Cluster nearby?",
+      "why": "Trumpler 2 lies a few degrees from the Double Cluster in the same sweep of Perseus, and it looks like one more member of that young brood.",
+      "look": "Center Miram, η Persei, and look about two degrees west. Pick out the brighter stars first, then let the fainter scatter fill in around them; it is a looser, sparser family than the Double Cluster.",
+      "answer": "It is neither, for it is no relation at all. Trumpler 2 is about 90 million years old against the Double Cluster's 14 million and lies less than a third as far away, a separate family from a different cloud that only shares the view. Kinship needs a shared distance, age and motion, and a shared patch of sky proves nothing.",
+      "story": "Chance alignments are common in this direction, because the line of sight toward Perseus runs along the disk of the galaxy, through our own spiral arm and into the next one out. Along such a line, families at very different depths pile up on the same patch of sky. Astronomers sort them into layers: parallax places each family at its depth, and only families that share a layer can be tested for kinship."
+    },
+    "NGC3293": {
+      "step": 1,
+      "rank": 15.2,
+      "beat": "Born together: an earlier wave of Carina",
+      "question": "How many generations of star families has the great Carina cloud produced?",
+      "why": "The Gem Cluster sits just north-west of the Carina Nebula, a bright, clean knot of young siblings next to a cloud that is still making stars.",
+      "look": "From the bright heart of the Carina Nebula move about two degrees north-west to a compact, bright clump much smaller than the Moon, a few stars resolved around a hazy center, with no glow around it.",
+      "answer": "It has produced at least two that you can see from here: the Gem Cluster, about 15 million years old, and the younger families still inside the glowing nebula, born from the same cloud complex in later waves. A great cloud does not make one family but a succession of them, each a separate litter.",
+      "story": "The clock that separates the generations is the heaviest survivor. In the nebula's young clusters, stars of fifty Suns and more still shine, which means they formed only a few million years ago, while in the Gem Cluster stars of that weight are already gone and the leaders are lighter. A cluster's heaviest surviving member is a birth date written in mass."
+    },
+    "NGC6124": {
+      "step": 1,
+      "rank": 78,
+      "beat": "Born together: an older family among the young",
+      "question": "Is NGC 6124 one more sibling of the young Scorpius stars around it?",
+      "why": "NGC 6124 is a rich family in the tail of Scorpius, a region crowded with young stars, and its place on the sky invites the guess that it belongs among them.",
+      "look": "From θ Lupi sweep about five degrees south-east to a round, evenly spread cloud of faint stars with a few brighter ones near the middle, and give it room in the field.",
+      "answer": "NGC 6124 is no sibling of theirs. At about 80 million years it is several times older than the young families of Scorpius, and at about 2,000 light-years it lies far behind most of them. It is a settled family in its own right, and a reminder that one patch of sky can hold families of very different generations.",
+      "story": "Membership is decided in three dimensions, and the sky shows only two. The young stars of Scorpius form a sprawling association only a few hundred light-years away, while this cluster's members share a parallax several times smaller. The two overlap only in projection, the way a distant hill can seem to touch a nearby tree. Ages confirm it: the association's brightest stars are hot giants that cannot be more than a few tens of millions of years old, a stage this family left behind long ago."
+    },
+    "NGC884": {
+      "step": 2,
+      "rank": 14,
+      "beat": "First to age: the orange supergiants",
+      "question": "Why do a few orange stars glow among χ Persei's blue-white siblings?",
+      "why": "χ Persei is h Persei's twin, born from the same cloud at the same time, and it shows most clearly the first thing time does to a family: it ages the siblings at different speeds.",
+      "look": "Keep both clusters in view and turn to χ Persei, the eastern one, slightly looser than h. Hunt for a few orange-tinted stars among the blue-white crowd; a slight defocus helps the color show.",
+      "answer": "They are the heaviest siblings, which burned through their core hydrogen fastest and swelled into red supergiants, cool and orange on the surface. Born on the same day as the blue-white stars around them, they are simply further along in life, and their stage dates the whole family to about 14 million years.",
+      "story": "Seeing several red supergiants at once takes a big family. The swollen stage lasts only about a tenth of a heavy star's life, so at any moment only a few of the siblings near the top of the weight range are passing through it. That is why only a litter of thousands holds enough heavy stars for several to be caught together. That makes the Double Cluster one of the best places in the sky to study how heavy stars swell, with the age of every one of them already known."
+    },
+    "NGC129": {
+      "step": 2,
+      "rank": 105,
+      "beat": "First to age: a pulsing elder",
+      "question": "Why does the brightest star of NGC 129 pulse while its siblings shine steadily?",
+      "why": "NGC 129 is a family about 100 million years old, and its brightest member, DL Cassiopeiae, behaves like no ordinary sibling: it brightens and fades every eight days or so.",
+      "look": "Find the loose patch of faint stars just north of the line from Caph to γ Cassiopeiae and pick out its brightest member, DL Cassiopeiae. Its changes over a week are real but small; the point tonight is which star leads the family.",
+      "answer": "It is the heaviest sibling and has already left its steady adult life: stars like it pass through a brief stage as Cepheids, swelling and shrinking on a strict rhythm. Its lighter siblings have not reached that stage yet, and their shared distance is what lets astronomers turn DL Cas's rhythm into a true brightness.",
+      "story": "The rhythm is also a clock. Heavier Cepheids are bigger and pulse more slowly, and heavier stars reach the pulsing stage sooner. A Cepheid's period therefore hints at its family's age: long-period Cepheids belong to younger families, short-period ones to older. DL Cassiopeiae's beat fits the family's age as read from its other stars, a cross-check between two independent clocks."
+    },
+    "NGC2362": {
+      "step": 2,
+      "rank": 5,
+      "beat": "First to age: an elder at five million years",
+      "question": "How soon after birth does the first member of a star family start to age?",
+      "why": "The τ Canis Majoris Cluster is one of the youngest families in binocular reach, and it shows how early the family clock starts ticking.",
+      "look": "Find τ Canis Majoris about three degrees north of the point midway between Wezen and Aludra, looking slightly fuzzy, wrapped in a tiny knot of faint stars. That one bright point outshines the rest of its family put together.",
+      "answer": "It can start almost at once, if the sibling is heavy enough. Here τ Canis Majoris has already used up the hydrogen in its core and begun to swell about five million years after birth, while its small siblings are still shrinking toward adulthood. One family holds its eldest-acting and youngest-acting members side by side, separated only by how much mass each was born with.",
+      "story": "A family this young pins down the fastest clocks in nature. Only stars of several dozen Suns can leave their steady life within a few million years. Finding one that already has, in a family of measured age, checks how quickly the heaviest stars burn, a figure otherwise known only from models. The bright point is itself a small crowd of heavy stars, including a pair that eclipse each other, so its light is shared among several of the family's heaviest members."
+    },
+    "M41": {
+      "step": 2,
+      "rank": 154,
+      "beat": "First to age: the orange giant",
+      "question": "Why does one star near M41's center glow orange among its white siblings?",
+      "why": "M41 sits just south of Sirius, a family of about a thousand stars, and one of them stands out from all the rest by its color.",
+      "look": "Put Sirius at the top of the field and move about four degrees straight south. M41 breaks into dozens of stars, and near its middle one has a clear orange tint; compare it with the white stars around it.",
+      "answer": "It was born with the rest but heavier, so it ran out of hydrogen in its core first and swelled into a cooler giant. Only the heaviest siblings have reached that point, which dates the family to about 150 million years, and the others will follow in order of their weight.",
+      "story": "A family's giants arrive in order of weight. The heaviest members swelled first and may already be gone, while the giant you see is a slightly lighter sibling caught in the act. The swollen stage is brief, a small fraction of a star's life, so a family of a thousand shows only a few giants at any one time, which is why a lone orange point near the middle is such a clear clock."
+    },
+    "M37": {
+      "step": 2,
+      "rank": 500,
+      "beat": "First to age: a family of orange elders",
+      "question": "Where did M37's heaviest siblings go?",
+      "why": "M37 is the oldest of Auriga's three bright clusters, the family that has gone furthest down the road its younger neighbors are just starting on.",
+      "look": "Find the rich, even glow south-east of M36, like a ball of fine sugar with only a handful of points resolved. The few that stand out are the family's aged giants; the sugar is thousands of quieter siblings.",
+      "answer": "Many are still there, but dark: many of its heavier members have died and left white dwarfs, cooling embers far too faint for binoculars, while the next heaviest are the orange giants that now lead the family. A family about half a billion years old has already lost its first generation of elders.",
+      "story": "The dead siblings are not lost to science. Deep images find this family's white dwarfs as faint points, and their masses, read from their spectra, can be matched to the masses of the stars that made them. That works because in a family of known age only stars above a certain weight have had time to die. That matching is how astronomers learned how much of a star is left behind when it dies, a recipe that applies to the Sun as well."
+    },
+    "M38": {
+      "step": 2,
+      "rank": 270,
+      "beat": "First to age: the sparkle gone",
+      "question": "Is M38 an older sibling of M36, or a stranger from another generation?",
+      "why": "M38 lies at almost the same distance as M36, which makes the pair a fair comparison of two families seen at different ages.",
+      "look": "From M36 move about two and a half degrees north-west. M38 is bigger and softer, a grainy cloud rather than a bright knot; switch between the two and compare their sparkle.",
+      "answer": "It is a stranger from another generation: born roughly 270 million years ago against M36's 22 million, it came out of a different cloud long before. Its top siblings have already aged away, which is why the bigger family now shines so much more quietly.",
+      "story": "For the comparison to be fair, the two families must be seen through the same veil, and they are. The dust in front of each dims and reddens their light by about the same amount, so the contrast in sparkle is a contrast in the stars themselves. Astronomers check this by comparing each member's color with the color its spectrum says it should have, and the excess redness measures the dust."
+    },
+    "M44": {
+      "step": 2,
+      "rank": 637,
+      "beat": "First to age: a clock that matches the Hyades",
+      "question": "Why does the Beehive's family clock read almost the same as the Hyades'?",
+      "why": "The Beehive is a family whose heaviest siblings are long gone and whose next heaviest are only now swelling into giants, one of the best-read clocks in the sky.",
+      "look": "Midway between Pollux and Regulus, let the cluster fill the field: dozens of white and pale-yellow stars, with a few warmer yellow-orange points among them, the siblings that have just begun to age.",
+      "answer": "The two may well be cousins. Both are about 600 to 700 million years old and move through space in a similar way, which has led astronomers to suggest they formed in the same great star-forming complex and have drifted apart since. If so, two families now separated by the whole width of Gemini once shared a birthplace.",
+      "story": "The case for kinship rests on more than age. The two families are unusually rich in heavy elements, matching each other closely and the Sun less well, and they share their motion through the galaxy with a loose stream of stars sometimes called the Hyades stream. Part of that stream turns out to be stars nudged into step by the galaxy's spiral arms rather than true siblings, which is why the cousin idea remains a hypothesis."
+    },
+    "M48": {
+      "step": 2,
+      "rank": 420,
+      "beat": "First to age: a family in its middle years",
+      "question": "Is M48 halfway between a young star family and an old one?",
+      "why": "M48 is a family old enough to have lost its brightest members and young enough to keep a crowd of white ones, which puts it at a useful point on the family clock.",
+      "look": "From ζ Monocerotis sweep about three degrees south-south-east. In 10×50s roughly two dozen stars stand out of a misty background, richer on the eastern side, with no glow of gas; look for the few with a yellowish tint.",
+      "answer": "M48 sits very nearly halfway, at about 420 million years, with its blue giants gone but its white stars still in place. Only a few members have begun to turn into yellow giants, so the family has lost its elders and the next generation is just starting to age. Its lithium tells the same story, sitting between the Pleiades' and the Hyades'.",
+      "story": "A third clock agrees with the other two. Sun-like stars are born spinning fast and are slowly braked by their own magnetic winds, so the rotation of a family's small members says how long the braking has gone on. Timed from starspots turning in and out of view, this family's spins fall in between those of the younger Pleiades and the older Hyades, just where its age puts them."
+    },
+    "M6": {
+      "step": 2,
+      "rank": 52,
+      "beat": "First to age: the orange wingtip",
+      "question": "How can one orange star date a whole family of blue-white siblings?",
+      "why": "The Butterfly Cluster is a family in which exactly one bright member stands apart, and that single exception says more about the family's age than all the others put together.",
+      "look": "From Shaula, the Scorpion's stinger, go about five degrees north. The Butterfly Cluster shows two loose wings spreading from a central body, and on one wingtip BM Scorpii glows clearly orange among the blue-white members; defocus slightly to make the color pop.",
+      "answer": "Every member shares one birthday, and models say how long a star of BM Scorpii's mass takes to run through its core hydrogen and swell: about 50 million years. The rest of the family, lighter and still blue-white, is waiting its turn in order of weight.",
+      "story": "Linked telescopes in Chile have measured BM Scorpii's swollen disk, and it comes out well over a hundred times the Sun's width: set in the Sun's place, it would reach beyond the orbit of Mercury. Yet it began as a compact blue-white star like the siblings around it, only heavier, somewhere between five and nine Suns by current estimates. The family clock hangs on that weight, which is why one swollen sibling gets measured so carefully."
+    },
+    "M7": {
+      "step": 2,
+      "rank": 170,
+      "beat": "First to age: the clock runs on",
+      "question": "What does the yellow giant near the center of Ptolemy's Cluster say about the family's age?",
+      "why": "Ptolemy's Cluster is a bright family a few degrees from the Butterfly Cluster, and its one standout star shows the family clock well into its run.",
+      "look": "Five degrees north-east of Shaula, Ptolemy's Cluster spreads dozens of stars over more than a degree, with chains, pairs and a yellowish star near the middle. Swing a few degrees north-west to the Butterfly Cluster and compare which star stands out in each family.",
+      "answer": "It says the clock has run about three times longer than in the Butterfly Cluster nearby: this family's heaviest siblings are long gone, and the one now leading the family into old age was born lighter than BM Scorpii. As a family ages, the front of aging moves steadily down the scale of mass.",
+      "story": "The front of aging moves at a known pace because stellar lifetimes follow mass so steeply: a star of eight Suns lasts some forty million years, one of four Suns a couple of hundred million, one like the Sun ten billion. Halve a star's mass and its life grows many times longer, which is why a family's leading elder changes slowly as the clock runs on, and why the clock can be read from which weight class is aging now."
+    },
+    "M25": {
+      "step": 2,
+      "rank": 96,
+      "beat": "First to age: the restless sibling",
+      "question": "Why is the one restless star in M25 among the family's heaviest members?",
+      "why": "M25 is a family about 100 million years old with one member that refuses to keep still, and that restlessness is a sign of age, not youth.",
+      "look": "Hop about four and a half degrees east-north-east from μ Sagittarii to a loose group of bright stars spread over half a degree. U Sagittarii is one of the central stars; compare it with its neighbors and note it as the one that changes over a week.",
+      "answer": "Only heavy stars reach that stage this early: U Sagittarii has used up the hydrogen in its core and is crossing a brief, unstable phase on its way to old age, which makes it pulse. Its siblings, lighter and slower to age, still shine steadily around it.",
+      "story": "Cepheids are a passing phase. After a heavy star leaves its steady life and swells, it may loop back toward hotter temperatures while it burns helium, and whenever it crosses a narrow band of temperatures its outer layers begin to pulse. Only stars of several Suns make that loop, so finding a Cepheid in a cluster says the family's heaviest stars have just come of age, a clock read from one restless member."
+    },
+    "NGC6087": {
+      "step": 2,
+      "rank": 91,
+      "beat": "First to age: the yellow leader",
+      "question": "What do S Normae's quieter siblings reveal about the star that leads them?",
+      "why": "NGC 6087 is a family whose brightest member, S Normae, has already reached a late, restless stage of life, while the siblings around it carry on unchanged.",
+      "look": "From η Arae sweep about four degrees west into Norma. A dozen or more stars gather around S Normae, the brightest and slightly yellow; the rest of the family is white and steady.",
+      "answer": "They reveal its distance and its age: the family as a whole lies about 3,000 light-years away and is about 90 million years old. That pins down how bright S Normae truly is and how heavy a star must be to reach its pulsing stage by then. The siblings that have not aged are the yardstick for the one that has.",
+      "story": "Clusters also let astronomers weigh a Cepheid twice. The family's age, read from its other members, fixes the mass a star needs to have arrived at the pulsing stage by now. The pulsation itself, through the star's size and rhythm, gives a second estimate, and for years the two disagreed by a noticeable margin. Stars like S Normae are used to settle the argument, which points to extra mixing inside heavy stars and to mass shed along the way."
+    },
+    "NGC4755": {
+      "step": 2,
+      "rank": 16,
+      "beat": "First to age: the orange jewel",
+      "question": "How old must a star family be before its heaviest member turns orange-red?",
+      "why": "The Jewel Box is a family in which a single member has already crossed into old age, the clearest example in the southern sky of siblings born together and aging apart.",
+      "look": "Nudge just over a degree south-east of Mimosa to the compact clump shaped like a letter A. Most of its stars are blue-white; one near the middle is distinctly orange, and a slight defocus brings out the contrast.",
+      "answer": "It need hardly be old at all: about 16 million years, a blink beside the Sun's billions, was enough for the Jewel Box's heaviest sibling to burn through its core and swell into an orange-red supergiant. For heavy stars old age comes fast, and the family's colors tell you exactly how fast.",
+      "story": "Look at the family's colors and you find blue-white and orange-red but almost nothing in between, and that gap is itself a clue. A heavy star leaving its steady life crosses from hot to cool so quickly that few are caught midway, so a young family shows its aged members already arrived at the cool end. The same gap appears on the charts of young clusters everywhere, a sign of how abrupt a heavy star's change of life is."
+    },
+    "NGC3532": {
+      "step": 2,
+      "rank": 300,
+      "beat": "First to age: the next in line",
+      "question": "Which of the Wishing Well's siblings will be the next to grow old?",
+      "why": "The Wishing Well Cluster is a big, bright family old enough that aging has worked its way well down from the heaviest members.",
+      "look": "From the Carina Nebula move about three degrees east-north-east to an elongated swarm of dozens of stars in curving chains with darker gaps. Most are white; a few yellow-orange ones are sprinkled among them, the siblings that have already turned.",
+      "answer": "The next will be the brightest of the white stars, the ones just a little lighter than the yellow-orange giants: they will run out of core hydrogen next and swell in their turn. The clock in a family never stops; it only moves down to lighter and lighter siblings.",
+      "story": "Astronomers find the next in line on a chart of color against brightness. Members still burning core hydrogen form a band that bends away near its top, and the stars sitting right at the bend have the least fuel to spare. The few giants above it show where the bend's earlier occupants have gone. Watching where that bend falls in families of different ages is how this clock was calibrated in the first place."
+    },
+    "NGC6633": {
+      "step": 2,
+      "rank": 550,
+      "beat": "First to age: a family a few pages on",
+      "question": "How much older is NGC 6633 than the young family of IC 4665?",
+      "why": "NGC 6633 lies about ten degrees east of IC 4665 at a similar distance, which makes the pair a clean experiment in what time alone does to a family.",
+      "look": "Sweep about ten degrees east from IC 4665 to an elongated scatter about the width of the full Moon. Pick out its brightest members and look for the few with a yellow-orange tint; then swing back to IC 4665 and compare.",
+      "answer": "It is roughly ten times older: NGC 6633 is about 550 million years old, and since the two lie at similar distances, age is the main thing that separates them. Its lithium even matches that of the Hyades and the Beehive, families only a little older.",
+      "story": "Ten times the age does not mean ten times lighter at the top. A star's life shortens so steeply with weight that the heaviest members still in their prime have dropped only from about six Suns in IC 4665 to roughly two and a half here. A small step in mass at the top therefore stands for hundreds of millions of years, and what this family has lost is a whole upper tier of siblings, not just a few stars."
+    },
+    "AST-Hyades": {
+      "step": 3,
+      "rank": 625,
+      "beat": "Thinning out: the nearest family",
+      "question": "How much of the Hyades family is still held together by its own gravity?",
+      "why": "The Hyades are the nearest star family of all, and an old one, so this is where you can watch a family thinning out with your own eyes.",
+      "look": "Sweep along the two arms of the Bull's V-shaped face; the family is too big for one field. Among its white and yellowish members a few are tinted orange, its aged giants, while bright orange Aldebaran at one tip is an outsider standing in front.",
+      "answer": "Gravity still holds only part of the family. Gaia counts nearly a thousand members, yet only about 190 Suns' worth of stars is still within the cluster's gravitational grip, and the rest are working their way out into the Milky Way. At about 625 million years, the Hyades are a family in their last chapters as a cluster.",
+      "story": "The Hyades are near enough for every member to be placed in three dimensions. Astronomers can therefore draw the boundary where the family's own gravity gives way to the galaxy's tide, about 26 light-years from the center, and simply count who lies inside it. A large share of the family already lies outside, on its way out, and the members still gathered near the middle are mostly the heavier ones. In a family that has lived this long, the lightest siblings are always the first to be pushed to the edge and lost."
+    },
+    "Mel111": {
+      "step": 3,
+      "rank": 750,
+      "beat": "Thinning out: more stream than cluster",
+      "question": "Will anything of the Coma family survive once the cluster itself is gone?",
+      "why": "The Coma Star Cluster is a family visibly coming undone, so loosely held that it is better described as a stream of stars with a small knot at its center.",
+      "look": "Between Denebola and Cor Caroli, let the sprawl of white stars fill most of the field. There is no dense core, only a loose scatter; orange γ Comae at the northern edge is a foreground star, not family.",
+      "answer": "Its shared motion will outlast it. The members that escape keep traveling along nearly the same path around the galaxy. Long after the cluster has dissolved, its siblings could still be picked out by the way they move, just as the family of the Big Dipper is today.",
+      "story": "Gaia found that the Coma family has a neighbor. About two hundred light-years away drifts a second group of stars, nicknamed Group X, which is a few hundred million years younger and yet already closer to complete dissolution than its elder. Age alone does not decide how fast a family comes apart; how heavy and how tightly packed it was at birth matters as much."
+    },
+    "M67": {
+      "step": 3,
+      "rank": 3870,
+      "beat": "Thinning out: a survivor the Sun's age",
+      "question": "What can a family as old as the Sun tell us about the Sun's siblings?",
+      "why": "M67 is one of the oldest families binoculars can reach, and its stars are close cousins of the Sun in age and makeup.",
+      "look": "From Acubens, south of the Beehive, drift about two degrees west to a misty patch peppered with a handful of faint stars. The few you can resolve are aging yellow and orange giants; the mist is hundreds of Sun-like siblings.",
+      "answer": "It tells us that the Sun's family almost certainly did not survive. M67 is a rare cluster that has lasted about as long as the Sun has, while nearly every family dissolves within a few hundred million years, so the Sun's own siblings must long ago have scattered around the galaxy.",
+      "story": "For a while this cluster was even proposed as the Sun's own birthplace, because some of its stars match the Sun's chemistry and age remarkably well. Orbit calculations then showed that a star could hardly have been thrown out of it onto the Sun's path without a kick violent enough to strip away its planets. So the idea was dropped, a neat case of chemistry suggesting kinship and motion ruling it out."
+    },
+    "NGC752": {
+      "step": 3,
+      "rank": 1340,
+      "beat": "Thinning out: a family coming loose",
+      "question": "How much longer can NGC 752 keep its scattered members together?",
+      "why": "NGC 752 is more than a billion years old, a family that has outlived almost all of its generation and shows how the long contest with the galaxy ends.",
+      "look": "From the wide orange double 56 Andromedae look just north-east for a large, loose patch of faint, similar stars. There is no bright center and no standout blue-white star, so relax your eye over the whole field.",
+      "answer": "It cannot hold them much longer. Its bound core is now a small fraction of what it must once have been, and the Milky Way keeps drawing members away, so the loose, centerless spread in your field is a family coming apart at the seams. Its escaped siblings will drift on in roughly the same direction for a long time.",
+      "story": "In its lifetime this family has circled the center of the galaxy nearly six times, and on every lap it crossed spiral arms and passed giant clouds that tugged at it. Its surviving core is the part that has withstood all of those encounters, and Gaia finds its lost members strung out in faint tails along its orbit, a cluster turning into a stream before our eyes."
+    },
+    "Stock2": {
+      "step": 3,
+      "rank": 290,
+      "beat": "Thinning out: a sprawling family",
+      "question": "How far has the Muscleman's family already spread across the sky?",
+      "why": "Stock 2 sits right beside the young Double Cluster but is a far nearer and older family, a few hundred million years along the road the Double Cluster has barely started.",
+      "look": "From the Double Cluster nudge about two degrees north, and a large, loose group fills much of the view, the stick figure many call the Muscleman. Use your widest field; the family is too spread out for a telescope to frame.",
+      "answer": "It has spread across about a degree of sky, some 20 light-years of space at its distance. Its hottest stars are gone and its members have loosened into a wide sprawl, still together but already showing the spread that, given time, ends every family's life as a cluster.",
+      "story": "Part of its sprawl is a trick of nearness: it lies about a sixth as far away as the Double Cluster, and the same family moved out to the twins' distance would shrink to a sixth of its width and blend into the background. Its looseness is real, though, measured in light-years rather than degrees, and comparing that true size with the family's weight says how loosely its members are held."
+    },
+    "M34": {
+      "step": 3,
+      "rank": 220,
+      "beat": "Thinning out: losing members one by one",
+      "question": "Where are M34's missing members going?",
+      "why": "M34 is a family a couple of hundred million years old, past its youth and slowly losing members, the stage at which most clusters begin to fade into the galaxy.",
+      "look": "Roughly halfway between Algol and Almach, find the loose group of a dozen or so stars, several in pairs, over a fainter glitter. Count the stars you are sure of; most of the family lies beyond what binoculars can show.",
+      "answer": "They are going out into the Milky Way. Passing gas clouds and the galaxy's tidal pull tug members away a few at a time, and each escapee keeps drifting along close to M34's own path, a sibling that has left home but still travels in the family's direction.",
+      "story": "Escape is slow and mostly quiet. Inside the family, members constantly trade energy in gentle gravitational encounters. Now and then one ends up just fast enough to climb past the edge of the cluster's grip, after which the galaxy's tide carries it off. Gaia sees the result as a sparse halo of members well outside the cluster's visible core, siblings on their way out."
+    },
+    "NGC1582": {
+      "step": 3,
+      "rank": 135,
+      "beat": "Thinning out: a family dissolving",
+      "question": "Was the Sun born into a family as loose as NGC 1582?",
+      "why": "NGC 1582 is not especially old, but it is a weak family, small and spread wide, and it shows that thinning out is not only a matter of time.",
+      "look": "From ε Aurigae, the star beside Capella, sweep about five degrees west into Perseus for a loose sprinkle of faint stars over more than half a degree. There is no center to find, which is exactly the point.",
+      "answer": "It may have been, though the Sun's family was probably a little bigger. Most star families are born small and loose, and NGC 1582, at about 135 million years, is already drifting apart member by member. The Sun's own family met that fate so long ago that its siblings are now spread around the galaxy.",
+      "story": "The Sun's birth family left clues in meteorites. The oldest grains in them once held radioactive atoms that decay within a few million years, so those atoms must have been made shortly before the solar system formed. Their most likely makers were heavy stars nearby, which suggests the Sun was born in a family rich enough to include such stars. That family has long since scattered, and astronomers now look for its members by matching chemistry, star by star."
+    },
+    "NGC1662": {
+      "step": 3,
+      "rank": 345,
+      "beat": "Thinning out: Orion's future",
+      "question": "What will Orion's bright young families look like a few hundred million years from now?",
+      "why": "The Klingon Battlecruiser Cluster is an old family at the same distance as Orion's young ones, so the difference you see beside the Sword is age alone.",
+      "look": "From π² Orionis, in the arc of faint stars west of Bellatrix, move about two degrees north to a small group of faint stars. Nothing in it is blue and brilliant; compare it in your mind with the Sword's bright young stars.",
+      "answer": "They will look much like this: a sparse little group whose heaviest stars died long ago, its fainter siblings slowly spreading into the Milky Way. The Klingon Battlecruiser Cluster has already lived through that stretch of time, and it shows that the bright families of Orion's Sword are a passing stage.",
+      "story": "Only a small part of Orion's present families is likely to end up like this one. Most of the young stars around the Sword and the Belt were born in loose groups that are already unbound and spreading. Only the densest knots, such as the cluster at the heart of the Orion Nebula, may hold enough mass to stay together for hundreds of millions of years. A family like this is what the lucky survivors of such a region look like."
+    },
+    "NGC2360": {
+      "step": 3,
+      "rank": 1450,
+      "beat": "Thinning out: an old survivor",
+      "question": "What kind of star family manages to last nearly a billion and a half years?",
+      "why": "Caroline's Cluster, a fist-width east of Sirius, is one of the old families of the winter Milky Way, and its age alone makes it unusual.",
+      "look": "Sweep about a fist-width east of Sirius to a point about three and a half degrees east of γ Canis Majoris. Look for a small, soft glow; its members are too faint and too evenly matched to stand out one by one.",
+      "answer": "It takes a rich, compact one. With nearly 2,800 Suns' worth of stars inside the region its gravity controls, Caroline's Cluster has had the mass to resist the galaxy's tug far longer than most families, and even so it is a survivor, not the rule.",
+      "story": "Old families hold members that look too young for their age. Caroline's Cluster has a few blue stragglers, stars hotter and brighter than any sibling still in its prime should be by now. The likeliest explanation is that each gained mass from a close partner or merged with it, taking on fresh fuel and a younger face, and in a family this old, close siblings have had time to change each other's lives."
+    },
+    "M46": {
+      "step": 3,
+      "rank": 432,
+      "beat": "Thinning out: the older neighbor",
+      "question": "What does M46's soft glow say about how far its family has aged?",
+      "why": "M46 sits just east of the young, sparkling M47, an older family about three times farther away, which turns the two into a before-and-after pair.",
+      "look": "From M47 move just over a degree east to a soft, even glow with a few stars at the threshold. Under dark skies averted vision resolves more members, all of a similar faintness.",
+      "answer": "It says that the family's brightest days are behind it: at about 430 million years its hot blue members are gone, and the modest stars that remain are too faint at this distance to sparkle. With some 7,900 Suns' worth of stars, though, it is heavy enough to stay a family for a long time yet.",
+      "story": "Comparing the two fairly means correcting for distance first. Placed side by side at the same range, this family's brightest stars would still fall well short of its neighbor's, because its blue heavyweights have died and the top of the family now belongs to stars of a few Suns. Its softer look is partly distance, but mostly age."
+    },
+    "NGC2477": {
+      "step": 3,
+      "rank": 701,
+      "beat": "Thinning out: a heavyweight that held on",
+      "question": "Why is NGC 2477 still crowded when most families its age have scattered?",
+      "why": "NGC 2477 is an old family that has kept thousands of members, a sharp exception to the rule that old families thin out.",
+      "look": "Put the bright scatter of NGC 2451 at one side of the field, and NGC 2477 appears at the other as a round, grainy haze like sugar spilled on velvet. That fine grain is thousands of siblings, still crowded together.",
+      "answer": "Sheer weight is the reason. With roughly 12,000 Suns' worth of stars, its combined gravity has resisted the Milky Way's pull far better than a modest family could, so it is still crowded at an age that has scattered most of its contemporaries.",
+      "story": "A family's weight can be checked by how fast its members move. In a heavy family the stars must swarm faster to keep from falling into the middle. The spread of their speeds, measured from the Doppler shifts in their spectra, therefore gives a weight that does not depend on counting stars at all. Rich old families are where that test is easiest, because they have so many members to measure."
+    },
+    "NGC5460": {
+      "step": 3,
+      "rank": 153,
+      "beat": "Thinning out: a light family letting go",
+      "question": "What will be left of NGC 5460's family once its cluster is gone?",
+      "why": "NGC 5460 is a light family, only about 500 Suns' worth of stars, and that weakness shows in how loosely its members are strewn.",
+      "look": "About two degrees east-south-east of Zeta Centauri, look for a loose spray about the width of the full Moon, with no dense center to anchor it.",
+      "answer": "Its stars will become anonymous members of the Milky Way, except for one thing they keep: their shared motion, the same thread by which the scattered siblings of the Southern Cross are still recognized today.",
+      "story": "Escaping a family this light takes surprisingly little. A member needs only about a kilometer a second of extra speed, roughly the pace of a rifle bullet, to climb out of the whole family's gravity for good, and the galaxy's tide lowers that bar further at the edge. Small gains of that size come easily as members pass one another, so a light family leaks siblings steadily, long before anything dramatic happens to it."
+    },
+    "NGC6208": {
+      "step": 3,
+      "rank": 1600,
+      "beat": "Thinning out: an ancient sprinkle",
+      "question": "How can anyone tell a thinned, ancient family from a random sprinkle of stars?",
+      "why": "NGC 6208 is about 1.6 billion years old, one of the oldest families in this part of the southern Milky Way, and to the eye it barely looks like a family at all.",
+      "look": "From ε¹ Arae sweep about one and a half degrees south-west for a loose sprinkle of faint stars. Nothing about it shouts cluster; its age shows only as sparseness.",
+      "answer": "You cannot tell by eye. Gaia sorts the family out by distance and motion, finding over 400 members that still share both about 3,700 light-years away. Once even those ties fray, the siblings will melt into the Milky Way's background, and only their common drift will remember them.",
+      "story": "The family's missing heavyweights have not all vanished. Every sibling born heavier than about two Suns has already lived out its life here, and most of them remain as white dwarfs, Earth-sized embers far too faint for binoculars, still moving with the family. The heaviest of all exploded and left neutron stars, which are usually kicked out at hundreds of kilometers a second, so a family keeps most of its dead but loses its most violent ones."
+    },
+    "IC4651": {
+      "step": 3,
+      "rank": 1700,
+      "beat": "Thinning out: compact against the odds",
+      "question": "How has IC 4651 stayed compact for 1.7 billion years?",
+      "why": "IC 4651 is about as old as NGC 6208 and lies in the same corner of the sky, yet it still looks like a proper cluster, an old family that has kept its shape.",
+      "look": "From α Arae sweep about one degree west for a small, rich group of faint stars; averted vision fills it in. Its compactness, not its brightness, is what stands out.",
+      "answer": "It has stayed compact by being heavy enough: about 2,300 Suns' worth of stars, roughly twice the mass of NGC 6208 nearby, which has thinned to a sprinkle at a similar age. For an old family, weight is what decides whether it keeps its shape or fades into the galaxy.",
+      "story": "Weight is not the only thing that decides a family's fate. Clusters that orbit far from the galaxy's crowded inner disk, or that ride above its thin layer of gas, meet fewer of the giant clouds that do most of the damage, so two families of equal weight can age very differently. Astronomers use Gaia's motions to trace each cluster's orbit back and estimate how rough its life has been."
+    },
+    "M23": {
+      "step": 3,
+      "rank": 230,
+      "beat": "Thinning out: the nurseries' future",
+      "question": "Will the newborn star families of Sagittarius ever look like M23?",
+      "why": "M23 lies a few degrees from the Lagoon and the other young families of Sagittarius, but it is a few hundred million years older, the same kind of family well past its youth.",
+      "look": "Hop about four and a half degrees north-west from μ Sagittarii to a broad cloud of faint stars crossed by curving chains, with a brighter star off one edge. Averted vision brings out many more members, all of a similar, modest brightness.",
+      "answer": "Some will, if they are heavy enough: M23 has kept its family together because it was born rich, while lighter litters now forming nearby will mostly have dissolved into the Milky Way long before they reach its age.",
+      "story": "Counts of clusters by age show how few make it this far. Young families still embedded in their clouds are common, but families tens of millions of years old are far rarer. Astronomers estimate that only around one newborn cluster in ten survives its first ten million years as a recognizable group. Families of this age are the rare survivors of that early sorting, and they keep thinning slowly afterward."
+    },
+    "M11": {
+      "step": 3,
+      "rank": 310,
+      "beat": "Thinning out: too heavy to scatter quickly",
+      "question": "Why does the Wild Duck's family stay packed together while others spread out?",
+      "why": "The Wild Duck is a family a few hundred million years old that shows almost no sign of thinning, the exception that explains the rule.",
+      "look": "Two degrees south-east of β Scuti, in the bright Scutum star cloud, find a compact, fan-shaped haze with a brighter star at its apex. It looks granular in 10×50s: thousands of siblings still packed tightly.",
+      "answer": "Its own weight holds it: with thousands of stars crammed close together, its gravity outmatches the galaxy's pull far better than a family of a few hundred could. Most families are born much lighter, which is why most of them come apart, and even the Wild Duck will thin in the end, only far more slowly.",
+      "story": "What protects a family from the galaxy's pull is how tightly it is packed compared with the reach of that pull. The galaxy's tide sets an outer boundary beyond which a member belongs to the galaxy rather than the family, and in a heavy, compact cluster that boundary lies far outside the crowded core, so few stars wander near it. A light, sprawling family fills its boundary to the brim, and every nudge spills members over the edge."
+    },
+    "IC4756": {
+      "step": 3,
+      "rank": 840,
+      "beat": "Thinning out: the oldest of three",
+      "question": "How much of IC 4756's family still holds together after 840 million years?",
+      "why": "IC 4756 is the oldest of the three families strung along the Milky Way from Ophiuchus into Serpens, and it shows the stage that IC 4665 and NGC 6633 are heading for.",
+      "look": "From θ Serpentis at the tip of the snake's tail, sweep about four degrees west to a broad scatter of faint stars over two full-Moon widths. Its edges fade into the Milky Way; let your eye find the slightly denser middle.",
+      "answer": "Over 700 members still move together, about a thousand Suns' worth in all. Yet the edges you saw blending into the Milky Way are a fair picture of the family: thinned, wide and slowly giving its members back to the galaxy.",
+      "story": "Because the three families lie at broadly similar distances and behind similar dust, their charts of color against brightness can be laid directly on top of one another. The band of stars still burning core hydrogen is the same in all three, but it ends lower and lower as age increases. The youngest still holds bright blue-white members, while in the oldest the band bends away among stars only a couple of times the Sun's mass. That overlay is the experiment the three clusters make together."
+    },
+    "NGC6940": {
+      "step": 3,
+      "rank": 770,
+      "beat": "Thinning out: a quiet survivor",
+      "question": "What keeps NGC 6940 a family after the better part of a billion years?",
+      "why": "NGC 6940 is an old family by cluster standards, and it has made it this far in a galaxy that pulls most families apart much sooner.",
+      "look": "From ε Cygni sweep about six degrees south-west to a soft, grainy patch the size of the full Moon sprinkled with faint resolved stars. There is no bright standout; age has evened out the family's looks.",
+      "answer": "Enough combined gravity keeps it together, for now: hundreds of members are still bound together and moving as one. Most families its age have already dissolved, which makes NGC 6940 a survivor rather than the rule.",
+      "story": "Part of what a family loses is not members but weight. As its heavy siblings die they shed most of their mass in winds, shells and explosions, and by this age a cluster has typically lost around a third of its starting mass that way. Less weight means a weaker grip on everyone left, and this family has weathered that slow loss along with the galaxy's tug, so what you see is the remnant of a heavier family."
+    },
+    "M39": {
+      "step": 3,
+      "rank": 430,
+      "beat": "Thinning out: a family near the end of its cluster days",
+      "question": "Will M39 still be a cluster a few hundred million years from now?",
+      "why": "M39 is a nearby family about 430 million years old, close enough to count its brightest members one by one, and it has reached the age at which most families start to come apart.",
+      "look": "From Deneb sweep about nine degrees east-north-east to a loose triangle of stars about the size of the full Moon. Count the members you can see at low power: they are spread wide, with no tight core.",
+      "answer": "M39 will probably have dissolved by then: with only about 500 Suns' worth of stars, its gravity is too weak to resist the galaxy's pull for ever. Its members will go on traveling side by side long after the cluster has gone, a family recognizable only by its shared motion.",
+      "story": "The end of a cluster is a slow unwinding rather than an explosion. Escaped members keep nearly the cluster's orbit around the galaxy, those slightly closer in pulling ahead and those slightly farther out falling behind, so the family stretches into a long thin stream along its path. After a few more laps the stream grows so long and faint that only careful measurements of motion can still trace it."
+    },
+    "M3": {
+      "step": 3,
+      "rank": 11750,
+      "beat": "Thinning out: too heavy ever to scatter",
+      "question": "Can a star family be heavy enough never to come apart at all?",
+      "why": "M3 is a star family in a completely different weight class from the open clusters, and an extreme test of how much a family's weight matters.",
+      "look": "A little past halfway from Cor Caroli toward Arcturus, find an obvious round glow, brighter toward the middle. It will not break into stars in binoculars: its siblings crowd far too closely to separate.",
+      "answer": "A family can come very close: M3 has kept hundreds of thousands of siblings together for most of the age of the universe. It manages this because its gravity dwarfs anything an open cluster can muster and its orbit keeps it out in the halo, far from the crowded disk where lighter families are torn apart. The Sun's family, like almost every family, was born far lighter.",
+      "story": "Even a family this heavy leaks. In the crowded core, close passes now and then fling a star out fast enough to escape, and each crossing of the galaxy's disk squeezes the cluster and loosens a few more. So globular clusters slowly shed members too, a few at a time over billions of years. Some lighter ones have already dissolved completely, and their stars, drawn out into long streams, now belong to the galaxy's halo."
+    },
+    "M93": {
+      "step": 3,
+      "rank": 740,
+      "beat": "Thinning out: a compact old arrowhead",
+      "question": "How has M93 kept its family close for some 700 million years?",
+      "why": "M93 is a family in its later years, well past the age at which most clusters lose their shape, yet it still reads as a tight arrowhead.",
+      "look": "Start at Xi Puppis and move about one and a half degrees north-west to a small, bright, arrowhead-shaped clump, a dozen or so stars resolved over a soft glow. Note how compact it still is.",
+      "answer": "It was born dense: some 2,500 Suns' worth of stars packed into a clump about 20 light-years across hold on to one another far better than a sprawling family could. It is thinning all the same, but it has kept its shape where lighter families have lost theirs.",
+      "story": "Astronomers measure a family's compactness by the radius that encloses half of its members. A family with a small half-mass radius keeps most of its stars deep inside the reach of its own gravity, so the galaxy's tide, which acts most strongly on the outskirts, finds few members to pull away. A family born packed into a small, dense clump has kept that advantage all its life, which is why its shape has lasted."
+    },
+    "Mel20": {
+      "step": 2,
+      "rank": 90,
+      "beat": "First to age: Mirfak, the family's eldest",
+      "question": "Why does Mirfak look yellower than the blue-white siblings around it?",
+      "why": "The Alpha Persei Cluster is a family so near that it fills the whole binocular field, and its brightest member stands apart from its siblings in color as well as in brightness.",
+      "look": "Center Mirfak, the brightest star of Perseus, and dozens of blue-white stars spread around it in curving chains across the field. Compare Mirfak's tint with theirs: it is a shade yellower than any of its siblings.",
+      "answer": "Mirfak was born the heaviest of the family, so it burned through its core hydrogen first and swelled into a supergiant, its surface cooling to yellow-white while its lighter siblings stay blue-white in their prime. Born on the same day, they are reading different pages of the same life, and Mirfak is several chapters ahead.",
+      "story": "Mirfak is also a test of how well we understand aging stars. The family's lithium clock and the age implied by Mirfak's own size and temperature do not agree perfectly. Since the family's age is the sturdier figure, the gap points to physics the models have not quite captured, perhaps how heavy stars mix their cores or the spin they were born with. A family whose eldest has already turned is a laboratory for exactly that question."
+    },
+    "AST-OrionBelt": {
+      "step": 4,
+      "rank": 5,
+      "beat": "Scattered: a family born loose",
+      "question": "Will the Belt stars and their young siblings stay together as they age?",
+      "why": "Orion's Belt marks the heart of a young family of a different kind from a cluster: hot, heavy siblings spread across several degrees of sky, the brightest family of the winter sky.",
+      "look": "Put the middle Belt star at the center and let the outer two sit near the edges. An S-shaped chain of fainter stars winds through the field, and many of them share the Belt stars' blue-white color and their birth.",
+      "answer": "These siblings will not stay together. An association like this is born too loose for its own gravity to hold, so they are already drifting apart while only a few million years old. In time they will spread across whole constellations, tied together only by the direction they travel.",
+      "story": "That a group like this is flying apart was shown by its motions. In the 1950s Adriaan Blaauw found that the stars of such associations move outward from a common center, like fragments of a slow explosion. Running the motions backward gave the time since they were together, a second clock alongside the ages read from the stars themselves. Gaia has since measured those motions for thousands of members across Orion and found the same pattern, branch by branch."
+    },
+    "HR1712": {
+      "step": 4,
+      "rank": 2.5,
+      "beat": "Scattered: a sibling thrown out",
+      "question": "How far can a star travel from its family in two and a half million years?",
+      "why": "AE Aurigae looks like an ordinary faint star near M38, but it was born in Orion, and it shows the most dramatic way a family can lose a member.",
+      "look": "From M38 drift about three degrees west-south-west to the lone, brighter star there. Nothing in the view marks it as unusual; its family tie is written entirely in its motion.",
+      "answer": "It can cross a good part of the sky. Flung out of the Orion Nebula's young cluster at high speed, AE Aurigae has covered hundreds of light-years and now shines among the stars of Auriga, far from any sibling. Its partner in flight, μ Columbae, left at the same moment in the opposite direction.",
+      "story": "Stars are thrown out of families in two ways. In one, a heavy partner explodes and its companion, suddenly released, flies off at its orbital speed. In the other, a close encounter among several stars in a crowded young cluster flings one outward while the rest tighten into a closer pair. AE Aurigae is the textbook case of the second kind, because the tightened pair it left behind can still be found in Orion's Sword."
+    },
+    "HR1996": {
+      "step": 4,
+      "rank": 3.1,
+      "beat": "Scattered: the other runaway",
+      "question": "Where is μ Columbae's partner in flight now?",
+      "why": "μ Columbae is a faint star in the Dove, south of Orion, and the family it came from lies far to the north, in Orion's Sword.",
+      "look": "From Phact, the brightest star of Columba, nudge about two degrees north-east to the faint bluish-white star there. Its color matches the hot young stars of Orion's Sword, the family it left.",
+      "answer": "Its partner is AE Aurigae, on the other side of Orion in Auriga, flung out of the same young cluster in the opposite direction. Two siblings born in one nest now sit on opposite sides of the constellation that made them.",
+      "story": "Tracing μ Columbae home works only because it moves so fast. Like the partner it left with, it flies at around a hundred kilometers a second relative to its surroundings, many times the gentle drift of ordinary stars, so its path stands out clearly against the background. The Hipparcos satellite's precise motions let astronomers run both paths back to a single point and a single moment. Slower escapees from the same nursery have surely left too, but their trails are lost among the drifting stars of Orion."
+    },
+    "DS-MizarAlcor": {
+      "step": 4,
+      "rank": 414,
+      "beat": "Scattered: the Dipper's family",
+      "question": "Do Mizar and Alcor belong to a bigger family than just each other?",
+      "why": "Mizar and Alcor are the famous pair in the Big Dipper's handle, and they are part of the clearest example of scattered siblings in the northern sky.",
+      "look": "Center the middle star of the Dipper's handle with Alcor beside it, then sweep along the handle and across the bowl. Mizar, Alioth, Megrez, Phecda and Merak share one white color, while Dubhe at the bowl's far corner is yellow-orange.",
+      "answer": "They belong to a much bigger family. The pair moves through space in step with Merak, Phecda, Megrez and Alioth, all born together about 414 million years ago. That family has since spread over some twenty degrees of sky, and only its shared motion still marks them as kin.",
+      "story": "The Dipper's family reaches far beyond the Dipper. Stars that share its motion are found all around the sky, because the Sun happens to sit inside the scattered outskirts of the group, and Sirius is often counted among them, though that claim is debated. Only the core still gathers in the Dipper, a handful of bright stars that have stayed close enough to look like a pattern."
+    },
+    "HR4295": {
+      "step": 4,
+      "rank": 414,
+      "beat": "Scattered: siblings across the Dipper",
+      "question": "Which of the Big Dipper's stars are Merak's true siblings?",
+      "why": "Merak, the lower pointer of the Big Dipper, belongs to a family that no longer looks like one: its siblings are spread across the whole pattern.",
+      "look": "Sweep from Merak across the bowl to Phecda and Megrez and out along the handle to Alioth and Mizar. All five are white and of similar brightness, a family resemblance; Dubhe, the upper pointer just five degrees from Merak, is yellow-orange.",
+      "answer": "Its true siblings are Phecda, Megrez, Alioth and Mizar with Alcor: together with Merak they drift across the sky at the same rate in the same direction, the signature of a shared birth about 414 million years ago. Dubhe and Alkaid, the two ends of the Dipper, are passers-by, and Dubhe lies half again as far away as Merak.",
+      "story": "The five Dipper siblings are no longer bound to one another, but they set out with nearly the same velocity, and small differences in speed take hundreds of millions of years to pull siblings far apart. Over the next hundred thousand years or so the Dipper's outline will warp, as Dubhe and Alkaid go their own ways, while these five keep traveling together."
+    },
+    "NGC6871": {
+      "step": 4,
+      "rank": 7.8,
+      "beat": "Scattered: a family that kept its dead",
+      "question": "Do the siblings of a dead star keep traveling with what it left behind?",
+      "why": "NGC 6871 is the bright core of a loose association of hot young stars in Cygnus, a family already spreading out, and one of its members has already reached the end of its life.",
+      "look": "From η Cygni in the swan's neck, move about two degrees east-north-east to a compact scatter of fairly bright white stars. Sweep around it at low power to sense the wider spread of bright stars that belong to the same family.",
+      "answer": "The siblings and the remains travel on together: Cygnus X-1, very likely the black hole left by one of the family's heaviest members, still moves with the young stars of NGC 6871 to within about 9 km/s. A family's shared motion outlasts even the death of its members, which is why it is the last tie astronomers can follow.",
+      "story": "Following a black hole through space is possible only because it has a visible partner. The blue supergiant it orbits can be tracked like any star. Its parallax and drift across the sky are measured with radio telescopes that pick out the system's compact radio glow, and its speed along our line of sight is read from its spectrum. Put together, those motions give the system's path through the galaxy, which can then be laid beside the family's."
+    },
+    "STAR-Antares": {
+      "step": 4,
+      "rank": 11,
+      "beat": "Scattered: the red elder of Scorpius",
+      "question": "Why is Antares red while its scattered siblings across Scorpius shine blue-white?",
+      "why": "Antares belongs to Upper Scorpius, a family of hot young stars about 11 million years old that never formed a tight cluster, and it is the one member that has visibly moved on.",
+      "look": "Put Antares near the edge of the field and let its orange-red deepen; then find σ Scorpii about two degrees west-north-west, crisp and blue-white. Two members of one family, at very different stages of life, share the view.",
+      "answer": "Antares was the family's heaviest member and has aged first, the same pattern as in a cluster, only here the family is strewn across the whole Scorpion. σ Scorpii beside it and the blue-white stars of the Scorpion's head are its siblings, still in their prime, and all of them drift through space together.",
+      "story": "Antares is also a clock for its family, and a contested one. Upper Scorpius was long thought to be about five million years old, until its heaviest stars, Antares among them, were found to fit an age about twice that. Newer studies suggest the family formed over a spread of several million years. A star that has already swollen into a supergiant cannot be very young, so it holds the family's age to a minimum that the small stars alone would miss."
+    },
+    "HR5469": {
+      "step": 4,
+      "rank": 16,
+      "beat": "Scattered: a branch of the Scorpius family",
+      "question": "How far across the sky do the siblings of the Scorpius stars reach?",
+      "why": "α Lupi is a hot blue-white giant in Lupus, far from any cluster, and its family is spread so widely that no single view could ever frame it.",
+      "look": "Find the clean blue-white star in a rich, scattered field south-west of Scorpius. Its color matches the bright stars of the Scorpion's head; that likeness, and a shared drift too slow to see, are all that mark it as kin.",
+      "answer": "They reach across a quarter of the southern sky. α Lupi belongs to the Upper Centaurus–Lupus group, an older branch of the same great family as the Scorpius stars, now spread from Lupus to Centaurus. This is what a family looks like once nothing binds it.",
+      "story": "This scattered family may have touched the Earth. Its heaviest members have been exploding for millions of years, and the blasts are thought to have helped hollow out the bubble of thin, hot gas the Sun now sits in. Radioactive iron laid down on the deep sea floor a few million years ago is often traced to supernovae in this very group. A family can be strewn across the sky and still leave its mark on its neighbors."
+    },
+    "HR4656": {
+      "step": 4,
+      "rank": 16,
+      "beat": "Scattered: the Cross's own family",
+      "question": "Are the stars of the Southern Cross a family, or only a pattern?",
+      "why": "δ Crucis, the faintest star of the Cross, belongs to a family that was born together and has since spread out over several constellations.",
+      "look": "Take in the whole Cross in one or two fields. δ Crucis, Mimosa and Acrux share a blue-white color, while Gacrux at the top glows orange; color is the one family trait you can actually see.",
+      "answer": "They are mostly a family. δ Crucis and Mimosa, and probably Acrux, share the motion of the Lower Centaurus–Crux group, while orange Gacrux is a nearer stranger that only lines up with them. The family's other members are scattered across Centaurus and beyond, still drifting the same way.",
+      "story": "The Cross's family is one branch of the largest family of young stars near the Sun, the Scorpius–Centaurus association, which stretches from Scorpius through Centaurus to Crux and holds thousands of members. Its main branches differ in age by several million years, the youngest in Scorpius, as if star birth had moved through the region in stages, and Gaia now splits even those branches into smaller groups."
+    },
+    "HR4853": {
+      "step": 4,
+      "rank": 16,
+      "beat": "Scattered: a loose sibling beside a tight family",
+      "question": "Why did Mimosa's family scatter while the Jewel Box, born at the same time, did not?",
+      "why": "Mimosa sits a degree from the Jewel Box and is about the same age, which makes this one field the clearest comparison of a family that held together and one that did not.",
+      "look": "Put Mimosa at the edge of the field and look about a degree south-east for the tight knot of the Jewel Box. Both share the same icy blue-white: one a lone sibling, the other a family still packed together.",
+      "answer": "The two families were born differently. The Jewel Box formed as a dense knot of thousands of stars whose combined gravity still holds it. Mimosa's family was born as a loose association that gravity never bound, so its members have been drifting apart from the start.",
+      "story": "Whether a birth ends in a cluster or a loose association seems to depend on how dense the gas was. Where the cloud was packed tightly, stars formed fast and close together, and their combined gravity held on after the gas cleared; where it was spread thin, the stars formed in a loose web that was never bound at all. Surveys of nearby star-forming regions find most young stars in the loose kind, which is why scattered families outnumber clusters."
+    },
+    "HR2020": {
+      "step": 4,
+      "rank": 23,
+      "beat": "Scattered: a family named for one star",
+      "question": "Why does a star only 23 million years old stand alone, with no family around it?",
+      "why": "Beta Pictoris is famous for the planet-forming disk around it, but it is also the namesake of a whole family of young stars.",
+      "look": "Sweep about six degrees west of Canopus to a lone, modest white star in an empty-looking area. Nothing in the view hints at its family, and that emptiness is the point.",
+      "answer": "It does have a family, just not a cluster: Beta Pictoris gives its name to a moving group of young stars born with it about 23 million years ago. They are now spread so widely across the sky that only their shared motion shows they belong together. Its siblings are scattered far beyond any binocular field.",
+      "story": "The family's age has been measured with two different clocks. Its faint red members still show lithium down to a sharp boundary, the same test used in clusters. The members' motions, run backward, draw together into a smaller region some twenty million years ago, and the two answers agree fairly well. As the nearest family this young, its members are among the best places to look for planets still glowing with the heat of their formation."
+    }
+  }
+}

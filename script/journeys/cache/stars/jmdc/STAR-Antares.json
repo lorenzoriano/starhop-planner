@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=247.351915-26.432003&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tCCDM J16294-2626 AB         \talf SCO                     \t 28.00000\t       \t        \t          \t...................\talpha Sco\n 0.00\tCCDM J16294-2626 AB         \talf SCO                     \t 40.00000\t       \t        \t          \t1931...............\talpha Sco\n 0.00\tCCDM J16294-2626 AB         \talf SCO                     \t 45.00000\t       \t  4.5000\t11        \t1953MNRAS.113..776C\talpha Sco\n 0.00\tCCDM J16294-2626 AB         \talf SCO                     \t 42.00000\t       \t        \tB         \t1953MNRAS.113..781E\talpha Sco\n 0.00\tCCDM J16294-2626 AB         \talf SCO                     \t 39.00000\t       \t        \t4300A     \t1955MNRAS.115..468E\talpha Sco\n 0.00\tCCDM J16294-2626 AB         \talf SCO                     \t 40.00000\t       \t  8.4000\t5100A     \t1966Natur.210.1105T\talpha Sco\n 0.00\tCCDM J16294-2626 AB         \talf SCO                     \t 28.00000\t       \t  0.5600\tV         \t1989AJ.....97..909S\talpha Sco\n 0.00\tCCDM J16294-2626 AB         \talf SCO                     \t 41.00000\t       \t  0.1000\t2.43      \t1990A&A...230..355R\talpha Sco\n 0.00\tCCDM J16294-2626 AB         \talf SCO                     \t 42.00000\t       \t  6.0000\t11mu      \t1995Ap&SS.224..447D\talpha Sco\n 0.00\tCCDM J16294-2626 AB         \tHR6134                      \t 38.72700\t39.7590\t  0.3990\t800nm     \t2003AJ....126.2502M\talpha Sco\n\n"
+}

@@ -1,0 +1,81 @@
+#
+#   VizieR Astronomical Server vizier.idia.ac.za
+#    Date: 2026-11-02T04:55:30 [V7.6.1]
+#   In case of problem, please report to:	cds-question@unistra.fr
+#
+#
+#Coosys	J2000:	eq_FK5 J2000
+#INFO	service_protocol=ASU	  IVOID of the protocol through which the data was retrieved
+#INFO	request_date=2026-11-02T04:55:30	  Query execution date
+#INFO	request=https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=J%2FA%2BA%2F686%2FA42%2Fclusters&-out=Name%2CID%2CAllNames%2CType%2CCST%2CN%2CRA_ICRS%2CDE_ICRS%2Cr50%2Crt%2Cr50pc%2CPlx%2Ce_Plx%2Cdist16%2Cdist50%2Cdist84%2CRV%2Ce_RV%2Cn_RV%2CCMDCl50%2ClogAge16%2ClogAge50%2ClogAge84%2CAV50%2CrJpc%2CNJ%2CMassJ%2Ce_MassJ%2CMassTot%2Ce_MassTot%2CNote&-out.add=_r&-c=83.88333+-1.06861&-c.rm=135.0&-out.max=500&-sort=_r	  Full request URL
+#INFO	contact=cds-question@unistra.fr	  Email or URL to contact publisher
+#INFO	server_software=VizieR/7.6.1	  Software version
+#INFO	publisher=CDS	  Data centre that produced the VOTable
+#INFO	-c=083.883330-01.068610,rm=135.	
+#Constraint -sort=_r
+
+#RESOURCE=yCat_36860042
+#Name: J/A+A/686/A42
+#Title: Improving the open cluster census. III. (Hunt+, 2024)
+#INFO	ivoid=ivo://cds.vizier/j/a+a/686/a42	    IVOID of underlying data collection
+#INFO	data_ivoid=ivo://cds.vizier/j/a+a/686/a42	    IVOID of underlying data collection
+#INFO	creator=Hunt E.L.	    First author or institution
+#INFO	cites=bibcode:2024A&A...686A..42H	    Article or Data origin sources
+#INFO	journal=A&A	    Journal name
+#INFO	original_date=2024	    Year of the article publication
+#INFO	reference_url=https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/686/A42	    Dataset landing page
+#INFO	citation=doi:10.26093/cds/vizier.36860042	    Dataset identifier that can be used for citation
+#INFO	publication_date=2024-11-21	    Date of first publication in the data centre
+#INFO	rights_uri=https://cds.unistra.fr/vizier-org/licences_vizier.html	    Licence URI
+#Coosys	H_2016.000:	ICRS
+#Table	J_A_A_686_A42_clusters:
+#Name: J/A+A/686/A42/clusters
+#Title: Main catalogue (table 1)
+#Column	_r	(F8.4)	Distance from center (083.88333000-01.06861000)[ICRS], at Epoch=J2016.0	[ucd=pos.angDistance]
+#Column	Name	(a20)	Main accepted cluster name	[ucd=meta.id;meta.main]
+#Column	ID	(I4)	Internal cluster ID	[ucd=meta.id]
+#Column	AllNames	(a253)	Comma separated list of all cluster names this object crossmatched against and all name variants	[ucd=meta.id]
+#Column	Type	(A1)	[omgdr] Estimated type of object (1)	[ucd=src.class]
+#Column	CST	(F11.8)	[3/99] Astrometric SNR (cluster significance test) (2)	[ucd=stat.snr]
+#Column	N	(I6)	[10/153797] Number of member stars	[ucd=meta.number]
+#Column	RA_ICRS	(F12.8)	Right ascension of densest point (ICRS) at Ep=2016.0	[ucd=pos.eq.ra;meta.main]
+#Column	DE_ICRS	(F12.8)	Declination of densest point (ICRS) at Ep=2016.0	[ucd=pos.eq.dec;meta.main]
+#Column	r50	(F11.8)	Radius containing 50% of members within the tidal radius	[ucd=phys.angSize]
+#Column	rt	(F11.8)	Tidal radius (approximate estimate)	[ucd=phys.angSize;src]
+#Column	r50pc	(F13.8)	Radius containing 50% of members in parsecs	[ucd=phys.size.radius]
+#Column	Plx	(F12.8)	Mean parallax	[ucd=pos.parallax;stat.mean]
+#Column	e_Plx	(F11.8)	Standard error of parallax	[ucd=stat.error;pos.parallax]
+#Column	dist16	(F15.8)	16th percentile of maximum likelihood distance	[ucd=pos.distance]
+#Column	dist50	(F15.8)	50th percentile of maximum likelihood distance	[ucd=pos.distance]
+#Column	dist84	(F16.8)	84th percentile of maximum likelihood distance	[ucd=pos.distance]
+#Column	RV	(F13.8)	? Mean Gaia DR3 radial velocity	[ucd=phys.veloc;pos.heliocentric]
+#Column	e_RV	(F13.8)	? Standard error of radial velocity	[ucd=stat.error]
+#Column	n_RV	(I4)	Number of member stars with a radial velocity	[ucd=meta.note]
+#Column	CMDCl50	(F11.8)	[0/1] 50th percentile of CMD class	[ucd=meta.code]
+#Column	logAge16	(F11.8)	? 16th percentile of logarithm of cluster age	[ucd=time.age]
+#Column	logAge50	(F11.8)	? 50th percentile of logarithm of cluster age	[ucd=time.age]
+#Column	logAge84	(F12.8)	? 84th percentile of logarithm of cluster age	[ucd=time.age]
+#Column	AV50	(F11.8)	? 50th percentile of V-band cluster extinction	[ucd=phys.absorption]
+#Column	rJpc	(F13.8)	? Jacobi radius in parsecs	[ucd=phys.size.radius]
+#Column	NJ	(I4)	[9/4171]? Number of stars within best-fit Jacobi radius	[ucd=meta.number]
+#Column	MassJ	(F15.8)	? Cluster mass within the Jacobi radius	[ucd=phys.mass]
+#Column	e_MassJ	(F15.8)	? Error on cluster mass within the Jacobi radius	[ucd=stat.error]
+#Column	MassTot	(F15.8)	? Total observed cluster mass	[ucd=phys.mass]
+#Column	e_MassTot	(F15.8)	? Error on total observed cluster mass	[ucd=stat.error]
+#Column	Note	(a33)	Reason why cluster was rejected	[ucd=meta.note]
+_r	Name	ID	AllNames	Type	CST	N	RA_ICRS	DE_ICRS	r50	rt	r50pc	Plx	e_Plx	dist16	dist50	dist84	RV	e_RV	n_RV	CMDCl50	logAge16	logAge50	logAge84	AV50	rJpc	NJ	MassJ	e_MassJ	MassTot	e_MassTot	Note
+arcmin	 	 	 	 	 	 	deg	deg	deg	deg	pc	mas	mas	pc	pc	pc	km/s	km/s	 	 	[yr]	[yr]	[yr]	mag	pc	 	Msun	Msun	Msun	Msun	
+--------	--------------------	----	-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	-	-----------	------	------------	------------	-----------	-----------	-------------	------------	-----------	---------------	---------------	----------------	-------------	-------------	----	-----------	-----------	-----------	------------	-----------	-------------	----	---------------	---------------	---------------	---------------	---------------------------------
+ 41.7536	OCSN_61             	5102	Collinder_70,OCSN_61                                                                                                                                                                                                                                         	o	10.06944727	   147	084.08365125	-00.40216642	 0.52019248	 1.51033708	   3.42857764	  2.59027145	 0.00586933	   377.18461696	   377.62489826	    378.06620862	  26.82268304	   2.79313945	  37	 0.99213845	 6.86887217	 7.06891656	  7.31035328	 0.19003168	   6.32598175	 123	    99.77384889	    17.95225898	   111.77373857	    19.29871110	
+ 60.1938	OC_0339             	4980	OC_0339                                                                                                                                                                                                                                                      	o	 3.58549667	    19	083.11891544	-00.41880692	 0.26922417	 0.78873310	   1.67488515	  2.75856078	 0.00334255	   355.21603228	   356.44327806	    357.67903333	  29.09977319	   7.31880175	   3	 0.64124322	 6.78566360	 7.89863086	  8.49903107	 2.72670066	   5.44163170	  19	    55.81721593	    15.81278860	    55.81721593	    15.81278860	
+ 60.9398	Theia_13            	5481	Collinder_70,Gulliver_6,Theia_13,UBC_17b                                                                                                                                                                                                                     	o	17.40952072	   249	083.13243029	-01.75276594	 0.33896084	 0.99073564	   2.41875593	  2.40968865	 0.00407888	   408.46032782	   408.84631616	    409.23303470	  25.82832855	   2.78421175	  57	 0.94232255	 6.61002398	 6.80874729	  6.98082399	 0.29863480	   8.35997264	 245	   201.03596112	    25.38280875	   202.26938108	    25.88650478	
+ 65.5773	OCSN_65             	5104	Collinder_70,OCSN_65,Theia_13                                                                                                                                                                                                                                	o	 6.20927158	    70	083.76420766	-02.15505865	 0.49738505	 1.58940416	   3.61703189	  2.36485458	 0.00480207	   415.87452100	   416.64994805	    417.42827217	  33.16098085	   5.31559048	  18	 0.99345005	 6.78126478	 7.11701322	  7.30012560	 0.36474946	   5.32941879	  54	    52.25056595	     6.31716896	    61.08501125	     9.37219951	
+ 74.5088	UBC_17a             	6925	Theia_13,UBC_17a                                                                                                                                                                                                                                             	o	12.03362972	   102	084.77577508	-01.93244115	 0.56311143	 1.79903243	   3.50645003	  2.77090725	 0.00529896	   356.38743619	   356.76476752	    357.14289871	  11.73650996	   3.44423660	  35	 0.95871335	 6.48284388	 6.66489244	  6.75617886	 0.23633656	   5.30858436	  74	    52.77322517	    10.53869499	    60.09505271	    13.76958201	
+ 87.1860	Berkeley_20         	 201	Berkeley_20,MWSC_572,OCL_497                                                                                                                                                                                                                                 	o	18.39187821	   171	083.15437664	+00.18844258	 0.02290393	 0.21965613	   3.11507767	  0.09436660	 0.01060580	  7413.23921840	  7792.58304713	   8212.84353226	  78.88790999	   1.78191553	   4	 0.75012302	 9.03907013	 9.26521206	  9.47394848	 0.46063878	  20.86492248	 143	   833.90408328	   182.83571588	  1145.08086210	   210.57350675	
+103.3819	Theia_139           	5518	ASCC_19,Theia_139                                                                                                                                                                                                                                            	m	14.39158482	   105	082.51035760	-02.11038248	 1.59783429	 4.98131459	   8.96905973	  3.05392248	 0.01233552	   321.19766092	   321.53274241	    321.86852377	  16.19395584	   2.48372324	  35	 0.98307195	 7.70537949	 7.97844243	  8.25361061	 0.17639996	   3.77206919	  20	    18.49028176	     3.01395178	    85.12115498	    14.91585161	
+104.9150	Sigma_Orionis       	5349	Sigma_Orionis,UBC_205                                                                                                                                                                                                                                        	o	 5.94040690	   181	084.70986394	-02.60975570	 0.12730078	 0.31521840	   0.88001924	  2.49977602	 0.00464396	   395.69513908	   396.08010920	    396.46582913	  24.97423615	   4.15465597	  31	 0.82460874	 6.42583418	 6.57196426	  6.65221977	 0.90191182	   6.18517366	 169	    81.35492887	    19.13704214	    81.29190306	    19.72511260	
+123.6551	ASCC_19             	  11	ASCC_19                                                                                                                                                                                                                                                      	o	 9.30711743	    61	081.97812989	-01.85602240	 0.32300055	 0.75889465	   1.98483998	  2.80542177	 0.00427227	   351.66153790	   352.07912043	    352.49769586	  11.65061088	   3.36539092	  26	 0.99964577	 6.67236090	 6.87212467	  7.04482460	 0.22972958	   5.45246030	  61	    56.32117383	    12.97779985	    56.09632140	    13.00698483	
+125.3330	CWNU_1088           	 593	CWNU_1088                                                                                                                                                                                                                                                    	o	 8.36725121	    46	085.90593203	-01.59277638	 0.84142717	 2.25420668	   6.67579928	  2.21315202	 0.00997272	   453.49274227	   454.54632335	    455.60481131	  17.03326912	   4.85827530	   8	 0.07189029	 7.04485655	 7.47265887	  7.80792999	 2.51856649	   5.94612609	  21	    71.85136214	    14.44326679	    40.33168271	    13.30990766	
+128.9010	HSC_1608            	3083	HSC_1608                                                                                                                                                                                                                                                     	m	 7.55043688	    45	084.90239076	+00.82269100	 0.96485019	 2.78913859	  12.05372857	  1.35269065	 0.01165038	   713.73762073	   715.71990911	    717.71323911	  33.20572795	   4.21669969	  14	 0.99224967	 7.71978378	 7.96399236	  8.22726250	 0.29473221	   5.88758465	  13	    24.01112518	     6.95394241	    90.72465037	    16.73435536	
+130.1083	FSR_1017            	1614	FSR_1017,MWSC_567                                                                                                                                                                                                                                            	m	 3.88009882	    17	082.96879158	-03.03508934	 7.95204005	17.50514013	   4.35556052	 30.91858135	 1.76112833	    31.16031049	    31.18078163	     31.20127969	  32.18340431	   5.16298381	   9	 0.97445273	 6.88303280	 7.19560099	  7.44582605	 0.38421273	   5.19356030	  10	     4.68659715	     1.57994740	     9.68306535	     2.27131060	
+

@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=2.294522%2B59.149781&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD432                       \tHR21                        \t  2.05000\t 2.1200\t  0.0500\t740nm     \t1999AJ....118.3032N\tHD432\n 0.00\tHD432                       \t                            \t         \t 2.0270\t  0.1220\t8-13      \t2014ApJ...797..119M\tHD432\n 0.00\tHD432                       \t                            \t  1.98000\t       \t  0.0100\t550 to 850\t2014SPIE.9146E..0WB\tHD432\n 0.00\tHD432                       \tFK5 2                       \t  2.14500\t 2.2180\t  0.0580\t700 nm    \t2016ApJS..227....4H\tHD432\n 0.00\tHD432                       \tbet Cas                     \t  2.03200\t 2.1030\t  0.0150\t550..850nm\t2017A&A...606L...1W\tHD432\n\n"
+}

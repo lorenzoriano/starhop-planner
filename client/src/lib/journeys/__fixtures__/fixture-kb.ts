@@ -1,0 +1,843 @@
+/**
+ * Small REAL-data fixture KB: Orion / Taurus / Gemini / Auriga winter region (15 objects).
+ *
+ * Every number has a sourceId in FIXTURE_SOURCES. Values were taken from the cited catalogs/papers
+ * (Hunt & Reffert 2024 and SIMBAD queried through the IDIA VizieR and Harvard SIMBAD mirrors on 2026-11-01;
+ * Hipparcos 2007 parallaxes via SIMBAD; papers as cited). Conversions: 1 pc = 3.26156 ly; HR24 ages are
+ * 10^logAge50 with the 16th/84th percentiles as min/max. Card prose is original.
+ *
+ * Also exports a mock JourneyEngineClient that returns a fixed, plausible JourneyResult for UI work
+ * (San Francisco, 2027-01-15 20:30 PST, 10×50 binoculars) — geometry computed from the fixture coordinates.
+ */
+import type {
+  BinocularView, Concept, ContextNode, DsoObject, Edge, JourneyEngineClient, JourneyRequest, JourneyResult,
+  KbImage, KnowledgeBase, NarrationBank, Source, StarObject, Template,
+} from '../types';
+
+// ───────────────────────────── sources ─────────────────────────────
+
+export const FIXTURE_SOURCES: Source[] = [
+  { id: 'hip2007', title: 'Validation of the new Hipparcos reduction', url: 'https://ui.adsabs.harvard.edu/abs/2007A%26A...474..653V/abstract', publisher: 'Astronomy & Astrophysics', kind: 'catalog', citation: 'van Leeuwen 2007, A&A 474, 653', bibcode: '2007A&A...474..653V', retrieved: '2026-11-01' },
+  { id: 'simbad', title: 'SIMBAD astronomical database (Harvard mirror)', url: 'https://simbad.harvard.edu/simbad/', publisher: 'CDS Strasbourg', kind: 'catalog', citation: 'Wenger et al. 2000, A&AS 143, 9', retrieved: '2026-11-01' },
+  { id: 'hr24', title: 'Improving the open cluster census. III. Using cluster masses, radii, and dynamics', url: 'https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/A%2BA/686/A42', publisher: 'Astronomy & Astrophysics / VizieR (IDIA mirror)', kind: 'catalog', citation: 'Hunt & Reffert 2024, A&A 686, A42', bibcode: '2024A&A...686A..42H', license: 'CDS terms; cite the paper', retrieved: '2026-11-01' },
+  { id: 'cg2020mirages', title: 'Clusters and mirages: cataloguing stellar aggregates in the Milky Way', url: 'https://ui.adsabs.harvard.edu/abs/2020A%26A...635A..45C/abstract', publisher: 'Astronomy & Astrophysics', kind: 'catalog', citation: 'Cantat-Gaudin & Anders 2020, A&A 635, A45', bibcode: '2020A&A...635A..45C', retrieved: '2026-11-01' },
+  { id: 'gcvs', title: 'General Catalogue of Variable Stars (GCVS 5.1)', url: 'https://vizier.idia.ac.za/viz-bin/VizieR?-source=B/gcvs', publisher: 'Sternberg Astronomical Institute / VizieR (IDIA mirror)', kind: 'catalog', citation: 'Samus et al. 2017, Astron. Rep. 61, 80', retrieved: '2026-11-01' },
+  { id: 'joyce2020', title: 'Standing on the Shoulders of Giants: New Mass and Distance Estimates for Betelgeuse', url: 'https://arxiv.org/abs/2006.09837', publisher: 'The Astrophysical Journal', kind: 'paper', citation: 'Joyce et al. 2020, ApJ 902, 63', bibcode: '2020ApJ...902...63J' },
+  { id: 'levesque2020', title: "Betelgeuse Just Isn't That Cool: Effective Temperature Alone Cannot Explain the Recent Dimming", url: 'https://arxiv.org/abs/2002.10463', publisher: 'The Astrophysical Journal Letters', kind: 'paper', citation: 'Levesque & Massey 2020, ApJL 891, L37', bibcode: '2020ApJ...891L..37L' },
+  { id: 'eso2109', title: 'Mystery of Betelgeuse’s dip in brightness solved', url: 'https://www.eso.org/public/news/eso2109/', publisher: 'ESO', kind: 'web', citation: 'ESO press release eso2109 (Montargès et al. 2021, Nature 594, 365)' },
+  { id: 'przybilla2006', title: 'Quantitative spectroscopy of BA-type supergiants', url: 'https://ui.adsabs.harvard.edu/abs/2006A%26A...445.1099P/abstract', publisher: 'Astronomy & Astrophysics', kind: 'paper', citation: 'Przybilla et al. 2006, A&A 445, 1099', bibcode: '2006A&A...445.1099P' },
+  { id: 'heiter2015', title: 'Gaia FGK benchmark stars: Effective temperatures and surface gravities', url: 'https://arxiv.org/abs/1506.06095', publisher: 'Astronomy & Astrophysics', kind: 'paper', citation: 'Heiter et al. 2015, A&A 582, A49', bibcode: '2015A&A...582A..49H' },
+  { id: 'richichi2005', title: "Aldebaran's angular diameter: How well do we know it?", url: 'https://arxiv.org/abs/astro-ph/0502181', publisher: 'Astronomy & Astrophysics', kind: 'paper', citation: 'Richichi & Roccatagliata 2005, A&A 433, 305', bibcode: '2005A&A...433..305R' },
+  { id: 'torres2015', title: 'Capella (α Aurigae) Revisited: New Binary Orbit, Physical Properties, and Evolutionary State', url: 'https://arxiv.org/abs/1505.07461', publisher: 'The Astrophysical Journal', kind: 'paper', citation: 'Torres et al. 2015, ApJ 807, 26', bibcode: '2015ApJ...807...26T' },
+  { id: 'menten2007', title: 'The distance to the Orion Nebula', url: 'https://www.aanda.org/articles/aa/abs/2007/41/aa8247-07/aa8247-07.html', publisher: 'Astronomy & Astrophysics', kind: 'paper', citation: 'Menten et al. 2007, A&A 474, 515', bibcode: '2007A&A...474..515M' },
+  { id: 'hillenbrand1997', title: 'On the Stellar Population and Star-Forming History of the Orion Nebula Cluster', url: 'https://ui.adsabs.harvard.edu/abs/1997AJ....113.1733H/abstract', publisher: 'The Astronomical Journal', kind: 'paper', citation: 'Hillenbrand 1997, AJ 113, 1733', bibcode: '1997AJ....113.1733H' },
+  { id: 'kraus2009', title: 'Tracing the young massive high-eccentricity binary system θ¹ Orionis C through periastron passage', url: 'https://arxiv.org/abs/0902.0365', publisher: 'Astronomy & Astrophysics', kind: 'paper', citation: 'Kraus et al. 2009, A&A 497, 195', bibcode: '2009A&A...497..195K' },
+  { id: 'brown1994', title: 'The Orion OB1 association. I. Stellar content', url: 'https://ui.adsabs.harvard.edu/abs/1994A%26A...289..101B/abstract', publisher: 'Astronomy & Astrophysics', kind: 'paper', citation: 'Brown, de Geus & de Zeeuw 1994, A&A 289, 101', bibcode: '1994A&A...289..101B' },
+  { id: 'stauffer1998', title: 'The Age of the Pleiades from the Lithium Depletion Boundary', url: 'https://ui.adsabs.harvard.edu/abs/1998ApJ...499L.199S/abstract', publisher: 'The Astrophysical Journal Letters', kind: 'paper', citation: 'Stauffer, Schultz & Kirkpatrick 1998, ApJ 499, L199', bibcode: '1998ApJ...499L.199S' },
+  { id: 'perryman1998', title: 'The Hyades: distance, structure, dynamics, and age', url: 'https://ui.adsabs.harvard.edu/abs/1998A%26A...331...81P/abstract', publisher: 'Astronomy & Astrophysics', kind: 'paper', citation: 'Perryman et al. 1998, A&A 331, 81', bibcode: '1998A&A...331...81P' },
+  { id: 'noirlab-pleiades', title: 'Pleiades Stars Passing Through Interstellar Cloud', url: 'https://noirlab.edu/public/news/noao0315/', publisher: 'NOIRLab', kind: 'web', citation: 'NOIRLab/NOAO press release noao0315 (Gibson & Nordsieck 2003)' },
+  { id: 'chandra-crab', title: 'Crab Nebula: A Crab Walks Through Time', url: 'https://chandra.harvard.edu/photo/2006/crab/', publisher: 'NASA / Chandra X-ray Center', kind: 'web' },
+  { id: 'openngc', title: 'OpenNGC (pinned be3cd6c) via catalog-extents.json', url: 'https://github.com/mattiaverga/OpenNGC', publisher: 'Mattia Verga', kind: 'catalog', license: 'CC BY-SA 4.0' },
+  { id: 'catalog-extents', title: 'StarHop catalog-extents.json (observing extents)', url: 'https://github.com/mattiaverga/OpenNGC', publisher: 'StarHop Planner', kind: 'catalog', citation: 'client/src/lib/catalog-extents.json (OpenNGC where available, otherwise included observing extents)' },
+  { id: 'hubble-m42', title: 'Orion Nebula – Hubble 2006 mosaic', url: 'https://commons.wikimedia.org/wiki/File:Orion_Nebula_-_Hubble_2006_mosaic.jpg', publisher: 'NASA / ESA', kind: 'image', license: 'Public domain' },
+];
+
+// ───────────────────────────── helpers ─────────────────────────────
+
+const DSS2: Pick<KbImage, 'credit' | 'license' | 'variant'> = {
+  credit: 'Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS',
+  license: 'DSS2: educational non-commercial use with acknowledgment',
+  variant: 'optical',
+};
+const dss = (id: string, caption: string, fieldDeg: number): KbImage => ({ ...DSS2, src: `data/binocular-images/${id}-optical.jpg`, caption, fieldDeg });
+const view = (s7: number, d7: number, s10: number, d10: number): BinocularView => ({
+  '7x50': { suburban: s7 as 0, dark: d7 as 0 },
+  '10x50': { suburban: s10 as 0, dark: d10 as 0 },
+  basis: 'curator',
+});
+
+// ───────────────────────────── stars ─────────────────────────────
+
+const betelgeuse: StarObject = {
+  id: 'STAR-Betelgeuse', kind: 'star', hr: 2061,
+  names: { display: 'Betelgeuse', designation: 'α Orionis', aliases: ['alf Ori', 'HR 2061', 'HD 39801', '58 Ori'], simbadId: '* alf Ori' },
+  con: 'Ori', ra: 88.79292, dec: 7.40694, mag: 0.5,
+  facts: {
+    distanceLy: { value: 548, min: 499, max: 636, unit: 'ly', sourceId: 'joyce2020', method: 'model', note: '168 +27/−15 pc from seismic + evolutionary modelling' },
+    teffK: { value: 3600, min: 3575, max: 3625, unit: 'K', sourceId: 'levesque2020', method: 'measured', note: '3600 ± 25 K, spectrophotometry during the 2020 dimming' },
+    radiusRsun: { value: 764, min: 702, max: 880, unit: 'Rsun', sourceId: 'joyce2020', method: 'model', note: '764 +116/−62 R☉' },
+    massMsun: { value: 18, min: 16.5, max: 19, unit: 'Msun', sourceId: 'joyce2020', method: 'model', note: 'current mass 16.5–19 M☉' },
+    vMax: { value: 0.0, unit: 'mag', sourceId: 'gcvs', method: 'catalog', note: 'GCVS range 0.0–1.6 V (SRc)' },
+    vMin: { value: 1.6, unit: 'mag', sourceId: 'gcvs', method: 'catalog' },
+  },
+  spectral: { text: 'M1-M2 Ia-Iab', class: 'M', lumClass: 'Ia-Iab', sourceId: 'simbad' },
+  evolutionaryStage: 'red-supergiant', stageConfidence: 'established',
+  variability: { class: 'semiregular', gcvsType: 'SRc', vMax: 0.0, vMin: 1.6, binocularVisibleAtMin: true, volatile: true, sourceId: 'gcvs' },
+  evoStage: 5, contextIds: [],
+  teaches: [{ conceptId: 'LIFE.giant', strength: 3 }, { conceptId: 'STAR.size', strength: 3 }, { conceptId: 'LIGHT.color-temp', strength: 3 }, { conceptId: 'STAR.supergiant-fate', strength: 3 }],
+  roles: ['supergiant', 'variable'], wow: 4, insight: 5, obsDifficulty: 1,
+  superlatives: [{ claim: 'one of the largest stars visible to the naked eye', scope: 'whole sky', sourceId: 'joyce2020', tag: 'largest-star-in-view' }],
+  misconceptions: ['MC2', 'MC4', 'MC6'],
+  historyHook: { text: 'In 2019–20 it faded so much that people expected an explosion; a dust cloud it had puffed out was to blame.', sourceId: 'eso2109' },
+  showpiece: true, interest: 0.95,
+  media: { images: [dss('STAR-Betelgeuse', 'Survey photograph of the Betelgeuse field; the star itself is a saturated point.', 3.7)], visuals: [{ type: 'temperature-swatch' }, { type: 'hr-diagram' }, { type: 'size-comparison' }, { type: 'light-curve', shape: 'irregular' }] },
+  card: {
+    glance: 'A bright orange point at Orion’s shoulder; defocus slightly and the color becomes obvious.',
+    whyHere: 'A star near the end of its life: this is what a heavy star becomes before it explodes.',
+    see: 'Center the shoulder star, then nudge the focus off sharp: the point swells into a small orange disk. Swing to blue-white Rigel at the opposite corner of Orion and back. The color difference is the lesson.',
+    understand: 'Betelgeuse is a red supergiant. It used up the hydrogen in its core in a few million years and swelled enormously. Its surface cooled to about 3,600 K, well below the Sun’s 5,800 K, so it glows orange-red. A star that is cool yet this bright must be gigantic.',
+    wonder: 'Put it where the Sun is and its surface would reach past the orbit of Mars.',
+    connect: 'Heavy stars do not fade quietly. Next: the wreck left by one that already exploded.',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Size', factRef: 'radiusRsun', comparisonKey: 'size.marble' },
+      { label: 'Surface temperature', factRef: 'teffK', comparisonKey: 'temperature.sun' },
+      { label: 'Mass', factRef: 'massMsun', comparisonKey: 'mass.supernova-limit' },
+    ],
+    photoCaption: 'Survey photos show only a saturated point; even big telescopes resolve its surface into a few pixels.',
+    deeper: 'Joyce et al. (2020) combined its pulsation periods with evolution models: 16.5–19 solar masses, about 764 solar radii and 168 (+27/−15) parsecs. Levesque & Massey (2020) measured 3,600 ± 25 K during the Great Dimming, too small a cooling to explain the fade, which pointed to dust; ESO’s VLT later imaged the veil.',
+    tier: 'showpiece',
+  },
+  eventDependent: { kind: 'dimming', note: 'Its brightness varies; check AAVSO before comparing it with nearby stars.', checkUrl: 'https://www.aavso.org/' },
+  sources: ['joyce2020', 'levesque2020', 'eso2109', 'gcvs', 'simbad'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const rigel: StarObject = {
+  id: 'HR1713', kind: 'star', hr: 1713,
+  names: { display: 'Rigel', designation: 'β Orionis', aliases: ['bet Ori', 'HR 1713', 'HD 34085', '19 Ori'], simbadId: '* bet Ori' },
+  con: 'Ori', ra: 78.63458, dec: -8.20167, mag: 0.12,
+  facts: {
+    distanceLy: { value: 863, min: 792, max: 948, unit: 'ly', sourceId: 'hip2007', method: 'measured', note: 'parallax 3.78 ± 0.34 mas' },
+    teffK: { value: 12100, min: 11950, max: 12250, unit: 'K', sourceId: 'przybilla2006', method: 'measured', note: '12,100 ± 150 K, NLTE spectroscopy' },
+  },
+  spectral: { text: 'B8 Ia', class: 'B', lumClass: 'Ia', sourceId: 'simbad' },
+  evolutionaryStage: 'blue-supergiant', stageConfidence: 'established',
+  evoStage: 5, contextIds: [],
+  teaches: [{ conceptId: 'LIGHT.color-temp', strength: 3 }, { conceptId: 'DIST.lum-vs-app', strength: 2 }],
+  roles: ['supergiant'], wow: 3, insight: 4, obsDifficulty: 1,
+  superlatives: [], misconceptions: ['MC1', 'MC2'], showpiece: true, interest: 0.8,
+  media: { images: [], visuals: [{ type: 'temperature-swatch' }, { type: 'hr-diagram' }] },
+  card: {
+    glance: 'A brilliant blue-white point at Orion’s foot.',
+    whyHere: 'The hot end of the thermometer, in the same constellation as cool Betelgeuse.',
+    see: 'Compare its icy blue-white with Betelgeuse’s orange by sweeping between Orion’s two corners. Defocus a little: the color holds up because the star is so bright.',
+    understand: 'Rigel is a blue supergiant whose surface is roughly twice as hot as the Sun’s. Hot gas glows blue-white, cooler gas orange-red, just as a stove ring changes color while it heats up. Same family of huge stars, opposite ends of the temperature scale.',
+    wonder: 'The light you see tonight left Rigel around the time of the Crusades, more than 800 years ago.',
+    connect: 'If color is temperature, which stars tonight are hotter than the Sun?',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Surface temperature', factRef: 'teffK', comparisonKey: 'temperature.sun' },
+    ],
+    photoCaption: 'Any photo of Rigel is dominated by glare; the star is a point at every telescope scale.',
+    tier: 'supporting',
+  },
+  sources: ['hip2007', 'przybilla2006', 'simbad'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const aldebaran: StarObject = {
+  id: 'STAR-Aldebaran', kind: 'star', hr: 1457,
+  names: { display: 'Aldebaran', designation: 'α Tauri', aliases: ['alf Tau', 'HR 1457', 'HD 29139', '87 Tau'], simbadId: '* alf Tau' },
+  con: 'Tau', ra: 68.98, dec: 16.50917, mag: 0.85,
+  facts: {
+    distanceLy: { value: 66.6, min: 65.6, max: 67.7, unit: 'ly', sourceId: 'hip2007', method: 'measured', note: 'parallax 48.94 ± 0.77 mas' },
+    teffK: { value: 3927, min: 3887, max: 3967, unit: 'K', sourceId: 'heiter2015', method: 'measured', note: 'angular diameter + bolometric flux' },
+    radiusRsun: { value: 45, min: 44, max: 46, unit: 'Rsun', sourceId: 'richichi2005', method: 'derived', note: 'limb-darkened 20.58 mas (lunar occultation) × Hipparcos 2007 distance' },
+  },
+  spectral: { text: 'K5+ III', class: 'K', lumClass: 'III', sourceId: 'simbad' },
+  evolutionaryStage: 'red-giant-branch', stageConfidence: 'likely',
+  evoStage: 5, contextIds: [], membershipRole: 'foreground',
+  teaches: [{ conceptId: 'SKY.projection', strength: 3 }, { conceptId: 'LIFE.giant', strength: 3 }],
+  roles: ['giant'], wow: 3, insight: 4, obsDifficulty: 1,
+  superlatives: [], misconceptions: ['MC9'], showpiece: true, interest: 0.8,
+  media: { images: [dss('STAR-Aldebaran', 'Survey photograph of Aldebaran against the Hyades field.', 3.7)], visuals: [{ type: 'temperature-swatch' }, { type: 'hr-diagram' }, { type: 'size-comparison' }] },
+  card: {
+    glance: 'A bright orange star at one tip of the Hyades “V”.',
+    whyHere: 'It looks like the leader of the Hyades, but it is not one of them.',
+    see: 'Frame the V-shaped Hyades with Aldebaran at its lower left. Compare its warm orange with the white cluster stars around it.',
+    understand: 'Aldebaran is an orange giant less than half as far away as the Hyades. It just happens to lie along the same line of sight. Stars that look side by side can sit at very different distances: a constellation is a trick of perspective.',
+    wonder: 'Its light takes about 67 years to reach you; the cluster behind it sent its light about 150 years ago.',
+    connect: 'An aging giant up close. What does the same stage look like in a far heavier star?',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Size', factRef: 'radiusRsun', comparisonKey: 'size.marble' },
+      { label: 'Surface temperature', factRef: 'teffK', comparisonKey: 'temperature.sun' },
+    ],
+    photoCaption: 'Photos make it look embedded in the cluster; distances show it is a foreground star.',
+    tier: 'showpiece',
+  },
+  sources: ['hip2007', 'heiter2015', 'richichi2005', 'simbad'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const capella: StarObject = {
+  id: 'STAR-Capella', kind: 'star', hr: 1708,
+  names: { display: 'Capella', designation: 'α Aurigae', aliases: ['alf Aur', 'HR 1708', 'HD 34029', '13 Aur'], simbadId: '* alf Aur' },
+  con: 'Aur', ra: 79.1725, dec: 45.99806, mag: 0.08,
+  facts: {
+    distanceLy: { value: 42.8, min: 42.5, max: 43.1, unit: 'ly', sourceId: 'hip2007', method: 'measured', note: 'parallax 76.20 ± 0.46 mas' },
+    teffK: { value: 4970, min: 4920, max: 5020, unit: 'K', sourceId: 'torres2015', method: 'measured', note: 'component Aa; Ab is 5730 ± 60 K' },
+    massMsun: { value: 2.57, min: 2.56, max: 2.58, unit: 'Msun', sourceId: 'torres2015', method: 'measured', note: 'component Aa (orbit); Ab 2.48 M☉' },
+    radiusRsun: { value: 12.0, min: 11.4, max: 12.6, unit: 'Rsun', sourceId: 'torres2015', method: 'measured', note: 'component Aa 11.98 ± 0.57 R☉; Ab 8.83 R☉' },
+  },
+  spectral: { text: 'G3 III:', class: 'G', lumClass: 'III', sourceId: 'simbad' },
+  evolutionaryStage: 'red-clump', stageConfidence: 'likely',
+  multiplicity: {
+    components: [{ label: 'Aa' }, { label: 'Ab' }],
+    pairs: [], systemNote: 'Two giants in a 104-day orbit, unresolved in binoculars.',
+  },
+  evoStage: 5, contextIds: [],
+  teaches: [{ conceptId: 'LIFE.giant', strength: 2 }, { conceptId: 'STAR.red-clump', strength: 2 }],
+  roles: ['giant', 'double'], wow: 3, insight: 3, obsDifficulty: 1,
+  superlatives: [], misconceptions: ['MC10'], showpiece: true, interest: 0.6,
+  media: { images: [dss('STAR-Capella', 'Survey photograph of the Capella field.', 3.7)], visuals: [{ type: 'temperature-swatch' }, { type: 'hr-diagram' }] },
+  card: {
+    glance: 'A brilliant yellowish point high overhead in winter.',
+    whyHere: 'Two yellow giants pretending to be one star, both a little cooler than the Sun.',
+    see: 'Look for a creamy, slightly golden tint compared with blue-white Rigel. Binoculars will not split the pair: they are far too close.',
+    understand: 'Capella is two giant stars, each about two and a half times the Sun’s mass, orbiting every few months. Weighing them through their orbit is how astronomers check their models of how stars age.',
+    wonder: 'Each of the two stars is roughly ten times wider than the Sun.',
+    connect: 'Giants come in many colors. How cool can a giant get?',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Mass (brighter star)', factRef: 'massMsun' },
+      { label: 'Surface temperature', factRef: 'teffK', comparisonKey: 'temperature.sun' },
+    ],
+    photoCaption: 'The photo shows one bright point; the two giants are only resolved by interferometers.',
+    tier: 'supporting',
+  },
+  sources: ['hip2007', 'torres2015', 'simbad'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const theta1OriC: StarObject = {
+  id: 'HR1895', kind: 'star', hr: 1895,
+  names: { display: 'θ¹ Orionis C', designation: 'θ¹ Ori C', aliases: ['tet01 Ori C', 'HR 1895', 'HD 37022'], simbadId: '* tet01 Ori C' },
+  con: 'Ori', ra: 83.81861, dec: -5.38970, mag: 5.13,
+  facts: {
+    distanceLy: { value: 1350, min: 1328, max: 1373, unit: 'ly', sourceId: 'menten2007', method: 'measured', note: 'adopts the Orion Nebula Cluster VLBA parallax, 414 ± 7 pc' },
+    massMsun: { value: 44, unit: 'Msun', sourceId: 'kraus2009', method: 'measured', note: 'combined mass of the C1+C2 binary from its orbit' },
+  },
+  spectral: { text: 'O7 Vp', class: 'O', lumClass: 'V', sourceId: 'simbad' },
+  evolutionaryStage: 'main-sequence', stageConfidence: 'established',
+  multiplicity: { components: [{ label: 'C1', spType: 'O7 V' }, { label: 'C2' }], pairs: [], systemNote: 'Massive eccentric binary, telescope-only.' },
+  evoStage: 2, contextIds: ['ctx:OriOB1d'],
+  teaches: [{ conceptId: 'LIFE.nursery', strength: 3 }, { conceptId: 'STAR.mass-fate', strength: 2 }],
+  roles: ['main-sequence'], wow: 2, insight: 5, obsDifficulty: 2,
+  superlatives: [], misconceptions: [], showpiece: false, interest: 0.7,
+  media: { images: [], visuals: [{ type: 'temperature-swatch' }, { type: 'hr-diagram' }] },
+  card: {
+    glance: 'One point in the bright knot at the heart of the Orion Nebula.',
+    whyHere: 'The power plant of the Orion Nebula.',
+    see: 'At 10× the Trapezium stars merge into one bright point inside the glow. Hold the binoculars steady and look at the core of the nebula.',
+    understand: 'This young pair of very heavy stars pours out ultraviolet light. That light energizes the surrounding hydrogen, which glows the way gas glows in a neon sign. Without this one system, most of the nebula would be dark.',
+    wonder: 'Together the two stars carry about 44 times the Sun’s mass.',
+    connect: 'Its light makes the nebula glow. Look again at the cloud it lights up.',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Mass (both stars)', factRef: 'massMsun', comparisonKey: 'mass.supernova-limit' },
+    ],
+    photoCaption: 'Telescope photos split the Trapezium into four stars; binoculars show one point.',
+    tier: 'supporting',
+  },
+  sources: ['menten2007', 'kraus2009', 'simbad'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+// ───────────────────────────── deep sky ─────────────────────────────
+
+const m42: DsoObject = {
+  id: 'M42', kind: 'dso',
+  names: { display: 'Orion Nebula', designation: 'M42', aliases: ['NGC 1976', 'Great Nebula in Orion'], simbadId: 'M 42' },
+  con: 'Ori', ra: 83.85, dec: -5.45, mag: 4.0,
+  facts: {
+    distanceLy: { value: 1350, min: 1328, max: 1373, unit: 'ly', sourceId: 'menten2007', method: 'measured', note: '414 ± 7 pc, VLBA radio parallax' },
+    ageMyr: { value: 1, min: 0.3, max: 2, unit: 'Myr', sourceId: 'hillenbrand1997', method: 'model', note: 'age of the embedded Orion Nebula Cluster' },
+    angularSizeArcmin: { value: 90, unit: 'arcmin', sourceId: 'openngc', method: 'catalog', note: '90′ × 60′' },
+    sizeLy: { value: 35, unit: 'ly', sourceId: 'menten2007', method: 'derived', note: '90′ extent at 414 pc' },
+  },
+  dsoClass: 'hii-region', secondaryClasses: ['embedded-cluster'], traits: ['naked-eye'],
+  extent: { majorArcmin: 90, minorArcmin: 60, sourceId: 'openngc' },
+  poweredBy: { kind: 'ionizing-stars', starIds: ['HR1895'], sourceIds: ['kraus2009'] },
+  view: view(3, 4, 3, 4),
+  appearance: { moonTolerance: 'medium', resolves: 'partly', bestFieldDeg: 3, colorVisible: false },
+  evoStage: 0, contextIds: ['ctx:OriOB1d', 'ctx:OrionA'],
+  teaches: [{ conceptId: 'LIFE.nursery', strength: 3 }, { conceptId: 'LIFE.cluster-birth', strength: 2 }, { conceptId: 'PERC.night-eyes', strength: 2 }],
+  roles: ['nursery'], wow: 5, insight: 5, obsDifficulty: 1,
+  superlatives: [{ claim: 'nearest large region forming massive stars', scope: 'whole sky', sourceId: 'menten2007', tag: 'nearest' }],
+  misconceptions: ['MC7'], showpiece: true, interest: 1,
+  media: {
+    images: [
+      { src: 'data/binocular-images/M42-primary.jpg', credit: 'NASA, ESA, M. Robberto (STScI/ESA) and the Hubble Space Telescope Orion Treasury Project Team', license: 'Public domain', caption: 'Hubble mosaic: colors and filaments the eye cannot see.', variant: 'featured', sourceUrl: 'https://commons.wikimedia.org/wiki/File:Orion_Nebula_-_Hubble_2006_mosaic.jpg' },
+      { src: 'data/binocular-images/M42-infrared.jpg', credit: '2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS', license: '2MASS: public domain', caption: 'Near-infrared view: dust turns transparent and hidden young stars appear.', variant: 'infrared', fieldDeg: 2 },
+    ],
+    visuals: [{ type: 'age-bar' }, { type: 'distance-bar' }],
+  },
+  card: {
+    glance: 'A soft grey-green glow around a tight knot of stars in Orion’s Sword.',
+    whyHere: 'The nearest big star nursery: the beginning of every star’s story.',
+    see: 'Find the three-star Sword below the Belt; its middle star is fuzzy. Center it and look slightly to one side: the glow spreads into curved wings with a dark notch. Expect grey, not the reds of photographs.',
+    understand: 'This is a cloud of gas and dust where stars are being born now. A handful of newborn, very hot stars at its core flood it with ultraviolet light, and the hydrogen glows like a neon sign. The cloud is lit from inside by its own young stars.',
+    wonder: 'The stars at its center are only about a million years old, younger than our species’ ancestors who first walked upright.',
+    connect: 'These newborns are still wrapped in their cloud. What does a family look like once the cloud is gone?',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Age of its stars', factRef: 'ageMyr', comparisonKey: 'time.sun-day' },
+      { label: 'Width', factRef: 'sizeLy' },
+    ],
+    photoCaption: 'Long exposures record red hydrogen and fine dust lanes; binoculars show a grey-green mist.',
+    notSee: 'No red or pink, and the Trapezium is a single point at 10×.',
+    deeper: 'Menten et al. (2007) measured radio parallaxes of young stars in the cluster: 414 ± 7 pc. Most of the ionizing light comes from θ¹ Orionis C, a massive binary of about 44 solar masses (Kraus et al. 2009). The visible nebula is a thin blister on the near face of a much larger molecular cloud.',
+    tier: 'showpiece',
+  },
+  sources: ['menten2007', 'hillenbrand1997', 'openngc', 'kraus2009', 'hubble-m42'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const m43: DsoObject = {
+  id: 'M43', kind: 'dso',
+  names: { display: 'De Mairan’s Nebula', designation: 'M43', aliases: ['NGC 1982'], simbadId: 'M 43' },
+  con: 'Ori', ra: 83.9, dec: -5.26667, mag: 9.0,
+  facts: {
+    distanceLy: { value: 1350, min: 1328, max: 1373, unit: 'ly', sourceId: 'menten2007', method: 'literature', note: 'same cloud as M42' },
+    angularSizeArcmin: { value: 20, unit: 'arcmin', sourceId: 'openngc', method: 'catalog', note: '20′ × 15′' },
+  },
+  dsoClass: 'hii-region',
+  extent: { majorArcmin: 20, minorArcmin: 15, sourceId: 'openngc' },
+  view: view(1, 2, 1, 3),
+  appearance: { moonTolerance: 'low', resolves: 'glow', bestFieldDeg: 2, colorVisible: false },
+  evoStage: 0, contextIds: ['ctx:OriOB1d', 'ctx:OrionA'],
+  teaches: [{ conceptId: 'LIFE.nursery', strength: 2 }],
+  roles: ['nursery'], wow: 2, insight: 3, obsDifficulty: 3,
+  superlatives: [], misconceptions: ['MC7'], showpiece: false, interest: 0.4,
+  media: { images: [dss('M43', 'Survey photograph of M43, the comma-shaped glow north of M42.', 2)], visuals: [] },
+  card: {
+    glance: 'A small round haze just north of the Orion Nebula’s core.',
+    whyHere: 'A separate bubble in the same cloud, lit by a single young star.',
+    see: 'Keep M42 in view and look just above its bright core for a little detached puff around a star. A dark sky and averted vision help.',
+    understand: 'One young star clears and lights its own small cavity in the cloud, separate from the big bubble the Trapezium blew.',
+    wonder: 'Two neighboring bubbles, two different power sources, one cloud.',
+    connect: 'The cloud makes stars in batches. Where are the older siblings?',
+    numbers: [{ label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' }],
+    photoCaption: 'Photos show a comma-shaped glow divided from M42 by a dark lane.',
+    tier: 'supporting',
+  },
+  sources: ['menten2007', 'openngc'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const ngc1981: DsoObject = {
+  id: 'NGC1981', kind: 'dso',
+  names: { display: 'NGC 1981', designation: 'NGC 1981', aliases: ['Coal Car Cluster'], simbadId: 'NGC 1981' },
+  con: 'Ori', ra: 83.8, dec: -4.43333, mag: 4.6,
+  facts: {
+    distanceLy: { value: 1285, min: 1259, max: 1319, unit: 'ly', sourceId: 'cg2020mirages', method: 'measured', note: 'Gaia DR2 cluster parallax 2.539 ± 0.066 mas' },
+    ageMyr: { value: 4.6, min: 2.6, max: 6.6, unit: 'Myr', sourceId: 'brown1994', method: 'model', note: 'age of the Orion OB1c subgroup' },
+    angularSizeArcmin: { value: 25, unit: 'arcmin', sourceId: 'catalog-extents', method: 'catalog' },
+  },
+  dsoClass: 'open-cluster',
+  view: view(3, 3, 3, 3),
+  appearance: { moonTolerance: 'high', resolves: 'stars', bestFieldDeg: 2, colorVisible: false },
+  evoStage: 1, contextIds: ['ctx:OriOB1'],
+  teaches: [{ conceptId: 'LIFE.cluster-birth', strength: 3 }],
+  roles: ['young-cluster'], wow: 2, insight: 3, obsDifficulty: 2,
+  superlatives: [], misconceptions: [], showpiece: false, interest: 0.4,
+  media: { images: [dss('NGC1981', 'Survey photograph of NGC 1981 at the top of Orion’s Sword.', 1.5)], visuals: [{ type: 'age-bar' }] },
+  card: {
+    glance: 'A loose handful of stars at the top of the Sword, with no glow around them.',
+    whyHere: 'An older sibling of the Orion Nebula’s newborns that has already shed its cloud.',
+    see: 'Move a finger-width north of M42: a sparse group of a dozen stars with no haze. Compare its clean look with the glowing nebula just below.',
+    understand: 'A few million years after birth, the hottest stars blow their parent gas away. What remains is a bare cluster of siblings.',
+    wonder: 'A few million years is enough to clear a cloud several light-years wide.',
+    connect: 'Even older siblings of this family shine in Orion’s Belt.',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Age', factRef: 'ageMyr', comparisonKey: 'time.sun-day' },
+    ],
+    photoCaption: 'The photo shows the same bright stars you see; there is no hidden nebula here.',
+    tier: 'supporting',
+  },
+  sources: ['cg2020mirages', 'brown1994', 'catalog-extents'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const orionBelt: DsoObject = {
+  id: 'AST-OrionBelt', kind: 'dso',
+  names: { display: 'Orion’s Belt', designation: 'Collinder 70', aliases: ['Cr 70', 'Alnitak', 'Alnilam', 'Mintaka'] },
+  con: 'Ori', ra: 83.88333, dec: -1.06861, mag: 0.4,
+  facts: {
+    ageMyr: { value: 1.7, min: 0.6, max: 2.8, unit: 'Myr', sourceId: 'brown1994', method: 'model', note: 'Orion OB1b subgroup age 1.7 ± 1.1 Myr' },
+    angularSizeArcmin: { value: 180, unit: 'arcmin', sourceId: 'catalog-extents', method: 'catalog' },
+  },
+  dsoClass: 'ob-association',
+  view: view(4, 4, 4, 4),
+  appearance: { moonTolerance: 'high', resolves: 'stars', bestFieldDeg: 6, colorVisible: true },
+  evoStage: 1, contextIds: ['ctx:OriOB1'],
+  teaches: [{ conceptId: 'MW.families', strength: 3 }, { conceptId: 'LIFE.cluster-birth', strength: 2 }],
+  roles: ['association', 'supergiant'], wow: 4, insight: 3, obsDifficulty: 1,
+  superlatives: [], misconceptions: ['MC9'], showpiece: true, interest: 0.7,
+  media: { images: [dss('AST-OrionBelt', 'Survey photograph of the Belt stars and their rich surrounding field.', 4)], visuals: [] },
+  card: {
+    glance: 'Three bright blue-white stars in a row, sprinkled with dozens of fainter ones.',
+    whyHere: 'The big blue siblings of the Orion family, born from the same cloud complex.',
+    see: 'Let the three Belt stars fill a wide field. Look for the curving chain of fainter stars that winds between them.',
+    understand: 'The Belt stars are massive, very hot stars from one family of young stars spread across Orion. They are too far apart to hold together, so the family is slowly drifting apart.',
+    wonder: 'These stars burn so fast that they will be gone long before the Sun reaches middle age.',
+    connect: 'Heavy stars live fast. What does one look like near the end?',
+    numbers: [{ label: 'Age', factRef: 'ageMyr', comparisonKey: 'time.sun-day' }],
+    photoCaption: 'The photo records faint nebulae near Alnitak that binoculars do not show.',
+    tier: 'showpiece',
+  },
+  sources: ['brown1994', 'catalog-extents'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const cr69: DsoObject = {
+  id: 'Cr69', kind: 'dso',
+  names: { display: 'λ Orionis Cluster', designation: 'Collinder 69', aliases: ['Cr 69', 'Meissa cluster'], simbadId: 'Cl Collinder 69' },
+  con: 'Ori', ra: 83.79208, dec: 9.81306, mag: 2.8,
+  facts: {
+    distanceLy: { value: 1284, min: 1284, max: 1285, unit: 'ly', sourceId: 'hr24', method: 'measured', note: 'dist50 393.8 pc (Gaia DR3)' },
+    ageMyr: { value: 5.2, min: 3.4, max: 7.0, unit: 'Myr', sourceId: 'hr24', method: 'model', note: 'logAge 6.72 (6.53–6.85)' },
+    memberCount: { value: 1247, unit: 'stars', sourceId: 'hr24', method: 'catalog', note: 'Gaia DR3 members, not all stars' },
+    massMsun: { value: 358, min: 298, max: 418, unit: 'Msun', sourceId: 'hr24', method: 'model', note: 'mass within the Jacobi radius' },
+  },
+  dsoClass: 'open-cluster',
+  view: view(4, 4, 3, 4),
+  appearance: { moonTolerance: 'high', resolves: 'stars', bestFieldDeg: 4, colorVisible: false },
+  evoStage: 1, contextIds: ['ctx:LambdaOri'],
+  teaches: [{ conceptId: 'LIFE.cluster-birth', strength: 2 }, { conceptId: 'MW.families', strength: 2 }],
+  roles: ['young-cluster'], wow: 3, insight: 3, obsDifficulty: 1,
+  superlatives: [], misconceptions: [], showpiece: false, interest: 0.5,
+  media: { images: [], visuals: [{ type: 'age-bar' }, { type: 'binocular-field', fieldDeg: 4 }] },
+  card: {
+    glance: 'A small triangle of stars at Orion’s head, with a scatter of fainter ones.',
+    whyHere: 'Another young Orion family, a few million years old, around the star Meissa.',
+    see: 'Point at Orion’s head: Meissa and its companions form a tight triangle with a dozen fainter stars around it.',
+    understand: 'This cluster formed a little before the Orion Nebula’s stars. A ring of gas around it was pushed out by its hot stars and by a supernova.',
+    wonder: 'Gaia picks out over a thousand members spread around this little triangle.',
+    connect: 'Same constellation, different birth dates.',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Age', factRef: 'ageMyr', comparisonKey: 'time.sun-day' },
+    ],
+    photoCaption: 'Wide photos show a faint red ring of gas around the cluster, invisible in binoculars.',
+    tier: 'supporting',
+  },
+  sources: ['hr24'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const m45: DsoObject = {
+  id: 'M45', kind: 'dso',
+  names: { display: 'Pleiades', designation: 'M45', aliases: ['Seven Sisters', 'Melotte 22'], simbadId: 'Cl Melotte 22' },
+  con: 'Tau', ra: 56.75, dec: 24.11667, mag: 1.6,
+  facts: {
+    distanceLy: { value: 440, min: 440, max: 440, unit: 'ly', sourceId: 'hr24', method: 'measured', note: 'dist50 134.8 pc (Gaia DR3)' },
+    ageMyr: { value: 125, min: 117, max: 133, unit: 'Myr', sourceId: 'stauffer1998', method: 'measured', note: 'lithium-depletion boundary 125 ± 8 Myr' },
+    memberCount: { value: 1721, unit: 'stars', sourceId: 'hr24', method: 'catalog', note: 'Gaia DR3 members' },
+    massMsun: { value: 947, min: 860, max: 1033, unit: 'Msun', sourceId: 'hr24', method: 'model', note: 'mass within the Jacobi radius' },
+    angularSizeArcmin: { value: 110, unit: 'arcmin', sourceId: 'catalog-extents', method: 'catalog' },
+  },
+  dsoClass: 'open-cluster', traits: ['naked-eye'],
+  view: view(4, 4, 4, 4),
+  appearance: { moonTolerance: 'high', resolves: 'stars', bestFieldDeg: 3, colorVisible: true },
+  evoStage: 2, contextIds: [],
+  teaches: [{ conceptId: 'LIFE.cluster-birth', strength: 3 }, { conceptId: 'LIFE.cluster-age', strength: 3 }, { conceptId: 'PERC.night-eyes', strength: 1 }],
+  roles: ['young-cluster'], wow: 5, insight: 4, obsDifficulty: 1,
+  superlatives: [], misconceptions: ['MC14'], showpiece: true, interest: 1,
+  media: { images: [dss('M45', 'Survey photograph of the Pleiades with the blue reflection haze.', 3)], visuals: [{ type: 'age-bar' }] },
+  card: {
+    glance: 'Dozens of blue-white stars in a little dipper shape.',
+    whyHere: 'A star family about a hundred million years past its birth cloud.',
+    see: 'The naked-eye dipper becomes dozens of blue-white points. Notice how similar the bright ones look: all hot, all bluish.',
+    understand: 'These stars were born together, so they share an age. The heaviest, hottest stars burn out first. The Pleiades still have blue-white ones, which tells you the family is young by star standards.',
+    wonder: 'The family formed when dinosaurs walked the Earth. The blue haze in photos is a different cloud they are passing through.',
+    connect: 'Families do not stay together forever. Next: a cluster several times older.',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Age', factRef: 'ageMyr', comparisonKey: 'time.sun-day' },
+      { label: 'Members found by Gaia', factRef: 'memberCount' },
+    ],
+    photoCaption: 'Long exposures show blue dust lit by the stars; binoculars rarely show it.',
+    notSee: 'The blue nebulosity of photographs.',
+    tier: 'showpiece',
+  },
+  sources: ['hr24', 'stauffer1998', 'noirlab-pleiades', 'catalog-extents'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const hyades: DsoObject = {
+  id: 'AST-Hyades', kind: 'dso',
+  names: { display: 'Hyades', designation: 'Melotte 25', aliases: ['Mel 25', 'Collinder 50'], simbadId: 'Cl Melotte 25' },
+  con: 'Tau', ra: 66.75, dec: 15.86667, mag: 0.5,
+  facts: {
+    distanceLy: { value: 153.9, min: 153.9, max: 153.9, unit: 'ly', sourceId: 'hr24', method: 'measured', note: 'dist50 47.19 pc (Gaia DR3)' },
+    ageMyr: { value: 625, min: 575, max: 675, unit: 'Myr', sourceId: 'perryman1998', method: 'model', note: '625 ± 50 Myr isochrones; other studies up to ~750 Myr' },
+    memberCount: { value: 927, unit: 'stars', sourceId: 'hr24', method: 'catalog', note: 'Gaia DR3 members' },
+    angularSizeArcmin: { value: 330, unit: 'arcmin', sourceId: 'catalog-extents', method: 'catalog' },
+  },
+  dsoClass: 'open-cluster', traits: ['naked-eye', 'contains-red-giants'],
+  view: view(4, 4, 4, 4),
+  appearance: { moonTolerance: 'high', resolves: 'stars', bestFieldDeg: 6, colorVisible: true },
+  evoStage: 3, contextIds: [],
+  teaches: [{ conceptId: 'LIFE.cluster-age', strength: 3 }, { conceptId: 'SKY.projection', strength: 2 }, { conceptId: 'STAR.red-clump', strength: 2 }],
+  roles: ['adult-cluster'], wow: 4, insight: 4, obsDifficulty: 1,
+  superlatives: [{ claim: 'nearest open cluster', scope: 'whole sky (excluding moving groups)', sourceId: 'perryman1998', tag: 'nearest' }],
+  misconceptions: ['MC9', 'MC13'], showpiece: true, interest: 0.9,
+  media: { images: [], visuals: [{ type: 'age-bar' }, { type: 'binocular-field', fieldDeg: 6 }] },
+  card: {
+    glance: 'A big V of stars, several of them yellow-orange, spilling past the field edge.',
+    whyHere: 'The same kind of family as the Pleiades, about five times older.',
+    see: 'Let the V fill your view. Look for the orange tint of several cluster stars, then compare them with Aldebaran, the brightest orange point at the tip.',
+    understand: 'The heaviest blue stars of this family have already died. The next heaviest have swollen into orange giants. A cluster’s brightest remaining stars tell you its age.',
+    wonder: 'This is the nearest real star cluster, close enough that its stars spread across a whole binocular field.',
+    connect: 'The brightest star in the V is an impostor. Which one?',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Age', factRef: 'ageMyr', comparisonKey: 'time.sun-day' },
+    ],
+    photoCaption: 'Photos show the same stars; the cluster is too spread out to frame in most telescopes.',
+    tier: 'showpiece',
+  },
+  sources: ['hr24', 'perryman1998', 'catalog-extents'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const m1: DsoObject = {
+  id: 'M1', kind: 'dso',
+  names: { display: 'Crab Nebula', designation: 'M1', aliases: ['NGC 1952', 'Taurus A'], simbadId: 'M 1' },
+  con: 'Tau', ra: 83.625, dec: 22.01667, mag: 8.4,
+  facts: {
+    distanceLy: { value: 6500, unit: 'ly', sourceId: 'chandra-crab', method: 'literature' },
+    ageMyr: { value: 0.00097, unit: 'Myr', sourceId: 'chandra-crab', method: 'literature', note: 'supernova seen in 1054 CE' },
+    angularSizeArcmin: { value: 8, unit: 'arcmin', sourceId: 'openngc', method: 'catalog', note: '8′ × 4′' },
+  },
+  dsoClass: 'supernova-remnant', traits: ['pulsar', 'historical-supernova'],
+  extent: { majorArcmin: 8, minorArcmin: 4, sourceId: 'openngc' },
+  poweredBy: { kind: 'pulsar-wind', sourceIds: ['chandra-crab'] },
+  view: view(0, 1, 0, 2),
+  appearance: { moonTolerance: 'low', resolves: 'glow', bestFieldDeg: 1, colorVisible: false },
+  evoStage: 7, contextIds: [],
+  teaches: [{ conceptId: 'LIFE.supernova', strength: 3 }],
+  roles: ['snr'], wow: 2, insight: 5, obsDifficulty: 4,
+  superlatives: [], misconceptions: [], showpiece: false, interest: 0.8,
+  historyHook: { text: 'Astronomers in China recorded the explosion as a “guest star” in 1054.', sourceId: 'chandra-crab' },
+  media: { images: [dss('M1', 'Survey photograph of the Crab Nebula’s filaments.', 0.6)], visuals: [{ type: 'distance-bar' }] },
+  card: {
+    glance: 'A faint, small oval smudge near the tip of Taurus’s horn; a dark-sky challenge.',
+    whyHere: 'The wreckage of a heavy star that exploded: what Betelgeuse will leave behind.',
+    see: 'Find ζ Tauri, then move about a degree north-west. Look for a tiny grey oval that does not sharpen into a star. Steady the binoculars and use averted vision.',
+    understand: 'When a star much heavier than the Sun runs out of fuel, its core collapses and the rest blows apart. The Crab is that debris, still expanding, with a spinning neutron star at its center powering the glow.',
+    wonder: 'People saw the explosion in 1054; it was bright enough to see in daylight for weeks.',
+    connect: 'Its atoms will one day drift into new clouds like the Orion Nebula.',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Time since the explosion was seen', factRef: 'ageMyr', comparisonKey: 'time.history' },
+    ],
+    photoCaption: 'Photos reveal colored filaments; binoculars show only a faint grey patch.',
+    notSee: 'Filaments and color.',
+    tier: 'showpiece',
+  },
+  sources: ['chandra-crab', 'openngc'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const m35: DsoObject = {
+  id: 'M35', kind: 'dso',
+  names: { display: 'M35', designation: 'M35', aliases: ['NGC 2168'], simbadId: 'NGC 2168' },
+  con: 'Gem', ra: 92.225, dec: 24.33333, mag: 5.3,
+  facts: {
+    distanceLy: { value: 2735, min: 2733, max: 2737, unit: 'ly', sourceId: 'hr24', method: 'measured', note: 'dist50 838.5 pc' },
+    ageMyr: { value: 162, min: 101, max: 259, unit: 'Myr', sourceId: 'hr24', method: 'model', note: 'logAge 8.21 (8.00–8.41)' },
+    memberCount: { value: 1609, unit: 'stars', sourceId: 'hr24', method: 'catalog', note: 'Gaia DR3 members' },
+    massMsun: { value: 4180, min: 3914, max: 4445, unit: 'Msun', sourceId: 'hr24', method: 'model' },
+    angularSizeArcmin: { value: 28, unit: 'arcmin', sourceId: 'catalog-extents', method: 'catalog' },
+  },
+  dsoClass: 'open-cluster',
+  view: view(3, 4, 3, 4),
+  appearance: { moonTolerance: 'medium', resolves: 'partly', bestFieldDeg: 2, colorVisible: false },
+  evoStage: 2, contextIds: [],
+  teaches: [{ conceptId: 'LIFE.cluster-age', strength: 2 }, { conceptId: 'SKY.projection', strength: 2 }],
+  roles: ['young-cluster'], wow: 4, insight: 3, obsDifficulty: 2,
+  superlatives: [], misconceptions: [], showpiece: true, interest: 0.7,
+  media: { images: [dss('M35', 'Survey photograph of M35 with NGC 2158 at its edge.', 0.93)], visuals: [{ type: 'age-bar' }] },
+  card: {
+    glance: 'A rich, grainy glow at Gemini’s feet with a few stars sparkling through.',
+    whyHere: 'A big young family, roughly the Pleiades’ age but six times farther away.',
+    see: 'Sweep from the Gemini foot stars to a round glittering patch. Then look just to one side for a much smaller, fainter smudge: that is NGC 2158.',
+    understand: 'M35 is about as old as the Pleiades but much farther away, so its stars blur into a glow and only the brightest come through.',
+    wonder: 'Gaia counts over 1,600 members here.',
+    connect: 'The small smudge beside it is not part of this family at all.',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Age', factRef: 'ageMyr', comparisonKey: 'time.sun-day' },
+    ],
+    photoCaption: 'Photos resolve hundreds of stars; binoculars show a grainy glow.',
+    tier: 'supporting',
+  },
+  sources: ['hr24', 'catalog-extents'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+const ngc2158: DsoObject = {
+  id: 'NGC2158', kind: 'dso',
+  names: { display: 'NGC 2158', designation: 'NGC 2158', aliases: [], simbadId: 'NGC 2158' },
+  con: 'Gem', ra: 91.875, dec: 24.1, mag: 8.7,
+  facts: {
+    distanceLy: { value: 12090, min: 12020, max: 12160, unit: 'ly', sourceId: 'hr24', method: 'measured', note: 'dist50 3706 pc' },
+    ageMyr: { value: 1860, min: 1290, max: 2700, unit: 'Myr', sourceId: 'hr24', method: 'model', note: 'logAge 9.27 (9.11–9.43)' },
+    memberCount: { value: 1958, unit: 'stars', sourceId: 'hr24', method: 'catalog', note: 'Gaia DR3 members' },
+    massMsun: { value: 20920, min: 20220, max: 21630, unit: 'Msun', sourceId: 'hr24', method: 'model' },
+    angularSizeArcmin: { value: 5, unit: 'arcmin', sourceId: 'catalog-extents', method: 'catalog' },
+  },
+  dsoClass: 'open-cluster', traits: ['line-of-sight-pair'],
+  view: view(0, 1, 1, 2),
+  appearance: { moonTolerance: 'low', resolves: 'glow', bestFieldDeg: 1, colorVisible: false },
+  evoStage: 3, contextIds: [],
+  teaches: [{ conceptId: 'SKY.projection', strength: 3 }, { conceptId: 'LIFE.cluster-age', strength: 2 }],
+  roles: ['adult-cluster'], wow: 2, insight: 4, obsDifficulty: 3,
+  superlatives: [], misconceptions: ['MC9'], showpiece: false, interest: 0.6,
+  media: { images: [], visuals: [{ type: 'distance-bar' }] },
+  card: {
+    glance: 'A tiny faint smudge at the south-west edge of M35.',
+    whyHere: 'A background cluster four times farther and ten times older than M35.',
+    see: 'Keep M35 in view and look half a degree to its south-west for a small, even glow. Averted vision helps.',
+    understand: 'Two clusters line up by chance. NGC 2158 is so far away that thousands of its stars merge into a faint haze.',
+    wonder: 'Its light set off about twelve thousand years ago, around the end of the last ice age.',
+    connect: 'Side by side on the sky does not mean side by side in space.',
+    numbers: [
+      { label: 'Distance', factRef: 'distanceLy', comparisonKey: 'distance.light-left' },
+      { label: 'Age', factRef: 'ageMyr', comparisonKey: 'time.sun-day' },
+    ],
+    photoCaption: 'Telescope photos resolve it into a dense swarm of faint yellow stars.',
+    tier: 'supporting',
+  },
+  sources: ['hr24', 'catalog-extents'],
+  provenance: { status: 'curated', batch: 'winter', curatedBy: 'fixture' },
+};
+
+export const FIXTURE_OBJECTS = [
+  betelgeuse, rigel, aldebaran, capella, theta1OriC,
+  m42, m43, ngc1981, orionBelt, cr69, m45, hyades, m1, m35, ngc2158,
+];
+
+// ───────────────────────────── contexts ─────────────────────────────
+
+export const FIXTURE_CONTEXTS: ContextNode[] = [
+  { id: 'ctx:OriOB1', kind: 'ob-association', name: 'Orion OB1 association', memberIds: ['AST-OrionBelt', 'NGC1981', 'M42', 'M43', 'HR1895'], facts: {}, text: 'A family of young star groups spread across Orion, born in successive waves.', sources: ['brown1994'] },
+  { id: 'ctx:OriOB1d', kind: 'ob-association', name: 'Orion OB1d (Orion Nebula Cluster)', parentId: 'ctx:OriOB1', memberIds: ['M42', 'M43', 'HR1895'], facts: { ageMyr: { value: 1, min: 0.3, max: 2, unit: 'Myr', sourceId: 'hillenbrand1997', method: 'model' } }, sources: ['hillenbrand1997'] },
+  { id: 'ctx:OrionA', kind: 'molecular-complex', name: 'Orion A molecular cloud', memberIds: ['M42', 'M43'], facts: { distanceLy: { value: 1350, min: 1328, max: 1373, unit: 'ly', sourceId: 'menten2007', method: 'measured' } }, sources: ['menten2007'] },
+  { id: 'ctx:LambdaOri', kind: 'ob-association', name: 'λ Orionis ring', memberIds: ['Cr69'], facts: { ageMyr: { value: 5.2, min: 3.4, max: 7.0, unit: 'Myr', sourceId: 'hr24', method: 'model' } }, sources: ['hr24'] },
+];
+
+// ───────────────────────────── concepts ─────────────────────────────
+
+const c = (id: string, title: string, tier: 0 | 1 | 2 | 3, bigIdea: string, prereqs: string[], terms: string[], parent?: string): Concept =>
+  ({ id, title, tier, bigIdea, prereqs, terms, ...(parent ? { parent } : {}) });
+
+export const FIXTURE_CONCEPTS: Concept[] = [
+  c('PERC.night-eyes', 'Night eyes', 0, 'Night vision sees faint light but almost no color, and works best slightly off-center.', [], ['averted vision', 'dark adaptation']),
+  c('SKY.projection', 'Line of sight', 0, 'Stars that look side by side can be at very different distances.', [], ['line of sight']),
+  c('LIGHT.brightness', 'Apparent brightness', 1, 'How bright a star looks depends on its light output and its distance.', [], ['apparent brightness']),
+  c('DIST.light-year', 'Light-year', 1, 'A light-year is a distance: how far light travels in a year.', [], ['light-year']),
+  c('STAR.fusion', 'Stars run on fusion', 1, 'Stars shine by fusing hydrogen into helium in their cores; they are not fires.', [], ['fusion', 'hydrogen']),
+  c('LIGHT.color-temp', 'Color is temperature', 1, 'Red-orange stars are cool, blue-white stars are hot.', ['PERC.night-eyes'], ['surface temperature']),
+  c('DIST.lum-vs-app', 'Luminosity vs brightness', 2, 'A faint-looking star can be a distant giant; a bright one can be ordinary and near.', ['LIGHT.brightness', 'DIST.light-year'], ['luminosity']),
+  c('STAR.size', 'Sizes of stars', 2, 'Stars range from smaller than Earth to wider than Mars’s orbit.', ['LIGHT.color-temp', 'DIST.lum-vs-app'], ['giant', 'supergiant', 'dwarf']),
+  c('STAR.mass-fate', 'Mass is destiny', 2, 'Heavy stars live fast and die violently; light stars live long and fade quietly.', ['STAR.fusion'], ['solar mass', 'lifetime']),
+  c('LIFE.nursery', 'Star nurseries', 2, 'Stars are born in cold clouds of gas and dust; newborn hot stars light up their cloud.', ['STAR.fusion'], ['nebula', 'emission']),
+  c('LIFE.cluster-birth', 'Born in batches', 2, 'A cluster is a family of stars of the same age.', ['LIFE.nursery'], ['open cluster']),
+  c('LIFE.cluster-age', 'Reading a cluster’s age', 3, 'A cluster’s brightest remaining stars tell its age.', ['LIFE.cluster-birth', 'STAR.mass-fate', 'LIGHT.color-temp'], ['turn-off']),
+  c('MW.families', 'Families drift apart', 3, 'Clusters dissolve into associations and moving groups that still share a motion.', ['LIFE.cluster-birth'], ['association', 'moving group']),
+  c('LIFE.giant', 'Giants', 2, 'When the core runs out of hydrogen, a star swells into a cool, huge, bright giant.', ['STAR.fusion', 'LIGHT.color-temp'], ['red giant']),
+  c('LIFE.supernova', 'Supernovae', 3, 'A heavy star ends in a supernova and leaves a neutron star or black hole.', ['LIFE.giant', 'STAR.mass-fate'], ['supernova', 'neutron star', 'pulsar']),
+  c('STAR.supergiant-fate', 'Supergiant fate', 3, 'Stars over about 8 solar masses end as core-collapse supernovae.', ['LIFE.giant', 'STAR.mass-fate'], ['red supergiant'], 'LIFE.supernova'),
+  c('STAR.red-clump', 'Red clump', 3, 'After the giant phase, stars settle down burning helium and pile up at one luminosity.', ['LIFE.giant'], ['helium burning'], 'LIFE.giant'),
+];
+
+// ───────────────────────────── edges ─────────────────────────────
+
+const e = (from: string, to: string, type: Edge['type'], subtype: string, strength: number, extra: Partial<Edge> = {}): Edge =>
+  ({ from, to, type, subtype, strength, reasonKey: `edge.${from}>${to}`, curated: true, ...extra });
+
+export const FIXTURE_EDGES: Edge[] = [
+  e('HR1895', 'M42', 'CAUSE', 'ionizes', 1, { sourceIds: ['kraus2009'] }),
+  e('M42', 'M43', 'SIBLING', 'same-cloud', 0.9, { directed: false, sourceIds: ['menten2007'] }),
+  e('M42', 'NGC1981', 'LIFE_NEXT', 'older-analog', 0.8, { factRefs: [{ objectId: 'M42', fact: 'ageMyr' }, { objectId: 'NGC1981', fact: 'ageMyr' }], sourceIds: ['brown1994'] }),
+  e('NGC1981', 'AST-OrionBelt', 'SIBLING', 'same-association', 0.8, { directed: false, sourceIds: ['brown1994'] }),
+  e('M42', 'AST-OrionBelt', 'SIBLING', 'same-association', 0.8, { directed: false, sourceIds: ['brown1994'] }),
+  e('AST-OrionBelt', 'Cr69', 'SAME_FAMILY', 'young-groups', 0.6, { factRefs: [{ objectId: 'AST-OrionBelt', fact: 'ageMyr' }, { objectId: 'Cr69', fact: 'ageMyr' }] }),
+  e('AST-OrionBelt', 'STAR-Betelgeuse', 'LIFE_NEXT', 'future-of-massive-stars', 0.7, { factRefs: [{ objectId: 'STAR-Betelgeuse', fact: 'massMsun' }] }),
+  e('M42', 'M45', 'LIFE_NEXT', 'older-analog', 0.85, { factRefs: [{ objectId: 'M42', fact: 'ageMyr' }, { objectId: 'M45', fact: 'ageMyr' }] }),
+  e('M45', 'AST-Hyades', 'LIFE_NEXT', 'older-analog', 0.9, { factRefs: [{ objectId: 'M45', fact: 'ageMyr' }, { objectId: 'AST-Hyades', fact: 'ageMyr' }], sourceIds: ['stauffer1998', 'perryman1998'] }),
+  e('STAR-Aldebaran', 'AST-Hyades', 'LINE_OF_SIGHT', 'foreground-star', 1, { directed: false, factRefs: [{ objectId: 'STAR-Aldebaran', fact: 'distanceLy' }, { objectId: 'AST-Hyades', fact: 'distanceLy' }] }),
+  e('STAR-Aldebaran', 'STAR-Betelgeuse', 'CONTRAST', 'same-stage-different-mass', 0.85, { factRefs: [{ objectId: 'STAR-Betelgeuse', fact: 'massMsun' }] }),
+  e('STAR-Betelgeuse', 'HR1713', 'CONTRAST', 'teffK', 1, { directed: false, factRefs: [{ objectId: 'STAR-Betelgeuse', fact: 'teffK' }, { objectId: 'HR1713', fact: 'teffK' }] }),
+  e('STAR-Betelgeuse', 'M1', 'LIFE_NEXT', 'fate-high-mass', 0.8, { sourceIds: ['chandra-crab'] }),
+  e('M35', 'NGC2158', 'LINE_OF_SIGHT', 'background-cluster', 1, { factRefs: [{ objectId: 'M35', fact: 'distanceLy' }, { objectId: 'NGC2158', fact: 'distanceLy' }, { objectId: 'NGC2158', fact: 'ageMyr' }] }),
+  e('M45', 'M35', 'CONTRAST', 'same-age-different-distance', 0.75, { directed: false, factRefs: [{ objectId: 'M45', fact: 'distanceLy' }, { objectId: 'M35', fact: 'distanceLy' }] }),
+  e('STAR-Capella', 'STAR-Aldebaran', 'SAME_PHYSICS', 'giants', 0.6, { directed: false, factRefs: [{ objectId: 'STAR-Capella', fact: 'teffK' }, { objectId: 'STAR-Aldebaran', fact: 'teffK' }] }),
+];
+
+// ───────────────────────────── templates ─────────────────────────────
+
+export const FIXTURE_TEMPLATES: Template[] = [
+  {
+    id: 'A1-cradle-to-grave', archetype: 'A1', title: 'Cradle to Grave', titleKeys: ['title.A1-cradle-to-grave'],
+    drivingQuestion: 'Where do stars come from, and how do they end?',
+    hookLine: 'Follow a star’s whole life, from nursery to wreckage, in one sweep of sky.',
+    themeTags: ['lives-of-stars', 'nurseries', 'star-corpses'],
+    slots: [
+      { arc: 'hook', label: 'Nursery', match: { roles: ['nursery'], minWow: 3, maxObsDifficulty: 2 } },
+      { arc: 'build', label: 'Young family', match: { roles: ['young-cluster', 'association'] }, repeat: [1, 3] },
+      { arc: 'twist', label: 'Impostor', match: { hasMisconception: true, roles: ['giant', 'adult-cluster'] }, optional: true },
+      { arc: 'build', label: 'Aging star', match: { roles: ['giant', 'adult-cluster'] }, optional: true },
+      { arc: 'payoff', label: 'Doomed giant', match: { roles: ['supergiant'], kinds: ['star'], maxObsDifficulty: 3 } },
+      { arc: 'coda', label: 'Shattered star', match: { roles: ['snr', 'pn'], maxObsDifficulty: 4 }, optional: true },
+    ],
+    order: 'partial', swapGroups: [[2, 3]],
+    edges: ['LIFE_NEXT', 'CAUSE', 'SIBLING', 'CONTRAST', 'LINE_OF_SIGHT', 'SAME_FAMILY'],
+    progression: { property: 'evoStage', direction: 'arc' },
+    length: [4, 7], defaultLength: 5,
+    ingredients: {
+      roles: [{ anyOf: ['nursery'], min: 1 }, { anyOf: ['young-cluster', 'adult-cluster'], min: 1 }, { anyOf: ['giant', 'supergiant', 'pn', 'snr'], min: 1 }],
+      minDistinctEvoStages: 3,
+    },
+    coreConcepts: ['LIFE.nursery', 'LIFE.cluster-birth', 'LIFE.giant', 'LIFE.supernova'],
+    moonFriendly: false, needsDark: false, kidFriendly: true, chainTo: ['A2-thermometer'],
+  },
+  {
+    id: 'A2-thermometer', archetype: 'A2', title: 'A Thermometer in the Sky', titleKeys: ['title.A2-thermometer'],
+    drivingQuestion: 'Why are stars different colors, and what does that tell us?',
+    hookLine: 'Read the temperature of stars by their color, from ember-orange to blue-white.',
+    themeTags: ['star-colours'],
+    slots: [
+      { arc: 'hook', label: 'Cool giant', match: { kinds: ['star'], factRanges: { teffK: { max: 4500 } }, minWow: 3, maxObsDifficulty: 2 } },
+      { arc: 'build', label: 'Color step', match: { kinds: ['star'] }, repeat: [1, 3] },
+      { arc: 'twist', label: 'Surprise', match: { kinds: ['star'], hasMisconception: true }, optional: true },
+      { arc: 'payoff', label: 'Hottest star', match: { kinds: ['star'], factRanges: { teffK: { min: 9000 } } } },
+      { arc: 'coda', label: 'Look again', match: { kinds: ['star'] }, optional: true },
+    ],
+    order: 'partial', swapGroups: [[1, 2]],
+    edges: ['CONTRAST', 'SAME_PHYSICS', 'LINE_OF_SIGHT', 'SIBLING'],
+    progression: { property: 'teffK', direction: 'up' },
+    length: [4, 6], defaultLength: 5,
+    ingredients: { factSpans: [{ fact: 'teffK', minSpan: 6000 }], minStars: 4 },
+    coreConcepts: ['LIGHT.color-temp', 'PERC.night-eyes', 'STAR.size'],
+    moonFriendly: true, needsDark: false, kidFriendly: true, chainTo: ['A1-cradle-to-grave'],
+  },
+];
+
+// ───────────────────────────── narration ─────────────────────────────
+
+export const FIXTURE_NARRATION: NarrationBank = {
+  version: 'fixture-1',
+  variants: {
+    'title.A1-cradle-to-grave': ['Cradle to Grave in {region}', 'Birth to Death over {region}'],
+    'title.A2-thermometer': ['A Thermometer in {region}', 'Star Colors of {region}'],
+    'edge.HR1895>M42': ['The hottest star in the knot, {prev}, is what makes {next} glow.'],
+    'edge.M42>M43': ['Stay in the same cloud: {next} is a second bubble lit by its own young star.'],
+    'edge.M42>NGC1981': ['Just north of the nebula, {next} shows the same kind of family a few million years later, its cloud already gone.'],
+    'edge.NGC1981>AST-OrionBelt': ['The big blue stars of the Belt are older siblings from the same Orion family.'],
+    'edge.M42>AST-OrionBelt': ['Up from the Sword, the Belt stars belong to the same family of young stars as the nebula’s newborns.'],
+    'edge.AST-OrionBelt>Cr69': ['At Orion’s head, {next} is another young family, born a little earlier.'],
+    'edge.AST-OrionBelt>STAR-Betelgeuse': ['Heavy blue stars like the Belt’s swell into red supergiants. {next} shows that future.'],
+    'edge.M42>M45': ['Fast-forward about a hundred million years: {next} is a family whose birth cloud is long gone.'],
+    'edge.M45>AST-Hyades': ['Same kind of family, about five times older: the blue giants are gone and orange giants have appeared.'],
+    'edge.STAR-Aldebaran>AST-Hyades': ['{prev} looks like part of the Hyades but sits less than half as far away, a foreground star.'],
+    'edge.STAR-Aldebaran>STAR-Betelgeuse': ['{prev} is an aging giant. {next} is the same chapter told by a star far heavier, and heavy stars do not age gently.'],
+    'edge.STAR-Betelgeuse>HR1713': ['Same constellation, same kind of huge star, opposite color: {prev} at about {prevVal}, {next} at about {nextVal}.'],
+    'edge.STAR-Betelgeuse>M1': ['What will {prev} leave behind? {next} is the wreck of a star that already exploded.'],
+    'edge.M35>NGC2158': ['The little smudge beside {prev} is {next}: {ratioPhrase} away and much older.'],
+    'edge.M45>M35': ['{next} is about the same age as {prev} but {ratioPhrase}, so its stars blur into a glow.'],
+    'edge.STAR-Capella>STAR-Aldebaran': ['Two giants, two colors: {prev} at about {prevVal}, {next} at about {nextVal}.'],
+    'CONTRAST.teffK': ['{prev} burns at about {prevVal}; {next} at about {nextVal}, {ratioPhrase}. That temperature gap is the color difference you see.'],
+    LIFE_NEXT: ['{next} shows what a star or family like {prev} becomes later in life.'],
+    'direction.same-field': ['Stay put: {next} is in the same view, {screenDir} of {prev}.'],
+    'direction.sweep': ['Sweep {screenDir} about {fields} binocular fields{compassHint}.'],
+    'direction.naked-eye-hop': ['Lower the binoculars and find {anchor} by eye, then hop {screenDir} to {next}.'],
+  },
+};
+
+// ───────────────────────────── the fixture KB ─────────────────────────────
+
+export const FIXTURE_KB: KnowledgeBase = {
+  version: 'fixture-winter-1',
+  objects: FIXTURE_OBJECTS,
+  contexts: FIXTURE_CONTEXTS,
+  concepts: FIXTURE_CONCEPTS,
+  edges: FIXTURE_EDGES,
+  templates: FIXTURE_TEMPLATES,
+  narration: FIXTURE_NARRATION,
+  sources: FIXTURE_SOURCES,
+};
+
+// ───────────────────────────── mock engine ─────────────────────────────
+
+const link = (from: string, to: string) => {
+  const edge = FIXTURE_EDGES.find((x) => (x.from === from && x.to === to) || (x.directed === false && x.from === to && x.to === from));
+  if (!edge) throw new Error(`fixture: no edge ${from}>${to}`);
+  return { from, type: edge.type, subtype: edge.subtype, strength: edge.strength, reasonKey: edge.reasonKey, curated: edge.curated };
+};
+
+/** Plausible fixed result: San Francisco, 2027-01-15 20:30 PST (04:30 UTC), 10×50 (6.5° field), Moon assumed down. */
+export const MOCK_JOURNEY_RESULT: JourneyResult = {
+  journeys: [
+    {
+      key: 'fx-a1-orion-0001',
+      templateId: 'A1-cradle-to-grave',
+      title: 'Cradle to Grave in Orion',
+      drivingQuestion: 'Where do stars come from, and how do they end?',
+      hook: 'Follow a star’s whole life, from nursery to wreckage, in one sweep of sky.',
+      regionCenter: { ra: 84.79, dec: 3.69, altDeg: 50.8, azDeg: 145.1, label: 'High in the south-east, around Orion' },
+      regionRadius: 30,
+      totalPathDeg: 29.6,
+      durationMin: 40,
+      difficulty: 'moderate',
+      difficultyReason: 'The last stop, the Crab Nebula, needs a dark sky.',
+      score: 0.82,
+      bestWindow: { start: '2027-01-15T03:45:00Z', end: '2027-01-15T07:40:00Z' },
+      stops: [
+        { index: 0, objectId: 'M42', role: 'Nursery', arc: 'hook', link: null, windowStart: '2027-01-15T04:30:00Z', windowEnd: '2027-01-15T04:38:00Z', altAtStart: 41.2, azAtStart: 146.9, moonSepDeg: null, challenge: false, transitionText: null, getThere: { mode: 'naked-eye-hop', fields: 0, distanceDeg: 0, bearingText: 'Find Orion’s Belt by eye, then drop down to the fuzzy middle star of the Sword.', anchorId: 'AST-OrionBelt' } },
+        { index: 1, objectId: 'NGC1981', role: 'Young family', arc: 'build', link: link('M42', 'NGC1981'), windowStart: '2027-01-15T04:38:00Z', windowEnd: '2027-01-15T04:46:00Z', altAtStart: 43.0, azAtStart: 148.8, moonSepDeg: null, challenge: false, transitionText: 'Just north of the nebula, NGC 1981 shows the same kind of family a few million years later, its cloud already gone.', getThere: { mode: 'same-field', fields: 0.16, distanceDeg: 1.02, bearingText: 'Stay put: it is in the same view, just above M42.' } },
+        { index: 2, objectId: 'AST-OrionBelt', role: 'Young family', arc: 'build', link: link('NGC1981', 'AST-OrionBelt'), windowStart: '2027-01-15T04:46:00Z', windowEnd: '2027-01-15T04:54:00Z', altAtStart: 46.8, azAtStart: 149.4, moonSepDeg: null, challenge: false, transitionText: 'The big blue stars of the Belt are older siblings from the same Orion family.', getThere: { mode: 'same-field', fields: 0.52, distanceDeg: 3.37, bearingText: 'Move up about half a field to the three Belt stars.' } },
+        { index: 3, objectId: 'STAR-Betelgeuse', role: 'Doomed giant', arc: 'payoff', link: link('AST-OrionBelt', 'STAR-Betelgeuse'), windowStart: '2027-01-15T04:54:00Z', windowEnd: '2027-01-15T05:02:00Z', altAtStart: 53.0, azAtStart: 139.3, moonSepDeg: null, challenge: false, transitionText: 'Heavy blue stars like the Belt’s swell into red supergiants. Betelgeuse shows that future.', getThere: { mode: 'sweep', fields: 1.51, distanceDeg: 9.79, bearingText: 'Sweep up and to the left about one and a half fields, toward Orion’s shoulder.' } },
+        { index: 4, objectId: 'M1', role: 'Shattered star', arc: 'coda', link: link('STAR-Betelgeuse', 'M1'), windowStart: '2027-01-15T05:02:00Z', windowEnd: '2027-01-15T05:10:00Z', altAtStart: 69.0, azAtStart: 134.1, moonSepDeg: null, challenge: true, transitionText: 'What will Betelgeuse leave behind? The Crab Nebula is the wreck of a star that already exploded.', getThere: { mode: 'naked-eye-hop', fields: 2.37, distanceDeg: 15.44, bearingText: 'Find ζ Tauri, the tip of the bull’s lower horn, then hop about a degree north-west.', anchorId: 'HR1910' } },
+      ],
+    },
+  ],
+  seedKey: 'fixture',
+  kbVersion: 'fixture-winter-1',
+  modelVersion: 'heuristic-fixture',
+  diagnostics: {
+    reasonsRejected: { altitude: 3, 'moon-glow': 0, 'binocular-rating': 1 },
+    limitingFactors: [],
+    message: 'Dark, moonless sky: all fixture journeys are available.',
+    candidates: 12,
+    validated: 1,
+    scorer: 'heuristic',
+  },
+};
+
+export const MOCK_EMPTY_RESULT: JourneyResult = {
+  journeys: [],
+  diagnostics: {
+    reasonsRejected: { 'moon-separation': 9, 'moon-glow': 4, altitude: 2 },
+    limitingFactors: ['moon'],
+    message: 'The Moon is 95% lit near Orion; faint objects are washed out. Try after moonset or pick a star-color journey.',
+  },
+};
+
+/** Mock engine for UI work. `empty` returns the empty-state result; `delayMs` simulates worker latency. */
+export function createMockJourneyEngineClient(opts: { empty?: boolean; delayMs?: number } = {}): JourneyEngineClient {
+  return {
+    async generate(_req: JourneyRequest): Promise<JourneyResult> {
+      if (opts.delayMs) await new Promise((r) => setTimeout(r, opts.delayMs));
+      return structuredClone(opts.empty ? MOCK_EMPTY_RESULT : MOCK_JOURNEY_RESULT);
+    },
+  };
+}
+
+export const mockJourneyEngineClient: JourneyEngineClient = createMockJourneyEngineClient();

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Download, Upload } from "lucide-react";
 import { Button } from "./ui/button";
-import { applyBackup, createBackup, readBackupFile, type BackupData, type BackupMode, type BackupPreview } from "@/lib/backup";
+import { applyBackup, createBackup, readBackupFile, readJourneyBackup, writeJourneyBackup, type BackupData, type BackupMode, type BackupPreview } from "@/lib/backup";
 
 type Props = {
   data: BackupData;
@@ -17,7 +17,9 @@ export function BackupControls({ data, onImport }: Props) {
 
   const download = () => {
     try {
-      const blob = new Blob([createBackup(data)], { type: "application/json" });
+      // Sky Journeys progress and feedback live in their own device keys; read them at export time.
+      const journeys = readJourneyBackup();
+      const blob = new Blob([createBackup(journeys ? { ...data, journeys } : data)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement("a");
       anchor.href = url;
@@ -40,7 +42,9 @@ export function BackupControls({ data, onImport }: Props) {
   const apply = () => {
     if (!preview) return;
     try {
-      const next = applyBackup(data, preview.backup, mode);
+      const journeys = readJourneyBackup();
+      const next = applyBackup(journeys ? { ...data, journeys } : data, preview.backup, mode);
+      if (!writeJourneyBackup(next.journeys)) throw new Error("Could not save the journey progress from this backup on this device.");
       onImport(next, mode);
       setStatus(mode === "merge" ? "Backup merged." : "Backup restored.");
       setPreview(null); setError("");
@@ -57,13 +61,14 @@ export function BackupControls({ data, onImport }: Props) {
       <Button type="button" variant="outline" onClick={() => input.current?.click()}><Upload size={15}/> Choose backup file</Button>
       <input ref={input} className="sr-only" type="file" accept=".json,application/json" aria-label="Choose a Starhop backup file" onChange={event => void selectFile(event.target.files?.[0])}/>
     </div>
-    <p className="text-sm text-muted-foreground">Move your settings, observing sessions, notes, recorded observations and saved locations to another device. Backup files can be up to 5 MiB.</p>
+    <p className="text-sm text-muted-foreground">Move your settings, observing sessions, notes, recorded observations, saved locations and Sky Journeys progress to another device. Backup files can be up to 5 MiB.</p>
     {preview && <div className="rounded-md border p-3 space-y-3" aria-label="Backup import preview">
       <div><strong>Backup preview</strong><p className="text-sm text-muted-foreground">Exported {new Date(preview.exportedAt).toLocaleString()}</p></div>
       <ul className="text-sm">
         <li>{preview.counts.sessions} sessions</li>
         <li>{preview.counts.targets} distinct targets, including {preview.counts.observations} recorded observations</li>
         <li>{preview.counts.locations} saved locations</li>
+        {preview.counts.journeys !== undefined && <li>{preview.counts.journeys} sky journeys and {preview.counts.journeyFeedback ?? 0} journey notes (seen, skipped, ratings)</li>}
         <li>Settings included</li>
       </ul>
       <label className="flex items-start gap-2 text-sm"><input type="radio" name="backup-mode" checked={mode === "merge"} onChange={() => setMode("merge")}/><span><strong>Merge</strong> sessions and locations with this device. Imported settings become active; existing session notes and observations are retained.</span></label>

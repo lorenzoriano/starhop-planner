@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=245.997860%2B61.514210&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.10\tHD148387                    \tHR6132                      \t  3.13000\t       \t  0.0600\t740nm     \t2001AJ....122.2707N\tHD148387\n 0.10\tHD148387                    \tHR6132                      \t  3.53500\t 3.7220\t  0.0710\t800nm     \t2003AJ....126.2502M\tHD148387\n 0.10\tHD148387                    \t                            \t  3.26000\t       \t  0.0100\t550 to 850\t2014SPIE.9146E..0WB\tHD148387\n 0.10\tHD148387                    \tHR 6132                     \t  3.17400\t 3.3550\t  0.0770\t700 nm    \t2016ApJS..227....4H\tHD148387\n 0.10\tHD148387                    \teta Dra                     \t  3.26100\t 3.4700\t  0.0100\t550..850nm\t2018AJ....155...30B\tHD148387\n\n"
+}

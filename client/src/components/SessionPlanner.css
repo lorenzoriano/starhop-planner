@@ -120,3 +120,35 @@
 }
 /* Override the legacy percentage widths on individual native-input labels. */
 .session-planner .planner-time-fields > label:nth-child(n) { width:auto; min-width:0; }
+
+/* Integration r5: journey links in the Planner. The badge styles live in journeys/entry-points.css (lazy); this is the
+   fallback shown until that chunk loads, and the row/heading layout around it. */
+.session-planner .planner-row-copy { min-width:0; }
+.session-planner .planner-row-copy > .night-journey-badge { display:inline-flex; align-items:center; gap:5px; justify-self:start; width:fit-content; max-width:100%; min-height:26px; margin-top:3px; padding:2px 9px; border:1px solid #6d6243; border-radius:999px; color:#e9d29a; font-size:11.5px; line-height:1.3; overflow-wrap:anywhere; }
+.session-planner .planner-sequence-heading { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px; }
+.session-planner .planner-hop-plan { margin-left:auto; white-space:nowrap; }
+.session-planner .planner-hop-plan:disabled { opacity:.5; cursor:default; }
+.session-planner .planner-journey-entry { margin:4px 0 12px; padding:10px 14px; min-width:0; }
+.session-planner .planner-journey-entry > summary { display:flex; align-items:center; gap:7px; min-height:36px; cursor:pointer; font-size:14px; color:#e9d29a; }
+.session-planner .planner-journey-entry > summary svg { flex:none; }
+.session-planner .planner-journey-entry[open] > summary { margin-bottom:8px; }
+@media (max-width:760px) {
+  .session-planner .planner-hop-plan { margin-left:0; }
+}
+
+/* Free spans between scheduled targets: a quiet note, not body text. */
+.session-planner .planner-free-gaps { display:grid; gap:2px; margin:4px 0 10px; }
+.session-planner .planner-free-gaps p { margin:0; color:#9fb4b0; font-size:12.5px; line-height:1.5; }
+/* Journey stops held at the journey's time. */
+.session-planner .planner-row-copy small { color:#a9bca9; font-size:12.5px; line-height:1.45; }
+
+/* Planner page: backup and offline storage sit below the workbench as panels like their siblings. */
+.offline-asset-controls, section[aria-label="Backup and restore"] { border:1px solid #2a414e; background:#0c1a25; border-radius:11px; padding:16px 18px; margin-top:18px; color:#c2d0cd; }
+.offline-asset-controls h2 { margin:0 0 4px; color:#d3e2d6; font-size:15px; font-weight:600; }
+.offline-asset-controls p, .offline-asset-controls small { margin:4px 0 0; color:#9fb4b0; font-size:12.5px; line-height:1.55; }
+.offline-asset-controls .offline-asset-summary p { color:#c2d0cd; }
+.offline-asset-controls progress { display:block; width:100%; max-width:420px; margin:6px 0 2px; accent-color:#9fc7a8; }
+.offline-asset-controls .offline-download-all { display:inline-flex; align-items:center; min-height:40px; margin-top:12px; padding:0 14px; border:1px solid #42645e; border-radius:7px; background:#132833; color:#d1e0d6; font-size:13px; cursor:pointer; }
+.offline-asset-controls .offline-download-all:hover:not(:disabled) { border-color:#82a88f; background:#1b343c; }
+.offline-asset-controls .offline-download-all:disabled { opacity:.55; cursor:default; }
+section[aria-label="Backup and restore"] > p { font-size:12.5px; line-height:1.55; }

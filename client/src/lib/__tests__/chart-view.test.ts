@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom } from "../chart-view";
+import { chartFrame, projectChartPoint, skyZenith, fieldViewZoom, observerUpRotation } from "../chart-view";
 import { eqToHorizontal, stereographicProject } from "../astronomy";
 import { chartPreferencesSchema } from "../../components/ChartPreferences";
 
@@ -68,5 +68,38 @@ describe("field camera framing", () => {
     expect(fieldViewZoom(40,2,5)).toBe(fieldViewZoom(40,5,5));
     expect(fieldViewZoom(70,.2)).toBeLessThanOrEqual(200);
     expect(fieldViewZoom(2,15)).toBeGreaterThanOrEqual(.5);
+  });
+});
+
+describe("observer-up chart rotation (Sky Journeys field mode, design review r4)", () => {
+  const lat = 37.77, lon = -122.42;
+  const date = new Date("2026-11-03T05:30:00Z");
+  const zenith = skyZenith(lat, lon, date);
+  // Screen position of a sky point on a chart turned by `rotation` (orientChartPoint's convention).
+  const screen = (p: { ra: number; dec: number }, frame: { ra: number; dec: number }, rotation: number) => {
+    const v = projectChartPoint(p, frame, frame, 10)!;
+    const a = (rotation * Math.PI) / 180;
+    return { x: v.x * Math.cos(a) - v.y * Math.sin(a), y: v.x * Math.sin(a) + v.y * Math.cos(a) };
+  };
+  for (const frame of [{ ra: 47, dec: 41 }, { ra: 300, dec: 40 }, { ra: 10, dec: 60 }]) {
+    it(`puts the zenith up and increasing azimuth to the right at RA ${frame.ra}°`, () => {
+      const rot = observerUpRotation(frame, zenith)!;
+      expect(rot).not.toBeNull();
+      const h0 = eqToHorizontal(frame.ra, frame.dec, lat, lon, date);
+      // Four neighbours 2° away: the one highest in the sky is the one highest on screen; azimuth grows to the right.
+      const around = [0, 90, 180, 270].map((pa) => {
+        const r = (pa * Math.PI) / 180;
+        const p = { ra: frame.ra + (2 * Math.sin(r)) / Math.cos((frame.dec * Math.PI) / 180), dec: frame.dec + 2 * Math.cos(r) };
+        const h = eqToHorizontal(p.ra, p.dec, lat, lon, date);
+        return { s: screen(p, frame, rot), dAlt: h.alt - h0.alt, dAz: ((h.az - h0.az + 540) % 360) - 180 };
+      });
+      const top = around.reduce((a, b) => (b.s.y < a.s.y ? b : a));
+      expect(top.dAlt).toBe(Math.max(...around.map((p) => p.dAlt)));
+      const right = around.reduce((a, b) => (b.s.x > a.s.x ? b : a));
+      expect(right.dAz).toBe(Math.max(...around.map((p) => p.dAz)));
+    });
+  }
+  it("is null at the zenith itself", () => {
+    expect(observerUpRotation(zenith, zenith)).toBeNull();
   });
 });

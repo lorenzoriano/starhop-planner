@@ -1,0 +1,93 @@
+{
+ "notes": "(Top-level keys deliberately avoid `objects`/`contexts`, which other scripts read from curated/*.json.) Merge-layer fixes owned by the KB build (script/journeys/build_kb.ts), applied AFTER the curated tier. Curator files stay untouched; every entry says why. objectFixes.<id>: `patch` uses the curated merge semantics (plain objects replace wholesale, `facts` merge per key, null deletes); `journeyIneligible` keeps the record for the inspector but demotes provenance.status to 'seeded' with the reason in provenance.ineligibleReason. contextFixes.<id>.addMembers adds membership links (mirrored into each object's contextIds). Positions are fixed upstream in make_object_list.py (NGC 2527, Coalsack) and names of BSC stars there too (HR 6165 = tau Sco, HR 2890 = Castor B).",
+ "objectFixes": {
+  "HR4210": {
+   "patch": { "mag": 4.3 },
+   "why": "Eta Carinae has brightened since the 1990s (its own deeper text says so): BSC5 V 6.21 is a 1940s-1990s value, which also kept it from closing a journey (PAYOFF_STAR_MAG 6.0). V is about 4.3 since 2018 (AAVSO light curve; Wikipedia, Eta Carinae)."
+  },
+  "HD226868": {
+   "patch": {
+    "facts": {
+     "radiusRsun": { "value": 22.3, "min": 20.5, "max": 24.1, "unit": "Rsun", "sourceId": "millerjones2021-cygx1", "method": "model", "note": "best-fitting O-star radius 22.3 ± 1.8 R☉ at 2.22 kpc (supplementary text)" },
+     "lumLsun": { "value": 427000, "min": 355000, "max": 501000, "unit": "Lsun", "sourceId": "millerjones2021-cygx1", "method": "model", "note": "log L/L☉ = 5.63 +0.07/−0.08 with Teff 31.1 ± 0.7 kK (supplementary text)" },
+     "teffK": { "value": 31100, "min": 30400, "max": 31800, "unit": "K", "sourceId": "millerjones2021-cygx1", "method": "model", "note": "Teff = 31.1 ± 0.7 kK adopted in the dynamical model" }
+    }
+   },
+   "why": "review panel 2026-11-02: the auto tier derived L = 13,000 L☉ and R = 4.8 R☉ with A_V = 0, but HDE 226868 is reddened by E(B−V) ≈ 1 (B−V 0.81 for an O9.7 supergiant), so both were ~30× and ~5× too small and produced false transitions ('about 40 times smaller than Deneb'). Values replaced with the cited paper's own (arXiv 2102.09091)."
+  },
+  "HR5267": {
+   "patch": { "facts": { "lumLsun": null, "radiusRsun": null } },
+   "why": "review panel 2026-11-02: the derived luminosity used BC_V for 33,250 K while the adopted Teff is 25,000 K (Pigulski 2016), roughly doubling L; the Stefan–Boltzmann radius inherits the error. No sourced replacement in the KB, so both are removed."
+  },
+  "HR1712": {
+   "patch": { "facts": { "lumLsun": null, "radiusRsun": null } },
+   "why": "review panel 2026-11-02: L derived with A_V = 0 for a star reddened by E(B−V) ≈ 0.5 (L several times too small, R = 2.9 R☉ for an O9.5 V star). Removed until a sourced value is curated."
+  },
+  "HR1203": {
+   "patch": { "facts": { "lumLsun": null } },
+   "why": "review panel 2026-11-02: L derived with A_V = 0 for ζ Per, reddened by E(B−V) ≈ 0.3; removed until a sourced value is curated (the interferometric radius stays)."
+  },
+  "HR6736": {
+   "patch": { "facts": { "lumLsun": null, "radiusRsun": null } },
+   "why": "review panel 2026-11-02: L derived with A_V = 0 for 9 Sgr inside the Lagoon (E(B−V) ≈ 0.3); R = 8 R☉ inherits it. Removed until a sourced value is curated."
+  },
+  "HR2890": {
+   "journeyIneligible": "Castor B lies 5 arcsec from Castor A, so binoculars always show the pair as one point; Castor A (HR2891) carries the system on its card.",
+   "why": "curator-winter flag"
+  },
+  "DS-OmSgr": {
+   "journeyIneligible": "Listed as a double-star target, but WDS has no companion for omega Sgr: the nearby stars are the unrelated corners of the Terebellum. Re-curate as a single star before journey use.",
+   "why": "curator-summer-south-stars flag; stars.auto has no WDS pair for HR 7597"
+  },
+  "HR5460": {
+   "journeyIneligible": "Alpha Centauri B lies about 8 arcsec from Alpha Centauri A, so binoculars always show the pair as one point; Alpha Centauri (HR5459) carries the system on its card.",
+   "why": "engine evaluation (docs/sky-journeys/engine-eval.md): same case as Castor B; the engine's same-sight rule already refused both components in one journey, but B alone was used as a stop"
+  },
+  "HR4731": {
+   "journeyIneligible": "Alpha-2 Crucis lies 3.5 arcsec from Acrux A, so binoculars always show the pair as one point; Acrux (HR4730) carries the system on its card.",
+   "why": "engine evaluation (docs/sky-journeys/engine-eval.md): same case as Castor B"
+  },
+  "IC1396": {
+   "patch": {
+    "facts": { "massMsun": null, "memberCount": null, "angularSizeArcmin": null, "sizeLy": null }
+   },
+   "why": "The auto tier matched HR24/OpenNGC rows for Trumpler 37 / the 14'x4' OpenNGC IC 1396 entry, which describe the central cluster and disagree with the curated 925 pc distance (curator note on facts.distanceLy). The curator nulled the extent; the cluster mass, member count and the extent-derived angular/linear sizes go with it."
+  }
+ },
+ "contextFixes": {
+  "ctx:GalacticHalo": {
+   "addMembers": ["M15", "M2", "M30", "M3", "M53", "M68", "M13", "M92", "M56", "NGC6934", "M79",
+                  "NGC5139", "NGC104", "NGC6752", "NGC362", "NGC2808", "NGC3201", "NGC1851"],
+   "why": "Globular clusters whose curated records teach MW.halo and cite the Harris (2010) catalog that this context rests on. M71 is left out: its curator places it near the disc, not in the halo. M54 stays in ctx:SgrDSph."
+  },
+  "ctx:M81Group": {
+   "addMembers": ["NGC2403"],
+   "why": "spring-dso lists NGC2403 as a member; the object record lacked the back-link."
+  }
+ },
+ "engineEvalFlags": {
+  "notes": "Data problems found by the engine evaluation (script/journeys/eval/run-grid.ts, docs/sky-journeys/engine-eval.md). Not read by the build; for the template / narration / curator owners. The engine works around each one as described in `engine`.",
+  "templates": [
+   { "id": "A7-record-breakers", "problem": "Slot superlativeTags use doc-04 forms (most-luminous-in-view, hottest-star-in-view, reddest-star, brightest-star, fastest-moving, fastest-spinning) while curators wrote most-luminous, hottest, reddest, brightest, fastest, fastest-spinner. youngest, coolest-star-in-view and largest-apparent match no KB object.", "engine": "slotMatches compares tag stems (candidates.superlativeStem); A7 went from 0% to 14.5% of themed requests. Align the vocabularies at the source." },
+   { "id": "A11-inside-our-galaxy", "problem": "The hook slot 'Milky Way river' (milky-way-field / star-cloud, maxObsDifficulty 2) has one qualifying object, M24; MWF-CygnusRift has difficulty 3. The payoff slot is labelled 'Another galaxy' but accepts globular clusters (M14 filled it).", "engine": "A11 runs only around Sagittarius at a dark site (1.2% of themed requests). Add binocular Milky Way fields (Scutum Star Cloud, Large Sagittarius Star Cloud, Cygnus Star Cloud, Norma, Carina) and relabel or split the payoff slot." },
+   { "id": "A8-how-stars-die", "problem": "'Smoke ring' (pn, maxObsDifficulty 3) matches only M27; 'Shattered star' (snr) only the Veil (NGC 6960/6992) and M1, all challenge objects. No curated link joined a planetary nebula to a supergiant.", "engine": "Derived CONTRAST 'mass decides the fate' (PN/white dwarf vs supergiant/SNR) and challenge payoffs where the slot allows maxObsDifficulty 4; A8 now runs at dark sites in summer (3.5% of themed requests)." },
+   { "id": "A1-cradle-to-grave", "problem": "Payoff 'Dying star' accepts any giant at evoStage 5-7, so Hyades giants (Ain, gamma and delta-1 Tauri), zeta Persei, zeta Aurigae and Arneb close the story as dull payoffs.", "engine": "payoffTerm weights wow and difficulty; consider minWow 3 or roles [supergiant, pn, snr] for the payoff." },
+   { "id": "A2-thermometer", "problem": "Payoff 'Blue-hot star' (teffK >= 9000) admits white A stars such as Merak and Phecda as the hot end of the thermometer.", "engine": "Colour archetypes now only use stars of mag <= 6 (STAR_COLOR_MAG); consider teffK >= 10000 or minWow 3 for the payoff." },
+   { "id": "all", "problem": "Archetypes with a fact progression accepted any CONTRAST/SCALE link, e.g. a distance ladder stepping by star radius.", "engine": "themeLinkOk (no data change needed): fact-bearing links must be about the progression fact and go its way." },
+   { "id": "all (length)", "problem": "Template maximum lengths are 5-8 stops (A10 [3,5], most [4,6]-[4,7]), so the UI's 'Long: 7-10 stops' request is mostly met by relaxing the length: at 8 stops asked, 1,766 of 2,076 grid journeys were 3-7 stops and only 333 took the archetype switch.", "engine": "Relaxed lengths now rank by closeness to the request (LENGTH_MISS_COST). Raise slot repeat ranges / template lengths, add switch targets, or relabel the Long option." },
+   { "id": "A9-seeing-double, A10-stars-that-change", "problem": "Without a progression or binary/variable-specific derived links, many steps ride derived luminosity or radius contrasts (true, but not about doubles or variability).", "engine": "Derived SAME_PHYSICS must share a core concept; more curated SAME_PHYSICS / SAME_FAMILY edges between doubles and between variables would carry these themes better." }
+  ],
+  "narration": [
+   { "keys": ["SCALE.*-down", "TIME_MACHINE.nearer"], "problem": "Every SCALE / TIME_MACHINE variant climbs ('Next rung', 'Keep counting', 'Older light'); a step back toward us (into a coda, or out of A11's distant star-cloud hook) has no text.", "engine": "narrate.ts uses the direction-neutral CONTRAST.<fact> lines, then a built-in 'Back the other way' line." },
+   { "keys": ["CONTRAST.fate"], "problem": "Key of the new derived fate contrast has no bank variants.", "engine": "Built-in text in narrate.ts (fateTransition)." },
+   { "keys": ["winter-stars.json edge narration"], "problem": "Two variants read 'about {ratioPhrase} wider/farther' while ratioPhrase already says 'about N times wider'.", "engine": "tidyText repairs it at runtime; fix the source lines." },
+   { "keys": ["LIFE_NEXT"], "problem": "The first generic variant ('{next} is what a family like {prev} grows into') assumes two clusters; it is also picked for star to planetary nebula steps (Albireo to the Dumbbell).", "engine": "None; add LIFE_NEXT.<evo>-<evo> variants for star steps or make the generic lines kind-neutral." },
+   { "keys": ["question.A6-contrasts"], "problem": "Variant 'Birth or death: how can two glowing clouds mean opposite things?' assumes two nebulae, but A6 journeys are often all stars.", "engine": "None; question / hook variants must fit every journey the archetype can build." }
+  ],
+  "objects": [
+   { "ids": ["HD192443", "HD206362", "HD206697", "HD284419", "HD33793", "HD5679", "HD58061", "HR1607", "HR3882", "HR5080", "HR5880", "HR5958", "HR7564", "NAME-FUOrionis", "NAME-TLyrae", "STAR-Mira"], "problem": "variability.binocularVisibleAtMin is false (Mira, chi Cygni, R Leonis, R CrB ...), but mag holds the maximum.", "engine": "conditions.fadingFloor rates them at least 2: at most the one challenge stop, never the opener, stop 2 or a payoff." },
+   { "ids": ["HR1165", "DS-15Mon"], "problem": "Star records carry the cluster role 'young-cluster' (Alcyone, 15 Monocerotis), so a single star fills cluster slots such as A12 'Bright family' or A1 'Newborn family'.", "engine": "None; keep cluster roles on the cluster records (membership lives in contextIds and edges)." },
+   { "ids": ["HR4199/IC2602", "HR1165/M45", "DS-ThetaTau/AST-Hyades", "HR2782/NGC2362", "DS-15Mon/NGC2264", "HR1879/Cr69", "HR1895/M42"], "problem": "Curated SIBLING 'member-star' / CAUSE 'dominant-star' edges join a cluster or nebula to a star inside it: the same binocular view.", "engine": "StoryGraph.pairOk never puts both in one journey (only a curated LINE_OF_SIGHT, e.g. Aldebaran and the Hyades, justifies a star inside a deep-sky object's extent). The edges remain useful for cards and context." }
+  ]
+ }
+}

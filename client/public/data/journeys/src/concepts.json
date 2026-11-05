@@ -1,0 +1,441 @@
+{
+  "version": "concepts-1",
+  "concepts": [
+    {
+      "id": "PERC.night-eyes", "title": "Night eyes", "tier": 0,
+      "bigIdea": "Your night vision sees faint light but almost no color, and it works best when you look slightly to one side.",
+      "prereqs": [], "terms": ["averted vision", "dark adaptation"],
+      "bridge": "Your night vision is sensitive but nearly colorblind, so faint things look gray and show best when you look a little to one side.",
+      "evidenceIds": ["M31", "M33", "M42", "M81"]
+    },
+    {
+      "id": "PERC.binoculars", "title": "What binoculars add", "tier": 0,
+      "bigIdea": "Binoculars collect far more light than your pupil, so hundreds of stars you could not see by eye appear.",
+      "prereqs": [], "terms": ["aperture", "field of view"],
+      "bridge": "Binoculars gather much more light than your eye can, which is why crowds of extra stars pop into view.",
+      "evidenceIds": ["M45", "AST-Hyades", "Mel20", "Mel111"]
+    },
+    {
+      "id": "SKY.projection", "title": "Line of sight", "tier": 0,
+      "bigIdea": "Stars that look side by side can sit at very different distances; a constellation is a trick of perspective.",
+      "prereqs": [], "terms": ["line of sight"],
+      "bridge": "The sky shows us directions, not depths: two stars that look close together can be very far apart along our line of sight.",
+      "evidenceIds": ["STAR-Aldebaran", "AST-Hyades", "NGC2158", "NGC2438", "AST-Coathanger"]
+    },
+    {
+      "id": "LIGHT.brightness", "title": "How bright it looks", "tier": 1,
+      "bigIdea": "How bright a star looks depends on how much light it gives out and how far away it is.",
+      "prereqs": [], "terms": ["apparent brightness"],
+      "bridge": "How bright a star looks depends on two things at once: how much light it really pours out, and how far away it is.",
+      "evidenceIds": ["STAR-Sirius", "HR1713", "STAR-Deneb"]
+    },
+    {
+      "id": "DIST.light-year", "title": "The light-year", "tier": 1,
+      "bigIdea": "A light-year is a distance: how far light travels in one year.",
+      "prereqs": [], "terms": ["light-year"],
+      "bridge": "A light-year measures distance, not time: it is how far light gets in one year of travel.",
+      "evidenceIds": ["STAR-Sirius", "STAR-Vega", "STAR-Procyon"]
+    },
+    {
+      "id": "LIGHT.color-temp", "title": "Color is temperature", "tier": 1,
+      "bigIdea": "A star's color is a thermometer: red-orange stars are the cool ones and blue-white stars are the hot ones.",
+      "prereqs": ["PERC.night-eyes"], "terms": ["surface temperature"],
+      "bridge": "A star's color works like a thermometer: orange-red means a cool surface, blue-white means a hot one.",
+      "evidenceIds": ["STAR-Betelgeuse", "HR1713", "STAR-Antares", "DS-Albireo", "STAR-MuCep", "STAR-LaSuperba"]
+    },
+    {
+      "id": "DIST.lum-vs-app", "title": "True power vs looks", "tier": 2,
+      "bigIdea": "A faint-looking star can be a distant giant, and a bright-looking one can be ordinary and close.",
+      "prereqs": ["LIGHT.brightness", "DIST.light-year"], "terms": ["luminosity"],
+      "bridge": "Looks deceive: a star can seem faint only because it is far away, while its true power, its luminosity, is enormous.",
+      "evidenceIds": ["HR1713", "STAR-Sirius", "STAR-Deneb", "STAR-Vega"]
+    },
+    {
+      "id": "TIME.lookback", "title": "Looking back in time", "tier": 2,
+      "bigIdea": "Looking far away means looking back in time, because every object shows you light that left it long ago.",
+      "prereqs": ["DIST.light-year"], "terms": ["lookback time"],
+      "bridge": "Light needs time to cross space, so the farther away something is, the older the view of it you receive.",
+      "evidenceIds": ["M42", "NGC869", "M13", "M31"]
+    },
+    {
+      "id": "STAR.fusion", "title": "Stars run on fusion", "tier": 1,
+      "bigIdea": "Stars shine by fusing hydrogen into helium in their cores; they are not fires.",
+      "prereqs": [], "terms": ["fusion", "hydrogen"],
+      "bridge": "Stars are not burning like fires; deep in their cores they fuse hydrogen into helium, and that releases their light.",
+      "evidenceIds": ["STAR-Vega", "STAR-Sirius", "HR5459"]
+    },
+    {
+      "id": "STAR.size", "title": "Sizes of stars", "tier": 2,
+      "bigIdea": "Stars range from smaller than Earth to wider than Mars's orbit; a star that is cool yet very bright must be huge.",
+      "prereqs": ["LIGHT.color-temp", "DIST.lum-vs-app"], "terms": ["giant", "supergiant", "dwarf"],
+      "bridge": "Stars come in wildly different sizes, and a star that is cool but still very bright has to be enormous.",
+      "evidenceIds": ["STAR-Betelgeuse", "STAR-Antares", "STAR-MuCep", "STAR-Sirius"]
+    },
+    {
+      "id": "STAR.mass-fate", "title": "Mass is destiny", "tier": 2,
+      "bigIdea": "Heavy stars live fast and die young and violently; light stars live long and fade quietly.",
+      "prereqs": ["STAR.fusion"], "terms": ["solar mass", "lifetime"],
+      "bridge": "A star's weight decides its life story: heavy stars burn out in a few million years, light ones last for billions.",
+      "evidenceIds": ["HR1713", "STAR-Deneb", "M45", "AST-Hyades", "NGC869"]
+    },
+    {
+      "id": "LIFE.nursery", "title": "Star nurseries", "tier": 2,
+      "bigIdea": "Stars are born in cold clouds of gas and dust, and newborn hot stars make their cloud glow.",
+      "prereqs": ["STAR.fusion"], "terms": ["nebula", "emission"],
+      "bridge": "Stars are born inside cold clouds of gas and dust called nebulae, and the hottest newborns make their cloud glow.",
+      "evidenceIds": ["M42", "M8", "NGC7000", "NGC2237", "NGC3372", "M17"]
+    },
+    {
+      "id": "LIFE.cluster-birth", "title": "Born in batches", "tier": 2,
+      "bigIdea": "Stars are born in batches, so a cluster is a family of siblings that all share one birthday.",
+      "prereqs": ["LIFE.nursery"], "terms": ["open cluster"],
+      "bridge": "Stars form in batches from one cloud, so an open cluster is a family of siblings with the same birthday.",
+      "evidenceIds": ["NGC2244", "NGC6530", "M45", "NGC869", "NGC884"]
+    },
+    {
+      "id": "LIFE.cluster-age", "title": "Reading a cluster's age", "tier": 3,
+      "bigIdea": "A cluster's brightest remaining stars tell its age: blue giants mean young, and only yellow and orange left means old.",
+      "prereqs": ["LIFE.cluster-birth", "STAR.mass-fate", "LIGHT.color-temp"], "terms": ["turn-off"],
+      "bridge": "In a cluster the heaviest stars die first, so the color of its brightest survivors works like a clock.",
+      "evidenceIds": ["M45", "AST-Hyades", "M44", "NGC752", "M67", "M37"]
+    },
+    {
+      "id": "MW.families", "title": "Families drift apart", "tier": 3,
+      "bigIdea": "Clusters slowly dissolve, and their stars spread into loose associations and moving groups that still share a motion.",
+      "prereqs": ["LIFE.cluster-birth"], "terms": ["association", "moving group"],
+      "bridge": "Star families do not stay together forever; they loosen and drift apart, yet their stars keep moving in step.",
+      "evidenceIds": ["AST-OrionBelt", "DS-MizarAlcor", "Mel20", "Mel111"]
+    },
+    {
+      "id": "LIFE.giant", "title": "Giants", "tier": 2,
+      "bigIdea": "When its core runs out of hydrogen, a star swells into a cool, huge, bright giant.",
+      "prereqs": ["STAR.fusion", "LIGHT.color-temp"], "terms": ["red giant"],
+      "bridge": "When a star uses up the hydrogen in its core, it swells into a huge, cool and bright red giant.",
+      "evidenceIds": ["STAR-Aldebaran", "STAR-Arcturus", "STAR-Betelgeuse", "STAR-Antares", "STAR-Capella"]
+    },
+    {
+      "id": "LIFE.pn-wd", "title": "A gentle ending", "tier": 3,
+      "bigIdea": "A Sun-like star dies gently: it puffs off its outer layers as a planetary nebula and leaves a white dwarf.",
+      "prereqs": ["LIFE.giant", "STAR.mass-fate"], "terms": ["planetary nebula", "white dwarf"],
+      "bridge": "A Sun-like star ends quietly: it puffs off its outer layers as a glowing shell and leaves behind a small, hot core, a white dwarf.",
+      "evidenceIds": ["M27", "M57", "NGC7293", "M97", "NGC2438"]
+    },
+    {
+      "id": "LIFE.supernova", "title": "A violent ending", "tier": 3,
+      "bigIdea": "A heavy star ends in a supernova and leaves a neutron star or a black hole.",
+      "prereqs": ["LIFE.giant", "STAR.mass-fate"], "terms": ["supernova", "neutron star", "pulsar"],
+      "bridge": "A star far heavier than the Sun ends in a supernova explosion that leaves behind a neutron star or a black hole.",
+      "evidenceIds": ["M1", "NGC6960", "NGC6992", "STAR-Betelgeuse", "NGC6888"]
+    },
+    {
+      "id": "LIFE.recycling", "title": "Star stuff", "tier": 3,
+      "bigIdea": "Dying stars return enriched gas to space, and new stars and planets form from it; we are made of it.",
+      "prereqs": ["LIFE.nursery", "LIFE.giant"], "terms": ["heavy elements"],
+      "bridge": "Dying stars send gas rich in newly made elements back into space, and later stars and planets, ours included, are built from it.",
+      "evidenceIds": ["M42", "M1", "M27", "NGC6960", "NGC6992"]
+    },
+    {
+      "id": "MULT.doubles", "title": "Double stars", "tier": 1,
+      "bigIdea": "Many stars are two or more; some are true orbiting pairs, others are chance alignments.",
+      "prereqs": ["SKY.projection"], "terms": ["double star", "binary"],
+      "bridge": "Many points of light are really two or more stars; some orbit each other, others only line up by chance.",
+      "evidenceIds": ["DS-MizarAlcor", "DS-Albireo", "DS-AlpCap", "DS-NuDra", "HR7056", "DS-DoubleDbl"]
+    },
+    {
+      "id": "MULT.weighing", "title": "Weighing stars", "tier": 3,
+      "bigIdea": "Orbiting pairs let us weigh stars, and that is how we know stellar masses.",
+      "prereqs": ["MULT.doubles", "STAR.mass-fate"], "terms": ["orbit"],
+      "bridge": "When two stars orbit each other, the size and pace of the orbit give away their masses; that is how stars are weighed.",
+      "evidenceIds": ["DS-MizarAlcor", "STAR-Capella", "STAR-Sirius", "HR2890"]
+    },
+    {
+      "id": "VAR.pulsating", "title": "Breathing stars", "tier": 2,
+      "bigIdea": "Some stars swell and shrink and change brightness on a rhythm.",
+      "prereqs": ["STAR.fusion"], "terms": ["variable star"],
+      "bridge": "Some stars swell and shrink like a slow heartbeat, brightening and fading as they go; astronomers call them variable stars.",
+      "evidenceIds": ["STAR-Mira", "DS-DeltaCep", "STAR-Rasalgethi", "HR7570"]
+    },
+    {
+      "id": "VAR.eclipsing", "title": "Eclipsing pairs", "tier": 2,
+      "bigIdea": "Some changing stars are really pairs that pass in front of each other.",
+      "prereqs": ["MULT.doubles"], "terms": ["eclipsing binary"],
+      "bridge": "Some stars dim on schedule because a companion we cannot see separately passes in front of them, a tiny regular eclipse.",
+      "evidenceIds": ["STAR-Algol", "HR7106", "HR1605", "HR1612"]
+    },
+    {
+      "id": "DIST.standard-candle", "title": "Cosmic yardsticks", "tier": 3,
+      "bigIdea": "Stars whose true brightness we know, such as Cepheids, are yardsticks for measuring distance.",
+      "prereqs": ["VAR.pulsating", "DIST.lum-vs-app"], "terms": ["standard candle", "Cepheid"],
+      "bridge": "If you know how bright a light truly is, how faint it looks tells you how far away it is; some pulsing stars reveal their true brightness through their rhythm.",
+      "evidenceIds": ["DS-DeltaCep", "HR7570", "HR2650", "M31"]
+    },
+    {
+      "id": "MW.disk", "title": "Our galaxy's disk", "tier": 2,
+      "bigIdea": "The Milky Way band is our galaxy, a flat disk seen edge-on from inside, and nurseries and young clusters crowd along it.",
+      "prereqs": ["PERC.binoculars"], "terms": ["galactic plane"],
+      "bridge": "The Milky Way band is our own galaxy: a flat disk of stars that we see edge-on because we live inside it.",
+      "evidenceIds": ["M24", "MWF-CygnusRift", "M7", "M11"]
+    },
+    {
+      "id": "MW.halo", "title": "The ancient halo", "tier": 3,
+      "bigIdea": "Globular clusters are ancient swarms in a halo around our galaxy's center, and they are older than the Sun.",
+      "prereqs": ["MW.disk", "LIFE.cluster-age"], "terms": ["globular cluster", "halo"],
+      "bridge": "Globular clusters are ancient balls of stars that swarm around our galaxy in a wide halo, well away from its flat disk.",
+      "evidenceIds": ["M13", "M22", "NGC5139", "NGC104", "M4", "M92"]
+    },
+    {
+      "id": "GAL.other", "title": "Other galaxies", "tier": 3,
+      "bigIdea": "Some faint smudges are whole other galaxies, each with billions of stars.",
+      "prereqs": ["MW.disk", "TIME.lookback"], "terms": ["galaxy"],
+      "bridge": "Some faint smudges are not clouds or clusters at all but entire galaxies like ours, each holding billions of stars.",
+      "evidenceIds": ["M31", "M33", "M81", "M82", "LMC", "SMC", "NGC253"]
+    },
+    {
+      "id": "SCALE.cosmic", "title": "The ladder of scale", "tier": 3,
+      "bigIdea": "From the Sun to stars, clusters, our galaxy and other galaxies, each step out is tens to thousands of times bigger.",
+      "prereqs": ["TIME.lookback", "GAL.other"], "terms": [],
+      "bridge": "Each step outward, from stars to clusters to our galaxy to other galaxies, is tens to thousands of times bigger than the last.",
+      "evidenceIds": ["M31", "M13", "NGC869", "LMC"]
+    },
+
+    {
+      "id": "STAR.spectral-sequence", "title": "The color sequence", "tier": 2, "parent": "LIGHT.color-temp",
+      "bigIdea": "Astronomers sort stars into a temperature sequence, and a star's spectrum also reveals what it is made of.",
+      "prereqs": ["LIGHT.color-temp"], "terms": ["spectral type"],
+      "bridge": "Spread a star's light into a rainbow and dark lines appear; their pattern sorts stars from hottest to coolest and shows what they contain.",
+      "evidenceIds": ["HR1713", "STAR-Sirius", "STAR-Procyon", "STAR-Capella", "STAR-Arcturus", "STAR-Betelgeuse"]
+    },
+    {
+      "id": "STAR.luminosity-class", "title": "Dwarf or giant?", "tier": 3, "parent": "STAR.size",
+      "bigIdea": "Two stars of the same color can be a small dwarf and a vast giant; fine details in their light tell which.",
+      "prereqs": ["STAR.size"], "terms": ["luminosity class"],
+      "bridge": "The same color can belong to a small dwarf or a vast giant; subtle details in the starlight tell the two apart.",
+      "evidenceIds": ["STAR-Aldebaran", "DS-61Cyg", "STAR-Arcturus"]
+    },
+    {
+      "id": "STAR.mass-luminosity", "title": "Heavier means brighter", "tier": 2, "parent": "STAR.mass-fate",
+      "bigIdea": "A slightly heavier star shines far more brightly and spends its fuel much faster.",
+      "prereqs": ["STAR.mass-fate"], "terms": [],
+      "bridge": "A star only a little heavier than another shines far more fiercely, and so it runs through its fuel much sooner.",
+      "evidenceIds": ["STAR-Vega", "STAR-Sirius", "HR5459"]
+    },
+    {
+      "id": "STAR.rotation", "title": "Spinning stars", "tier": 2, "parent": "STAR.fusion",
+      "bigIdea": "Some stars spin so fast that they bulge at the middle and run hotter at the poles than at the equator.",
+      "prereqs": ["STAR.fusion"], "terms": [],
+      "bridge": "Some stars spin so fast that they flatten into squashed balls, hotter at their poles than around their waists.",
+      "evidenceIds": ["HR7557", "STAR-Vega", "HR3982", "HR472"]
+    },
+    {
+      "id": "STAR.be-disk", "title": "Stars with skirts", "tier": 2, "parent": "STAR.rotation",
+      "bigIdea": "Fast-spinning hot stars can fling off a disk of gas that comes and goes, changing their brightness.",
+      "prereqs": ["STAR.rotation"], "terms": ["Be star"],
+      "bridge": "Very fast-spinning hot stars can shed a ring of gas around their middles, and as it grows and fades their light changes.",
+      "evidenceIds": ["HR264", "HR1180", "HR1910", "HR5953"]
+    },
+    {
+      "id": "STAR.red-clump", "title": "Helium-burning giants", "tier": 3, "parent": "LIFE.giant",
+      "bigIdea": "After the first giant phase, stars settle down to burn helium, and many pile up at about the same brightness.",
+      "prereqs": ["LIFE.giant"], "terms": ["helium burning"],
+      "bridge": "After swelling into giants, many stars settle into a calmer stage of burning helium, and they end up remarkably alike in brightness.",
+      "evidenceIds": ["HR1346", "HR1373", "HR1409", "DS-ThetaTau", "STAR-Capella"]
+    },
+    {
+      "id": "STAR.agb-massloss", "title": "Giants shedding skin", "tier": 3, "parent": "LIFE.giant",
+      "bigIdea": "Old giants pulse, cool and lose mass in slow winds, and that gas will later become a planetary nebula.",
+      "prereqs": ["LIFE.giant"], "terms": ["stellar wind"],
+      "bridge": "Very old giants pulse and blow off their outer gas in slow winds, the first step toward a planetary nebula.",
+      "evidenceIds": ["STAR-Mira", "HR3882", "HR7564", "HR6146"]
+    },
+    {
+      "id": "STAR.carbon-dredge-up", "title": "Sooty red stars", "tier": 3, "parent": "LIFE.recycling",
+      "bigIdea": "Late in life some giants dredge freshly made carbon to their surface, and the soot makes them glow deep red.",
+      "prereqs": ["LIFE.giant"], "terms": ["carbon star"],
+      "bridge": "Some ageing giants stir carbon made in their cores up to the surface, and carbon-rich haze turns them a deep red.",
+      "evidenceIds": ["STAR-LaSuperba", "HR1607", "HR7220", "NAME-TLyrae", "HR9004", "HR1648"]
+    },
+    {
+      "id": "STAR.s-process", "title": "Elements made inside", "tier": 3, "parent": "LIFE.recycling",
+      "bigIdea": "Some giants show technetium, an element with no stable form, which proves it was made inside the star.",
+      "prereqs": ["STAR.agb-massloss"], "terms": [],
+      "bridge": "Some giants contain an element that decays away and has no stable form, so it must have been forged inside the star itself.",
+      "evidenceIds": ["HR7564"]
+    },
+    {
+      "id": "STAR.supergiant-fate", "title": "Supergiants' fate", "tier": 3, "parent": "LIFE.supernova",
+      "bigIdea": "Stars born with more than about eight times the Sun's mass end their lives as core-collapse supernovae.",
+      "prereqs": ["LIFE.giant", "STAR.mass-fate"], "terms": ["red supergiant"],
+      "bridge": "Supergiants are the heaviest stars nearing their end, and stars like them finish with a supernova when their cores collapse.",
+      "evidenceIds": ["STAR-Betelgeuse", "STAR-Antares", "HR1713", "STAR-Deneb", "STAR-MuCep"]
+    },
+    {
+      "id": "STAR.white-dwarf", "title": "The Sun's ember", "tier": 3, "parent": "LIFE.pn-wd",
+      "bigIdea": "The Sun will end as a white dwarf: an Earth-sized ember of carbon and oxygen that slowly cools.",
+      "prereqs": ["LIFE.pn-wd"], "terms": ["white dwarf"],
+      "bridge": "A white dwarf is the leftover core of a Sun-like star: about the size of Earth, very dense, and slowly cooling.",
+      "evidenceIds": ["STAR-Sirius", "HR1325", "STAR-Procyon"]
+    },
+    {
+      "id": "STAR.black-hole-binary", "title": "A visible black-hole partner", "tier": 3, "parent": "LIFE.supernova",
+      "bigIdea": "A blue supergiant you can find in binoculars is orbiting an unseen black hole.",
+      "prereqs": ["LIFE.supernova", "MULT.doubles"], "terms": ["black hole"],
+      "bridge": "When the heaviest stars collapse they can leave black holes, and some of those still orbit a visible partner star.",
+      "evidenceIds": ["HD226868"]
+    },
+    {
+      "id": "STAR.mass-transfer", "title": "Stars that steal", "tier": 3, "parent": "VAR.eclipsing",
+      "bigIdea": "In close pairs one star can pull gas off the other, which turns their life stories upside down.",
+      "prereqs": ["VAR.eclipsing"], "terms": [],
+      "bridge": "In very close pairs one star can drain gas from its partner, so the lighter star may end up the older-looking one.",
+      "evidenceIds": ["STAR-Algol", "HR7106"]
+    },
+    {
+      "id": "VAR.mira", "title": "Slow giants that fade", "tier": 2, "parent": "VAR.pulsating",
+      "bigIdea": "Some cool giants brighten and fade by hundreds of times over about a year.",
+      "prereqs": ["VAR.pulsating"], "terms": ["long-period variable"],
+      "bridge": "Some cool giants pulse over months, swinging from easy to see to invisible without optics and back again.",
+      "evidenceIds": ["STAR-Mira", "HR7564", "HR3882", "HR5080"]
+    },
+    {
+      "id": "VAR.cepheid", "title": "Cepheid clocks", "tier": 3, "parent": "DIST.standard-candle",
+      "bigIdea": "A Cepheid's pulsing rhythm reveals its true brightness, which makes it a cosmic yardstick.",
+      "prereqs": ["VAR.pulsating"], "terms": ["Cepheid"],
+      "bridge": "Cepheids are pulsing stars whose rhythm gives away how bright they truly are, so they can be used to measure distance.",
+      "evidenceIds": ["DS-DeltaCep", "HR7570", "HR2650", "HR424"]
+    },
+    {
+      "id": "VAR.rr-lyrae", "title": "Halo heartbeats", "tier": 3, "parent": "DIST.standard-candle",
+      "bigIdea": "Old, light pulsating stars common in globular clusters measure distances across the galaxy's halo.",
+      "prereqs": ["VAR.pulsating", "MW.halo"], "terms": [],
+      "bridge": "Old, small pulsating stars that beat in less than a day are common in globular clusters and help map our galaxy's halo.",
+      "evidenceIds": ["HD182989"]
+    },
+    {
+      "id": "VAR.dust-fading", "title": "Hidden by soot", "tier": 2, "parent": "VAR.pulsating",
+      "bigIdea": "A star can fade dramatically behind soot or dust it has just puffed out.",
+      "prereqs": ["LIFE.giant"], "terms": [],
+      "bridge": "Some stars dim not because they change inside but because they puff out a cloud of dust that briefly hides them.",
+      "evidenceIds": ["HR5880", "STAR-Betelgeuse"]
+    },
+    {
+      "id": "VAR.nova", "title": "Stars that flare", "tier": 3, "parent": "MULT.doubles",
+      "bigIdea": "A white dwarf piling up gas stolen from a partner can blow off its surface in a nova, again and again.",
+      "prereqs": ["MULT.doubles", "STAR.white-dwarf"], "terms": ["nova"],
+      "bridge": "A nova is a white dwarf that collects gas from a companion until the layer ignites and flares; the star survives and can do it again.",
+      "evidenceIds": ["HR5958"]
+    },
+    {
+      "id": "KIN.moving-group", "title": "Moving together", "tier": 3, "parent": "MW.families",
+      "bigIdea": "Stars born together keep drifting together across the sky long after their cluster has spread out.",
+      "prereqs": ["MW.families"], "terms": [],
+      "bridge": "Stars born in one family keep sharing the same motion through space even after the family has spread across the sky.",
+      "evidenceIds": ["DS-MizarAlcor", "HR4295", "HR4554", "HR4660", "HR4905", "AST-Hyades"]
+    },
+    {
+      "id": "KIN.runaway", "title": "Runaway stars", "tier": 3, "parent": "MW.families",
+      "bigIdea": "Some stars were thrown out of their birth cluster by a supernova or a close encounter and are still fleeing.",
+      "prereqs": ["LIFE.cluster-birth"], "terms": ["runaway star"],
+      "bridge": "A runaway star was kicked out of its birth cluster by a close encounter or an exploding partner and is still racing away.",
+      "evidenceIds": ["HR1712", "HR1996", "HR6175"]
+    },
+    {
+      "id": "KIN.halo-star", "title": "Visitors from the halo", "tier": 3, "parent": "MW.halo",
+      "bigIdea": "Some passing stars belong to the galaxy's ancient halo: they are old, poor in heavy elements and fast.",
+      "prereqs": ["MW.halo"], "terms": [],
+      "bridge": "A few nearby stars are visitors from our galaxy's old halo, born before much recycled star stuff existed and moving fast.",
+      "evidenceIds": ["HD140283", "HR4550", "STAR-Arcturus"]
+    },
+    {
+      "id": "KIN.proper-motion", "title": "Stars on the move", "tier": 2, "parent": "DIST.light-year",
+      "bigIdea": "The nearest stars visibly shift across the sky over a human lifetime.",
+      "prereqs": ["DIST.light-year"], "terms": ["proper motion"],
+      "bridge": "Stars are not fixed: the closest ones creep across the sky fast enough to notice within a lifetime.",
+      "evidenceIds": ["NAME-BarnardsStar", "DS-61Cyg", "HR4550"]
+    },
+    {
+      "id": "NEAR.neighborhood", "title": "Our neighbors", "tier": 2, "parent": "DIST.light-year",
+      "bigIdea": "Most of the Sun's nearest neighbors are dim red dwarfs you cannot see without optics.",
+      "prereqs": ["DIST.light-year"], "terms": ["red dwarf"],
+      "bridge": "Most stars near the Sun are small, dim red dwarfs, far too faint to see without binoculars.",
+      "evidenceIds": ["HD95735", "HD202560", "HD217987", "HD1326"]
+    },
+    {
+      "id": "PLAN.host", "title": "Suns with planets", "tier": 2, "parent": "LIFE.recycling",
+      "bigIdea": "Planets around other stars are common, and some of their host stars are visible in binoculars.",
+      "prereqs": ["STAR.fusion"], "terms": ["exoplanet"],
+      "bridge": "Many stars have planets of their own, called exoplanets, found from the tiny tug or dimming they cause.",
+      "evidenceIds": ["HR8729", "HD209458", "HD189733", "HR458", "HR5185"]
+    },
+    {
+      "id": "PLAN.debris-disk", "title": "Dusty belts", "tier": 2, "parent": "PLAN.host",
+      "bigIdea": "Dusty belts like our own Kuiper belt surround some young nearby stars.",
+      "prereqs": ["PLAN.host"], "terms": ["debris disk"],
+      "bridge": "Some nearby stars are ringed by belts of dust and rubble, leftovers of planet building like the icy belt beyond Neptune.",
+      "evidenceIds": ["STAR-Fomalhaut", "STAR-Vega", "HR1084"]
+    },
+    {
+      "id": "PLAN.solar-twin", "title": "The Sun's twins", "tier": 1, "parent": "STAR.fusion",
+      "bigIdea": "Stars almost identical to the Sun show us what our Sun looks like from far away.",
+      "prereqs": ["STAR.fusion"], "terms": ["solar twin"],
+      "bridge": "Some stars are near copies of the Sun, so looking at them shows what our own Sun would look like from far away.",
+      "evidenceIds": ["HR6060", "HR7503", "HR7504", "HR5459", "HR4785"]
+    },
+    {
+      "id": "PERC.purkinje", "title": "Red stars play tricks", "tier": 1, "parent": "PERC.night-eyes",
+      "bigIdea": "Red stars seem to brighten the longer you stare at them, which makes judging red variables tricky.",
+      "prereqs": ["PERC.night-eyes"], "terms": [],
+      "bridge": "Your eye's sensitivity shifts in the dark, so a red star seems to grow brighter the longer you stare; glance, don't stare.",
+      "evidenceIds": ["STAR-Mira", "HR1607", "STAR-MuCep"]
+    },
+    {
+      "id": "OBS.extinction", "title": "Dust dims and reddens", "tier": 2, "parent": "MW.disk",
+      "bigIdea": "Dust between us and a star makes it look fainter and redder than it really is.",
+      "prereqs": ["MW.disk"], "terms": ["interstellar dust"],
+      "bridge": "Space along the Milky Way is laced with dust that dims starlight and tints it redder, like a sunset seen through haze.",
+      "evidenceIds": ["STAR-MuCep", "HD58061", "HD226868"]
+    },
+
+    {
+      "id": "NEB.reflection", "title": "Mirrors of dust", "tier": 2, "parent": "LIFE.nursery",
+      "bigIdea": "Dust clouds can shine by reflecting nearby starlight, which is why they look blue in photographs.",
+      "prereqs": ["LIFE.nursery"], "terms": ["reflection nebula"],
+      "bridge": "Not every cloud glows on its own; some dust simply reflects nearby starlight, the way fog glows around a streetlight.",
+      "evidenceIds": ["M78", "M45", "NGC1977"]
+    },
+    {
+      "id": "NEB.dark", "title": "Dark clouds", "tier": 2, "parent": "MW.disk",
+      "bigIdea": "The dark lanes and holes in the Milky Way are not empty space but dust clouds blocking the stars behind them.",
+      "prereqs": ["MW.disk"], "terms": ["dark nebula"],
+      "bridge": "Dark patches in the Milky Way are thick dust clouds standing in front of the stars, the raw material for new ones.",
+      "evidenceIds": ["DN-Coalsack", "DN-Pipe", "DN-BarnardE", "MWF-CygnusRift"]
+    },
+    {
+      "id": "LIFE.wind-bubble", "title": "Blown bubbles", "tier": 3, "parent": "STAR.mass-fate",
+      "bigIdea": "The heaviest stars blow fierce winds that inflate glowing bubbles around them before they explode.",
+      "prereqs": ["STAR.mass-fate"], "terms": ["Wolf-Rayet star"],
+      "bridge": "Very heavy stars blow such strong winds near the end of their lives that they inflate bubbles in the gas around them.",
+      "evidenceIds": ["NGC6888", "HD192163"]
+    },
+    {
+      "id": "GAL.interacting", "title": "Galaxies in contact", "tier": 3, "parent": "GAL.other",
+      "bigIdea": "Galaxies pull on each other, and close encounters can stretch them and set off bursts of star birth.",
+      "prereqs": ["GAL.other"], "terms": [],
+      "bridge": "Neighboring galaxies tug on one another, and a close pass can distort them and trigger floods of new stars.",
+      "evidenceIds": ["M81", "M82", "M51"]
+    },
+    {
+      "id": "GAL.satellites", "title": "Galaxy companions", "tier": 3, "parent": "GAL.other",
+      "bigIdea": "Big galaxies, ours included, are orbited by smaller companion galaxies.",
+      "prereqs": ["GAL.other"], "terms": ["satellite galaxy"],
+      "bridge": "Large galaxies have smaller companion galaxies in orbit around them, the way planets have moons.",
+      "evidenceIds": ["M32", "LMC", "SMC"]
+    },
+    {
+      "id": "MW.spiral-arm", "title": "Along a spiral arm", "tier": 3, "parent": "MW.disk",
+      "bigIdea": "Star nurseries and young clusters line up along our galaxy's spiral arms.",
+      "prereqs": ["MW.disk", "LIFE.nursery"], "terms": ["spiral arm"],
+      "bridge": "Our galaxy's disk is wound into spiral arms, and that is where gas piles up and most new stars are born.",
+      "evidenceIds": ["M8", "M17", "M16", "M24", "NGC6530"]
+    }
+  ]
+}

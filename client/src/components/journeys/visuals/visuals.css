@@ -1,0 +1,59 @@
+/* Sky Journeys in-app visuals. Theme tokens only; every distinction also works in luminance (red light). */
+.jv-figure { margin: 0; min-width: 0; display: grid; gap: 6px; }
+.jv-svg { width: 100%; max-width: 420px; height: auto; display: block; overflow: visible; font-family: var(--font-sans); }
+.jv-caption { font-size: .82rem; line-height: 1.45; color: hsl(var(--muted-foreground)); margin: 0; }
+
+.jv-label { font-size: 10.5px; fill: hsl(var(--foreground) / .82); }
+.jv-label-strong { font-weight: 700; fill: hsl(var(--foreground)); paint-order: stroke; stroke: hsl(var(--card)); stroke-width: 3px; }
+.jv-label-dashed { font-style: italic; }
+.jv-tick { font-size: 9.5px; fill: hsl(var(--muted-foreground)); }
+.jv-region { font-size: 9.5px; font-style: italic; fill: hsl(var(--foreground) / .6); }
+.jv-num { font-size: 9px; font-weight: 700; fill: hsl(var(--foreground)); }
+.jv-num-inverse { fill: hsl(var(--card)); }
+.jv-axis { stroke: hsl(var(--muted-foreground)); stroke-width: 1; fill: none; }
+.jv-grid { stroke: hsl(var(--border)); stroke-width: 1; stroke-dasharray: 2 3; }
+.jv-plot-bg { fill: hsl(var(--background) / .55); stroke: hsl(var(--border)); }
+.jv-leader { stroke: hsl(var(--muted-foreground) / .7); stroke-width: .8; }
+.jv-arrowhead { fill: hsl(var(--foreground) / .8); }
+
+/* swatch */
+.jv-swatch-head { display: flex; align-items: center; gap: 10px; font-size: .92rem; }
+.jv-swatch-disc { width: 20px; height: 20px; border-radius: 50%; flex: none; box-shadow: 0 0 0 1px hsl(var(--foreground) / .35); }
+.jv-tick-sun line { stroke: hsl(var(--foreground)); stroke-width: 1.5; stroke-dasharray: 2 2; }
+.jv-tick-star path { fill: hsl(var(--foreground)); }
+
+/* HR diagram */
+.jv-hr-cells rect { fill: hsl(var(--foreground) / .55); }
+.jv-hr-ms { fill: none; stroke: hsl(var(--foreground) / .55); stroke-width: 1.2; stroke-dasharray: 4 3; }
+.jv-hr-sun circle { fill: none; stroke: hsl(var(--foreground)); stroke-width: 1.5; }
+.jv-hr-sun .jv-hr-sun-dot { fill: hsl(var(--foreground)); stroke: none; }
+.jv-hr-trail { fill: none; stroke: hsl(var(--foreground) / .8); stroke-width: 1.2; }
+.jv-hr-prev circle { fill: hsl(var(--card)); stroke: hsl(var(--foreground)); stroke-width: 1.3; }
+.jv-hr-current circle { fill: hsl(var(--foreground)); stroke: hsl(var(--card)); stroke-width: 1.5; }
+.jv-hr-current .jv-hr-current-halo { fill: none; stroke: hsl(var(--foreground)); stroke-width: 1.5; stroke-dasharray: 3 2; }
+
+/* size */
+.jv-ring { fill: none; stroke: hsl(var(--muted-foreground)); stroke-width: 1; stroke-dasharray: 1.5 3; }
+.jv-size-current { fill: hsl(var(--foreground) / .22); stroke: hsl(var(--foreground)); stroke-width: 1.5; }
+.jv-size-prev { fill: none; stroke: hsl(var(--foreground) / .85); stroke-width: 1.3; stroke-dasharray: 5 3; }
+.jv-size-planet { fill: hsl(var(--foreground) / .1); stroke: hsl(var(--foreground) / .7); stroke-width: 1; }
+.jv-size-sun circle { fill: hsl(var(--foreground)); }
+.jv-size-sun .jv-size-sun-pointer { fill: none; stroke: hsl(var(--foreground)); stroke-width: 1; }
+.jv-bar { fill: hsl(var(--foreground) / .35); }
+.jv-bar-current { fill: hsl(var(--foreground) / .85); }
+.jv-break { stroke: hsl(var(--card)); stroke-width: 3; }
+
+/* light curve */
+.jv-curve { fill: none; stroke: hsl(var(--foreground)); stroke-width: 2; stroke-linejoin: round; }
+
+/* ladder & age */
+.jv-stop circle { fill: hsl(var(--card)); stroke: hsl(var(--foreground)); stroke-width: 1.3; }
+.jv-stop-current circle { fill: hsl(var(--foreground)); }
+.jv-stop-current .jv-num { fill: hsl(var(--card)); }
+.jv-stop-current .jv-stop-halo { fill: none; stroke-dasharray: 3 2; }
+.jv-landmark path { fill: hsl(var(--muted-foreground)); }
+.jv-range { fill: hsl(var(--foreground) / .45); }
+.jv-ladder-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: .84rem; color: hsl(var(--foreground) / .9); }
+.jv-ladder-list li[aria-current="step"] { font-weight: 700; }
+.jv-ladder-n { display: inline-grid; place-items: center; min-width: 1.4em; height: 1.4em; border-radius: 50%; border: 1px solid hsl(var(--foreground) / .8); font-size: .75rem; font-weight: 700; margin-right: 4px; }
+.jv-ladder-list li[aria-current="step"] .jv-ladder-n { background: hsl(var(--foreground)); color: hsl(var(--card)); }

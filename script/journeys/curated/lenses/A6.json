@@ -1,0 +1,956 @@
+{
+  "archetype": "A6",
+  "storyline": "Your eye gets two clues about every star, how bright it looks and what color it is, and each stop sets a star beside a neighbor in the same or the next field to find out which clue deserves trust. Brightness is caught out first, because it mixes a star's true power with its distance, and nothing in a point of light says how far it has come. Color holds up, because distance dims light without changing its tint, so it reads a star's surface temperature, though temperature alone cannot say how big a star is. Put the two together once a distance is known and they give something no eye can see, a star's size. Families of stars born together, all at one distance and one age, then show why sizes and colors differ: the heavier a star, the faster it ages, so the first siblings to swell and redden are the heaviest.",
+  "beats": [
+    {
+      "step": 1,
+      "label": "Brightness hides distance",
+      "maxStops": 2
+    },
+    {
+      "step": 2,
+      "label": "Color reads temperature",
+      "maxStops": 2
+    },
+    {
+      "step": 3,
+      "label": "Brightness and color give size",
+      "maxStops": 1
+    },
+    {
+      "step": 4,
+      "label": "Born together, aging apart",
+      "maxStops": 2
+    }
+  ],
+  "minBeats": 3,
+  "endSteps": [
+    3,
+    4
+  ],
+  "narration": {
+    "title.A6-contrasts": [
+      "Look-Alikes of {region}",
+      "{region}'s Unlikely Twins",
+      "Telling {region}'s Stars Apart",
+      "Strangers Side by Side in {region}",
+      "How {region} Fools the Eye"
+    ],
+    "question.A6-contrasts": [
+      "When two stars in the sky look alike, how can you tell them apart?",
+      "Which clues about a star can your eyes trust, and which ones mislead?",
+      "What can your eyes really tell you about a star, and where do they mislead?"
+    ],
+    "hook.A6-contrasts": [
+      "Two stars can look like twins and be strangers, and your eye holds the clues to tell.",
+      "The sky is flat to the eye, so a near ember and a far furnace can pass for twins.",
+      "Your eye gets two clues from every star, brightness and color, and only one is honest."
+    ],
+    "story.A6-contrasts": [
+      "Every star hands your eye two clues, how bright it looks and what color it is, and they do not deserve equal trust. Starting at {hook}, each stop sets a star beside a neighbor and lets one clue unmask the other, until stars that seemed like twins turn out to be strangers.",
+      "The sky flattens depth, so a nearby ember and a distant furnace can pass for a matched pair. Tonight you take such pairs apart one clue at a time, beginning with brightness and color, the two things your eye reads from every star.",
+      "Every stop tonight holds a resemblance between stars that does not survive a closer look, and each one gives way to a clue your own eyes can read. The last of them waits at {name}, where the same simple clues reveal what no eye can see directly."
+    ],
+    "story.A6-contrasts.end3": [
+      "Every star hands your eye two clues, how bright it looks and what color it is, and they do not deserve equal trust. Starting at {hook}, each stop sets a star beside a neighbor, first catching brightness out, then trusting color, and finally putting the two together to measure something no eye can see.",
+      "A nearby modest star and a distant giant can look like a matched pair, because the sky hides how deep it is. Tonight you take such pairs apart clue by clue, from brightness to color to the size of a star, which the two together reveal."
+    ],
+    "story.A6-contrasts.end4": [
+      "Every star hands your eye two clues, how bright it looks and what color it is, and they do not deserve equal trust. Starting at {hook}, each stop sets a star beside a neighbor, and the night ends among stars born together, where the same clues show which siblings have aged fastest.",
+      "A nearby modest star and a distant giant can look like a matched pair, because the sky hides how deep it is. Tonight you take such pairs apart clue by clue, and then turn the same clues on whole families of stars, whose colors turn out to keep time.",
+      "Brightness and color are all a star gives your eye, and tonight you learn which of them to believe, starting at {hook}. At {name}, among stars born on the same day, the two clues read together show which siblings have grown old first, and why."
+    ],
+    "payoff.A6-contrasts": [
+      "Brightness alone could not be trusted, because it mixes a star's true power with its distance, while color, short of a little reddening by dust, held up as an honest thermometer of a star's surface. Every pair tonight looked alike at first and turned out unlike underneath, and the clue that unmasked them was one your own eyes could read. Next time two stars look like a matched pair, read their colors first and let their brightness wait until you know how far away they are.",
+      "You tell look-alike stars apart by trusting color over brightness, because a near ember can match a distant furnace in brightness but never in temperature. That is how astronomers, with nothing but starlight to go on, have sorted the sky's neighbors from its strangers. The same two clues are waiting in every field you point at, and now you know which one to believe."
+    ],
+    "payoff.A6-contrasts.end3": [
+      "Brightness alone could not be trusted, because it mixes a star's true power with its distance, while color held up as an honest thermometer of a star's surface. Put together at {name}, the two clues measured something no eye can see, a star's size, which is how astronomers know that some faint-looking points are among the largest stars in the sky. Why one star swells while another just as hot stays small is a question for a family of stars born together, on another clear night. Until then, when two stars look like a matched pair, read their colors first and let their brightness wait until you know how far away they are.",
+      "You tell look-alike stars apart by trusting color over brightness, because a near ember can match a distant furnace in brightness but never in temperature. Once color gives the temperature and distance gives the true power, size follows, and at {name} that simple arithmetic turned a point of light into a star of startling size. The same two clues are waiting in every field you point at, and now you know which one to believe.",
+      "The eye reads two things from every star, brightness and color, and only color can be taken nearly at face value, since distance dims a star without changing its tint. Together, color and true brightness gave a star's size, the first thing tonight that no eye could have seen directly. Carry that suspicion to the next clear night, and every pair of neighbors becomes a small puzzle about depth and scale."
+    ],
+    "payoff.A6-contrasts.end4": [
+      "Brightness misled, because it mixes a star's true power with its distance, while color held up as an honest thermometer of a star's surface. At {name}, among stars born together at one distance, the two clues read side by side pointed to the deepest difference of all, weight. The heaviest siblings burn their fuel fastest, so they are the first to swell and turn gold or red. Next time a cluster's stars look alike, look for the one whose color does not match, because it is telling you the family's age.",
+      "You tell look-alike stars apart by trusting color over brightness, because a near ember can match a distant furnace in brightness but never in temperature. Among siblings born together the same two clues become a clock, since a family's colors drain from blue toward gold as its heaviest members run through their fuel first. Every star cluster you meet from now on carries that clock, and your own eyes can read its hands in the colors and the sparkle of its brightest stars.",
+      "The eye reads two things from every star, brightness and color, and only color can be taken nearly at face value, since distance dims a star without changing its tint. Tonight those clues moved from single stars to a whole family at {name}, where stars born on the same day showed that the heavier a star is, the sooner it grows old. Carry that to the next clear night, and every cluster becomes a portrait of time as well as a pattern of stars."
+    ],
+    "switch.A6-contrasts": [
+      "Of all the clues tonight, color is the one your eye reads most honestly, and it turns out to be a thermometer. {themeQuestion}",
+      "Color has been the most trustworthy clue so far, and it can carry a whole night by itself. {themeQuestion}"
+    ]
+  },
+  "transitions": {
+    "pairs": {
+      "1>1": [
+        "{prev} showed brightness bending to distance, and {next} plays the same trick with other stars, so the first case was no accident.",
+        "One misleading pair could be chance, so {next} puts brightness on trial a second time, with a fresh comparison."
+      ],
+      "1>2": [
+        "Brightness at {prev} could not be read without a distance, so at {next} you turn to the clue that distance leaves alone, the color of a star.",
+        "{prev} caught brightness misleading you, and at {next} you try a clue that crosses any distance unchanged, the color of a star.",
+        "Distance fooled the eye at {prev}, so at {next} the test turns to color, which reaches you unchanged however far the light has come."
+      ],
+      "1>3": [
+        "{prev} showed that brightness means little without a distance, and at {next} the distance is known, so brightness set beside color can measure a star's size.",
+        "After brightness misled you at {prev}, {next} shows what it is good for once the distance is known, because set beside color it gives away a star's size."
+      ],
+      "1>4": [
+        "At {prev} a hidden distance made brightness lie, and at {next} a whole family shares one distance, so every difference in brightness among its stars is real.",
+        "{prev} was a single star misjudged for want of a distance, and {next} is a family at one distance and one age, where the brightness clue finally tells the truth."
+      ],
+      "2>2": [
+        "{prev} gave one temperature reading, and {next} adds a second, so the color thermometer can be checked against itself.",
+        "{next} brings a fresh pair of tints after {prev}, and the same rule reads them, the redder of the two being the cooler."
+      ],
+      "2>3": [
+        "With a temperature in hand from {prev}, {next} adds the other clue, true brightness, and the two together give how big a star is.",
+        "{prev} turned color into the heat of each patch of surface, and at {next} the star's true power, set beside that heat, gives away how much surface there is."
+      ],
+      "2>4": [
+        "Color read one star's temperature at {prev}, and at {next} the same clue, applied to stars born together, shows which of them have aged fastest.",
+        "The colors that read a temperature at {prev} read something new at {next}, because in a family born together they show which members have aged fastest."
+      ],
+      "3>4": [
+        "Size came from color and true brightness at {prev}, and at {next} its cause shows itself, because among stars born together weight sets the pace of swelling.",
+        "Size explained the light of {prev}, and {next} shows where such differences come from, because in a family of stars born together the heavy ones change first.",
+        "After one star measured at {prev}, {next} sets many side by side at one distance and one age, so whatever still tells them apart must be weight."
+      ],
+      "4>4": [
+        "{prev} showed one family's clock at one hour, and {next} reads another family's, so you can see what time does to the colors of stars born together.",
+        "From the family at {prev} to the one at {next}, the cluster clock is read again, and setting the two readings side by side shows what time does to a family."
+      ]
+    },
+    "arrive": {
+      "1": [
+        "{next} puts brightness on trial, the clue that mixes a star's true power with its distance.",
+        "At {next} the clue to doubt is brightness, because nothing in a point of light says how far it has traveled.",
+        "{next} looks like an ordinary point, and its brightness alone cannot say whether it is near and modest or far and mighty."
+      ],
+      "2": [
+        "At {next} the clue to read is color, the one that distance cannot change.",
+        "{next} turns from brightness to color, the clue that reports a star's surface temperature whatever its distance.",
+        "With {next} the test moves to color, and color, unlike brightness, travels across space unchanged."
+      ],
+      "3": [
+        "At {next} brightness and color work together, and what they measure is a star's size.",
+        "{next} puts both clues to work at once: a temperature from its color, a true power from its distance, and from the two its size.",
+        "Color alone could not say how big a star is, so at {next} it is joined by true brightness, and together they reveal a star's size."
+      ],
+      "4": [
+        "At {next} the comparison moves from single stars to a family, whose members were born together and have aged at different speeds.",
+        "{next} is a family born at one time, and the differences among its stars are differences of weight, not of distance.",
+        "With {next} the look-alikes are siblings, all at one distance, so what tells them apart is how fast each has aged."
+      ]
+    }
+  },
+  "objects": {
+    "DS-EtaCas": {
+      "step": 1,
+      "rank": 19.3,
+      "beat": "The fainter one is the neighbor",
+      "question": "Which star of the W is our neighbor, the brighter one or the fainter?",
+      "why": "The W of Cassiopeia looks like five stars hung at one depth, and η Cassiopeiae, tucked between brighter γ and Schedar, is the place to test the first thing your eye judges about any star, how bright it looks.",
+      "look": "Hold η Cassiopeiae and γ Cassiopeiae, the middle star of the W, in one field about three degrees apart. γ is plainly the brighter and whiter of the two, η a softer pale yellow, and nothing in the view hints at which is closer.",
+      "answer": "The fainter one is the neighbor: η Cassiopeiae lies about 19 light-years away and γ more than five hundred, so γ must pour out roughly two thousand times more visible light just to look brighter. Until you know how far a star is, its brightness tells you nothing about what it is.",
+      "story": "Drive past a fence post and it slides against the far hills while the hills hardly move, and a near star does the same as Earth carries us around the Sun. Each year η Cassiopeiae swings about a sixth of an arcsecond to either side of its average place, while γ, far behind it, barely stirs."
+    },
+    "HR21": {
+      "step": 1,
+      "rank": 54.7,
+      "beat": "Twins in brightness only",
+      "question": "Caph and Schedar shine equally bright; are they equally powerful stars?",
+      "why": "At the two ends of the W, Caph and Schedar are as evenly matched in brightness as two stars can be, which makes them a fair test of whether equal brightness means equal stars.",
+      "look": "Caph is the western end of the W and Schedar its bright southern point, about five degrees apart. Swing between them and judge which is brighter; most nights you cannot choose, though Schedar's orange tint already hints that they are not twins.",
+      "answer": "Schedar lies about four times farther away and gives out about thirty times more light than Caph, roughly 800 Suns against 26, so their equal brightness is a coincidence of distance. Read alone, the brightness of a point is one number standing in for two, power and distance, and nothing in the light itself pulls them apart.",
+      "story": "Light from a star spreads over an ever larger sphere as it travels, so at twice the distance it is shared over four times the area and each eye catches a quarter as much. That simple geometry is why a star twice as far away must be four times as powerful merely to look the same, and one three times as far, nine times."
+    },
+    "HR8974": {
+      "step": 1,
+      "rank": 45,
+      "beat": "Matched pair, unmatched stars",
+      "question": "Errai and Alfirk look equally bright; which of the two is truly the stronger?",
+      "why": "Two of the stars that draw the house of Cepheus, Errai at its peak and Alfirk partway down, shine at almost exactly the same brightness, so between them they put the eye's simplest judgment on trial.",
+      "look": "Errai is the peak of the house of Cepheus, pointing toward Polaris, and Alfirk lies partway down the house toward bright Alderamin. Compare them by eye first, then in turn in the binoculars: the brightness is a match, but Errai is pale orange and Alfirk blue-white.",
+      "answer": "Alfirk is by far the stronger, because it lies about fifteen times farther away and still keeps level, which takes hundreds of times more visible light than Errai gives. Distance can make a giant and a modest star into perfect twins, so brightness has to wait for the distance before it can be trusted.",
+      "story": "Errai is close enough that its yearly parallax shift is large and easy to measure, while Alfirk's is small, and the ratio of the two shifts, turned upside down, is the ratio of their distances. Once that is known, equal brightness stops being a statement about the stars and becomes a statement about how far away each one is."
+    },
+    "HR8238": {
+      "step": 1,
+      "rank": 685,
+      "beat": "Fainter, farther, mightier",
+      "question": "Alderamin, the brightest star of Cepheus, outshines Alfirk; is it also the more powerful?",
+      "why": "Alfirk sits partway up the house of Cepheus from Alderamin, its bright corner, and beside that neighbor it looks like the lesser star, the kind of judgment the eye makes without thinking.",
+      "look": "Put Alderamin, the brightest star of Cepheus, in the field and then move to Alfirk, nearly a magnitude fainter and a little bluer. Both look like ordinary points, and nothing in their light says how far each has traveled.",
+      "answer": "Alderamin looks the stronger only because it is near, about 49 light-years away against Alfirk's 685, while Alfirk pours out about a thousand times more energy, roughly 19,000 Suns against 18. The brighter-looking star is simply the closer one, and nothing in either point of light hints at that until someone measures how far each lies.",
+      "story": "A hot star hides much of its power from the eye, because most of its energy comes out as ultraviolet, beyond violet, where we see nothing at all. Alfirk's visible glow is only a fraction of its true output, so here brightness misleads twice, once through distance and once through light the eye cannot catch."
+    },
+    "STAR-Vega": {
+      "step": 1,
+      "rank": 25,
+      "beat": "Brightest, but only nearest",
+      "question": "Vega outshines Deneb, so is Vega the more powerful star of the Triangle?",
+      "why": "Vega is the brilliant corner of the Summer Triangle and Deneb the faintest, and because both are white the comparison is clean: whatever separates them, it is not their color.",
+      "look": "Vega and Deneb are too far apart for one field, so judge them by eye first: Vega is plainly brighter. Then visit each in the binoculars, a hard white spark for Vega and a softer white point in a crowded Milky Way field for Deneb, and notice how alike their colors are.",
+      "answer": "Vega only wins on looks, because it is about a hundred times nearer, 25 light-years against roughly 2,600, while Deneb gives out nearly four thousand times more light. Two stars of one color can differ that much in power, and the eye, reading brightness alone, would never have suspected it.",
+      "story": "Vega's distance is known to a fraction of a percent, Deneb's only roughly, because Deneb's yearly shift is so tiny that the best measurements disagree. Even the uncertain figure leaves no doubt about the verdict, since any distance in the plausible range makes Deneb thousands of times the more powerful."
+    },
+    "DS-61Cyg": {
+      "step": 1,
+      "rank": 11.4,
+      "beat": "Faint, and right next door",
+      "question": "Is the faint orange pair near Deneb farther away than Deneb itself?",
+      "why": "On a sky that looks flat, faint stars seem far and bright ones near, and 61 Cygni, a dim pair a short hop from brilliant Deneb, is where that habit breaks most spectacularly.",
+      "look": "Center Deneb, then move about 8° south-south-east to 61 Cygni. Deneb is a bright white star, 61 Cygni barely a naked-eye point that 10× binoculars split into two matched orange stars, and nothing in either view says which is the closer.",
+      "answer": "61 Cygni is one of the Sun's nearest neighbors, while Deneb lies more than two hundred times farther and gives out over a million times as much light. The faint pair is close and feeble, the bright star far and mighty, and brightness by itself could not have sorted out which was which.",
+      "story": "Most of the Sun's nearest neighbors are dim dwarfs like these two, and most of the bright stars you know by name are distant giants, so a sky ranked by brightness comes out close to the reverse of one ranked by distance. The eye sees a dome with every star painted on it; only a measured shift gives the dome its depth back."
+    },
+    "HR7763": {
+      "step": 1,
+      "rank": 5250,
+      "beat": "Equal light, unequal distance",
+      "question": "Two Cygnus stars look equally faint; how far apart can their distances really be?",
+      "why": "P Cygni and 61 Cygni are two unremarkable fifth-magnitude points in the same constellation, so if brightness told distance they would sit side by side in space.",
+      "look": "From Sadr, where the arms of the Northern Cross meet, slide about 2½° south-south-west to P Cygni, a plain white point against the Milky Way. Then visit 61 Cygni, east of Sadr, and compare: the two match in brightness almost exactly, and only the color differs, white against orange.",
+      "answer": "P Cygni lies about 5,250 light-years away, some 460 times farther than 61 Cygni, so to match it in brightness it must give out some two hundred thousand times as much visible light. Two equal points can hide a gap that large, which is why brightness alone can never rank the stars.",
+      "story": "P Cygni is too far for a parallax as crisp as its neighbor's, so its distance was pinned by measuring how wide it looks with an interferometer and comparing that with the true size its atmosphere must have. The answer agrees with Gaia, and it places a star of the rarest, most luminous kind behind a modest glow."
+    },
+    "HR7557": {
+      "step": 1,
+      "rank": 16.7,
+      "beat": "A matched set that is not",
+      "question": "Altair and Tarazed look like a matched set; do they stand together in space?",
+      "why": "Altair is the white corner of the Summer Triangle, flanked by an attendant on each side, and the brighter attendant, orange Tarazed, looks so close that the trio seems to be one family.",
+      "look": "Altair, Tarazed about 2° above it and fainter Alshain below fit in one field as a short straight line. Note how much brighter Altair is than Tarazed, and how the line looks like one tidy group standing at one distance.",
+      "answer": "Altair is one of our nearest bright neighbors, about 17 light-years away, while Tarazed lies more than twenty times farther and gives out about two hundred times more light, yet still looks the fainter. The neat line of three is a chance alignment, and how bright each looks says nothing until the depths are known.",
+      "story": "A postcard puts a nearby tree and a far ridge on one flat sheet, and the sky does the same to stars of every depth. Parallax restores the missing dimension: through the year Tarazed shifts far less than Altair, the mark of a much more distant star."
+    },
+    "STAR-Aldebaran": {
+      "step": 1,
+      "rank": 66.6,
+      "beat": "Bright partly because near",
+      "question": "How much of Aldebaran's brilliance is real power, and how much is closeness?",
+      "why": "The Hyades make a V of stars at almost one distance, and Aldebaran blazes at its tip, so it is the perfect place to see how a single foreground star can take over a whole pattern.",
+      "look": "Frame the V of the Hyades and compare Aldebaran with the cluster's own bright stars, such as the pair θ Tauri near it. Aldebaran outshines all of them and is a deeper orange, and to the eye it seems to lead the family.",
+      "answer": "Each plays a part, because Aldebaran is a genuine giant of nearly 500 Suns that also stands well in front of the cluster, at about 67 light-years against the Hyades' 154. Pushed back among them it would fade to about magnitude 2.7, so how bright it looks depends as much on where it stands as on what it is.",
+      "story": "The Hyades give themselves away by moving: their members drift across the sky together, like a flock heading for one point on the horizon, and Aldebaran does not share that drift. Its own yearly shift, larger than the cluster's, confirms that it stands well in front, lit up for us partly by being near."
+    },
+    "STAR-Sirius": {
+      "step": 1,
+      "rank": 8.6,
+      "beat": "Brightest, because nearest",
+      "question": "Is the brightest star in the night sky also the most powerful star of its constellation?",
+      "why": "Sirius outshines every other star at night, and the fainter stars of its own constellation, Canis Major, make the perfect lineup for testing what that brilliance is really worth.",
+      "look": "Sirius is the blazing white star below and left of Orion's Belt. Lower down in Canis Major, Wezen and Adhara mark the Dog's hindquarters, far fainter to the eye; compare them with Sirius by eye or swing to them in the binoculars.",
+      "answer": "Sirius wins only on closeness: it is a modest star of about 25 Suns, while Wezen, nearly two hundred times farther, gives out around 37,000 and Adhara around 21,000. The sky's brightest star is a candle held close beside lighthouses far away, and its glare says how near it is, not what kind of star it is.",
+      "story": "Astronomers level the field by asking how bright each star would look from one standard distance, about 33 light-years, a figure they call absolute magnitude. Moved there, Sirius would be a middling star near magnitude 1.4, while Wezen, brought in from far away, would blaze near magnitude −6.6, brighter than any star in our sky."
+    },
+    "STAR-Procyon": {
+      "step": 1,
+      "rank": 11.5,
+      "beat": "The near one wins",
+      "question": "Which is the stronger lamp, bright Procyon or faint Gomeisa beside it?",
+      "why": "Canis Minor is little more than two stars, Procyon and Gomeisa, close together on the sky and very unequal in brightness, a small, clean experiment in what brightness can and cannot tell you.",
+      "look": "Put Procyon in the field and sweep 4° north-west to Gomeisa. Procyon is creamy white and many times brighter, Gomeisa far fainter and a little bluer.",
+      "answer": "Faint Gomeisa is the stronger, by about 36 times, but it lies about fourteen times farther away, 162 light-years against Procyon's 11. Gomeisa's bluer tint is worth remembering, because a color, unlike a brightness, does not fade on the long road from a distant star.",
+      "story": "Procyon and Gomeisa sit only a few degrees apart, so the sky invites you to treat them as neighbors, yet their yearly parallax shifts differ more than tenfold. Depth is the one thing the eye can never see, which is why the brighter of two lamps so often turns out to be merely the nearer."
+    },
+    "HR5459": {
+      "step": 1,
+      "rank": 4.4,
+      "beat": "Two Pointers, two worlds",
+      "question": "The two Pointers look like a pair; are they anywhere near each other?",
+      "why": "The Pointers beside the Southern Cross are the most famous pair of bright stars in the southern sky, and their matched look is exactly the kind of resemblance that brightness invents.",
+      "look": "Alpha Centauri and Hadar sit about four degrees apart beside the Southern Cross, close enough to hold in one field. Alpha Centauri is the brighter, with a warm yellow-white tint; Hadar is a shade fainter and blue-white.",
+      "answer": "They are strangers: Alpha Centauri is our nearest naked-eye neighbor at about 4.4 light-years, while Hadar lies far behind it and must pour out thousands of times more light to look nearly as bright. Their brightness made them a pair, and only their distances could pull them apart.",
+      "story": "Hadar's yearly shift is about eighty times smaller than Alpha Centauri's, and since the shift shrinks as distance grows, that ratio is the ratio of their depths. A star much like the Sun has to stand right next door to rank among the sky's brightest, while Hadar keeps pace from far beyond."
+    },
+    "HR4210": {
+      "step": 1,
+      "rank": 7660,
+      "beat": "Faint dot, monster star",
+      "question": "Why does one of the Milky Way's heaviest stars look fainter than a nearby cluster star?",
+      "why": "Eta Carinae sits in the glow of the Carina Nebula a few degrees from Theta Carinae, and the two make the starkest brightness reversal in the southern sky.",
+      "look": "Center the Carina Nebula and find Eta Carinae, a small yellow-orange point near its brightest part. Then drop about 5° south to Theta Carinae, the brightest of the Southern Pleiades, which outshines it several times over.",
+      "answer": "Distance and dust both work against it, because Theta Carinae lies about 456 light-years away and Eta Carinae about 7,660, nearly seventeen times farther and behind its own cloud. Brightness can hide two things at once, how far a star is and what stands in front of it, so it cannot be read on its own.",
+      "story": "Brightness can also be stolen by whatever lies in front of a star, and Eta Carinae sits inside the dust it threw off. The dust soaks up visible light and glows it back out as warm infrared, so astronomers count the star's true output in the infrared, where it outshines the Sun millions of times over."
+    },
+    "HR6262": {
+      "step": 1,
+      "rank": 5571,
+      "beat": "The fainter twin is the giant",
+      "question": "Of the two ζ stars in the Scorpion's tail, which one is the true giant?",
+      "why": "ζ¹ and ζ² Scorpii make a naked-eye pair at the bend of the Scorpion's tail, near enough on the sky to look like partners and different enough in brightness to suggest which one matters.",
+      "look": "Find the pair where the tail bends south: orange ζ² is the brighter, ζ¹ a fainter, paler star just beside it, with a tight knot of stars half a degree north. From mid-northern sites the scene hugs the horizon, so pick a night with a clear southern view.",
+      "answer": "The fainter one is, by an astonishing margin, for ζ¹ shines with about 850,000 Suns from the cluster just north of it, while orange ζ² is an ordinary giant passing in front. On the flat sky the two look like a couple, and only their distances, never their brightness, reveal which is the monster.",
+      "story": "ζ¹'s yearly shift is barely half a thousandth of an arcsecond, with an error a fifth as large, so astronomers lean on the young cluster around it, whose many members together give a firmer depth. Both routes put it thousands of light-years beyond ζ², whose shift is large and sure."
+    },
+    "HR98": {
+      "step": 1,
+      "rank": 24.3,
+      "beat": "An old Sun, close at hand",
+      "question": "Achernar outshines Beta Hydri; is it the closer of the two, or the stronger?",
+      "why": "Near the south celestial pole, soft yellow Beta Hydri and brilliant blue-white Achernar are the two brightest lamps of a sparse sky, and the gap in brightness invites the easy conclusion that one is simply nearer.",
+      "look": "Find Beta Hydri between the Small Magellanic Cloud and the pole, a soft yellow point, then look across to Achernar, the lone brilliant blue-white star at the end of Eridanus. Achernar is roughly eight times brighter to the eye, and its color is far icier.",
+      "answer": "It is the stronger, not the closer: Achernar lies nearly six times farther away and gives out about 2,850 Suns to Beta Hydri's three and a half. The brighter-looking star is the distant one, and only a measured distance could turn its brilliance into a statement about what it is.",
+      "story": "Both stars are near enough for their yearly shifts to be measured cleanly, so this comparison rests on two firm rulers rather than one guess. With both depths known, the brightness gap can be split honestly into the part that is distance and the part that is power."
+    },
+    "HR4785": {
+      "step": 1,
+      "rank": 27.5,
+      "beat": "A Sun at a glance",
+      "question": "Would you guess that faint Chara is nearer to us than bright Cor Caroli?",
+      "why": "Canes Venatici is a faint constellation with one bright star, Cor Caroli, and a modest yellowish one, Chara, that happens to be very nearly a copy of the Sun.",
+      "look": "Start at Cor Caroli, the bright star below the Big Dipper's handle, and move about five degrees north-west to Chara, a faint pale-yellow point. Cor Caroli is white and three or four times brighter, and Chara looks like any background star.",
+      "answer": "Chara is the nearer, at about 27 light-years against Cor Caroli's 107, and it looks faint because it gives out about one Sun's worth of light, a hundred times less than Cor Caroli. Seen from there our Sun would be just as easy to pass by, and its glow alone would never say how close it was.",
+      "story": "Chara's spectrum is almost a copy of sunlight, and that makes it a ruler in its own right: a star with the Sun's spectrum should have about the Sun's power, so its faintness alone says how far away it must be. For Chara this spectroscopic distance agrees with the parallax, which is why the method is trusted where parallax cannot reach."
+    },
+    "HD95735": {
+      "step": 1,
+      "rank": 8.3,
+      "beat": "The neighbor nobody notices",
+      "question": "Could one of the Sun's nearest neighbors hide among hundreds of faint field stars?",
+      "why": "If brightness told distance, the nearest stars would be the brightest in the sky, and Lalande 21185, below the Big Dipper's bowl, is a sharp test of that idea.",
+      "look": "Use a detailed chart to find it about four and a half degrees south of 47 Ursae Majoris. It is a dim, faintly orange point among hundreds of others in the field, fainter than 47 Ursae Majoris, which lies more than five times farther away.",
+      "answer": "It can, because Lalande 21185 gives out only about a thirtieth of the Sun's light, so even at 8.3 light-years it sinks below what the naked eye can see. Its faintness speaks of a small, feeble star, and brightness alone could never have told you that it is right next door.",
+      "story": "Its yearly shift is nearly four tenths of an arcsecond, one of the largest of any star, and that measurement, not its glow, is what proves it close. A star this feeble could sit in almost any field and pass for a distant one, which is exactly how it hid in plain sight."
+    },
+    "HR6060": {
+      "step": 1,
+      "rank": 46,
+      "beat": "The Sun, seen from afar",
+      "question": "Faint 18 Scorpii or bright ζ Ophiuchi: which of the two stars is closer to us?",
+      "why": "18 Scorpii is as close to a twin of the Sun as any star known, and setting it beside bright ζ Ophiuchi a few degrees away shows how little brightness says about either.",
+      "look": "From the Yed pair in Ophiuchus, sweep about five degrees south to 18 Scorpii, a soft yellow-white point, then swing about six degrees east to blue-white ζ Ophiuchi, some fifteen times brighter.",
+      "answer": "18 Scorpii is the closer by about eight times, and it is faint simply because it is an ordinary Sun. ζ Ophiuchi, about 366 light-years away, gives out some seventy-five thousand times more light, so the brighter of the two is the far one, a reversal brightness alone would never have shown.",
+      "story": "Because 18 Scorpii is a near copy of the Sun, its true power is known before you measure anything, so how faint it looks gives its distance at once. That answer matches its parallax, and turned around, it shows how the Sun would look from a few dozen light-years: a point you would sweep past."
+    },
+    "HD212466": {
+      "step": 1,
+      "rank": 11100,
+      "beat": "An overlooked giant",
+      "question": "Can a dim orange star near δ Cephei be one of the largest stars known?",
+      "why": "RW Cephei sits a short sweep from δ Cephei, a modest orange point you would never pick out of the field, which makes it a perfect witness against judging stars by their glow.",
+      "look": "From δ Cephei slide about two and a half degrees south-south-west to RW Cephei, a modest orange point among field stars of similar brightness. δ Cephei, in the same sweep, is more than ten times brighter.",
+      "answer": "It can, because RW Cephei lies about 11,000 light-years away, more than twelve times as deep as δ Cephei, and that distance dims a star about a thousand times wider than the Sun into a point you could overlook. Its faintness is the work of distance, and nothing in the point of light itself would tell you that a giant is hiding there.",
+      "story": "A star this distant shifts too little through the year for its parallax to be trusted, so astronomers borrow a distance from its company. RW Cephei very likely belongs to a scattered group of young, heavy stars whose depth, measured from many members at once, becomes its own."
+    },
+    "HD226868": {
+      "step": 1,
+      "rank": 7240,
+      "beat": "One faint star among many",
+      "question": "Among the faint stars beside η Cygni, could one outshine the Sun four hundred thousand times?",
+      "why": "Cygnus X-1 looks like any of the ninth-magnitude stars that crowd the swan's neck, so it tests the brightness clue at its most extreme, where a faint point and a great power coincide.",
+      "look": "Center η Cygni, midway along the swan's neck, and look about 0.4° east-north-east for a ninth-magnitude star a little brighter than its neighbors. Steady binoculars and a dark sky help, and nothing about its light marks it out from the rest.",
+      "answer": "The star you found does, for this blue supergiant shines with about 427,000 Suns, and its light simply travels some 7,200 light-years to reach you. Every faint point in this field could be a dwarf nearby or a monster far away, and brightness alone cannot say which.",
+      "story": "The distance that makes this faint star so powerful was measured in 2021 with radio telescopes spread across a continent, which tracked the tiny yearly shift of the radio glow from the system's jets. Without that ruler the star could pass for any of its neighbors."
+    },
+    "HR5763": {
+      "step": 1,
+      "rank": 974,
+      "beat": "Equal pair, unequal depths",
+      "question": "ν¹ and ν² Boötis shine alike; which of the two is truly the brighter star?",
+      "why": "In northern Boötes two stars sit side by side at almost the same brightness, the kind of matched pair that the eye happily treats as a couple.",
+      "look": "Start at Nekkar, the star at the top of the kite of Boötes, and sweep east. Binoculars show orange ν¹ and white ν² side by side, nearly equal in brightness, and only their colors tell them apart.",
+      "answer": "The orange star wins easily: ν¹ is a giant of about 1,760 Suns, roughly ninety times the Sun's width, while its neighbor is an ordinary white star, and only their distances make them look like twins. The matched brightness was the illusion, and it is worth noticing that their colors never pretended to match.",
+      "story": "Two stars this close on the sky are often assumed to be partners, and for most of history nothing could prove otherwise. Gaia settled it by timing each star's yearly sway on its own, and one sways more than twice as far as the other, so one is near and the other far."
+    },
+    "HR1790": {
+      "step": 1,
+      "rank": 252,
+      "beat": "Shoulders at different depths",
+      "question": "Of Orion's two shoulders, which is nearer, the brighter one or the dimmer?",
+      "why": "Bellatrix and Betelgeuse are the two shoulders of one hunter, so the sky invites you to read them as a pair at one distance, with the brighter simply the stronger.",
+      "look": "Put Bellatrix, Orion's western shoulder, in the field, then swing across to Betelgeuse. Betelgeuse is usually the brighter and plainly orange, Bellatrix blue-white, though Betelgeuse's brightness drifts over months, so judge the pair fresh each night.",
+      "answer": "The dimmer one is nearer: Bellatrix lies about 250 light-years away, roughly half as far as Betelgeuse, so the brighter shoulder is also the more distant and must give out many times more light. The hunter stands at no single depth, and how bright each shoulder looks cannot be judged until that depth is known.",
+      "story": "The proof that the shoulders stand at different depths is one measurement, the tiny yearly shift each star makes as Earth circles the Sun, larger for the nearer star. Measured that way, the two shoulders lie farther from each other than the nearer one lies from us."
+    },
+    "STAR-Fomalhaut": {
+      "step": 1,
+      "rank": 25.1,
+      "beat": "Lonely, bright and near",
+      "question": "Fomalhaut outshines Alnair; does that make it the more powerful star?",
+      "why": "Fomalhaut stands alone in a sparse part of the sky, and its brilliance makes it easy to assume that it outranks the fainter stars of the Crane to its south-west.",
+      "look": "Fomalhaut is the only bright star in its part of the sky, a clean white point in Piscis Austrinus. About twenty degrees to the south-south-west, Alnair, the brightest star of the Crane, is blue-white and noticeably fainter; compare the two by eye.",
+      "answer": "It does not, because Fomalhaut is simply close, about 25 light-years away, while Alnair lies some four times farther and gives out about twenty times more light. A lonely beacon can be a small star near at hand, and its brightness cannot say so until a distance is measured.",
+      "story": "With no bright neighbors around it, Fomalhaut looks like a beacon ruling a field of lesser stars, and the eye happily turns brilliance into rank. Parallax shows instead a modest star that simply lives nearby, one that would look unremarkable if it stood as far away as Alnair."
+    },
+    "NGC457": {
+      "step": 1,
+      "rank": 9132,
+      "beat": "One eye, two possible stars",
+      "question": "Is the Owl's bright eye an ordinary neighbor or a distant supergiant?",
+      "why": "The Owl Cluster's bright eye looks like any other star, yet it can be only one of two very different things, and which one depends entirely on how far away it is.",
+      "look": "Two degrees south of Ruchbah, find the pair of eyes, the brighter one φ Cassiopeiae, with the faint spray of the cluster trailing away from them. Compare the eye's brightness with the faint stars of the swarm behind it.",
+      "answer": "The evidence leans toward the supergiant, since at the cluster's distance a star this bright must be the family's heaviest sibling grown huge, while the same point placed in front would be an ordinary neighbor. One brightness fits two utterly different stars, and only the distance chooses between them.",
+      "story": "Astronomers accept a star into a family only when several rulers agree: its yearly parallax shift, its drift across the sky and its speed toward or away from us must all match the cluster's. The bright eye passes most of those tests, but stars this bright strain Gaia's measurements, so the case is strong rather than closed."
+    },
+    "DS-Albireo": {
+      "step": 2,
+      "rank": 4380,
+      "beat": "Gold and blue in one field",
+      "question": "Albireo's two stars sit side by side; why does one glow gold and the other blue?",
+      "why": "Brightness can be bent by distance, but color cannot, and Albireo puts two colors in one field so cleanly that the comparison needs no trust in anything but your eyes.",
+      "look": "Brace the binoculars on Albireo, the head of the swan, and at 10× it splits into a golden-orange star and a fainter blue-white one about 34 arcseconds apart. Let the image drift if the split is hard, and compare the two tints rather than their brightness.",
+      "answer": "The gold star is the cooler, only about a third as hot as its blue sibling, and since distance cannot change a color, that ranking is honest. What the tint cannot report is how much glowing surface stands behind it, and the cool gold star is somehow the brighter of the two.",
+      "story": "Every glowing body pours out a whole rainbow, but the hotter it is, the farther its strongest output slides toward the blue. The gold star's peak sits at the red end of what the eye can see, and the blue star's lies far beyond violet, so your eye catches the two rainbows tilted opposite ways and reads the tilt as a tint."
+    },
+    "HR7735": {
+      "step": 2,
+      "rank": 4030,
+      "beat": "Orange among white",
+      "question": "Why does 31 Cygni glow orange while its neighbors in the field shine white?",
+      "why": "31 Cygni and its neighbors set warm and cool stars a few arcminutes apart, wide enough for any binoculars, which makes this little group an easy place to read color as a thermometer.",
+      "look": "From Deneb go about 5° west-north-west to 31 Cygni. Binoculars show it orange, with white 30 Cygni about 5½′ away and a fainter star closer in; defocus slightly and the orange deepens against the white.",
+      "answer": "Its surface runs near 4,030 K, far cooler than the white stars beside it, and color is that temperature made visible. A thermometer reading, though, describes each square meter of a star and says nothing of how many square meters there are.",
+      "story": "The white star beside 31 Cygni is not its partner but a separate star at another depth, and that does not matter, because color is read star by star. What does tint starlight in Cygnus is dust, thick along this stretch of the Milky Way, which nudges every color toward red, yet the orange star and the white one stay on opposite sides of the scale."
+    },
+    "HR7139": {
+      "step": 2,
+      "rank": 3480,
+      "beat": "Red beside blue-white",
+      "question": "Why do δ¹ and δ² Lyrae, side by side, glow such different colors?",
+      "why": "Lyra holds a pair of neighbors whose colors you can compare at a glance, and color, unlike brightness, does not care how far the light has come.",
+      "look": "About 3½° north of Sheliak, δ² Lyrae glows orange-red, with fainter blue-white δ¹ just west of it. Defocus slightly and compare the two tints, not their brightness.",
+      "answer": "The difference is heat: the orange-red star has a surface several times cooler than its blue-white neighbor's, and the eye turns that gap straight into color. Yet the cool star is the brighter of the two, and a temperature alone cannot say whether that comes from nearness or from sheer size.",
+      "story": "The eye's color-sensing cells need a generous dose of light before they report anything, which is why most faint stars look plain white to the naked eye. Binoculars gather enough to wake them, and a pair like this one, with one star near each end of the scale, is where the difference shows best."
+    },
+    "STAR-MuCep": {
+      "step": 2,
+      "rank": 3700,
+      "beat": "The reddest ember",
+      "question": "What does the Garnet Star's deep red tell you that its brightness cannot?",
+      "why": "Cepheus holds one of the reddest stars visible without optics, set among white neighbors, and that contrast in color is a measurement you make the moment the star enters the field.",
+      "look": "From Alderamin, the brightest star of Cepheus, look toward ζ Cephei; the Garnet Star sits a little south of halfway. In binoculars its deep orange-red leaps out against the white stars around it, and a slightly soft focus strengthens it.",
+      "answer": "Its color reads a surface some two thousand degrees cooler than the Sun's, and that reading holds even though its distance is still argued over. What the color cannot do is weigh how much of that cool surface there is, which is the part that decides how much light the star truly gives.",
+      "story": "Astronomers turn the eye's impression into a number by measuring a star's brightness twice, once through a blue filter and once through a yellow one. The gap between the two, its color index, is about 2.35 magnitudes here, among the largest of any star you can see unaided, and a little of that is dust along the way."
+    },
+    "DS-DeltaCep": {
+      "step": 2,
+      "rank": 5820,
+      "beat": "Yellow star, blue companion",
+      "question": "Why is δ Cephei yellowish while the small companion beside it is blue-white?",
+      "why": "δ Cephei carries its own color comparison, a fainter blue-white companion close beside it, so in one steady view you can read two temperatures from a pair of stars that travel together.",
+      "look": "δ Cephei marks the south-east corner of the house of Cepheus. Brace your binoculars and look for the fainter companion close beside the yellowish star; at 10× the pair splits, and the contrast between yellow and blue-white is the thing to judge.",
+      "answer": "The bright star's surface is about 5,820 K, close to the Sun's, so it glows yellowish, while its companion is a hotter star whose light leans blue. Yet the hotter star is the fainter, and since the two travel together at one distance, that can only mean it is the smaller.",
+      "story": "δ Cephei's own color drifts as it pulses, more golden when it is dim and whiter when it is bright, a change precise light meters record though the eye cannot. Color and brightness move together because both come from the surface heating and cooling, and that link helped show the star is really breathing rather than being eclipsed."
+    },
+    "HR264": {
+      "step": 2,
+      "rank": 27990,
+      "beat": "Blue-white against orange",
+      "question": "How much hotter is the W's blue-white middle star than orange Schedar?",
+      "why": "The W of Cassiopeia mixes colors as well as distances, and its middle star, γ, sits close enough to orange Schedar to make the two a ready-made thermometer.",
+      "look": "γ Cassiopeiae is the middle star of the W, a clean blue-white point. Swing to Schedar, the bright southern point of the W, about five degrees away, and back, and let the colors rather than the brightness hold your attention.",
+      "answer": "γ is about six times hotter, with a surface near 28,000 K against Schedar's 4,600, and your eye reads that gap as blue-white against orange. Yet the two shine at nearly the same brightness, so heat alone cannot be the whole story of how much light a star sends out.",
+      "story": "Angelo Secchi, whose look at γ Cassiopeiae's spectrum made history, also made one of the first great sortings of stars by their spectra. His classes lined up with color, white stars in one group, yellow in another, orange and red in others, and only decades later was the order understood as one of temperature."
+    },
+    "HR168": {
+      "step": 2,
+      "rank": 4600,
+      "beat": "Equal light, different heat",
+      "question": "Schedar and Caph shine alike; why is one orange and the other nearly white?",
+      "why": "Schedar and Caph are the two ends of the W and almost exactly equal in brightness, so their difference in color stands out on its own, with nothing else to distract from it.",
+      "look": "Swing between Schedar, the W's bright southern point, and Caph at its western end, about five degrees apart. They match in brightness, so watch the tint: Schedar warm orange, Caph a clean yellow-white.",
+      "answer": "Schedar's surface is about 4,600 K and Caph's about 6,900, a gap of more than two thousand degrees that the eye reads as orange against yellow-white. The color settles which star is hotter, but not how the cooler one keeps level in brightness, which needs its distance as well as its heat.",
+      "story": "In hotter gas the atoms jostle harder, and harder knocks shake loose more energetic packets of light, which the eye sees as bluer. A cooler surface sheds gentler packets, weighted toward red and orange, so the tint of a star is a direct report of how violently its surface is churning."
+    },
+    "STAR-LaSuperba": {
+      "step": 2,
+      "rank": 2720,
+      "beat": "The cool end of the scale",
+      "question": "How cool must a star be to glow as deep a red as La Superba?",
+      "why": "In the dim stretch of sky below the Big Dipper's bowl, La Superba glows a red so deep that it seems to belong to another kind of star, and it shows the color thermometer at its coolest end.",
+      "look": "From Cor Caroli head about a third of the way toward Megrez. La Superba is obvious in binoculars as a red-orange ember; compare it with white Cor Caroli, and the longer you look, the redder it seems.",
+      "answer": "Its surface runs at less than half the Sun's temperature, among the coolest stars the eye can see, and its own carbon deepens the red further still. Such a feeble glow per square meter should be hard to see at all from so far away, and the color alone cannot say what makes up the shortfall.",
+      "story": "Here the color thermometer reaches its limit. A surface this cool is red to begin with, and the carbon in its air strips away much of the blue that remains, so the tint overstates the coolness a little. Astronomers correct for that by measuring the star's disk and its total light directly."
+    },
+    "HR1713": {
+      "step": 2,
+      "rank": 12100,
+      "beat": "Ice-blue against orange",
+      "question": "What do Rigel's icy blue and Betelgeuse's orange say about the two stars?",
+      "why": "Rigel and Betelgeuse mark opposite corners of Orion and look roughly equal in brightness, so the most obvious difference between them, color, is the one to read.",
+      "look": "Hold Rigel, Orion's foot, in the field and take in its icy blue-white, then swing across the constellation to Betelgeuse on the opposite shoulder. A touch of defocus turns each into a small disk of color, and the contrast becomes vivid.",
+      "answer": "Betelgeuse's surface is only about 3,600 K, less than a third as hot as Rigel's, so the orange shoulder is the cool star and the icy foot the hot one. The two still shine about equally, and a color, which speaks only for each patch of surface, leaves open how much surface each star has.",
+      "story": "Why can distance not change a color? As light spreads outward, every wavelength thins by exactly the same factor, so the proportions of red, green and blue that leave a star are the proportions that arrive. Rigel's icy tint and Betelgeuse's orange have each crossed centuries of space unaltered."
+    },
+    "HR4763": {
+      "step": 2,
+      "rank": 3689,
+      "beat": "The orange one in the Cross",
+      "question": "How much cooler is the orange top of the Southern Cross than its blue-white foot?",
+      "why": "The Southern Cross is a pattern of blue-white stars with one orange exception at its head, and that single odd color is the most obvious thermometer reading in the southern sky.",
+      "look": "Center Gacrux, the top of the Cross, and compare its warm orange with blue-white Acrux at the foot, about six degrees away; a slight defocus makes the color jump. Then glance at Mimosa and δ Crucis, the arms, which side with Acrux.",
+      "answer": "Acrux's surface runs near 21,000 K, nearly six times hotter than Gacrux's, and the eye registers that gap as orange against blue-white. The colors rank the four stars by heat, but they cannot say which of the four is largest, since size needs each star's true power as well as its heat.",
+      "story": "At Harvard a century ago, Annie Jump Cannon sorted the spectra of a vast catalog of stars into a sequence of letters, O, B, A, F, G, K and M. Only later was her order understood as a scale of temperature from hottest to coolest, and the Cross spans it, its blue-white stars near the hot end and Gacrux near the cool one."
+    },
+    "HR8775": {
+      "step": 2,
+      "rank": 3668,
+      "beat": "One warm corner of the Square",
+      "question": "Scheat and Markab match in brightness; why do their colors not match?",
+      "why": "The Great Square of Pegasus looks like four equal corners, and Scheat and Markab, one above the other, shine so evenly that only their color tells them apart.",
+      "look": "Scheat is the north-west corner of the Square; swing to Markab, the corner directly south, and back. The brightness is a near-perfect match, the color is not: orange-red against blue-white.",
+      "answer": "Markab's surface is near 10,500 K and Scheat's near 3,700, nearly three times cooler, which is the whole of the color difference. Matched brightness from such unequal heat is the real puzzle, because a thermometer says how hard a surface glows and never how big it is.",
+      "story": "One thing can tint a star that has nothing to do with the star: our own air, which scatters blue light and reddens anything low in the sky, as it does the setting Sun. Two stars at nearly the same height pass through about the same air, so a color gap between neighbors like these belongs to the stars and not the atmosphere."
+    },
+    "HR4301": {
+      "step": 2,
+      "rank": 4700,
+      "beat": "Two Pointers, two colors",
+      "question": "Why is Dubhe yellow-orange when Merak, its partner Pointer, is white?",
+      "why": "The two Pointers of the Big Dipper are used together so often that they seem a matched pair, but in binoculars their colors disagree, and color is a clue that distance cannot fake.",
+      "look": "Sweep between Dubhe, the upper Pointer, and Merak, the lower one five degrees away, a few times. Dubhe is yellow-orange and Merak white, and the difference grows clearer the longer you compare.",
+      "answer": "Dubhe's surface is about 4,700 K, half the temperature of Merak's 9,500, and the eye sees the cooler star as yellow-orange. Dubhe is also the brighter Pointer, though, and nothing in a color can tell you whether that is because it is nearer or because there is simply more of it.",
+      "story": "Dubhe's light is really a blend, a giant and a fainter white partner far too close to split, and the color you see is the mixture. The giant gives most of the light, so it sets the tint, much as one loud voice sets the tone of a duet, and spectra that pull the two apart confirm the giant's cooler surface."
+    },
+    "STAR-Rasalgethi": {
+      "step": 2,
+      "rank": 3271,
+      "beat": "Two heads, two colors",
+      "question": "Rasalgethi and Rasalhague sit five degrees apart; why is one of them orange-red?",
+      "why": "The heads of Hercules and Ophiuchus sit close together in the sky, one ruddy and one white, a pair that makes the color thermometer easy to read.",
+      "look": "Fit Rasalgethi and Rasalhague in one low-power sweep, about 5° apart. Rasalgethi is orange-red and Rasalhague white, and over weeks Rasalgethi's brightness wanders, so trust its color more than its glow.",
+      "answer": "Rasalgethi's surface is about 3,300 K and Rasalhague's about 7,850, more than twice as hot, and that gap is the color you see. Rasalgethi is the fainter of the two here, and whether that means a small star or a distant one is something the tint cannot answer, since it says nothing about the star's girth.",
+      "story": "Rasalgethi's brightness wanders by up to a magnitude as its loose outer layers heave, yet its color changes little, because its surface temperature shifts far less than its light does. That makes color the steadier witness, the clue to trust when a restless star and a steady one are set side by side."
+    },
+    "HR337": {
+      "step": 2,
+      "rank": 3829,
+      "beat": "Equal light, opposite colors",
+      "question": "Mirach and Alpheratz shine with the same brightness; are they alike in anything else?",
+      "why": "Andromeda's chain of stars holds a pair of perfectly matched brightness, Mirach and Alpheratz, which leaves color as the only visible difference and makes it easy to read.",
+      "look": "Mirach is the middle bright star of Andromeda's chain and Alpheratz the corner it shares with the Great Square of Pegasus. Visit each in turn: equal in brightness, but Mirach is ruddy orange and Alpheratz blue-white.",
+      "answer": "They share almost nothing else, for Alpheratz's surface is near 12,900 K and Mirach's near 3,800, more than three times cooler. Why the cool one keeps up in brightness is beyond what color can tell, since a tint describes a surface's heat and not its area.",
+      "story": "Their matched brightness is a coincidence of distance and power, while their difference in color comes from the one property distance cannot touch. Their spectra agree with the eye, showing bands of molecules in the cool star's light, which survive only at low temperatures, and strong hydrogen lines in the hot one's."
+    },
+    "HR2990": {
+      "step": 2,
+      "rank": 4850,
+      "beat": "Twins that are not",
+      "question": "Gemini's twins look like a pair; why is Pollux orange and Castor white?",
+      "why": "Castor and Pollux are named as twins and shine side by side, which makes their difference in color the first crack in the family resemblance.",
+      "look": "Put Pollux and Castor in one field, about four and a half degrees apart: Pollux warm orange, Castor white. A touch of defocus makes the difference vivid.",
+      "answer": "Castor's surface is about 9,550 K, nearly twice as hot as Pollux's, so the twins are not even the same temperature. Pollux is still the brighter of the two, and a reading of heat has no way of saying whether that comes from nearness or from a bigger glowing surface.",
+      "story": "Star colors are subtler than they seem, and the eye exaggerates them when two stars sit side by side. The Sun itself would look white rather than yellow from space, so white alone does not prove a star hot, while an orange as plain as Pollux's needs a surface a good deal cooler than the Sun's."
+    },
+    "HR3541": {
+      "step": 2,
+      "rank": 2625,
+      "beat": "Red ember by the Beehive",
+      "question": "Why does X Cancri glow red when the Beehive's stars nearby shine white?",
+      "why": "Just south-east of the Beehive Cluster, X Cancri glows like an ember beside a swarm of white and pale-yellow stars, a color contrast you can hold within a couple of fields.",
+      "look": "From the Beehive move about four and a half degrees south-east to X Cancri, a red-orange star that deepens the longer you look. Swing back to the Beehive and compare its white and pale-yellow members.",
+      "answer": "X Cancri's surface runs at less than half the Sun's temperature, far cooler than the Beehive's white stars, and the red is that coolness made visible. It also lies nearly twice as far as the cluster, and to be seen at all from there a surface glowing this weakly needs something the color does not reveal.",
+      "story": "Variable-star observers know that red stars are treacherous for judging brightness, because the eye's faint-light vision is nearly blind to red and an estimate drifts the longer you stare. The color suffers no such doubt, and that is the point of this stop: here brightness wobbles in your own eye while the tint stays put."
+    },
+    "HR3165": {
+      "step": 2,
+      "rank": 40000,
+      "beat": "The hot end of the scale",
+      "question": "How far apart on the thermometer are blue-white Naos and orange Pi Puppis?",
+      "why": "Puppis holds both ends of the color scale a short swing apart, steely blue-white Naos and deep yellow-orange Pi Puppis, so here the thermometer can be read across nearly its whole range.",
+      "look": "Center Naos, a sharp blue-white point among Milky Way stars, then swing about 10° west to Pi Puppis, deep yellow-orange. Compare the tints rather than the brightness, which is close.",
+      "answer": "Naos runs near 40,000 K and Pi Puppis near 3,900, a factor of ten that spans almost the whole range of stars you can see. Their brightness is nearly equal all the same, and a ranking by heat cannot explain how the cooler star keeps up.",
+      "story": "At the hot end the color thermometer loses its fine scale. Once a surface is several times hotter than the Sun's, its glow peaks far beyond violet, and the eye catches only the gently sloping tail on the visible side, which has much the same shape for every such star. The eye can tell hot from cool, but it takes a spectrum to tell very hot from extreme."
+    },
+    "HR5056": {
+      "step": 2,
+      "rank": 25300,
+      "beat": "Blue-white against orange-gold",
+      "question": "Arcturus and Spica blaze along one arc of sky; what do their colors say?",
+      "why": "Follow the arc of the Big Dipper's handle and you meet two of the brightest stars in that part of the sky, orange Arcturus and blue-white Spica, a color contrast you can see without any optics at all.",
+      "look": "Find Spica by continuing the Dipper-handle arc past Arcturus to a lone, brilliant blue-white star. Hold it in the field, then swing back to Arcturus, and compare icy blue-white with warm orange-gold.",
+      "answer": "Spica's surface runs near 25,300 K and Arcturus's near 4,300, so the blue-white star is about six times hotter, and that is the whole of the color difference. Arcturus nonetheless looks brighter, and its color, which reports only how fiercely each patch of it glows, cannot say why.",
+      "story": "Low in the sky a bright star can flash every color in turn, because the air bends blue light a little more than red and the twinkling air keeps shuffling them. Judge a color when the star is held steady and as high as it gets; Spica's blue-white and Arcturus's orange then settle into their true tints."
+    },
+    "HR8425": {
+      "step": 2,
+      "rank": 13201,
+      "beat": "The hot one of the Crane",
+      "question": "Why is Alnair blue-white while Tiaki, just as bright, glows orange-red?",
+      "why": "Alnair and Tiaki are the two bright stars of the Crane, equal enough in brightness that their color is the only difference the eye can see, and color is the clue that distance cannot fake.",
+      "look": "Center Alnair, a clean blue-white point, then move about six degrees to Tiaki, orange-red. Defocus both slightly and the colors grow richer, while the brightness stays nearly a match.",
+      "answer": "Alnair's surface runs near 13,200 K and Tiaki's near 3,500, and that is the whole of the color difference. Yet the two look nearly equal, so either Tiaki is far nearer or it has vastly more surface, and color by itself cannot choose between them.",
+      "story": "Color is how the eye reads where a star's light is strongest: a hotter surface pushes its glow toward the blue end of the rainbow, a cooler one toward the red. Alnair's light is richest in blue and violet, Tiaki's in red and beyond, and the eye, catching both ends of the scale at once, calls one blue-white and the other orange-red."
+    },
+    "HR99": {
+      "step": 2,
+      "rank": 4464,
+      "beat": "Pale orange beside icy white",
+      "question": "Why is Ankaa pale orange while Achernar, across the same dark sky, is icy blue-white?",
+      "why": "Phoenix and Eridanus hold two lone bright stars of very different colors, Ankaa and Achernar, a contrast that needs nothing but a glance from one to the other.",
+      "look": "Ankaa stands alone between Achernar and Fomalhaut, a pale orange point in binoculars. Swing to Achernar, the brilliant blue-white star at the end of Eridanus, and compare the tints rather than the brightness.",
+      "answer": "Achernar's surface runs near 14,800 K, more than three times hotter than Ankaa's, and the eye reads that gap as icy blue against pale orange. A thermometer stops there, though: it cannot tell a small hot star from a large one, and Achernar's lead in brightness could come from either.",
+      "story": "Ankaa and Achernar both lie far from the Milky Way's dusty band, where the space between the stars is clear, so their light arrives with its colors untouched. That leaves temperature as the only explanation for the pale orange and the icy blue, and their spectra, metal lines in one and helium lines in the other, say the same."
+    },
+    "STAR-Deneb": {
+      "step": 3,
+      "beat": "Same white, vastly bigger",
+      "question": "Deneb and Vega share the same white glow; how different can their sizes be?",
+      "why": "Deneb and Vega are both white, so their surfaces burn at similar temperatures, and that shared color turns a comparison of their true power into a measurement of size.",
+      "look": "Center Deneb, a soft white point in a crowded Milky Way field, and set its color beside Vega's hard white, judging the two by eye since they lie far apart. The two whites match; only the brightness differs, and Vega is plainly ahead.",
+      "answer": "With such similar temperatures the two surfaces shine about equally, patch for patch, so all of Deneb's extra light must come from extra surface, about 75 times Vega's width. Color and brightness have measured that difference, but they say nothing of why one white star grew so vast while the other stayed small, which shows only among stars that share a birthday.",
+      "story": "Color fixes how much light each square meter of a star gives out, since a hotter skin glows harder, and a known distance turns apparent brightness into the star's total light. Divide the total by the share of one square meter and what is left is the area of the glowing surface, and from the area its width. Deneb's distance is the weak link, uncertain by nearly a factor of two, and the size inherits that doubt."
+    },
+    "HR9045": {
+      "step": 3,
+      "beat": "The Sun's heat, a giant's size",
+      "question": "ρ and η Cassiopeiae are about equally hot; why is one so much stronger?",
+      "why": "ρ Cassiopeiae, a faint star near Caph, and η Cassiopeiae in the W have surfaces of about the same temperature, which makes the pair a clean test of size once you see past a tint that dust has warmed.",
+      "look": "Start at Caph and slide about two and a half degrees west-south-west to ρ Cassiopeiae, a faint yellow-orange point. Then swing back east to η Cassiopeiae, between Schedar and γ in the W, a brighter, paler yellow star. ρ looks the warmer of the two, partly because dust along its long path reddens it.",
+      "answer": "At one temperature a star's light grows with its surface, and ρ Cassiopeiae gives out about half a million times η's light, so it must be some 560 times η's width, a hypergiant beside a near twin of the Sun. The clues can weigh up that gap, yet not explain how two stars of one heat came to differ so much, and that takes stars of one age and one distance.",
+      "story": "Dust between the stars scatters blue light more than red, as the air does at sunset, so a star seen through thousands of light-years of it looks warmer in tint than it is. That is why astronomers read ρ Cassiopeiae's temperature from the dark lines in its spectrum rather than from its color, and those lines put its surface close to the Sun's."
+    },
+    "HR424": {
+      "step": 3,
+      "beat": "Pale yellow, giant size",
+      "question": "Polaris shines with the Sun's pale yellow; is it built like the Sun?",
+      "why": "Polaris has very nearly the Sun's surface temperature, so its color says it shines like the Sun square meter for square meter, and its true brightness then says how many square meters it has.",
+      "look": "Center Polaris on its little ring of fainter stars and note its pale yellow tint. If Cassiopeia is up, compare it by eye with η Cassiopeiae in the W, a near twin of the Sun with almost the same color.",
+      "answer": "It is built on a far grander scale, for about 2,200 times the Sun's light pours from a surface of almost the Sun's temperature, so Polaris must be about 48 times the Sun's width, a yellow supergiant. Its light records how far it has swollen but not why a star of the Sun's color should swell at all, which is a matter of weight and age.",
+      "story": "Polaris is one of the few supergiants whose tiny disk has been measured directly, by linking telescopes into one sharp eye, and the measured width agrees with the one worked out from its color, brightness and distance. That agreement is what lets the same arithmetic be used with confidence on stars no telescope can resolve."
+    },
+    "HR2326": {
+      "step": 3,
+      "beat": "Two white beacons, one giant",
+      "question": "Sirius and Canopus are the two brightest stars of the night; are they alike?",
+      "why": "Sirius and Canopus are both white and both brilliant, the first and second brightest stars of the night sky, so their shared color invites a fair comparison of what lies behind their light.",
+      "look": "Canopus is the brilliant star well south of Sirius; compare the two by eye, Sirius a little brighter and icier, Canopus white with the faintest touch of cream. Low in the sky both flicker through colors, so judge them when they are highest.",
+      "answer": "They are alike only in looks, for Canopus lies about 36 times farther away and gives out about 660 times as much light, which from its slightly cooler surface means some forty times Sirius's width. Neither clue says why one white star stayed compact while the other grew so large; that shows only among stars born together.",
+      "story": "White covers a range of heat: Sirius's surface is about 9,850 K and Canopus's about 7,660 K, so Canopus gives out only about a third as much light from each square meter. That widens the gap rather than closing it, because every bit of Canopus's extra power must then come from extra surface."
+    },
+    "STAR-Betelgeuse": {
+      "step": 3,
+      "beat": "Same color, far bigger",
+      "question": "Betelgeuse and Aldebaran glow the same orange; which of the two is bigger?",
+      "why": "Betelgeuse and Aldebaran are the two orange lamps of the sky around Orion, close in color and close in brightness, so any difference in size must be hidden in their distances.",
+      "look": "Hold Aldebaran, the orange eye of Taurus, and then Betelgeuse, Orion's orange shoulder, in turn; defocus slightly so each blooms into a small disk of color. The tints are close, Betelgeuse a shade redder, and the brightness is close too.",
+      "answer": "Betelgeuse lies about eight times farther away yet looks about as bright, and counted across all colors it gives out a couple of hundred times Aldebaran's light. From a surface of nearly the same heat, that takes about seventeen times the width. Both are aging stars, but the two clues cannot tell why one grew into a supergiant and the other only a giant, which takes stars of one birthday to show.",
+      "story": "The eye judges color poorly in a sharp point of light, and a slightly defocused disk lets its color-sensing cells do their work. Read that way, Betelgeuse and Aldebaran both glow the orange-red of a surface well below the Sun's temperature, so they shine nearly alike per square meter and any difference in their total light is a difference in area."
+    },
+    "STAR-Arcturus": {
+      "step": 3,
+      "beat": "Same distance, cooler and brighter",
+      "question": "Arcturus and Muphrid lie at the same distance; why is the cooler star brighter?",
+      "why": "Muphrid sits five degrees from Arcturus and, by a lucky coincidence, at almost exactly the same distance, so here brightness is finally a fair measure and the color comparison can do the rest.",
+      "look": "Sweep from Arcturus about five degrees west to Muphrid; a wide field holds both. Arcturus is orange-gold and far brighter, Muphrid pale yellow-white, and since they lie at the same distance, what you see in brightness is real.",
+      "answer": "Arcturus gives out about twenty-two times Muphrid's light from a cooler, redder surface, and a cooler surface shines less per square meter, so it must have far more of it, nearly ten times Muphrid's width. Yet color and brightness are silent on why Arcturus swelled and Muphrid did not, a matter of age and weight that stars born together lay bare.",
+      "story": "Arcturus is one of the anchor stars for this method, a giant near enough to be measured three ways: by the width of its disk, caught with linked telescopes, by its total light, and by its color. All three agree, and that agreement is what makes size-from-color-and-brightness trustworthy for stars too far away to measure directly."
+    },
+    "HR7796": {
+      "step": 3,
+      "beat": "The Sun's heat, a supergiant's size",
+      "question": "Sadr burns at almost the Sun's temperature; how can it shine like thirty thousand Suns?",
+      "why": "Where the arms of the Northern Cross meet, Sadr glows with a pale yellow close to the Sun's own color, which means its surface is about as hot as the Sun's and its extra light has to come from somewhere else.",
+      "look": "Center Sadr and note its faint yellowish tint, then swing about six degrees to Deneb, the swan's tail, a whiter star by comparison. Around both, the Milky Way crowds every field with fainter stars.",
+      "answer": "At about 6,000 K, its 34,000 Suns of light demand some 180 times the Sun's width, a yellow supergiant. Its light measures that bulk but keeps no record of how Sadr came by it, a question for a family of stars that share one age.",
+      "story": "Every patch of a star's surface glows with the fourth power of its temperature, so a surface twice as hot gives out sixteen times the light from each patch. Sadr and the Sun are close in heat, so patch for patch they shine alike, and the whole of Sadr's surplus of light has to be surface."
+    },
+    "HR7525": {
+      "step": 3,
+      "beat": "Cooler, yet far stronger",
+      "question": "How can orange Tarazed, cooler than Altair, give out hundreds of times more light?",
+      "why": "Tarazed is orange and Altair white, so Tarazed is the cooler star, and a cooler surface gives out less light per square meter, which makes its true power a puzzle worth solving.",
+      "look": "Put Altair and Tarazed in one field, about 2° apart: crisp white against warm orange. Tarazed looks the lesser star, about two magnitudes fainter, and its color says it is the cooler too.",
+      "answer": "It manages it by being enormous, for with a surface near 4,200 K against Altair's 7,600, Tarazed needs nearly fifty times Altair's width to give out its 2,100 Suns. Why one of the two has swollen and the other has not is a matter of weight and time that these two clues cannot reach.",
+      "story": "Linked telescopes have caught the width of Tarazed's tiny disk, about seven thousandths of an arcsecond, and it matches the size that its color and true brightness predict. Few giants are near enough for that check, which is why astronomers prize the ones that are."
+    },
+    "STAR-Antares": {
+      "step": 3,
+      "beat": "Cool, red and immense",
+      "question": "Antares and τ Scorpii lie at similar distances; why is the cool red one brighter?",
+      "why": "τ Scorpii, a blue-white star a couple of degrees from Antares, lies at about the same distance, so the pair lets you compare true brightness and color at once, the two clues that together reveal size.",
+      "look": "Put Antares near one side of the field and find τ Scorpii a couple of degrees to the south-east. Antares is the brighter and a deep orange-red, τ a fainter, icy point, and from here both are roughly 500 light-years away.",
+      "answer": "τ Scorpii's surface is nearly nine times hotter, so square meter for square meter it shines thousands of times more fiercely, yet Antares gives out about twice as much light in all. Only size squares that, and Antares is about 130 times wider. The two belong to one young family of Scorpius, and a family is where the reason for that gap can be read.",
+      "story": "Antares lies close to the Moon's path across the sky, and when the Moon passes in front of it the star fades out over a fraction of a second rather than at once, because it has a measurable disk. Timing that fade gives the width directly, and it agrees with the enormous size implied by the colors and brightness of Antares and its neighbor."
+    },
+    "HR2773": {
+      "step": 3,
+      "beat": "Two orange stars, two sizes",
+      "question": "Pi and Tau Puppis glow a similar orange; how does Pi match Tau from farther away?",
+      "why": "Puppis holds two orange stars of nearly equal brightness and similar, though not identical, tints, so any big gap in their true output has to be mostly a gap in size.",
+      "look": "Pi Puppis is a deep yellow-orange star with a fainter companion beside it; Tau Puppis lies about fourteen degrees to the south-south-west, near Canopus. Visit each in turn: the tints are close and the brightness nearly equal.",
+      "answer": "Pi Puppis lies about three times farther away and still looks a shade brighter, and counted across all colors it gives out about forty times Tau's light. From its slightly cooler surface, that needs about ten times Tau's width. The colors match closely enough to rule out heat as the difference, but they cannot say why one orange star grew so much larger than the other.",
+      "story": "Astronomers size up every star whose disk is too small to see with one piece of arithmetic. The light from each square meter of surface is fixed by the temperature, so the total light divided by that amount gives the area, and the area gives the width. Run the same reasoning on the Sun and it returns the Sun's own size."
+    },
+    "HR8636": {
+      "step": 3,
+      "beat": "Cooler, yet nine times stronger",
+      "question": "Tiaki is cooler than Alnair; how does it still give out far more light?",
+      "why": "In the Crane, red Tiaki and blue-white Alnair shine at nearly the same brightness, and since the red one is the cooler, the pair sets a neat puzzle that only size can solve.",
+      "look": "Center Tiaki, the Crane's deep orange-red star, and set its brightness rather than its tint against Alnair's, about six degrees away. The two come close to a tie, which a much cooler star should not be able to manage.",
+      "answer": "Tiaki lies nearly twice as far away and still gives out about nine times Alnair's light, so its cooler skin must cover vastly more ground, some 45 times Alnair's width. The clues have measured the giant, but whether Alnair will one day swell the same way is a question of weight and age that they cannot settle.",
+      "story": "A simple law of glowing bodies sets the terms of the puzzle: the light each square meter gives out climbs with the fourth power of the temperature. A surface about a quarter as hot therefore shines only about a two-hundredth as much per square meter, so a cooler star that still outshines a hotter one has to make up the difference in sheer area."
+    },
+    "HR3307": {
+      "step": 3,
+      "beat": "Orange corner, giant size",
+      "question": "Avior and Aspidiske look nearly equal in the False Cross; which is the bigger star?",
+      "why": "Avior and Aspidiske are two corners of the False Cross, close in brightness but not in color, so the pair puts both clues to work at once.",
+      "look": "Find the False Cross, the larger and fainter look-alike of the Southern Cross, and center Avior, its brightest corner and the only orange one. Then swing about seven degrees east to Aspidiske, a white star a little fainter.",
+      "answer": "Avior is a little nearer, about 605 light-years against 766, yet gives out nearly twice Aspidiske's total light, so its dimmer skin must cover about fourteen times the area, nearly four times Aspidiske's width. The clues stop there, for why an orange giant and a white star should differ so much in size is a matter of weight and age they cannot reach.",
+      "story": "Because the orange giant supplies most of Avior's visible light, the blended tint is still an honest reading of the giant's skin, about 4,300 K against roughly 7,100 K for Aspidiske. By the law that ties glow to heat, each square meter of Avior gives out only about a seventh as much light."
+    },
+    "NGC4755": {
+      "step": 4,
+      "rank": 16,
+      "beat": "One sibling aged first",
+      "question": "What made one Jewel Box star race ahead of its blue-white siblings?",
+      "why": "The Jewel Box is a family portrait in which every star shares one birthday and one distance, so any difference in color or brightness has to come from the stars themselves.",
+      "look": "From Mimosa, on the eastern arm of the Southern Cross, nudge about a degree south-east to a small cluster shaped like a letter A. Near its middle one star glows orange among the blue-white ones; defocus slightly and the contrast sharpens.",
+      "answer": "A little more mass at birth was all it took, and the orange supergiant is the sibling that reached old age first while the lighter ones are still blue-white in their prime. Read as a clock, one red star among so many blue ones says the family is young, yet already old enough to lose its heaviest member.",
+      "story": "Inside one family brightness stops lying, because every member's light has crossed the same gulf of space, so a brighter star really is a more powerful one. For stars still living quietly on hydrogen, more power means more weight: a heavier star's gravity squeezes its core hotter, and fusion there quickens steeply with heat. The heaviest members spend their fuel fastest, and the orange one is the first to have run its core dry."
+    },
+    "AST-Hyades": {
+      "step": 4,
+      "rank": 625,
+      "beat": "Siblings at different stages",
+      "question": "Which stars of the Hyades V have aged first, and what set them apart?",
+      "why": "The Hyades share one birthday and one distance, so whatever separates the colors of their brightest stars cannot be age or perspective, and only birth weight is left.",
+      "look": "Sweep along both arms of the V in Taurus and pick out the yellow-orange points among the white. The family's orange giants are γ, δ¹, ε and θ¹ Tauri. θ¹ and white θ² make a naked-eye pair of siblings, while Aldebaran, at one tip, only lines up in front.",
+      "answer": "Ain, the orange giant at the tip of the V's northern arm, started at about 2.7 times the Sun's mass and has swollen to nearly thirteen times its width, while white θ², born the same day, is still under five. A small head start in weight became a lead of a whole stage of life, and the giants' color shows where the family's clock now stands.",
+      "story": "A star's core is a furnace whose pace is set by the weight pressing down on it, so a star with a little more mass runs its core hotter and spends its hydrogen far faster. In a family that differs only in weight, the members that started heaviest are the first to leave their steady middle years and swell. Read along the V, the line between white and orange therefore marks a weight: above it every star has already changed, below it none has."
+    },
+    "M45": {
+      "step": 4,
+      "rank": 125,
+      "beat": "A family still young",
+      "question": "Why are the Pleiades all blue-white, while the Hyades nearby show orange giants?",
+      "why": "Taurus holds two star families a short sweep apart, and the Pleiades, the younger, show what a family looks like before time has thinned out its heaviest members.",
+      "look": "Take in the little dipper of the Pleiades and its dozens of blue-white stars, then swing about twelve degrees south-east to the V of the Hyades, where yellow-orange giants stand among white stars. Both families are bright enough for their colors to show plainly.",
+      "answer": "Their leaders are still hot, Alcyone's surface near 13,500 K, because even the heaviest Pleiades have not yet used up their core hydrogen. A family's top drains from blue toward orange as it ages, so the Pleiades and the Hyades read like one family portrait taken about half a billion years apart.",
+      "story": "The two families of Taurus formed from similar gas and differ chiefly in age, which makes them a before-and-after picture. In the Pleiades the heaviest survivors, several times the Sun's weight, still burn hydrogen in their cores and so still glow blue-white, while in the Hyades stars of that weight swelled and faded long ago. The colors at the top of each family are therefore a reading of how long it has been alive."
+    },
+    "NGC869": {
+      "step": 4,
+      "rank": 14,
+      "beat": "Heavy stars live fast",
+      "question": "In a family only 14 million years old, how can some stars already be giants?",
+      "why": "The Double Cluster packs hundreds of stars with one birthday into a single binocular field, so the few that look different are telling you about weight, not age.",
+      "look": "Sweep from Cassiopeia's W toward Perseus and hold both clusters in one field. Among the blue-white crowd pick out a few orange points, mostly around and east of the pair, and defocus a touch so their color shows as small warm disks.",
+      "answer": "Only the very heaviest stars could use up their core hydrogen so quickly, and these few have already swollen into red supergiants while their lighter siblings still burn blue-white. Dated on their own, the supergiants give the same age as the rest, so one birthday has led to two very different lives, and the orange ones mark how far the family's clock has run.",
+      "story": "A star's light climbs much more steeply than its weight, so a heavier star spends its larger store of fuel far faster and has the shorter life. Here every member lies at the same distance, which means a star that looks brighter truly is brighter, and a warmer color truly means a cooler surface. Put those two clues together and the orange points come out as the largest stars in the family, bloated giants among compact blue-white ones."
+    },
+    "Stock2": {
+      "step": 4,
+      "rank": 290,
+      "beat": "Nearer, older, quieter",
+      "question": "Stock 2 lies far nearer than the Double Cluster; why doesn't it outshine it?",
+      "why": "Two degrees from the Double Cluster lies Stock 2, a loose sprawl of stars, and the pair lets you read both clues across two families at once, brightness against distance and color against age.",
+      "look": "From the Double Cluster nudge about two degrees north until Stock 2 fills much of the view, a big, loose stick figure of stars. Compare the two families' brightest stars: to the eye they are a fair match.",
+      "answer": "Stock 2 is about twenty times the Double Cluster's age, so its mighty blue leaders are long gone and its brightest survivors are modest white stars. Its nearness covers that loss so well that the two families look matched in the field, though on the clock they stand far apart.",
+      "story": "Because Stock 2 is so much nearer, a star in it needs far less light to look as bright as a star in the Double Cluster, so leaders that look equal are unequal in power. What sets a star's power is its weight, and weight is exactly what time strips from the top of a family, since the heaviest and most luminous members are the first to burn out. A family a few hundred million years old has already lost the kind of star that still leads the Double Cluster."
+    },
+    "NGC7789": {
+      "step": 4,
+      "rank": 1600,
+      "beat": "An old family's soft glow",
+      "question": "Why does Caroline's Rose glow evenly while younger clusters nearby sparkle?",
+      "why": "Cassiopeia is full of young star families, and Caroline's Rose, a soft patch beside faint ρ Cassiopeiae, is the old one among them, a chance to see what more than a billion years does to a family's light.",
+      "look": "From Caph move about three degrees south-west to ρ and σ Cassiopeiae; the cluster is the soft, even glow midway between them. Its members are too faint to show color, so judge texture instead, and compare it with the glitter of a younger family such as the Double Cluster.",
+      "answer": "Every star heavy enough to blaze blue-white burned out long ago, so no member stands far above the rest and the family's light comes out as an even mist. Smoothness itself is the clock here: the softer a cluster looks at a given distance, the further time has worn down its top.",
+      "story": "In a young cluster a handful of heavy stars each outshine hundreds of their siblings, so the light is concentrated in a few bright sparks. As the family ages those sparks go out from the top down, and the light that remains is shared among thousands of stars of nearly equal, modest brightness. Spread evenly across many faint points, it reaches the eye as a smooth glow rather than as a scatter of stars."
+    },
+    "HR1017": {
+      "step": 4,
+      "rank": 90,
+      "beat": "The heaviest sibling",
+      "question": "Why is Mirfak yellow-white when the family around it is blue-white?",
+      "why": "Mirfak sits at the heart of its own star family, the Alpha Persei Cluster, and is the only bright member that does not share the family's blue-white color.",
+      "look": "Center Mirfak, between Capella and the W of Cassiopeia, and let the field fill with dozens of blue-white stars in curving chains. Compare Mirfak's yellower tint with its siblings', using the widest field you have.",
+      "answer": "It was born the heaviest, about seven times the Sun's mass, and has already cooled to about 6,350 K and swollen to perhaps fifty times the Sun's width, while its lighter siblings still burn hot and compact. The yellow of the family's leader is the hand of its clock, showing that the heaviest member has just moved past its steady years.",
+      "story": "How do astronomers know Mirfak belongs to this family and is not a passer-by, like Aldebaran in front of the Hyades? Its drift across the sky, its speed toward us and its distance all match those of the stars around it, so it shares their birthday as well as their distance. That leaves only one way for its tint to differ: it began life with a different weight."
+    },
+    "M6": {
+      "step": 4,
+      "rank": 52,
+      "beat": "One orange star as a clock",
+      "question": "What does the single orange star in the Butterfly Cluster say about the family?",
+      "why": "Above the Scorpion's sting, the Butterfly Cluster spreads wings of blue-white stars around a single orange one, and since the whole family shares one birthday, that odd color has to be telling you something about weight.",
+      "look": "From Shaula, the stinger of Scorpius, go about five degrees north. The Butterfly shows two loose wings of blue-white stars, and on one wingtip BM Scorpii glows clearly orange; defocus slightly to make it pop.",
+      "answer": "It dates the family to roughly 50 million years, because BM Scorpii, the heaviest sibling, has only just had time to exhaust its core and swell. One orange star among hundreds is the first grain to fall through a very slow hourglass, and the others will follow in order of weight.",
+      "story": "Astronomers turn that orange star into years with models of stellar lives, because a star's weight fixes how long its core hydrogen lasts. Gaia's parallax gives the family's shared distance, which turns each member's brightness into true power and so into weight, and the heaviest member still burning steadily sets the age."
+    },
+    "M7": {
+      "step": 4,
+      "rank": 170,
+      "beat": "The older neighbor",
+      "question": "Side by side, which is older, Ptolemy's Cluster or the Butterfly, and how can you tell?",
+      "why": "Ptolemy's Cluster lies a few degrees from the Butterfly Cluster, two families in one sweep of the Scorpion's tail, so their looks can be compared directly.",
+      "look": "From Shaula go about five degrees north-east to Ptolemy's Cluster, a big bright spray more than a degree across, with a yellowish star near its middle. Then sweep north-west to the Butterfly Cluster and compare: it is smaller and crisper, with its one orange star among blue-white members.",
+      "answer": "Ptolemy's Cluster is the older, about 170 million years against roughly 50 for the Butterfly, and a yellow giant now stands among its brightest survivors. It looks bigger and brighter only because it is nearer, about 900 light-years against 1,470, yet nearness cannot warm a family's colors, and these read a much later hour.",
+      "story": "Neighboring families make a natural experiment, because their stars formed in much the same way and differ mainly in age. Count down from the brightest stars still in their long middle years and the older family runs out sooner. In Ptolemy's Cluster the bluest, heaviest stars are already missing, which is the age difference written in color."
+    },
+    "M35": {
+      "step": 4,
+      "rank": 150,
+      "beat": "Young family, old stranger",
+      "question": "M35 and the little smudge beside it share a field; are they alike?",
+      "why": "Near the feet of Gemini the bright cluster M35 has a faint, compact neighbor in the same field, and the pair shows how a family's brightness changes as it ages.",
+      "look": "From η and μ Geminorum move about two degrees north-west to M35, a round, grainy glow sprinkled with resolved stars. Just south-west, a much smaller, fainter smudge is NGC 2158, best caught from a dark site with the binoculars braced; neither shows color, so compare their sparkle.",
+      "answer": "They are strangers: NGC 2158 lies about 12,100 light-years away, more than four times farther than M35, and at nearly 1.9 billion years it is more than ten times older. M35 still sparkles with hot young leaders, while its neighbor's light comes from survivors long past their prime, the same clock read at two very different hours.",
+      "story": "Gaia separates the two by motion: the members of M35 drift together one way, while those of its neighbor move another, at a pace that marks a far greater distance. Once each family's distance is known, the brightness of its leaders becomes a true power, and that power falls as a family ages, because its most luminous members are the first to die. The faint neighbor's leaders turn out to be cool giants, the kind of star that heads a family only late in its life."
+    },
+    "DS-MizarAlcor": {
+      "step": 4,
+      "rank": 414,
+      "beat": "A family inside the Dipper",
+      "question": "Do the Big Dipper's white stars belong to one family, and is Mizar one of them?",
+      "why": "Most of the Big Dipper's stars are white and look alike, and the pair of Mizar and Alcor, where the handle bends, is the place to ask whether a shared color in the sky means a shared birth in space.",
+      "look": "Look at the middle star of the handle and catch Alcor beside Mizar by eye; binoculars spread them apart. Then compare their white with the other Dipper stars: Merak, Phecda, Megrez and Alioth match it, while Dubhe at the bowl's lip is yellow-orange and Alkaid at the handle's end a little bluer.",
+      "answer": "Mizar, Alcor, Merak, Phecda, Megrez and Alioth very likely form one family, while Dubhe and Alkaid are strangers passing through. Merak, about two and a half times the Sun's mass, is among the family's heaviest survivors and still white, so the family clock has already claimed stars much heavier than that. Dubhe's orange, a giant's color, belongs to a stranger.",
+      "story": "Membership is tested the way you would pick out a flock of birds: each star's motion across the sky and along our line of sight is measured, and stars moving in parallel at matching distances belong together. Five of the Dipper's stars pass, and their shared white follows from a shared age, since stars of similar weight born on the same day are still at the same stage of life."
+    },
+    "NGC3532": {
+      "step": 4,
+      "rank": 300,
+      "beat": "Many chapters later",
+      "question": "Next to Carina's young clusters, what has time done to the Wishing Well's colors?",
+      "why": "The Wishing Well lies a few degrees from the Carina Nebula, whose clusters are only a few million years old, so it lets you compare a young family with one many chapters further on.",
+      "look": "From the Carina Nebula move about three degrees east-north-east to the big, rich oval of the Wishing Well. Look for its few yellow-orange stars among the white ones, then swing back toward the nebula's blue-white youngsters and compare.",
+      "answer": "Time has taken its blue stars and left white ones and a few orange giants in charge, which is why the Wishing Well looks white and gold where the Carina clusters look blue. Its colors read a far later hour on the same clock, and a family's colors keep that time whether it lies near or far.",
+      "story": "The Wishing Well's age is read from its brightest stars: the heaviest members still in their steady years mark how long the family has lived, because anything heavier has already swollen or died. Next to the young Carina clusters, whose blue-white giants still burn, that mark has slid far down to white stars, and the few orange giants are the members that have only just passed it."
+    },
+    "IC2602": {
+      "step": 4,
+      "rank": 46,
+      "beat": "A family still in its prime",
+      "question": "How young is a family whose brightest stars are all still blue-white?",
+      "why": "Around Theta Carinae spreads a naked-eye family of blue-white stars, the Southern Pleiades, and its uniform color is itself a clue to its age.",
+      "look": "Find Theta Carinae, the brightest of a small spray of stars just south of the Carina Nebula, and take in the two or three dozen blue-white members around it. Hunt for a gold or orange star among the bright ones; there is none to find.",
+      "answer": "It is young enough that even its heaviest members are still in their steady adult lives, so none has swollen and reddened yet. That is the earliest face a family's color clock shows, all blue at the top, and every orange giant this family will ever have is still hidden among those blue-white stars.",
+      "story": "A family's top color works as a clock because its heaviest steady stars mark how long it has lived, and blue-white leaders mean even heavy stars have not had time to swell. Theta Carinae, at about 31,000 K, is in fact too hot for a family this old, so its history probably involves a partner, and astronomers time the family by its other members."
+    },
+    "M47": {
+      "step": 4,
+      "rank": 109,
+      "beat": "Sparkle against mist",
+      "question": "Why does M47 sparkle while M46, in the same field, only glows?",
+      "why": "In Puppis two clusters share one binocular field, one coarse and bright, one fine and misty, and the difference between them shows what age and distance each do to a family's looks.",
+      "look": "Center M47, a coarse scatter of bright blue-white stars, then look just over a degree east for M46, a softer, finer, misty patch. Keep both in one field and compare their sparkle and texture.",
+      "answer": "Youth makes the sparkle, since M47 still keeps its heavy blue-white stars and each one stands out on its own. M46 has had about four times as long to lose its brightest members, so what is left melts into mist, a family whose clock has run long enough to take its own crown.",
+      "story": "Two clues are tangled in this field, because a cluster can look dim either by being far or by being old. Color pulls them apart: distance leaves a star's tint alone, so blue-white leaders in M47 mean heavy stars still in their steady years, while an older family's leaders have faded to plain white whatever its depth."
+    },
+    "M46": {
+      "step": 4,
+      "rank": 432,
+      "beat": "The bigger family hides",
+      "question": "M46 holds twice as many stars as M47; why does it look so much fainter?",
+      "why": "Beside bright M47 lies M46, a quiet glow that turns out to be the bigger family, which makes the pair a lesson in how little a cluster's looks say about its size.",
+      "look": "From M47 move just over a degree east. In 10×50 binoculars M46 is a soft, even glow with a few stars at the threshold; compare its total glow with M47's handful of bright stars.",
+      "answer": "Depth does much of the hiding, for M46 lies about three times farther than M47, and age does the rest by taking away the bright stars that would have stood out. Gaia finds nearly six times M47's mass in that modest glow, a family whose bulk now sits in small, faint, long-lived stars.",
+      "story": "A cluster's sparkle depends on its brightest few stars, not on its total count, and those few are the first to go as a family ages. That is why an old, rich cluster can look quieter than a young, poor one, and why astronomers count members with Gaia, star by star, rather than judging a family's size by its glitter."
+    },
+    "NGC2451": {
+      "step": 4,
+      "rank": 26.1,
+      "beat": "Young sparkle, old mist",
+      "question": "NGC 2451 and NGC 2477 share a field; how different are the two families?",
+      "why": "In Puppis a bold scatter of bright stars and a misty, grainy glow sit a degree and a half apart, and their contrast is as much about time as about distance.",
+      "look": "Put the bright, scattered stars of NGC 2451, with orange c Puppis among them, at one side of the field and NGC 2477 at the other, a round, grainy haze. Compare sparkle with mist.",
+      "answer": "NGC 2451 is young and near, about 26 million years old, while NGC 2477 is about 700 million years old and several times deeper, its blue stars long gone. Neighbors on the sky, they stand hundreds of millions of years apart on the clock that colors keep.",
+      "story": "Color sorts these families where brightness cannot, since a far, rich cluster and a near, sparse one can glow alike. The bright stars of NGC 2451 are mostly blue-white, the hue of heavy stars still steady, while the leaders of NGC 2477 turned into giants long ago, too faint at that depth for binoculars to show their tint."
+    },
+    "M44": {
+      "step": 4,
+      "rank": 637,
+      "beat": "A middle-aged family",
+      "question": "The Beehive and the Hyades lie far apart in the sky; are they the same age?",
+      "why": "The Beehive is a swarm of white and pale-yellow stars with a few warmer ones among them, the color pattern of a family well into middle age, and it has a famous look-alike in Taurus.",
+      "look": "Midway between Pollux and Regulus, frame the Beehive and pick out its handful of yellow-orange giants among the white and pale-yellow stars. Notice that no bright blue-white star leads the swarm.",
+      "answer": "They are very nearly the same age, within a few tens of millions of years, and both show the same pattern of white stars joined by a few orange giants. Two families on opposite sides of the sky read the same hour on their clocks, which is just what you would expect if they were born in one great nursery and later drifted apart.",
+      "story": "Two families are dated alike when the same weight of star sits at the same turning point in both: the heaviest members still burning hydrogen in their cores, just below the few that have begun to swell. In the Beehive and the Hyades that turning point falls at about the same weight. The two also drift through space in nearly the same direction, part of why astronomers suspect a shared origin, though the case is not closed."
+    },
+    "NGC6231": {
+      "step": 4,
+      "rank": 4,
+      "beat": "A family at the very start",
+      "question": "In a family only four million years old, has any star had time to age?",
+      "why": "Half a degree north of the ζ pair in the Scorpion's tail lies NGC 6231, a tight knot of blue-white stars, and it shows a family at the very beginning of the clock that time writes in colors.",
+      "look": "Follow the tail down to the naked-eye pair ζ¹ and ζ² Scorpii and go half a degree north to a compact knot of bright stars. They are almost all blue-white; compare them with orange ζ², a foreground star that does not belong.",
+      "answer": "Only the very heaviest have begun to, and ζ¹ Scorpii, a member of about 36 times the Sun's mass, has already swollen into a hypergiant about a hundred times the Sun's width. Everyone else still blazes blue-white, so this family's clock has barely started, and yet its first stars are already in their last stage.",
+      "story": "Stars of very different weights share the same blue-white color while they are young, so in a family this fresh the colors barely differ and the clock can be read only at its top end. There the heaviest stars, dozens of Suns each, burn through their core hydrogen in a few million years, faster than anything else in the sky."
+    },
+    "M36": {
+      "step": 4,
+      "rank": 22,
+      "beat": "The youngest of three",
+      "question": "Three clusters in one sweep of Auriga; which is the youngest, and how can you tell?",
+      "why": "Auriga holds three star families in a single sweep, M36, M37 and M38, at broadly similar distances, so their differences in look are mostly differences in age.",
+      "look": "M36 is a small, compact knot with several bright stars popping out of it. Sweep about two and a half degrees north-west to M38 and about four degrees south-east to M37, and compare how much of each family's light sits in a few bright points.",
+      "answer": "M36 is the youngest, and its leaders are still hot blue-white stars, which is why it gathers into a small, bright knot. M38 is roughly twelve times older and M37 more than twenty, and in each the bright top has worn away, so the knot, the cloud and the fine grain are three readings of one clock.",
+      "story": "With the three families at similar distances, how bright their leading stars look is a fair comparison of how much light those stars truly give. That light climbs steeply with a star's weight, so the youngest family, which still has its heaviest members, puts most of its glow into a few bright points. As a family ages and loses those leaders, the same total light spreads across a crowd of fainter stars."
+    },
+    "M37": {
+      "step": 4,
+      "rank": 500,
+      "beat": "Half a billion years on",
+      "question": "Why does M37 look like fine sugar while M36 nearby is a bright, sparkling knot?",
+      "why": "M37 is the richest of Auriga's three star families, and set beside the young knot of M36 it shows what time does to a family's sparkle.",
+      "look": "From M36 move about four degrees east-south-east to M37, a round, rich, even glow with only a handful of stars resolved. Its stars are too faint to show color, so compare texture: M36's few bright sparks against M37's fine grain.",
+      "answer": "M37's heavy blue stars burned out long ago, and the light that remains comes from thousands of modest members blended together, with a few orange giants on top that only a telescope shows in color. The grain is age made visible: M37 has already spent the kind of star that still makes M36 glitter.",
+      "story": "In a young family the brightest stars are also the bluest, because the heaviest members are the hottest and the most luminous. Take those away and the brightest left are a few cool giants above a great many white and yellow stars of nearly equal brightness, too faint and too alike for any one of them to stand out at this distance. That is why age turns a cluster from sparks into grain, even when the older family holds more stars."
+    },
+    "IC4756": {
+      "step": 4,
+      "rank": 840,
+      "beat": "Look-alikes that are alike",
+      "question": "IC 4756 and NGC 6633 look like twins; are they also alike in age?",
+      "why": "Across the border of Serpens and Ophiuchus two loose star families sit a few degrees apart, similar in size and brightness, a rare look-alike pair that might really be alike.",
+      "look": "From θ Serpentis sweep about four degrees west to IC 4756, a broad scatter of faint stars, then about three degrees farther west to NGC 6633, a longer, looser spray. Compare their looseness, and look for a yellowish point or two among the white; colors are faint at this brightness.",
+      "answer": "They are roughly alike, about 840 million years old for IC 4756 and 550 million for NGC 6633, at similar distances near 1,500 and 1,300 light-years. Their shared look is the honest one, two families whose clocks both stand at the hour when white stars begin, one by one, to swell into orange giants.",
+      "story": "Brightness and color can be taken at face value here because the two families sit at similar distances, so neither clue is bent by depth. Both have lost every blue-white star and are now led by a few swollen giants, the pattern of a family several hundred million years old. Gaia's parallaxes confirm that this time the matching looks are no trick of perspective."
+    },
+    "M39": {
+      "step": 4,
+      "rank": 430,
+      "beat": "An all-white family",
+      "question": "Why are M39's brightest stars all white, with no blue leaders among them?",
+      "why": "North-east of Deneb lies M39, a loose spray of stars shaped like a triangle, and the even white of its brightest members is the signature of a family that has already lost its heaviest.",
+      "look": "From Deneb sweep about 9° east-north-east to the loose triangle of M39. Count its brightest stars and judge their color: white or nearly so throughout, with no blazing blue leaders and no orange giants.",
+      "answer": "A family loses its stars from the heaviest down, so an all-white top puts M39 at a few hundred million years, however the models argue over the exact figure. Deneb, a short sweep away, is the kind of heavy star such a family burns through first, and it would have died long before M39's white stars ever change color.",
+      "story": "A family's brightest members are the heaviest it still has, so the color at the top of a cluster names the heaviest weight that has survived. Hot blue-white leaders mean stars many times the Sun's weight are still alive, and a white top means those are gone and the clock has reached stars of a few Suns. A yellow or orange top would mean that even those have begun to swell."
+    },
+    "M41": {
+      "step": 4,
+      "rank": 154,
+      "beat": "An orange sibling",
+      "question": "Is M41's orange star a member of the family or a passer-by in front?",
+      "why": "M41 lies just south of Sirius, and near its middle one star glows orange among white ones, a color difference that could mean a sibling grown old or a stranger lined up.",
+      "look": "Put Sirius at the top of the field and move about four degrees south to M41. It breaks into dozens of stars, and near the middle one has a clear orange tint; compare it with the white stars around it.",
+      "answer": "It is family, a sibling that was born a little heavier and has already swollen into a giant while the others stay white. At about 150 million years only the heaviest members of M41 have made that change, so one orange star near the middle dates the whole cluster, much as a first gray hair dates a head.",
+      "story": "In a family of one age, a small difference in birth weight makes a large difference in pace, so the line between steady stars and swollen ones is sharp. The giants of M41 began only a little heavier than its brightest white stars, yet they have already crossed into old age while those just below the line look untouched."
+    },
+    "M67": {
+      "step": 4,
+      "rank": 3870,
+      "beat": "An old family in Cancer",
+      "question": "M67 and the Beehive share Cancer; why does M67 look like a faint mist?",
+      "why": "Cancer holds two star families, the bright Beehive and the faint M67, and between them they span much of the life of an open cluster.",
+      "look": "From Acubens, the star at the bottom of Cancer about nine degrees south of the Beehive, drift about two degrees west to M67, a small, faint, grainy glow. No color shows at this brightness, so compare its texture with the Beehive's bright, scattered stars.",
+      "answer": "M67 is about six times the Beehive's age, so only Sun-like stars and a few giants remain, and it also lies more than four times farther away. Age and distance together turn a rich family into a faint mist, and its brightest giants show what the Sun itself will one day become.",
+      "story": "Both clues are needed to untangle this one, because M67 is older and also farther away than the Beehive, and either alone could dim a family. Distance only shrinks and fades the view, leaving each star's true power as it was, while age removes the most powerful stars altogether. With Gaia fixing the distance, the faintness left over is age: the stars at M67's turning point are only slightly heavier than the Sun."
+    },
+    "HR6165": {
+      "step": 4,
+      "rank": 11,
+      "beat": "Siblings of different weight",
+      "question": "Antares and τ Scorpii were born in one family; why do they look so unlike?",
+      "why": "τ Scorpii is a plain blue-white point a couple of degrees from Antares, and both belong to the young family of Upper Scorpius, which turns their contrast into a story about weight rather than age.",
+      "look": "Put Antares at one edge of a wide field and sweep about two degrees south-east to τ Scorpii. Swing back and forth, deep orange against crisp blue-white, and defocus slightly to judge the colors as small disks.",
+      "answer": "Born about 11 million years ago in the same family, Antares started out the heavier, perhaps 15 Suns, and has already swollen into a red supergiant while τ still burns quietly as a compact blue star. That span is a blink in the life of a star like the Sun, so a family this young already split into red and blue shows how hard weight presses on the clock.",
+      "story": "Antares almost certainly once looked much like τ, a compact blue-white star burning hydrogen in its core. When that core ran dry it shrank and heated, the layers above it ballooned outward, and as the surface spread it cooled, so the color slid from blue-white toward red. Here color is the record of a swelling, which is why the thermometer and the size measurement tell the same story."
+    },
+    "NGC2516": {
+      "step": 4,
+      "rank": 125,
+      "beat": "The Pleiades, moved farther",
+      "question": "Can a family's colors give its age even when distance dims every star?",
+      "why": "The Southern Beehive, beside the False Cross in Carina, is a family born about when the Pleiades were but set much deeper in space, a natural test of which clue survives the distance.",
+      "look": "From Avior, the orange corner of the False Cross, move about three degrees west. Binoculars show dozens of stars in a patch the width of the full Moon, mostly white and blue-white, with the brightest in a rough box and none of them dazzling.",
+      "answer": "Its colors give the age undimmed, because the hottest stars a family still holds depend on time, not on where you stand. The Southern Beehive keeps blue-white stars at its top, the look of a family the Pleiades' age, and its light has carried that date across the extra distance as faithfully as a postmark.",
+      "story": "Distance drains brightness but leaves color alone, so a family's colors read the same hour near or far. The Southern Beehive's brightest steady stars are blue-white, the same top color as in the Pleiades, and that matching hand on the clock is how two families so differently placed can be seen to share an age."
+    }
+  }
+}

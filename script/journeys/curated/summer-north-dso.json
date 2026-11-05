@@ -1,0 +1,6043 @@
+{
+ "batch": "summer-north",
+ "kind": "dso",
+ "version": "summer-north-dso-2026-11-02",
+ "curator": "curator-summer-north-dso",
+ "storySeeds": [
+  {
+   "title": "Summer Triangle: birth, gentle death, violent death",
+   "archetype": "A8 / A1",
+   "stops": [
+    "NGC7000",
+    "MWF-CygnusRift",
+    "M29",
+    "HD192163",
+    "NGC6888",
+    "NGC6992",
+    "NGC6960",
+    "M27"
+   ],
+   "description": "Start in the North America Nebula (stars being born, lit by a hidden star), cross the Cygnus Rift to M29 (a young cluster dimmed by that dust), visit WR 136 and its Crescent bubble (a heavy star shedding itself), then the Veil (what such a star leaves) and finish at the Dumbbell (how the Sun will end). Split it into a Cygnus half and a Vulpecula half if the region is too large. Built on doc 03 story U4, BAA Veil observing reports and the Astronomical League binocular lists.",
+   "sources": [
+    "baa-veil",
+    "comeron2005",
+    "esahubble-crescent",
+    "fesen2021",
+    "al-binocular-messier"
+   ]
+  },
+  {
+   "title": "Ancient star balls: the Hercules globular contrast",
+   "archetype": "A6 / A11",
+   "stops": [
+    "HR6212",
+    "M13",
+    "M92"
+   ],
+   "description": "Use the Keystone (ζ Her, a nearby star) as the hook, then M13 (12 Gyr, [Fe/H] −1.53), then M92 (13.8 Gyr, [Fe/H] −2.31): same kind of object, different family history. Extend with M56 and M71 in Lyra and Sagitta for a metal-poor to metal-rich ladder when the region allows. Built on doc 03 story U3b and the NASA Hubble Messier pages.",
+   "sources": [
+    "harris2010",
+    "ying2023",
+    "vandenberg2013",
+    "nasa-m13",
+    "nasa-m92"
+   ]
+  },
+  {
+   "title": "Dark rivers: the dust that hides and makes stars",
+   "archetype": "A11",
+   "stops": [
+    "MWF-CygnusRift",
+    "M29",
+    "NGC6910",
+    "NGC7000"
+   ],
+   "description": "Naked-eye Rift first, then M29 (dimmed more than tenfold by that dust), NGC 6910 next to foreground Sadr (perspective), then the North America Nebula, whose “Gulf of Mexico” is more of the same dust. An Aquila variant swaps in Barnard’s E near Tarazed. Grounded in Straižys et al. 2014 and Astronomy magazine’s Barnard’s E column.",
+   "sources": [
+    "straizys2014",
+    "astronomy-barnardE",
+    "comeron2005"
+   ]
+  },
+  {
+   "title": "Ophiuchus families: same distance, different age",
+   "archetype": "A5 / A6",
+   "stops": [
+    "IC4665",
+    "NGC6633",
+    "NGC6709"
+   ],
+   "description": "IC 4665 (~55 Myr, blue-white, its age still debated) and NGC 6633 (~550 Myr, a Hyades twin) sit at almost the same distance about 10 degrees apart, a clean cluster-age contrast. NGC 6709 in Aquila adds a middle step. Grounded in Jeffries et al. 2023, Brogaard et al. 2025 and Hunt & Reffert 2024.",
+   "sources": [
+    "jeffries2023",
+    "brogaard2025",
+    "hr24",
+    "jeffries2002"
+   ]
+  },
+  {
+   "title": "Fake clusters, real families",
+   "archetype": "A6 (SKY.projection)",
+   "stops": [
+    "AST-Coathanger",
+    "NGC6823",
+    "M71",
+    "M27"
+   ],
+   "description": "Open with the Coathanger (a chance alignment, Baumgardt 1998), contrast it with NGC 6823 (a real newborn family) and M71 (a real ancient one long misclassified), and close at M27 where M71’s stars are headed. Phil Harrington’s Binocular Universe Coathanger column covers the same sweep.",
+   "sources": [
+    "baumgardt1998",
+    "harrington-coathanger",
+    "esahubble-m71",
+    "nasa-m27"
+   ]
+  }
+ ],
+ "sources": [
+  {
+   "id": "simbad",
+   "title": "SIMBAD astronomical database (Harvard mirror)",
+   "url": "https://simbad.harvard.edu/simbad/",
+   "publisher": "CDS Strasbourg",
+   "kind": "catalog",
+   "citation": "Wenger et al. 2000, A&AS 143, 9",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "hr24",
+   "title": "Improving the open cluster census. III. Using cluster masses, radii, and dynamics",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=J/A%2BA/686/A42",
+   "publisher": "Astronomy & Astrophysics / VizieR (IDIA mirror)",
+   "kind": "catalog",
+   "citation": "Hunt & Reffert 2024, A&A 686, A42",
+   "bibcode": "2024A&A...686A..42H",
+   "license": "CDS terms; cite the paper",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "catalog-extents",
+   "title": "StarHop catalog-extents.json (observing extents)",
+   "url": "https://github.com/mattiaverga/OpenNGC",
+   "publisher": "StarHop Planner",
+   "kind": "catalog",
+   "citation": "client/src/lib/catalog-extents.json (OpenNGC where available, otherwise included observing extents)"
+  },
+  {
+   "id": "bv21",
+   "title": "Accurate distances to Galactic globular clusters through a combination of Gaia EDR3, HST and literature data",
+   "url": "https://people.smp.uq.edu.au/HolgerBaumgardt/globular/",
+   "publisher": "Monthly Notices of the RAS / H. Baumgardt (combined table, version 4, March 2023)",
+   "kind": "catalog",
+   "citation": "Baumgardt & Vasiliev 2021, MNRAS 505, 5957",
+   "bibcode": "2021MNRAS.505.5957B",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "harris2010",
+   "title": "Catalog of Parameters for Milky Way Globular Clusters (2010 edition)",
+   "url": "https://physics.mcmaster.ca/~harris/mwgc.dat",
+   "publisher": "W. E. Harris, McMaster University",
+   "kind": "catalog",
+   "citation": "Harris 1996, AJ 112, 1487 (2010 edition, arXiv:1012.3224)",
+   "bibcode": "1996AJ....112.1487H",
+   "license": "Free to use; cite and refer to the source",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "vandenberg2013",
+   "title": "The Ages of 55 Globular Clusters as Determined Using an Improved ΔV(TO,HB) Method Along with Color-Magnitude Diagram Constraints",
+   "url": "https://arxiv.org/abs/1308.2257",
+   "publisher": "The Astrophysical Journal",
+   "kind": "paper",
+   "citation": "VandenBerg, Brogaard, Leaman & Casagrande 2013, ApJ 775, 134",
+   "bibcode": "2013ApJ...775..134V",
+   "retrieved": "2026-11-01"
+  },
+  {
+   "id": "ying2023",
+   "title": "The Absolute Age of M92",
+   "url": "https://arxiv.org/abs/2306.02180",
+   "publisher": "The Astronomical Journal",
+   "kind": "paper",
+   "citation": "Ying, Chaboyer, Boudreaux et al. 2023, AJ 166, 18",
+   "bibcode": "2023AJ....166...18Y",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "gaia-edr3-simbad",
+   "title": "Gaia EDR3 parallaxes as listed in SIMBAD (Harvard mirror)",
+   "url": "https://simbad.harvard.edu/simbad/sim-tap",
+   "publisher": "ESA Gaia / CDS",
+   "kind": "catalog",
+   "citation": "Gaia Collaboration 2021, A&A 649, A1 (EDR3), via SIMBAD basic.plx_value / mesDistance",
+   "bibcode": "2021A&A...649A...1G",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "zucker2020",
+   "title": "A compendium of distances to molecular clouds in the Star Formation Handbook",
+   "url": "https://ui.adsabs.harvard.edu/abs/2020A%26A...633A..51Z/abstract",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "paper",
+   "citation": "Zucker et al. 2020, A&A 633, A51 (value via SIMBAD mesDistance)",
+   "bibcode": "2020A&A...633A..51Z",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "odell2013",
+   "title": "Studies of NGC 6720 with Calibrated HST WFC3 Emission-Line Filter Images. III. Tangential Motions using AstroDrizzle Images",
+   "url": "https://arxiv.org/abs/1304.5233",
+   "publisher": "The Astronomical Journal",
+   "kind": "paper",
+   "citation": "O'Dell, Ferland, Henney & Peimbert 2013, AJ 145, 170",
+   "bibcode": "2013AJ....145..170O",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "ring-molecular-2025",
+   "title": "The Structure of the Molecular Envelope of the Ring Nebula (NGC 6720)",
+   "url": "https://arxiv.org/abs/2501.12223",
+   "publisher": "arXiv (2025)",
+   "kind": "paper",
+   "citation": "arXiv:2501.12223 (2025): dynamical age ~6000 yr from molecular-line kinematics",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "meaburn2005",
+   "title": "The global kinematics of the Dumbbell planetary nebula (NGC 6853, M27, PN G060.8-03.6)",
+   "url": "https://arxiv.org/abs/astro-ph/0501569",
+   "publisher": "Revista Mexicana de Astronomía y Astrofísica",
+   "kind": "paper",
+   "citation": "Meaburn, Boumis, Christopoulou et al. 2005, Revista Mexicana de Astronomía y Astrofísica (arXiv:astro-ph/0501569)",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "nasa-m27",
+   "title": "Messier 27 (The Dumbbell Nebula) — Hubble Messier Catalog",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-27/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "nasa-m57",
+   "title": "Messier 57 (The Ring Nebula) — Hubble Messier Catalog",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-57/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "nasa-m13",
+   "title": "Messier 13 (The Hercules Cluster) — Hubble Messier Catalog",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-13/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "nasa-m92",
+   "title": "Messier 92 — Hubble Messier Catalog",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-92/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "nasa-m71",
+   "title": "Messier 71 — Hubble Messier Catalog",
+   "url": "https://science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-71/",
+   "publisher": "NASA",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "apod-m13",
+   "title": "APOD 2016 July 27: M13: A Great Globular Cluster of Stars",
+   "url": "https://apod.nasa.gov/apod/ap160727.html",
+   "publisher": "NASA Astronomy Picture of the Day",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "esahubble-m71",
+   "title": "Messier 71: an unusual globular cluster (potw1018a)",
+   "url": "https://esahubble.org/images/potw1018a/",
+   "publisher": "ESA/Hubble",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "esahubble-crescent",
+   "title": "The Crescent Nebula (opo0023a)",
+   "url": "https://esahubble.org/images/opo0023a/",
+   "publisher": "ESA/Hubble",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "zhekov2011",
+   "title": "Suzaku Observations of the Prototype Wind-Blown Bubble NGC 6888",
+   "url": "https://arxiv.org/abs/1012.3917",
+   "publisher": "The Astrophysical Journal",
+   "kind": "paper",
+   "citation": "Zhekov & Park 2011, The Astrophysical Journal (arXiv:1012.3917)",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "fesen2021",
+   "title": "An Updated Distance to the Cygnus Loop based on Gaia Early DR3",
+   "url": "https://arxiv.org/abs/2109.05368",
+   "publisher": "Monthly Notices of the Royal Astronomical Society",
+   "kind": "paper",
+   "citation": "Fesen, Weil, Cisneros, Blair & Raymond 2021, MNRAS 507, 244",
+   "bibcode": "2021MNRAS.507..244F",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "ritchey2024",
+   "title": "A refined search for high-velocity gas in the Cygnus Loop supernova remnant",
+   "url": "https://arxiv.org/abs/2401.00960",
+   "publisher": "arXiv (submitted to MNRAS)",
+   "kind": "paper",
+   "citation": "Ritchey, Federman & Lambert 2024, arXiv:2401.00960",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "baa-veil",
+   "title": "Visibility of the Veil Nebula",
+   "url": "https://britastro.org/node/4929",
+   "publisher": "British Astronomical Association",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "fang2020",
+   "title": "The First Extensive Spectroscopic Study of Young Stars in the North America and Pelican Nebulae Region",
+   "url": "https://arxiv.org/abs/2009.11995",
+   "publisher": "The Astrophysical Journal",
+   "kind": "paper",
+   "citation": "Fang, Hillenbrand, Kim et al. 2020, The Astrophysical Journal (arXiv:2009.11995)",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "kuhn2020nap",
+   "title": "Distance and Tangential Velocity of the Main Ionizing Star in the North America/Pelican Nebulae with Gaia EDR3",
+   "url": "https://arxiv.org/abs/2012.05074",
+   "publisher": "Research Notes of the AAS",
+   "kind": "paper",
+   "citation": "Kuhn & Hillenbrand 2020, Research Notes of the AAS (arXiv:2012.05074)",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "comeron2005",
+   "title": "The ionizing star of the North America and Pelican nebulae",
+   "url": "https://ui.adsabs.harvard.edu/abs/2005A%26A...430..541C/abstract",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "paper",
+   "citation": "Comerón & Pasquali 2005, A&A 430, 541",
+   "bibcode": "2005A&A...430..541C",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "villafranca2020",
+   "title": "The Villafranca catalog of Galactic OB groups: I. Systems with O2-O3.5 stars",
+   "url": "https://arxiv.org/abs/2009.05773",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "paper",
+   "citation": "Maíz Apellániz et al. 2020, Astronomy & Astrophysics (arXiv:2009.05773)",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "straizys2014",
+   "title": "The Enigma of the Open Cluster M29 (NGC 6913) Solved",
+   "url": "https://arxiv.org/abs/1407.6291",
+   "publisher": "The Astronomical Journal",
+   "kind": "paper",
+   "citation": "Straižys, Milašius, Boyle et al. 2014, The Astronomical Journal (arXiv:1407.6291)",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "green2015dust",
+   "title": "A Three-Dimensional Map of Milky-Way Dust",
+   "url": "https://arxiv.org/abs/1507.01005",
+   "publisher": "The Astrophysical Journal",
+   "kind": "paper",
+   "citation": "Green, Schlafly, Finkbeiner et al. 2015, ApJ 810, 25",
+   "bibcode": "2015ApJ...810...25G",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "barnard1927",
+   "title": "Catalogue of 349 dark objects in the sky (Barnard 1927), VizieR VII/220A",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=VII/220A",
+   "publisher": "University of Chicago Press / VizieR (IDIA mirror)",
+   "kind": "catalog",
+   "citation": "Barnard 1927, Photographic Atlas of Selected Regions of the Milky Way; VizieR VII/220A",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "lynds1962",
+   "title": "Catalogue of Dark Nebulae (Lynds 1962), VizieR VII/7A",
+   "url": "https://vizier.idia.ac.za/viz-bin/VizieR?-source=VII/7A",
+   "publisher": "ApJS / VizieR (IDIA mirror)",
+   "kind": "catalog",
+   "citation": "Lynds 1962, ApJS 7, 1",
+   "bibcode": "1962ApJS....7....1L",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "astronomy-barnardE",
+   "title": "101 must-see cosmic objects: Barnard's E",
+   "url": "https://www.astronomy.com/observing/101-must-see-cosmic-objects-barnards-e/",
+   "publisher": "Astronomy Magazine",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "baumgardt1998",
+   "title": "The nature of some doubtful open clusters as revealed by HIPPARCOS",
+   "url": "https://ui.adsabs.harvard.edu/abs/1998A%26A...340..402B/abstract",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "paper",
+   "citation": "Baumgardt 1998, A&A 340, 402",
+   "bibcode": "1998A&A...340..402B",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "jeffries2023",
+   "title": "A revised age greater than 50 Myr for the young cluster IC 4665",
+   "url": "https://arxiv.org/abs/2309.07619",
+   "publisher": "Monthly Notices of the Royal Astronomical Society",
+   "kind": "paper",
+   "citation": "Jeffries, Jackson, Binks et al. 2023, MNRAS 526, 1260",
+   "bibcode": "2023MNRAS.526.1260J",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "manzi2008",
+   "title": "The lithium depletion boundary of IC 4665",
+   "url": "https://arxiv.org/abs/0712.0226",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "paper",
+   "citation": "Manzi, Randich, de Wit & Palla 2008, A&A 479, 141",
+   "bibcode": "2008A&A...479..141M",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "brogaard2025",
+   "title": "Attempting an accurate age estimate of the open cluster NGC 6633 using CoRoT and Gaia",
+   "url": "https://arxiv.org/abs/2508.19767",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "paper",
+   "citation": "Brogaard, Miglio, Arentoft et al. 2025, A&A 702, A265",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "jeffries2002",
+   "title": "Membership, metallicity and lithium abundances for solar-type stars in NGC 6633",
+   "url": "https://arxiv.org/abs/astro-ph/0206367",
+   "publisher": "Monthly Notices of the Royal Astronomical Society",
+   "kind": "paper",
+   "citation": "Jeffries, Totten, Harmer & Deliyannis 2002, MNRAS 336, 1109",
+   "bibcode": "2002MNRAS.336.1109J",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "brewer2016",
+   "title": "Determining the Age of the Kepler Open Cluster NGC 6819 With a New Triple System and Other Eclipsing Binary Stars",
+   "url": "https://arxiv.org/abs/1601.04069",
+   "publisher": "The Astronomical Journal",
+   "kind": "paper",
+   "citation": "Brewer, Sandquist, Mathieu et al. 2016, AJ 151, 66",
+   "bibcode": "2016AJ....151...66B",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "alonso2024",
+   "title": "High-resolution spectroscopy of the young open cluster M 39 (NGC 7092)",
+   "url": "https://arxiv.org/abs/2312.08581",
+   "publisher": "Astronomy & Astrophysics",
+   "kind": "paper",
+   "citation": "Alonso-Santiago, Frasca, Catanzaro et al. 2024, Astronomy & Astrophysics (arXiv:2312.08581)",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "mirabel2003",
+   "title": "Formation of a Black Hole in the Dark",
+   "url": "https://arxiv.org/abs/astro-ph/0305205",
+   "publisher": "Science",
+   "kind": "paper",
+   "citation": "Mirabel & Rodrigues 2003, Science 300, 1119",
+   "bibcode": "2003Sci...300.1119M",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "apod-cygx1",
+   "title": "APOD 2003 June 12: Black Hole Formation in the Dark",
+   "url": "https://apod.nasa.gov/apod/ap030612.html",
+   "publisher": "NASA Astronomy Picture of the Day",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "massey1995",
+   "title": "The Initial Mass Function and Massive Star Evolution in the OB Associations of the Northern Milky Way",
+   "url": "https://ui.adsabs.harvard.edu/abs/1995ApJ...454..151M/abstract",
+   "publisher": "The Astrophysical Journal",
+   "kind": "paper",
+   "citation": "Massey, Johnson & DeGioia-Eastwood 1995, The Astrophysical Journal",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "al-binocular-messier",
+   "title": "Binocular Messier Observing Program, Appendix A",
+   "url": "https://www.astroleague.org/binocular-messier-observing-program-appendix-a/",
+   "publisher": "Astronomical League",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "al-binocular-deepsky",
+   "title": "Binocular Deep Sky Observing Program list",
+   "url": "https://www.astroleague.org/wp-content/uploads/2023/06/BINODSKY_LIST.pdf",
+   "publisher": "Astronomical League",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "vds-sketches",
+   "title": "Project Deep-Sky with Binoculars: sketches",
+   "url": "https://deepsky.vdsastro.de/en/project-deep-sky-with-binoculars.php?list=sketches",
+   "publisher": "Vereinigung der Sternfreunde (VdS) Fachgruppe Deep Sky",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "harrington-coathanger",
+   "title": "Binocular Universe: The Coathanger",
+   "url": "https://www.cloudynights.com/articles/cat/column/binocular-universe/binocular-universe-the-coathanger-r1954/",
+   "publisher": "Cloudy Nights (Phil Harrington)",
+   "kind": "web",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "wiki-m13-donatiello",
+   "title": "Messier 13 – The Hercules Globular Cluster (photo)",
+   "url": "https://commons.wikimedia.org/wiki/File:Messier_13_-_The_Hercules_Globular_Cluster.jpg",
+   "publisher": "Giuseppe Donatiello / Wikimedia Commons",
+   "kind": "image",
+   "license": "CC0",
+   "retrieved": "2026-11-02"
+  },
+  {
+   "id": "eso-m27",
+   "title": "M27 – Dumbbell Nebula (ESO FORS1 composite)",
+   "url": "https://commons.wikimedia.org/wiki/File:M27_-_Dumbbell_Nebula.jpg",
+   "publisher": "ESO / Wikimedia Commons",
+   "kind": "image",
+   "license": "CC BY 4.0",
+   "retrieved": "2026-11-02"
+  }
+ ],
+ "objects": [
+  {
+   "id": "M13",
+   "kind": "dso",
+   "names": {
+    "display": "Great Hercules Globular Cluster",
+    "designation": "M13",
+    "aliases": [
+     "NGC 6205",
+     "Hercules Cluster",
+     "M 13"
+    ],
+    "simbadId": "M  13"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 24201,
+     "min": 23940,
+     "max": 24462,
+     "unit": "ly",
+     "sourceId": "bv21",
+     "method": "measured",
+     "note": "7.42 ± 0.08 kpc (Gaia EDR3 + HST + literature)"
+    },
+    "ageMyr": {
+     "value": 12000,
+     "min": 11620,
+     "max": 12380,
+     "unit": "Myr",
+     "sourceId": "vandenberg2013",
+     "method": "model",
+     "note": "12.00 ± 0.38 Gyr (fit only; distance/abundance systematics add ~±1.5 Gyr)"
+    },
+    "massMsun": {
+     "value": 484000,
+     "min": 477590,
+     "max": 490410,
+     "unit": "Msun",
+     "sourceId": "bv21",
+     "method": "model",
+     "note": "4.84e5 ± 6.4e3 M☉ (N-body fit)"
+    },
+    "feH": {
+     "value": -1.53,
+     "unit": "dex",
+     "sourceId": "harris2010",
+     "method": "catalog"
+    },
+    "angularSizeArcmin": {
+     "value": 16.6,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 117,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "16.6′ observing extent at 7.42 kpc (Baumgardt & Vasiliev 2021)"
+    }
+   },
+   "dsoClass": "globular-cluster",
+   "traits": [
+    "contains-red-giants"
+   ],
+   "extent": {
+    "majorArcmin": 16.6,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "bv21"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 3,
+     "dark": 4
+    },
+    "10x50": {
+     "suburban": 3,
+     "dark": 4
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 4,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "MW.halo",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 1
+    },
+    {
+     "conceptId": "TIME.lookback",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "globular"
+   ],
+   "wow": 4,
+   "insight": 4,
+   "obsDifficulty": 2,
+   "superlatives": [
+    {
+     "claim": "the brightest globular cluster in the far-northern sky",
+     "scope": "globular clusters north of declination +30°",
+     "sourceId": "harris2010",
+     "tag": "brightest-globular-north"
+    }
+   ],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "In 1974 the Arecibo radio telescope beamed a coded message about humanity toward this cluster.",
+    "sourceId": "apod-m13"
+   },
+   "showpiece": true,
+   "interest": 0.95,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M13-primary.jpg",
+      "credit": "Giuseppe Donatiello",
+      "license": "CC0",
+      "caption": "Telescope photograph: thousands of resolved stars. Binoculars show only the soft central glow.",
+      "variant": "featured",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Messier_13_-_The_Hercules_Globular_Cluster.jpg"
+     },
+     {
+      "src": "data/binocular-images/M13-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view: the cool red giants dominate the light.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "distance-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "What does a city of half a million ancient stars look like from here?",
+    "glance": "A small, round, soft glow on the west side of the Hercules Keystone, brighter toward its middle.",
+    "whyHere": "Most stars live in the Milky Way's flat disk, but its oldest families orbit in a vast halo around it, and the Great Hercules Cluster is the grandest of them in northern skies.",
+    "see": "Find the four-star Keystone of Hercules. About a third of the way from η to ζ Herculis sits a fuzzy ball that is clearly not a star, brightening toward its center; beside a star of similar brightness, one is a point and the other a cloud.",
+    "understand": "A globular cluster is a tight ball of stars born together when the Milky Way was young. The Great Hercules Cluster packs roughly half a million Suns' worth of them into about 120 light-years, a space that around the Sun holds only a few thousand stars. Its stars are poor in iron and the other heavy elements, so they must have formed before many generations of stars had lived and died.",
+    "wonder": "In 1974 the Arecibo radio telescope beamed a message about humanity toward the Great Hercules Cluster, and it will need roughly 24,000 years to arrive.",
+    "connect": "M92, Hercules's second globular, looks smaller but is even older and poorer in heavy elements.",
+    "answer": "From here it is a soft, round glow, yet it holds about half a million stars some 12 billion years old. On a planet near its core, the night sky would be crowded with stars far brighter than any we see.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age of its stars",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Mass",
+      "factRef": "massMsun"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "The photo resolves thousands of stars with a telescope; in binoculars expect an unresolved, round glow.",
+    "notSee": "No individual stars and no color: the cluster stays a smooth haze at 10×.",
+    "deeper": "Baumgardt & Vasiliev (2021) combined Gaia EDR3 parallaxes with HST and literature distances: 7.42 ± 0.08 kpc and a mass of about 4.8 × 10⁵ solar masses. VandenBerg et al. (2013) fitted turnoff isochrones for 12.0 ± 0.4 Gyr; that error covers the fit only, and distance and composition add more than a billion years either way. Harris (2010) lists [Fe/H] = −1.53, about 1/30 of the Sun’s iron fraction. Edmond Halley recorded the cluster in 1714 (NASA). The 1974 Arecibo message was a symbolic demonstration rather than a serious attempt at contact.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "bv21",
+    "vandenberg2013",
+    "harris2010",
+    "catalog-extents",
+    "apod-m13",
+    "nasa-m13",
+    "wiki-m13-donatiello",
+    "al-binocular-messier"
+   ],
+   "con": "Her",
+   "ra": 250.425,
+   "dec": 36.46667,
+   "mag": 5.8,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "M92",
+   "kind": "dso",
+   "names": {
+    "display": "M92",
+    "designation": "M92",
+    "aliases": [
+     "NGC 6341",
+     "M 92"
+    ],
+    "simbadId": "M  92"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 27723,
+     "min": 27495,
+     "max": 27952,
+     "unit": "ly",
+     "sourceId": "bv21",
+     "method": "measured",
+     "note": "8.50 ± 0.07 kpc"
+    },
+    "ageMyr": {
+     "value": 13800,
+     "min": 13050,
+     "max": 14550,
+     "unit": "Myr",
+     "sourceId": "ying2023",
+     "method": "model",
+     "note": "13.80 ± 0.75 Gyr (Monte Carlo isochrones); VandenBerg+2013: 12.75 ± 0.25 Gyr"
+    },
+    "massMsun": {
+     "value": 273000,
+     "min": 268260,
+     "max": 277740,
+     "unit": "Msun",
+     "sourceId": "bv21",
+     "method": "model",
+     "note": "2.73e5 ± 4.7e3 M☉"
+    },
+    "feH": {
+     "value": -2.31,
+     "unit": "dex",
+     "sourceId": "harris2010",
+     "method": "catalog"
+    },
+    "angularSizeArcmin": {
+     "value": 11.2,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 90,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "11.2′ observing extent at 8.50 kpc"
+    }
+   },
+   "dsoClass": "globular-cluster",
+   "traits": [
+    "contains-red-giants"
+   ],
+   "extent": {
+    "majorArcmin": 11.2,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "bv21"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "10x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 4,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "MW.halo",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 2
+    },
+    {
+     "conceptId": "TIME.lookback",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "globular"
+   ],
+   "wow": 3,
+   "insight": 5,
+   "obsDifficulty": 3,
+   "superlatives": [
+    {
+     "claim": "among the oldest star clusters known in the Milky Way",
+     "scope": "Milky Way globular clusters with precise ages",
+     "sourceId": "ying2023",
+     "tag": "oldest"
+    }
+   ],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "Johann Bode found it in 1777, and Charles Messier added it to his list a few years later.",
+    "sourceId": "nasa-m92"
+   },
+   "showpiece": false,
+   "interest": 0.85,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M92-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of M92: a compact core in a sparse field. Binoculars show a small soft glow.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M92-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view of the same field.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Just how old can a cluster of stars be?",
+    "glance": "A smaller, more concentrated glow than the Great Hercules Cluster, north of the Hercules Keystone in a sparse patch of sky.",
+    "whyHere": "If the Great Hercules Cluster is the grand old city of Hercules, M92 is the older village nearby, among the most ancient star families known anywhere in the Milky Way.",
+    "see": "From π Herculis, the Keystone's north-east corner, go about 6° north, a little over one binocular field. M92 looks like a smaller, fainter Great Hercules Cluster with an almost starlike center, so flip back and forth between the two and compare their size and brightness.",
+    "understand": "Iron and the other heavy elements are made inside stars and scattered when they die, so a star's share of them is a family history, and M92's stars hold only about 1/200 of the Sun's share. The age comes from the turnoff, the point where a cluster's stars begin to leave their steady middle age: the dimmer that point, the older the cluster. A 2023 study tested it against thousands of variations of the stellar models.",
+    "wonder": "When the Sun formed, these stars were already about 9 billion years old.",
+    "connect": "The heavy elements M92 lacks were forged later, in stars that lived and died, like the dying star of the Ring Nebula.",
+    "answer": "About as old as the Universe allows: roughly 13.8 billion years, give or take three quarters of a billion. Their nearly pristine gas is a sample of the Galaxy as it was before most stars had lived.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age of its stars",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Heavy elements (log, Sun = 0)",
+      "factRef": "feH"
+     },
+     {
+      "label": "Mass",
+      "factRef": "massMsun"
+     }
+    ],
+    "photoCaption": "The survey photo shows a dense core; binoculars show a small, unresolved, fuzzy ball.",
+    "notSee": "Its individual stars need a telescope of 15 cm or more.",
+    "deeper": "Ying et al. (2023) ran 20,000 Monte Carlo sets of stellar-model isochrones and found 13.80 ± 0.75 Gyr; about 80% of the error comes from the distance. VandenBerg et al. (2013), with a different method, found 12.75 ± 0.25 Gyr, so “among the very oldest” is the safe phrasing. Baumgardt & Vasiliev (2021): 8.50 ± 0.07 kpc and 2.7 × 10⁵ solar masses. Harris (2010): [Fe/H] = −2.31, against −1.53 for M13.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "bv21",
+    "ying2023",
+    "vandenberg2013",
+    "harris2010",
+    "catalog-extents",
+    "nasa-m92"
+   ],
+   "con": "Her",
+   "ra": 259.275,
+   "dec": 43.13333,
+   "mag": 6.4,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "IC4665",
+   "kind": "dso",
+   "names": {
+    "display": "IC 4665",
+    "designation": "IC 4665",
+    "aliases": [
+     "Summer Beehive",
+     "Collinder 349",
+     "Melotte 179"
+    ],
+    "simbadId": "Cl IC 4665"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 1120,
+     "min": 1119,
+     "max": 1121,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "343.3 pc, Gaia DR3 cluster parallax (statistical range only)"
+    },
+    "ageMyr": {
+     "value": 55,
+     "min": 28,
+     "max": 60,
+     "unit": "Myr",
+     "sourceId": "jeffries2023",
+     "method": "literature",
+     "note": "Jeffries+2023: >50 Myr, bracketed by IC 2602/IC 2391 (~55 Myr); Manzi+2008 LDB 28–32 Myr now a lower limit; HR24 NN 33 Myr (18–53)"
+    },
+    "memberCount": {
+     "value": 308,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members (HDBSCAN), not all stars"
+    },
+    "massMsun": {
+     "value": 279,
+     "unit": "Msun",
+     "sourceId": "hr24",
+     "method": "model",
+     "note": "HR24 MassTot"
+    },
+    "angularSizeArcmin": {
+     "value": 41,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 13,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "41′ observing extent at 343 pc"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "traits": [
+    "naked-eye"
+   ],
+   "extent": {
+    "majorArcmin": 41,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 3,
+     "dark": 4
+    },
+    "10x50": {
+     "suburban": 3,
+     "dark": 4
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "vds-sketches"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "high",
+    "resolves": "stars",
+    "bestFieldDeg": 3,
+    "colorVisible": false
+   },
+   "evoStage": 2,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.cluster-birth",
+     "strength": 3
+    },
+    {
+     "conceptId": "PERC.binoculars",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 2
+    }
+   ],
+   "roles": [
+    "young-cluster"
+   ],
+   "wow": 3,
+   "insight": 3,
+   "obsDifficulty": 2,
+   "superlatives": [],
+   "misconceptions": [],
+   "showpiece": true,
+   "interest": 0.7,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/IC4665-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of IC 4665: a loose scatter of blue-white stars.",
+      "fieldDeg": 1.37,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/IC4665-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view of the same field.",
+      "fieldDeg": 1.37,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "How do astronomers know that a family of stars is young?",
+    "glance": "A loose scatter of a few dozen white stars just north-east of Cebalrai in Ophiuchus, wider than the full Moon.",
+    "whyHere": "Star clusters are families born together, and comparing families of different ages is how we watch stars grow up; IC 4665 is one of the youngest you can see member by member.",
+    "see": "Center Cebalrai (β Ophiuchi), the orange star at Ophiuchus's shoulder, and move about a degree north-east. A ragged group of white stars fills a patch wider than the full Moon; count the brighter members at low power, then hunt for fainter ones by looking slightly to one side.",
+    "understand": "This is an open cluster, a loose family of stars born together from one cloud and still traveling as a group. Its brightest members are hot blue-white stars that burn out within a few hundred million years, so the family must be young. For a sharper age astronomers use lithium, a fragile element that small stars slowly destroy: find the faintest stars that have already burned theirs, and you have a clock.",
+    "wonder": "When these stars began to shine, the dinosaurs were already gone.",
+    "connect": "NGC 6633, about 10° east, sits at nearly the same distance but is roughly ten times older.",
+    "answer": "Hot blue-white stars that should burn out quickly are still shining, and the lithium clock narrows the age to somewhere between 30 and 60 million years, with a 2023 reanalysis favoring the older end.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members (Gaia)",
+      "factRef": "memberCount"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "Survey photos show the same loose spray of stars you see in binoculars, plus many fainter members.",
+    "deeper": "Hunt & Reffert (2024) find about 300 Gaia DR3 members at 343 pc. Manzi et al. (2008) located the lithium depletion boundary (the faintest stars that have already burned their lithium) at an age near 28–32 Myr. Jeffries et al. (2023) reanalysed those spectra, argued that the boundary was not cleanly detected and placed IC 4665 at more than 50 Myr, between IC 2602 and IC 2391 (~55 Myr). The neural-network isochrone age in Hunt & Reffert is 33 Myr (18–53).",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "hr24",
+    "jeffries2023",
+    "manzi2008",
+    "catalog-extents",
+    "vds-sketches"
+   ],
+   "con": "Oph",
+   "ra": 266.575,
+   "dec": 5.71667,
+   "mag": 4.2,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC6633",
+   "kind": "dso",
+   "names": {
+    "display": "NGC 6633",
+    "designation": "NGC 6633",
+    "aliases": [
+     "Collinder 380",
+     "Melotte 201"
+    ],
+    "simbadId": "NGC  6633"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 1270,
+     "min": 1270,
+     "max": 1271,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "389.5 pc, Gaia DR3 cluster parallax (statistical range only)"
+    },
+    "ageMyr": {
+     "value": 550,
+     "min": 450,
+     "max": 600,
+     "unit": "Myr",
+     "sourceId": "brogaard2025",
+     "method": "model",
+     "note": "0.55 (+0.05/−0.10) Gyr from CoRoT giants + Gaia; HR24 NN 472 Myr (301–799)"
+    },
+    "memberCount": {
+     "value": 515,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members"
+    },
+    "massMsun": {
+     "value": 645,
+     "unit": "Msun",
+     "sourceId": "hr24",
+     "method": "model",
+     "note": "HR24 MassTot"
+    },
+    "angularSizeArcmin": {
+     "value": 27,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 10.0,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "27′ observing extent at 390 pc"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "traits": [
+    "contains-red-giants"
+   ],
+   "extent": {
+    "majorArcmin": 27,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 3,
+     "dark": 4
+    },
+    "10x50": {
+     "suburban": 3,
+     "dark": 4
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "high",
+    "resolves": "stars",
+    "bestFieldDeg": 2.5,
+    "colorVisible": false
+   },
+   "evoStage": 3,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 3
+    },
+    {
+     "conceptId": "STAR.mass-fate",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.cluster-birth",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "adult-cluster"
+   ],
+   "wow": 3,
+   "insight": 3,
+   "obsDifficulty": 2,
+   "superlatives": [],
+   "misconceptions": [
+    "MC13"
+   ],
+   "showpiece": true,
+   "interest": 0.6,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC6633-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of NGC 6633 against the Ophiuchus Milky Way.",
+      "fieldDeg": 0.9,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/NGC6633-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view: its few red giants stand out.",
+      "fieldDeg": 0.9,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "How can you read a star cluster's age from its brightest stars?",
+    "glance": "A long, loose spray of stars in a rich Milky Way field in Ophiuchus, easy in any binoculars.",
+    "whyHere": "IC 4665 and NGC 6633 sit at almost the same distance, so comparing them shows age alone at work, and this family is about ten times older.",
+    "see": "From IC 4665, sweep about 10° due east to an elongated scatter about the width of the full Moon against a dense star background. Pick out its brightest members, then swing back to IC 4665: similar size, similar distance, different age.",
+    "understand": "Heavy, hot, blue stars burn their fuel fastest, so a cluster's brightest surviving stars are a clock. In NGC 6633 the hottest stars are long gone, and its brightest members are white stars and a few yellow-orange giants that have begun to swell. The CoRoT satellite caught three of those giants ringing like bells, and their tones pinned down their masses and the cluster's age.",
+    "wonder": "These stars were born around the time the first animals with hard shells appeared in Earth's oceans.",
+    "connect": "Star families drift apart as they age; the oldest surviving ones are the globular clusters of the halo.",
+    "answer": "Find the heaviest stars still in their steady phase and you know how long the cluster has been burning. In NGC 6633 that clock reads about 550 million years.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members (Gaia)",
+      "factRef": "memberCount"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "The survey photo records hundreds of faint members; binoculars show a few dozen.",
+    "deeper": "Hunt & Reffert (2024): 390 pc, about 500 Gaia DR3 members and about 650 solar masses. Brogaard et al. (2025) combined CoRoT oscillation measurements of three red-giant members with Gaia photometry for 0.55 (+0.05/−0.10) Gyr; Hunt & Reffert’s neural-network age is 0.47 Gyr (0.30–0.80). Jeffries et al. (2002) found its lithium pattern almost identical to the Hyades and Praesepe despite slightly lower metallicity, which makes it a useful twin of those clusters.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "hr24",
+    "brogaard2025",
+    "jeffries2002",
+    "catalog-extents"
+   ],
+   "con": "Oph",
+   "ra": 276.925,
+   "dec": 6.56667,
+   "mag": 4.6,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "M57",
+   "kind": "dso",
+   "names": {
+    "display": "Ring Nebula",
+    "designation": "M57",
+    "aliases": [
+     "NGC 6720",
+     "M 57"
+    ],
+    "simbadId": "M  57"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 2569,
+     "min": 2480,
+     "max": 2658,
+     "unit": "ly",
+     "sourceId": "gaia-edr3-simbad",
+     "method": "measured",
+     "note": "central star Gaia EDR3: 787.7 ± 27.2 pc"
+    },
+    "ageMyr": {
+     "value": 0.004,
+     "min": 0.004,
+     "max": 0.006,
+     "unit": "Myr",
+     "sourceId": "odell2013",
+     "method": "measured",
+     "note": "~4,000 yr from HST proper motions (O'Dell+2013); ~6,000 yr from molecular kinematics (arXiv:2501.12223)"
+    },
+    "angularSizeArcmin": {
+     "value": 1.27,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog",
+     "note": "OpenNGC NGC6720"
+    },
+    "sizeLy": {
+     "value": 0.9,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "1.27′ at 788 pc (Gaia EDR3 central star)"
+    }
+   },
+   "dsoClass": "planetary-nebula",
+   "traits": [
+    "contains-white-dwarfs"
+   ],
+   "extent": {
+    "majorArcmin": 1.27,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "central-star-uv",
+    "sourceIds": [
+     "nasa-m57",
+     "odell2013"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 1
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 6,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.pn-wd",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 2
+    },
+    {
+     "conceptId": "STAR.mass-fate",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "pn",
+    "wd"
+   ],
+   "wow": 2,
+   "insight": 5,
+   "obsDifficulty": 4,
+   "superlatives": [],
+   "misconceptions": [
+    "MC8",
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "Antoine Darquier found it in 1779 and compared it to a fading planet.",
+    "sourceId": "nasa-m57"
+   },
+   "showpiece": false,
+   "interest": 0.8,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M57-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the M57 field; the ring is tiny even here.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "size-comparison"
+     },
+     {
+      "type": "distance-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "How will a star like the Sun end its life?",
+    "glance": "At 10× almost a star: a tiny, slightly soft dot between the two bottom stars of Lyra.",
+    "whyHere": "Stars like the Sun do not explode; they end with a gentler exhalation, and the Ring Nebula is the textbook picture of that last breath.",
+    "see": "Find Lyra's small parallelogram below Vega. The Ring Nebula lies between its two bottom stars, Sheliak and Sulafat, a little closer to Sheliak; in 10×50 binoculars it is a faint star that refuses to focus to a sharp point, so brace them and compare it with true stars nearby.",
+    "understand": "When a Sun-like star runs out of fuel it swells into a giant and lets its outer layers drift away, and its exposed hot core makes that gas glow. The shell is called a planetary nebula, an old name from small telescopes that showed a planet-like disk; planets have nothing to do with it. Comparing Hubble images taken 13 years apart, astronomers measured the gas moving outward and worked back to when it left: only about 4,000 years ago.",
+    "wonder": "The Ring is about a light-year across, so light itself needs a year to cross this tiny smudge.",
+    "connect": "The Dumbbell in Vulpecula shows the same ending bigger, nearer and much easier.",
+    "answer": "It will puff off its outer layers into a glowing shell like the Ring and leave its bare core to cool slowly into an Earth-sized white dwarf, a brief flash at the end of a ten-billion-year life.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age of the shell",
+      "factRef": "ageMyr"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "Telescope and space images show a colored ring; binoculars show at most a starlike dot.",
+    "notSee": "No ring, no color and no central star in binoculars.",
+    "deeper": "Gaia EDR3 places the central star at 788 ± 27 pc (via SIMBAD). O'Dell et al. (2013) measured how features moved between Hubble images taken 13 years apart and derived a dynamical age of about 4,000 years; a 2025 molecular-line study argues for about 6,000 years. NASA's Hubble team describes a football-shaped inner region seen end-on, surrounded by a doughnut-shaped ring.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "gaia-edr3-simbad",
+    "odell2013",
+    "ring-molecular-2025",
+    "catalog-extents",
+    "nasa-m57"
+   ],
+   "con": "Lyr",
+   "ra": 283.4,
+   "dec": 33.03333,
+   "mag": 8.8,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "M27",
+   "kind": "dso",
+   "names": {
+    "display": "Dumbbell Nebula",
+    "designation": "M27",
+    "aliases": [
+     "NGC 6853",
+     "Apple Core Nebula",
+     "M 27"
+    ],
+    "simbadId": "M  27"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 1269,
+     "min": 1251,
+     "max": 1288,
+     "unit": "ly",
+     "sourceId": "gaia-edr3-simbad",
+     "method": "measured",
+     "note": "central star Gaia EDR3: 389.1 ± 5.6 pc; Gaia DR2 376 pc"
+    },
+    "ageMyr": {
+     "value": 0.011,
+     "min": 0.0095,
+     "max": 0.012,
+     "unit": "Myr",
+     "sourceId": "meaburn2005",
+     "method": "derived",
+     "note": "radius 3.35′ at 389 pc (0.38 pc) ÷ 31–35 km/s outer-shell expansion (Meaburn+2005) ≈ 10,500–12,000 yr; non-uniform expansion makes this rough"
+    },
+    "angularSizeArcmin": {
+     "value": 6.7,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog",
+     "note": "OpenNGC NGC6853"
+    },
+    "sizeLy": {
+     "value": 2.5,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "6.7′ at 389 pc (Gaia EDR3)"
+    }
+   },
+   "dsoClass": "planetary-nebula",
+   "traits": [
+    "contains-white-dwarfs"
+   ],
+   "extent": {
+    "majorArcmin": 6.7,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "central-star-uv",
+    "sourceIds": [
+     "nasa-m27"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "10x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false,
+    "filterHelps": "OIII"
+   },
+   "evoStage": 6,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.pn-wd",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 2
+    },
+    {
+     "conceptId": "PERC.night-eyes",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "pn",
+    "wd"
+   ],
+   "wow": 3,
+   "insight": 5,
+   "obsDifficulty": 3,
+   "superlatives": [
+    {
+     "claim": "the first planetary nebula ever discovered",
+     "scope": "all planetary nebulae (Messier, 1764)",
+     "sourceId": "nasa-m27",
+     "tag": "first-discovered"
+    }
+   ],
+   "misconceptions": [
+    "MC8",
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "Charles Messier logged it in 1764: the first planetary nebula anyone discovered.",
+    "sourceId": "nasa-m27"
+   },
+   "showpiece": true,
+   "interest": 0.95,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M27-primary.jpg",
+      "credit": "ESO / I. Appenzeller, W. Seifert, O. Stahl, M. Zamani",
+      "license": "CC BY 4.0",
+      "caption": "Large-telescope composite: colors and the full hourglass the eye cannot see in binoculars.",
+      "variant": "featured",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:M27_-_Dumbbell_Nebula.jpg"
+     },
+     {
+      "src": "data/binocular-images/M27-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view of the Dumbbell field.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "size-comparison"
+     },
+     {
+      "type": "distance-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "Where is the easiest place to see how a Sun-like star dies?",
+    "glance": "A small gray patch, clearly larger than any star, sometimes with a hint of a pinched apple-core shape.",
+    "whyHere": "Most dying stars are too small or faint for binoculars, but the Dumbbell is close and large enough that you can see the shape of one star's last breath.",
+    "see": "Find the little arrow of Sagitta below Albireo, then move about 3° north of its tip star, γ Sagittae, into Vulpecula. The Dumbbell is a small, faint gray smudge; brace the binoculars and look slightly to one side, and on a dark night it turns squarish or hourglass-shaped.",
+    "understand": "A star once like the Sun swelled into a giant and let its outer layers drift away, and its bare, extremely hot core now makes that gas glow like a neon sign. The outer shells are expanding at about 30 kilometers per second, and dividing the shell's size by that speed gives an age of roughly ten thousand years. Within tens of thousands more the gas will fade into space, carrying elements made inside the star.",
+    "wonder": "Its outer gas moves fast enough to cross the United States in under three minutes, yet from here the shape will look unchanged for your whole lifetime.",
+    "connect": "Heavier stars go out violently; the Veil in Cygnus is the wreck of such an explosion.",
+    "answer": "The Dumbbell may be the best place of all: a Sun-like star's shed layers, lit by its bare core and close enough, about 1,270 light-years, to show their shape in binoculars.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age of the shell",
+      "factRef": "ageMyr"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "The large-telescope photo records color and faint outer lobes; binoculars show a small gray patch.",
+    "notSee": "No color, no knots, and the central star is beyond binoculars.",
+    "deeper": "Gaia EDR3 measures the central star at 389 ± 6 pc (via SIMBAD). Meaburn et al. (2005) found expansion speeds from ≤7 km/s in the core to 31–35 km/s in the outer shells; dividing the visible radius (about 0.38 pc) by those outer speeds gives a kinematic age near 10,000–12,000 years, a rough figure because the shells do not expand uniformly. Hubble images show dense knots with tails pointing away from the central star (NASA).",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "gaia-edr3-simbad",
+    "meaburn2005",
+    "catalog-extents",
+    "nasa-m27",
+    "eso-m27",
+    "al-binocular-messier"
+   ],
+   "con": "Vul",
+   "ra": 299.9,
+   "dec": 22.71667,
+   "mag": 7.4,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC6960",
+   "kind": "dso",
+   "names": {
+    "display": "West Veil Nebula",
+    "designation": "NGC 6960",
+    "aliases": [
+     "Witch's Broom",
+     "Western Veil",
+     "Cygnus Loop (west)",
+     "Caldwell 34"
+    ],
+    "simbadId": "NGC  6960"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 2365,
+     "min": 2316,
+     "max": 2414,
+     "unit": "ly",
+     "sourceId": "fesen2021",
+     "method": "measured",
+     "note": "725 ± 15 pc from Gaia EDR3 parallaxes of stars with high-velocity absorption; Ritchey+2024 put a far-side star at ~870 pc, so a larger distance is possible"
+    },
+    "ageMyr": {
+     "value": 0.02,
+     "min": 0.01,
+     "max": 0.021,
+     "unit": "Myr",
+     "sourceId": "fesen2021",
+     "method": "literature",
+     "note": "commonly quoted 1–2 × 10⁴ yr (middle-aged remnant); NASA outreach uses ~10,000 yr"
+    },
+    "sizeLy": {
+     "value": 117,
+     "unit": "ly",
+     "sourceId": "fesen2021",
+     "method": "derived",
+     "note": "diameter of the whole Cygnus Loop from its ~18 pc radius at 725 pc"
+    },
+    "angularSizeArcmin": {
+     "value": 210,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog",
+     "note": "catalog-extents NGC6960 entry spans the whole loop (210′ × 160′); the western filament itself is ~70′ long"
+    }
+   },
+   "dsoClass": "supernova-remnant",
+   "extent": {
+    "majorArcmin": 210,
+    "minorArcmin": 160,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "shock-heating",
+    "sourceIds": [
+     "fesen2021"
+    ],
+    "note": "blast wave heating interstellar clouds"
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 1
+    },
+    "10x50": {
+     "suburban": 0,
+     "dark": 1
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "baa-veil"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 4,
+    "colorVisible": false,
+    "filterHelps": "OIII"
+   },
+   "evoStage": 7,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.supernova",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 3
+    },
+    {
+     "conceptId": "PERC.night-eyes",
+     "strength": 2
+    }
+   ],
+   "roles": [
+    "snr"
+   ],
+   "wow": 2,
+   "insight": 5,
+   "obsDifficulty": 4,
+   "superlatives": [],
+   "misconceptions": [
+    "MC7"
+   ],
+   "showpiece": false,
+   "interest": 0.8,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC6960-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the West Veil filament crossing the bright star 52 Cygni.",
+      "fieldDeg": 2.33,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "size-comparison"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "What is left of a star thousands of years after it explodes?",
+    "glance": "A thin, very faint streak through the star 52 Cygni; most observers need a dark sky and a nebula filter.",
+    "whyHere": "Heavy stars end with a bang rather than a sigh, and the Veil is the expanding wreck of one such explosion, still spreading across Cygnus.",
+    "see": "Find 52 Cygni, a modest star about 3° south of ε Cygni at the eastern end of the Northern Cross's crossbar; the West Veil runs north–south right through it. Without a filter it is usually invisible in 10×50, but a nebula filter held to one eyepiece may bring out a pale thread.",
+    "understand": "Ten to twenty thousand years ago a star many times heavier than the Sun ran out of fuel, its core collapsed, and the rest exploded as a supernova. The blast wave is still plowing into thin surrounding gas and heating it until it glows. This thread and its eastern partner are opposite edges of one bubble spanning about seven full Moons on the sky.",
+    "wonder": "Its distance comes from a clever fence: stars whose light shows the remnant's fast gas must lie inside or behind it, so their distances pin it down.",
+    "connect": "The East Veil, across the bubble, is the brighter arc and the easier catch.",
+    "answer": "A blast wave still on the move, outlining a bubble about 120 light-years across. The atoms glowing in it include elements forged in that star and its explosion, and they will join future clouds, stars and planets, just as debris like this once joined ours.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Time since the explosion",
+      "factRef": "ageMyr"
+     },
+     {
+      "label": "Width of the whole bubble",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "Long exposures with narrow filters show braided red and blue filaments; binoculars show a ghostly line at best.",
+    "notSee": "No color and no fine braiding; without a filter often nothing at all.",
+    "deeper": "Fesen et al. (2021) used Gaia EDR3 parallaxes of stars whose spectra show high-velocity gas from the remnant, so they sit inside or behind it: 725 ± 15 pc, about 2,400 light-years, giving a radius of about 18 pc. Ritchey et al. (2024) found that one of those stars is a binary unsuitable for the test and placed another star near 870 pc, so the distance may grow. Ages of 10,000–20,000 years are quoted. In BAA reports the eastern arc shows in 10×50 with averted vision; the western one rarely shows without a filter.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "fesen2021",
+    "ritchey2024",
+    "baa-veil",
+    "catalog-extents"
+   ],
+   "con": "Cyg",
+   "ra": 311.425,
+   "dec": 30.71667,
+   "mag": 7.0,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC6992",
+   "kind": "dso",
+   "names": {
+    "display": "East Veil Nebula",
+    "designation": "NGC 6992",
+    "aliases": [
+     "NGC 6995",
+     "Eastern Veil",
+     "Cygnus Loop (east)",
+     "Caldwell 33"
+    ],
+    "simbadId": "NGC  6992"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 2365,
+     "min": 2316,
+     "max": 2414,
+     "unit": "ly",
+     "sourceId": "fesen2021",
+     "method": "measured",
+     "note": "725 ± 15 pc from Gaia EDR3 parallaxes of stars with high-velocity absorption; Ritchey+2024 put a far-side star at ~870 pc, so a larger distance is possible"
+    },
+    "ageMyr": {
+     "value": 0.02,
+     "min": 0.01,
+     "max": 0.021,
+     "unit": "Myr",
+     "sourceId": "fesen2021",
+     "method": "literature",
+     "note": "commonly quoted 1–2 × 10⁴ yr (middle-aged remnant); NASA outreach uses ~10,000 yr"
+    },
+    "sizeLy": {
+     "value": 117,
+     "unit": "ly",
+     "sourceId": "fesen2021",
+     "method": "derived",
+     "note": "diameter of the whole Cygnus Loop from its ~18 pc radius at 725 pc"
+    },
+    "angularSizeArcmin": {
+     "value": 60,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog",
+     "note": "catalog-extents NGC6992 (60′ × 8′ arc)"
+    }
+   },
+   "dsoClass": "supernova-remnant",
+   "extent": {
+    "majorArcmin": 60,
+    "minorArcmin": 8,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "shock-heating",
+    "sourceIds": [
+     "fesen2021"
+    ],
+    "note": "blast wave heating interstellar clouds"
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "baa-veil"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 4,
+    "colorVisible": false,
+    "filterHelps": "OIII"
+   },
+   "evoStage": 7,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.supernova",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 3
+    },
+    {
+     "conceptId": "STAR.mass-fate",
+     "strength": 2
+    },
+    {
+     "conceptId": "PERC.night-eyes",
+     "strength": 2
+    }
+   ],
+   "roles": [
+    "snr"
+   ],
+   "wow": 3,
+   "insight": 5,
+   "obsDifficulty": 4,
+   "superlatives": [],
+   "misconceptions": [
+    "MC7"
+   ],
+   "showpiece": false,
+   "interest": 0.9,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC6992-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the East Veil arc.",
+      "fieldDeg": 2,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "size-comparison"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "Why does a supernova remnant look like scattered threads instead of a bubble?",
+    "glance": "On a dark night, a faint, curved sliver of light: easier than the western arc, still a stretch for 10×50.",
+    "whyHere": "The East Veil is the brightest stretch of a supernova's blast wave in binocular reach, and its broken, threadlike look is itself a clue.",
+    "see": "From ε Cygni, the eastern end of the Northern Cross's crossbar, move about 3° south-east. Under a dark, transparent sky, sweep slowly with averted vision for a faint, slightly curved arc about two full Moons long; a nebula filter helps enormously.",
+    "understand": "This arc and the West Veil are opposite edges of one expanding shell, and the empty-looking space between them is its inside. Space is not evenly filled, so the blast runs into lumpy clouds, and only where it hits denser patches does it heat gas until it glows. We also see the shell best at its rim, where our line of sight runs through the most glowing gas, the way a soap bubble's edge stands out more than its face.",
+    "wonder": "If your eyes could see all of it, the full loop would span about seven full Moons.",
+    "connect": "The Dumbbell in Vulpecula shows the gentle end of a lighter star.",
+    "answer": "The blast wave only shines where it strikes denser gas and where we look along its edge, so a smooth bubble shows up as scattered, braided arcs. Only stars more than about eight times the Sun's mass end this way.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Time since the explosion",
+      "factRef": "ageMyr"
+     },
+     {
+      "label": "Width of the whole bubble",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "Filtered long exposures show twisted ribbons of glowing gas; binoculars show a faint gray arc.",
+    "notSee": "No color, no ribbons; expect a faint arc only under dark, transparent skies.",
+    "deeper": "Fesen et al. (2021) used Gaia EDR3 parallaxes of stars whose spectra show high-velocity gas from the remnant, so they sit inside or behind it: 725 ± 15 pc, about 2,400 light-years, giving a radius of about 18 pc. Ritchey et al. (2024) found that one of those stars is a binary unsuitable for the test and placed another star near 870 pc, so the distance may grow. Ages of 10,000–20,000 years are quoted. In BAA reports the eastern arc shows in 10×50 with averted vision; the western one rarely shows without a filter.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "fesen2021",
+    "ritchey2024",
+    "baa-veil",
+    "catalog-extents"
+   ],
+   "con": "Cyg",
+   "ra": 314.1,
+   "dec": 31.71667,
+   "mag": 7.0,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC6888",
+   "kind": "dso",
+   "names": {
+    "display": "Crescent Nebula",
+    "designation": "NGC 6888",
+    "aliases": [
+     "Caldwell 27",
+     "Sh2-105"
+    ],
+    "simbadId": "NGC  6888"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 5651,
+     "min": 5494,
+     "max": 5807,
+     "unit": "ly",
+     "sourceId": "gaia-edr3-simbad",
+     "method": "measured",
+     "note": "WR 136 Gaia EDR3 parallax 0.577 ± 0.016 mas (1732 ± 48 pc); ESA/Hubble quotes ~4,500 ly, older work 1.26 kpc"
+    },
+    "angularSizeArcmin": {
+     "value": 20,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog",
+     "note": "20′ × 10′"
+    },
+    "sizeLy": {
+     "value": 33,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "20′ at 1.73 kpc"
+    }
+   },
+   "dsoClass": "wind-bubble",
+   "extent": {
+    "majorArcmin": 20,
+    "minorArcmin": 10,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "stellar-wind",
+    "starIds": [
+     "HD192163"
+    ],
+    "sourceIds": [
+     "esahubble-crescent",
+     "zhekov2011"
+    ],
+    "note": "WR 136 (WN6) fast wind sweeping up its earlier slow wind"
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 1
+    },
+    "10x50": {
+     "suburban": 0,
+     "dark": 1
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false,
+    "filterHelps": "OIII"
+   },
+   "evoStage": 6,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "STAR.mass-fate",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.supernova",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "supergiant"
+   ],
+   "wow": 1,
+   "insight": 5,
+   "obsDifficulty": 4,
+   "superlatives": [],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "The gas now lit up began leaving its star roughly a quarter of a million years ago.",
+    "sourceId": "esahubble-crescent"
+   },
+   "showpiece": false,
+   "interest": 0.75,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC6888-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the Crescent Nebula and its central star WR 136.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "size-comparison"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "What does a heavy star do in the last stretch before it explodes?",
+    "glance": "In binoculars you see the star that blew this bubble, not the bubble itself.",
+    "whyHere": "Before exploding, a heavy star spends a long time tearing itself apart, and the Crescent is the bubble one such star has blown around itself.",
+    "see": "The Crescent lies nearly 3° south-west of Sadr, at the center of the Northern Cross. Use the chart to find the faint star WR 136; the shell itself is a large-telescope target even with a filter, so in binoculars you are visiting the star that made it.",
+    "understand": "WR 136 is a Wolf-Rayet star, a very heavy star that has lost its outer hydrogen and now drives a fierce wind. Earlier, as a swollen giant, it shed slower gas, and the fast wind is ramming into that older material and piling it into a glowing shell, like a snowplow pushing snow. The chemistry gives it away: the shell is rich in nitrogen made in the star's core, so the gas came from the star, not from space.",
+    "wonder": "The gas you would see in a photo began leaving the star roughly a quarter of a million years ago.",
+    "connect": "The Veil, a few fields south-east, shows what follows when such a star explodes.",
+    "answer": "It strips itself bare, and WR 136's wind now plows the old gas into the Crescent's glowing shell, the portrait of a star in its final chapter before a supernova.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "Telescope images show a glowing crescent shell around WR 136; binoculars show only the star.",
+    "notSee": "The shell itself: it needs a telescope and a nebula filter.",
+    "deeper": "Gaia EDR3 measures WR 136’s parallax as 0.577 ± 0.016 mas, about 1.73 kpc (via SIMBAD); older studies used 1.26 kpc, and ESA/Hubble quotes about 4,500 light-years. ESA/Hubble describes the shell as material shed about 250,000 years ago and now being torn apart by the wind. Suzaku X-ray data (Zhekov & Park 2011) show hot gas filling the bubble; adopting a WN6 wind of about 1,600 km/s, they estimated a dynamical age near 30,000 years at their distance.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "gaia-edr3-simbad",
+    "esahubble-crescent",
+    "zhekov2011",
+    "catalog-extents"
+   ],
+   "con": "Cyg",
+   "ra": 303.0,
+   "dec": 38.35,
+   "mag": 7.4,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC7000",
+   "kind": "dso",
+   "names": {
+    "display": "North America Nebula",
+    "designation": "NGC 7000",
+    "aliases": [
+     "Caldwell 20",
+     "Sh2-117 (with IC 5070)"
+    ],
+    "simbadId": "NGC  7000"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 2639,
+     "min": 2580,
+     "max": 2727,
+     "unit": "ly",
+     "sourceId": "zucker2020",
+     "method": "measured",
+     "note": "dust-cloud distance 809 +27/−18 pc (via SIMBAD); Kuhn & Hillenbrand 2020 find ~785 pc for the young star groups (Gaia EDR3)"
+    },
+    "ageMyr": {
+     "value": 1,
+     "unit": "Myr",
+     "sourceId": "fang2020",
+     "method": "model",
+     "note": "median age of the young stars (spectroscopic survey)"
+    },
+    "memberCount": {
+     "value": 580,
+     "unit": "stars",
+     "sourceId": "fang2020",
+     "method": "measured",
+     "note": "likely young members identified spectroscopically, not all stars"
+    },
+    "angularSizeArcmin": {
+     "value": 120,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog",
+     "note": "120′ × 30′ (OpenNGC)"
+    },
+    "sizeLy": {
+     "value": 92,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "120′ at ~810 pc"
+    }
+   },
+   "dsoClass": "hii-region",
+   "secondaryClasses": [
+    "embedded-cluster",
+    "dark-nebula"
+   ],
+   "traits": [
+    "naked-eye"
+   ],
+   "extent": {
+    "majorArcmin": 120,
+    "minorArcmin": 30,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "ionizing-stars",
+    "sourceIds": [
+     "comeron2005",
+     "villafranca2020"
+    ],
+    "note": "Bajamar star, 2MASS J20555125+4352246, O3.5 III(f*) + O8; hidden behind the dark cloud L935; not a KB object"
+   },
+   "view": {
+    "7x50": {
+     "suburban": 1,
+     "dark": 3
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 5,
+    "colorVisible": false,
+    "filterHelps": "UHC"
+   },
+   "evoStage": 0,
+   "contextIds": [
+    "ctx:NAP"
+   ],
+   "teaches": [
+    {
+     "conceptId": "LIFE.nursery",
+     "strength": 3
+    },
+    {
+     "conceptId": "PERC.night-eyes",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.cluster-birth",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "nursery"
+   ],
+   "wow": 3,
+   "insight": 4,
+   "obsDifficulty": 3,
+   "superlatives": [],
+   "misconceptions": [
+    "MC7"
+   ],
+   "historyHook": {
+    "text": "Its real power source was only identified in 2005: a hot star hidden behind the dark “Gulf of Mexico”.",
+    "sourceId": "comeron2005"
+   },
+   "showpiece": true,
+   "interest": 0.9,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC7000-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Wide survey photograph: the North America shape and the dark Gulf of Mexico.",
+      "fieldDeg": 5,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/NGC7000-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view: dust thins and hidden young stars appear.",
+      "fieldDeg": 5,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "distance-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "Can you see a star nursery whose light source is hidden from view?",
+    "glance": "A large, faint brightening of the Milky Way east of Deneb with a darker notch: subtle, not a bright cloud.",
+    "whyHere": "Stars are born in clouds of gas, and the North America Nebula is a nursery big enough to frame in binoculars, lit by a star nobody found until 2005.",
+    "see": "Put Deneb at the edge of a wide field and look about 3° east. On a dark, transparent night the area looks slightly brighter than the surrounding Milky Way, with a sharper dark edge on its southern side, the Gulf of Mexico; low power and a nebula filter help, but don't mistake rich star fields for the glow.",
+    "understand": "This is a cloud of hydrogen lit by ultraviolet light from very hot young stars, glowing the way a neon sign does when electricity excites its atoms. For a long time nearby Deneb got the credit, but it is not the main lamp. Infrared light passes through dust, and infrared images finally revealed the real source: a hot star hidden behind the dark lane that forms the gulf.",
+    "wonder": "Most of the young stars here are only about a million years old: when they formed, our ancestors already walked on two legs.",
+    "connect": "The dark gulf is one small piece of the dust lane that splits the whole summer Milky Way.",
+    "answer": "The North America Nebula is one, lit by a star hidden behind the dust of its gulf, its continent shape a chance meeting of glowing gas and dark dust.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age of its young stars",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy"
+     },
+     {
+      "label": "Young stars found",
+      "factRef": "memberCount"
+     }
+    ],
+    "photoCaption": "Long exposures record red hydrogen glow and the continent outline; binoculars show a faint gray brightening.",
+    "notSee": "No red color and no sharp continent: just a subtle glow with a darker edge.",
+    "deeper": "Zucker et al. (2020) put the dust cloud at about 810 pc; Kuhn & Hillenbrand (2020) find about 785 pc for the young star groups with Gaia EDR3. Comerón & Pasquali (2005) found the ionizing star in infrared data behind the dark cloud L935; the GOSSS survey later showed it to be a close pair, O3.5 III(f*) + O8 (Maíz Apellániz et al. 2020). Fang et al. (2020) identified about 580 young members with a median age near 1 Myr. Deneb, often credited, is not the main power source.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "zucker2020",
+    "kuhn2020nap",
+    "fang2020",
+    "comeron2005",
+    "villafranca2020",
+    "catalog-extents"
+   ],
+   "con": "Cyg",
+   "ra": 314.7,
+   "dec": 44.33333,
+   "mag": 4.0,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "MWF-CygnusRift",
+   "kind": "dso",
+   "names": {
+    "display": "Cygnus Rift",
+    "designation": "Great Rift (Cygnus)",
+    "aliases": [
+     "Great Cygnus Rift",
+     "Northern Coalsack (part)",
+     "Dark Rift"
+    ]
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 2600,
+     "min": 1600,
+     "max": 3300,
+     "unit": "ly",
+     "sourceId": "straizys2014",
+     "method": "literature",
+     "note": "dust in front of M29 at ~800 pc (Straižys+2014); Green+2015 dust map 800–1000 pc; Lallement+2013 (cited there) 500–600 pc; distance depends on which part"
+    }
+   },
+   "dsoClass": "milky-way-field",
+   "secondaryClasses": [
+    "dark-nebula"
+   ],
+   "traits": [
+    "naked-eye"
+   ],
+   "poweredBy": {
+    "kind": "silhouette",
+    "sourceIds": [
+     "straizys2014",
+     "green2015dust"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 2,
+     "dark": 4
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "silhouette",
+    "bestFieldDeg": 10,
+    "colorVisible": false
+   },
+   "evoStage": null,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "MW.disk",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.nursery",
+     "strength": 1
+    },
+    {
+     "conceptId": "PERC.night-eyes",
+     "strength": 1
+    }
+   ],
+   "roles": [],
+   "wow": 4,
+   "insight": 4,
+   "obsDifficulty": 3,
+   "superlatives": [],
+   "misconceptions": [
+    "MC12"
+   ],
+   "showpiece": true,
+   "interest": 0.75,
+   "media": {
+    "images": [],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "What splits the summer Milky Way in two?",
+    "glance": "A long dark lane splitting the Milky Way from Cygnus southward: naked-eye under dark skies, best scanned slowly with binoculars.",
+    "whyHere": "The dark lane down the middle of the summer Milky Way looks like a gap between stars, but it is something more interesting: a wall of dusty clouds in our own spiral arm.",
+    "see": "Under a dark sky, follow the Milky Way from Deneb past Sadr toward Albireo, where a dark band splits it into two streams. Sweep binoculars slowly across that boundary and star-rich fields give way abruptly to dim, nearly empty ones.",
+    "understand": "The Milky Way band is our galaxy's disk seen edge-on from inside. Clouds of gas and fine dust drift between the stars, grains about the size of smoke particles, and where they pile up they block everything behind them. You can measure the effect on a cluster behind the Rift: M29's stars look redder than their type should, and the amount of reddening tells how much light the dust is swallowing.",
+    "wonder": "Behind the dust lies the young cluster M29; without the dust in the way, it would look more than ten times brighter.",
+    "connect": "Barnard's E in Aquila is one small, sharply drawn knot of the same dust.",
+    "answer": "Dust does, in a chain of cold clouds a couple of thousand light-years away that blocks the starlight behind it and carves the Cygnus Rift. Clouds like these are also where new stars form, so the darkness is a nursery in waiting.",
+    "numbers": [
+     {
+      "label": "Distance of the dust",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     }
+    ],
+    "photoCaption": "Wide-field photographs show the Rift as dark lanes threaded through the Milky Way’s star clouds.",
+    "notSee": "The Rift is a contrast effect: it disappears under light pollution or moonlight.",
+    "deeper": "Distances depend on which part of the Rift and which method. Straižys et al. (2014) put the dust in front of M29 near 800 pc and found it reddens the cluster by E(B−V) ≈ 1.0, roughly three magnitudes of dimming. Green et al. (2015) place the Rift at 800–1,000 pc in their 3-D dust map, noting that Lallement et al. (2013) found 500–600 pc. The dark lane continues south through Aquila toward Sagittarius as the Great Rift.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "straizys2014",
+    "green2015dust"
+   ],
+   "con": "Cyg",
+   "ra": 300.0,
+   "dec": 35.0,
+   "mag": null,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "DN-BarnardE",
+   "kind": "dso",
+   "names": {
+    "display": "Barnard's E",
+    "designation": "B142 / B143",
+    "aliases": [
+     "E Nebula",
+     "Barnard 142",
+     "Barnard 143",
+     "LDN 694"
+    ],
+    "simbadId": "LDN  694"
+   },
+   "facts": {
+    "angularSizeArcmin": {
+     "value": 30,
+     "unit": "arcmin",
+     "sourceId": "barnard1927",
+     "method": "catalog",
+     "note": "B143 outlines a square ~30′ across (W side missing); B142 ~40′"
+    }
+   },
+   "dsoClass": "dark-nebula",
+   "extent": {
+    "majorArcmin": 30,
+    "sourceId": "barnard1927"
+   },
+   "poweredBy": {
+    "kind": "silhouette",
+    "sourceIds": [
+     "barnard1927",
+     "lynds1962"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "silhouette",
+    "bestFieldDeg": 3,
+    "colorVisible": false
+   },
+   "evoStage": 0,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.nursery",
+     "strength": 2
+    },
+    {
+     "conceptId": "MW.disk",
+     "strength": 2
+    },
+    {
+     "conceptId": "PERC.night-eyes",
+     "strength": 2
+    }
+   ],
+   "roles": [
+    "nursery"
+   ],
+   "wow": 2,
+   "insight": 4,
+   "obsDifficulty": 4,
+   "superlatives": [],
+   "misconceptions": [
+    "MC12"
+   ],
+   "historyHook": {
+    "text": "E. E. Barnard photographed and cataloged hundreds of dark markings like this one in the early twentieth century.",
+    "sourceId": "barnard1927"
+   },
+   "showpiece": false,
+   "interest": 0.6,
+   "media": {
+    "images": [],
+    "visuals": [
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "How can a dust cloud draw a letter on the Milky Way?",
+    "glance": "Under a dark sky, a small starless hook shaped like a squared-off E against a rich star field near Tarazed.",
+    "whyHere": "Dark nebulae look like holes, and for a long time many astronomers thought they were; Barnard's E is a sharp little reminder that they are clouds.",
+    "see": "Center Tarazed (γ Aquilae), the orange star about 2° north-west of Altair, then move about 1.5° west. Look for a squared hook about the size of the full Moon where the faint background stars suddenly vanish; it needs a dark, moonless sky, and gentle sweeping with averted vision helps.",
+    "understand": "There is no hole here. A cold cloud of gas and dust sits in front of the Milky Way's distant stars and swallows their light. E. E. Barnard photographed and cataloged hundreds of these markings about a century ago, and their crisp outlines were part of the argument: a tunnel through the stars would hardly have such sharp edges, but a cloud in front of them would.",
+    "wonder": "In the classic catalog of dark clouds, this one earns the top opacity rating, 6 on a scale of 1 to 6.",
+    "connect": "The same kind of dust, on a grand scale, forms the Cygnus Rift.",
+    "answer": "A cold dust cloud in front of a rich star field simply hides the stars behind it, and its outline happens to make an E. Clouds this cold and dark are the raw material of future stars.",
+    "numbers": [
+     {
+      "label": "Apparent size",
+      "factRef": "angularSizeArcmin"
+     }
+    ],
+    "photoCaption": "Wide-field photographs show the dark “E” against dense star clouds; binoculars show a subtle starless patch.",
+    "notSee": "A sharp letter E: in binoculars the shape is a vague, dark hook.",
+    "deeper": "Barnard (1927) described B143 as a narrow, angular marking outlining a square about 30′ across with its west side missing, and B142 as an irregular patch about 40′ wide just to the south. Lynds (1962) listed the area as LDN 694 with opacity class 6, the darkest. No reliable distance turned up in the sources checked; popular references quote about 2,000 light-years without a citation. Astronomy magazine recommends starting from Tarazed and notes that B143 is the easier half.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "barnard1927",
+    "lynds1962",
+    "astronomy-barnardE"
+   ],
+   "con": "Aql",
+   "ra": 295.175,
+   "dec": 10.95,
+   "mag": null,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "AST-Coathanger",
+   "kind": "dso",
+   "names": {
+    "display": "Coathanger",
+    "designation": "Collinder 399",
+    "aliases": [
+     "Brocchi's Cluster",
+     "Cr 399"
+    ],
+    "simbadId": "Cl Collinder 399"
+   },
+   "facts": {
+    "angularSizeArcmin": {
+     "value": 60,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "asterism",
+   "traits": [
+    "naked-eye",
+    "line-of-sight-pair"
+   ],
+   "extent": {
+    "majorArcmin": 60,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "baumgardt1998"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 4,
+     "dark": 4
+    },
+    "10x50": {
+     "suburban": 4,
+     "dark": 4
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "vds-sketches"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "high",
+    "resolves": "stars",
+    "bestFieldDeg": 3,
+    "colorVisible": true
+   },
+   "evoStage": null,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "SKY.projection",
+     "strength": 3
+    },
+    {
+     "conceptId": "PERC.binoculars",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIGHT.color-temp",
+     "strength": 1
+    }
+   ],
+   "roles": [],
+   "wow": 4,
+   "insight": 4,
+   "obsDifficulty": 2,
+   "superlatives": [],
+   "misconceptions": [
+    "MC9"
+   ],
+   "historyHook": {
+    "text": "Cataloged for decades as a star cluster, it was shown in 1998 with Hipparcos data to be a chance alignment.",
+    "sourceId": "baumgardt1998"
+   },
+   "showpiece": true,
+   "interest": 0.9,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/AST-Coathanger-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the Coathanger: a straight bar with a hook.",
+      "fieldDeg": 5,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/AST-Coathanger-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view: the orange giant stars brighten.",
+      "fieldDeg": 5,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "Is every tight group of stars a real family?",
+    "glance": "Ten stars forming an upside-down coat hanger: a straight row of six with a hook of four, about two full Moons long.",
+    "whyHere": "Among the true star families of summer hides an impostor, a pattern so neat that it was cataloged as a cluster for decades.",
+    "see": "Sweep a little less than halfway from Albireo toward Altair, into Vulpecula, and the pattern jumps out: a bar of six stars with a hook of four hanging below its middle. A couple of the hook stars look orange and the rest white, and it is easy even from suburban skies with the Moon up.",
+    "understand": "To tell a family from a crowd, astronomers measure each star's distance and motion. When the Hipparcos satellite did that in 1998, the Coathanger fell apart: its stars lie at very different distances and drift in different directions. It is an asterism, a chance pattern, just as constellations are.",
+    "wonder": "Gaia puts one hook star about 235 light-years away and a bar star about 1,700, over seven times farther, yet they line up neatly.",
+    "connect": "IC 4665 in Ophiuchus is a true family, born together and moving together.",
+    "answer": "The Coathanger's stars only line up from where we stand, and stars side by side on the sky can be hundreds of light-years apart. Seen from another part of the Galaxy, the hanger would simply not exist.",
+    "numbers": [
+     {
+      "label": "Length on the sky",
+      "factRef": "angularSizeArcmin"
+     }
+    ],
+    "photoCaption": "The survey photo matches the binocular view closely; the orange stars are giants at different distances.",
+    "deeper": "Baumgardt (1998) used Hipparcos parallaxes and proper motions to show that Collinder 399 is not a physical cluster. Gaia EDR3 parallaxes listed in SIMBAD confirm the spread: 5 Vul 13.9 mas (~235 ly), 4 Vul 12.7 mas (~255 ly), HD 182761 7.9 mas (~410 ly), HD 182955 5.7 mas (~580 ly) and HD 183261 1.9 mas (~1,700 ly). Phil Harrington’s Binocular Universe column treats it as a classic sweep between Albireo and Altair.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "baumgardt1998",
+    "gaia-edr3-simbad",
+    "catalog-extents",
+    "harrington-coathanger",
+    "vds-sketches"
+   ],
+   "con": "Vul",
+   "ra": 291.5,
+   "dec": 20.1,
+   "mag": 3.6,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "M39",
+   "kind": "dso",
+   "names": {
+    "display": "M39",
+    "designation": "M39",
+    "aliases": [
+     "NGC 7092",
+     "Theia 517",
+     "M 39"
+    ],
+    "simbadId": "M  39"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 965,
+     "min": 960,
+     "max": 970,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "295.9 pc, Gaia DR3 (HR24 lists it as Theia_517); range widened to ±0.5% for systematics"
+    },
+    "ageMyr": {
+     "value": 430,
+     "min": 320,
+     "max": 540,
+     "unit": "Myr",
+     "sourceId": "alonso2024",
+     "method": "model",
+     "note": "430 ± 110 Myr, isochrones fitted to high-resolution spectra; HR24 NN 127 Myr (67–222)"
+    },
+    "memberCount": {
+     "value": 511,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members"
+    },
+    "massMsun": {
+     "value": 500,
+     "unit": "Msun",
+     "sourceId": "hr24",
+     "method": "model",
+     "note": "HR24 MassTot"
+    },
+    "angularSizeArcmin": {
+     "value": 32,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    },
+    "sizeLy": {
+     "value": 9.0,
+     "unit": "ly",
+     "sourceId": "catalog-extents",
+     "method": "derived",
+     "note": "32′ at 296 pc"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "traits": [
+    "naked-eye"
+   ],
+   "extent": {
+    "majorArcmin": 32,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 3,
+     "dark": 4
+    },
+    "10x50": {
+     "suburban": 3,
+     "dark": 4
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "high",
+    "resolves": "stars",
+    "bestFieldDeg": 3,
+    "colorVisible": false
+   },
+   "evoStage": 3,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "PERC.binoculars",
+     "strength": 3
+    },
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 2
+    },
+    {
+     "conceptId": "MW.families",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "adult-cluster"
+   ],
+   "wow": 4,
+   "insight": 3,
+   "obsDifficulty": 2,
+   "superlatives": [],
+   "misconceptions": [
+    "MC13"
+   ],
+   "showpiece": true,
+   "interest": 0.7,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M39-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of M39: a loose triangle of bright stars.",
+      "fieldDeg": 1.07,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M39-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view of the same field.",
+      "fieldDeg": 1.07,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "How many stars of a nearby family can you count one by one?",
+    "glance": "A large, bright, loose triangle of a few dozen stars north-east of Deneb, easy in any binoculars.",
+    "whyHere": "Most clusters are distant smudges, but M39 is close enough that binoculars resolve its members into individual stars.",
+    "see": "From Deneb, sweep about 9° east-north-east in Cygnus to a loose triangle of stars about the size of the full Moon, standing out from the Milky Way. At your lowest power count the members, and notice that the brightest are all white or blue-white.",
+    "understand": "Gaia shows these stars sharing one distance, about 965 light-years, and one motion through space: an open cluster, a family born together. A 2024 study of their spectra fits an age of roughly 430 million years, though another method gives a third of that, a reminder that cluster ages depend on models. The bluest heavyweights have burned out, and the brightest survivors are white stars of about three solar masses.",
+    "wonder": "Aristotle may have noted it as a comet-like smudge around 325 BC, which would make it one of the first star clusters ever written down.",
+    "connect": "NGC 6819, deeper in Cygnus, is several times older and has somehow held together.",
+    "answer": "You can count a few dozen, M39's brightest white stars standing out one by one, the visible tip of a family Gaia counts at over five hundred.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members (Gaia)",
+      "factRef": "memberCount"
+     },
+     {
+      "label": "Width",
+      "factRef": "sizeLy"
+     }
+    ],
+    "photoCaption": "The survey photo shows the same bright triangle you see, plus fainter members.",
+    "deeper": "Hunt & Reffert (2024) list M39 as Theia 517 in Gaia DR3: 296 pc, about 510 members, about 500 solar masses, and a neural-network age of 127 Myr (67–222). Alonso-Santiago et al. (2024) fitted isochrones to high-resolution spectra of 20 members and found 430 ± 110 Myr, with a turnoff near 2.8 solar masses. A threefold disagreement between methods is a useful reminder that cluster ages are model-dependent.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "hr24",
+    "alonso2024",
+    "catalog-extents",
+    "al-binocular-messier"
+   ],
+   "con": "Cyg",
+   "ra": 323.05,
+   "dec": 48.43333,
+   "mag": 4.6,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC6819",
+   "kind": "dso",
+   "names": {
+    "display": "NGC 6819",
+    "designation": "NGC 6819",
+    "aliases": [
+     "Foxhead Cluster",
+     "Collinder 402",
+     "Melotte 223"
+    ],
+    "simbadId": "NGC  6819"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 8190,
+     "min": 8150,
+     "max": 8230,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "2510 pc, Gaia DR3; range widened to ±0.5% for systematics"
+    },
+    "ageMyr": {
+     "value": 2380,
+     "min": 2160,
+     "max": 2600,
+     "unit": "Myr",
+     "sourceId": "brewer2016",
+     "method": "measured",
+     "note": "2.38 ± 0.05 (±0.22 sys) Gyr from eclipsing-binary masses and radii; CMD 2.21 ± 0.10 Gyr; HR24 NN 1.68 Gyr (too young)"
+    },
+    "memberCount": {
+     "value": 2311,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members"
+    },
+    "massMsun": {
+     "value": 7530,
+     "unit": "Msun",
+     "sourceId": "hr24",
+     "method": "model",
+     "note": "HR24 MassTot"
+    },
+    "angularSizeArcmin": {
+     "value": 5,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "traits": [
+    "contains-red-giants"
+   ],
+   "extent": {
+    "majorArcmin": 5,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 4,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 3
+    },
+    {
+     "conceptId": "STAR.mass-fate",
+     "strength": 2
+    },
+    {
+     "conceptId": "MULT.weighing",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "old-cluster"
+   ],
+   "wow": 2,
+   "insight": 4,
+   "obsDifficulty": 3,
+   "superlatives": [
+    {
+     "claim": "one of the few star clusters inside the Kepler spacecraft’s original field",
+     "scope": "Kepler prime mission field (2009–2013)",
+     "sourceId": "brewer2016",
+     "tag": "kepler-field"
+    }
+   ],
+   "misconceptions": [
+    "MC13"
+   ],
+   "showpiece": false,
+   "interest": 0.6,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC6819-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of NGC 6819: a rich knot of faint stars.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/NGC6819-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view: its red giants stand out.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "How does a family of stars survive for billions of years?",
+    "glance": "A small, faint, grainy smudge in a rich Cygnus star field: easy to overlook.",
+    "whyHere": "Most star families dissolve within a few hundred million years, so a cluster that has held together for billions is a puzzle worth a look.",
+    "see": "Start at δ Cygni, the western end of the Northern Cross's crossbar, and move about 5° south. Brace the binoculars and look for a tiny haze, much smaller than the full Moon, that grows slightly with averted vision and hints at graininess.",
+    "understand": "Open clusters are loosely bound, and passing clouds and the Galaxy's own tides keep tugging at them, so most drift apart. NGC 6819 is rich, with thousands of members whose combined gravity has held it together, and its brightest stars are now yellow and orange giants, the blue heavyweights long gone. The Kepler spacecraft recorded eclipses among its stars, which weighed them and pinned down the age.",
+    "wonder": "Its stars were born at roughly the time oxygen first began building up in Earth's air.",
+    "connect": "M71 in Sagitta, a globular cluster, is older still.",
+    "answer": "NGC 6819 survives by being big, with enough members and enough gravity to hold together for about 2.4 billion years while smaller families scatter. It sits inside the patch of sky Kepler stared at for years, which is why we know it so well.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members (Gaia)",
+      "factRef": "memberCount"
+     },
+     {
+      "label": "Mass",
+      "factRef": "massMsun"
+     }
+    ],
+    "photoCaption": "The survey photo resolves a dense swarm; binoculars show a faint, slightly grainy glow.",
+    "notSee": "Individual stars: only the brightest few pop out at 10×.",
+    "deeper": "Brewer et al. (2016) used masses and radii of eclipsing binaries found by Kepler: 2.38 ± 0.05 Gyr (±0.22 systematic); the color–magnitude diagram gives 2.21 ± 0.10 Gyr. Hunt & Reffert (2024) find 2.51 kpc, about 2,300 Gaia members and about 7,500 solar masses; their neural-network age (1.7 Gyr) is lower, a known weakness of such ages for old clusters.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "hr24",
+    "brewer2016",
+    "catalog-extents",
+    "al-binocular-deepsky"
+   ],
+   "con": "Cyg",
+   "ra": 295.325,
+   "dec": 40.18333,
+   "mag": 7.3,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "M71",
+   "kind": "dso",
+   "names": {
+    "display": "M71",
+    "designation": "M71",
+    "aliases": [
+     "NGC 6838",
+     "M 71"
+    ],
+    "simbadId": "M  71"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 13046,
+     "min": 12883,
+     "max": 13209,
+     "unit": "ly",
+     "sourceId": "bv21",
+     "method": "measured",
+     "note": "4.00 ± 0.05 kpc"
+    },
+    "ageMyr": {
+     "value": 11000,
+     "min": 9000,
+     "max": 12000,
+     "unit": "Myr",
+     "sourceId": "vandenberg2013",
+     "method": "model",
+     "note": "11.00 ± 0.38 Gyr (fit; systematics ±1.5 Gyr); ESA/Hubble quotes 9–10 Gyr"
+    },
+    "massMsun": {
+     "value": 37800,
+     "min": 36420,
+     "max": 39180,
+     "unit": "Msun",
+     "sourceId": "bv21",
+     "method": "model"
+    },
+    "feH": {
+     "value": -0.78,
+     "unit": "dex",
+     "sourceId": "harris2010",
+     "method": "catalog"
+    },
+    "angularSizeArcmin": {
+     "value": 7.2,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "globular-cluster",
+   "extent": {
+    "majorArcmin": 7.2,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "bv21"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 3
+    },
+    "basis": "curator",
+    "evidenceIds": [
+     "vds-sketches"
+    ]
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 4,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "MW.halo",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.recycling",
+     "strength": 2
+    }
+   ],
+   "roles": [
+    "globular"
+   ],
+   "wow": 2,
+   "insight": 4,
+   "obsDifficulty": 3,
+   "superlatives": [],
+   "misconceptions": [],
+   "historyHook": {
+    "text": "Until the 1970s many astronomers thought it was a dense open cluster rather than a globular.",
+    "sourceId": "esahubble-m71"
+   },
+   "showpiece": false,
+   "interest": 0.65,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M71-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of M71 in the Sagitta Milky Way.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M71-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view of the same field.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Why was this globular cluster mistaken for an ordinary one for so long?",
+    "glance": "A small, faint, slightly elongated glow in the shaft of Sagitta, easy to confuse with the Milky Way's haze.",
+    "whyHere": "Globular clusters are usually easy to tell from open ones, but M71 blurred the line so well that astronomers argued about it until the 1970s.",
+    "see": "Find the little arrow of Sagitta between Albireo and Altair. M71 sits mid-shaft, about halfway between δ and γ Sagittae and just south of the line, a faint small haze that won't resolve, so check the field on the chart and use averted vision.",
+    "understand": "M71 is loose for a globular, and its stars are rich in heavy elements for one, so it looked like a dense open cluster. The decisive test came from the brightness and colors of its stars, plotted on a diagram that sorts stars by stage of life: they traced the pattern of an ancient population. It also lacks the pulsing RR Lyrae stars most globulars contain, which had misled astronomers for decades.",
+    "wonder": "Its stars are more than twice the Sun's age yet carry about a sixth of the Sun's share of heavy elements, far more than M92's.",
+    "connect": "These old stars are all lighter than the Sun, and each will end gently, like the Dumbbell four degrees north.",
+    "answer": "It is loose and unusually rich in heavy elements, yet its stars are about 11 billion years old, a genuine globular orbiting close to the Milky Way's disk instead of far out in the halo.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age of its stars",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Heavy elements (log, Sun = 0)",
+      "factRef": "feH"
+     },
+     {
+      "label": "Mass",
+      "factRef": "massMsun"
+     }
+    ],
+    "photoCaption": "The survey photo shows a loose, grainy ball; binoculars show a faint, unresolved haze.",
+    "deeper": "Baumgardt & Vasiliev (2021): 4.0 kpc and about 3.8 × 10⁴ solar masses, a lightweight globular. Harris (2010): [Fe/H] = −0.78. VandenBerg et al. (2013): 11.0 ± 0.4 Gyr (fit only); ESA/Hubble quotes 9–10 Gyr. ESA/Hubble explains that its short horizontal branch, a feature of the color–magnitude diagram, accounts for the missing RR Lyrae variables that once argued against a globular classification.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "bv21",
+    "vandenberg2013",
+    "harris2010",
+    "esahubble-m71",
+    "nasa-m71",
+    "catalog-extents",
+    "vds-sketches",
+    "al-binocular-messier"
+   ],
+   "con": "Sge",
+   "ra": 298.45,
+   "dec": 18.78333,
+   "mag": 8.2,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC6871",
+   "kind": "dso",
+   "names": {
+    "display": "NGC 6871",
+    "designation": "NGC 6871",
+    "aliases": [
+     "Collinder 405",
+     "Cyg OB3 nucleus"
+    ],
+    "simbadId": "NGC  6871"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 6010,
+     "min": 5980,
+     "max": 6040,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "1843 pc, Gaia DR3; range widened to ±0.5% for systematics; older photometry 1.5–1.8 kpc"
+    },
+    "ageMyr": {
+     "value": 7.8,
+     "min": 5.1,
+     "max": 11.0,
+     "unit": "Myr",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "HR24 logAge 16/50/84 = 6.71/6.89/7.04 (neural-net isochrone)"
+    },
+    "memberCount": {
+     "value": 351,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members"
+    },
+    "massMsun": {
+     "value": 1626,
+     "unit": "Msun",
+     "sourceId": "hr24",
+     "method": "model",
+     "note": "HR24 MassTot"
+    },
+    "angularSizeArcmin": {
+     "value": 20,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "secondaryClasses": [
+    "ob-association"
+   ],
+   "extent": {
+    "majorArcmin": 20,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 3,
+     "dark": 3
+    },
+    "10x50": {
+     "suburban": 3,
+     "dark": 4
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "high",
+    "resolves": "stars",
+    "bestFieldDeg": 3,
+    "colorVisible": false
+   },
+   "evoStage": 1,
+   "contextIds": [
+    "ctx:CygOB3"
+   ],
+   "teaches": [
+    {
+     "conceptId": "LIFE.cluster-birth",
+     "strength": 3
+    },
+    {
+     "conceptId": "STAR.mass-fate",
+     "strength": 2
+    },
+    {
+     "conceptId": "MW.families",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.supernova",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "young-cluster",
+    "association"
+   ],
+   "wow": 3,
+   "insight": 4,
+   "obsDifficulty": 2,
+   "superlatives": [],
+   "misconceptions": [],
+   "historyHook": {
+    "text": "In 2003 astronomers showed that the black hole Cygnus X-1 travels through space with this group of stars.",
+    "sourceId": "mirabel2003"
+   },
+   "showpiece": false,
+   "interest": 0.75,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC6871-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of NGC 6871 in the rich Cygnus Milky Way.",
+      "fieldDeg": 0.67,
+      "variant": "optical"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "Can a black hole still have living siblings?",
+    "glance": "A loose, bright knot of white stars set in the dense Cygnus Milky Way.",
+    "whyHere": "Black holes are born from the heaviest stars, and heavy stars are born in families, so somewhere a black hole should still be traveling with its kin.",
+    "see": "From η Cygni, in the swan's neck below Sadr, move about 2° east-north-east. A compact scatter of fairly bright white stars stands out from the dense background; frame it at low power, then sweep around to sense how many bright stars belong to the wider family.",
+    "understand": "NGC 6871 is the densest part of Cygnus OB3, a loose group of hot, heavy stars born within the last several million years. Stars this heavy burn through their fuel in a few million years, and one former member already has. In 2003 astronomers measured the motion of Cygnus X-1 through space and found it moving along with this group, so its black hole, now weighed at about 21 Suns, very likely began as one of the family’s heaviest stars.",
+    "wonder": "The black hole's parent star seems to have collapsed without a big explosion, since a supernova kick would have stopped it keeping pace with its siblings.",
+    "connect": "Cygnus X-1's companion is a faint star a little to the west, near η Cygni.",
+    "answer": "Cygnus X-1 seems to, for this black hole of about twenty Suns and its blue supergiant still travel with the stars of NGC 6871, probably the family its parent was born in, where some siblings may end the same way.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members (Gaia)",
+      "factRef": "memberCount"
+     }
+    ],
+    "photoCaption": "The survey photo shows the cluster’s bright stars against countless background stars, as binoculars do.",
+    "deeper": "Hunt & Reffert (2024): 1.84 kpc, about 350 Gaia members and a neural-network age of 7.8 Myr (5–11); older photometric ages range from about 2 to 20 Myr. Massey et al. (1995) studied the massive-star content of Cyg OB3. Mirabel & Rodrigues (2003) found that Cygnus X-1 moves with Cyg OB3 to within about 9 km/s and argued that its black hole formed from a progenitor of more than 40 solar masses that ejected at most about one solar mass; they used the then-accepted black-hole mass of about 10 solar masses, which Miller-Jones et al. (2021) revised to about 21 solar masses.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "hr24",
+    "massey1995",
+    "mirabel2003",
+    "millerjones2021-cygx1",
+    "apod-cygx1",
+    "catalog-extents"
+   ],
+   "con": "Cyg",
+   "ra": 301.475,
+   "dec": 35.78333,
+   "mag": 5.2,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "M29",
+   "kind": "dso",
+   "names": {
+    "display": "M29",
+    "designation": "M29",
+    "aliases": [
+     "NGC 6913",
+     "M 29"
+    ],
+    "simbadId": "M  29"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 5570,
+     "min": 5010,
+     "max": 5600,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "1709 pc, Gaia DR3 (HR24); Straižys+2014 photometric 1.54 ± 0.15 kpc sets the lower bound"
+    },
+    "ageMyr": {
+     "value": 5,
+     "min": 4,
+     "max": 6,
+     "unit": "Myr",
+     "sourceId": "straizys2014",
+     "method": "model",
+     "note": "5 ± 1 Myr (Padova isochrones, 15 O9–B8 members); HR24 NN 6.4 Myr (4.0–8.9)"
+    },
+    "memberCount": {
+     "value": 70,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members"
+    },
+    "angularSizeArcmin": {
+     "value": 7,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "extent": {
+    "majorArcmin": 7,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "straizys2014"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "10x50": {
+     "suburban": 3,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "partly",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 1,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.cluster-birth",
+     "strength": 3
+    },
+    {
+     "conceptId": "MW.disk",
+     "strength": 2
+    },
+    {
+     "conceptId": "DIST.lum-vs-app",
+     "strength": 2
+    }
+   ],
+   "roles": [
+    "young-cluster"
+   ],
+   "wow": 2,
+   "insight": 4,
+   "obsDifficulty": 2,
+   "superlatives": [],
+   "misconceptions": [
+    "MC1"
+   ],
+   "showpiece": false,
+   "interest": 0.65,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M29-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of M29: a compact box of stars in a dusty field.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M29-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view: the dust thins and more stars appear.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     },
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "How much of a young star cluster can dust hide?",
+    "glance": "A tiny, compact knot of half a dozen stars about 2 degrees south of Sadr.",
+    "whyHere": "Dust does more than draw dark lanes; it also dims and reddens whatever lies behind it, and M29 is a cluster seen through exactly that curtain.",
+    "see": "Center Sadr, at the middle of the Northern Cross, and drop about 2° south. A compact knot of five or six stars sits in a small box shape, faint but distinct against the Milky Way.",
+    "understand": "M29's brightest stars are hot, heavy stars only about five million years old, among the youngest in binocular reach and each far more luminous than the Sun. They look modest partly because they lie over 5,000 light-years away, and partly because the dust of the Cygnus Rift sits in front of them. Astronomers measure that dust by how much redder the stars look than their type should be, the way a low Sun turns orange through smoky air.",
+    "wonder": "Strip the dust away and these blue-white stars would rival the finer clusters of the summer sky.",
+    "connect": "That dust shows to the naked eye as the dark lane splitting the Milky Way.",
+    "answer": "The Rift's dust dims M29 more than tenfold, turning a cluster of brilliant young stars into a faint little box.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members (Gaia)",
+      "factRef": "memberCount"
+     }
+    ],
+    "photoCaption": "The survey photo shows the compact group and dark patches of dust around it.",
+    "deeper": "Straižys et al. (2014) classified about 260 stars in the field: eight O9–B2 members give 1.54 ± 0.15 kpc, the isochrone age is 5 ± 1 Myr, and the mean reddening E(B−V) ≈ 1.03, about three magnitudes of dimming, comes from the Great Cygnus Rift at roughly 800 pc. Hunt & Reffert (2024) find 1.71 kpc and 70 Gaia members, with a neural-network age of 6.4 Myr. Membership in Cyg OB1 is often stated but debated.",
+    "tier": "showpiece"
+   },
+   "sources": [
+    "hr24",
+    "straizys2014",
+    "catalog-extents",
+    "al-binocular-messier"
+   ],
+   "con": "Cyg",
+   "ra": 305.975,
+   "dec": 38.53333,
+   "mag": 7.1,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "M56",
+   "kind": "dso",
+   "names": {
+    "display": "M56",
+    "designation": "M56",
+    "aliases": [
+     "NGC 6779",
+     "M 56"
+    ],
+    "simbadId": "M  56"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 34018,
+     "min": 33561,
+     "max": 34475,
+     "unit": "ly",
+     "sourceId": "bv21",
+     "method": "measured",
+     "note": "10.43 ± 0.14 kpc"
+    },
+    "ageMyr": {
+     "value": 12750,
+     "min": 12250,
+     "max": 13250,
+     "unit": "Myr",
+     "sourceId": "vandenberg2013",
+     "method": "model",
+     "note": "12.75 ± 0.50 Gyr (fit only)"
+    },
+    "massMsun": {
+     "value": 166000,
+     "min": 158430,
+     "max": 173570,
+     "unit": "Msun",
+     "sourceId": "bv21",
+     "method": "model"
+    },
+    "feH": {
+     "value": -1.98,
+     "unit": "dex",
+     "sourceId": "harris2010",
+     "method": "catalog"
+    },
+    "angularSizeArcmin": {
+     "value": 7.1,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "globular-cluster",
+   "extent": {
+    "majorArcmin": 7.1,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "bv21"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 4,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "MW.halo",
+     "strength": 2
+    },
+    {
+     "conceptId": "TIME.lookback",
+     "strength": 2
+    },
+    {
+     "conceptId": "DIST.light-year",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "globular"
+   ],
+   "wow": 2,
+   "insight": 3,
+   "obsDifficulty": 4,
+   "superlatives": [],
+   "misconceptions": [],
+   "showpiece": false,
+   "interest": 0.4,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/M56-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of M56 in a crowded Lyra star field.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/M56-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view of the same field.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "How far into the Galaxy's halo can binoculars reach?",
+    "glance": "A faint, small round haze in a crowded Lyra star field: a challenge for 10×50.",
+    "whyHere": "The Great Hercules Cluster is the easy globular; M56 is the same kind of ancient star ball much farther off, a hard catch that pays off in distance.",
+    "see": "Start at Albireo and sweep about halfway toward Sulafat (γ Lyrae), at the bottom of Lyra. Look for a small, faint, round haze among many stars, and check the field against the chart before deciding.",
+    "understand": "Like the Great Hercules Cluster, M56 is a globular cluster, a ball of ancient stars from the Galaxy's halo. But it is about 40% farther away and only a third as massive, so it looks small and faint. Its stars are nearly 13 billion years old.",
+    "wonder": "Its light set out about 34,000 years ago, during the last Ice Age.",
+    "connect": "Albireo, nearby, is a few hundred light-years away; this glow is about eighty times farther.",
+    "answer": "At least as far as M56, deep in the halo, where over a hundred thousand Suns' worth of ancient stars blur into one faint haze.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age of its stars",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Mass",
+      "factRef": "massMsun"
+     }
+    ],
+    "photoCaption": "The survey photo shows a compact ball of stars; binoculars show a faint, round glow.",
+    "deeper": "Baumgardt & Vasiliev (2021): 10.43 ± 0.14 kpc, 1.7 × 10⁵ solar masses. VandenBerg et al. (2013): 12.75 ± 0.50 Gyr. Harris (2010): [Fe/H] = −1.98.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "bv21",
+    "vandenberg2013",
+    "harris2010",
+    "catalog-extents",
+    "al-binocular-messier"
+   ],
+   "con": "Lyr",
+   "ra": 289.15,
+   "dec": 30.18333,
+   "mag": 8.3,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC6709",
+   "kind": "dso",
+   "names": {
+    "display": "NGC 6709",
+    "designation": "NGC 6709",
+    "aliases": [
+     "Collinder 393"
+    ],
+    "simbadId": "NGC  6709"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 3420,
+     "min": 3400,
+     "max": 3440,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "1048 pc, Gaia DR3; range widened to ±0.5%"
+    },
+    "ageMyr": {
+     "value": 161.0,
+     "min": 109.0,
+     "max": 286.0,
+     "unit": "Myr",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "HR24 logAge 16/50/84 = 8.04/8.21/8.46 (neural-net isochrone)"
+    },
+    "memberCount": {
+     "value": 452,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members"
+    },
+    "angularSizeArcmin": {
+     "value": 13,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "extent": {
+    "majorArcmin": 13,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "partly",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 2,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.cluster-birth",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "young-cluster"
+   ],
+   "wow": 2,
+   "insight": 2,
+   "obsDifficulty": 3,
+   "superlatives": [],
+   "misconceptions": [],
+   "showpiece": false,
+   "interest": 0.3,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC6709-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of NGC 6709 in the Aquila Milky Way.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/NGC6709-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view of the same field.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "How young is a star family that still has blue-white stars?",
+    "glance": "A small, faint scatter of stars in a rich Aquila field.",
+    "whyHere": "Not every cluster is famous, and NGC 6709 is a good example of an ordinary young family going quietly about its life in the Milky Way's disk.",
+    "see": "From ζ Aquilae, at the eagle's tail, sweep about 5° south-west. Look for a small, slightly grainy patch with a few resolved stars, easy to miss against the rich background.",
+    "understand": "Its brightest stars are still blue-white, and such hot stars burn out fast, so the family can be no more than a few hundred million years old. Gaia picked out about 450 members sharing one distance and motion. Fitting their colors and brightness to stellar models gives the age.",
+    "wonder": "The light you see left it about 3,400 years ago, when Egypt's New Kingdom pharaohs ruled.",
+    "connect": "The older and younger families of Ophiuchus lie to the west.",
+    "answer": "Young enough to keep its hot stars: NGC 6709 is about 160 million years old, a toddler by the standards of the Sun.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members (Gaia)",
+      "factRef": "memberCount"
+     }
+    ],
+    "photoCaption": "The survey photo resolves dozens of members; binoculars show a handful plus haze.",
+    "deeper": "Hunt & Reffert (2024): 1.05 kpc, about 450 Gaia DR3 members, neural-network age 161 Myr (109–286). No literature age override was applied.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "hr24",
+    "catalog-extents",
+    "al-binocular-deepsky"
+   ],
+   "con": "Aql",
+   "ra": 282.875,
+   "dec": 10.35,
+   "mag": 6.7,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC6823",
+   "kind": "dso",
+   "names": {
+    "display": "NGC 6823",
+    "designation": "NGC 6823",
+    "aliases": [
+     "Collinder 404",
+     "with NGC 6820 nebula"
+    ],
+    "simbadId": "NGC  6823"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 6660,
+     "min": 6620,
+     "max": 6690,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "2041 pc, Gaia DR3; range widened to ±0.5%"
+    },
+    "ageMyr": {
+     "value": 3.8,
+     "min": 2.8,
+     "max": 4.6,
+     "unit": "Myr",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "HR24 logAge 16/50/84 = 6.45/6.58/6.67 (neural-net isochrone)"
+    },
+    "memberCount": {
+     "value": 175,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members"
+    },
+    "angularSizeArcmin": {
+     "value": 12,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "embedded-cluster",
+   "secondaryClasses": [
+    "hii-region"
+   ],
+   "extent": {
+    "majorArcmin": 12,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "ionizing-stars",
+    "sourceIds": [
+     "hr24"
+    ],
+    "note": "cluster O/B stars ionize the surrounding NGC 6820 nebula"
+   },
+   "view": {
+    "7x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "partly",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 1,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.nursery",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.cluster-birth",
+     "strength": 2
+    }
+   ],
+   "roles": [
+    "young-cluster",
+    "nursery"
+   ],
+   "wow": 2,
+   "insight": 3,
+   "obsDifficulty": 3,
+   "superlatives": [],
+   "misconceptions": [
+    "MC7"
+   ],
+   "showpiece": false,
+   "interest": 0.4,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC6823-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of NGC 6823 and the faint NGC 6820 glow.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/NGC6823-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared view: dust thins and embedded stars appear.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Can you see a cluster still sitting in the cloud it formed from?",
+    "glance": "A small, faint knot of stars in Vulpecula; the glowing gas around it shows only in photographs.",
+    "whyHere": "One of the youngest clusters on the binocular list, NGC 6823 is still wrapped in the gas it formed from.",
+    "see": "About 3.5° east of α Vulpeculae, look for a tiny group of faint stars. Binoculars show only the brightest members; the gas and dark pillars around them need a camera.",
+    "understand": "At about 4 million years old, its hot young stars are still blasting the surrounding hydrogen with ultraviolet light. That light makes the cloud glow and slowly erodes it, carving pillars where denser knots shield the gas behind them. The same process sculpts the famous pillars in the Eagle Nebula.",
+    "wonder": "It formed after the first human ancestors began walking on two legs.",
+    "connect": "The North America Nebula, to the north, is a bigger nursery in the same Milky Way band.",
+    "answer": "Its stars, yes; its cloud, no. The glowing gas around NGC 6823 shows only in photographs, but the cluster you see is still sitting in it.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members (Gaia)",
+      "factRef": "memberCount"
+     }
+    ],
+    "photoCaption": "Photographs show red gas and dark pillars around the cluster; binoculars show a few faint stars.",
+    "notSee": "The nebula NGC 6820 and its pillars.",
+    "deeper": "Hunt & Reffert (2024): 2.04 kpc, about 175 Gaia members, neural-network age 3.8 Myr (2.8–4.6). It is often assigned to the Vulpecula OB1 association.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "hr24",
+    "catalog-extents",
+    "al-binocular-deepsky"
+   ],
+   "con": "Vul",
+   "ra": 295.775,
+   "dec": 23.3,
+   "mag": 7.1,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC6910",
+   "kind": "dso",
+   "names": {
+    "display": "NGC 6910",
+    "designation": "NGC 6910",
+    "aliases": [
+     "Collinder 418"
+    ],
+    "simbadId": "NGC  6910"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 5460,
+     "min": 5430,
+     "max": 5490,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "1674 pc, Gaia DR3; range widened to ±0.5%"
+    },
+    "ageMyr": {
+     "value": 15.1,
+     "min": 8.9,
+     "max": 24.0,
+     "unit": "Myr",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "HR24 logAge 16/50/84 = 6.95/7.18/7.38 (neural-net isochrone)"
+    },
+    "memberCount": {
+     "value": 273,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members"
+    },
+    "angularSizeArcmin": {
+     "value": 8,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "extent": {
+    "majorArcmin": 8,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "10x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "partly",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 2,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "SKY.projection",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIFE.cluster-birth",
+     "strength": 2
+    }
+   ],
+   "roles": [
+    "young-cluster"
+   ],
+   "wow": 2,
+   "insight": 3,
+   "obsDifficulty": 2,
+   "superlatives": [],
+   "misconceptions": [
+    "MC9"
+   ],
+   "showpiece": false,
+   "interest": 0.45,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC6910-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of NGC 6910 near Sadr.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/NGC6910-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view of the same field.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "Does the bright star beside this cluster belong to it?",
+    "glance": "A small, tight group of faint stars just north of Sadr, in the same binocular field.",
+    "whyHere": "Sadr crowds the view of a young cluster just beside it, a neat test of whether things that look together really are.",
+    "see": "Center Sadr; NGC 6910 is a small knot about half a degree north, in the same field. Averted vision adds a soft haze of fainter members.",
+    "understand": "NGC 6910 is a young family about 15 million years old, deep in the Cygnus Milky Way. Gaia measures its distance at about 5,460 light-years, while Sadr is a supergiant much nearer to us. The two only look connected, a trick of perspective.",
+    "wonder": "The cluster was born long after the dinosaurs died out.",
+    "connect": "M29, two degrees south of Sadr, is another young family at almost the same distance.",
+    "answer": "Sadr is about 1,800 light-years away and the cluster three times farther, so the bright star is a foreground passer-by.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members (Gaia)",
+      "factRef": "memberCount"
+     }
+    ],
+    "photoCaption": "The survey photo shows the cluster and Sadr’s glare in one frame.",
+    "deeper": "Hunt & Reffert (2024): 1.67 kpc, about 270 Gaia members, neural-network age 15 Myr (9–24). It sits in the Cygnus OB1 region of young clusters and associations.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "hr24",
+    "catalog-extents",
+    "al-binocular-deepsky"
+   ],
+   "con": "Cyg",
+   "ra": 305.775,
+   "dec": 40.78333,
+   "mag": 7.4,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC6934",
+   "kind": "dso",
+   "names": {
+    "display": "NGC 6934",
+    "designation": "NGC 6934",
+    "aliases": [
+     "Caldwell 47"
+    ],
+    "simbadId": "NGC  6934"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 51272,
+     "min": 50717,
+     "max": 51826,
+     "unit": "ly",
+     "sourceId": "bv21",
+     "method": "measured",
+     "note": "15.72 ± 0.17 kpc"
+    },
+    "ageMyr": {
+     "value": 11750,
+     "min": 11500,
+     "max": 12000,
+     "unit": "Myr",
+     "sourceId": "vandenberg2013",
+     "method": "model",
+     "note": "11.75 ± 0.25 Gyr (fit only)"
+    },
+    "massMsun": {
+     "value": 150000,
+     "min": 146270,
+     "max": 153730,
+     "unit": "Msun",
+     "sourceId": "bv21",
+     "method": "model"
+    },
+    "feH": {
+     "value": -1.47,
+     "unit": "dex",
+     "sourceId": "harris2010",
+     "method": "catalog"
+    },
+    "angularSizeArcmin": {
+     "value": 5.9,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "globular-cluster",
+   "extent": {
+    "majorArcmin": 5.9,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "bv21"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 0,
+     "dark": 1
+    },
+    "10x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "low",
+    "resolves": "glow",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 4,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "TIME.lookback",
+     "strength": 2
+    },
+    {
+     "conceptId": "MW.halo",
+     "strength": 2
+    },
+    {
+     "conceptId": "DIST.light-year",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "globular"
+   ],
+   "wow": 1,
+   "insight": 3,
+   "obsDifficulty": 4,
+   "superlatives": [],
+   "misconceptions": [],
+   "showpiece": false,
+   "interest": 0.35,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC6934-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of NGC 6934 in Delphinus.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/NGC6934-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view of the same field.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "How small does a globular cluster look from 50,000 light-years away?",
+    "glance": "A tiny, faint, almost starlike glow in Delphinus: a real challenge for 10×50.",
+    "whyHere": "The Great Hercules Cluster is a globular next door by comparison, and NGC 6934 is the same kind of ancient star ball twice as far away, a real test of your sky and your eyes.",
+    "see": "From ε Delphini, south-west of the dolphin's diamond, drop about 4° south. Look for a tiny fuzzy star that won't focus, and confirm it against the chart.",
+    "understand": "NGC 6934 holds about 150,000 Suns' worth of stars, almost 12 billion years old. Double a cluster's distance and it shrinks to half the size and a quarter of the brightness. At twice the Great Hercules Cluster's distance and with a third of its mass, this one is reduced to a pinpoint glow.",
+    "wonder": "Its light left about 51,000 years ago, while Neanderthals still lived in Europe.",
+    "connect": "Job's Coffin, just north, is only a couple of hundred light-years away.",
+    "answer": "From that far, NGC 6934's ancient stars shrink to a fuzzy star that won't focus.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age of its stars",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Mass",
+      "factRef": "massMsun"
+     }
+    ],
+    "photoCaption": "The survey photo shows a small, bright-cored ball; binoculars show a faint, nearly starlike speck.",
+    "deeper": "Baumgardt & Vasiliev (2021): 15.72 ± 0.17 kpc, 1.5 × 10⁵ solar masses. VandenBerg et al. (2013): 11.75 ± 0.25 Gyr. Harris (2010): [Fe/H] = −1.47.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "bv21",
+    "vandenberg2013",
+    "harris2010",
+    "catalog-extents",
+    "al-binocular-deepsky"
+   ],
+   "con": "Del",
+   "ra": 308.55,
+   "dec": 7.4,
+   "mag": 8.7,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC6940",
+   "kind": "dso",
+   "names": {
+    "display": "NGC 6940",
+    "designation": "NGC 6940",
+    "aliases": [
+     "Collinder 424",
+     "Melotte 232"
+    ],
+    "simbadId": "NGC  6940"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 3300,
+     "min": 3280,
+     "max": 3310,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "1011 pc, Gaia DR3; range widened to ±0.5%"
+    },
+    "ageMyr": {
+     "value": 770.0,
+     "min": 528.0,
+     "max": 1200.0,
+     "unit": "Myr",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "HR24 logAge 16/50/84 = 8.72/8.89/9.08 (neural-net isochrone)"
+    },
+    "memberCount": {
+     "value": 864,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members"
+    },
+    "massMsun": {
+     "value": 2190,
+     "unit": "Msun",
+     "sourceId": "hr24",
+     "method": "model",
+     "note": "HR24 MassTot"
+    },
+    "angularSizeArcmin": {
+     "value": 31,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "extent": {
+    "majorArcmin": 31,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "10x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "partly",
+    "bestFieldDeg": 2.5,
+    "colorVisible": false
+   },
+   "evoStage": 3,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.cluster-age",
+     "strength": 2
+    },
+    {
+     "conceptId": "PERC.binoculars",
+     "strength": 2
+    }
+   ],
+   "roles": [
+    "adult-cluster"
+   ],
+   "wow": 3,
+   "insight": 2,
+   "obsDifficulty": 3,
+   "superlatives": [],
+   "misconceptions": [],
+   "showpiece": false,
+   "interest": 0.45,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC6940-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the rich cluster NGC 6940.",
+      "fieldDeg": 1.03,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/NGC6940-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view of the same field.",
+      "fieldDeg": 1.03,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "What does a real crowd of star siblings look like?",
+    "glance": "A large, rich, even scatter of faint stars in southern Vulpecula, about the size of the full Moon.",
+    "whyHere": "A real family of stars rarely looks dramatic, and NGC 6940 is the proof: a plain patch that turns out to hold hundreds of siblings.",
+    "see": "From ε Cygni, sweep about 6° south-west. Look for a soft, grainy patch the size of the full Moon, sprinkled with faint resolved stars; a dark sky brings out dozens.",
+    "understand": "Its hottest stars are long gone, and the white and yellow stars that remain date the family to the better part of a billion years. Gaia measured the distance and motion of every star in the field, and more than 800 move together. That shared motion is what makes a cluster real, whatever it looks like.",
+    "wonder": "The whole family weighs about 2,200 Suns, spread across a patch of sky the size of the full Moon.",
+    "connect": "The Coathanger looks more like a cluster but is a false one.",
+    "answer": "It can look like NGC 6940, an unremarkable grainy patch that holds hundreds of stars traveling together.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members (Gaia)",
+      "factRef": "memberCount"
+     }
+    ],
+    "photoCaption": "The survey photo resolves hundreds of members; binoculars show a grainy glow with a few dozen stars.",
+    "deeper": "Hunt & Reffert (2024): 1.01 kpc, about 860 Gaia members and about 2,200 solar masses; neural-network age 0.77 Gyr (0.53–1.2). No literature age override was applied.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "hr24",
+    "catalog-extents",
+    "al-binocular-deepsky"
+   ],
+   "con": "Vul",
+   "ra": 308.65,
+   "dec": 28.3,
+   "mag": 6.3,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "AST-JobsCoffin",
+   "kind": "dso",
+   "names": {
+    "display": "Job's Coffin",
+    "designation": "Delphinus diamond",
+    "aliases": [
+     "Delphinus asterism",
+     "α β γ δ Delphini"
+    ]
+   },
+   "facts": {
+    "angularSizeArcmin": {
+     "value": 30,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "asterism",
+   "traits": [
+    "naked-eye"
+   ],
+   "extent": {
+    "majorArcmin": 30,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "gaia-edr3-simbad"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 4,
+     "dark": 4
+    },
+    "10x50": {
+     "suburban": 4,
+     "dark": 4
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "high",
+    "resolves": "stars",
+    "bestFieldDeg": 4,
+    "colorVisible": true
+   },
+   "evoStage": null,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "SKY.projection",
+     "strength": 2
+    },
+    {
+     "conceptId": "LIGHT.color-temp",
+     "strength": 1
+    }
+   ],
+   "roles": [],
+   "wow": 3,
+   "insight": 2,
+   "obsDifficulty": 1,
+   "superlatives": [],
+   "misconceptions": [
+    "MC9"
+   ],
+   "showpiece": true,
+   "interest": 0.4,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/AST-JobsCoffin-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of the Delphinus diamond.",
+      "fieldDeg": 4,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/AST-JobsCoffin-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view of the same field.",
+      "fieldDeg": 4,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "distance-bar"
+     },
+     {
+      "type": "binocular-field",
+      "fieldDeg": 6.5
+     }
+    ]
+   },
+   "card": {
+    "question": "Are the four stars of the Dolphin's diamond a family?",
+    "glance": "A small, bright diamond of four stars with a short tail: the dolphin of Delphinus, lovely in binoculars.",
+    "whyHere": "Delphinus looks like a tight little family of stars, which makes it a good place to test that impression.",
+    "see": "Look about 14° north-east of Altair for a tight diamond of four stars that fits easily in one field. Compare the warm yellowish tint of γ Delphini at one corner with the white of α.",
+    "understand": "Gaia measured each corner's distance. The two nearest corners, β and γ, lie about 100–120 light-years away, while α and δ are about twice as far. Like the Coathanger, the diamond is an asterism, a chance pattern.",
+    "wonder": "γ Delphini, at one corner, is a double star that a small telescope splits easily.",
+    "connect": "About 4 degrees south of the tail lies a faint globular cluster hundreds of times farther away.",
+    "answer": "The diamond is a coincidence of perspective, two near stars and two far ones that happen to frame a kite from here.",
+    "numbers": [
+     {
+      "label": "Size on the sky",
+      "factRef": "angularSizeArcmin"
+     }
+    ],
+    "photoCaption": "The survey photo matches the binocular view: four bright stars and many faint ones.",
+    "deeper": "Gaia parallaxes listed in SIMBAD: β Del 32.3 mas (~100 ly), γ² Del 28.1 mas (~116 ly), δ Del 14.8 mas (~220 ly), α Del 13.7 mas (~238 ly).",
+    "tier": "supporting"
+   },
+   "sources": [
+    "gaia-edr3-simbad",
+    "catalog-extents"
+   ],
+   "con": "Del",
+   "ra": 310.5,
+   "dec": 15.38333,
+   "mag": 3.6,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  },
+  {
+   "id": "NGC7063",
+   "kind": "dso",
+   "names": {
+    "display": "NGC 7063",
+    "designation": "NGC 7063",
+    "aliases": [
+     "Collinder 437"
+    ],
+    "simbadId": "NGC  7063"
+   },
+   "facts": {
+    "distanceLy": {
+     "value": 2140,
+     "min": 2130,
+     "max": 2150,
+     "unit": "ly",
+     "sourceId": "hr24",
+     "method": "measured",
+     "note": "657 pc, Gaia DR3; range widened to ±0.5%"
+    },
+    "ageMyr": {
+     "value": 147.0,
+     "min": 88.5,
+     "max": 268.0,
+     "unit": "Myr",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "HR24 logAge 16/50/84 = 7.95/8.17/8.43 (neural-net isochrone)"
+    },
+    "memberCount": {
+     "value": 206,
+     "unit": "stars",
+     "sourceId": "hr24",
+     "method": "catalog",
+     "note": "Gaia DR3 members"
+    },
+    "angularSizeArcmin": {
+     "value": 7,
+     "unit": "arcmin",
+     "sourceId": "catalog-extents",
+     "method": "catalog"
+    }
+   },
+   "dsoClass": "open-cluster",
+   "extent": {
+    "majorArcmin": 7,
+    "sourceId": "catalog-extents"
+   },
+   "poweredBy": {
+    "kind": "starlight",
+    "sourceIds": [
+     "hr24"
+    ]
+   },
+   "view": {
+    "7x50": {
+     "suburban": 1,
+     "dark": 2
+    },
+    "10x50": {
+     "suburban": 2,
+     "dark": 3
+    },
+    "basis": "curator"
+   },
+   "appearance": {
+    "moonTolerance": "medium",
+    "resolves": "partly",
+    "bestFieldDeg": 2,
+    "colorVisible": false
+   },
+   "evoStage": 2,
+   "contextIds": [],
+   "teaches": [
+    {
+     "conceptId": "LIFE.cluster-birth",
+     "strength": 2
+    },
+    {
+     "conceptId": "PERC.binoculars",
+     "strength": 1
+    }
+   ],
+   "roles": [
+    "young-cluster"
+   ],
+   "wow": 2,
+   "insight": 2,
+   "obsDifficulty": 3,
+   "superlatives": [],
+   "misconceptions": [],
+   "showpiece": false,
+   "interest": 0.3,
+   "media": {
+    "images": [
+     {
+      "src": "data/binocular-images/NGC7063-optical.jpg",
+      "credit": "Digitized Sky Survey · STScI / Caltech / UKST / AAO; color mosaic by CDS",
+      "license": "DSS2: educational non-commercial use with acknowledgment",
+      "caption": "Survey photograph of NGC 7063 in eastern Cygnus.",
+      "fieldDeg": 0.6,
+      "variant": "optical"
+     },
+     {
+      "src": "data/binocular-images/NGC7063-infrared.jpg",
+      "credit": "2MASS / UMass / IPAC-Caltech / NASA / NSF; color mosaic by CDS",
+      "license": "2MASS: public domain",
+      "caption": "Near-infrared survey view of the same field.",
+      "fieldDeg": 0.6,
+      "variant": "infrared"
+     }
+    ],
+    "visuals": [
+     {
+      "type": "age-bar"
+     }
+    ]
+   },
+   "card": {
+    "question": "How many members can a modest little cluster hide?",
+    "glance": "A small, sparse group of faint stars in eastern Cygnus: pleasant but modest.",
+    "whyHere": "Some clusters reveal their true size only when you measure motions, and NGC 7063 grew from a dozen stars to about two hundred once Gaia looked.",
+    "see": "From υ Cygni, move about 2° north-east, near the star 69 Cygni, to a small group of a dozen faint stars. It is pleasant rather than spectacular, so take a moment to let fainter members appear.",
+    "understand": "Older catalogs counted only the dozen stars you see. Gaia measured the distance and motion of every faint star in the area and found about 200 sharing the same values, most too faint for binoculars. At about 2,140 light-years, this is a nearby family by cluster standards.",
+    "wonder": "Its stars are roughly 150 million years old, a little older than the Pleiades.",
+    "connect": "M39, to the north, is a bigger, brighter family.",
+    "answer": "Many more than it shows: binoculars catch about a dozen stars, but Gaia finds about 200 moving together.",
+    "numbers": [
+     {
+      "label": "Distance",
+      "factRef": "distanceLy",
+      "comparisonKey": "distance.light-left"
+     },
+     {
+      "label": "Age",
+      "factRef": "ageMyr",
+      "comparisonKey": "time.sun-day"
+     },
+     {
+      "label": "Members (Gaia)",
+      "factRef": "memberCount"
+     }
+    ],
+    "photoCaption": "The survey photo shows a loose knot of stars; binoculars show its brightest dozen.",
+    "deeper": "Hunt & Reffert (2024): 657 pc, about 200 Gaia members, neural-network age 148 Myr (89–268). No literature age override was applied.",
+    "tier": "supporting"
+   },
+   "sources": [
+    "hr24",
+    "catalog-extents",
+    "al-binocular-deepsky"
+   ],
+   "con": "Cyg",
+   "ra": 321.1,
+   "dec": 36.5,
+   "mag": 7.0,
+   "provenance": {
+    "status": "curated",
+    "batch": "summer-north",
+    "curatedBy": "curator-summer-north-dso"
+   }
+  }
+ ],
+ "edges": [
+  {
+   "from": "HD192163",
+   "to": "NGC6888",
+   "type": "CAUSE",
+   "subtype": "sculpts",
+   "strength": 1.0,
+   "reasonKey": "edge.HD192163>NGC6888",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "NGC6888",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "esahubble-crescent",
+    "zhekov2011"
+   ]
+  },
+  {
+   "from": "NGC6888",
+   "to": "NGC6992",
+   "type": "LIFE_NEXT",
+   "subtype": "fate-high-mass",
+   "strength": 0.85,
+   "reasonKey": "edge.NGC6888>NGC6992",
+   "curated": true,
+   "sourceIds": [
+    "esahubble-crescent",
+    "fesen2021"
+   ]
+  },
+  {
+   "from": "NGC6871",
+   "to": "NGC6888",
+   "type": "LIFE_NEXT",
+   "subtype": "massive-star-future",
+   "strength": 0.7,
+   "reasonKey": "edge.NGC6871>NGC6888",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "NGC6871",
+     "fact": "ageMyr"
+    },
+    {
+     "objectId": "NGC6888",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "hr24",
+    "esahubble-crescent"
+   ]
+  },
+  {
+   "from": "STAR-Deneb",
+   "to": "NGC6960",
+   "type": "LIFE_NEXT",
+   "subtype": "fate-high-mass",
+   "strength": 0.65,
+   "reasonKey": "edge.STAR-Deneb>NGC6960",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "NGC6960",
+     "fact": "ageMyr"
+    }
+   ],
+   "sourceIds": [
+    "fesen2021"
+   ]
+  },
+  {
+   "from": "NGC6960",
+   "to": "NGC6992",
+   "type": "SIBLING",
+   "subtype": "same-remnant",
+   "strength": 1.0,
+   "reasonKey": "edge.NGC6960>NGC6992",
+   "curated": true,
+   "directed": false,
+   "factRefs": [
+    {
+     "objectId": "NGC6992",
+     "fact": "sizeLy"
+    }
+   ],
+   "sourceIds": [
+    "fesen2021"
+   ]
+  },
+  {
+   "from": "HR7763",
+   "to": "NGC6888",
+   "type": "SAME_PHYSICS",
+   "subtype": "mass-loss",
+   "strength": 0.7,
+   "reasonKey": "edge.HR7763>NGC6888",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "esahubble-crescent"
+   ]
+  },
+  {
+   "from": "M27",
+   "to": "NGC6992",
+   "type": "CONTRAST",
+   "subtype": "fate-low-vs-high-mass",
+   "strength": 0.9,
+   "reasonKey": "edge.M27>NGC6992",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "meaburn2005",
+    "fesen2021"
+   ]
+  },
+  {
+   "from": "M57",
+   "to": "M27",
+   "type": "SAME_PHYSICS",
+   "subtype": "same-process",
+   "strength": 0.9,
+   "reasonKey": "edge.M57>M27",
+   "curated": true,
+   "directed": false,
+   "factRefs": [
+    {
+     "objectId": "M57",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M27",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "gaia-edr3-simbad"
+   ]
+  },
+  {
+   "from": "NAME-TLyrae",
+   "to": "M57",
+   "type": "LIFE_NEXT",
+   "subtype": "agb-to-pn",
+   "strength": 0.75,
+   "reasonKey": "edge.NAME-TLyrae>M57",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M57",
+     "fact": "ageMyr"
+    }
+   ],
+   "sourceIds": [
+    "odell2013"
+   ]
+  },
+  {
+   "from": "HR7564",
+   "to": "M27",
+   "type": "LIFE_NEXT",
+   "subtype": "agb-to-pn",
+   "strength": 0.75,
+   "reasonKey": "edge.HR7564>M27",
+   "curated": true,
+   "sourceIds": [
+    "meaburn2005"
+   ]
+  },
+  {
+   "from": "M71",
+   "to": "M27",
+   "type": "LIFE_NEXT",
+   "subtype": "fate-low-mass",
+   "strength": 0.75,
+   "reasonKey": "edge.M71>M27",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M71",
+     "fact": "ageMyr"
+    }
+   ],
+   "sourceIds": [
+    "vandenberg2013",
+    "nasa-m27"
+   ]
+  },
+  {
+   "from": "STAR-Vega",
+   "to": "M57",
+   "type": "SCALE",
+   "subtype": "distance-step",
+   "strength": 0.6,
+   "reasonKey": "edge.STAR-Vega>M57",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "STAR-Vega",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M57",
+     "fact": "distanceLy"
+    }
+   ]
+  },
+  {
+   "from": "M13",
+   "to": "M92",
+   "type": "CONTRAST",
+   "subtype": "feH-age",
+   "strength": 0.9,
+   "reasonKey": "edge.M13>M92",
+   "curated": true,
+   "directed": false,
+   "factRefs": [
+    {
+     "objectId": "M13",
+     "fact": "feH"
+    },
+    {
+     "objectId": "M92",
+     "fact": "feH"
+    },
+    {
+     "objectId": "M92",
+     "fact": "ageMyr"
+    }
+   ],
+   "sourceIds": [
+    "harris2010",
+    "ying2023",
+    "vandenberg2013"
+   ]
+  },
+  {
+   "from": "HR6212",
+   "to": "M13",
+   "type": "SCALE",
+   "subtype": "distance-step",
+   "strength": 0.6,
+   "reasonKey": "edge.HR6212>M13",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "HR6212",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M13",
+     "fact": "distanceLy"
+    }
+   ]
+  },
+  {
+   "from": "M56",
+   "to": "M71",
+   "type": "CONTRAST",
+   "subtype": "feH",
+   "strength": 0.7,
+   "reasonKey": "edge.M56>M71",
+   "curated": true,
+   "directed": false,
+   "factRefs": [
+    {
+     "objectId": "M56",
+     "fact": "feH"
+    },
+    {
+     "objectId": "M71",
+     "fact": "feH"
+    }
+   ],
+   "sourceIds": [
+    "harris2010"
+   ]
+  },
+  {
+   "from": "DS-Albireo",
+   "to": "M56",
+   "type": "SCALE",
+   "subtype": "distance-step",
+   "strength": 0.65,
+   "reasonKey": "edge.DS-Albireo>M56",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M56",
+     "fact": "distanceLy"
+    }
+   ]
+  },
+  {
+   "from": "AST-JobsCoffin",
+   "to": "NGC6934",
+   "type": "SCALE",
+   "subtype": "distance-step",
+   "strength": 0.65,
+   "reasonKey": "edge.AST-JobsCoffin>NGC6934",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "NGC6934",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "gaia-edr3-simbad"
+   ]
+  },
+  {
+   "from": "M71",
+   "to": "NGC6819",
+   "type": "CONTRAST",
+   "subtype": "globular-vs-old-open",
+   "strength": 0.6,
+   "reasonKey": "edge.M71>NGC6819",
+   "curated": true,
+   "directed": false,
+   "factRefs": [
+    {
+     "objectId": "M71",
+     "fact": "ageMyr"
+    },
+    {
+     "objectId": "NGC6819",
+     "fact": "ageMyr"
+    }
+   ],
+   "sourceIds": [
+    "esahubble-m71",
+    "brewer2016"
+   ]
+  },
+  {
+   "from": "IC4665",
+   "to": "NGC6633",
+   "type": "CONTRAST",
+   "subtype": "same-distance-different-age",
+   "strength": 0.9,
+   "reasonKey": "edge.IC4665>NGC6633",
+   "curated": true,
+   "directed": false,
+   "factRefs": [
+    {
+     "objectId": "IC4665",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "NGC6633",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "IC4665",
+     "fact": "ageMyr"
+    },
+    {
+     "objectId": "NGC6633",
+     "fact": "ageMyr"
+    }
+   ],
+   "sourceIds": [
+    "hr24",
+    "jeffries2023",
+    "brogaard2025"
+   ]
+  },
+  {
+   "from": "IC4665",
+   "to": "NGC6709",
+   "type": "LIFE_NEXT",
+   "subtype": "older-analog",
+   "strength": 0.5,
+   "reasonKey": "edge.IC4665>NGC6709",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "IC4665",
+     "fact": "ageMyr"
+    },
+    {
+     "objectId": "NGC6709",
+     "fact": "ageMyr"
+    }
+   ],
+   "sourceIds": [
+    "hr24",
+    "jeffries2023"
+   ]
+  },
+  {
+   "from": "NGC6633",
+   "to": "NGC6940",
+   "type": "CONTRAST",
+   "subtype": "same-age-different-distance",
+   "strength": 0.55,
+   "reasonKey": "edge.NGC6633>NGC6940",
+   "curated": true,
+   "directed": false,
+   "factRefs": [
+    {
+     "objectId": "NGC6633",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "NGC6940",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "hr24",
+    "brogaard2025"
+   ]
+  },
+  {
+   "from": "M39",
+   "to": "NGC6819",
+   "type": "LIFE_NEXT",
+   "subtype": "older-analog",
+   "strength": 0.75,
+   "reasonKey": "edge.M39>NGC6819",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "M39",
+     "fact": "ageMyr"
+    },
+    {
+     "objectId": "NGC6819",
+     "fact": "ageMyr"
+    }
+   ],
+   "sourceIds": [
+    "alonso2024",
+    "brewer2016"
+   ]
+  },
+  {
+   "from": "M39",
+   "to": "NGC7063",
+   "type": "CONTRAST",
+   "subtype": "brightness-distance",
+   "strength": 0.5,
+   "reasonKey": "edge.M39>NGC7063",
+   "curated": true,
+   "directed": false,
+   "factRefs": [
+    {
+     "objectId": "M39",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "NGC7063",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "hr24"
+   ]
+  },
+  {
+   "from": "NGC6871",
+   "to": "HD226868",
+   "type": "SIBLING",
+   "subtype": "same-association",
+   "strength": 0.9,
+   "reasonKey": "edge.NGC6871>HD226868",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "mirabel2003",
+    "apod-cygx1"
+   ]
+  },
+  {
+   "from": "M29",
+   "to": "NGC6910",
+   "type": "SAME_FAMILY",
+   "subtype": "young-twins",
+   "strength": 0.65,
+   "reasonKey": "edge.M29>NGC6910",
+   "curated": true,
+   "directed": false,
+   "factRefs": [
+    {
+     "objectId": "M29",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "NGC6910",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "hr24",
+    "straizys2014"
+   ]
+  },
+  {
+   "from": "HR7796",
+   "to": "NGC6910",
+   "type": "LINE_OF_SIGHT",
+   "subtype": "foreground-star",
+   "strength": 0.9,
+   "reasonKey": "edge.HR7796>NGC6910",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "HR7796",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "NGC6910",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "hr24"
+   ]
+  },
+  {
+   "from": "MWF-CygnusRift",
+   "to": "M29",
+   "type": "CAUSE",
+   "subtype": "dims",
+   "strength": 0.85,
+   "reasonKey": "edge.MWF-CygnusRift>M29",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "MWF-CygnusRift",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "M29",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "straizys2014"
+   ]
+  },
+  {
+   "from": "MWF-CygnusRift",
+   "to": "NGC7000",
+   "type": "SAME_PHYSICS",
+   "subtype": "dust-silhouette",
+   "strength": 0.7,
+   "reasonKey": "edge.MWF-CygnusRift>NGC7000",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "comeron2005",
+    "straizys2014"
+   ]
+  },
+  {
+   "from": "MWF-CygnusRift",
+   "to": "DN-BarnardE",
+   "type": "SAME_FAMILY",
+   "subtype": "dark-cloud",
+   "strength": 0.75,
+   "reasonKey": "edge.MWF-CygnusRift>DN-BarnardE",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "barnard1927",
+    "straizys2014"
+   ]
+  },
+  {
+   "from": "DN-BarnardE",
+   "to": "NGC6823",
+   "type": "LIFE_NEXT",
+   "subtype": "cloud-to-nursery",
+   "strength": 0.6,
+   "reasonKey": "edge.DN-BarnardE>NGC6823",
+   "curated": true,
+   "factRefs": [
+    {
+     "objectId": "NGC6823",
+     "fact": "ageMyr"
+    }
+   ],
+   "sourceIds": [
+    "barnard1927",
+    "hr24"
+   ]
+  },
+  {
+   "from": "STAR-Deneb",
+   "to": "NGC7000",
+   "type": "CONTRAST",
+   "subtype": "not-the-power-source",
+   "strength": 0.75,
+   "reasonKey": "edge.STAR-Deneb>NGC7000",
+   "curated": true,
+   "sourceIds": [
+    "comeron2005",
+    "villafranca2020"
+   ]
+  },
+  {
+   "from": "NGC7000",
+   "to": "NGC6823",
+   "type": "SAME_PHYSICS",
+   "subtype": "same-process",
+   "strength": 0.6,
+   "reasonKey": "edge.NGC7000>NGC6823",
+   "curated": true,
+   "directed": false,
+   "factRefs": [
+    {
+     "objectId": "NGC7000",
+     "fact": "distanceLy"
+    },
+    {
+     "objectId": "NGC6823",
+     "fact": "distanceLy"
+    }
+   ],
+   "sourceIds": [
+    "comeron2005",
+    "hr24"
+   ]
+  },
+  {
+   "from": "AST-Coathanger",
+   "to": "M71",
+   "type": "CONTRAST",
+   "subtype": "chance-vs-family",
+   "strength": 0.75,
+   "reasonKey": "edge.AST-Coathanger>M71",
+   "curated": true,
+   "sourceIds": [
+    "baumgardt1998",
+    "bv21"
+   ]
+  },
+  {
+   "from": "AST-Coathanger",
+   "to": "NGC6823",
+   "type": "CONTRAST",
+   "subtype": "chance-vs-family",
+   "strength": 0.65,
+   "reasonKey": "edge.AST-Coathanger>NGC6823",
+   "curated": true,
+   "sourceIds": [
+    "baumgardt1998",
+    "hr24"
+   ]
+  },
+  {
+   "from": "AST-Coathanger",
+   "to": "NGC6940",
+   "type": "CONTRAST",
+   "subtype": "chance-vs-family",
+   "strength": 0.6,
+   "reasonKey": "edge.AST-Coathanger>NGC6940",
+   "curated": true,
+   "sourceIds": [
+    "baumgardt1998",
+    "hr24"
+   ]
+  },
+  {
+   "from": "AST-Coathanger",
+   "to": "AST-JobsCoffin",
+   "type": "SAME_FAMILY",
+   "subtype": "asterism",
+   "strength": 0.6,
+   "reasonKey": "edge.AST-Coathanger>AST-JobsCoffin",
+   "curated": true,
+   "directed": false,
+   "sourceIds": [
+    "baumgardt1998",
+    "gaia-edr3-simbad"
+   ]
+  }
+ ],
+ "contexts": [
+  {
+   "id": "ctx:CygOB3",
+   "kind": "ob-association",
+   "name": "Cygnus OB3",
+   "memberIds": [
+    "NGC6871",
+    "HD226868"
+   ],
+   "facts": {},
+   "text": "A loose group of young, heavy stars in Cygnus whose densest part is NGC 6871. The black-hole binary Cygnus X-1 moves through space with it.",
+   "sources": [
+    "massey1995",
+    "mirabel2003",
+    "hr24"
+   ]
+  },
+  {
+   "id": "ctx:NAP",
+   "kind": "molecular-complex",
+   "name": "North America / Pelican complex",
+   "memberIds": [
+    "NGC7000"
+   ],
+   "facts": {
+    "distanceLy": {
+     "value": 2639,
+     "min": 2580,
+     "max": 2727,
+     "unit": "ly",
+     "sourceId": "zucker2020",
+     "method": "measured",
+     "note": "dust-cloud distance 809 +27/−18 pc"
+    }
+   },
+   "text": "One cloud complex, about 2,600 light-years away, split by the dark lane L935 into the North America and Pelican nebulae and ionized by the hidden Bajamar star.",
+   "sources": [
+    "zucker2020",
+    "comeron2005",
+    "villafranca2020",
+    "fang2020"
+   ]
+  }
+ ],
+ "narration": {
+  "edge.HD192163>NGC6888": [
+   "{prev} is the engine of {next}: its fierce wind sweeps the gas the star shed earlier into a glowing shell.",
+   "The shell exists only because {prev} is losing itself to space, one fierce gust at a time."
+  ],
+  "edge.NGC6888>NGC6992": [
+   "{prev} shows a heavy star shedding its layers before the end, and a few fields to the south-east the Veil shows what is left once such a star explodes.",
+   "From a star getting ready to explode to the wreckage of one that already did, a few fields to the south-east."
+  ],
+  "edge.NGC6871>NGC6888": [
+   "The heaviest stars of {prev} are only a few million years old, and stars like them, near the end of their lives, become stripped, wind-blowing stars like the one inside {next}.",
+   "First the young heavyweights, then what such a heavyweight turns into: a star blowing itself away."
+  ],
+  "edge.STAR-Deneb>NGC6960": [
+   "{prev} is a heavy supergiant late in life, and the Veil shows how a star like that is expected to end, in an explosion whose debris is still expanding.",
+   "{prev} has a violent future, and its likely fate is written across the sky to the south in the Veil."
+  ],
+  "edge.NGC6960>NGC6992": [
+   "{prev} and {next} are opposite edges of the same expanding bubble, about {nextVal} wide, and the dark space between them is its inside.",
+   "Both arcs come from the same explosion, so sweep across the bubble from one side of the Veil to the other."
+  ],
+  "edge.HR7763>NGC6888": [
+   "{prev} and the star inside {next} are both heavy stars throwing off their outer layers, just over a degree apart on the sky.",
+   "Two heavy stars losing mass in two different ways, one in sudden outbursts and the other in a steady, fierce wind."
+  ],
+  "edge.M27>NGC6992": [
+   "{prev} is how a Sun-like star ends, letting its layers drift away, and {next} is how a heavy star ends, blowing itself apart.",
+   "Both are glowing gas left by dying stars, one a gentle exhalation and the other an explosion, and the difference comes down to the star's mass."
+  ],
+  "edge.M57>M27": [
+   "{prev} and {next} are the same thing at different distances, shells shed by dying Sun-like stars, and {next}, about {nextVal} away, is roughly half as far, so it looks bigger.",
+   "The Dumbbell is the same kind of ending seen from a closer seat, a nearer and larger version of the Ring."
+  ],
+  "edge.NAME-TLyrae>M57": [
+   "{prev} is a cool, swollen star in the last stage before it sheds its outer layers, and {next} shows that shedding a few thousand years on.",
+   "A dying red star still holding on to its layers, and a few degrees away, a shell already let go."
+  ],
+  "edge.HR7564>M27": [
+   "{prev} is a pulsing red giant puffing out its outer layers, and once that is done its exposed core will light the gas, as in {next}.",
+   "From a star in the act of losing its layers to one that has finished: the Dumbbell, to the south."
+  ],
+  "edge.M71>M27": [
+   "Every star still shining in {prev} is lighter than the Sun and very old, and when they finally run out of fuel they will end like {next}.",
+   "From ancient lightweight stars to the gentle ending that awaits each of them, four degrees to the north."
+  ],
+  "edge.STAR-Vega>M57": [
+   "{prev} is about {prevVal} away, while {next}, a few degrees south in the same constellation, lies about {nextVal} off, roughly a hundred times farther.",
+   "Vega and the Ring Nebula share a constellation but not a depth, for the dying star lies far behind its bright neighbor."
+  ],
+  "edge.M13>M92": [
+   "{prev} and {next} are both ancient globulars in Hercules, but {next} has several times fewer heavy elements and ranks among the very oldest clusters known.",
+   "{next} is the same kind of object with a different family history, formed from gas that even fewer earlier stars had enriched."
+  ],
+  "edge.HR6212>M13": [
+   "{prev}, the Keystone star you just used, is a neighbor of the Sun at about {prevVal}, while {next}, a few degrees along the Keystone's edge, is about {nextVal} away.",
+   "Beside a nearby star on the sky, but hundreds of times deeper in space."
+  ],
+  "edge.M56>M71": [
+   "{prev} and {next} are both ancient globulars, yet {next} holds more than ten times more heavy elements and orbits much closer to the Milky Way's disk.",
+   "Two old balls of stars with different chemistry, one poor in heavy elements far out in the halo, the other richer and near the disk."
+  ],
+  "edge.DS-Albireo>M56": [
+   "{prev} is a few hundred light-years away, and {next}, less than four degrees from it on the sky, lies about {nextVal} off.",
+   "From a nearby, colorful double to a faint ball of ancient stars dozens of times deeper."
+  ],
+  "edge.AST-JobsCoffin>NGC6934": [
+   "The stars of {prev} are a couple of hundred light-years away, and {next}, four degrees south, is about {nextVal} away.",
+   "From a nearby pattern of stars to a faint globular hundreds of times farther."
+  ],
+  "edge.M71>NGC6819": [
+   "{prev} was long mistaken for an open cluster, while {next} is a real open cluster that is unusually old, yet still several times younger than {prev}.",
+   "A loose globular and a rich old open cluster, two very different families that both look like a faint, grainy patch."
+  ],
+  "edge.IC4665>NGC6633": [
+   "{prev} and {next} sit at almost the same distance, but {next} is roughly ten times older, and its hottest blue stars are gone.",
+   "The two lie at about the same distance, so comparing them shows how a family looks once its brightest blue stars have burned out."
+  ],
+  "edge.IC4665>NGC6709": [
+   "{prev} is a few tens of millions of years old, and {next} is roughly three times older and farther away.",
+   "Another family, a little further along in life and a little deeper in space."
+  ],
+  "edge.NGC6633>NGC6940": [
+   "{prev} and {next} are both several hundred million years old, but {next} is more than twice as far, so its stars look fainter and more crowded.",
+   "The next family is of similar age but farther away, the same portrait in a smaller frame."
+  ],
+  "edge.M39>NGC6819": [
+   "{prev} is a few hundred million years old, while {next} is about five times older and has kept thousands of members together.",
+   "From a middle-aged family that will soon scatter to an old one that has survived, its brightest stars now giants."
+  ],
+  "edge.M39>NGC7063": [
+   "{prev} is close enough to count its stars one by one, while {next} is more than twice as far and much sparser in binoculars.",
+   "A nearby family and a farther one, and a reminder of how much distance alone changes what you see."
+  ],
+  "edge.NGC6871>HD226868": [
+   "{next} was born in the same family of heavy stars as {prev}, Cygnus OB3, and still moves through space with it, and one of its members has already become a black hole.",
+   "This family photo has one dark member, for the black hole Cygnus X-1 shares the motion of these young stars."
+  ],
+  "edge.M29>NGC6910": [
+   "{prev} and {next} are young clusters at nearly the same distance, one a few million and the other about fifteen million years old.",
+   "Two young families in the same stretch of the Cygnus Milky Way, two degrees apart."
+  ],
+  "edge.HR7796>NGC6910": [
+   "{prev} shares the field with {next} but lies much nearer, about {prevVal} against {nextVal}, so they only look connected.",
+   "The bright star beside the cluster is a foreground supergiant, not a member of the family."
+  ],
+  "edge.MWF-CygnusRift>M29": [
+   "The dust of {prev} lies between us and {next}, dimming the young cluster more than tenfold and reddening its light.",
+   "The dark lane you can see by eye is what turns a cluster of brilliant young stars into a faint little box."
+  ],
+  "edge.MWF-CygnusRift>NGC7000": [
+   "The dark Gulf of Mexico in {next} is the same kind of dust as {prev}, cold clouds blocking the light behind them.",
+   "From the great dark lane to a small dark notch that gives a nebula its shape."
+  ],
+  "edge.MWF-CygnusRift>DN-BarnardE": [
+   "{next} is one small, sharply drawn knot of the same dust that forms {prev}.",
+   "From the great dark river of the Milky Way down to a single dark cloud in Aquila."
+  ],
+  "edge.DN-BarnardE>NGC6823": [
+   "{prev} is a cold, dark cloud, and {next} shows the next step, a cloud that has already made hot young stars that now light it up and wear it away.",
+   "From a dark cloud to a cloud that has started making stars."
+  ],
+  "edge.STAR-Deneb>NGC7000": [
+   "{prev} looks like the obvious lamp for {next}, but the real power source is a hotter star hidden behind the nebula's own dust.",
+   "The brightest nearby star is not always the cause: beside {prev}, the nebula is lit by a star you cannot see."
+  ],
+  "edge.NGC7000>NGC6823": [
+   "{prev} and {next} both glow because hot young stars energize their hydrogen, though {next} is farther away and much smaller on the sky.",
+   "Another nursery in the same Milky Way band, lit in exactly the same way."
+  ],
+  "edge.AST-Coathanger>M71": [
+   "{prev} looks like a cluster but is a chance line-up, while {next}, a few degrees east, is a real family of stars bound together for billions of years.",
+   "From a fake cluster to the real thing, one made by perspective and the other by gravity."
+  ],
+  "edge.AST-Coathanger>NGC6823": [
+   "{prev} is a chance alignment, while {next} is a true family of stars born together only a few million years ago.",
+   "A pattern and a family in the same patch of sky, made by entirely different physics."
+  ],
+  "edge.AST-Coathanger>NGC6940": [
+   "{prev} has a striking shape but no family ties, while {next} looks less dramatic and yet hundreds of its stars move together.",
+   "The plain-looking patch is the real family, a good reason never to judge a cluster by its shape."
+  ],
+  "edge.AST-Coathanger>AST-JobsCoffin": [
+   "Like {prev}, {next} is a neat pattern of stars at different distances, another trick of perspective.",
+   "The dolphin's little diamond is another chance pattern, its corners at very different depths."
+  ]
+ }
+}

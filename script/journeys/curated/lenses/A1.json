@@ -1,0 +1,1189 @@
+{
+  "archetype": "A1",
+  "storyline": "No one lives long enough to watch a star grow up, so astronomers do what a visitor to a forest might: find trees of every age and put them in order. This journey does the same with the sky. It starts in a cloud of gas and dust where gravity is making stars right now, then moves to a newborn cluster that is blowing its birth cloud away. Next comes a family that has lived in the open for millions or billions of years and lost its heaviest members. From there it follows one star into old age, swollen into a giant, and then to a star on the brink, down to its last fuels or already shedding its skin. It ends, where the sky allows, with what a star leaves behind: a glowing shell, the wreck of a supernova, or the cooling ember of a white dwarf. Each stop is the stage that follows the one before, and the thread that ties them is weight, because the heavier a star, the faster it lives and the more violently it dies.",
+  "beats": [
+    {
+      "step": 1,
+      "label": "Nursery",
+      "maxStops": 1
+    },
+    {
+      "step": 2,
+      "label": "Newborn cluster",
+      "maxStops": 1
+    },
+    {
+      "step": 3,
+      "label": "A family grows up",
+      "maxStops": 1
+    },
+    {
+      "step": 4,
+      "label": "Aging giant",
+      "maxStops": 1
+    },
+    {
+      "step": 5,
+      "label": "On the brink",
+      "maxStops": 1
+    },
+    {
+      "step": 6,
+      "label": "The end: what a star leaves behind",
+      "maxStops": 1
+    }
+  ],
+  "minBeats": 4,
+  "endSteps": [
+    5,
+    6
+  ],
+  "narration": {
+    "title.A1-cradle-to-grave": [
+      "{region}, from Nursery to Embers",
+      "The Life of {region}'s Stars",
+      "How the Stars of {region} Grow Old",
+      "A Star's Life Story Above {region}",
+      "Where Are {region}'s Stars in Their Lives?"
+    ],
+    "question.A1-cradle-to-grave": [
+      "Where do stars come from, and how do they end?",
+      "What happens to a star between its birth and its death?",
+      "How can one night's sky show the whole life of a star?"
+    ],
+    "hook.A1-cradle-to-grave": [
+      "No one lives long enough to watch a star grow up, yet the sky shows every age at once.",
+      "A star's life is far too long to watch, so we read it from many stars of different ages.",
+      "The gas a dying star gives back becomes the next stars, and you can follow the cycle."
+    ],
+    "story.A1-cradle-to-grave": [
+      "Astronomers learn a star's life the way you might learn a forest's, by finding trees of every age and putting them in order. Tonight you do the same around {region}, from {hook} to {name}.",
+      "Every star you can see is at some point in one life story: born in a cold cloud, raised in a family, swollen in old age and finally returned to space. Tonight each stop is a different moment of that life, in the order a star lives it.",
+      "Stars are not eternal, and their weight decides how fast they live and how they die. Starting at {hook}, you follow that life forward to its end, one stage at a time."
+    ],
+    "payoff.A1-cradle-to-grave": [
+      "The sky holds every stage of a star's life at once, because stars of every age are shining side by side. They condense from cold clouds, live on the fuel in their cores for millions or billions of years, and grow old from the top down, the heaviest first. Weight sets the pace, and it decides how violent the ending will be. In the end each gives its gas back to space, richer in elements than it was at birth, and from clouds of that recycled gas the Sun, the Earth and everything on it were made.",
+      "From {hook} to {name} you have followed a single life by reading many. Gravity gathers a cloud into stars, the newborns clear their cradle and live as a family, and each member ages at a pace set by its weight. Old age swells a star into a giant, and the end returns its matter to space, enriched with elements the star made. Nothing is wasted, because that matter becomes the next nursery, and long ago some of it became the Sun, the Earth and us.",
+      "No single star lives quickly enough to watch, but the sky holds every stage at once. It shows collapsing clouds and newborn families, older families that have lost their heaviest members, and giants swelling toward their last fuels. The heavier a star, the faster it runs through that sequence and the more violently it ends. What it finally gives back seeds the next generation of stars, and our own Sun and planet were built from such gifts."
+    ],
+    "payoff.A1-cradle-to-grave.end6": [
+      "The sky holds every stage of a star's life at once, and tonight you read them in order, ending at {name}, what a star leaves behind. Clouds collapse into stars, families age from the top down, and old age swells each star until its fuel is gone. Then a star like the Sun lets its layers drift off around a cooling core, while a heavyweight collapses and explodes. Either way its gas returns to space richer than it began, and from such recycled gas the Sun, the Earth and we ourselves were made.",
+      "From {hook} to {name} you have followed one life by reading many, all the way to its end, with weight setting how fast each star lived. The end hands a star's matter back to the clouds, enriched with carbon and other elements it forged, and {name} is one such gift on its way back. In time it will be gathered into a new nursery, the same road that the material of the Sun and the Earth once took."
+    ],
+    "payoff.A1-cradle-to-grave.end5": [
+      "The sky holds every stage of a star's life at once, and tonight you read them in order, as far as {name}, a star on the brink. Clouds collapse into stars, families age from the top down, and old age swells each star until only its last fuels are left. After that, weight decides the rest: a star of modest mass lets its outer layers go around a cooling core, while a heavyweight collapses and explodes. Either way its gas returns to space richer than it began, and from such gas the Sun, the Earth and we ourselves were made.",
+      "From {hook} to {name} you have followed one life by reading many, right to the edge of its end, with weight setting how fast each star got there. {name} is nearly out of fuel, and when it finishes, its matter will go back to the clouds, enriched with elements it forged. That is the same road the material of the Sun and the Earth once took."
+    ],
+    "story.A1-cradle-to-grave.end6": [
+      "Tonight's stars are one life told by many, each caught a stage later than the one before. The night begins at {hook} and ends at {name}, with what a star leaves behind once its life is over.",
+      "Every star you will see tonight is at a different moment of the same life, and the stops run in the order a star lives them, right through to its death. Weight is the thread: the heavier a star, the faster it travels that road and the more violently it ends."
+    ],
+    "story.A1-cradle-to-grave.end5": [
+      "Tonight's stars are one life told by many, each caught a stage later than the one before. The night begins at {hook} and ends at {name}, a star on the brink of its own ending.",
+      "Every star you will see tonight is at a different moment of the same life, and the stops run in the order a star lives them, as far as a star close to its end. Weight is the thread: the heavier a star, the faster it travels that road."
+    ],
+    "title.A1-cradle-to-grave.end5": [
+      "{region}, from Nursery to Embers",
+      "The Life of {region}'s Stars",
+      "How the Stars of {region} Grow Old",
+      "A Star's Life Story Above {region}",
+      "Where Are {region}'s Stars in Their Lives?"
+    ],
+    "title.A1-cradle-to-grave.end6": [
+      "Birth and Death Above {region}",
+      "{region}'s Cradles and Graves",
+      "How {region} Makes and Unmakes Its Stars",
+      "{region}, from Nursery to Embers",
+      "The Life and Death of {region}'s Stars"
+    ]
+  },
+  "transitions": {
+    "pairs": {
+      "1>2": [
+        "Gravity turns clouds like {prev} into stars, and {next} is what such a cloud makes a few million years on, a newborn family starting to clear its cradle.",
+        "{prev} is the raw material, and {next} shows what that material becomes once gravity has had its way: a family of newborn stars breaking out of its cloud."
+      ],
+      "1>3": [
+        "The stars born in clouds like {prev} will one day travel together as a family like {next}, long after their birth gas has vanished.",
+        "Skip ahead tens or hundreds of millions of years from a cloud like {prev} and you reach a family like {next}, its gas long gone and its stars growing up together."
+      ],
+      "2>3": [
+        "Once newborns like those of {prev} have blown their cloud away, they spend most of their lives as a family in the open, and {next} is one such family, its cloud long gone.",
+        "{prev} is only at the start of its life as a family; {next} has been growing up in the open for far longer.",
+        "Give a newborn family like {prev} tens or hundreds of millions of years and you get something like {next}, its gas gone and its brightest stars changing."
+      ],
+      "2>4": [
+        "The heaviest newborns of a family like {prev} will be the first to grow old, and {next} shows what that old age looks like.",
+        "Newborn stars like those in {prev} burn their fuel at a pace set by their weight, and {next} is a star that has already run through its core hydrogen."
+      ],
+      "3>4": [
+        "A family like {prev} ages from the top down, its heaviest members leaving their steady middle age first, and {next} is a star that already has.",
+        "Every member of a family like {prev} will one day run out of core hydrogen and swell, and {next} is a star that has already reached that stage.",
+        "In a family like {prev} the heaviest stars are the first to spend their core hydrogen, and {next} is a star that has already done so, now into its old age."
+      ],
+      "3>5": [
+        "The heaviest members of a family like {prev} are the first to reach the end, and {next} is a star already standing at its edge.",
+        "Every star in a family like {prev} will one day run out of fuel, and {next} is a star that has nearly done so.",
+        "A family like {prev} loses its heaviest members first, and {next} shows where such a heavyweight stands near the close of its life."
+      ],
+      "4>5": [
+        "Every giant like {prev} eventually reaches the last stretch of its life, and {next} is a star already there, how it finishes set by the weight it was born with.",
+        "{prev} is in its old age; {next} is further on still, with only the last of its fuel left to burn.",
+        "{prev} is still in the thick of its old age, while {next} has come to the edge of its end, and its weight will decide how that end looks.",
+        "{prev} still has a long stretch of old age ahead, while {next} has almost nothing left to burn and is already letting its outer layers slip away.",
+        "Old age is a slope rather than a step, and {next} stands much further down it than {prev}, so near the bottom that it is already giving its outer layers back to space."
+      ],
+      "5>6": [
+        "{prev} has not yet crossed the edge, and {next} shows one of the two things a star can leave behind once it has.",
+        "Where {prev} is down to its last fuels, {next} shows what one star left behind once its fuel was gone.",
+        "{prev} has its ending still ahead, and {next} shows what one kind of ending leaves behind."
+      ],
+      "4>6": [
+        "A giant like {prev} cannot stay swollen forever, and {next} shows what is left once a star's life is over.",
+        "Old age leads to an ending, and {next} is what remains after it, the star's matter already on its way back to space."
+      ],
+      "3>6": [
+        "Every star in a family like {prev} will one day run out of fuel, and {next} shows what is left when one has."
+      ]
+    },
+    "arrive": {
+      "2": [
+        "After {prev}, {next} shows the hatching: stars only a few million years old, still near the gas that made them.",
+        "From {prev} the story moves to {next}, a family so young that its birth cloud is still close by or only just gone.",
+        "{next} comes next in the life story: a newborn family a few million years old, clearing the gas it was made from."
+      ],
+      "3": [
+        "After {prev}, {next} shows a family that has left its cloud far behind and is growing up in the open.",
+        "From {prev} the story moves on to {next}, a family living in clear space and aging from the top down.",
+        "{next} is the next chapter after {prev}: a family whose birth gas is long gone and whose stars now age at the pace their weights set."
+      ],
+      "4": [
+        "After {prev}, {next} follows a single star into old age, swollen into a giant once its core hydrogen ran out.",
+        "From {prev} the story narrows to one star, {next}, which has spent its core hydrogen and swollen.",
+        "{next} takes the story past a family's middle age to a single star that has already left its steady years."
+      ],
+      "5": [
+        "{next} brings the story to the edge of the end, a star with only its last fuels left.",
+        "After {prev}, {next} brings the story to the brink, a star near the close of its life and already losing its grip on its outer layers.",
+        "From {prev} the story moves to {next}, a star in the last short stretch of its life, its weight already deciding how it will end."
+      ],
+      "6": [
+        "After {prev}, {next} shows the end itself: what is left once a star has given its matter back to space.",
+        "From {prev} the story reaches its last page at {next}, the remains of a star whose life is already over.",
+        "{next} closes the story: a star's life is over here, and its matter is on its way back to space."
+      ]
+    }
+  },
+  "objects": {
+    "DN-Coalsack": {
+      "step": 1,
+      "beat": "Before birth: a cold dark cloud",
+      "question": "Could the Coalsack one day become a nursery like those of Carina?",
+      "why": "Every star's life starts in cold, dark gas, and the Coalsack is that raw material in its purest form, so close that it shows as a shadow on the Milky Way.",
+      "answer": "It may one day, but not yet: studies of its gas suggest it has made no stars at all. To begin, parts of it must grow dense enough for gravity to beat the pressure of the gas. A push from outside, such as the light of hot stars or the shock of a dying one, often supplies the squeeze, which is how one generation of stars sets off the next.",
+      "story": "A cloud like this is held up against its own weight by the restless churning of its gas and by magnetic fields threaded through it, and only where those give way can a clump begin to fall inward. Radio telescopes tuned to molecules such as carbon monoxide weigh the gas and search it for the dense knots where that collapse starts, and in the Coalsack they find almost none."
+    },
+    "DN-Pipe": {
+      "step": 1,
+      "beat": "Before birth: a cold dark cloud",
+      "question": "Why has this huge dark cloud made so few stars?",
+      "why": "Before there is a nursery there is a cloud, and the Pipe is one of the nearest, a silhouette of cold gas and dust laid across the brightest part of the Milky Way.",
+      "answer": "Over most of the Pipe gravity has not yet won. A cloud makes stars only where a clump grows dense enough for its own weight to overcome the pressure of the gas inside it. In the Pipe that has happened in earnest in one place, Barnard 59, at the western end of the stem, and the rest is raw material, waiting, as the glowing nurseries of Sagittarius once were.",
+      "story": "Astronomers mapped the Pipe by measuring how much its dust dims and reddens the stars behind it, tens of thousands of them, and the map shows about 160 small, dense cores strung along the cloud. Most of them are not yet heavy enough to collapse, held up by the warmth and pressure of their own gas, which makes the Pipe a rare view of the moment just before a nursery switches on."
+    },
+    "IC1396": {
+      "step": 1,
+      "beat": "Nursery: one generation sparks the next",
+      "question": "How much of the cloud at IC 1396's edge is actually turning into stars?",
+      "why": "Every star begins in a cloud, and in IC 1396 a young cluster and the cold gas around it share one field, the raw material and the first results side by side.",
+      "look": "Start at the Garnet Star and move about a degree and a half south-south-west to the scatter of stars around HD 206267. That bright central star is the group of hot stars doing the work; the glowing gas they press on is faint at best in binoculars.",
+      "answer": "So far only about five percent of the mass of the dark globule called the Elephant's Trunk has turned into protostars. Much of the rest will be boiled away by the hot stars' light before it can collapse, which is why clouds make stars so wastefully, and why their families soon find themselves standing in the open.",
+      "rank": 4,
+      "story": "The hot stars at the center are pushing a front of compressed gas into the cloud around them, and new stars form where that front arrives. Inside the Elephant's Trunk the young stars grow younger the deeper they lie in the globule, the pattern expected if the squeeze is moving inward and setting off collapse as it goes."
+    },
+    "M17": {
+      "step": 1,
+      "beat": "Nursery: the lights just switched on",
+      "question": "How long ago did the stars lighting the Omega Nebula switch on?",
+      "why": "This story starts where gas turns into stars, and the Omega Nebula is a nursery so young that its newborns are still half hidden in the dust they formed from.",
+      "answer": "They switched on less than a million years ago, a blink in the life of a star like the Sun. The heavy newborns are still wrapped in their cloud, but their light is already eating it away, and within a few million years the gas will be gone and only a bare cluster will remain.",
+      "rank": 0.7,
+      "story": "Some of the Omega's newest heavyweights are still so deeply buried that only infrared and radio light gets out, and around each one the gas is lit in a small, dense bubble a fraction of a light-year across. That is the very first stage of a heavy star clearing its surroundings, and in time those bubbles will open into the big glowing cavity you see."
+    },
+    "M42": {
+      "step": 1,
+      "beat": "Nursery: stars forming now",
+      "question": "How does a cold cloud of gas turn itself into stars?",
+      "why": "Every star's life begins inside a cloud like this, and the Orion Nebula is the nearest place where heavy stars are being made, close enough for binoculars to show their handiwork.",
+      "look": "Look into the bright core of the glow, where a knot of newborn stars merges into a single point at this power. Everything gray around it is gas their light has reached, and the dark notch biting into one side is dust lying in front of it.",
+      "answer": "Gravity does it. Where the cloud is densest, a clump of gas pulls itself inward and heats up as it falls, until its center is hot enough to fuse hydrogen and a star switches on. The newborns at the core are already pushing back on the cloud with their light, and that push is how a nursery starts turning into a cluster.",
+      "rank": 1,
+      "story": "Infrared cameras, which see through the dust, find more than a thousand young stars in the nebula's heart, many still wrapped in flat disks of gas and dust. Hubble photographed dozens of those disks as dark silhouettes against the glow, and in them you can see the Sun's own beginning: a young star, a disk around it, and the raw material of planets."
+    },
+    "M78": {
+      "step": 1,
+      "beat": "Nursery: hidden births",
+      "question": "What kind of stars is the dark cloud behind M78 making?",
+      "why": "This story begins with the cloud, and M78 is a small lamp held up against one of Orion's great dark clouds, showing a little of what goes on inside.",
+      "answer": "It is making mostly small ones. ESO counts about 45 young, low-mass stars in this cloud, still shrinking and settling toward steady adult life, around the two hotter stars whose light you see scattered by dust. Stars like the Sun are born this way, in modest batches deep inside clouds that will one day disperse and let the family go.",
+      "story": "Stars this young give themselves away twice: in infrared light, because the dust still wrapped around them is warmed and glows, and in X-rays, because newborn stars flare far more violently than grown ones. Those two signatures let astronomers count a family that visible light cannot reach, and they show the cloud behind M78 still at work."
+    },
+    "M8": {
+      "step": 1,
+      "beat": "Nursery: stars forming now",
+      "question": "Which came first here, the glowing cloud or the stars sitting in it?",
+      "why": "A star's story begins in cold gas, and the Lagoon is a nursery caught at work, near enough that you can see both the raw material and some of what it has already made.",
+      "look": "Hold the Lagoon in the middle of the field and compare its two halves: on one side of the dark lane a ragged scatter of stars sits on the glow, on the other a brighter patch of gas with few stars at all.",
+      "answer": "The cloud came first, and the stars are its children: the ragged scatter beside the lane formed from this gas only about two million years ago. The bright patch across from it is lit by a young star still buried in the gas, and over the next few million years the newborns' light will clear the cloud away and leave their family standing on its own.",
+      "rank": 2,
+      "story": "The ages here come from the smallest members, because a star of the Sun's weight takes tens of millions of years to shrink to its steady adult size. Finding the Lagoon's faint stars still large and contracting dates the whole family. That clock and the hot stars still lighting the gas tell the same story, of a family only just made."
+    },
+    "NGC3372": {
+      "step": 1,
+      "beat": "Nursery: births and deaths together",
+      "question": "How can a star nursery already hold a star close to its death?",
+      "why": "The whole life of a star starts in clouds like this one, and the Carina Nebula is the grandest nursery binoculars can show, with a twist that makes it the perfect place to begin.",
+      "look": "Sweep the bright, ragged haze and find the small orange point beside its dark notch of dust. That point is Eta Carinae, a pair of enormously heavy stars born in this very cloud.",
+      "answer": "Heavy stars live fast. The clusters buried in this cloud are only a few million years old, yet for Eta Carinae that is most of a lifetime: in the 1840s it threw off more than ten Suns' worth of gas and survived. The lighter stars born beside it are only starting out, and they will drift away as a family long after it is gone.",
+      "rank": 6.2,
+      "story": "Its buried clusters hold dozens of the hottest kind of star, and their combined light and winds are carving the cloud's edges into ridges and pillars. In infrared images the tips of those pillars hide stars so young that they are still firing jets of gas, so the cloud is making stars and being destroyed by them at the same time."
+    },
+    "NGC7000": {
+      "step": 1,
+      "beat": "Nursery: stars forming now",
+      "question": "How many stars has the North America Nebula already made?",
+      "why": "A star's life starts in a cloud like this, and the North America Nebula is a whole continent of glowing hydrogen whose newborns are almost all hidden from your eyes.",
+      "answer": "Spectra have picked out about 580 young stars in and around the cloud, most of them too faint or too veiled by dust for binoculars, and the cloud is still making more. Once the hottest of them have cleared the gas away, the survivors will stand in the open as a cluster.",
+      "rank": 1,
+      "story": "The North America Nebula and the Pelican beside it are one cloud, cut in two by a lane of dust lying in front of them. Along the Pelican's bright rim, infrared telescopes see the cloud being pressed and worn away by starlight, with newborn stars still blowing jets out of the ridges where the squeeze is strongest."
+    },
+    "AST-OrionBelt": {
+      "step": 2,
+      "beat": "Newborn family, already scattering",
+      "question": "What will become of the three bright Belt stars themselves?",
+      "why": "The Belt stars are newborn siblings from the same cloud complex as the Orion Nebula, already loosely spread across the sky.",
+      "look": "Put the middle Belt star in the center and follow the S-shaped chain of fainter stars winding between the three. Many of them belong to the same young group, born only a few million years ago.",
+      "answer": "Being the heaviest, they will be the first to go: two of them are already supergiants, and all three will most likely end in supernovae, enriching the very clouds where Orion is still making stars. The many small siblings around them will be left to grow old slowly, scattered so widely that no one will see them as a family.",
+      "rank": 5,
+      "story": "Orion has been making stars in waves for about ten million years: the Belt belongs to one of the older waves, the Sword below it to younger ones, and the Orion Nebula to the youngest of all. Astronomers read that order from the heaviest members, whose short lives make them precise clocks, since a star of twenty or thirty Suns cannot live much beyond five to ten million years."
+    },
+    "Cr69": {
+      "step": 2,
+      "beat": "Newborn cluster, cloud blown away",
+      "question": "Why might one of these newborn stars have died before its siblings grew up?",
+      "why": "The λ Orionis Cluster is a family of newborns that has already cleared a vast space around itself, perhaps with the help of a sibling's death.",
+      "look": "Aim at the faint star of Orion's head, above and between Betelgeuse and Bellatrix. Binoculars turn it into a neat triangle with a dozen fainter stars around it, and notice what is missing: there is no glow at all.",
+      "answer": "If one did, it was the heaviest, because a heavier star squeezes its core harder, the core runs hotter, and the fuel burns disproportionately fast. The biggest member of a family can live only a few million years while its small siblings get billions, which may be how a supernova came to blow this ring clear while its siblings were still young. Every cluster in this story ages from the top down in just this way.",
+      "rank": 5.2,
+      "story": "Around the cluster lies a ring of gas and dust nearly two hundred light-years across, plain in infrared and radio maps, with the family close to its center. The ring's size and the speed at which it is expanding fit a blast about a million years ago, and that is the main reason astronomers suspect one sibling has already finished its life."
+    },
+    "IC2395": {
+      "step": 2,
+      "beat": "Newborn cluster, just out of its cloud",
+      "question": "Why does IC 2395 still sparkle with hot blue-white stars?",
+      "why": "IC 2395 is a family that has only just shed its birth cloud.",
+      "answer": "IC 2395 is only about seven million years old, too young for even its heaviest members to have burned out. As they go, one weight class at a time, the cluster will dim and redden like an older family.",
+      "rank": 6.8,
+      "story": "Young stars are born with disks of dust and gas around them, and those disks fade within a few million years as planets form and the stars' light blows the rest away. Infrared surveys find few of IC 2395's stars still carrying them, a second clock that agrees the family has only just stepped into the open."
+    },
+    "IC2944": {
+      "step": 2,
+      "beat": "Newborn cluster eating its cloud",
+      "question": "How old are the stars eating away the Running Chicken's cloud?",
+      "why": "The young cluster in the Running Chicken's glow is a family of newborns in the middle of destroying its cradle.",
+      "answer": "By Gaia's measurements of its members they are about four million years old. In another few million years the cloud will be gone, and the group will stand in clear space as a young family, the stage that follows every nursery.",
+      "rank": 3.9,
+      "story": "A glowing cloud around a cluster is itself a clock, because hot stars destroy their birth gas within roughly ten million years of switching on: wherever bright gas still surrounds a family, the family must be young. Here the gas is already patchy and broken into knots, the look of a cradle in its last stage."
+    },
+    "M16": {
+      "step": 2,
+      "beat": "Newborn cluster eating its cloud",
+      "question": "What will be left of the Eagle Nebula once its pillars are gone?",
+      "why": "In the Eagle Nebula you can watch a newborn family breaking out.",
+      "look": "Look for the tight scatter of a dozen stars and the dim haze around them, brighter on one side. The stars are the newborns, a few million years old; the haze is the remains of their cloud, which they are slowly destroying.",
+      "answer": "What will be left is the stars themselves, about 3,500 Suns' worth of them, standing in clear space. The last ones to form, inside the pillars at the very end, will be the family's youngest members, and once the gas has evaporated the whole group begins its long life as a cluster in the open.",
+      "rank": 6.3,
+      "story": "The cluster's age comes from both ends of the family at once. Its heavy stars are still burning hydrogen in their cores, while its light ones are still shrinking toward adulthood, and only an age under ten million years fits both. That makes the Eagle a cradle caught in the middle of its destruction, neither a fresh cloud nor an empty one."
+    },
+    "M21": {
+      "step": 2,
+      "beat": "Newborn cluster that has left its cloud",
+      "question": "How many stars did M21 take with it out of its cloud?",
+      "why": "M21, a short sweep from the Lagoon, shows what that cloud's family will look like a few million years on.",
+      "answer": "Gaia counts about 210 members, together weighing about 900 Suns, most of them far too faint for binoculars. From here on the family can only lose stars: the heaviest will burn out first, and the lightest will slowly slip away into the Galaxy, which is the story of every cluster.",
+      "rank": 5.4,
+      "story": "M21's age is read the same way from both ends: its heaviest stars are still burning hydrogen, which caps the age, while its lightest are still contracting toward adulthood, which says how recently they formed. Together they place it just ahead of the Lagoon's newborns, the same star-forming region's work caught one stage later."
+    },
+    "Mel15": {
+      "step": 2,
+      "beat": "Newborn cluster inside its cloud",
+      "question": "How heavy a family is being born inside the Heart Nebula?",
+      "why": "The cluster at the center of the Heart Nebula is a newborn family still wrapped in the gas it came from.",
+      "answer": "The family weighs about 2,700 Suns, its members ranging from eight known O stars, the hottest and heaviest kind, down to a multitude of small ones. The O stars will be gone within a few million years, but the lighter majority will grow up together as a family in the open once the cloud has been blown away.",
+      "rank": 3.5,
+      "story": "The family's light has hollowed a cavity in its cloud, and around the walls the gas is pressed into dense knots and pillars where a younger generation is forming. Infrared surveys find many of those younger stars along the walls rather than at the center, the pattern expected when one family sets off the next."
+    },
+    "NGC1981": {
+      "step": 2,
+      "beat": "Newborn cluster, cloud already gone",
+      "question": "Is NGC 1981 related to the newborn stars in the Orion Nebula?",
+      "why": "NGC 1981 stands at the top of Orion's Sword, a degree away from the cloud that is still making stars.",
+      "look": "Start at the Orion Nebula and move about a degree north. Compare the two views: a glowing cloud with its stars inside, then a sparse group of a dozen stars on a clean, dark background.",
+      "answer": "They are relatives from the same great cloud, born in different waves. Orion has been making stars for millions of years, and NGC 1981 belongs to an earlier wave than the Nebula's newborns, which is why it has already lost its gas and they have not. A cluster's surroundings are a clock, and this one says the family has only just left home.",
+      "rank": 4.6,
+      "story": "Gaia's measurements show that Orion's young stars are not one family but several groups stacked along the line of sight, each with its own distance, motion and age. NGC 1981 is one of the older groups, and its stars have had time to drift a little away from the cloud they came from, which is why they now stand on clear sky."
+    },
+    "NGC2244": {
+      "step": 2,
+      "beat": "Newborn cluster blowing its cloud away",
+      "question": "What happens to a cloud once its newborn stars switch on?",
+      "why": "The Rosette Cluster shows a family of newborns pushing its own cloud aside.",
+      "look": "Go about a third of the way from Betelgeuse to Procyon and drop slightly south into Monoceros, to a small rectangle of stars. Its white stars are the newborns, the one yellow-orange star among them is not a sibling, and on a very dark night the faint ring of haze around the group is what is left of their cloud.",
+      "answer": "The newborns push it away. Their winds and light have already hollowed out the middle of their cloud, leaving the Rosette Nebula as a glowing ring around an empty heart. In a few million years the ring will thin and fade too, leaving the family under clear skies.",
+      "rank": 4.1,
+      "story": "The hollow at the Rosette's center is no accident, for the cluster's hottest stars blow winds at a couple of thousand kilometers per second. Those winds, with the push of their light, have driven the gas outward into a thick shell. X-ray telescopes find the cavity filled with gas at millions of degrees, the spent wind itself, still pressing on the ring."
+    },
+    "NGC2264": {
+      "step": 2,
+      "beat": "Newborn cluster, still in its cloud",
+      "question": "Is the Christmas Tree Cluster finished being born?",
+      "why": "The Christmas Tree Cluster is a family caught in the middle of hatching, its stars already shining while their birth cloud is still around them.",
+      "look": "Find S Monocerotis, the bright trunk star, and the narrow triangle of fainter stars hanging from it. The gas around them does not show in binoculars, but every star in that triangle formed from it within the last few million years.",
+      "answer": "It is not quite finished: at the tree's tip the dark Cone Nebula is still collapsing into new stars, even as the older siblings below wear it away. Within a few million years their light will have cleared the last of the gas, and the family will stand in the open.",
+      "rank": 5,
+      "story": "The Christmas Tree has not been born all at once: the members around S Monocerotis, near the base, are older, while the youngest, still hidden in dust, crowd toward the Cone at the tip, where the gas is densest. Ages measured star by star across the cluster follow that gradient, so the tree has been lighting up from one end to the other."
+    },
+    "NGC2362": {
+      "step": 2,
+      "beat": "Newborn cluster, one star already aging",
+      "question": "Why does τ Canis Majoris age faster than all its siblings?",
+      "why": "The τ Canis Majoris Cluster is a newborn family in which the heaviest sibling has already raced ahead into old age.",
+      "look": "Find τ Canis Majoris and its tight knot of faint stars. The bright point at the center is the cluster's heaviest member, and the faint stars around it are siblings of the same age that have barely started their lives.",
+      "answer": "Its weight sets its pace. Its core is crushed harder and burns hotter than a small star's, so it spent its core hydrogen in a few million years and has begun to swell, while the faint stars around it will need billions of years to do the same.",
+      "rank": 5,
+      "story": "The bright point is itself a small crowd: τ Canis Majoris is a multiple star whose brightest member is a hot bright giant, together with a pair of heavy stars that eclipse each other every 1.3 days. So the family's heaviest siblings are packed into one point of light, and every one of them will be gone long before the cluster's small members have settled down."
+    },
+    "NGC3293": {
+      "step": 3,
+      "beat": "A young family in the open, an earlier wave",
+      "question": "What will the Carina Nebula's clusters look like once their gas is gone?",
+      "why": "The Gem Cluster is an earlier wave of the Carina Nebula's births, a family already standing in the open beside the cloud that is still making its younger siblings.",
+      "look": "From the bright heart of the Carina Nebula move about two degrees north-west to the compact, bright clump of the Gem Cluster. Glowing gas, then a clean knot of stars: the before and after of a cluster's birth.",
+      "answer": "They will look much like the Gem Cluster does now: a compact knot of about 1,400 Suns' worth of stars, some 320 of them counted by Gaia, standing in clear space at an age of about fifteen million years. The clusters still buried in the nebula are on the same road, ready to begin their long lives as families in the open.",
+      "rank": 15.2,
+      "story": "Eleven of the Gem Cluster's heavy blue stars quiver every few hours, β Cephei stars whose surfaces rise and fall like a struck bell, one of the richest such choirs known. The notes are set deep inside, where core hydrogen is slowly turning to helium, so they let astronomers listen to how far those heavyweights have come and check the family's age from within."
+    },
+    "NGC6231": {
+      "step": 2,
+      "beat": "Newborn cluster of heavyweights",
+      "question": "What will NGC 6231 look like when its blazing stars are gone?",
+      "why": "NGC 6231 is a newborn cluster still full of the heaviest stars a cloud can make.",
+      "answer": "It will look much fainter and redder. Within a few tens of millions of years all its blue-white heavyweights will have exploded or collapsed, leaving cooler blue-white stars and a few red supergiants as its brightest, the look of an older family. Mass sets the order of departure, heaviest first.",
+      "rank": 4,
+      "story": "Many of NGC 6231's heavy stars come in close pairs, and following the pairs around their orbits weighs them directly: most come out between about ten and forty Suns. Weights like those are how astronomers know this family will soon start losing its brightest members, one supernova at a time."
+    },
+    "NGC6530": {
+      "step": 2,
+      "beat": "Newborn cluster, still in its cloud",
+      "question": "How big a family can one cloud make at once?",
+      "why": "NGC 6530 is a newborn family so fresh that it still sits on the glowing gas of the Lagoon.",
+      "answer": "This cloud has produced about 680 known siblings so far, weighing over 2,000 Suns together, all made from the gas still glowing around them, and Gaia's census misses the faintest. Because a cloud makes its whole family at once, every member shares one birthday, and that is what lets astronomers read a star's age from the company it keeps.",
+      "rank": 2,
+      "story": "A newborn cluster mixes stars at very different points of the same beginning: its heavy members already burn hydrogen as adults, while the light ones are still contracting and still wrapped in disks. Spectra of the faint members show lithium, a fragile element young stars have not yet had time to destroy, and that is how astronomers prove they are true newborns rather than older stars lying in front."
+    },
+    "NGC6823": {
+      "step": 2,
+      "beat": "Newborn cluster, still in its cloud",
+      "question": "How many stars has NGC 6823 already made from its cloud?",
+      "why": "NGC 6823 is a cluster only a few million years old that still sits in its birth cloud.",
+      "answer": "Gaia counts about 175 members, together about 1,600 Suns' worth, and binoculars catch only the brightest. Once their light has eroded the last of the cloud, those stars will be a family in the open, the next stage in a star's life.",
+      "rank": 3.8,
+      "story": "In a cluster this young the stars still show their birth order: the heaviest are already burning hydrogen in their cores, while most of the lighter ones are still shrinking and warming toward that point. Astronomers fit both groups to models of how stars of each mass settle down, and the youngest members give the age of the whole family."
+    },
+    "NGC6871": {
+      "step": 2,
+      "beat": "Newborn cluster that lost a member",
+      "question": "What did NGC 6871's lost sibling leave behind?",
+      "why": "NGC 6871 is a compact knot of hot young stars in the Cygnus Milky Way, and one of its siblings is already missing.",
+      "look": "From η Cygni move about two degrees east-north-east to a compact scatter of fairly bright white stars. These are hot, heavy young siblings; the one that is missing became something you cannot see at all.",
+      "answer": "It very likely left a black hole of about twenty Suns, Cygnus X-1, which moves with this group and probably came from a star born with more than forty. The heaviest siblings still shining here will follow it before long, while the lighter ones will grow up into the long-lived family that every cluster eventually becomes.",
+      "rank": 7.8,
+      "story": "To tie a black hole to a cluster, astronomers measure its motion through space, from the slow drift of its companion star across the sky and the shift of its spectral lines. They compare that with the motion of the cluster's stars, and if the two match, they very likely set out together. Cygnus X-1 passes that test, which turns a lone black hole into a family member with a known age."
+    },
+    "NGC7160": {
+      "step": 2,
+      "beat": "Newborn cluster, cloud gone",
+      "question": "What comes next for a family that has just finished being born?",
+      "why": "NGC 7160 shows what the young stars of nearby IC 1396 will look like once their cloud is gone.",
+      "answer": "A long life in the open comes next. With its gas and most of its planet-making disks gone after about ten million years, its roughly 150 known members will now age together, the heaviest first, while the Galaxy's tides slowly pull the group apart.",
+      "rank": 10,
+      "story": "NGC 7160 is the oldest step in a sequence that runs across Cepheus: the cluster inside IC 1396 is younger, and newborns are still forming at that cloud's edge. Star birth seems to have swept through the region in waves, each generation's light and winds pressing on the gas that makes the next."
+    },
+    "AST-Hyades": {
+      "step": 3,
+      "beat": "An old family with giants",
+      "question": "Which of the Hyades have already grown old?",
+      "why": "The Hyades are near enough that you can pick out, star by star, the members that have already grown old.",
+      "look": "Sweep along each arm of the V and stop on every orange-tinted star among the white ones. Leave out Aldebaran, the brightest orange point: it is not part of the family.",
+      "answer": "Four of them have grown old: γ, δ¹, ε and θ¹ Tauri, the orange giants of the V. They were the heaviest stars the family had left, so they ran out of core hydrogen first and swelled. All four are at the same stage of old age, which is exactly what siblings of equal weight and equal age should show.",
+      "rank": 625,
+      "story": "Because the Hyades are so close, astronomers can plot hundreds of members by color and true brightness and see exactly where the family's stars peel away from the band of steady adults. That turn-off, at stars a little over twice the Sun's mass, is the clock, and the heavier siblings that once stood above it have left a trace: several white dwarfs, their cooling cores, still travel with the cluster."
+    },
+    "IC2391": {
+      "step": 3,
+      "beat": "A young family in the open",
+      "question": "What will the Omicron Velorum Cluster look like in a few hundred million years?",
+      "why": "The Omicron Velorum Cluster is a young, nearby family early in its long life in the open.",
+      "answer": "It will look fainter, warmer and thinner. Its blue-white heavyweights will have swollen into giants and died, its brightest survivors will be white stars, and the Galaxy's tides will have pulled away many of its members, the path every family follows.",
+      "rank": 50,
+      "story": "At this age the cluster is a laboratory for how stars settle down: its Sun-like members still spin fast and flare often, while its heavy members are steady blue-white adults. Comparing families of known age like this one with older ones is how astronomers learned that a star's spin and its outbursts fade as it grows up."
+    },
+    "IC2602": {
+      "step": 3,
+      "beat": "A young family in the open",
+      "question": "How long until the Southern Pleiades show their first orange giant?",
+      "why": "The Southern Pleiades are a young family early in their life in the open, still sparkling blue-white.",
+      "answer": "It will take a long while by human standards and a short one by a star's. The blue-white heavyweights at its top will go first, swelling into giants as their core hydrogen runs out. Only after that will this family start to look like an older cluster, with warm-tinted giants among white stars.",
+      "rank": 46,
+      "story": "Gaia's census of stars moving with the Southern Pleiades finds far more siblings than the compact group you see: a wide halo of members spread over many degrees, stars already working their way out of the family. A cluster starts to dissolve almost as soon as it leaves its cloud, and this halo is that loss caught early."
+    },
+    "IC4651": {
+      "step": 3,
+      "beat": "An old family with giants",
+      "question": "Who is left in a star family after 1.7 billion years?",
+      "why": "IC 4651 is a family that has stayed together for nearly two billion years, a rare survivor.",
+      "answer": "What is left is stars much like the Sun and a few aging giants. Everything much heavier has already swollen and died, so the giants at its top are the latest members to reach old age.",
+      "rank": 1700,
+      "story": "Siblings in a family like this start out with nearly the same chemistry, down to the last trace element, because they formed from one well-mixed cloud. That shared fingerprint outlasts the family itself, and astronomers hope to use it to find the Sun's own lost siblings among the stars around us."
+    },
+    "IC4665": {
+      "step": 3,
+      "beat": "A young family in the open",
+      "question": "Which of IC 4665's stars will be the first to grow old?",
+      "why": "IC 4665 is a young family, a few tens of millions of years into its life in the open.",
+      "answer": "The brightest blue-white ones will go first, because they are the heaviest. When their core hydrogen runs out each will swell into a giant and then die, starting a slow change that will leave the family warmer in color, fainter and much sparser.",
+      "rank": 55,
+      "story": "IC 4665 is young enough that its smallest red dwarfs are still shrinking toward their adult size, while its heaviest members are already steady blue-white stars. It sits in the long stretch of a family's life when nothing changes at the top, so the next visible change, a first giant, is still many millions of years away."
+    },
+    "IC4756": {
+      "step": 3,
+      "beat": "An old family with giants",
+      "question": "Why do a few of IC 4756's stars look yellow and orange?",
+      "why": "IC 4756 is a family that has held together for nearly a billion years, long enough for its members to start growing old.",
+      "answer": "They were the heaviest survivors, so they ran out of core hydrogen first and swelled. Spread over a much bigger surface, their light now comes from cooler gas, and cooler gas glows yellow or orange. They are the family's elders, the first to reach old age.",
+      "rank": 840,
+      "story": "Set beside the Hyades, IC 4756 is a little further along, with brightest steady stars slightly lighter and giants slightly less massive. That is all the difference a couple of hundred million years makes to a family's top. Its stars like the Sun, meanwhile, have barely changed at all."
+    },
+    "M11": {
+      "step": 3,
+      "beat": "A rich family growing older",
+      "question": "How can a family as rich as the Wild Duck Cluster survive so long?",
+      "why": "The Wild Duck Cluster is a family with enough stars to keep growing old together, packed into a single tight fan.",
+      "answer": "It survives by sheer weight. All that mass holds onto its members against the Galaxy's tides far better than a small cluster can. Its heaviest stars have already gone the way of every family's top members, and its brightest survivors are now the ones closest to becoming giants.",
+      "rank": 310,
+      "story": "Over its life the heaviest members have sunk toward the middle while the lighter ones drifted outward, like stones and sand sorting themselves in a shaken sieve, and the outskirts are where a cluster loses stars first. Counting the Wild Duck's members by brightness at different distances from its center shows exactly this sorting, a sign that the family has lived long enough for its own gravity to rearrange it."
+    },
+    "M23": {
+      "step": 3,
+      "beat": "A family in its middle years",
+      "question": "Which of M23's ordinary-looking stars will grow old next?",
+      "why": "M23 is a family a few hundred million years into its life, with nothing blazing left at its top.",
+      "answer": "The brightest of them will go next, because they are the heaviest stars still in their steady phase. When their core hydrogen runs out they will swell into giants, and then the next weight class down will follow, so the top of the family keeps sinking toward stars like the Sun.",
+      "rank": 230,
+      "story": "A family at this stage has lost its hot blue stars but has few giants to show for it, because stars of three or four Suns pass through the giant stage quickly and spend most of their lives as steady white stars. So M23 looks plain, a field of similar stars, even though some of its members have already lived and died."
+    },
+    "M34": {
+      "step": 3,
+      "beat": "A family in its middle years",
+      "question": "What is pulling M34's family apart as it grows older?",
+      "why": "M34 is a family a few hundred million years into its life, still blue-white at the top but thinner than a young cluster.",
+      "answer": "Passing gas clouds and the steady tug of the Galaxy's tides are pulling it apart. Each encounter loosens a few members, which drift off to orbit the Galaxy on their own, so the family thins while its stars age. Its top stars, still blue-white, are the next to run out of core hydrogen and become giants.",
+      "rank": 220,
+      "story": "M34's white dwarfs, the cores of members that have already died, are a gift to astronomers: knowing the cluster's age, they can work out how heavy each star was at birth. Comparing that with what is left shows that a star born at four or five Suns ends as a core of less than one, so most of its matter went back into space."
+    },
+    "M35": {
+      "step": 3,
+      "beat": "A young family beside an old one",
+      "question": "Why does the little smudge beside M35 look so different from it?",
+      "why": "M35 shares its field with NGC 2158, a family roughly ten times older, so one view holds two ages of the same story.",
+      "look": "Center M35 and look at its south-west edge for the much smaller, fainter smudge of NGC 2158. Compare the sparkle of the one with the even haze of the other.",
+      "answer": "NGC 2158 looks so different because it is far older and far more distant. It has lived more than ten times as long as M35, long enough for every bright blue star to burn out, and it lies several times farther away, so its redder survivors merge into a faint haze. Side by side they show where a young family like M35 is headed.",
+      "rank": 150,
+      "story": "The two families are not related: they lie at very different distances and only line up from where we stand, so they never shared a cloud. That makes the pair a clean comparison, two families of the same kind caught at different chapters of one story."
+    },
+    "M36": {
+      "step": 3,
+      "beat": "A young family in the open",
+      "question": "What will M36 look like once its blue-white stars start to age?",
+      "why": "M36 is a young family whose top stars have barely begun to age.",
+      "answer": "It will look much like its neighbor M37, a short sweep away, which is more than twenty times older. As M36's brightest members run out of core hydrogen one after another, they will swell into orange giants, and the whole cluster will dim and turn warmer in color.",
+      "rank": 22,
+      "story": "M36, M38 and M37 form a sequence across Auriga from youngest to oldest, and sweeping through them is like leafing through one family album. The youngest is still blue-white at the top, while the oldest has orange giants among its brightest stars. They are unrelated families, which makes the point stronger, since every cluster ages the same way."
+    },
+    "M37": {
+      "step": 3,
+      "beat": "An old family with giants",
+      "question": "Why are M37's few brightest stars orange rather than blue-white?",
+      "why": "M37 is an old family whose brightest members have already grown into giants.",
+      "look": "Hold M37 steady and look for the handful of points that stand out from the even glow. Its brightest members today are its orange giants, though at this distance their color is hard to catch.",
+      "answer": "The stars now at the top are the ones that have just run out of core hydrogen and ballooned. Their energy now leaks out through a vastly larger surface, so each square meter runs cooler, and a cooler surface glows orange. Each of them is a star in old age, swollen far beyond the size it had in the family's youth.",
+      "rank": 500,
+      "story": "In a family this old a handful of swollen giants make up a large share of the light, outshining thousands of steady stars, which is why the cluster's glow as a whole is warmer than a young cluster's. Astronomers measure that combined color in faraway galaxies too, and clusters like M37 are the references for turning it into an age."
+    },
+    "M39": {
+      "step": 3,
+      "beat": "A family in its middle years",
+      "question": "What happens to M39's family as its stars age?",
+      "why": "M39 is a family close enough for you to count its brightest members one by one.",
+      "answer": "It ages from the top down. Its brightest white stars are the next in line to spend their core hydrogen and swell into giants. As each one does, the family's light grows a little fainter and warmer, just as it did when its bluest members burned out long ago.",
+      "rank": 430,
+      "story": "Dating a family by its top stars sounds simple, but heavy stars like M39's brightest often spin fast. A spinning star stirs fresh hydrogen down into its core and stays in its steady phase longer, blurring the edge between members still burning and members that are done. That blur is one reason the ages of clusters like this one are so hard to pin down."
+    },
+    "M41": {
+      "step": 3,
+      "beat": "A young family with its first giants",
+      "question": "Why does one star near M41's center glow orange among white siblings?",
+      "why": "M41 has reached the moment when its heaviest survivors are just becoming the family's first giants.",
+      "look": "Put Sirius at the top of the field and drop about four degrees south. M41 breaks into dozens of white stars, and near its middle one has a clear orange tint: that is the brightest of its giants.",
+      "answer": "That star glows orange because lifetimes fall steeply with weight: a star a few times heavier than its sibling carries more fuel but burns it so much faster that it runs out first. After about 150 million years only the heaviest members have got that far, and the brightest of these giants sits near the middle, while the next weight class down will follow one star at a time.",
+      "rank": 154,
+      "story": "At M41's age the stars just leaving their steady phase weigh about four or five Suns, so its orange giants were born a little above that, and they will end quietly as white dwarfs. Any sibling born above about eight Suns lived less than about forty million years, and a family this rich very likely had a few, long since gone as supernovae."
+    },
+    "M44": {
+      "step": 3,
+      "beat": "An old family with giants",
+      "question": "Why do the Beehive and the Hyades look so alike?",
+      "why": "The Beehive has reached the stage at which its first giants are just appearing.",
+      "look": "Break the Beehive into its white and pale-yellow stars, then hunt for the few warmer, yellow-orange points among them: those are the family's new giants.",
+      "answer": "They look alike because they are at the same stage of life, and they may even share a birthplace, since their ages and their motions through space are similar. Both have lost every hot blue star and both show a handful of orange giants, the heaviest survivors just beginning to swell, which is how any family looks at six or seven hundred million years.",
+      "rank": 637,
+      "story": "Among the Beehive's white stars is one that looks too young for the family: 40 Cancri, hotter than any other member by more than a thousand degrees. It is a blue straggler, most likely made when siblings collided and merged sometime in the last few hundred million years, and the fresh fuel set its clock back. Families can hide second chances like this, which is why astronomers date them from the crowd rather than from any one star."
+    },
+    "M45": {
+      "step": 3,
+      "beat": "A young family in the open",
+      "question": "Has anyone in the Pleiades family grown old yet?",
+      "why": "The Pleiades are a family at the bright start of their long life in the open.",
+      "look": "Look at the color of the brightest members: every one is blue-white, with no orange among them. Keep that picture in mind: in older families the colors change.",
+      "answer": "None has grown old in a way your eye can see. At about 125 million years every bright Pleiad still shines blue-white and none has swollen into an orange giant, but the family has already lost its heaviest siblings, stars too massive to last this long. Alcyone and the other bright sisters are next in line, and when their core hydrogen runs out they will be the first to swell.",
+      "rank": 125,
+      "story": "There is direct evidence of the Pleiades' lost siblings: a white dwarf, the cooling core of a dead star, travels with the cluster. For it to have finished its life already, it must have been born heavier than about six Suns, a sibling that lived fast and died while the bright sisters you see were still young."
+    },
+    "M47": {
+      "step": 3,
+      "beat": "A young family in the open",
+      "question": "Which shows a later chapter of family life, M47 or its neighbor M46?",
+      "why": "M47 and M46 share one binocular field while sitting at different points in a family's life.",
+      "look": "Center M47's coarse scatter of bright blue-white stars, then keep M46, the finer misty patch just over a degree east, in the same field and compare their sparkle.",
+      "answer": "M46 shows the later chapter. At roughly four times M47's age it has already lost the bright blue members M47 still shows, and its survivors are fainter and more even. A family does not fade all at once but from the top down, losing its brightest stars first.",
+      "rank": 109,
+      "story": "Astronomers date families like these by the heaviest star still burning hydrogen in its core, because each weight class runs out at its own predictable time. In M47 that star is several times the Sun's mass, while in M46 it is lighter, which by the same rule makes M46 the older family, though its faint, even look owes as much to its greater distance as to its age."
+    },
+    "M48": {
+      "step": 3,
+      "beat": "A family in its middle years",
+      "question": "Which of M48's stars are next to become giants?",
+      "why": "M48 is caught halfway, its blue giants gone and its first yellow giants already among the survivors.",
+      "answer": "The white stars at its top are next in line. A few of their slightly heavier siblings have already swollen into yellow giants, and as each white star exhausts the hydrogen in its core it will follow, swelling and cooling into a giant of its own.",
+      "rank": 420,
+      "story": "M48's giants are heavy enough to have lit the helium in their cores gently, like a slow fire. In a star under about two Suns the core is so tightly packed when helium ignites that it goes off as a runaway flash, for a moment as powerful as a whole galaxy, though none of it reaches the surface. The Sun will go through one in its own old age."
+    },
+    "M50": {
+      "step": 3,
+      "beat": "A young family in the open",
+      "question": "Will M50 still be a cluster by the time its stars are old?",
+      "why": "M50 is a family still early in its long life in the open.",
+      "answer": "Only part of it may still be one. Every pass near a gas cloud and every tug of the Galaxy's tides peels off a few members, and most families dissolve within a few hundred million years. M50's roughly 1,800 Suns' worth of stars gives it a fighting chance, and either way its stars will grow old on schedule, heaviest first.",
+      "rank": 144,
+      "story": "A cluster is held together only by its own gravity, and each member that gains a little speed in close passes with its siblings may climb out and leave. This slow evaporation strips the lightest stars first, since they are the easiest to fling outward, so an aging family grows both sparser and weighted toward its heavier members."
+    },
+    "M52": {
+      "step": 3,
+      "beat": "A young family in the open",
+      "question": "How far into its life is M52's family?",
+      "why": "M52 is a rich but still young family, early in its life in the open.",
+      "answer": "M52's family is still near the start. Its heaviest members are already gone, but plenty of hot stars remain, and over the next few hundred million years they will swell and die in order of weight, leaving the family warmer in color and fewer at the top.",
+      "rank": 84,
+      "story": "Astronomers date a family like this by plotting each member's color against its true brightness, and stars of one age fall along one curve. The place where that curve bends away from the band of steady adults marks the heaviest stars running low on core hydrogen. For M52 that bend sits among hot blue-white stars, the signature of a family still young."
+    },
+    "M6": {
+      "step": 3,
+      "beat": "A young family, its first giant",
+      "question": "What will BM Scorpii become as the rest of the Butterfly Cluster grows up?",
+      "why": "In the Butterfly Cluster one sibling, BM Scorpii, has already raced ahead into old age.",
+      "answer": "BM Scorpii will be a dead star long before its siblings grow old. Having already swollen into an orange giant, it is in the last stretch of its life, and when it is gone the next-heaviest blue-white sibling will take its place as the family's oldest-looking member.",
+      "rank": 52,
+      "story": "In a family about fifty million years old, the line between stars that have already swollen and those still burning hydrogen falls at roughly seven Suns. BM Scorpii must have been born just above it, and its blue-white siblings below. Stars just under that line will become giants in turn, while everything much lighter will still be steady long after the cluster has dissolved."
+    },
+    "M67": {
+      "step": 3,
+      "beat": "An old family the Sun's age",
+      "question": "Which of M67's stars show the Sun's own future?",
+      "why": "M67 is a family that has reached roughly the Sun's age, so its stars show where a star like ours is headed.",
+      "answer": "Its brightest stars show it. The yellow and orange giants at the top of M67 began only a little heavier than the Sun, which is why they have already used up their core hydrogen and swollen while the Sun-like members have not. In a few billion years the Sun will do the same.",
+      "rank": 3870,
+      "story": "M67 is one of the few places where you can see the Sun's whole future at once. It holds stars just leaving their steady phase, giants on their first climb, giants burning helium in their cores and, fainter, white dwarfs that are already finished. Lined up by brightness and color, they trace the path the Sun will follow over the next several billion years."
+    },
+    "M7": {
+      "step": 3,
+      "beat": "A family growing older",
+      "question": "Will the yellow giant in Ptolemy's Cluster be the last of its family to grow old?",
+      "why": "Ptolemy's Cluster is a bright, sprawling family whose top stars have begun to grow old.",
+      "look": "Look for the yellowish star near the middle of the cluster, among the white ones: a giant, one of the family's oldest-looking members.",
+      "answer": "It is only the first of many. Each of its white siblings, starting with the heaviest, will run out of core hydrogen in turn and swell the same way, and its smallest members, lighter than the Sun, will outlast them all by billions of years.",
+      "rank": 170,
+      "story": "The yellow giant is a few times heavier than the Sun, and stars of that weight spend only about a tenth of their lives as giants, so a family this size can show only one or two at a time. That is why giants are rare in clusters, and why each one is precious to astronomers measuring how fast stars age."
+    },
+    "M93": {
+      "step": 3,
+      "beat": "An old family with giants",
+      "question": "What is left of a star family after 700 million years?",
+      "why": "M93 has lived long enough to lose its blue stars and gain its first aging giants.",
+      "look": "Look for the arrowhead of white and yellow stars, evenly bright, with no blue-white heavyweights left to stand out.",
+      "answer": "What is left is the quieter half of the family. Its heaviest stars burned out long ago, its brightest survivors are white and yellow, and a few have already swollen into giants, the stage every member will reach in its turn, from the heaviest down.",
+      "rank": 740,
+      "story": "At this age the heaviest stars still burning hydrogen weigh a bit over twice the Sun, so every member that has died so far was heavier than that, and nearly all of them will have left white dwarfs rather than exploding. Only siblings born above about eight Suns end violently, and in a family like this those were few and went within its first few tens of millions of years."
+    },
+    "Mel20": {
+      "step": 3,
+      "beat": "A young family with an aging star",
+      "question": "Has any member of the Alpha Persei family grown old already?",
+      "why": "The Alpha Persei Cluster is a young family whose brightest member is not quite what it seems.",
+      "look": "Center Mirfak and compare it with the dozens of blue-white stars around it: Mirfak itself is pale yellow, a different color from its siblings.",
+      "answer": "Mirfak, the bright star at the center, already has: it fits the family's age and motion, yet it has left its steady phase and swollen into a yellow-white supergiant. It was the heaviest of the siblings, so it aged first, while the blue-white crowd around it is still in the prime of life.",
+      "rank": 90,
+      "story": "Mirfak weighs about eight Suns by most estimates, which puts it right on the line between the two ways a star can end. A little heavier and its core will collapse in a supernova; a little lighter and it will shed its outer layers and leave a white dwarf. How the family's present leader dies is still an open question."
+    },
+    "NGC1647": {
+      "step": 3,
+      "beat": "A young family in the open",
+      "question": "What separates NGC 1647 from the Hyades a few degrees away?",
+      "why": "NGC 1647 shares a corner of Taurus with the Hyades, two families at very different ages.",
+      "answer": "Mostly age separates them: NGC 1647 is about five times younger than the Hyades, so its brightest members are still steady blue-white stars, while the Hyades' brightest have swollen into orange giants. Put the two together and you see the same kind of family at two chapters of its life.",
+      "rank": 117,
+      "story": "Ages like these come from the heaviest members still burning hydrogen in their cores, since each weight class runs out at its own predictable time. In NGC 1647 stars of several Suns are still doing so, while in the Hyades nothing above about two and a half Suns is left, a gap of hundreds of millions of years in one corner of Taurus."
+    },
+    "NGC1662": {
+      "step": 3,
+      "beat": "A family in its middle years",
+      "question": "What will the Orion Nebula's stars look like a few hundred million years from now?",
+      "why": "The Klingon Battlecruiser Cluster, at the western edge of Orion, is a family a few hundred million years down the road that Orion's newborns are only starting on.",
+      "answer": "They will look much like the Klingon Battlecruiser Cluster does now. By then the Nebula's newborns will have lost their cloud and their hottest members, and the survivors will be a sparse, quiet group whose brightest stars are only now nearing the giant stage.",
+      "rank": 345,
+      "story": "Most families never get this far. By one widely cited estimate, fewer than one in ten of the groups born in clouds survives as a bound cluster to even a hundred million years, because once the gas is gone, so is much of the gravity that held them. NGC 1662 has lasted several times longer, and whether Orion's newborns will hold together as well is far from certain."
+    },
+    "NGC2232": {
+      "step": 3,
+      "beat": "A young family in the open",
+      "question": "Where does NGC 2232 sit between Orion's newborns and the old clusters?",
+      "why": "NGC 2232 is a young family in Monoceros, a short hop from Orion's nurseries, that has already left its cloud far behind.",
+      "answer": "NGC 2232 sits just past the hatching. Its birth gas has long been cleared and its stars are still building planets from the debris around them, yet its brightest members are white stars in their prime, none of them swollen into a giant. From here it will age from the top down, like every family.",
+      "rank": 25,
+      "story": "Its age depends on which stars you ask. The lightest members, which destroy their fragile lithium at a known pace, give about 38 million years, close to twice what the same models read from their colors and brightness. The two clocks agree only if these young stars are blotched with dark magnetic spots that make them look younger than they are."
+    },
+    "NGC2477": {
+      "step": 3,
+      "beat": "An old family with giants",
+      "question": "What happens to a family as rich as NGC 2477 after 700 million years?",
+      "why": "NGC 2477 is a heavyweight that has lived long enough for its brightest members to become giants.",
+      "answer": "It holds together better than most, because its great mass gives it a strong grip on its members. But it ages like any other: its heaviest stars went first, and its brightest survivors, already giants, show the stage every star in it will reach in turn, from the heaviest down.",
+      "rank": 701,
+      "story": "With thousands of members, NGC 2477 is rich enough to show every stage of old age at once. Stars just leaving their steady phase, giants on their first climb and a clump of giants burning helium in their cores are all there, sorted by weight. Its white dwarfs have been counted too, and how far the faintest of them have cooled gives a second age that agrees with the first."
+    },
+    "NGC2516": {
+      "step": 3,
+      "beat": "A young family in the open",
+      "question": "How far along is the Southern Beehive in a family's life?",
+      "why": "The Southern Beehive is a family about as old as the Pleiades, early in its long life in the open.",
+      "answer": "The Southern Beehive is still early in its life. Its hottest members are already gone, but its brightest survivors are still blue-white, and none has yet joined the orange giants that mark an older family. From here it will age the way every cluster does, losing its top stars one weight class at a time.",
+      "rank": 125,
+      "story": "Clusters this young still spin fast, because Sun-like stars are born rotating quickly and slow down as their winds carry spin away. Timing the Southern Beehive's stars as dark spots turn into and out of view therefore gives an age of its own. That spin clock agrees with the one read from its brightest members, which is why astronomers trust it for lone stars like the Sun."
+    },
+    "NGC3532": {
+      "step": 3,
+      "beat": "A family in its middle years",
+      "question": "What will the Wishing Well look like a billion years from now?",
+      "why": "The Wishing Well is a family in its middle years, with its first orange giants already among the survivors.",
+      "look": "Sweep the Wishing Well's crowd of white stars and look for the few orange-tinted points: those are the family's first giants.",
+      "answer": "It will look warmer and fainter. Its white stars will have swollen into giants and gone in order of weight, until stars not much heavier than the Sun sit at the top, the way the oldest clusters look today.",
+      "rank": 300,
+      "story": "The Wishing Well is rich in white dwarfs, and because the cluster's age is known, each one tells how heavy its star was at birth. Together they show that a star born at three or four Suns leaves a core of well under one, so most of its weight goes back into space before the end."
+    },
+    "NGC4755": {
+      "step": 3,
+      "beat": "A young family, its first red supergiant",
+      "question": "How long before the Jewel Box's other bright stars turn orange too?",
+      "why": "In the Jewel Box the heaviest sibling has already raced into old age while the others look on.",
+      "look": "Center the Jewel Box and find the one orange-red star among its blue-white jewels: a sibling that was born with them and has already swollen into a supergiant.",
+      "answer": "It will not be long by a star's clock. The brightest blue-white members are heavy enough to be close to the end of their steady phase, and each will swell in turn, heaviest first, while the family's small members carry on for billions of years. The orange star is a preview of their old age.",
+      "rank": 16,
+      "story": "The Jewel Box's top has already begun to turn: several of its brightest blue stars, Kappa Crucis among them, are rated supergiants, swelling while still hot as their core hydrogen runs low. They are on the road the red one took first, and the lighter blue-white siblings below them are lined up behind in order of weight."
+    },
+    "NGC6633": {
+      "step": 3,
+      "beat": "An old family with giants",
+      "question": "Is NGC 6633 at the same stage of life as the Hyades?",
+      "why": "NGC 6633 is a family whose first giants have been studied closely enough to be weighed.",
+      "look": "Pick out NGC 6633's brightest members against the dense background; under a dark sky a few look slightly warmer in tint than the rest, and those are the family's giants.",
+      "answer": "It is very nearly at the same stage. At about 550 million years it has lost its blue stars and shows a few yellow-orange giants, and its Sun-like stars have burned their lithium almost exactly as the Hyades' have, despite a slightly different chemistry. Different families, born in different places, reach the same chapter on the same schedule.",
+      "rank": 550,
+      "story": "A second clock runs in NGC 6633's smaller stars, and it is lithium, a fragile element that burns at about two and a half million degrees, far cooler than hydrogen needs. In a star like the Sun, slow churning carries a little of it down to where that heat destroys it. So the longer a family has lived, the less lithium its Sun-like stars keep, and families born far apart can be set side by side on one clock."
+    },
+    "NGC752": {
+      "step": 3,
+      "beat": "An old family coming apart",
+      "question": "Where are NGC 752's lost stars now?",
+      "why": "NGC 752, well over a billion years old, is a family near the end of its life as a cluster.",
+      "answer": "They are spread through the Milky Way. Over more than a billion years the Galaxy's tides have drawn away so many members that only a sparse remnant is left, while the escapees orbit the Galaxy on their own, indistinguishable from any other star. Its few new giants are the family's elders.",
+      "rank": 1340,
+      "story": "NGC 752's giants weigh only about twice the Sun, the heaviest stars it has left, and stars of that weight have a quiet future: none of its remaining members will explode. From here on every death in this family will be gentle, a giant shedding its outer layers around a white dwarf."
+    },
+    "NGC7789": {
+      "step": 3,
+      "beat": "An old family with giants",
+      "question": "Why does Caroline's Rose look misty rather than sparkling?",
+      "why": "Caroline's Rose is a massive family that has had well over a billion years to change.",
+      "answer": "Its brightest stars are no longer much brighter than the rest. With the blue heavyweights long gone, the top of the family is a crowd of giants and near-Sun-like stars of similar brightness, and at about 6,400 light-years they merge into an even glow. Age flattens a family's sparkle.",
+      "rank": 1600,
+      "story": "Every member of Caroline's Rose still alive is now too light to end as a supernova, so all its future deaths will be gentle ones: giants puffing off their outer layers to leave white dwarfs. Thousands of such endings lie ahead of it, one after another, as each weight class runs out of fuel."
+    },
+    "NGC869": {
+      "step": 3,
+      "beat": "A young family with red supergiants",
+      "question": "How long have the Double Cluster's orange supergiants got left?",
+      "why": "In the Double Cluster the heaviest siblings have already reached the last stretch of their lives, only about 14 million years after birth.",
+      "answer": "They have not long left by a star's clock. They are the heaviest members, swollen into red supergiants because their core hydrogen is gone, and stars that heavy are expected to end as supernovae, astronomically soon. Their blue-white siblings are next in line, heaviest first.",
+      "rank": 14,
+      "story": "At this family's age the line between stars still burning hydrogen and stars that have swollen sits at about fifteen Suns, so the orange supergiants were born just above it. Counting how many members sit in that bloated stage, against how many are still steady, is one of the ways astronomers measure how long a heavy star spends as a supergiant."
+    },
+    "NGC884": {
+      "step": 3,
+      "beat": "A young family with red supergiants",
+      "question": "What will χ Persei look like after its red supergiants are gone?",
+      "why": "χ Persei, the eastern half of the Double Cluster, already shows its heaviest siblings near the end.",
+      "answer": "It will look a little dimmer and bluer for a while, until the next weight class takes their place. When the orange supergiants have exploded, the heaviest blue-white stars still shining will be the ones to run out of fuel and swell, so the family keeps losing its top and growing fainter.",
+      "rank": 14,
+      "story": "The red supergiants of both clusters are variable, brightening and fading by anything from a few tenths of a magnitude to two magnitudes over months and years, the restless breathing of stars too swollen to hold still. That restlessness is how a heavy star's last stage begins: it pushes gas off its surface and starts to lose weight before the end."
+    },
+    "Stock2": {
+      "step": 3,
+      "beat": "A family in its middle years",
+      "question": "Why is Stock 2 so hard to see as one family?",
+      "why": "Stock 2 is a big family in Cassiopeia, spread so thinly that the eye barely notices it as one group.",
+      "answer": "Stock 2 has been loosening for a few hundred million years. Its members now spread over so much sky that they barely rise above the Milky Way, and the Galaxy's tides will keep drawing them apart while its stars, heaviest first, grow old.",
+      "rank": 290,
+      "story": "A family loosens because the Galaxy pulls on it unevenly: the side nearer the galactic center is tugged a little harder than the far side, and that difference slowly stretches the cluster along its orbit. Gaia has found escaped members around several nearby clusters strung out in faint streams that lead and trail the family, much like the two tails of a comet."
+    },
+    "DS-Albireo": {
+      "step": 4,
+      "beat": "Aging giant beside a star in its prime",
+      "question": "Why is Albireo's golden star so much further through life than its blue companion?",
+      "why": "Albireo shows an aging giant and a star still in its prime side by side, probably born together.",
+      "look": "Split Albireo into its gold and blue stars. The gold one is the aging giant; the blue one is still in its steady phase.",
+      "answer": "The golden star began heavier. If the two were born together, about 100 million years ago, the heavier star burned through its core hydrogen first and swelled into a cool golden giant, while the lighter blue star is still in its prime. In time the giant will shed its outer layers and leave a white dwarf, and the blue star will take its turn.",
+      "story": "Matching each star's brightness and temperature to models of how stars change with age gives the gold star about five Suns and the blue one three to four. That gap is small enough to look trivial and large enough to set them on different clocks. A star twice the Sun's mass spends its core hydrogen in roughly a billion years; one of five Suns needs barely a tenth of that."
+    },
+    "DS-DeltaCep": {
+      "step": 4,
+      "beat": "Aging supergiant, pulsing",
+      "question": "Why does a star start pulsing in its old age?",
+      "why": "δ Cephei is a heavy star passing through an unsteady stretch of its old age, its outer layers rising and falling every few days.",
+      "answer": "It pulses because aging moved its surface temperature into a narrow band in which a layer of helium inside the star acts like a valve, trapping heat when squeezed and releasing it when it expands. A heavy star crosses that band only briefly as it evolves, so δ Cephei is caught in a fleeting stage of its old age.",
+      "story": "δ Cephei's rhythm is itself changing, and that change is the star aging in front of us: a pulsating star that grows pulses more slowly, one that shrinks more quickly. Timings going back to John Goodricke's discovery in 1784 show its period shortening by about a tenth of a second a year, which most models read as the star slowly heating as it crosses that narrow band."
+    },
+    "HR168": {
+      "step": 4,
+      "beat": "Aging giant: an orange giant",
+      "question": "What will Schedar become after its orange-giant years?",
+      "why": "Schedar, the orange star of Cassiopeia's W, is a giant among the W's whiter stars.",
+      "answer": "Schedar will become a white dwarf once it has lived through its giant years. It will swell further, grow unsteady, cast off its outer layers into space and leave behind its bare, hot core, which will then cool for billions of years.",
+      "story": "Schedar has most likely already been through its first swelling and now burns helium in its core, a calm stage; when that helium runs out it will swell again, further than before, before shedding its outer layers. Each of those steps takes less time than the one before, so the rest of Schedar's life is short compared with what it has already lived."
+    },
+    "HR1713": {
+      "step": 4,
+      "beat": "Aging supergiant: a heavyweight",
+      "question": "How will Rigel's life end?",
+      "why": "Rigel is a heavyweight in its late years, far too massive to end quietly.",
+      "answer": "Rigel will most likely end with a bang. It has used up the hydrogen in its core, and stars this luminous usually end as core-collapse supernovae, perhaps after first swelling into a red supergiant like Betelgeuse across Orion. When nothing is left to burn, its core will fall in on itself in a fraction of a second and the rest of the star will be blasted into space.",
+      "look": "Rigel is the bright blue-white foot of Orion. Swing across the constellation to orange Betelgeuse at the opposite corner: both are heavyweights past their prime, and Betelgeuse shows the cooler, more swollen stage that may lie ahead of Rigel.",
+      "story": "Rigel has left its long hydrogen-burning life behind, though whether it is still swelling toward the red or has already been a red supergiant and shrunk back is debated, since both paths pass through a hot, blue stage. Its faint, irregular flickers, the sign of slow pulsations deep inside, are one of the tests astronomers use to tell the two apart."
+    },
+    "HR2004": {
+      "step": 4,
+      "beat": "Aging supergiant, still blue",
+      "question": "What lies ahead for Saiph, the hot star at Orion's foot?",
+      "why": "Saiph is a heavy blue supergiant that has already left its steady phase, though it still glows blue-white.",
+      "answer": "A short and dramatic old age lies ahead. As its core runs through its remaining fuels, its envelope should swell and cool, perhaps turning it into a red supergiant like Betelgeuse, and a star this heavy is expected to end in a supernova.",
+      "story": "Saiph and Rigel are both heavyweights past their prime, but Saiph's surface is still nearly as hot as it was in its steady years, so it has most likely only begun to swell, while Rigel has cooled further. A heavy star makes that change in well under a million years, so seeing two of them at different points along it, at Orion's two feet, is a lucky snapshot."
+    },
+    "HR2286": {
+      "step": 4,
+      "beat": "Aging giant: a red giant",
+      "question": "How close to the end is Tejat, the red giant at Castor's foot?",
+      "why": "Tejat is a red giant far enough along that its outer layers no longer hold perfectly still.",
+      "answer": "Tejat is well along. It has ballooned to about 110 times the Sun's width, and giants this swollen go on to swell further and pulse more strongly, until their outer layers drift off into space.",
+      "story": "Tejat is about twice the Sun's weight, and stars like it spend roughly a tenth of their lives as giants of one kind or another, so it has been aging quickly by a star's standards. When it finishes it will leave a white dwarf of perhaps six-tenths of a Sun, having given back to space well over half of the matter it was born with.",
+      "look": "Find Gemini's western foot: Tejat is the orange-red star there, with the cluster M35 about 3½° to its west-north-west, past Propus (η Geminorum) and a little north. Its deep orange-red is the color of a surface that has swollen to many times its old size and cooled."
+    },
+    "HR2326": {
+      "step": 4,
+      "beat": "Aging giant: a heavy star burning helium",
+      "question": "What is Canopus burning now that its core hydrogen is gone?",
+      "why": "Canopus is a heavy star, about 25 million years old and already well past its steady phase.",
+      "answer": "Canopus is most likely burning helium. Models of a star of nine or ten Suns place it in a stage where helium is burning into carbon in its core, a later fuel that lasts far less time than hydrogen did. When that runs out it will swell again, and for a star of its weight the end may come as a heavy white dwarf or a supernova; it sits close to the line between the two.",
+      "story": "Astronomers place Canopus by asking which stage lasts long enough to be caught. A heavy star races through the swelling that follows its core hydrogen in well under a million years, but then burns helium for a couple of million. A star found at Canopus's size and temperature is therefore far more likely to be in that longer stage."
+    },
+    "HR2773": {
+      "step": 4,
+      "beat": "Aging supergiant",
+      "question": "Where is Pi Puppis in its life story?",
+      "why": "Pi Puppis is a heavy star in its late years, a cool orange supergiant in the Stern of the old ship Argo.",
+      "answer": "Pi Puppis is near its end. It has spent its core hydrogen and swollen into a supergiant, and a star that heavy finishes its life soon after, most likely as a supernova, long before the smaller stars scattered around it grow old.",
+      "story": "The sprinkle of fainter stars around Pi Puppis is its own family, and their ages say how long Pi Puppis itself has been alive: only some tens of millions of years. Only a star born many times heavier than the Sun could have reached the supergiant stage in that time, which is how astronomers know which way its life will end."
+    },
+    "HR2990": {
+      "step": 4,
+      "beat": "Aging giant with a planet",
+      "question": "Will Pollux's planet survive what comes next?",
+      "why": "Pollux is a giant with a planet, which makes its future personal: it is a rehearsal for the Sun's.",
+      "answer": "Its planet has survived so far: Pollux has swollen to about nine times the Sun's width, still far inside the planet's orbit at about 1.6 times Earth's distance from the Sun. But a giant keeps growing as it ages, and before the end it will swell much larger and shed much of its mass, so whether the planet survives depends on how far the star reaches and how hard it lets go.",
+      "story": "What decides a planet's fate around a swelling star is a tug of war: as the star loses mass its grip weakens and planets drift outward, but tides raised on the bloated star drag close planets inward. Astronomers find fewer close-in planets around giants than around stars in their prime, a hint that the tides often win."
+    },
+    "HR3307": {
+      "step": 4,
+      "beat": "Aging giant beside a hot young star",
+      "question": "How can one point of light hold an old giant and a young-looking star?",
+      "why": "Avior blends an aging orange giant and a hot blue star into one point in the False Cross.",
+      "answer": "The two stars started with different weights. The one that became the giant was heavier, so it ran through its core hydrogen first and swelled, while its partner is still in its steady phase. Each pair like this is a snapshot of two chapters of the same story.",
+      "story": "Avior's blue partner is itself a heavy star, about seven Suns of hot blue-white, still calmly burning hydrogen in its core. The two are separated by at least about ninety times Earth's distance from the Sun, too far to have traded gas, so whatever set them on different clocks was settled at birth, not by one star feeding on the other."
+    },
+    "HR3634": {
+      "step": 4,
+      "beat": "Aging supergiant: near the dividing line",
+      "question": "Will Suhail end with a bang or quietly?",
+      "why": "Suhail, the orange star in the sails of Vela, is a swollen giant whose weight puts it close to the line between the two ways a star can end.",
+      "answer": "No one can say for certain, because its birth weight has not been measured well. A star born above about eight Suns keeps burning heavier fuels until its core collapses and explodes, while one born lighter sheds its outer layers and leaves a white dwarf. Suhail's light, several thousand Suns' worth, places it close to that line.",
+      "story": "Above the line, each fuel a star burns lasts a fraction of the one before. Hydrogen keeps it going for millions of years, helium for about a tenth as long, carbon for centuries, and the heavier fuels that follow for a year or so, months and finally days. The surface barely notices those last stages, so a supergiant can look calm right up to the end, and nobody can tell from outside how near that is."
+    },
+    "HR6241": {
+      "step": 4,
+      "beat": "Aging giant: an ordinary orange giant",
+      "question": "What is ε Scorpii's old age like compared with Antares'?",
+      "why": "ε Scorpii is a modest orange giant just along the Scorpion's body from Antares, a far heavier star at a far later stage.",
+      "answer": "ε Scorpii's old age is slower and gentler. It is an ordinary giant, about twelve times the Sun's width, burning through its later fuels at a calm pace, while Antares is a heavyweight racing toward a supernova. A modest giant like ε ends by shedding its outer layers and leaving a white dwarf, the quiet way most stars end.",
+      "story": "ε Scorpii is a clump giant, a star that has been through its first swelling and now burns helium quietly in its core, a calm stage of about a hundred million years, a small fraction of its prime. Most of the orange giants you see in the sky sit on this same plateau, which is why so many of them look alike."
+    },
+    "HR6262": {
+      "step": 4,
+      "beat": "Aging hypergiant: a heavyweight near the end",
+      "question": "How long can a star as heavy as ζ¹ Scorpii last?",
+      "why": "ζ¹ Scorpii is one of the heaviest stars binoculars can show, already in its late years though it was born only a few million years ago.",
+      "answer": "A star like ζ¹ lasts only a few million years in all, and it has spent most of them. Stars this heavy burn fuel at a ferocious rate, and ζ¹ has already left its steady phase to become a hypergiant, unstable and swollen. Its end will be a supernova, or perhaps a collapse straight into a black hole.",
+      "story": "Stars this heavy blow so much of themselves away in their winds that they can lose a large share of their weight before the end, and how much they lose helps decide what remains. ζ¹'s spectrum shows that wind directly, in lines stretched by gas streaming off its surface."
+    },
+    "HR7139": {
+      "step": 4,
+      "beat": "Aging giant: a cool bright giant",
+      "question": "What makes δ² Lyrae so much redder than its blue neighbor?",
+      "why": "δ² Lyrae is a cool giant sitting in one field with a hot blue star, so old age shows plainly as color.",
+      "answer": "Old age has made it redder. δ² has used up its core fuel and ballooned into a giant hundreds of times the Sun's width, and its light now escapes from a surface so cool that it glows orange-red. Giants this swollen are near the end, when they begin to lose their outer layers to space.",
+      "story": "δ² Lyrae is most likely on the last climb of a giant's life, after its core helium is gone, burning hydrogen and helium in two thin shells around a dead core of carbon and oxygen. Its light wobbles slightly and irregularly, as such giants do, because a surface so far from its core is barely held in place."
+    },
+    "HR7264": {
+      "step": 4,
+      "beat": "Aging giant: a bright giant",
+      "question": "What stage of life has Albaldah reached?",
+      "why": "Albaldah, above the Teapot's handle in Sagittarius, is a luminous giant that has only lately left its steady phase.",
+      "answer": "Albaldah has reached the swelling that follows a star's prime. Its surface is still a hot yellow-white rather than orange, so it is early in its old age, on its way to becoming larger and cooler before the end.",
+      "story": "A star that has just left its prime crosses a stretch in which it changes quickly, so astronomers rarely catch one there, and Albaldah's yellow-white surface and size of nearly thirty Suns put it in that brief crossing. Well before the Sun has aged at all, it will have cooled to orange and swollen much further."
+    },
+    "HR7525": {
+      "step": 4,
+      "beat": "Aging giant: a bright giant",
+      "question": "What has old age done to Tarazed, Altair's orange companion on the sky?",
+      "why": "Tarazed is a bright giant whose orange glow stands out right beside white Altair.",
+      "look": "Put Altair and Tarazed in one field: crisp white against warm orange. The orange is old age showing in the color of a swollen surface.",
+      "answer": "It has made it enormous and cool. Having used up the hydrogen in its core, Tarazed swelled into a bright giant many times the Sun's width, and its surface cooled to orange as its light spread over far more area. Its next steps are to swell further and finally shed its outer layers.",
+      "story": "How a star swells has a neat explanation: once the core's hydrogen is gone, the core shrinks and heats, a shell of hydrogen around it ignites, and that shell pours out more energy than the core ever did. The extra heat pushes the outer layers outward until the surface is so large and so cool that it glows orange."
+    },
+    "HR7796": {
+      "step": 4,
+      "beat": "Aging supergiant",
+      "question": "How far along is Sadr, at the heart of the Northern Cross?",
+      "why": "Sadr is a yellow supergiant, a heavy star grown huge after leaving its steady phase.",
+      "answer": "Sadr is well into its old age. With its core hydrogen spent, Sadr has swollen to about 180 times the Sun's width, and a star that heavy and that swollen is heading for a supernova.",
+      "story": "Models matched to its brightness and temperature give Sadr a birth weight of about a dozen Suns and an age of only about twelve million years, less than a three-hundredth of the Sun's. That is how fast a heavy star reaches old age: by the time a star like the Sun would barely have settled in, Sadr's core hydrogen is spent."
+    },
+    "HR911": {
+      "step": 4,
+      "beat": "Aging giant: a red giant, still steady",
+      "question": "What will Menkar have to go through to become like Mira?",
+      "why": "Menkar is a red giant much like Mira in the same constellation, but one stage earlier.",
+      "answer": "Menkar will have to swell further and lose its balance. As it ages its outer layers will grow larger and looser until they begin to rock in and out, and its light will start swinging like Mira's. That restless stage is the beginning of the end, when a giant starts giving its gas back to space.",
+      "story": "Whether a giant pulses is set by how large and cool it has grown: up to a certain size its outer layers settle into balance, beyond it they overshoot and rock. Menkar's light holds nearly steady, so it sits on the calm side of that line, while Mira, larger and cooler, has crossed it."
+    },
+    "STAR-Capella": {
+      "step": 4,
+      "beat": "Aging giants: two stars, two stages",
+      "question": "What comes next for Capella's two giants?",
+      "why": "Capella holds two old stars in one point of light, born together and caught at slightly different stages.",
+      "answer": "When the heavier one finishes burning the helium in its core, it will swell again, larger and more luminous than now, and its twin will follow the same path a little behind. Stars of about two and a half Suns end quietly: each will cast off its outer layers into space and leave a white dwarf, so Capella will one day be a pair of embers.",
+      "story": "Capella's family has two more members, a pair of faint red dwarfs about ten thousand times Earth's distance from the Sun away, sharing the giants' motion through space. Born at the same moment, they are so light that they will keep burning hydrogen in their cores for far longer than the universe has yet existed, long after both giants have become embers."
+    },
+    "STAR-Deneb": {
+      "step": 4,
+      "beat": "Aging supergiant on its way to red",
+      "question": "What is Deneb turning into?",
+      "why": "Deneb is a heavyweight whose old age is happening fast.",
+      "answer": "Deneb is most likely turning into a red supergiant. Its surface already shows nitrogen dredged up from the core, a sign that it has burned through its core hydrogen, and the best models have it swelling toward the red supergiant stage on its way to a supernova. For now it is a white star about 200 times the Sun's width, midway through that crossing.",
+      "story": "A heavy star burns hydrogen through a cycle that uses carbon as a go-between and turns much of it into nitrogen, so nitrogen showing up at the surface means material from the core has been mixed outward. In Deneb that mixing is strong enough to measure, one of the main clues that the star has finished its core hydrogen rather than still being in its prime.",
+      "look": "Deneb is the bright white star at the tail of the swan, the top of the Northern Cross. Its white is the color of a heavyweight only partway to red; sweep about 16° north-north-east into Cepheus to the Garnet Star, a deep orange-red supergiant at the stage Deneb is heading for."
+    },
+    "HR1607": {
+      "step": 5,
+      "beat": "The end begins: giving back its carbon",
+      "question": "How long can Hind's Crimson Star keep puffing out its carbon?",
+      "why": "Hind's Crimson Star is a dying giant in one of the last stages of a Sun-like star's life, deep red with its own carbon.",
+      "answer": "It cannot keep it up for long, as stars count time. Each slow pulse helps lift more of its envelope away, and once the envelope is gone the bare core will be left as a white dwarf. The carbon it has given away will drift into the clouds where new stars and planets form.",
+      "story": "The carbon-star stage is brief even by the standards of a star's old age, likely a few hundred thousand years at most, and the reason is a feedback loop. Each flash of helium burning deep inside brings up more carbon, more carbon makes more soot, and soot catches starlight so well that it is pushed outward, dragging gas along. The star is feeding the very wind that will strip it bare."
+    },
+    "HR1648": {
+      "step": 5,
+      "beat": "The end begins: giving back its carbon",
+      "question": "What is W Orionis doing with the carbon it has made?",
+      "why": "W Orionis is a dying giant in Orion that has already started to hand its carbon back.",
+      "answer": "W Orionis is giving it to the Galaxy. Carbon dredged up from its interior forms soot and gas in its cool atmosphere, and its wind carries them away; when the envelope is gone, the bare core will be left as a white dwarf. Orion's nurseries a few fields away show where such material ends up.",
+      "story": "Proof that giants at this stage make their own elements came in 1952, when Paul Merrill found technetium in their spectra. Technetium has no stable form, and the kind these stars make loses half of itself in about two hundred thousand years, so it cannot be left over from their birth cloud. It was made inside, recently, and carried up to the surface, just as W Orionis's carbon was."
+    },
+    "HR2405": {
+      "step": 5,
+      "beat": "The end begins: giving back its carbon",
+      "question": "How will UU Aurigae's life end?",
+      "why": "UU Aurigae is a carbon star, a giant in its last stage that is already blowing its outer layers into space.",
+      "answer": "UU Aurigae will end quietly, by giving itself away. Its slow wind will strip off the rest of its carbon-rich envelope until only the hot core remains, a white dwarf that will cool for billions of years while the gas and dust it shed join the clouds that make new stars.",
+      "story": "Not every giant can become a carbon star; it takes the right weight at birth, roughly one and a half to four Suns. Lighter stars never dredge up enough carbon to outnumber the oxygen that would lock it away, while in heavier ones the base of the envelope runs so hot that it burns new carbon into nitrogen. UU Aurigae's color is a record of the weight it was born with."
+    },
+    "HR2748": {
+      "step": 5,
+      "beat": "The end begins: shedding its skin",
+      "question": "What will L² Puppis leave behind when its shedding is done?",
+      "why": "L² Puppis is a dying giant, born about as heavy as the Sun and already down to two-thirds of it, caught letting its outer layers go.",
+      "answer": "It will leave a small, hot core, a white dwarf, which for a few thousand years will light the gas it has cast off as a glowing shell. The dust forming in its wind now will drift into the Galaxy's clouds, and some of it may end up in planets that form long after the star itself has gone dark.",
+      "story": "The ALMA images that weighed L² Puppis also caught a small companion circling about twice as far from it as Earth is from the Sun, a planet or perhaps a brown dwarf. Models suggest the star's swollen envelope will drag it inward until it is swallowed, a preview of what the Sun's old age may do to its nearest planets."
+    },
+    "HR3207": {
+      "step": 5,
+      "beat": "On the brink: a star stripped to its core",
+      "question": "What will the stripped star inside Gamma Velorum do next?",
+      "why": "Gamma Velorum holds a heavy star that has already lost its outer layers to its own winds, one step from the finish.",
+      "answer": "It will most likely explode: with its hydrogen gone, the Wolf–Rayet star is burning through the heavier fuels in its exposed core, and when those run out the core should collapse in a supernova. The young stars gathered around Gamma Velorum will be showered with its debris, and the cycle of this story begins again.",
+      "story": "The stripped star must have been born the heavier of the two, because in a pair born together the heavier partner ages first, yet it now weighs about a third as much as its companion. Its winds, perhaps helped by handing gas to its partner, peeled away its hydrogen layers, and its surface now shows carbon made by burning helium, the inside of a star turned out for us to see."
+    },
+    "HR3541": {
+      "step": 5,
+      "beat": "The end begins: giving back its carbon",
+      "question": "What is X Cancri giving back to the Galaxy?",
+      "why": "X Cancri is a dying giant that has dredged carbon from its core to its surface and is now letting it go.",
+      "answer": "X Cancri is giving back carbon, made in its core and carried off as soot and gas in its wind, along with the rest of its outer layers. When the giving is over, a white dwarf will be all that is left of the star, and its carbon will be on its way to future stars and planets.",
+      "story": "Carbon is not the only thing X Cancri makes. In the layer where helium burns, free neutrons soak one at a time into iron nuclei and build them, step by step, into heavier elements such as strontium, barium and lead. This slow process in giants like this one is thought to have made about half of all the elements heavier than iron, and the star's wind carries them out along with its soot."
+    },
+    "HR4210": {
+      "step": 5,
+      "beat": "On the brink: a star that nearly blew apart",
+      "question": "How close is Eta Carinae to exploding?",
+      "why": "Eta Carinae, the small orange point inside the Carina Nebula, is a pair of enormously heavy stars near the violent end of their lives.",
+      "answer": "Eta Carinae is close by a star's clock, though no one can name the date. A star this heavy lives only a few million years, and its survival of the Great Eruption shows how near the edge it already is. When it does explode, its debris will tear into the Carina Nebula, the very cloud it was born in, and the cycle of this story will start over there.",
+      "story": "Light from the star's great outburst of the 1840s that set off toward distant dust clouds has been bouncing back to us like an echo, so astronomers can take spectra of an eruption seen by eye long ago. In 2018 those echoes showed gas flung out at more than ten thousand kilometers per second, the mark of a blast rather than a gentle wind, a near-explosion the star somehow survived."
+    },
+    "HR6146": {
+      "step": 5,
+      "beat": "The end begins: shedding its skin",
+      "question": "How does a giant like g Herculis give its gas back to space?",
+      "why": "g Herculis is an old giant whose thin outer layers are already leaking away.",
+      "answer": "It gives its gas back a little with every pulse. Each swelling lifts its loose, cool outer layers higher, and some never fall back, so over thousands of years the star strips itself down toward its core. When the core is bare it will be a white dwarf, and the gas it shed will join the clouds between the stars.",
+      "story": "Stretched hundreds of times wider than the Sun, g Herculis holds its surface with a gravity tens of thousands of times feebler than the Sun's, so it takes only a nudge to loft gas. Each pulse sends a shock wave up through its atmosphere that throws gas high enough to cool, and there dust condenses, catches the starlight and is pushed away, pulling the gas along with it."
+    },
+    "HR7066": {
+      "step": 5,
+      "beat": "The end begins: an unsteady dying giant",
+      "question": "What is happening to R Scuti in its last stage?",
+      "why": "R Scuti, a degree from the Wild Duck Cluster, is a bloated giant in the last unsettled stage of its life.",
+      "answer": "Its last fuels are nearly spent, and astronomers still debate whether it is in the final giant stage or already leaving it, on its way to becoming the exposed core at the heart of a planetary nebula. Either way the end has begun, and its uneven heaving is the star coming loose.",
+      "story": "R Scuti is one of the few stars whose irregularity has been shown to be chaos in the mathematician's sense. In 1996 an analysis of decades of amateur brightness estimates found that its swings follow a small set of fixed rules that never quite repeat. Two rhythms drive each other in an envelope too loosely held to keep a steady beat."
+    },
+    "HR7763": {
+      "step": 5,
+      "beat": "On the brink: a star blowing itself apart",
+      "question": "How will P Cygni's struggle against its own light end?",
+      "why": "P Cygni is a heavyweight so luminous that it is already coming apart at the seams.",
+      "answer": "It will end with its core collapsing, after it has lost much more of itself. Its winds and outbursts strip away mass, like the shell of about a tenth of a Sun it threw off in 1600, and when the core has burned through its last fuel it will fall in on itself, most likely in a supernova.",
+      "story": "Records going back to about 1700 show P Cygni slowly brightening, by about a seventh of a magnitude a century. The usual reading is that its surface is cooling while its total output holds steady, shifting more of its light into colors the eye sees. That would make it one of the very few stars whose aging can be followed through human history, though models explain only part of the change."
+    },
+    "HR8262": {
+      "step": 5,
+      "beat": "The end begins: shedding its skin",
+      "question": "What will W Cygni's pulses have done by the time they stop?",
+      "why": "W Cygni is a red giant late in life whose every pulse pushes a little more of it into space.",
+      "answer": "They will have given the star away. Cycle after cycle they lift its outer layers off, until only the hot core is left, a white dwarf that will briefly light the cast-off gas before both fade. The gas itself goes back into the Galaxy, to be used again.",
+      "story": "A giant's pulses change as it nears the end. Small, loose rhythms like W Cygni's are thought by many astronomers to come first, and as the star grows larger and cooler its swings deepen and lengthen toward the deep, regular beat of a Mira. The wind grows with them, so the closer a giant gets to its end, the faster it gives itself away."
+    },
+    "HR8383": {
+      "step": 5,
+      "beat": "On the brink: a bloated supergiant",
+      "question": "How close to its end is the giant of VV Cephei?",
+      "why": "VV Cephei holds a red supergiant in the bloated last stage of a heavy star's life, with a hot companion circling it.",
+      "answer": "It is close, as heavy stars count time. It has swollen to hundreds of times the Sun's width and is losing gas from its loosely held surface. Red supergiants like it end when their cores collapse, most likely in a supernova that will shower its companion's neighborhood with debris.",
+      "story": "A red supergiant with a companion this close cannot keep all its gas to itself: its swollen outer layers spill toward the hot star, which is wrapped in a glowing disk of the captured gas. That transfer strips the giant faster than its wind alone would, so a partner can bring the end of a heavy star's life closer."
+    },
+    "HR9004": {
+      "step": 5,
+      "beat": "The end begins: giving back its carbon",
+      "question": "How will TX Piscium's life end?",
+      "why": "TX Piscium is a carbon star, a giant near the end that is filtering its light through its own smoke.",
+      "answer": "TX Piscium will end by blowing itself away. Dust forming close to the star is pushed outward by its light, dragging gas with it, until the whole envelope has gone and only a white dwarf remains. The carbon in that dust will be part of the next generation of stars and planets.",
+      "story": "Herschel's infrared images show the gas TX Piscium has already lost swept into a bow along its path, because the star is plowing through the thin gas between the stars at about 55 kilometers per second. So the handover has already begun: what it sheds does not drift off untouched but piles up against the Galaxy's own gas and starts to mix with it."
+    },
+    "HR9045": {
+      "step": 5,
+      "beat": "On the brink: a star throwing off shells",
+      "question": "Where is ρ Cassiopeiae headed after its outbursts?",
+      "why": "ρ Cassiopeiae is a hypergiant in a brief, unstable stage near the very end of a heavy star's life.",
+      "answer": "ρ Cassiopeiae is headed toward collapse. Many astronomers think it has already been a red supergiant and is now heating up again, throwing off shells of gas as it goes. A star this heavy can only end with its core collapsing, in a supernova or perhaps straight into a black hole.",
+      "story": "Yellow hypergiants like ρ Cassiopeiae seem to bounce off an invisible wall. As one heats up, its swollen atmosphere reaches a range of temperatures at which it can no longer hold steady, so it throws off a shell, cools sharply and then starts heating again. ρ Cassiopeiae has done this four times in the last century or so, most recently in 2013, and the gaps between outbursts seem to be shrinking."
+    },
+    "M1": {
+      "step": 6,
+      "beat": "The end: a supernova's wreck",
+      "question": "Will the Crab Nebula's debris end up in new stars?",
+      "why": "The Crab is the wreck of a heavy star whose explosion was seen from Earth in 1054.",
+      "answer": "It will, in time. The expanding cloud will thin and merge with the gas between the stars over many thousands of years, carrying elements forged in the star and its explosion. Some of it will one day be gathered into a cloud that makes stars, the beginning of this story all over again.",
+      "story": "The Crab's glow is powered from inside: the spinning neutron star at its center pours energy into the nebula, which is why it still shines so brightly nearly a thousand years after the blast. Astronomers watch that core slowing down by timing its pulses, and the energy it loses each second matches what the nebula gives off."
+    },
+    "M27": {
+      "step": 6,
+      "beat": "The end: a cast-off shell",
+      "question": "Is the Dumbbell the end of a star's story or a new beginning?",
+      "why": "The Dumbbell is what a star like the Sun leaves when it is done, close enough that binoculars show its shape on a dark, moonless night.",
+      "answer": "The Dumbbell is both. The white dwarf at its center will cool for billions of years and never shine by fusion again. But the gas, carrying elements made inside the star, will spread into the Galaxy's clouds, where future stars and planets will form from it, just as the Sun and Earth formed from material like this.",
+      "story": "The star at the Dumbbell's center is one of the hottest known, around a hundred thousand degrees, because it is the bare core that once burned helium deep inside the giant. Its ultraviolet light strips electrons from the gas around it, and as the core cools over the next tens of thousands of years the shell will dim until the glow goes out."
+    },
+    "NGC6992": {
+      "step": 6,
+      "beat": "The end: a supernova's wreck",
+      "question": "What will become of the gas in the Veil's blast wave?",
+      "why": "The Veil is how the heaviest stars end: the expanding wreck of a supernova, thousands of years after the blast.",
+      "answer": "It will slow, cool and stop glowing over tens of thousands of years, then mix into the clouds between the stars, enriched with elements forged in the star and in its explosion. Shocks like this can even squeeze nearby clouds into collapsing, so the death of one star can start the birth of the next.",
+      "story": "Spectra show the Veil's gas racing outward at hundreds of kilometers per second, and working back from its size gives an explosion roughly ten to twenty thousand years ago. The arc glows where the shock heats the gas it sweeps up, so most of what you see is gas from between the stars, with a share of the dead star's own debris mixed in."
+    },
+    "NGC7293": {
+      "step": 6,
+      "beat": "The end: a cast-off shell",
+      "question": "What will happen to the Helix's glowing shell?",
+      "why": "The Helix is the cast-off shell of a star like the Sun, near enough to look large in binoculars.",
+      "answer": "It will fade and spread. As the white dwarf at its center cools, it will stop lighting the gas, and the shell will thin into the space between the stars. The elements made inside the star will go with it, into the clouds that build the next generation.",
+      "story": "The Helix is close enough that its gas breaks up into thousands of comet-shaped knots, each about the size of our solar system, with tails pointing away from the central star. They form where the hot, fast wind of the exposed core runs into the slower gas the giant shed earlier, and in time they too will dissolve and mix with the gas around them."
+    },
+    "STAR-Antares": {
+      "step": 5,
+      "beat": "On the brink: a supernova in waiting",
+      "question": "What will Antares leave behind when it explodes?",
+      "why": "Antares, the red heart of the Scorpion, is a heavyweight already near the explosive finish reserved for the heaviest stars.",
+      "answer": "Antares will most likely leave a neutron star, a collapsed core so dense that a Sun's worth of matter fits in a ball the size of a city, inside an expanding cloud of debris like the Veil in Cygnus. That cloud will carry the oxygen, silicon and iron Antares forged in its core out into the Galaxy, ready to be built into new stars.",
+      "story": "Antares will run through its last fuels quickly: after helium come carbon, neon, oxygen and silicon, each burning for a shorter time in a shrinking core, the last in a matter of days. Neutrinos from those final stages pour out so fast that, in the hours before the collapse, detectors on Earth might sense them before any change in its light."
+    },
+    "STAR-Betelgeuse": {
+      "step": 5,
+      "beat": "On the brink: a supernova in waiting",
+      "question": "How soon will Betelgeuse explode, and how can anyone tell?",
+      "why": "Betelgeuse, the orange shoulder of Orion, is a heavy star close to the violent end that only the heaviest stars meet.",
+      "answer": "The best models put the explosion about 100,000 years away, a moment in the life of a star, and they rest on how Betelgeuse's light, size and slow pulsations fit a heavy star early in burning the helium in its core. A star this heavy races through its last fuels after that. When its core finally collapses, the rest of Betelgeuse will be blasted into Orion's clouds, the same clouds where new stars are being born tonight.",
+      "story": "Betelgeuse's famous dimming in 2019 and 2020 gave astronomers a close look at how such a star sheds itself. A great bubble of gas rose from its surface, cooled and condensed into dust that hid part of the star for months. Episodes like that, repeated again and again, are how a red supergiant loses much of its outer layers before its core gives out."
+    },
+    "STAR-LaSuperba": {
+      "step": 5,
+      "beat": "The end begins: giving back its carbon",
+      "question": "What will be left of La Superba once its wind has done its work?",
+      "why": "La Superba is a dying giant that has turned red with the carbon it made and is now blowing it into space.",
+      "answer": "La Superba will leave a white dwarf, and around where it stood a shell of carbon-rich dust and gas, already about three light-years across, where its wind has piled up against the gas between the stars. That material will mix into future clouds, the raw stuff of the next stars.",
+      "story": "Even among carbon stars La Superba is odd: roughly one carbon atom in five at its surface is the heavier kind, carbon-13, where the Sun has about one in ninety. How a star like this built up so much is still unexplained, so the carbon it is returning to the Galaxy carries a recipe nobody has fully worked out."
+    },
+    "STAR-Mira": {
+      "step": 5,
+      "beat": "The end begins: shedding its skin",
+      "question": "Where does all the gas that Mira sheds end up?",
+      "why": "Mira is a giant at the stage where the end has already begun, pulsing and losing its outer layers to space.",
+      "look": "Check a current brightness estimate first, because near its faintest Mira is out of binocular reach. Near its peak it is an obvious orange-red point in the Whale's neck, well south of Aries.",
+      "answer": "Some falls onto Mira's companion, a white dwarf that feeds on its wind, and the rest streams out into space. In the end Mira will give away its whole envelope, leaving its hot core exposed to light the last of that gas as a planetary nebula, and then to cool as a white dwarf of its own.",
+      "story": "Mira was the first star found to vary, in 1596, and its rhythm is the heartbeat of a giant's last stage: the core is spent, two thin shells burn around it, and the swollen envelope swings in and out every eleven months. Each swing pushes gas out beyond the surface, where it cools into dust that the star's light then drives away."
+    },
+    "STAR-MuCep": {
+      "step": 5,
+      "beat": "On the brink: a red supergiant",
+      "question": "What is the last thing the Garnet Star will do?",
+      "why": "The Garnet Star is a red supergiant, swollen near the end of a heavy star's life, one of the reddest stars your eye can see.",
+      "look": "From Alderamin look toward ζ Cephei; the Garnet Star sits a little south of the halfway point. Let the focus go a touch soft and compare its deep orange-red with the white stars around it.",
+      "answer": "Most likely the Garnet Star will explode. A red supergiant like this is burning through its last fuels in its core, each faster than the one before. When nothing is left that can release energy, the core will collapse and blast the star apart, scattering what it made over a lifetime back into space.",
+      "story": "The Garnet Star is losing so much gas that it sits inside a shell of its own making, found in infrared light from the warm dust and in radio waves from its molecules. A red supergiant can shed a large share of its mass this way before its core gives out, and how much is gone by then shapes the explosion that follows."
+    },
+    "M57": {
+      "step": 6,
+      "beat": "The end: a cast-off shell",
+      "question": "What is left once a star like the Sun has run out of fuel?",
+      "why": "The Ring Nebula is the final page of a modest star's life, the outer layers it let go of still glowing around the core it left behind.",
+      "look": "Find Lyra's small parallelogram below Vega and aim between its two bottom stars, a little closer to Sheliak. Brace the binoculars: the Ring is a faint star that will not come to a sharp point, best caught under a dark sky.",
+      "answer": "What is left is a bare, hot core, no bigger than the Earth, and the shell of gas it shed only a few thousand years ago, made to glow by the core's ultraviolet light. Within a few tens of thousands of years the shell will thin into the clouds between the stars, carrying the carbon and nitrogen the star made, and the core will cool in the dark as a white dwarf.",
+      "story": "The Ring is not really a ring but more like a barrel of glowing gas seen nearly end-on, which is why its middle looks dark. Hubble and Webb images show the white dwarf inside a thin haze, and along the bright rim thousands of small dense knots, clumps of the star's old atmosphere."
+    },
+    "HR1325": {
+      "step": 6,
+      "beat": "The end: the ember left behind",
+      "question": "Can binoculars show the core a dead star leaves behind?",
+      "why": "40 Eridani holds the last stage of a quiet ending, the white dwarf that remains once a star of modest weight has given its outer layers away.",
+      "look": "Find 40 Eridani about 15° west of Rigel, a yellow-orange star in Eridanus. Brace the binoculars and look about 1½ arcminutes to its east-south-east for a very faint point at the limit of braced 10×50s under a dark sky: that is the ember, 40 Eri B. If it will not separate from its bright neighbor, the white dwarf is still there, and so is the story.",
+      "answer": "Under a dark sky, braced 10×50s can just show one: the faint point beside 40 Eridani is a white dwarf, a core of about half the Sun's mass squeezed into a ball the size of the Earth. It stopped making energy long ago and has been cooling on stored heat ever since, the ending that waits for the Sun.",
+      "story": "40 Eridani B was among the first white dwarfs ever found, seen by William Herschel in 1783, though its nature stayed a puzzle until 1914, when its spectrum showed a white-hot surface on a star far too faint to be large. With no fuel left a white dwarf can only cool, so its temperature today is a clock for how long ago its star died."
+    },
+    "NGC3242": {
+      "step": 6,
+      "beat": "The end: a cast-off shell",
+      "question": "How long does the glowing shell of a dead star last?",
+      "why": "The Ghost of Jupiter is the end of the road for a star of modest weight, its cast-off outer layers still lit by the bare core they once wrapped.",
+      "answer": "The glow lasts only a few tens of thousands of years, because the shell keeps spreading and thinning while the core that lights it cools, so the light goes out long before the white dwarf itself stops shining. The Ghost's inner shell left the star only a few thousand years ago, so this ending is still fresh.",
+      "story": "A planetary nebula is a brief afterglow. The core left behind is at first hot enough to pour out ultraviolet light that strips electrons from the shed gas, and the gas shines as they are recaptured. As the core cools and the shell spreads, both effects weaken together, which is why these shells are rare in the sky even though they are the fate of most stars."
+    },
+    "NGC3132": {
+      "step": 6,
+      "beat": "The end: a cast-off shell",
+      "question": "What became of the star that made the Eight-Burst Nebula?",
+      "why": "The Eight-Burst Nebula is the last page of a star born a few times heavier than the Sun, the outer layers it gave back still glowing around what is left of it.",
+      "answer": "It became a white dwarf, a faint core hidden beside the 10th-magnitude star at the center, which is only a companion still in its prime; binoculars blend both, and the shell, into one faint point. The star was born at nearly three Suns, lived a few hundred million years, and gave most of that matter back as the shell now glowing around them.",
+      "story": "Stars born with up to about eight Suns all end this way, which makes planetary nebulae the commonest grave in the Galaxy, though each glows for only a few tens of thousands of years. The shell's shape records the star's last breaths: rings, lobes and bursts like these are thought to be sculpted by companions orbiting close to the dying star."
+    },
+    "NGC2440": {
+      "step": 6,
+      "beat": "The end: a cast-off shell",
+      "question": "Why does the end of a star like the Sun leave such a hot core?",
+      "why": "NGC 2440 is a death caught early, the shed layers of a star of modest weight still lit by a core that has only just been laid bare.",
+      "answer": "The core was the star's furnace, the region where hydrogen and then helium burned, and when the outer layers drift away that buried heat is suddenly exposed at the surface. Its light, mostly ultraviolet, is what makes the shed gas glow, and the glow will fade as the core cools.",
+      "story": "A star's core gets hotter as it ages, not cooler: each time a fuel runs out the core contracts and heats until the next one ignites, so the very last core of a Sun-like star is the hottest thing it ever made. Stripped of its envelope, that core pours its buried heat out as ultraviolet light, which is why the youngest white dwarfs are among the hottest surfaces in the sky."
+    },
+    "HR2693": {
+      "step": 4,
+      "beat": "Aging supergiant: crossing to red",
+      "question": "What is Wezen, a creamy-yellow supergiant, on its way to becoming?",
+      "why": "Wezen, the creamy-yellow star in Canis Major's triangle south-east of Sirius, is a heavyweight that has left its prime and is changing fast.",
+      "look": "Wezen is the creamy-yellow star of Canis Major's triangle, south-east of Sirius. Compare it with blue-white Aludra, about 4½° to the south-east, since both are supergiants. Wezen's warmer tint marks a star further along the swelling and cooling that heavy stars go through once their core hydrogen is gone.",
+      "answer": "Wezen is most likely on its way to becoming a red supergiant. It has spent the hydrogen in its core and is swelling and cooling as it goes, already nearly two hundred times the Sun's width. A star that outshines the Sun tens of thousands of times is heavy enough to end its red years by collapsing in a supernova.",
+      "story": "Stars like Wezen are rarely caught, because the crossing from blue-white to red takes only some tens of thousands of years, a blink beside the ten million or so a heavy star spends in its prime. Its tint, cooler than the blue-white stars around it but far hotter than a red supergiant's, is what marks it as most likely mid-crossing, a heavyweight caught between two long stages."
+    },
+    "HD58061": {
+      "step": 5,
+      "beat": "On the brink: a giant buried in its own dust",
+      "question": "How much of itself has VY Canis Majoris already thrown away?",
+      "why": "VY Canis Majoris is one of the largest stars known, a red supergiant so swollen that it can no longer hold on to its outer layers.",
+      "look": "From τ Canis Majoris and its little cluster, move about 1¼° south-east to a dull orange point among white stars. It looks faint because it is far away and buried in the gas and dust it has shed.",
+      "answer": "It has thrown away a great deal, at a pace of a hundred Earths' worth of gas or more every year. The arcs and knots that telescopes map around it add up to a large fraction of a Sun lost in the last thousand years or so. A star shedding itself that fast is in the last stretch of its life, and its core will most likely end by collapsing, in a supernova or perhaps straight into a black hole.",
+      "story": "A red supergiant this large barely holds its own surface, because the gravity at its edge is feeble. Pulsations, churning gas and the push of starlight on dust lift material off it in great outbursts rather than a steady breeze. As that gas cools, dust condenses in it and screens the star, so most of its power reaches us as infrared rather than visible light."
+    }
+  }
+}

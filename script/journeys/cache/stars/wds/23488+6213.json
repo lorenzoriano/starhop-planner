@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/wds/wds&WDS=23488%2B6213&-out=WDS,Disc,Comp,Obs2,pa2,sep2,mag1,mag2,SpType,pmRA1,pmDE1,pmRA2,pmDE2,Notes",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\nWDS\tDisc\tComp\tObs2\tpa2\tsep2\tmag1\tmag2\tSpType\tpmRA1\tpmDE1\tpmRA2\tpmDE2\tNotes\n \t \t \tyr\tdeg\tarcsec\tmag\tmag\t \tmas/yr\tmas/yr\tmas/yr\tmas/yr\t\n----------\t-------\t-----\t----\t---\t------\t------\t-----\t----------\t----\t----\t----\t----\t----\n23488+6213\tSTT 508\tAB   \t2015\t194\t  1.50\t 5.660\t 7.95\tA3Iae     \t  -3\t  -1\t  -7\t  -6\tN\n23488+6213\tSTT 508\tAC   \t2015\t311\t 63.00\t 5.660\t10.19\tA3Iae     \t  -3\t  -1\t  -2\t  -1\tN\n23488+6213\tFYM 150\tAD   \t2015\t359\t 37.90\t 5.660\t14.40\tA3Iae     \t  -3\t  -1\t    \t    \tN\n23488+6213\tFYM 150\tAE   \t2012\t 96\t 43.00\t 5.660\t15.10\tA3Iae     \t  -3\t  -1\t    \t    \tN\n23488+6213\tFYM 150\tAG   \t2012\t349\t119.70\t 5.660\t11.30\tA3Iae     \t  -3\t  -1\t  17\t   9\tN\n23488+6213\tFYM 150\tCF   \t2012\t201\t  3.90\t10.190\t13.50\tOB-       \t  -2\t  -1\t    \t    \tN\n\n"
+}

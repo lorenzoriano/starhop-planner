@@ -1,6 +1,6 @@
 import { ContextDateButton, ContextLocationButton } from "./ObservingContext";
 import "./ClockUX.css";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { formatInTimeZone } from "date-fns-tz";
 import {
   CalendarDays,
@@ -19,6 +19,10 @@ import { CatalogCombobox } from "./CatalogCombobox";
 import { observationAt, createMoonSampler } from "@/lib/observing-profile";
 import { resolveLocalMoment } from "@/lib/session";
 import { type SavedLocation } from "@/lib/saved-locations";
+import { displayName, type ObjectActions, type ObjectSkyContext } from "@/lib/object-links";
+import type { BinocularProfile } from "@/lib/binocular-assessment";
+import { ObjectActionRow } from "./ObjectActionRow";
+import { ObjectJourneyLinks } from "./journeys/lazy-entry";
 import {
   CLOCK_COLORS,
   CLOCK_LIMIT,
@@ -38,6 +42,10 @@ import {
 } from "@/lib/astronomical-clock";
 
 type Props = {
+  /** Shared cross-tab object verbs (lib/object-links). */
+  actions?: ObjectActions;
+  /** Binocular profile for "In journey" links (tonight's journeys); without it only "Find a journey with this". */
+  profile?: BinocularProfile;
   targets: UnifiedTarget[];
   ids: string[];
   onIds: (ids: string[]) => void;
@@ -85,7 +93,14 @@ export function AstronomicalClock({
   onLive,
   live,
   skyBrightness,
+  actions,
+  profile,
 }: Props) {
+  // Tonight's journeys at the observing moment (same request as the Tonight teaser: one shared engine call).
+  const journeySky = useMemo<ObjectSkyContext | undefined>(
+    () => (profile ? { at: date, lat, lon, timezone, live, skyBrightness, profile } : undefined),
+    [profile, date, lat, lon, timezone, live, skyBrightness],
+  );
   const dialRef = useRef<SVGSVGElement>(null);
   const [dialTextScale, setDialTextScale] = useState(1);
   const [locked, setLocked] = useState(false);
@@ -531,10 +546,10 @@ export function AstronomicalClock({
                 onBlur={() => setHighlight(null)}
               >
                 <i />
-                {t.displayName || t.name}
+                {displayName(t)}
               </button>
               <button
-                aria-label={`Remove ${t.name} from comparison`}
+                aria-label={`Remove ${displayName(t)} from comparison`}
                 onClick={() => onIds(ids.filter((id) => id !== t.id))}
               >
                 <X size={13} />
@@ -670,7 +685,7 @@ export function AstronomicalClock({
                           (highlight && highlight !== chosen[i]?.id ? 0.15 : 1)}
                       >
                         <title>
-                          {chosen[i].name} ·{" "}
+                          {displayName(chosen[i])} ·{" "}
                           {String(Math.floor(b / 2)).padStart(2, "0")}:
                           {b % 2 ? "30" : "00"} · {Math.round(fraction * 100)}%
                           of sampled dates meet your limits
@@ -703,7 +718,7 @@ export function AstronomicalClock({
                 opacity={highlight && highlight !== t.id ? 0.3 : 1}
                 tabIndex={0}
                 role="img"
-                aria-label={`${t.name} altitude path`}
+                aria-label={`${displayName(t)} altitude path`}
                 onPointerEnter={() => setHighlight(t.id)}
                 onPointerLeave={() => setHighlight(null)}
                 onFocus={() => setHighlight(t.id)}
@@ -852,7 +867,7 @@ export function AstronomicalClock({
                   onBlur={() => setHighlight(null)}
                 >
                   <i />
-                  {t.displayName || t.name}
+                  {displayName(t)}
                   <strong>{rounded(Math.abs(o.alt))} {o.alt<0?"below horizon":"high"}</strong>
                 </button>
                 <p>
@@ -888,6 +903,11 @@ export function AstronomicalClock({
                     </b>
                   </span>
                 </div>
+                {actions && (
+                  <ObjectActionRow className="astro-object-actions" objectId={t.id} name={displayName(t)} actions={actions} at={at} omit={["clock"]}>
+                    <Suspense fallback={null}><ObjectJourneyLinks objectId={t.id} actions={actions} compact sky={journeySky}/></Suspense>
+                  </ObjectActionRow>
+                )}
               </article>
             );
           })}
@@ -1055,13 +1075,13 @@ export function AstronomicalClock({
                     {chosen.map((t, i) => (
                       <div key={t.id} className="astro-season-row">
                         <strong style={{ color: CLOCK_COLORS[i] }}>
-                          {t.displayName || t.name}
+                          {displayName(t)}
                         </strong>
                         <div className="astro-night-tiles">
                           {season.days.map((d) => (
                             <button
                               key={d.day}
-                              aria-label={`${t.name}, ${formatInTimeZone(resolveLocalMoment(d.day,"12:00",timezone)!,timezone,"MMM d, yyyy")}: ${d.hours[i].toFixed(1)} qualifying hours, Moon ${Math.round(d.lit * 100)} percent lit`}
+                              aria-label={`${displayName(t)}, ${formatInTimeZone(resolveLocalMoment(d.day,"12:00",timezone)!,timezone,"MMM d, yyyy")}: ${d.hours[i].toFixed(1)} qualifying hours, Moon ${Math.round(d.lit * 100)} percent lit`}
                               title={`${formatInTimeZone(resolveLocalMoment(d.day,"12:00",timezone)!,timezone,"MMM d, yyyy")} · ${d.hours[i].toFixed(1)} h · Moon ${Math.round(d.lit * 100)}% lit`}
                               onClick={() => {
                                 changeNight(d.day);

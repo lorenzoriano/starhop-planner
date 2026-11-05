@@ -70,5 +70,4 @@ There is no remote repository. Do not attempt to push commits.
 - **Free-port server fix** — dev server auto-finds a free port if 5000 is taken.
 
 ### Known State
-- `star-hopping.md` (untracked) contains algorithm research notes — not part of the build.
 - DB/storage layer is unused stubs; no PostgreSQL setup required for normal dev.

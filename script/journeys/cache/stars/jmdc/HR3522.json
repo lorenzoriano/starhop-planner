@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=133.149213%2B28.330821&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD75732                     \t                            \t  0.83400\t 0.8540\t  0.0240\t2.15      \t2008ApJ...680..728B\tHD75732\n 0.00\tHD75732                     \t55 Cnc                      \t  0.68500\t 0.7110\t  0.0040\tH         \t2011ApJ...740...49V\tHD75732\n 0.00\tHD75732                     \t                            \t  0.68700\t 0.7240\t  0.0110\tH         \t2016A&A...586A..94L\tHD75732\n\n"
+}

@@ -2,10 +2,15 @@ import { z } from "zod";
 import * as Astro from "astronomy-engine";
 import tzLookup from "tz-lookup";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
-import { nightListSchema, type NightItem } from "./session";
+import { nightListSchema, stripStaleJourneyTags, type NightItem } from "./session";
 import { starSearchAliases } from "./stellar-search";
 import { eqToHorizontal, angularDistance, type UnifiedTarget, type Star } from "./astronomy";
-import { moonState, lunarFeatures, lunarFrame, projectLunarFeature, scatteredMoonlight } from "./moon";
+import { moonState, lunarFeatures, lunarFrame, projectLunarFeature } from "./moon";
+import { MIN_ALT, darkEnough, isStellarCategory, moonCategoryOfCategory, moonVerdict, plannerMoonWeight } from "./sky-feasibility";
+
+/** The Planner schedules by the shared sky model's "possible" rule (lib/sky-feasibility.ts): 15° up, bright stars from civil dusk. */
+export const PLANNER_RULE = "possible" as const;
+const minimumFor = (lunar: boolean) => lunar ? MIN_ALT.lunar : MIN_ALT[PLANNER_RULE];
 
 export const observingSessionSchema = z.object({
   id:z.string(), name:z.string().min(1).max(100), startAt:z.string().datetime(),
@@ -18,6 +23,14 @@ export type ObservingSession = z.infer<typeof observingSessionSchema>;
 export const plannerStoreSchema = z.object({ sessions:z.array(observingSessionSchema).max(300), activeId:z.string().nullable() });
 export type PlannerStore = z.infer<typeof plannerStoreSchema>;
 export const emptyPlanner: PlannerStore = { sessions:[],activeId:null };
+/** Every journey key the Planner's nights carry (sorted, deduplicated). */
+export const plannerJourneyKeys=(store:PlannerStore)=>Array.from(new Set(store.sessions.flatMap(s=>s.items.flatMap(i=>i.journeyKey?[i.journeyKey]:[])))).sort();
+/** stripStaleJourneyTags over every night; returns `store` itself when every journey tag still resolves. */
+export function stripStalePlannerJourneyTags(store:PlannerStore,resolves:(key:string)=>boolean):PlannerStore {
+  let changed=false;
+  const sessions=store.sessions.map(session=>{const items=stripStaleJourneyTags(session.items,resolves);if(items===session.items)return session;changed=true;return {...session,items};});
+  return changed?{...store,sessions}:store;
+}
 export const sessionTimezone = (s: Pick<ObservingSession,"lat"|"lon">) => tzLookup(s.lat,s.lon);
 
 export function eveningOn(localDate:string,lat:number,lon:number) {
@@ -40,7 +53,64 @@ export function makeSession(name:string,start:Date,lat:number,lon:number,items:N
 }
 
 type Candidate = { id:string;name:string;date:Date;alt:number;az:number;separation:number|null;moonlight:number;lunar:boolean;usable:boolean;score:number;minimum:number;darkEnough:boolean };
-export type SequenceStep = { id:string; name:string; date:Date|null; alt:number; az:number; separation:number|null; moonlight:number; reason:string; lunar:boolean };
+export type SequenceStep = { id:string; name:string; date:Date|null; alt:number; az:number; separation:number|null; moonlight:number; reason:string; lunar:boolean;
+  /** Slot length in minutes when it differs from the session's minutes per target (journey stops keep the journey's pace). */
+  minutes?:number;
+  /** Set on journey items held at the journey's own time (one locked block per journey, in stop order). */
+  journey?:{key:string;stop?:number;plannedAt:Date};
+};
+/** Slot length of a scheduled step in minutes. */
+export const stepMinutes=(step:Pick<SequenceStep,"minutes">,session:Pick<ObservingSession,"minutesPerTarget">)=>step.minutes??session.minutesPerTarget;
+
+type JourneySlot={id:string;key:string;stop?:number;plannedAt:Date;minutes:number;inSession:boolean};
+/**
+ * Journey items the Planner holds at the journey's own times: items with a journeyKey and a plannedAt (added with
+ * "Add all stops to tonight's plan"). Each journey is one locked block in stop order; a stop lasts until the next stop
+ * of its journey (never longer than the session's minutes per target), the last one as long as the block's typical stop.
+ * `inSession` is false when the stop's time falls outside the session (it is then listed as not fitting, never moved).
+ */
+export function journeySlots(session:Pick<ObservingSession,"startAt"|"durationMinutes"|"minutesPerTarget"|"items">):JourneySlot[] {
+  const start=+new Date(session.startAt),end=start+session.durationMinutes*60_000;
+  const groups=new Map<string,{id:string;stop?:number;at:number;index:number}[]>();
+  session.items.forEach((item,index)=>{
+    if(item.observedAt||!item.journeyKey||!item.plannedAt)return;
+    const at=Date.parse(item.plannedAt);if(!Number.isFinite(at))return;
+    const list=groups.get(item.journeyKey)??[];list.push({id:item.id,stop:item.journeyStop,at,index});groups.set(item.journeyKey,list);
+  });
+  const slots:JourneySlot[]=[];
+  for(const [key,list] of Array.from(groups)){
+    // Story order first; times never run backwards inside a block.
+    list.sort((a,b)=>(a.stop??Infinity)-(b.stop??Infinity)||a.at-b.at||a.index-b.index);
+    for(let i=1;i<list.length;i++)if(list[i].at<list[i-1].at)list[i]={...list[i],at:list[i-1].at};
+    const gaps=list.slice(1).map((entry,i)=>(entry.at-list[i].at)/60_000).filter(gap=>gap>0).sort((a,b)=>a-b);
+    const typical=gaps.length?gaps[Math.floor(gaps.length/2)]:session.minutesPerTarget;
+    list.forEach((entry,i)=>{
+      const gap=i+1<list.length?(list[i+1].at-entry.at)/60_000:typical;
+      const minutes=Math.max(1,Math.min(session.minutesPerTarget,Math.round(gap)||1));
+      slots.push({id:entry.id,key,stop:entry.stop,plannedAt:new Date(entry.at),minutes,inSession:entry.at>=start&&entry.at<end});
+    });
+  }
+  return slots;
+}
+/** A session's longest span (plannerStoreSchema durationMinutes max). */
+export const MAX_SESSION_MINUTES=720;
+/**
+ * The session times that hold journey `key`'s whole block (every timed stop, first to last slot end), so moving or
+ * extending the session for one stop never pushes the journey's other stops out. The session's own span is kept when
+ * it fits; past MAX_SESSION_MINUTES the start moves later just enough to hold the block (never after its first stop),
+ * and `clamped` says the journey's last stops still fall outside. Null when the session holds no timed stop of `key`.
+ */
+export function journeyBlockFit(session:Pick<ObservingSession,"startAt"|"durationMinutes"|"minutesPerTarget"|"items">,key:string):{startAt:Date;durationMinutes:number;clamped:boolean}|null {
+  const slots=journeySlots(session).filter(slot=>slot.key===key);
+  if(!slots.length)return null;
+  const start=+new Date(session.startAt),end=start+session.durationMinutes*60_000,max=MAX_SESSION_MINUTES*60_000;
+  const first=Math.min(...slots.map(slot=>+slot.plannedAt)),last=Math.max(...slots.map(slot=>+slot.plannedAt+slot.minutes*60_000));
+  let nextStart=Math.min(start,first);
+  const nextEnd=Math.max(end,last);
+  if(nextEnd-nextStart>max)nextStart=Math.min(first,Math.max(nextStart,last-max));
+  const minutes=Math.ceil((Math.min(nextEnd,nextStart+max)-nextStart)/60_000);
+  return {startAt:new Date(nextStart),durationMinutes:Math.max(30,Math.min(MAX_SESSION_MINUTES,minutes)),clamped:last-nextStart>max};
+}
 /** Keep the legend, colour assignment and numbered slots in scheduled order. */
 export function sessionTimelineItems(items:NightItem[],steps:SequenceStep[]):NightItem[] {
   const scheduled=steps.filter(step=>step.date).slice().sort((a,b)=>+a.date!-+b.date!).map(step=>items.find(item=>item.id===step.id)).filter((item):item is NightItem=>!!item);
@@ -48,7 +118,9 @@ export function sessionTimelineItems(items:NightItem[],steps:SequenceStep[]):Nig
 }
 export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[],skyBrightness=21.6):SequenceStep[] {
   const start=new Date(session.startAt),end=new Date(start.getTime()+session.durationMinutes*60_000);
-  const remaining=session.items.filter(i=>!i.observedAt).map(i=>i.id);
+  // Journey stops added with their times stay at those times, in story order, as one block per journey.
+  const locked=journeySlots(session),lockedIds=new Set(locked.map(slot=>slot.id));
+  const remaining=session.items.filter(i=>!i.observedAt&&!lockedIds.has(i.id)).map(i=>i.id);
   const steps:SequenceStep[]=[];
   const moonCache=new Map<number,ReturnType<typeof moonState>>();
   const frameCache=new Map<number,ReturnType<typeof lunarFrame>>();
@@ -60,16 +132,16 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
     const lunar=id.startsWith("moon:"), feature=lunarFeatures.find(f=>`moon:${f.id}`===id),target=targetMap.get(id);
     if(!feature&&!target)return null;
     const pos=lunar?{alt:moon.alt,az:moon.az}:eqToHorizontal(target!.ra,target!.dec,session.lat,session.lon,at);
-    const brightStellar=target && /star|asterism/i.test(target.category) && target.mag<=5;
-    const minimum=lunar?5:15;
+    const minimum=minimumFor(lunar);
     let lunarVisible=true;
     if(feature){let frame=frameCache.get(at.getTime());if(!frame){frame=lunarFrame(session.lat,session.lon,at);frameCache.set(at.getTime(),frame);}const p=projectLunarFeature(feature,frame);lunarVisible=p.visible&&p.lit;}
-    const darkEnough=lunar?moon.sunSeparation>=20&&lunarVisible:moon.sunAlt<=(brightStellar?-6:-18);
+    const dark=lunar?moon.sunSeparation>=20&&lunarVisible:darkEnough(moon.sunAlt,{stellar:isStellarCategory(target!.category),mag:target!.mag},PLANNER_RULE);
     const separation=target?angularDistance(target.ra,target.dec,moon.ra,moon.dec):null;
-    const impact=target?{...scatteredMoonlight(moon,pos.alt,separation!,skyBrightness),diffuse:/galaxy|nebula|cloud/i.test(target.category)}:null;
-    const usable=pos.alt>=minimum&&darkEnough;
-    const score=pos.alt-(impact?.brightening??0)*(impact?.diffuse?14:brightStellar?2:6);
-    const point={id,name:feature?.name??target!.displayName,date:at,alt:pos.alt,az:pos.az,separation:separation,moonlight:impact?.brightening??0,lunar,usable,score,minimum,darkEnough};
+    // Site-sky K–S brightening from the shared Moon verdict (the Planner weighs it rather than rejecting).
+    const brightening=target?moonVerdict({alt:pos.alt,separation:separation!,category:moonCategoryOfCategory(target.category)},moon,skyBrightness).brightening:0;
+    const usable=pos.alt>=minimum&&dark;
+    const score=pos.alt-brightening*(target?plannerMoonWeight(target.category,target.mag):6);
+    const point={id,name:feature?.name??target!.displayName,date:at,alt:pos.alt,az:pos.az,separation:separation,moonlight:brightening,lunar,usable,score,minimum,darkEnough:dark};
     targetCache.set(key,point); return point;
   };
   const duration=session.minutesPerTarget*60_000,quantum=5*60_000;
@@ -79,7 +151,7 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
   for(const id of remaining){
     const target=targetMap.get(id);
     const altitude=(ms:number)=>target?eqToHorizontal(target.ra,target.dec,session.lat,session.lon,new Date(ms)).alt:moonState(session.lat,session.lon,new Date(ms)).alt;
-    const minimum=id.startsWith('moon:')?5:15;
+    const minimum=minimumFor(id.startsWith('moon:'));
     let previous=altitude(+start),closing=Infinity;
     for(let ms=+start+15*60_000;ms<=+start+26*3600_000;ms+=15*60_000){
       const next=altitude(ms);
@@ -89,6 +161,24 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
     closes.set(id,closing);
   }
   const ids=remaining.slice().sort((a,b)=>closes.get(a)!-closes.get(b)!||a.localeCompare(b));
+  // Free targets fit around the journey blocks.
+  const busy=locked.filter(slot=>slot.inSession).map(slot=>({start:+slot.plannedAt,end:+slot.plannedAt+slot.minutes*60_000}));
+  const overlapsBusy=(from:number,to:number)=>busy.some(b=>from<b.end&&to>b.start);
+  // Journey items without a time (older data) still keep story order: a stop waits for the earlier stops of its journey
+  // that can be scheduled at all.
+  const itemOf=new Map(session.items.map(item=>[item.id,item]));
+  const usableSomewhere=(id:string)=>{for(let ms=+start;ms+duration<=+end;ms+=quantum){if(atTarget(id,new Date(ms))?.usable&&atTarget(id,new Date(ms+duration))?.usable)return true;}return false;};
+  const before=ids.map((id,i)=>{
+    const item=itemOf.get(id);if(!item?.journeyKey)return BigInt(0);
+    let mask=BigInt(0);
+    ids.forEach((other,j)=>{
+      const o=itemOf.get(other);
+      if(j===i||!o?.journeyKey||o.journeyKey!==item.journeyKey)return;
+      const earlier=(o.journeyStop??Infinity)<(item.journeyStop??Infinity)||(o.journeyStop===item.journeyStop&&session.items.indexOf(o)<session.items.indexOf(item));
+      if(earlier&&usableSomewhere(other))mask|=BigInt(1)<<BigInt(j);
+    });
+    return mask;
+  });
   type Plan={mask:bigint;score:number;slots:Candidate[]};
   // Joint time/order search. Waiting is a real alternative, so packed sessions
   // can reorder rising objects and long sessions can use higher later slots.
@@ -107,6 +197,7 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
       if(ms+duration>+end)continue;
       for(let i=0;i<ids.length;i++){
         const bit=BigInt(1)<<BigInt(i);if(plan.mask&bit)continue;
+        if((plan.mask&before[i])!==before[i]||overlapsBusy(ms,ms+duration))continue;
         const candidate=atTarget(ids[i],new Date(ms));
         if(!candidate?.usable||!atTarget(ids[i],new Date(ms+duration))?.usable)continue;
         const finishTick=Math.ceil((ms+duration-+start)/quantum);
@@ -127,8 +218,16 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
     const reason=rising&&nearEnd?'Rising target · later for altitude; session ends soon':rising&&+candidate.date>+start+30*60_000?'Later in the session to catch this rising target higher':!rising&&realClosing?'Observe before its usable window closes':candidate.moonlight>=1?'Moonlit sky: prioritize bright detail':candidate.lunar?'Moon is up and safely separated from the Sun':'Well placed at this time';
     steps.push({...candidate,reason});remaining.splice(remaining.indexOf(candidate.id),1);
   }
+  for(const slot of locked){
+    const p=atTarget(slot.id,slot.plannedAt),journey={key:slot.key,...(slot.stop?{stop:slot.stop}:{}),plannedAt:slot.plannedAt};
+    if(!p){steps.push({id:slot.id,name:slot.id,date:null,alt:-90,az:0,separation:null,moonlight:0,lunar:slot.id.startsWith("moon:"),reason:"Catalog entry unavailable",journey});continue;}
+    steps.push({id:p.id,name:p.name,date:slot.inSession?slot.plannedAt:null,alt:p.alt,az:p.az,separation:p.separation,moonlight:p.moonlight,lunar:p.lunar,minutes:slot.minutes,journey,
+      reason:slot.inSession?"At the journey’s time":"The journey visits it outside this session"});
+  }
   for(const id of remaining){const p=atTarget(id,start);steps.push({id,name:p?.name??id,date:null,alt:p?.alt??-90,az:p?.az??0,separation:p?.separation??null,moonlight:p?.moonlight??0,lunar:id.startsWith("moon:"),reason:!p?"Catalog entry unavailable":steps.length*session.minutesPerTarget>=session.durationMinutes?"Not enough time: lengthen this session":`No usable slot: needs ${p.minimum}° altitude and ${p.lunar?"distance from the Sun":"a darker sky"}`});}
-  return steps;
+  // Scheduled steps in time order (journey blocks interleave with free targets), then the ones that do not fit.
+  const scheduledSteps=steps.filter(step=>step.date).sort((a,b)=>+a.date!-+b.date!||(a.journey?.stop??0)-(b.journey?.stop??0));
+  return [...scheduledSteps,...steps.filter(step=>!step.date)];
 }
 
 /** Idle spans are explicit; they are time available to rest, adapt or observe freely. */
@@ -137,7 +236,7 @@ export function sessionFreeGaps(session:ObservingSession,steps:SequenceStep[]){
  let cursor=+new Date(session.startAt);
  for(const step of steps.filter(s=>s.date).slice().sort((a,b)=>+a.date!-+b.date!)){
   if(+step.date!-cursor>=5*60_000)gaps.push({start:new Date(cursor),end:step.date!});
-  cursor=+step.date!+session.minutesPerTarget*60_000;
+  cursor=Math.max(cursor,+step.date!+stepMinutes(step,session)*60_000);
  }
  if(end-cursor>=5*60_000)gaps.push({start:new Date(cursor),end:new Date(end)});
  return gaps;

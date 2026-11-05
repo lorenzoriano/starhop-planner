@@ -4,6 +4,12 @@ import {
   type UnifiedTarget,
   type ObservingMode,
 } from "./astronomy";
+import { binocularAssessment, type BinocularProfile, type FitRating } from "./binocular-assessment";
+import { moonIllumination, moonState, type MoonState } from "./moon";
+import {
+  MIN_ALT, TWILIGHT, darkEnough, isStellarCategory, minAltitude, moonCategoryOfCategory, moonVerdict, plannerMoonWeight,
+  type MoonVerdict, type VisibilityRule,
+} from "./sky-feasibility";
 
 export interface ObjectGuide {
   story: string;
@@ -86,11 +92,11 @@ export const OBJECT_GUIDES: Record<string, ObjectGuide> = {
   },
   "DS-Albireo": {
     story:
-      "At the foot of Cygnus, Albireo becomes a striking gold and blue pair through a small telescope.",
+      "Albireo, the swan's head at the foot of the Northern Cross, pairs a golden star with a blue one. Precise motions now suggest two stars born together and slowly drifting apart, rather than a couple in orbit.",
     lookFor:
-      "A golden star beside a blue companion. Use a small telescope at low to moderate power; ordinary handheld binoculars do not reliably split the pair.",
-    equipment: "Small telescope for the color pair",
-    binocular: false,
+      "A golden star beside a fainter blue-white one, about 34 arcseconds apart. Brace 10×50 binoculars on something solid and the pair splits; at 7× it is harder, so let the image drift and watch for the blue point trailing behind. A small telescope at low power shows the colors best.",
+    equipment: "Braced 10×50 binoculars · small telescope",
+    binocular: true,
   },
 };
 
@@ -150,9 +156,8 @@ export function skyConditions(lat: number, lon: number, date: Date) {
     sunAlt,
     moonAlt: moonHor.altitude,
     moonAz: moonHor.azimuth,
-    illumination: Math.round(
-      Astro.Illumination(Astro.Body.Moon, date).phase_fraction * 100,
-    ),
+    /** Percent, the shared rounding (moon.ts moonIllumination) every tab shows for this instant. */
+    illumination: moonIllumination(date).percent,
     moonPhase:
       phase < 22.5 || phase >= 337.5
         ? "New Moon"
@@ -170,16 +175,16 @@ export function skyConditions(lat: number, lon: number, date: Date) {
                     ? "Last quarter"
                     : "Waning crescent",
     darkness:
-      sunAlt < -18
+      sunAlt < TWILIGHT.astronomical
         ? "Astronomical night"
-        : sunAlt < -12
+        : sunAlt < TWILIGHT.nautical
           ? "Astronomical twilight"
-          : sunAlt < -6
+          : sunAlt < TWILIGHT.civil
             ? "Nautical twilight"
             : sunAlt < 0
               ? "Civil twilight"
               : "Daylight",
-    isDark: sunAlt < -18,
+    isDark: sunAlt < TWILIGHT.astronomical,
   };
 }
 export interface VisibleTarget {
@@ -227,10 +232,75 @@ export function rankTargets(
         Math.max(0, 9 - target.mag) * 2 +
         (OBJECT_GUIDES[target.id] ? 45 : EASY_TARGETS.has(target.id) ? 30 : 0) +
         (mode === "binocular" && friendly ? 15 : 0) -
-        (alt < 15 ? 60 : 0);
+        (alt < MIN_ALT.possible ? 60 : 0);
       return { target, alt, az, score };
     })
     .sort((a, b) => b.score - a.score);
+}
+
+export interface TonightTarget extends VisibleTarget {
+  /** binocularAssessment rating at this altitude, Moon and sky (binocular mode only; null otherwise or below the horizon). */
+  rating: FitRating | null;
+  /** The shared Moon verdict (lib/sky-feasibility.ts moonVerdict), the same one the journey engine applies. */
+  moon: MoonVerdict;
+  /** Twilight rule of `rule` passed (bright stars from civil dusk under "possible"). */
+  darkEnough: boolean;
+  /** Altitude, twilight and Moon all pass under `rule`. */
+  feasible: boolean;
+}
+export interface RankTonightOptions {
+  /** Site zenith sky brightness (mag/arcsec²). */
+  skyBrightness: number;
+  /** Binocular profile; the binocular rating is applied in binocular mode only. */
+  profile?: BinocularProfile;
+  /** Moon at `date` (computed when absent; pass the planner's currentMoon to avoid recomputing). */
+  moon?: MoonState;
+  /** Default "possible" (Tonight lists everything that can be seen; "comfortable" = journey standard). */
+  rule?: VisibilityRule;
+}
+/** Tonight's Best penalties on top of rankTargets' score (score points; rankTargets' altitude term is 0.65/°). */
+export const TONIGHT_PENALTY = {
+  /** Per binocular rating 0..3 (excellent … telescope more rewarding). */
+  rating: [0, 5, 20, 45] as const,
+  /** Moon verdict fails (too close or brighter than the journey glow limit). */
+  moonFails: 25,
+  /** Too bright in twilight for this object under the rule. */
+  twilight: 30,
+} as const;
+
+/**
+ * Tonight's Best on the shared sky model: rankTargets' score (altitude, brightness, curated guides, binocular-
+ * friendly) minus the Moon (glow × the Planner's per-category weight, and TONIGHT_PENALTY.moonFails when
+ * moonVerdict fails), the twilight rule and, in binocular mode, the binocularAssessment rating. The journey engine
+ * applies the same moonVerdict and rating model, so Tonight's top objects and tonight's journeys agree.
+ */
+export function rankTonight(
+  targets: UnifiedTarget[],
+  lat: number,
+  lon: number,
+  date: Date,
+  mode: ObservingMode,
+  opts: RankTonightOptions,
+): TonightTarget[] {
+  const rule = opts.rule ?? "possible";
+  const moon = opts.moon ?? moonState(lat, lon, date);
+  const minAlt = minAltitude(rule);
+  return rankTargets(targets, lat, lon, date, mode)
+    .map((v): TonightTarget => {
+      const { target, alt } = v;
+      const verdict = moonVerdict({ alt, ra: target.ra, dec: target.dec, category: moonCategoryOfCategory(target.category) }, moon, opts.skyBrightness);
+      const dark = darkEnough(moon.sunAlt, { stellar: isStellarCategory(target.category), mag: target.mag }, rule);
+      const rating = mode === "binocular" && opts.profile && alt > 0
+        ? binocularAssessment(target, opts.profile, { alt, moon, skyBrightness: opts.skyBrightness }).rating
+        : null;
+      const score = v.score
+        - verdict.glow * plannerMoonWeight(target.category, target.mag)
+        - (verdict.ok ? 0 : TONIGHT_PENALTY.moonFails)
+        - (dark ? 0 : TONIGHT_PENALTY.twilight)
+        - (rating === null ? 0 : TONIGHT_PENALTY.rating[rating]);
+      return { ...v, score, rating, moon: verdict, darkEnough: dark, feasible: alt >= minAlt && dark && verdict.ok };
+    })
+    .sort((a, b) => b.score - a.score || a.target.id.localeCompare(b.target.id));
 }
 export function altitudeSamples(
   target: Pick<UnifiedTarget, "ra" | "dec">,

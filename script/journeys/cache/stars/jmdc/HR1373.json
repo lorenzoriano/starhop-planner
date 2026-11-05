@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=65.733730%2B17.542514&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.08\tHD27697                     \t* del01Tau                  \t  2.80000\t       \t  0.7000\t7000A     \t1984SvA....28..431K\tHD27697\n 0.08\tHD27697                     \t* del01 Tau                 \t  2.60000\t 3.0000\t  0.7000\tR         \t1987SvAL...13..379T\tHD27697\n 0.08\tHD27697                     \tHR1373                      \t  2.07000\t       \t  0.0700\t740nm     \t2001AJ....122.2707N\tHD27697\n 0.08\tHD27697                     \tHR1373                      \t  2.20700\t 2.3380\t  0.0330\t800nm     \t2003AJ....126.2502M\tHD27697\n 0.08\tGaia DR2 3314024566918614528\tHR 1373                     \t  2.34700\t 2.4080\t  0.0370\tK'        \t2009ApJ...691.1243B\tGaia DR2 3314024566918614528\n\n"
+}

@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/wds/wds&WDS=12372-6908&-out=WDS,Disc,Comp,Obs2,pa2,sep2,mag1,mag2,SpType,pmRA1,pmDE1,pmRA2,pmDE2,Notes",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\nWDS\tDisc\tComp\tObs2\tpa2\tsep2\tmag1\tmag2\tSpType\tpmRA1\tpmDE1\tpmRA2\tpmDE2\tNotes\n \t \t \tyr\tdeg\tarcsec\tmag\tmag\t \tmas/yr\tmas/yr\tmas/yr\tmas/yr\t\n----------\t-------\t-----\t----\t---\t------\t------\t-----\t----------\t----\t----\t----\t----\t----\n12372-6908\tRIZ   4\tAa,Ab\t2010\t -1\t  0.00\t 2.800\t 5.50\tB2IV-V    \t -40\t -13\t    \t    \tN\n12372-6908\tDON 541\tAB   \t2007\t321\t 28.80\t 2.690\t13.00\tB2IV-V    \t -40\t -13\t -25\t -15\tN\n12372-6908\tSHT  45\tAC   \t2000\t198\t  4.90\t 3.400\t11.90\tB2IV-V    \t -40\t -12\t    \t    \tN  K\n12372-6908\tSHT  45\tAD   \t2000\t243\t  3.40\t 3.400\t13.40\tB2IV-V    \t -40\t -12\t    \t    \tN  K\n12372-6908\tSHT  45\tAE   \t2000\t159\t  5.80\t 3.400\t15.40\tB2IV-V    \t -40\t -12\t    \t    \tN  K\n\n"
+}

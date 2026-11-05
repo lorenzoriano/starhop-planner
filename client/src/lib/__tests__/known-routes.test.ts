@@ -51,17 +51,24 @@ describe("field guide route waypoints", () => {
     ).toBeNull();
     expect(resolveKnownWaypoint("M31 (Andromeda)", nodes)?.id).toBe("M31");
   });
-  it("preserves the classic landmarks while inserting overlapping guided fields", () => {
+  it("keeps the classic naked-eye jumps and breaks only the longer moves onto fainter fields into overlapping ones", () => {
+    // At 7° every move is a naked-eye jump or within 0.7 field: the guide's own five fields and instructions.
     const route = buildKnownRoute(entry, nodes, target, params)!;
     expect(route).not.toBeNull();
-    expect(route.hops.length).toBeGreaterThan(5);
-    for(const id of ["HR15","HR165","HR337","HR269"]){const star=stars.find(s=>s.id===id)!;expect(route.hops.some(h=>h.center.ra===star.ra&&h.center.dec===star.dec)).toBe(true);}
-    for(let i=1;i<route.hops.length;i++){
-      const from=route.hops[i-1].center,to=route.hops[i].center;
-      expect(route.hops[i].distanceDeg).toBeCloseTo(angularDistance(from.ra,from.dec,to.ra,to.dec));
-      expect(route.hops[i].distanceDeg).toBeLessThanOrEqual(params.fovWidth*.7+1e-6);
+    expect(route.hops.map((h) => h.instruction)).toEqual(entry.waypoints.map((w) => w.instruction));
+    // At 3.7° the μ And → M31 move (3.9°) is broken into overlapping fields; the landmarks stay in order.
+    const narrow = { ...params, fovWidth: 3.7, fovHeight: 3.7 };
+    const guided = buildKnownRoute(entry, nodes, target, narrow)!;
+    expect(guided.hops.length).toBeGreaterThan(5);
+    const landmarks = ["HR15", "HR165", "HR337", "HR269"].map((id) => { const star = stars.find((s) => s.id === id)!; return guided.hops.findIndex((h) => h.center.ra === star.ra && h.center.dec === star.dec); });
+    expect(landmarks).toEqual([0, 1, 2, 3]);
+    expect(guided.hops[1].instruction).toBe(entry.waypoints[1].instruction);
+    for (let i = 1; i < guided.hops.length; i++) {
+      const from = guided.hops[i - 1].center, to = guided.hops[i].center;
+      expect(guided.hops[i].distanceDeg).toBeCloseTo(angularDistance(from.ra, from.dec, to.ra, to.dec));
+      if (i > 3) expect(guided.hops[i].distanceDeg).toBeLessThanOrEqual(narrow.fovWidth + 1e-6);
     }
-    expect(route.hops.at(-1)!.center.ra).toBe(target.ra);
+    expect(guided.hops.at(-1)!.center.ra).toBe(target.ra);
   });
   it("omits a route with unresolved or unavailable landmarks", () => {
     expect(

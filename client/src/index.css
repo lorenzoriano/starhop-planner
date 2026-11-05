@@ -517,9 +517,7 @@ button:disabled { opacity: .45; cursor: default; }
 .display-options label { display: flex; align-items: center; gap: 8px; font-size:12px; color: #a1b8c2; }
 .display-options input[type=range] { width: 80px; margin-left: auto; accent-color: #aacbba; }
 .display-options input[type=checkbox] { accent-color: #aacbba; }
-.red-light { --background: 0 35% 4%; --foreground: 5 55% 60%; --card: 0 30% 7%; --primary: 5 50% 48%; --primary-foreground: 0 35% 5%; --muted-foreground: 5 40% 45%; --border: 0 25% 18%; --ring: 5 50% 48%; }
-.red-light #root { filter: grayscale(1) sepia(1) saturate(5) hue-rotate(305deg) brightness(.65); }
-.red-light [role="dialog"] { filter: grayscale(1) sepia(1) saturate(5) hue-rotate(305deg) brightness(.65); }
+/* Red light: see red-theme.css (hand-written base) and theme/red-theme-postcss.js (derived from every rule). */
 @media (min-width: 1600px) { .main-content { padding-left: 50px; padding-right: 50px; } .sky-overview { max-height: 420px; } .featured-body { padding: 25px; } .object-story { font-size: 12px; } }
 @media (max-width: 1250px) { .app-header { padding: 0 25px; gap: 15px; } .workspace-layout { grid-template-columns: 240px minmax(0, 1fr); } .setup-panel { padding: 30px 19px; } .main-content { padding: 30px 25px 0; } .conditions-strip { gap: 9px; } .condition { gap: 6px; } .condition-icon { display: none; } .object-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .tonight-hero { grid-template-columns: 1.25fr 1fr; gap: 15px; } .featured-body { padding: 17px; } .featured-body h2 { font-size: 26px; } .featured-body .visibility-tag { font-size:12px; } .featured-body .eyebrow { font-size:12px; } .object-story { font-size:12px; } .sky-caption { font-size:12px; } .hop-layout { grid-template-columns: minmax(0, 1.5fr) minmax(240px, 1fr); gap: 14px; } .current-field { padding: 19px; } .main-nav { gap: 3px; } }
 @media (max-width: 1000px) { .brand-subtitle { font-size:12px; letter-spacing: 1px; } .app-header { height: 80px; } .workspace-layout { grid-template-columns: 1fr; } .setup-panel { display: none; } .setup-panel.open { display: grid; grid-template-columns: 1fr 1fr; gap: 0 30px; border-right: 0; border-bottom: 1px solid #29404c; padding: 20px 28px; } .setup-title { grid-column: 1/-1; } .field-tip { margin: 20px 0 0; } .mobile-setup-toggle { display: inline-flex; } .main-content { padding: 28px 28px 0; } .object-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .page-heading h1 { font-size: 40px; } .header-actions { gap: 5px; } .offline-pill { font-size:12px; padding: 7px 9px; } }
@@ -2483,3 +2481,13 @@ button:disabled { opacity: .45; cursor: default; }
 .context-edit svg { width:13px; height:13px; flex:0 0 13px; }
 .context-fields { grid-template-columns:repeat(2,minmax(0,1fr)); }
 .context-fields input { min-width:0; }
+
+/* Photo credits are corner captions, quieter than titles: small, untracked, ~60% opacity (integration r5 polish). */
+.target-photo > .target-photo-caption, .binocular-target-field > .binocular-photo-label {
+  top:auto; bottom:5px; right:6px; left:auto; padding:1px 5px; border-radius:3px; background:#08121a99; color:#d7ded4;
+  font-size:12px; letter-spacing:0; text-transform:none; text-shadow:none; opacity:.6; line-height:1.4; max-width:calc(100% - 12px);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; pointer-events:auto;
+}
+.target-photo > .target-photo-caption:hover { opacity:.9; }
+/* Chart notes stay captions: "max(12px,1em)" grew them to the parent's size outside the chart box. */
+.observatory-shell p.night-moon-explanation, .observatory-shell p.night-moon-scale { font-size:12.5px !important; line-height:1.5; }

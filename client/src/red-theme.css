@@ -1,0 +1,58 @@
+/* Red light (night vision): hand-written base of the red theme.
+   Everything else is derived per rule by theme/red-theme-postcss.js. The palette is pure red (G = B = 0):
+     text      var(--nv-text)  R 255  -> 5.2:1 on black, >= 4.5:1 on every surface
+     surfaces  R 0..40 (page ~15, cards ~20-30, selected/raised 40)
+     lines     lightness of the original colour, as red
+   Rules here are already scoped to html.red-light, so the plugin leaves them alone. */
+
+html.red-light:root {
+  color-scheme: dark;
+  --nv-text: rgb(255 0 0);
+  /* Filled accents: full red with black ink (5.25:1); text-primary stays full red. */
+  --primary: 0 100% 50%;
+  --primary-foreground: 0 0% 0%;
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 0 0% 0%;
+  --ring: 0 100% 50%;
+  --sidebar-primary: 0 100% 50%;
+  --sidebar-primary-foreground: 0 0% 0%;
+  accent-color: rgb(255 0 0);
+}
+html.red-light, html.red-light body { background-color: rgb(4 0 0); color: var(--nv-text); }
+/* Native controls fall back to the UA's grey fills (range tracks, selects): give them the surface ladder. */
+html.red-light :where(input, select, textarea) { background-color: rgb(12 0 0); color: var(--nv-text); }
+/* Chart lettering is text: full red whatever fill the chart picked, so labels keep >= 4.5:1. */
+html.red-light svg:not(.lucide) :is(text, tspan) { fill: var(--nv-text) !important; }
+html.red-light ::selection { background: rgb(40 0 0); color: var(--nv-text); }
+html.red-light ::placeholder { color: rgb(210 0 0); opacity: 1; }
+html.red-light :focus-visible { outline-color: var(--nv-text); }
+html.red-light option,
+html.red-light optgroup { background-color: rgb(0 0 0); color: var(--nv-text); }
+
+/* Content CSS cannot recolour: photos and canvases (luminance -> red, a little dimmed) ... */
+html.red-light img,
+html.red-light video,
+html.red-light canvas { filter: url(#starhop-red-media); }
+/* ... and SVG charts / swatches coloured by attributes or inline styles (red passes through unchanged). */
+html.red-light svg:not(.lucide):not(.night-vision-definitions),
+html.red-light :is([style*="background"], [style*="color"], [style*="fill"], [style*="stroke"], [style*="border"]):not(svg *) { filter: url(#starhop-red-ui); }
+html.red-light svg:not(.lucide) :is(svg, [style]) { filter: none; }
+
+/* The filter definitions take no space (always, not only in red light). */
+.night-vision-definitions { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* Colour emoji (Moon-phase glyphs) and canvases that carry their own inline filter (the blurred lunar
+   viewport) cannot take the media filter directly: filter the glyph, or the canvas's parent. */
+html.red-light :is(.moon-phase-glyph, .observing-calendar-phase),
+html.red-light :has(> canvas[style*="filter"]) { filter: url(#starhop-red-mixed); }
+html.red-light :has(> canvas[style*="filter"]) > canvas { filter: none; }
+
+/* Pressed/selected states often differed only by hue (gold vs grey text). With one text red, mark compact
+   controls with weight and an underline so the state still reads without colour (card-like selections
+   keep the brighter border the derived theme gives them). */
+html.red-light :is([aria-pressed="true"], [aria-selected="true"], [aria-checked="true"], [data-state="active"], [data-state="on"]):not(svg *):not(:has(div, p, small, ul, ol, h2, h3, h4)) {
+  font-weight: 700;
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}

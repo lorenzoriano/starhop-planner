@@ -68,8 +68,6 @@
 .binocular-method-details .binocular-method-note { margin:8px 0 0; }
 .binocular-detail { scroll-padding-top:78px; }
 .binocular-detail-sticky-actions { position:sticky; top:-1px; z-index:4; margin:-10px -4px 0; padding:8px 4px; border-bottom:1px solid #344b4d; background:#101e27f5; }
-.binocular-quick-actions { display:flex; flex-wrap:wrap; gap:7px; }
-.binocular-quick-actions > button { min-height:38px; padding:0 10px; font-size:11px; }
 .binocular-detail-impression { color:#a8bdc1; font-size:12px; line-height:1.65; margin:0; }
 .binocular-detail-more { border-top:1px solid #304851; padding-top:8px; }
 .binocular-detail-notes { grid-template-columns:1fr; }
@@ -79,7 +77,5 @@
   .binocular-detail { width:calc(100% - 20px); max-height:94dvh; padding:16px; gap:12px; }
   .binocular-detail h2 { font-size:27px; }
   .binocular-detail-sticky-actions { margin-inline:-3px; }
-  .binocular-quick-actions { gap:5px; }
-  .binocular-quick-actions > button { flex:1 1 calc(50% - 5px); font-size:10px; padding-inline:6px; }
   .binocular-new-moon-action { align-items:flex-start; flex-direction:column; }
 }

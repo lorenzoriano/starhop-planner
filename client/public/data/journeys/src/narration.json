@@ -1,0 +1,1705 @@
+{
+  "version": "narration-3",
+  "placeholders": {
+    "inCon": "Get-there: ', still in <constellation>' or ', in <constellation>' for the stop being reached (empty for the first stop).",
+    "ifUp": "Guard, renders as nothing: the variant is used only when {next}'s value is clearly larger than {prev}'s (ranges do not overlap).",
+    "ifDown": "Guard, renders as nothing: only when {next}'s value is clearly smaller than {prev}'s (ranges do not overlap).",
+    "ifClear": "Guard, renders as nothing: only when the two values clearly differ (ranges do not overlap, ratio at least 1.5).",
+    "ifSimilar": "Guard, renders as nothing: only when the two values' published ranges overlap.",
+    "prev": "Display name of the previous stop (in skip lines: the last stop actually seen).",
+    "next": "Display name of the stop being arrived at.",
+    "name": "Display name of the stop the line is about (compare.*, why.*, payoff.*). In story.* lines: the payoff stop, empty after an archetype switch (so only name-free story variants fit).",
+    "hook": "Display name of the journey's first stop (callbacks, payoffs and story lines).",
+    "skipped": "Display name of the stop the observer skipped or could not find.",
+    "prevVal": "Formatted value of the link's property for {prev}, number plus unit with no 'about' (e.g. '3,600 K', '650 million years'). The property is the edge subtype when it is a FactKey, otherwise the first factRef's fact. Rendered from a sourced FactValue; a range renders as '550–650 light-years'.",
+    "nextVal": "Same as {prevVal}, for {next}.",
+    "value": "Formatted value of the card number being compared (compare.* lines), number plus unit.",
+    "ratioPhrase": "Rounded ratio with a comparative, e.g. 'about 3 times hotter', 'about 20 times farther'. In transitions it compares {next} with {prev}; in compare.* lines it compares the value with the Sun.",
+    "scaled": "Value rendered on the app-wide scale model where the Sun is a 1 cm marble: size → the object's diameter (e.g. '7.6 m'); distance → km at 68 km per light-year (e.g. '92,000 km'); time.sun-day → age ÷ 4,600 million years × 24 h (e.g. '30 minutes').",
+    "year": "Calendar year the light now arriving left the object of the line ({next} in transitions, {name} elsewhere): current year minus distanceLy, rounded to the decade above 100 ly and to the century above 1,000 ly; written '1470', '680 CE' or '5500 BCE'.",
+    "ago": "Light-travel time of the same object as a duration: 'about 25,000 years', '2.5 million years'.",
+    "deg": "Angular distance of the hop in degrees, rounded.",
+    "fields": "Hop distance in fields of the selected binoculars (distance ÷ true field), as words: 'half a', 'one', 'one and a half'.",
+    "screenDir": "Direction to move in the observer's view: 'up', 'down and to the left', and so on.",
+    "compassHint": "Optional tail starting with ', ' naming the constellation the hop enters (e.g. ', toward Taurus'), or empty.",
+    "anchor": "Display name of the naked-eye anchor star for a naked-eye hop.",
+    "region": "Patch label, e.g. 'Orion' or 'the Summer Triangle'.",
+    "theme": "Title of the template the journey switches into (switch.* lines).",
+    "bridge": "The Concept.bridge sentence of the concept the observer missed (skip.bridge, bridge.prereq).",
+    "claim": "Superlative claim without its scope, e.g. 'one of the largest stars visible to the naked eye' (why.superlative; noun-phrase claims) or a full statement (why.superlative.statement). The scope stays in the card details.",
+    "question": "The journey's driving question as rendered. Available to why.hook lines, but the shipped bank never repeats it: the UI shows it on the overview and, for the first stop without its own card.question, in the question box.",
+    "kind": "Plain kind of the stop the line is about, with its article: 'an orange giant', 'a young open cluster' (plain-language.ts plainKind).",
+    "prevKind": "Plain kind of {prev} with its article ('an orange giant'). Filled only when it differs from {next}'s kind.",
+    "nextKind": "Plain kind of {next} with its article. Filled only when it differs from {prev}'s kind.",
+    "sharedKind": "The plain kind {prev} and {next} share, with its article ('an open cluster'). Filled only when the two kinds are the same.",
+    "themeQuestion": "Driving question of the template the journey switches into (switch.* lines).",
+    "span": "Hop length in binocular fields of the selected instrument plus degrees: 'about two fields of your 6.5° binoculars (13°)'.",
+    "fov": "True field of the selected binoculars in degrees, e.g. '6.5'.",
+    "anchorLook": "Anchor star with a recognizable description: 'Arcturus, the bright orange star of Boötes,' (ends with a comma when described), or 'Alphecca in Corona Borealis'."
+  },
+  "bands": {
+    "compare.distance.light-left": [
+      {
+        "suffix": "b0",
+        "max": 15,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b15",
+        "min": 15,
+        "max": 28,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b28",
+        "min": 28,
+        "max": 40,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b40",
+        "min": 40,
+        "max": 70,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b70",
+        "min": 70,
+        "max": 130,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b130",
+        "min": 130,
+        "max": 190,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b190",
+        "min": 190,
+        "max": 416,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b416",
+        "min": 416,
+        "max": 600,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b600",
+        "min": 600,
+        "max": 1000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b1k",
+        "min": 1000,
+        "max": 1400,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b1400",
+        "min": 1400,
+        "max": 2100,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b2100",
+        "min": 2100,
+        "max": 4500,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b4500",
+        "min": 4500,
+        "max": 6000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b6k",
+        "min": 6000,
+        "max": 12000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b12k",
+        "min": 12000,
+        "max": 19000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b19k",
+        "min": 19000,
+        "max": 26500,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b26k",
+        "min": 26500,
+        "max": 100000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b100k",
+        "min": 100000,
+        "max": 300000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b300k",
+        "min": 300000,
+        "max": 1000000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b1M",
+        "min": 1000000,
+        "max": 4000000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b4M",
+        "min": 4000000,
+        "max": 8000000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b8M",
+        "min": 8000000,
+        "max": 40000000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b40M",
+        "min": 40000000,
+        "max": 66000000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "b66M",
+        "min": 66000000,
+        "fact": "distanceLy"
+      }
+    ],
+    "compare.distance.marble": [
+      {
+        "suffix": "m0",
+        "max": 20,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "m20",
+        "min": 20,
+        "max": 600,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "m600",
+        "min": 600,
+        "max": 6000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "m6k",
+        "min": 6000,
+        "max": 100000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "m100k",
+        "min": 100000,
+        "max": 2200000,
+        "fact": "distanceLy"
+      },
+      {
+        "suffix": "m2M",
+        "min": 2200000,
+        "fact": "distanceLy"
+      }
+    ],
+    "compare.size.marble": [
+      {
+        "suffix": "s0",
+        "max": 0.02,
+        "fact": "radiusRsun"
+      },
+      {
+        "suffix": "s002",
+        "min": 0.02,
+        "max": 0.5,
+        "fact": "radiusRsun"
+      },
+      {
+        "suffix": "s05",
+        "min": 0.5,
+        "max": 2,
+        "fact": "radiusRsun"
+      },
+      {
+        "suffix": "s2",
+        "min": 2,
+        "max": 10,
+        "fact": "radiusRsun"
+      },
+      {
+        "suffix": "s10",
+        "min": 10,
+        "max": 215,
+        "fact": "radiusRsun"
+      },
+      {
+        "suffix": "s215",
+        "min": 215,
+        "max": 328,
+        "fact": "radiusRsun"
+      },
+      {
+        "suffix": "s328",
+        "min": 328,
+        "max": 1119,
+        "fact": "radiusRsun"
+      },
+      {
+        "suffix": "s1119",
+        "min": 1119,
+        "fact": "radiusRsun"
+      }
+    ],
+    "compare.temperature.sun": [
+      {
+        "suffix": "t0",
+        "max": 3700,
+        "fact": "teffK"
+      },
+      {
+        "suffix": "t3700",
+        "min": 3700,
+        "max": 5200,
+        "fact": "teffK"
+      },
+      {
+        "suffix": "t5200",
+        "min": 5200,
+        "max": 6500,
+        "fact": "teffK"
+      },
+      {
+        "suffix": "t6500",
+        "min": 6500,
+        "max": 10000,
+        "fact": "teffK"
+      },
+      {
+        "suffix": "t10k",
+        "min": 10000,
+        "fact": "teffK"
+      }
+    ],
+    "compare.mass.supernova-limit": [
+      {
+        "suffix": "k0",
+        "max": 0.8,
+        "fact": "massMsun"
+      },
+      {
+        "suffix": "k08",
+        "min": 0.8,
+        "max": 8,
+        "fact": "massMsun"
+      },
+      {
+        "suffix": "k8",
+        "min": 8,
+        "max": 25,
+        "fact": "massMsun"
+      },
+      {
+        "suffix": "k25",
+        "min": 25,
+        "fact": "massMsun"
+      }
+    ],
+    "compare.time.sun-day": [
+      {
+        "suffix": "d0",
+        "max": 1,
+        "fact": "ageMyr"
+      },
+      {
+        "suffix": "d1",
+        "min": 1,
+        "max": 100,
+        "fact": "ageMyr"
+      },
+      {
+        "suffix": "d100",
+        "min": 100,
+        "max": 4600,
+        "fact": "ageMyr"
+      },
+      {
+        "suffix": "d4600",
+        "min": 4600,
+        "fact": "ageMyr"
+      }
+    ],
+    "compare.luminosity.sun": [
+      {
+        "suffix": "l0",
+        "max": 1,
+        "fact": "lumLsun"
+      },
+      {
+        "suffix": "l1",
+        "min": 1,
+        "max": 100,
+        "fact": "lumLsun"
+      },
+      {
+        "suffix": "l100",
+        "min": 100,
+        "max": 10000,
+        "fact": "lumLsun"
+      },
+      {
+        "suffix": "l10k",
+        "min": 10000,
+        "fact": "lumLsun"
+      }
+    ]
+  },
+  "citations": {
+    "compare.distance.light-left.b15": [
+      "https://www.nasa.gov/reference/international-space-station/"
+    ],
+    "compare.distance.light-left.b28": [
+      "https://science.nasa.gov/mission/hubble/overview/the-history-of-hubble/"
+    ],
+    "compare.distance.light-left.b40": [
+      "https://www.nasa.gov/history/sputnik/",
+      "https://www.nasa.gov/mission/apollo-11/"
+    ],
+    "compare.distance.light-left.b70": [
+      "https://science.nasa.gov/missions/hubble/hubble-views-the-star-that-changed-the-universe/",
+      "https://esahubble.org/images/opo1115a/"
+    ],
+    "compare.distance.light-left.b130": [
+      "https://arxiv.org/abs/2009.11913"
+    ],
+    "compare.distance.light-left.b190": [
+      "https://arxiv.org/abs/2009.11913",
+      "https://www.lindahall.org/about/news/scientist-of-the-day/galileo-galilei/"
+    ],
+    "compare.distance.light-left.b416": [
+      "https://www.lindahall.org/about/news/scientist-of-the-day/galileo-galilei/"
+    ],
+    "compare.distance.light-left.b600": [
+      "https://chandra.harvard.edu/photo/2006/crab/"
+    ],
+    "compare.distance.light-left.b1k": [
+      "https://idp.bl.uk/blog/the-dunhuang-star-chart",
+      "https://arxiv.org/abs/0906.3034",
+      "https://blog.sciencemuseum.org.uk/updating-stars-and-observing-the-andromeda-galaxy/"
+    ],
+    "compare.distance.light-left.b1400": [
+      "https://www.britannica.com/biography/Ptolemy"
+    ],
+    "compare.distance.light-left.b2100": [
+      "https://www.english-heritage.org.uk/visit/places/stonehenge/history-and-stories/history/"
+    ],
+    "compare.distance.light-left.b4500": [
+      "https://www.metmuseum.org/essays/the-origins-of-writing"
+    ],
+    "compare.distance.light-left.b6k": [
+      "https://www.metmuseum.org/essays/the-origins-of-writing"
+    ],
+    "compare.distance.light-left.b12k": [
+      "https://www.usgs.gov/publications/last-glacial-maximum"
+    ],
+    "compare.distance.light-left.b19k": [
+      "https://www.usgs.gov/publications/last-glacial-maximum"
+    ],
+    "compare.distance.light-left.b26k": [
+      "https://www.usgs.gov/publications/last-glacial-maximum"
+    ],
+    "compare.distance.light-left.b100k": [
+      "https://www.mpg.de/11322481/oldest-homo-sapiens-fossils-at-jebel-irhoud-morocco"
+    ],
+    "compare.distance.light-left.b300k": [
+      "https://www.mpg.de/11322481/oldest-homo-sapiens-fossils-at-jebel-irhoud-morocco",
+      "https://humanorigins.si.edu/evidence/human-fossils/species/homo-heidelbergensis"
+    ],
+    "compare.distance.light-left.b1M": [
+      "https://www.sciencedaily.com/releases/2023/02/230209141458.htm",
+      "https://www.mpg.de/11322481/oldest-homo-sapiens-fossils-at-jebel-irhoud-morocco"
+    ],
+    "compare.distance.light-left.b4M": [
+      "https://humanorigins.si.edu/evidence/genetics"
+    ],
+    "compare.distance.light-left.b8M": [
+      "https://humanorigins.si.edu/evidence/genetics"
+    ],
+    "compare.distance.light-left.b40M": [
+      "https://www.science.org/doi/10.1126/science.1230492"
+    ],
+    "compare.distance.light-left.b66M": [
+      "https://www.science.org/doi/10.1126/science.1230492"
+    ],
+    "compare.distance.marble.": [
+      "https://arxiv.org/abs/1605.09788",
+      "https://observatoiredeparis.psl.eu/the-new-definition-of-the-astronomical-unit.html",
+      "https://science.nasa.gov/moon/facts/"
+    ],
+    "compare.size.marble.": [
+      "https://arxiv.org/abs/1605.09788",
+      "https://observatoiredeparis.psl.eu/the-new-definition-of-the-astronomical-unit.html"
+    ],
+    "compare.temperature.sun.": [
+      "https://arxiv.org/abs/1605.09788"
+    ],
+    "compare.mass.supernova-limit.": [
+      "https://arxiv.org/abs/0908.0700"
+    ],
+    "compare.time.sun-day.": [
+      "https://doi.org/10.1038/ngeo941"
+    ],
+    "payoff.A5-families": [
+      "https://arxiv.org/abs/1001.5444"
+    ]
+  },
+  "variants": {
+    "title.A1-cradle-to-grave": [
+      "Birth and Death Above {region}",
+      "{region}'s Cradles and Graves",
+      "How {region} Makes and Unmakes Its Stars",
+      "{region}, from Nursery to Embers",
+      "Cloud, Star, Cinder: A Life Told in {region}"
+    ],
+    "title.A2-thermometer": [
+      "The Colors of {region}",
+      "{region}'s Hidden Thermometer",
+      "Reading the Heat of {region} by Eye",
+      "{region} in Ember and Blue",
+      "Which Star in {region} Burns Hottest?"
+    ],
+    "title.A3-how-far": [
+      "The Depths Behind {region}",
+      "{region}'s Ladder into the Dark",
+      "How Far Back {region} Goes",
+      "{region}, Rung by Rung",
+      "How Deep Is the Sky in {region}?"
+    ],
+    "title.A4-time-machine": [
+      "Old Light over {region}",
+      "{region}'s Calendar of Light",
+      "Reading {region} Like a History Book",
+      "{region}, Seen as It Was",
+      "When Did the Light of {region} Set Out?"
+    ],
+    "title.A5-families": [
+      "The Star Families of {region}",
+      "{region}'s Scattered Siblings",
+      "Born Together in {region}, Drifting Apart",
+      "{region}, a Family Album",
+      "Who Are the Sisters of {region}?"
+    ],
+    "title.A6-contrasts": [
+      "Look-Alikes of {region}",
+      "{region}'s Unlikely Twins",
+      "Telling {region}'s Neighbors Apart",
+      "{region}, Pair by Pair",
+      "Strangers Side by Side: The Pairs of {region}"
+    ],
+    "title.A7-record-breakers": [
+      "The Extremes of {region}",
+      "{region}'s Record Holders",
+      "Where {region} Breaks the Records",
+      "{region} at Its Most Extreme",
+      "How Extreme Can {region} Get?"
+    ],
+    "title.A8-how-stars-die": [
+      "How Stars End in {region}",
+      "{region}'s Smoke Rings and Supernovae",
+      "What {region} Says About the Sun's Fate",
+      "{region}, and the Two Ways to Die",
+      "Will the Sun End Like the Stars of {region}?"
+    ],
+    "title.A9-seeing-double": [
+      "Seeing Double in {region}",
+      "{region}'s Hidden Pairs",
+      "Splitting the Stars of {region} Apart",
+      "{region} in Pairs and Partners",
+      "Partners or Strangers: The Doubles of {region}"
+    ],
+    "title.A10-stars-that-change": [
+      "The Restless Stars of {region}",
+      "{region}'s Breathing Stars",
+      "Watching {region} Change",
+      "{region}, Flickering and Fading",
+      "Pulse, Eclipse and Shadow: The Variables of {region}"
+    ],
+    "title.A11-inside-our-galaxy": [
+      "Inside Our Galaxy, from {region}",
+      "{region}'s Window on the Milky Way",
+      "Looking Out Through {region} into the Galaxy",
+      "{region} and Our Place in the Milky Way",
+      "Where Are We? An Answer from {region}"
+    ],
+    "title.A12-moonlit": [
+      "Moonlit {region}",
+      "{region}'s Moonproof Wonders",
+      "Finding {region} by Moonlight",
+      "{region} Under a Bright Moon",
+      "What Survives the Moon in {region}?"
+    ],
+    "question.A1-cradle-to-grave": [
+      "Where do stars come from, and how do they end?",
+      "What happens to a star between its birth and its death?",
+      "Could a single patch of sky show a star's whole life?"
+    ],
+    "question.A2-thermometer": [
+      "Why do stars shine in different colors, and what are the colors telling us?",
+      "Is a red star hotter or cooler than a blue one?",
+      "Can you read a star's temperature just by looking at it?"
+    ],
+    "question.A3-how-far": [
+      "Which of these stars is nearest, and how could anyone know?",
+      "How far away is the most distant thing you can see tonight?",
+      "How do astronomers measure distances that no one could ever travel?"
+    ],
+    "question.A4-time-machine": [
+      "How old is the light landing in your eye right now?",
+      "When did tonight's starlight leave home?",
+      "How far back in time can a pair of binoculars see?"
+    ],
+    "question.A5-families": [
+      "Are stars born alone, or do they have families?",
+      "Where are the Sun's brothers and sisters now?",
+      "Do star families stay together, or do they drift apart?"
+    ],
+    "question.A6-contrasts": [
+      "Why do neighbors in the sky turn out to be so different?",
+      "If two stars look alike, why do they live such different lives?",
+      "What hidden difference sets look-alike stars apart?"
+    ],
+    "question.A7-record-breakers": [
+      "What are the most extreme things you can see tonight?",
+      "How big, how bright and how far can a binocular target be?",
+      "What pushes a star or a cluster to break a record?"
+    ],
+    "question.A8-how-stars-die": [
+      "Will the Sun explode one day?",
+      "How does a star die, and what decides the way it goes?",
+      "What will be left of the Sun when it is gone?"
+    ],
+    "question.A9-seeing-double": [
+      "When you see one star, how many are really there?",
+      "Are double stars real partners, or strangers lined up by chance?",
+      "How many stars can hide inside a single point of light?"
+    ],
+    "question.A10-stars-that-change": [
+      "Aren't stars supposed to shine steadily?",
+      "Why do some stars brighten and fade?",
+      "Can you catch a star in the act of changing?"
+    ],
+    "question.A11-inside-our-galaxy": [
+      "Where are we in the Milky Way?",
+      "What does our galaxy look like from the inside?",
+      "How far can you see beyond the Milky Way?"
+    ],
+    "question.A12-moonlit": [
+      "What can you still see when the Moon floods the sky?",
+      "What does moonlight leave untouched?",
+      "What is worth finding on a bright, moonlit night?"
+    ],
+    "hook.A1-cradle-to-grave": [
+      "One patch of sky holds every chapter of a star's life, from cold cloud to cinders.",
+      "Stars are born, grow old and die, and tonight you can see all three in a few sweeps.",
+      "The gas a dying star gives back becomes the next stars, and you can follow the cycle."
+    ],
+    "hook.A2-thermometer": [
+      "A star's color is its temperature, and your eyes can read it like a thermometer.",
+      "In the sky red means cool and blue means hot, the reverse of every bathroom tap.",
+      "A gentle defocus turns tonight's stars into embers and sparks, each a temperature."
+    ],
+    "hook.A3-how-far": [
+      "The brightest stars are not always the nearest, and tonight you find out which are.",
+      "Start with a star next door and climb outward, each rung farther than the last.",
+      "No one has traveled to a star, yet we know how far they are; tonight you see how."
+    ],
+    "hook.A4-time-machine": [
+      "Every point of light is a letter posted long ago, each one sent at a different time.",
+      "Looking farther means looking back in time, and each stop tonight shows older light.",
+      "The light in your binoculars left these stars in different centuries of our history."
+    ],
+    "hook.A5-families": [
+      "Stars are born in litters from one cloud, then slowly wander away from their siblings.",
+      "The Sun lost track of its siblings long ago, but many stars still travel with theirs.",
+      "From tight young clusters to scattered families, tonight shows how star families age."
+    ],
+    "hook.A6-contrasts": [
+      "Stars that pass for twins can be strangers, and one hidden fact gives them away.",
+      "Neighbors on the sky can be worlds apart in age, size or distance.",
+      "Two stars can look alike and live opposite lives; tonight you find what parts them."
+    ],
+    "hook.A7-record-breakers": [
+      "The sky's record holders are within binocular reach, and every record has a cause.",
+      "Some of the most extreme objects in the galaxy hide among ordinary-looking stars.",
+      "Each stop tonight is a record holder, extreme for a physical reason you can name."
+    ],
+    "hook.A8-how-stars-die": [
+      "A star dies gently or violently, and its weight makes the choice.",
+      "Some stars fade inside a smoke ring and others explode; one fate awaits the Sun.",
+      "Tonight you see what is left when stars die, and learn which ending the Sun will get."
+    ],
+    "hook.A9-seeing-double": [
+      "Many single-looking stars split in two in binoculars, and some pairs are real partners.",
+      "A single point of light can hold a whole family of stars circling one another.",
+      "Some pairs are bound by gravity and others are strangers lined up by chance."
+    ],
+    "hook.A10-stars-that-change": [
+      "Some stars swell, fade and wink, and you can judge their brightness yourself.",
+      "Stars look steady, yet some are pulsing, eclipsing or hiding behind their own dust.",
+      "Spend a night as a variable-star observer, comparing stars that refuse to keep still."
+    ],
+    "hook.A11-inside-our-galaxy": [
+      "We live inside a galaxy, and tonight you look along its disk, above it and beyond it.",
+      "The Milky Way's glow is our own galaxy seen edge-on from within.",
+      "From the crowded disk to the halo and beyond, tonight traces our galactic address."
+    ],
+    "hook.A12-moonlit": [
+      "Moonlight drowns faint nebulae, but it cannot touch color, doubles or bright clusters.",
+      "A bright Moon is no enemy of star colors and double stars, which it cannot wash out.",
+      "The Moon steals the faint things tonight, so the night belongs to color and pairs."
+    ],
+    "payoff.A1-cradle-to-grave": [
+      "Stars condense out of cold clouds, shine on the fuel in their cores, and finally hand their gas back to space, where it builds new stars and planets, ours among them.",
+      "From {hook} to {name}, nothing in a star's life is wasted: what a dying star gives back becomes new stars and planets, and some of it, long ago, became us.",
+      "A star is born from a collapsing cloud, lives on its fuel and dies by returning its gas to space. The Sun and Earth are built from the leftovers of that cycle."
+    ],
+    "payoff.A2-thermometer": [
+      "Color is temperature: {hook} glows at the cool, ember end and {name} at the hot, blue-white end, and your eyes alone can read the whole scale.",
+      "Stars differ in color because their surfaces differ in temperature, cool ones orange-red like {hook} and the hottest blue-white like {name}, just as a heated poker goes from red to white.",
+      "You have just read a thermometer stretched across the sky, from the ember glow of {hook} to the blue-white blaze of {name}, using only the color of their light."
+    ],
+    "payoff.A3-how-far": [
+      "{hook} was the nearest and {name} the farthest, its light taking about {ago} to reach you. Brightness alone would never have told you that order, but measurement did.",
+      "Astronomers measure the nearest stars by parallax, a star's small shift as Earth circles the Sun, and reach as far as {name} with cleverer yardsticks built on that first step.",
+      "The order runs from {hook}, nearest, out to {name}, farthest, and every rung of that ladder was measured rather than guessed, each method resting on the one before it."
+    ],
+    "payoff.A4-time-machine": [
+      "The light from {name} set out about {ago} ago, the oldest of the night, and it reached your eye in the same moment as the far younger light of {hook}.",
+      "The freshest light tonight came from {hook} and the oldest from {name}, which left it around {year}: letters posted at different times, all arriving together.",
+      "Every stop showed a different moment of the past, and {name} reaches back furthest: its light has crossed empty space for about {ago} to meet you."
+    ],
+    "payoff.A5-families": [
+      "Stars are born in families from one cloud and drift apart as they age, as the Sun's own siblings did long ago; they are still out there, circling the galaxy.",
+      "From the close-knit family of {hook} to the looser one of {name}, the pattern is clear: star families start tight and spread out with time.",
+      "Every star was born into a family, and most families slowly scatter; {name} shows one well along that road, and the Sun's own family went the same way long ago."
+    ],
+    "payoff.A6-contrasts": [
+      "One hidden property, whether temperature, age, distance or mass, set each pair apart even when they looked alike, and {name} showed how wide that gap can be.",
+      "Each pair tonight shared a look and differed in one deep way, which is why astronomers measure stars instead of trusting their appearance.",
+      "What your eye sees, color and brightness, is only the surface; underneath, each look-alike pair differed in temperature, age, distance or mass, and that difference shaped their lives."
+    ],
+    "payoff.A7-record-breakers": [
+      "The most extreme sight of the night was {name}, and none of the records was an accident: each came from mass, age or sheer distance.",
+      "From {hook} to {name}, every record holder is extreme for a physical reason, and the remarkable thing is that ordinary binoculars reach them all.",
+      "Extremes are where physics shows its hand: {name} tops tonight's list, and its record, like all the others, has a cause you can name."
+    ],
+    "payoff.A8-how-stars-die": [
+      "The Sun is too light to explode: it will swell into a giant, puff off a glowing shell and settle as a white dwarf, while only far heavier stars end like {name}.",
+      "The Sun's ending will be gentle, a giant, then a glowing shell, then a slowly cooling white dwarf, and {name} shows the violent fate kept for much heavier stars.",
+      "Mass decides how a star dies: Sun-like stars fade inside glowing shells, while the heavyweights end in a supernova, as {name} shows, scattering the makings of new worlds."
+    ],
+    "payoff.A9-seeing-double": [
+      "{name} looks like a single star to the eye, yet it holds a whole system, several stars sharing one point of light.",
+      "Some pairs are true partners and some only line up by chance, and {name} is the real thing, stars held together by gravity and circling one another.",
+      "Your eye counted one star, binoculars and physics counted more, and {name} is the proof that a single point of light can be a crowd."
+    ],
+    "payoff.A10-stars-that-change": [
+      "None of tonight's stars keeps still, and each changes for its own reason: swelling and shrinking, a partner passing in front, or dust drifting across its face.",
+      "Stars do change, and usefully: the strict rhythm of a Cepheid, a star that swells and shrinks like a slow heartbeat, even tells astronomers how far away it is.",
+      "Every change you saw was a clue, a pulse, an eclipsing partner or a veil of dust, and patient watchers have turned such clues into physics."
+    ],
+    "payoff.A11-inside-our-galaxy": [
+      "We live inside the flat disk you swept at the start, wrapped in an ancient halo, and {name} took you farther from home than anything else tonight.",
+      "Our address is the Milky Way's disk: you looked along it, then out of it, and finally across the gulf to {name}.",
+      "We live in the disk among nurseries and star clusters, and {name} shows how far the view reaches beyond them."
+    ],
+    "payoff.A12-moonlit": [
+      "Even under a bright Moon, color, double stars and bright clusters come through untouched, and {name} proves it.",
+      "Moonlight washed out the faint nebulae and galaxies tonight, but not {name}, nor the colors and pairs that came before it.",
+      "Plenty survives moonlight, star colors, double stars and bright families of stars among it, with {name} as tonight's proof."
+    ],
+    "switch.A1-cradle-to-grave": [
+      "How a star's story ends depends on its weight. {themeQuestion}",
+      "Now that you have seen a star near its end, the ending itself deserves a closer look. {themeQuestion}"
+    ],
+    "switch.A2-thermometer": [
+      "Color also hints at age, since the reddest giants are old stars near their end. {themeQuestion}",
+      "A star's color is a clue to its whole life, not just its temperature. {themeQuestion}"
+    ],
+    "switch.A3-how-far": [
+      "Distance is also time, because the farther the stop, the older the light you are seeing. {themeQuestion}",
+      "Every light-year is also a year that the light spent on the road. {themeQuestion}"
+    ],
+    "switch.A4-time-machine": [
+      "All those ages rest on distances, and distances have to be measured somehow. {themeQuestion}",
+      "To date old light you first need to know how far it came. {themeQuestion}"
+    ],
+    "switch.A5-families": [
+      "Families grow old, and so do the stars in them. {themeQuestion}",
+      "A family's age shows in its stars, and that leads to their whole life story. {themeQuestion}"
+    ],
+    "switch.A6-contrasts": [
+      "Of all the contrasts, color is the one your eye reads best, and it turns out to be a thermometer. {themeQuestion}",
+      "The sharpest contrast in the sky is color, and color has a cause. {themeQuestion}"
+    ],
+    "switch.A7-record-breakers": [
+      "Extremes invite comparison, and some of the strongest contrasts sit side by side. {themeQuestion}",
+      "Records only mean something next to ordinary stars. {themeQuestion}"
+    ],
+    "switch.A8-how-stars-die": [
+      "Dead stars seed new ones, so the story circles back to its beginning. {themeQuestion}",
+      "Every stellar ending feeds a new beginning. {themeQuestion}"
+    ],
+    "switch.A9-seeing-double": [
+      "Some pairs do more than sit together: they eclipse each other, and their light changes. {themeQuestion}",
+      "A double star that eclipses becomes a variable star. {themeQuestion}"
+    ],
+    "switch.A10-stars-that-change": [
+      "A steady pulse can serve as a ruler for distance. {themeQuestion}",
+      "Pulsing stars turned out to be measuring rods for the universe. {themeQuestion}"
+    ],
+    "switch.A11-inside-our-galaxy": [
+      "Looking out of our galaxy also means looking back in time. {themeQuestion}",
+      "Light from that far away is old light. {themeQuestion}"
+    ],
+    "switch.A12-moonlit": [
+      "The colors you have been seeing are a thermometer in disguise. {themeQuestion}",
+      "Moonlight leaves color alone, and color is temperature. {themeQuestion}"
+    ],
+    "LIFE_NEXT": [
+      "{next} is {nextKind}, the stage that comes after {prev} in a star's life.",
+      "Where {prev} is {prevKind}, {next} is {nextKind}, and that is exactly what comes next in a star's life.",
+      "If {prev} is one chapter of a star's life, {next} is the page you turn to after it.",
+      "{next} has moved on from where {prev} stands now, further along the same life story."
+    ],
+    "LIFE_NEXT.older-analog": [
+      "{next} is the same kind of object as {prev} with far more time behind it, about {nextVal} against {prevVal}.",
+      "Give something like {prev} a great deal more time and you get {next}, which is {ratioPhrase}.",
+      "{prev} has had about {prevVal} to age and {next} about {nextVal}, so the same recipe has been cooking far longer.",
+      "{next} shows what time does to an object like {prev}, since it is {ratioPhrase}."
+    ],
+    "LIFE_NEXT.younger-analog": [
+      "{next} is a younger version of {prev}, about {nextVal} old against {prevVal}, like a photograph from its childhood.",
+      "{next} shows roughly what {prev} looked like long ago, before time had worked on it.",
+      "{next} is the same kind of object as {prev}, caught much earlier in life.",
+      "Going from {prev} to {next} is like rewinding the clock to the same kind of object near its birth."
+    ],
+    "LIFE_NEXT.fate-high-mass": [
+      "{prev} is heavy enough to end in a supernova, and {next} shows what such an ending leaves behind.",
+      "A star like {prev} will not fade quietly, and {next} is the wreckage of one that has already exploded.",
+      "Heavy stars end in a blast, and {next} is the debris of a star much like {prev}.",
+      "{next} is what remains once a star like {prev} finally blows itself apart."
+    ],
+    "LIFE_NEXT.fate-low-mass": [
+      "Stars like {prev} do not explode but puff off their outer layers, and {next} is one caught in the act.",
+      "{next} is the gentle ending that awaits stars like {prev}, a dying star breathing its outer gas into space.",
+      "A star like {prev} ends not in a blast but in a glowing shell like {next}.",
+      "{next} is a star like {prev} at the very end, and a preview of the Sun's own fate."
+    ],
+    "LIFE_NEXT.future-of-massive-stars": [
+      "The hot, heavy stars of {prev} will not stay blue for long, and within a few million years they swell into something like {next}.",
+      "Give stars like those in {prev} a few million years and they balloon into {nextKind} like {next}.",
+      "{next} is the future of the hot, heavy stars of {prev}: swollen, cooler and close to the end.",
+      "Later in life, the heavyweights of {prev} will look like {next}."
+    ],
+    "LIFE_NEXT.0-1": [
+      "{prev} is raw material, cold gas and dust, and in {next} the same kind of material has begun turning into stars.",
+      "A cloud like {prev} collapses into a nest of newborn stars like {next}, and that is where a star's life begins.",
+      "{next} is a cloud like {prev} that has already started making stars."
+    ],
+    "LIFE_NEXT.1-2": [
+      "The newborns of {prev} are still wrapped in their cloud, while in {next} the cloud has gone and the young stars stand in the open.",
+      "Blow away the birth cloud around stars like those of {prev} and you are left with something like {next}, a young family in the open.",
+      "{next} is a young family that has already left its nursery behind, one step on from {prev}.",
+      "{next} is the same kind of family as {prev}, a little older, with nothing left of its cocoon."
+    ],
+    "LIFE_NEXT.2-3": [
+      "{next} is a middle-aged family, older than {prev}, with its hottest blue stars already gone.",
+      "Let a cluster like {prev} age for a long while and you get something like {next}.",
+      "The brightest stars of {prev} still shine blue-white, while time has turned some in {next} yellow and orange.",
+      "{next} has lived long enough to lose its heaviest stars, something {prev} has not yet done."
+    ],
+    "LIFE_NEXT.3-4": [
+      "{next} is older still, with only small, long-lived stars and a few orange giants left.",
+      "{next} has outlived nearly every heavy star it was born with, which makes it an elder beside {prev}.",
+      "{prev} is middle-aged, and {next} is a true elder."
+    ],
+    "LIFE_NEXT.2-5": [
+      "{prev} is in its long, steady adult life, while {next} has run out of hydrogen in its core and swollen into a giant.",
+      "When stars like those in {prev} grow old they swell, and {next} is one that already has.",
+      "After its steady years a star grows big, cool and bright, which is where {next} is now."
+    ],
+    "LIFE_NEXT.3-5": [
+      "Stars like those in {prev} eventually swell into giants, and {next} has already made that change.",
+      "{next} is where a star from a family like {prev} is headed, the giant stage.",
+      "From the steady adulthood of {prev} you move to the old age of {next}."
+    ],
+    "LIFE_NEXT.5-6": [
+      "{prev} is ageing, while {next} is in its final throes, shedding its outer layers.",
+      "{next} is a giant at the very end, giving its gas back to space.",
+      "After the giant stage comes the last act, and {next} is in the middle of it."
+    ],
+    "LIFE_NEXT.5-7": [
+      "{prev} is a star near its end, and {next} is what such an ending leaves behind.",
+      "{next} is the remains of a star like {prev}, the step from dying to dead.",
+      "{next} is the last page of the story that {prev} is still living.",
+      "What comes after a giant like {prev} is written in the gas of {next}."
+    ],
+    "LIFE_NEXT.6-7": [
+      "{prev} is shedding its last layers, and {next} is what remains once that is over.",
+      "After the final shedding comes the remnant, and {next} is one.",
+      "{next} is the scene after the curtain falls on a star like {prev}."
+    ],
+    "LIFE_NEXT.ageMyr": [
+      "{ifUp}{prev} is about {prevVal} old and {next} about {nextVal}, a later page of the same life story.",
+      "{ifUp}{next} is {ratioPhrase} than {prev}, about {nextVal} against {prevVal}.",
+      "{ifUp}Time is the difference between them, since {prev} has had about {prevVal} and {next} about {nextVal}."
+    ],
+    "CAUSE": [
+      "{prev} is the reason {next} looks the way it does.",
+      "{next} is lit, shaped or made by {prev}, so what you saw there explains what you see here.",
+      "Without {prev} there would be no {next} to see.",
+      "{prev} does the work, and {next}, {nextKind}, shows the result."
+    ],
+    "CAUSE.ionizes": [
+      "{prev} floods its surroundings with ultraviolet light, and that is what makes the gas of {next} glow like a neon sign.",
+      "{next} glows because {prev} pours out light fierce enough to energize its gas.",
+      "The fierce light of {prev} lights {next} from inside, making its hydrogen shine.",
+      "Follow the energy from the hot star {prev} into the glowing gas of {next}."
+    ],
+    "CAUSE.illuminates": [
+      "{next} makes no light of its own; it is dust reflecting the glow of {prev}, like fog around a streetlight.",
+      "The dust of {next} shines only because {prev} lights it up.",
+      "{prev} is the lamp and {next} the dust it lights.",
+      "Starlight from {prev} bounces off the dust of {next}, and in photographs that scattered light looks blue, much as the daytime sky does."
+    ],
+    "CAUSE.sculpts": [
+      "{prev} blows hard winds and shines fierce light, and between them they carved the shape of {next}.",
+      "The shape of {next} is the work of {prev}, its winds and radiation pushing the gas aside.",
+      "{next} has been hollowed out from the inside by {prev}."
+    ],
+    "CAUSE.cluster-in-nebula": [
+      "The stars of {prev} and the gas of {next} belong to one birth story, children and the cloud they came from.",
+      "{next} formed from the same gas you just saw in {prev}.",
+      "The young stars and the glowing cloud are parent and child, {prev} and {next}.",
+      "These young stars were born from this cloud, and now they light it up."
+    ],
+    "CAUSE.formed-from": [
+      "{next} condensed out of a cloud like {prev}.",
+      "Gas became stars here, for {next} formed from material like that in {prev}.",
+      "{prev} is the raw material, and {next} is what it became."
+    ],
+    "CAUSE.wind-bubble": [
+      "{prev} blows a wind so fierce that it has inflated the glowing bubble of {next}.",
+      "{next} is a bubble blown by {prev}, a heavy star near its end.",
+      "The wind from {prev} is pushing gas outward, and {next} is the result."
+    ],
+    "SIBLING": [
+      "{prev} and {next} are siblings, born from the same cloud at about the same time.",
+      "{next} shares a birth cloud with {prev}, though the two have since moved apart.",
+      "{next} is a sister to {prev}, for their stars came out of one cloud.",
+      "{next} and {prev} grew up in the same nursery."
+    ],
+    "SIBLING.same-association": [
+      "{prev} and {next} belong to one sprawling family of young stars spread across this part of the sky.",
+      "{next} is a cousin of {prev}, part of the same loose family.",
+      "{next} is another household of the big family that {prev} belongs to.",
+      "{next} was born in the same burst of star birth as {prev}, just a little way off."
+    ],
+    "SIBLING.same-cloud": [
+      "{next} is another bright patch of the cloud that made {prev}.",
+      "{next} is part of the same cloud of gas and dust as {prev}.",
+      "{next} is another window into the same cloud, lit by its own young stars.",
+      "{prev} and {next} are two glowing parts of one star-forming cloud."
+    ],
+    "SIBLING.moving-group": [
+      "{next} drifts through space in step with {prev}, a family that has spread out but still moves together.",
+      "They look unrelated, but {prev} and {next} share a motion through space, the sign of a common birth.",
+      "{next} and {prev} are scattered siblings, and their shared motion gives them away.",
+      "Family ties outlast the cluster, and {next} still travels with {prev}."
+    ],
+    "SIBLING.same-system": [
+      "{prev} and {next} are bound together by gravity, partners in one system.",
+      "{next} is not just nearby; it orbits together with {prev}.",
+      "{next} and {prev} share one center of gravity, two parts of a single system."
+    ],
+    "CONTRAST": [
+      "{prev} is {prevKind} and {next} is {nextKind}, neighbors on the sky with very different stories.",
+      "{next} looks like a neighbor of {prev}, but it is {nextKind} where {prev} is {prevKind}.",
+      "{next} is {sharedKind} like {prev}, yet the two are far from twins.",
+      "{prev} and {next} share a patch of sky and very little else."
+    ],
+    "CONTRAST.teffK": [
+      "{prev} burns at about {prevVal} and {next} at about {nextVal}, and that gap is the color difference you can see.",
+      "Swing from {prev} to {next} and compare the colors, about {prevVal} against {nextVal}, and your eyes are reading a thermometer.",
+      "{next} is {ratioPhrase} than {prev}, and the change of color as you swing between them is that difference made visible.",
+      "Defocus slightly as you move from {prev}, at about {prevVal}, to {next}, at about {nextVal}, and the colors jump out.",
+      "One short swing takes you across the thermometer, from {prev} near {prevVal} to {next} near {nextVal}."
+    ],
+    "CONTRAST.distanceLy": [
+      "{prev} and {next} look like neighbors, but {next} is {ratioPhrase}.",
+      "Close on the sky, they are far apart in space, {prev} about {prevVal} away and {next} about {nextVal}.",
+      "{next} shares this patch of sky with {prev}, yet it is {ratioPhrase}, a trick of perspective.",
+      "The sky flattens depth, so {prev} at about {prevVal} and {next} at about {nextVal} seem to sit side by side."
+    ],
+    "CONTRAST.ageMyr": [
+      "{ifUp}One is young and one is old, about {prevVal} for {prev} against about {nextVal} for {next}.",
+      "{ifDown}One is old and one is young, about {prevVal} for {prev} against about {nextVal} for {next}.",
+      "{ifUp}{next} is {sharedKind} like {prev}, but {ratioPhrase}, and time shows in what is left of it.",
+      "{ifClear}{next} is {sharedKind} like {prev}, but about {nextVal} old against {prevVal}."
+    ],
+    "CONTRAST.radiusRsun": [
+      "Both look like points of light, yet {next} is {ratioPhrase} than {prev}.",
+      "{prev} measures about {prevVal} and {next} about {nextVal}, though to your eye both are mere points of light.",
+      "Put each in the Sun's place and the difference would be enormous, because {next} is {ratioPhrase} than {prev}.",
+      "Set side by side, {prev} at about {prevVal} and {next} at about {nextVal} would look nothing alike."
+    ],
+    "CONTRAST.lumLsun": [
+      "{next} is {ratioPhrase} than {prev}, whatever their brightness in your binoculars suggests.",
+      "In the light they truly give off, {prev} shines with about {prevVal} and {next} with about {nextVal}.",
+      "How bright a star looks depends on its distance too, and in truth {next} is {ratioPhrase} than {prev}.",
+      "Rank them by real output rather than by eye and {prev} gives about {prevVal} while {next} gives about {nextVal}."
+    ],
+    "CONTRAST.massMsun": [
+      "{next} is {ratioPhrase} than {prev}, and in a star's life weight is destiny.",
+      "Weigh them and {prev} comes to about {prevVal}, {next} to about {nextVal}, and their futures differ as much as their masses.",
+      "About {prevVal} against {nextVal}, heavy star beside light star, and that difference decides how each will end."
+    ],
+    "CONTRAST.same-age-different-distance": [
+      "{next} is about as old as {prev} but {ratioPhrase}, so its stars blur into a glow.",
+      "{prev} and {next} are about the same age, but one lies much farther off.",
+      "Push a family like {prev} far away and it would look roughly like {next}, the same age at a different distance.",
+      "{next} and {prev} were born at about the same time, so the difference you see is mostly distance."
+    ],
+    "CONTRAST.same-distance-different-age": [
+      "{prev} and {next} sit at about the same distance, so the difference you see is age.",
+      "At the same distance but a different age, {prev} is about {prevVal} old and {next} about {nextVal}.",
+      "Distance cannot explain this one: {next} looks different from {prev} because it is {ratioPhrase}."
+    ],
+    "CONTRAST.same-stage-different-mass": [
+      "{prev} is an ageing giant, and {next} is the same chapter told by a far heavier star; heavy stars do not age gently.",
+      "{next} is {ratioPhrase} than {prev}, at the same stage of life but with a very different ending ahead.",
+      "{prev} and {next} are at the same stage of life, but in different weight classes."
+    ],
+    "CONTRAST.birth-vs-death": [
+      "Both are glowing clouds, but {prev} is a cradle and {next} a shroud.",
+      "{prev} and {next} glow for the same reason, energized gas, but one marks a birth and the other a death.",
+      "From a distance {prev} and {next} look alike, yet one is where stars begin and the other where one ended."
+    ],
+    "SAME_FAMILY": [
+      "{next} is {sharedKind}, just like {prev}, so you can compare the two in the same binoculars.",
+      "{next} is {sharedKind} like {prev}, but {ratioPhrase}.",
+      "{next} is the same kind of object as {prev}, only {ratioPhrase}.",
+      "{next} is another object of the same kind as {prev}, which makes the two easy to compare.",
+      "{next} is {nextKind}, a close relative of {prev}, which is {prevKind}."
+    ],
+    "SAME_FAMILY.twin": [
+      "{next} is almost a twin of {prev}, so see whether you can tell them apart.",
+      "{prev} and {next} are near twins, with one small difference between them.",
+      "{next} matches {prev} closely, {sharedKind} nearly the same in everything you can see."
+    ],
+    "SAME_FAMILY.young-groups": [
+      "{next} is another young family like {prev}, born at a slightly different time.",
+      "{prev} and {next} are both young families, so compare how tightly packed they look.",
+      "{next} is a young group of stars too, a little different in age from {prev}."
+    ],
+    "SCALE": [
+      "The scale grows again, for {next} is {ratioPhrase} than {prev}.",
+      "From {prev} to {next} the scale jumps, and {next} is {ratioPhrase}.",
+      "Each step multiplies the last, and {next} is {ratioPhrase} than {prev}.",
+      "From {prev} to {next} the scale takes a big step outward."
+    ],
+    "SCALE.distanceLy": [
+      "{next} lies about {nextVal} away, {ratioPhrase} than {prev}.",
+      "From {prev} at about {prevVal} the view reaches out to {next} at about {nextVal}, {ratioPhrase}.",
+      "{next} sits about {nextVal} away, {ratioPhrase} than {prev}, so its light has a longer road behind it.",
+      "{prev} is about {prevVal} away and {next} about {nextVal}, another long step outward."
+    ],
+    "SCALE.radiusRsun": [
+      "{next} is {ratioPhrase} than {prev}, though both are points of light to your eye.",
+      "{prev} is about {prevVal} across, and {next} about {nextVal}.",
+      "Both are points of light, but {next} is {ratioPhrase} than {prev}."
+    ],
+    "SCALE.sizeLy": [
+      "{next} spans about {nextVal}, {ratioPhrase} than {prev}.",
+      "{prev} spans about {prevVal}, and {next} about {nextVal}.",
+      "The scale grows again, for {next} is {ratioPhrase} than {prev}."
+    ],
+    "SCALE.ageMyr": [
+      "{next} is {ratioPhrase} than {prev}, so time has had longer to work on it.",
+      "{prev} is about {prevVal} old, and {next} about {nextVal}.",
+      "Time adds up, and {next} is about {nextVal} old."
+    ],
+    "TIME_MACHINE": [
+      "The light from {next} left it long before the light you just saw from {prev}.",
+      "{next} is farther away than {prev}, so its light is older and you see it as it was longer ago.",
+      "What reaches you from {next} set out well before the light of {prev}.",
+      "Farther away means further back in time, and {next} is farther than {prev}."
+    ],
+    "TIME_MACHINE.distanceLy": [
+      "The light from {next} set out around {year}, earlier than the light from {prev}.",
+      "Turn the clock back again, for the light you see from {next} left it around {year}.",
+      "{next} is about {nextVal} away, so you see it as it was about {ago} ago.",
+      "What you see of {next} left it around {year}, older light than that of {prev}."
+    ],
+    "SAME_PHYSICS": [
+      "{next} runs on the same physics as {prev}, only in a different setting.",
+      "{next} is {nextKind}, yet the physics at work is the same as in {prev}.",
+      "{next} is {sharedKind} like {prev}, driven by the same physics.",
+      "{prev} and {next} shine, change or glow for the same underlying reason."
+    ],
+    "SAME_PHYSICS.same-process": [
+      "{prev} and {next} glow for the same reason.",
+      "In a different place, the same process is at work: {next} works just like {prev}.",
+      "{next} tells the same story as {prev}, so you already know how it works."
+    ],
+    "SAME_PHYSICS.ionization": [
+      "Like {prev}, {next} is gas energized by hot young stars, glowing like a neon sign.",
+      "{next} is another stellar neon sign, glowing for the same reason as {prev}.",
+      "Hot young stars energize the gas in {next}, just as they do in {prev}."
+    ],
+    "SAME_PHYSICS.giants": [
+      "{next} is another giant like {prev}, a star that has used up the hydrogen in its core and swollen.",
+      "Both are ageing stars, {prev} at about {prevVal} and {next} at about {nextVal}.",
+      "{prev} and {next} are both stars in later life, swollen into giants."
+    ],
+    "SAME_PHYSICS.pulsation": [
+      "Like {prev}, {next} swells and shrinks, and its brightness follows.",
+      "{next} pulses as {prev} does, on a rhythm of its own.",
+      "{prev} and {next} beat with the same physics at different tempos."
+    ],
+    "SAME_PHYSICS.eclipse": [
+      "{next} dims for the same reason as {prev}: one star passes in front of another.",
+      "{next} works like {prev}, an eclipse too close to see directly, betrayed only by the dip in its light.",
+      "{next} plays the same trick of geometry as {prev}, with a partner crossing in front."
+    ],
+    "SAME_PHYSICS.rotation": [
+      "{next} spins fast too, like {prev}.",
+      "{next} is another fast spinner, flattened by its own rotation.",
+      "Like {prev}, {next} is a star bulging at the waist from its own spin."
+    ],
+    "SAME_PHYSICS.concept": [
+      "{next} carries on the idea you met at {prev}.",
+      "{next} builds on what {prev} showed.",
+      "{prev} and {next} teach the same lesson in different ways."
+    ],
+    "NEIGHBOR": [
+      "{next} is close to {prev} in space, not just on the sky.",
+      "{next} is a real neighbor of {prev}, not a line-of-sight one.",
+      "{prev} and {next} share the same patch of space."
+    ],
+    "NEIGHBOR.interacting": [
+      "{prev} and {next} are tugging on each other right now.",
+      "{prev} and {next} are close enough to disturb each other.",
+      "{next} has been stirred up by its neighbor {prev}."
+    ],
+    "NEIGHBOR.satellite-of": [
+      "{next} is a small companion galaxy orbiting {prev}.",
+      "{prev} has moons of a sort, and {next} is one of its companion galaxies.",
+      "{next} circles {prev} the way a moon circles a planet, only far more slowly."
+    ],
+    "NEIGHBOR.same-group": [
+      "{next} belongs to the same group of galaxies as {prev}.",
+      "{prev} and {next} are neighbors in one small group of galaxies.",
+      "{next} and {prev} share a galaxy-sized neighborhood."
+    ],
+    "LINE_OF_SIGHT": [
+      "{prev} and {next} line up on the sky, but they are nowhere near each other in space.",
+      "{next} only looks close to {prev}, a trick of perspective.",
+      "They share a direction but not a depth, {prev} at about {prevVal} and {next} at about {nextVal}.",
+      "{next} lies along the same line of sight as {prev}, but it is {ratioPhrase}."
+    ],
+    "LINE_OF_SIGHT.foreground-star": [
+      "{prev} and {next} overlap on the sky but not in space, since one is much closer to us.",
+      "{prev} and {next} overlap on the sky, but one is a foreground star much nearer to us.",
+      "A star in front and a family behind it, about {prevVal} against about {nextVal}.",
+      "One of {prev} and {next} sits much closer to us than the other, like a passer-by in a group photograph."
+    ],
+    "LINE_OF_SIGHT.background-cluster": [
+      "The little smudge beside {prev} is {next}, {ratioPhrase} and lined up only by chance.",
+      "Behind {prev} hides {next}, a cluster far deeper in space.",
+      "Just past {prev} lies {next}, a background cluster about {nextVal} away.",
+      "{next} sits behind {prev} like a distant town seen past a nearer one."
+    ],
+    "LINE_OF_SIGHT.line-of-sight": [
+      "{prev} and {next} share a direction, not a neighborhood.",
+      "{next} and {prev} line up by chance, at very different distances.",
+      "{prev} is about {prevVal} away and {next} about {nextVal}, so their closeness is a chance alignment."
+    ],
+    "skip": [
+      "If {skipped} won't show tonight, go straight on from {prev} to {next}.",
+      "Leave {skipped} for another night and carry on to {next}.",
+      "Without {skipped} the jump from {prev} to {next} is bigger, but the story still holds together.",
+      "Skip {skipped} and pick up the trail again at {next}."
+    ],
+    "skip.bridge": [
+      "What {skipped} would have shown is this: {bridge}",
+      "The idea you would miss at {skipped} is this: {bridge}",
+      "{skipped} was there to make one point: {bridge}"
+    ],
+    "skip.LIFE_NEXT": [
+      "{skipped} was the stage between {prev} and {next}, so the story jumps a chapter, but it still runs forward.",
+      "Missing {skipped} means jumping from {prev} straight to the later stage shown by {next}.",
+      "Turn two pages at once, from {prev} past {skipped} to {next}."
+    ],
+    "skip.CONTRAST": [
+      "Without {skipped}, set {next} directly against {prev}, and the contrast still works.",
+      "{skipped} was meant to be the opposite of {prev}, so set {next} against {prev} instead."
+    ],
+    "skip.SCALE": [
+      "Missing {skipped} makes this a bigger jump, from {prev} straight out to {next}.",
+      "Take two steps in one, past {skipped} and out to {next}."
+    ],
+    "skip.TIME_MACHINE": [
+      "Skipping {skipped} means a bigger leap back in time, from {prev} straight to {next}.",
+      "Go two steps back at once, past {skipped} to the older light of {next}."
+    ],
+    "skip.CAUSE": [
+      "{skipped} would have shown what powers this scene, but {next} still shows the effect.",
+      "Without {skipped} you miss the cause, yet {next} still shows the result."
+    ],
+    "skip.SIBLING": [
+      "{skipped} was another member of this family, and {next} carries the family story on.",
+      "One sibling, {skipped}, stays unseen tonight, and the family continues with {next}."
+    ],
+    "bridge.prereq": [
+      "{bridge}"
+    ],
+    "coda.callback": [
+      "Before you pack up, look back at {hook}, because you now know what you are seeing.",
+      "Finish where you began: find {hook} again and see it with new eyes.",
+      "Return to {hook} for a last look, since the night's story started there."
+    ],
+    "why.hook": [
+      "We begin with {name}, {kind} you can find in seconds, and it sets up everything that follows.",
+      "{name} is where tonight starts, {kind} that is easy to find and holds the first clue.",
+      "Start with {name}, {kind} that is easy to find and at the heart of tonight's story."
+    ],
+    "why.hook.A1-cradle-to-grave": [
+      "A star's life begins in cold gas, so that is where we start: {name} is a nursery where new stars are still taking shape.",
+      "Every star starts as a cloud of gas and dust, and in {name} you are looking at stars being born right now."
+    ],
+    "why.hook.A2-thermometer": [
+      "Tonight the stars are a thermometer, and {name}, glowing like an ember, sits at its cool end.",
+      "Cool stars glow orange-red, so the scale starts with {name}, {kind}, and climbs toward blue-white from here."
+    ],
+    "why.hook.A3-how-far": [
+      "To measure the depth of the sky you start close to home, and {name} is the first rung, near enough that its light takes about {ago} to reach you.",
+      "The ladder starts next door with {name}, {kind}, and every stop after it lies farther away."
+    ],
+    "why.hook.A4-time-machine": [
+      "Every star you see is a message from the past, and the one from {name} has been on its way for about {ago}.",
+      "The light you see from {name} left it around {year}, and each stop after it shows older light still."
+    ],
+    "why.hook.A5-families": [
+      "Stars are born in families, and {name} shows one at a glance: siblings from a single cloud, still close enough to see as a group.",
+      "We begin with {name}, a family of stars that has not yet drifted apart."
+    ],
+    "why.hook.A6-contrasts": [
+      "Tonight's stars look alike at first and lead very different lives, so take in the color and brightness of {name}, because both can mislead.",
+      "{name} is the first of tonight's look-alikes, easy to find and less simple than it appears."
+    ],
+    "why.hook.A7-record-breakers.claim": [
+      "Tonight is a tour of extremes, and the first record holder is {name}, {claim}."
+    ],
+    "why.hook.A7-record-breakers": [
+      "Tonight is a tour of extremes, and {name}, {kind}, is the first record holder.",
+      "The first of the night's champions is {name}, {kind} that holds its record for a physical reason."
+    ],
+    "why.hook.A8-how-stars-die": [
+      "Stars end in one of two ways, and {name} is a star already in the late chapters of its life.",
+      "{name} shows where the Sun is headed, and the stops after it reveal the two ways a star's life can end."
+    ],
+    "why.hook.A9-seeing-double": [
+      "Count the stars of {name} by eye, then count again in the binoculars, because the difference is tonight's whole subject.",
+      "Many single-looking stars are really two or more, and {name} is the first test of your counting."
+    ],
+    "why.hook.A10-stars-that-change": [
+      "Not every star shines steadily, and {name} is the first tonight whose light rises and falls.",
+      "{name} looks like any other star, yet its light rises and falls, whether or not your eye can follow it."
+    ],
+    "why.hook.A11-inside-our-galaxy": [
+      "We live inside the Milky Way, and {name} lies in its disk, the same thin layer of stars that holds the Sun.",
+      "Tonight starts at home, for {name} is part of the Milky Way's band, the glow of our galaxy's disk seen from inside."
+    ],
+    "why.hook.A12-moonlit": [
+      "The Moon washes out the faint things tonight, but {name} is bright and colorful enough to shine straight through.",
+      "Moonlight cannot touch {name}, {kind} bright enough to ignore the glare."
+    ],
+    "why.build": [
+      "{name} is {kind}, and it carries the thread on from {prev}.",
+      "The trail leads on to {name}, {kind}.",
+      "{name}, {kind}, is the next step on from {prev}."
+    ],
+    "why.twist": [
+      "{name} breaks the pattern so far, because it is not what it seems.",
+      "{name} upsets an easy assumption about what a point of light can be.",
+      "{name}, {kind}, is less ordinary than it looks."
+    ],
+    "why.payoff": [
+      "With {name}, {kind}, the pieces of the night come together.",
+      "Everything so far leads to {name}, {kind}.",
+      "{name}, {kind}, is where tonight's thread has been heading."
+    ],
+    "why.coda": [
+      "{name} closes the loop with a last look back toward {hook}.",
+      "End on {name}, {kind} and an easy last look.",
+      "{name} ends the night somewhere it can be compared with {hook}."
+    ],
+    "why.challenge": [
+      "It is tonight's challenge, so give it a patient minute and skip it without guilt if it stays hidden.",
+      "This is the night's challenge, and if it will not show after a patient minute, move on."
+    ],
+    "why.superlative": [
+      "{name} is {claim}.",
+      "{name} holds a record, for it is {claim}."
+    ],
+    "why.superlative.statement": [
+      "{name} stands out for one reason: {claim}.",
+      "What sets {name} apart is this: {claim}."
+    ],
+    "why.condition.sets-soon": [
+      "See {name} early, because it sets soon.",
+      "{name} is sinking toward the horizon, so it comes first."
+    ],
+    "why.condition.highest": [
+      "{name} is about as high as it gets tonight.",
+      "Catch {name} now, near its highest point."
+    ],
+    "notice.moonlit": [
+      "Tonight's bright Moon washes out faint clouds of gas, but it cannot hide color, double stars or bright clusters.",
+      "The Moon is bright, so this journey keeps to what moonlight cannot spoil: colors, pairs and bright clusters."
+    ],
+    "notice.challenge": [
+      "This one is hard, so give it a minute of careful looking and skip it without guilt if it does not show."
+    ],
+    "notice.volatile": [
+      "This star changes unpredictably, so judge it against the stars around it rather than any printed brightness."
+    ],
+    "notice.photo": [
+      "The photograph is a long exposure, and your binoculars will show much less color, which is perfectly normal."
+    ],
+    "compare.distance.light-left": [
+      "The light reaching you from {name} left it around {year}.",
+      "Light from {name} has been traveling for about {ago} to reach you.",
+      "You are seeing {name} as it was about {ago} ago."
+    ],
+    "compare.distance.light-left.b0": [
+      "This light left {name} around {year}, only a few years ago, which is recent mail by cosmic standards.",
+      "Light from {name} takes about {ago} to reach you, so a child who started school the year it left could be reading this."
+    ],
+    "compare.distance.light-left.b15": [
+      "This light left {name} around {year}, in the years astronauts were assembling the International Space Station (1998–2011).",
+      "Light from {name} set out around {year}, while the Space Station was being built piece by piece in orbit."
+    ],
+    "compare.distance.light-left.b28": [
+      "This light left {name} around {year}, the era when the Hubble Space Telescope was launched (1990).",
+      "Light from {name} set out around {year}, about when Hubble first opened its eyes in orbit (1990)."
+    ],
+    "compare.distance.light-left.b40": [
+      "This light left {name} around {year}, in the Space Age that began with Sputnik (1957) and reached the Moon (1969).",
+      "Light from {name} set out around {year}, give or take the decades when people first flew to the Moon."
+    ],
+    "compare.distance.light-left.b70": [
+      "This light left {name} around {year}, within a few decades of 1923, when Edwin Hubble showed that other galaxies exist.",
+      "Light from {name} set out around {year}, when astronomers were still learning that the Milky Way is one galaxy among many."
+    ],
+    "compare.distance.light-left.b130": [
+      "This light left {name} around {year}, in the decades after the first measurement of a star's distance (1838).",
+      "Light from {name} set out around {year}, soon after astronomers first managed to measure how far away a star is."
+    ],
+    "compare.distance.light-left.b190": [
+      "This light left {name} around {year}, after Galileo first turned a telescope on the sky (1609–10) but before anyone knew how far a star was.",
+      "Light from {name} set out around {year}, when telescopes were new and no star's distance had yet been measured (that came in 1838)."
+    ],
+    "compare.distance.light-left.b416": [
+      "This light left {name} around {year}, before anyone had looked at the sky through a telescope, for Galileo's first views came in 1609–10.",
+      "Light from {name} set out around {year}, so the whole of telescope astronomy has happened while it was on its way."
+    ],
+    "compare.distance.light-left.b600": [
+      "This light left {name} around {year}, in the centuries after Chinese astronomers recorded the 'guest star' of 1054, the blast that made the Crab Nebula.",
+      "Light from {name} set out around {year}, in medieval times, and it has been traveling for about {ago}."
+    ],
+    "compare.distance.light-left.b1k": [
+      "This light left {name} around {year}, the age of the Dunhuang star chart and of al-Sufi, who in 964 wrote the first known description of the Andromeda Galaxy.",
+      "Light from {name} set out around {year}, when the oldest surviving star atlas, drawn in Tang-dynasty China, was still fairly new."
+    ],
+    "compare.distance.light-left.b1400": [
+      "This light left {name} around {year}, in the age of the Roman Empire and of Ptolemy, whose star catalog (about 150 CE) was used for well over a thousand years.",
+      "Light from {name} set out around {year}, in Roman times, and it has been crossing space for about {ago}."
+    ],
+    "compare.distance.light-left.b2100": [
+      "This light left {name} around {year}, after the great stones of Stonehenge were raised (around 2500 BCE).",
+      "Light from {name} set out around {year}, ancient history, yet younger than Stonehenge."
+    ],
+    "compare.distance.light-left.b4500": [
+      "This light left {name} around {year}, close to the time people in Mesopotamia invented writing (about 3200 BCE).",
+      "Light from {name} set out around {year}, when the first written records on Earth were just appearing."
+    ],
+    "compare.distance.light-left.b6k": [
+      "This light left {name} around {year}, before writing existed anywhere, so no one could have recorded the moment it set out.",
+      "Light from {name} set out about {ago} ago, before the first written word (about 3200 BCE)."
+    ],
+    "compare.distance.light-left.b12k": [
+      "This light left {name} about {ago} ago, as the great ice sheets of the last Ice Age began to melt back.",
+      "Light from {name} set out about {ago} ago, as the last Ice Age was loosening its grip."
+    ],
+    "compare.distance.light-left.b19k": [
+      "This light left {name} about {ago} ago, in the coldest part of the last Ice Age, when the ice sheets were at their largest.",
+      "Light from {name} set out about {ago} ago, while ice sheets kilometers thick still covered much of the northern lands."
+    ],
+    "compare.distance.light-left.b26k": [
+      "This light left {name} about {ago} ago, before the last Ice Age reached its coldest peak.",
+      "Light from {name} set out about {ago} ago, deep in the Ice Age, long before farming or writing."
+    ],
+    "compare.distance.light-left.b100k": [
+      "This light left {name} about {ago} ago, when our species was young, for the oldest known Homo sapiens fossils are about 300,000 years old.",
+      "Light from {name} set out about {ago} ago, in the early days of our own species."
+    ],
+    "compare.distance.light-left.b300k": [
+      "This light left {name} about {ago} ago, before our species existed, when other kinds of humans walked the Earth.",
+      "Light from {name} set out about {ago} ago, before Homo sapiens itself."
+    ],
+    "compare.distance.light-left.b1M": [
+      "This light left {name} about {ago} ago, in the age when our distant ancestors made the first stone tools, long before our species existed.",
+      "Light from {name} set out about {ago} ago, before any human like you had been born."
+    ],
+    "compare.distance.light-left.b4M": [
+      "This light left {name} about {ago} ago, around when the ancestors of humans and chimpanzees went their separate ways.",
+      "Light from {name} set out about {ago} ago, near the very start of the human family tree."
+    ],
+    "compare.distance.light-left.b8M": [
+      "This light left {name} about {ago} ago, before the human and chimpanzee lines had split.",
+      "Light from {name} set out about {ago} ago, before there was any human branch on the tree of life."
+    ],
+    "compare.distance.light-left.b40M": [
+      "This light left {name} about {ago} ago, after the dinosaurs had vanished (66 million years ago), while mammals were spreading across the land.",
+      "Light from {name} set out about {ago} ago, in the age of mammals that followed the dinosaurs."
+    ],
+    "compare.distance.light-left.b66M": [
+      "This light left {name} about {ago} ago, while dinosaurs still roamed the Earth.",
+      "Light from {name} set out about {ago} ago, before the asteroid that ended the dinosaurs."
+    ],
+    "compare.distance.marble": [
+      "If the Sun were a 1 cm marble, with Earth a grain of sand 1 m from it, {name} would be about {scaled} away.",
+      "On the marble scale, where the Sun is 1 cm across, {name} sits about {scaled} away."
+    ],
+    "compare.distance.marble.m0": [
+      "If the Sun were a 1 cm marble with Earth a sand grain 1 m away, {name} would be another marble about {scaled} off.",
+      "Shrink the Sun to a 1 cm marble and Earth orbits 1 m away, while {name} sits about {scaled} off, which shows how empty space is."
+    ],
+    "compare.distance.marble.m20": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} away, though Earth orbits just 1 m from the marble.",
+      "On the marble scale {name} is about {scaled} off, and the whole Earth is about 40,000 km around."
+    ],
+    "compare.distance.marble.m600": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} away, a good part of the way to the real Moon (384,000 km).",
+      "On the marble scale {name} sits about {scaled} away, to set beside a real Moon 384,000 km from Earth."
+    ],
+    "compare.distance.marble.m6k": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} away, farther than the real Moon is from Earth.",
+      "Even with the Sun shrunk to a marble, {name} lies about {scaled} off, beyond the real Moon."
+    ],
+    "compare.distance.marble.m100k": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} away, still less than the real Earth–Sun distance (150 million km).",
+      "Shrink the Sun to a marble and {name} is still about {scaled} away."
+    ],
+    "compare.distance.marble.m2M": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} away, farther than the real Sun is from us.",
+      "On a scale where the Sun is a marble, {name} is still more distant than the real Sun, at about {scaled}."
+    ],
+    "compare.size.marble": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} across."
+    ],
+    "compare.size.marble.s0": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} across, smaller than a grain of sand, a crushed stellar core.",
+      "On the marble scale {name} shrinks to about {scaled}, a speck you could lose on a fingertip."
+    ],
+    "compare.size.marble.s002": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} across, a small seed beside the marble.",
+      "On the marble scale {name} is a seed about {scaled} wide."
+    ],
+    "compare.size.marble.s05": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} across, close to the marble itself.",
+      "On the marble scale {name} is about {scaled} wide, nearly a twin of the Sun in size."
+    ],
+    "compare.size.marble.s2": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} across, somewhere between a grape and an orange.",
+      "On the marble scale {name} grows to about {scaled}, a piece of fruit beside the Sun's marble."
+    ],
+    "compare.size.marble.s10": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} across, yet in the Sun's place it would still fit inside Earth's orbit.",
+      "On the marble scale {name} is about {scaled} wide, big, but swap it for the Sun and Earth would still orbit outside it."
+    ],
+    "compare.size.marble.s215": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} across, and in the Sun's place its surface would reach past Earth's orbit.",
+      "On the marble scale {name} is about {scaled} wide, and put in the Sun's place it would swallow Earth's orbit."
+    ],
+    "compare.size.marble.s328": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} across, and in the Sun's place its surface would reach past the orbit of Mars.",
+      "On the marble scale {name} is about {scaled} wide, so swap it for the Sun and Earth and Mars would orbit inside it."
+    ],
+    "compare.size.marble.s1119": [
+      "If the Sun were a 1 cm marble, {name} would be about {scaled} across, and in the Sun's place it would reach beyond the orbit of Jupiter.",
+      "On the marble scale {name} is about {scaled} wide, big enough to engulf Jupiter's orbit."
+    ],
+    "compare.temperature.sun": [
+      "About {value} at the surface, against about 5,800 K for the Sun."
+    ],
+    "compare.temperature.sun.t0": [
+      "About {value}, far cooler than the Sun's 5,800 K, which is why it glows orange-red; in stars, red means cool.",
+      "About {value}, and like a stove ring glowing dull red, a cooler surface shines redder."
+    ],
+    "compare.temperature.sun.t3700": [
+      "About {value}, cooler than the Sun's 5,800 K, which makes it an orange star.",
+      "About {value}, a little cooler than the Sun, so its light leans toward orange."
+    ],
+    "compare.temperature.sun.t5200": [
+      "About {value}, close to the Sun's 5,800 K, a yellow-white star much like ours.",
+      "About {value}, nearly the Sun's own temperature."
+    ],
+    "compare.temperature.sun.t6500": [
+      "About {value}, hotter than the Sun's 5,800 K, which is why it looks white.",
+      "About {value}, and that extra heat over the Sun is what makes it look white."
+    ],
+    "compare.temperature.sun.t10k": [
+      "About {value}, {ratioPhrase}, hot enough to glow blue-white.",
+      "About {value}, which against the Sun's 5,800 K is hot enough to glow blue-white."
+    ],
+    "compare.mass.supernova-limit": [
+      "About {value}, to set against the dividing line: stars above roughly 8 Suns end as supernovae, lighter ones as white dwarfs."
+    ],
+    "compare.mass.supernova-limit.k0": [
+      "About {value}, lighter than the Sun, so it burns slowly and will outlive the Sun.",
+      "About {value}, a lightweight that sips its fuel and lives longer than the Sun."
+    ],
+    "compare.mass.supernova-limit.k08": [
+      "About {value}, too light to explode, so like the Sun it will end as a white dwarf.",
+      "About {value}, below the roughly 8-Sun line, so its ending will be gentle."
+    ],
+    "compare.mass.supernova-limit.k8": [
+      "About {value}, above the roughly 8-Sun line and heavy enough to end in a supernova.",
+      "About {value}, and stars this heavy do not fade away but explode."
+    ],
+    "compare.mass.supernova-limit.k25": [
+      "About {value}, far above the roughly 8-Sun line, so it will end in a supernova and may leave a black hole.",
+      "About {value}, one of the true heavyweights, whose core will collapse and may leave a black hole behind."
+    ],
+    "compare.time.sun-day": [
+      "If the Sun's life so far were one day, {name} would be about {scaled} old."
+    ],
+    "compare.time.sun-day.d0": [
+      "If the Sun's life so far were one day, {name} would have been born just {scaled} ago.",
+      "Squeeze the Sun's life into a day and {name} is only {scaled} old, a true newborn."
+    ],
+    "compare.time.sun-day.d1": [
+      "If the Sun's life so far were one day, {name} would have been born {scaled} ago, a baby by the standards of stars.",
+      "Squeeze the Sun's life into a day and {name} turns up only {scaled} before the end of it."
+    ],
+    "compare.time.sun-day.d100": [
+      "If the Sun's life so far were one day, {name} would have been born {scaled} ago.",
+      "On a clock where the Sun's life so far is 24 hours, {name} appeared {scaled} before midnight."
+    ],
+    "compare.time.sun-day.d4600": [
+      "If the Sun's life so far were one day, {name} would be about {scaled} old, already ancient when the Sun was born.",
+      "On a clock where the Sun's life is one day, {name} has been around for {scaled}, so it is older than the Sun."
+    ],
+    "compare.time.history": [
+      "About {value}, a blink in cosmic time, short enough to count in human generations.",
+      "About {value}, which on a clock where the Sun's life is one day is a fraction of a second.",
+      "About {value}, recent enough that people may have seen it happen."
+    ],
+    "compare.luminosity.sun": [
+      "About {value}, measured against the Sun's output."
+    ],
+    "compare.luminosity.sun.l0": [
+      "About {value}, dimmer than the Sun, so in the Sun's place it would leave Earth cold and dim.",
+      "About {value}, a modest glow beside the Sun."
+    ],
+    "compare.luminosity.sun.l1": [
+      "About {value}, brighter than the Sun, though a modest star by tonight's standards.",
+      "About {value}, more powerful than the Sun, but nowhere near the champions."
+    ],
+    "compare.luminosity.sun.l100": [
+      "About {value}, enough that in the Sun's place it would scorch the Earth.",
+      "About {value}, so if it stood where the Sun is, our oceans would boil away."
+    ],
+    "compare.luminosity.sun.l10k": [
+      "About {value}, enough that in the Sun's place it would roast the Earth far beyond anything alive could bear.",
+      "About {value}, at least ten thousand Suns' worth of light pouring from a single star."
+    ],
+    "direction.same-field": [
+      "Stay put: {next} is in the same view, {screenDir} of {prev}.",
+      "Don't move the binoculars: {next} is already in the same view, {screenDir} of {prev}.",
+      "No hop needed: {next} sits in the same view, {screenDir} of {prev}."
+    ],
+    "direction.sweep": [
+      "Sweep {screenDir} {span} to {next}{inCon}.",
+      "From {prev}, slide {screenDir} {span} to {next}{inCon}.",
+      "Move {screenDir} {span}, and {next} is there{inCon}."
+    ],
+    "direction.sweep.one": [
+      "Shift {screenDir} {span} to {next}{inCon}.",
+      "Nudge the binoculars {screenDir} {span} and {next} comes in{inCon}."
+    ],
+    "direction.naked-eye-hop": [
+      "Lower the binoculars and find {anchorLook} by eye. From there, hop {screenDir} {span} to {next}.",
+      "Put the binoculars down and spot {anchorLook} by eye; aim at it, then hop {screenDir} {span} to {next}.",
+      "Eyes first: find {anchorLook} without binoculars, then hop {screenDir} {span} to {next}."
+    ],
+    "direction.after-skip": [
+      "Since {skipped} didn't show, start fresh: find {anchorLook} by eye, then hop {screenDir} {span} to {next}.",
+      "Reset at {anchorLook}: find it by eye, then hop {screenDir} {span} to {next}."
+    ],
+    "direction.challenge": [
+      "{next} is faint: get to the right spot first, then wait and look slightly to one side of where it should be.",
+      "Aim carefully, brace your elbows, and give {next} a slow, patient look."
+    ],
+    "SAME_FAMILY.ageMyr": [
+      "{ifClear}{next} is {sharedKind} like {prev}, but {ratioPhrase}, about {nextVal} against {prevVal}.",
+      "{ifClear}{prev} is about {prevVal} old and {next} about {nextVal}, the same kind of family at a different age.",
+      "{ifSimilar}{next} is {sharedKind} like {prev}, and about the same age too, {nextVal} against {prevVal}."
+    ],
+    "SAME_FAMILY.distanceLy": [
+      "{next} is {sharedKind} like {prev}, but {ratioPhrase}, about {nextVal} away against {prevVal}.",
+      "{prev} is about {prevVal} away and {next} about {nextVal}, which explains much of why they look different.",
+      "{next} is the same kind of object as {prev} at a different distance, {ratioPhrase} than {prev}."
+    ],
+    "SAME_FAMILY.teffK": [
+      "{next} is {sharedKind} like {prev}, but its surface is about {nextVal} against {prevVal}, and the color shows it.",
+      "{next} is the same kind of star as {prev} at a different temperature, {ratioPhrase}."
+    ],
+    "SAME_PHYSICS.teffK": [
+      "{next} burns at about {nextVal} against about {prevVal} for {prev}, one more step along the color scale.",
+      "{next} is {ratioPhrase} than {prev}, and the shift in color as you swing across is that temperature difference.",
+      "From {prev} at about {prevVal} to {next} at about {nextVal}, compare the two colors as you swing across."
+    ],
+    "SAME_PHYSICS.distanceLy": [
+      "{next} works like {prev}, but it is {ratioPhrase}, about {nextVal} away.",
+      "{prev} is about {prevVal} away and {next} about {nextVal}, the same physics at very different depths."
+    ],
+    "story.A1-cradle-to-grave": [
+      "A star's life runs from a cold cloud to a glowing wreck. Tonight you follow it forward through the sky around {region}, from {hook} to {name}.",
+      "Stars are not eternal: they condense out of cold clouds, shine on the fuel in their cores, and give their gas back when they die. Tonight each chapter is a different object.",
+      "Nothing in a star's life is wasted. The gas a dying star returns to space becomes the next generation, and tonight's stops follow that cycle from start to finish."
+    ],
+    "story.A2-thermometer": [
+      "Heat a poker and it glows red, then orange, then white. Stars follow the same rule, and tonight you line them up from the warm glow of {hook} to the blue-white of {name}.",
+      "A star's color is a direct reading of its surface temperature, no instrument needed. Tonight's stops climb from cool toward hot, so compare each color with the last.",
+      "Red stars are the cool ones and blue-white stars the scorching ones, which surprises almost everyone. A gentle defocus makes the colors easier to judge, starting with {hook}."
+    ],
+    "story.A3-how-far": [
+      "Brightness is a poor guide to distance, since a modest star nearby can outshine a giant far away. Tonight you climb outward from {hook}, each stop farther than the last.",
+      "Each rung of tonight's ladder lies farther than the last. Near stars give away their distance by a tiny shift as Earth circles the Sun; the far ones need cleverer tricks built on that.",
+      "You start close to home with {hook} and step outward through {region}. By the end, the depth of the sky is something you can feel."
+    ],
+    "story.A4-time-machine": [
+      "Light is fast but not instant, so everything you see in the sky is already history. Each stop tonight shows older light than the last, from {hook} out to {name}.",
+      "The light entering your binoculars set out long before you looked up, and from each stop at a different time. Read the night like a calendar, starting with {hook}, the freshest light.",
+      "Every distance in the sky is also a stretch of time. Starting with {hook}, you move to ever older light, and the night becomes a walk back through history."
+    ],
+    "story.A5-families": [
+      "Stars are born in batches from a single cloud, then slowly drift apart. Tonight you meet families of different ages, from {hook} to {name}, and watch the ties loosen.",
+      "Somewhere in the galaxy the Sun's brothers and sisters are still out there, scattered beyond recognition. Tonight's star families show how that happens, starting with {hook}.",
+      "A star cluster is a family photograph: siblings born together from one cloud, all sharing a birthday. Look at a few and a story appears, of families that start tight and slowly come apart."
+    ],
+    "story.A6-contrasts": [
+      "Two stars can share a patch of sky, a color or a brightness and still be strangers. Tonight's game is finding the hidden fact that sets each pair apart.",
+      "Looks deceive in the sky as much as anywhere. Starting at {hook}, you compare neighbors that seem alike and find the one difference that gave them such different lives.",
+      "The sky looks flat, so stars that seem like neighbors or twins can be anything but. Tonight is a game of spot-the-difference, played with real physics."
+    ],
+    "story.A7-record-breakers": [
+      "Among the ordinary-looking stars hide some of the most extreme objects your eyes will ever catch. Tonight you visit them from {hook} to {name}, and every record has a reason.",
+      "Every record in the sky, whether the biggest star, the brightest or the farthest light, comes from something physical: mass, age or sheer distance. Tonight you collect the records and their reasons together.",
+      "Extremes are where physics shows its hand most clearly. Starting with {hook}, each stop holds a record, and each record has a cause you can name."
+    ],
+    "story.A8-how-stars-die": [
+      "Stars die in one of two ways, and which one depends above all on how heavy the star was at birth. By {name} you will know which ending awaits the Sun.",
+      "A Sun-like star ends quietly, puffing its outer layers into space, while a heavyweight tears itself apart in a supernova. Tonight you see what both endings leave behind, starting with {hook}.",
+      "The Sun will not last forever, and the sky is full of stars that have already reached the end. Tonight's stops show the two ways a star can go, and why weight decides."
+    ],
+    "story.A9-seeing-double": [
+      "Many stars that look single to the eye split into pairs in binoculars, and some pairs hold whole families. Count them from {hook} onward, and ask which pairs really belong together.",
+      "A double star can be a true couple, two suns circling each other, or two strangers that happen to line up. Tonight's stops include both kinds, and telling them apart is half the pleasure.",
+      "Your eye sees one point of light, binoculars sometimes see two, and physics often finds more. From {hook} to {name}, tonight is an exercise in counting stars that hide behind one another."
+    ],
+    "story.A10-stars-that-change": [
+      "The stars look as steady as streetlights, yet some swell and shrink, some are eclipsed by a partner, and some fade behind their own dust. Tonight you watch them as a variable-star observer would.",
+      "Starting with {hook}, you visit stars whose brightness will not sit still. Each changes for its own physical reason, and you can judge the change yourself against the stars nearby.",
+      "Flickering stars have taught astronomers a remarkable amount, including how far away other galaxies are. Tonight you meet a few of them and learn to estimate their brightness by eye."
+    ],
+    "story.A11-inside-our-galaxy": [
+      "We see the Milky Way from inside, a little like a fish trying to picture its pond. Tonight you look along the crowded disk, up toward the halo, and out of the galaxy to {name}.",
+      "The faint band of the Milky Way is our galaxy seen edge-on from within. From {hook} onward, tonight's stops trace where we live: in the disk, inside an ancient halo, with other galaxies beyond.",
+      "Every star you can see without a telescope belongs to our own galaxy, most of them to its thin disk. Tonight you work outward from that disk to see how far the view reaches."
+    ],
+    "story.A12-moonlit": [
+      "A bright Moon washes out faint nebulae and galaxies, but not a star's color, a double's split or a bright cluster's sparkle. Tonight is built from exactly those.",
+      "Moonlit nights have their own treasures. Starting with {hook}, tonight's stops were chosen to shine through the glare, and each holds up well in it.",
+      "Moonlight steals the faint and delicate things, but leaves color, pairs and bright star families alone. Tonight is a tour of what the Moon cannot spoil, ending at {name}."
+    ],
+    "why.payoff.A1-cradle-to-grave": [
+      "The last chapter of tonight's life story is {name}, {kind}.",
+      "{name}, {kind}, carries the life story to its latest stage tonight."
+    ],
+    "why.payoff.A2-thermometer": [
+      "{name} sits at the hot end of tonight's thermometer.",
+      "The scale tops out at {name}, {kind}."
+    ],
+    "why.payoff.A3-how-far": [
+      "{name} is the top of the ladder.",
+      "The ladder ends at {name}, {kind}."
+    ],
+    "why.payoff.A4-time-machine": [
+      "The last stop, {name}, reaches deepest into the past.",
+      "With {name} you reach deepest into the past."
+    ],
+    "why.payoff.A5-families": [
+      "{name} shows what time does to a family of stars.",
+      "{name} is a family far along the road of drifting apart."
+    ],
+    "why.payoff.A6-contrasts": [
+      "{name} completes the last pair of the night.",
+      "With {name}, {kind}, the night's last pair of look-alikes is complete."
+    ],
+    "why.payoff.A7-record-breakers": [
+      "{name} is the final record holder of the night.",
+      "The last champion of the night is {name}, {kind}."
+    ],
+    "why.payoff.A8-how-stars-die": [
+      "{name} shows one of the two endings in full.",
+      "With {name}, {kind}, you see how a star's life can close."
+    ],
+    "why.payoff.A9-seeing-double": [
+      "{name} is the last point of light to count tonight.",
+      "The night's counting ends at {name}, {kind}."
+    ],
+    "why.payoff.A10-stars-that-change": [
+      "{name} is the last of tonight's changing stars.",
+      "The night's last restless star is {name}, {kind}."
+    ],
+    "why.payoff.A11-inside-our-galaxy": [
+      "{name} takes you farther from home than anything else tonight.",
+      "The view reaches its farthest at {name}."
+    ],
+    "why.payoff.A12-moonlit": [
+      "{name} is the last of tonight's moonproof sights.",
+      "The night ends its tour of the moonlit sky at {name}, {kind}."
+    ]
+  }
+}

@@ -135,7 +135,7 @@ async function catalogChecks(browser) {
       assert(button.textRects.every(rect => rect.left >= button.box.left - .5 && rect.right <= button.box.right + .5 && rect.top >= button.box.top && rect.bottom <= button.box.bottom), JSON.stringify(button));
       for (const text of ['Clock ↗', 'Moon ↗']) if (button.text === text) assert.equal(button.textRects.length, 1, JSON.stringify(button));
     }
-    const save = result.buttons.find(button => button.text.includes('Add to night') || button.text.includes('Remove to night') || button.text.includes('Remove from night'));
+    const save = result.buttons.find(button => button.text.includes('Add to night') || button.text.includes("Add to tonight's plan") || button.text.includes('Remove to night') || button.text.includes('Remove from night'));
     assert(save.box.right <= result.card.right - 8, JSON.stringify({ save, card: result.card }));
     console.log(JSON.stringify({ check: 'catalog', width: 393, size: 'large', ...result }));
   } finally { await context.close(); }

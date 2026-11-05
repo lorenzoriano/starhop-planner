@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=213.915300%2B19.182409&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD124897                    \tALF BOO                     \t 19.00000\t       \t        \t          \t...................\tHD124897\n 0.00\tHD124897                    \tALF BOO                     \t 20.00000\t       \t        \t          \t1931...............\tHD124897\n 0.00\tHD124897                    \tALF BOO                     \t 26.00000\t       \t  7.0000\t5000A     \t1974ApJ...187..131C\tHD124897\n 0.00\tHD124897                    \tALF BOO                     \t 21.00000\t21.6000\t  1.2000\t2.2       \t1983ApJ...268..309D\tHD124897\n 0.00\tHD124897                    \tALF BOO                     \t 20.36000\t20.9500\t  0.2000\t2.2       \t1986A&A...166..204D\tHD124897\n 0.00\tHD124897                    \talf Boo                     \t 19.10000\t19.5000\t  1.0000\tK         \t1996AJ....111.1705D\tHD124897\n 0.00\tHD124897                    \tHR5340                      \t 19.10000\t       \t  1.0000\t2.2mu     \t1998AJ....116..981D\tHD124897\n 0.00\tHD124897                    \talf Boo                     \t 20.20000\t       \t  0.0800\tK         \t1998AJ....116..981D\tHD124897\n 0.00\tHD124897                    \tHR5340                      \t 19.99500\t21.3730\t  0.2470\t800nm     \t2003AJ....126.2502M\tHD124897\n\n"
+}

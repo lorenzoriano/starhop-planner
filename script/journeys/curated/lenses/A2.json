@@ -1,0 +1,1489 @@
+{
+  "archetype": "A2",
+  "storyline": "A star's color is a thermometer you can read with your own eyes. Everything that glows, from a stove ring to the Sun, sends out a broad spread of colors, and the hotter it gets the more that spread tips from red toward blue. So the stops climb the scale in order: an ember-red star at the cool end, then orange, then the Sun's own yellow, then white. Blue-white comes last, at the hot end, where the eye's thermometer starts to run out of range, and when the sky allows, a pair closes the night with two temperatures in a single view. At every stop you judge the color first, against the one before it, and only then learn what it means in kelvins and why. By the end you are not being told the temperatures of the stars; you are reading them.",
+  "beats": [
+    {
+      "step": 1,
+      "label": "Ember red: the cool end",
+      "maxStops": 1
+    },
+    {
+      "step": 2,
+      "label": "Orange: cooler than the Sun",
+      "maxStops": 1
+    },
+    {
+      "step": 3,
+      "label": "Yellow: the Sun's color",
+      "maxStops": 1
+    },
+    {
+      "step": 4,
+      "label": "White: hotter than the Sun",
+      "maxStops": 1
+    },
+    {
+      "step": 5,
+      "label": "Blue-white: the hot end",
+      "maxStops": 1
+    },
+    {
+      "step": 6,
+      "label": "Two temperatures in one view",
+      "maxStops": 1
+    }
+  ],
+  "minBeats": 4,
+  "narration": {
+    "title.A2-thermometer": [
+      "The Colors of {region}",
+      "{region}'s Hidden Thermometer",
+      "Reading the Heat of {region} by Eye",
+      "{region} by the Color of Its Stars",
+      "How Hot Are the Stars of {region}?"
+    ],
+    "question.A2-thermometer": [
+      "Can you read a star's temperature just by looking at its color?",
+      "Why do stars shine in different colors, and what are the colors telling us?",
+      "Is a red star hotter or cooler than a blue one?"
+    ],
+    "hook.A2-thermometer": [
+      "A star's color is its temperature, and your eyes can read it like a thermometer.",
+      "In the sky red means cool and blue means hot, the reverse of every bathroom tap.",
+      "Every star's tint is a temperature, written in light and readable by eye."
+    ],
+    "story.A2-thermometer": [
+      "Heat a poker and it glows red, then orange, then yellow, then white, and stars obey the same rule. Tonight you climb that scale one color at a time, starting from the warm glow of {hook}, judging each tint first and learning its temperature after.",
+      "A star's color is a direct reading of its surface temperature, no instrument needed. Each stop tonight is a little hotter than the last, so compare every color with the one before it, and by the end you will be reading the sky's thermometer yourself.",
+      "Red stars are the cool ones and blue-white stars the scorching ones, which surprises almost everyone. Starting at {hook}, the night climbs the scale step by step, and a gentle defocus makes each tint easier to judge."
+    ],
+    "story.A2-thermometer.end4": [
+      "Heat a poker and it glows red, then orange, then yellow, then white, and stars obey the same rule. Tonight you climb that scale from the warm glow of {hook} up to white, judging each tint first and learning its temperature after.",
+      "A star's color is a direct reading of its surface temperature, no instrument needed. Each stop tonight runs a little hotter than the last, from a warm tint up to a clean white, so compare every color with the one before it and the sky's thermometer becomes yours to read."
+    ],
+    "story.A2-thermometer.end5": [
+      "Heat a poker and it glows red, then orange, then yellow, then white, and the hottest stars go further still, to blue-white. Tonight you climb the scale from the warm glow of {hook}, judging each tint first and learning its temperature after, until the eye's thermometer reaches the top of its range.",
+      "Red stars are the cool ones and blue-white stars the scorching ones, which surprises almost everyone. Starting at {hook}, the night climbs the scale step by step to the hot end, and a gentle defocus makes each tint easier to judge."
+    ],
+    "story.A2-thermometer.end6": [
+      "A star's color is a direct reading of its surface temperature, no instrument needed. Starting at {hook}, each stop tonight runs a little hotter than the last, and the night closes on two stars in one view, where you weigh two temperatures at a glance.",
+      "Heat a poker and it glows red, then orange, then yellow, then white, and stars obey the same rule. Tonight you climb that scale one color at a time, judging each tint first and learning its temperature after, and finish with a pair that sets two colors side by side."
+    ],
+    "payoff.A2-thermometer": [
+      "Each color tonight was a temperature: from the warm glow of {hook}, every whiter step was a hotter surface, and your eyes read each one without an instrument. The same physics that turns a dimmed lamp filament orange and a bright one white sorted tonight's stars, and it will sort every star you ever look at. Astronomers use the same reading first on millions of stars, sorting them by color before they know anything else about them.",
+      "Stars differ in color because their surfaces differ in temperature, starting with {hook} and rising through each hotter, whiter step, as a lamp filament whitens when you turn up the current. What looked like decoration on the sky is a thermometer, and the light of every star now carries a reading you know how to take. Survey telescopes do exactly this for millions of stars at once, measuring the balance of blue and red light before they measure anything else.",
+      "You have just read a thermometer stretched across the sky, starting from the warm glow of {hook}, using nothing but the color of the light. Behind every tint was one rule, a hotter surface tipping its glow toward shorter, bluer waves, and it holds for every star, near or far. Distance dims a star without changing its tint, so the reading works however far away a star happens to be."
+    ],
+    "payoff.A2-thermometer.end4": [
+      "Each color tonight was a temperature, from the warm glow of {hook} up to the white of {name}, and every step up the scale was a hotter surface that your eyes ranked without an instrument. The same physics whitens a lamp filament as you turn up the current, because a hotter body tips its whole spread of light toward the blue. Above white the scale climbs on to blue-white, where the hottest stars begin to outrun the eye's thermometer, and that last stretch is waiting for another night.",
+      "Stars shine in different colors because their surfaces run at different temperatures. Tonight you read that scale from {hook} to {name}, each star a little whiter and a little hotter than the one before. Nothing about distance or brightness could change the order, since light keeps its mixture of colors however far it travels. Astronomers sort millions of stars the same way, by color first, before they know anything else about them.",
+      "From {hook} to the white of {name}, you have read a thermometer stretched across the sky using nothing but the color of the light. Behind every tint was one rule: a hotter surface pushes its glow toward shorter, bluer waves, so red marks the cool end and white sits well above the Sun. The scale runs further still, to blue-white stars many times hotter than the Sun, and once you know the rule you can read them on the next clear night."
+    ],
+    "payoff.A2-thermometer.end5": [
+      "Each color tonight was a temperature, from the warm glow of {hook} to the blue-white of {name}, the tint painters call cold and physics calls hottest. Your eyes ranked every step without an instrument. The same physics that whitens a lamp filament as the current rises sorted the stars, a hotter surface tipping its glow toward blue. At the top the eye's thermometer ran out of range, because past a certain heat every star looks much the same blue-white, and there a spectrum has to take over and say how much hotter blue-white can be.",
+      "Stars differ in color because their surfaces differ in temperature, and tonight the scale ran from {hook} all the way to {name} at the hot end. There, every square meter of a star's surface outshines the Sun's many times over. Near the top the tints crowded together even as the temperatures leapt, which is the eye reaching the limit of its range. Astronomers carry on from there with spectra, but the first reading of every star is still the one you took tonight, its color.",
+      "You have read a thermometer stretched across the sky, from the warm glow of {hook} up to the blue-white of {name}, using nothing but the color of the light. Behind every tint was one rule, a hotter surface tipping its glow toward shorter, bluer waves, and it holds for every star, near or far. Only at the very top did the eye give out, where blue-white looks much the same for stars that differ by tens of thousands of degrees."
+    ],
+    "payoff.A2-thermometer.end6": [
+      "Each color tonight was a temperature, and at {name} two of them shared a single field, so the comparison you had been making star by star took only a glance. From the warm glow of {hook} onward, every whiter tint meant a hotter surface, the same rule that whitens a lamp filament as the current rises. Dust between the stars can warm a tint along the way, which is why astronomers check colors against spectra, but the first reading of any star is the one your eyes took tonight.",
+      "Stars shine in different colors because their surfaces run at different temperatures, and the night climbed that scale from {hook} before {name} set two tints side by side. Distance never changes the reading, because light keeps its mixture of colors however far it travels; only dust can tilt it, and it always tilts toward red. With that one caution, the color of any star you meet is a thermometer you already know how to read.",
+      "From the warm glow of {hook} to the pair at {name}, you read a thermometer stretched across the sky using nothing but the color of the light. Behind every tint was one rule, a hotter surface tipping its glow toward shorter, bluer waves, and in a pair that rule plays out in one view, two temperatures weighed at once. Astronomers do the same on a vast scale, sorting millions of stars by color before they know anything else about them."
+    ]
+  },
+  "transitions": {
+    "pairs": {
+      "1>2": [
+        "Hold the memory of the ember glow of {prev} and look at {next}: the red has softened to orange, the first visible step up the thermometer.",
+        "From {prev} to {next} the tint shifts from deep red-orange to plain orange, and that small shift is a hotter surface.",
+        "Beside the deep red of {prev}, {next} reads as a cleaner orange, the color of a surface some hundreds of degrees hotter."
+      ],
+      "1>3": [
+        "From the ember of {prev}, the scale passes through orange to reach {next}, whose soft yellow belongs to a surface close to the Sun's own.",
+        "After the deep red of {prev}, {next} looks almost golden: the color has climbed through orange to a surface well over a thousand degrees hotter, close to the Sun's own.",
+        "{next} has left the red of {prev} far behind, past orange, and its soft yellow is the color of a surface close to the Sun's own temperature."
+      ],
+      "1>4": [
+        "Beside the ember of {prev}, {next} looks almost colorless: the scale has climbed through orange and the Sun's yellow to the white of a surface thousands of degrees hotter.",
+        "From the deep red of {prev} to the pale white of {next}, the scale passes orange and yellow and climbs past the Sun's own mark in a single swing.",
+        "{next} shines white, or nearly so, where {prev} glowed red, and every tint in between, orange and then yellow, lies on the way to a surface well above the Sun's temperature."
+      ],
+      "1>5": [
+        "From the ember of {prev} to the steely blue-white of {next} is nearly the whole thermometer in one swing, a surface several times hotter.",
+        "{next} is everything {prev} is not, a crisp blue-white point whose surface runs several times hotter than the ember you just left."
+      ],
+      "2>3": [
+        "Where {prev} was orange, {next} has lost most of its red and turned yellow, a sign that its surface runs hotter again, close to the Sun's.",
+        "Swing from the orange of {prev} to {next} and the color pales toward yellow, the tint of a surface near the Sun's temperature.",
+        "{next} is a paler, yellower point than {prev}, and that paling is the thermometer rising toward the Sun's own mark."
+      ],
+      "2>4": [
+        "After the orange of {prev}, {next} looks nearly colorless, the pale white of a star hotter than the Sun.",
+        "From the orange of {prev} the scale climbs past the Sun's yellow to {next}, a white star whose surface runs thousands of degrees hotter.",
+        "{next} has lost nearly all the warmth of {prev}; its pale tint marks a surface far above the Sun's temperature."
+      ],
+      "2>5": [
+        "After the orange of {prev}, {next} shines an icy-looking blue-white, the far end of the scale, with a surface several times hotter.",
+        "From the orange of {prev} the reading jumps to the blue-white of {next}, where the eye's thermometer nears the top of its range."
+      ],
+      "3>4": [
+        "After the yellow of {prev}, {next} looks paler, white or close to it, and that paling means a surface hotter than the Sun's.",
+        "Next to the soft yellow of {prev}, {next} reads paler still, the first mark above the Sun on the scale.",
+        "{next} keeps little of the warmth of {prev}, and whatever cream is left in its white belongs to a surface well above the Sun's temperature."
+      ],
+      "3>5": [
+        "From the yellow of {prev} the scale climbs past white to {next}, a blue-white star at the hot end.",
+        "After the yellow of {prev}, {next} has a steely blue-white cast, the color of a surface several times hotter than the Sun's.",
+        "{next} has a bluish edge that the yellow of {prev} lacks entirely, the sign of a surface many thousands of degrees hotter."
+      ],
+      "4>5": [
+        "Beside the white of {prev}, {next} shows at most a faint bluish edge, yet its surface is far hotter: near the top of the scale the eye's thermometer runs out of range.",
+        "From {prev} to {next} the tint barely changes, a hint of blue at most, while the temperature leaps by thousands of degrees, which is how the top of the scale behaves.",
+        "Compare {next} with {prev}: if a faint blue edge seems to creep in, it is real, and behind that small change hides a surface thousands of degrees hotter."
+      ],
+      "4>6": [
+        "After the white of {prev}, {next} sets a warm tint beside a paler one, two temperatures in a single view.",
+        "{prev} gave you one white mark on the scale, and {next} now holds two different marks in the same field.",
+        "From the single white point of {prev}, the night moves to {next}, where two tints share one view and the eye can weigh them together."
+      ],
+      "5>6": [
+        "Having climbed the scale one star at a time, you can now read two temperatures at once in {next}.",
+        "{prev} closed the hot end of the scale, and {next} sets two of its colors side by side in a single view.",
+        "After {prev}, {next} puts the whole lesson into one field, two stars and two temperatures side by side."
+      ]
+    },
+    "arrive": {
+      "1": [
+        "{next} glows a deep, warm red-orange, and on tonight's thermometer that tint marks the cool end.",
+        "{next} is the reddest point in its part of the sky, and on the thermometer red is the cool end.",
+        "Start the scale at {next}, whose ember glow is the coolest color a star shows to the eye."
+      ],
+      "2": [
+        "{next} is plainly orange, a step hotter than the deepest red stars and still cooler than the Sun.",
+        "{next} glows orange, the color of a surface cooler than the Sun's but well above the coolest stars.",
+        "On the thermometer {next} sits at orange, below the Sun's yellow and above the ember red of the coolest stars."
+      ],
+      "3": [
+        "{next} shines a soft yellow, the color of a surface close to the Sun's own temperature and hotter than {prev}.",
+        "{next} brings the scale to the Sun's own color, a gentle yellow that marks a surface near 6,000 K.",
+        "{next} looks yellow, the middle of the scale, where a surface runs close to the Sun's temperature."
+      ],
+      "4": [
+        "{next} looks white, or nearly so, beside the warmer tint of {prev}, and a white star is a star hotter than the Sun.",
+        "{next} has shed most of the yellow, and its pale tint is the color of a surface hotter than the Sun's.",
+        "On the scale {next} reads white, the first mark above the Sun's own yellow."
+      ],
+      "5": [
+        "{next} has the steely blue-white cast of the hottest stars, and it outdoes {prev} in temperature even where the colors look close.",
+        "{next} sits at the hot end of the scale, its blue-white tint the sign of a surface many times hotter than the Sun's.",
+        "With {next} the scale reaches blue-white, where the eye's thermometer is close to running out of range."
+      ],
+      "6": [
+        "{next} puts two colors in one view, so the thermometer you have been reading star by star now works at a single glance.",
+        "{next} sets two tints side by side, and the eye you have been training tonight can rank them in a second.",
+        "In {next} two stars share one field, a last test of reading temperature by color."
+      ]
+    }
+  },
+  "objects": {
+    "STAR-MuCep": {
+      "step": 1,
+      "rank": 3700,
+      "beat": "Cool end: garnet red",
+      "question": "Why does the Garnet Star look redder than almost any other star you can see?",
+      "why": "Every thermometer needs a bottom mark, and the Garnet Star supplies one with a red so deep that every later star will look hotter beside it.",
+      "look": "Find it a little south of the halfway point between Alderamin and ζ Cephei, in Cepheus. Among the white stars around it, it glows a deep orange-red, and nudging the focus slightly soft spreads it into a small disk where the color is easier to judge.",
+      "answer": "Its surface runs at under two-thirds of the Sun's temperature, and a glow that cool sends out far more red than blue; dust along the way reddens it a little more. Any star that looks less red than this one, you can now say, is hotter.",
+      "story": "William Herschel named it for its color in the 1780s, and part of that color is borrowed. On its way to us its light crosses dust, which scatters blue more readily than red, the same physics that reddens a sunset. Astronomers measure how much by comparing the color they see with the temperature the star's spectrum gives. The gap shows it would look a shade less red without the dust, though still far redder than anything around it."
+    },
+    "STAR-Betelgeuse": {
+      "step": 1,
+      "rank": 3600,
+      "beat": "Cool end: ember red",
+      "question": "What does the orange-red of Betelgeuse say about the temperature of its surface?",
+      "why": "A good scale starts from a reading you can trust, and Betelgeuse, whose temperature has been measured with unusual care, glows at the cool end where the night begins.",
+      "look": "Betelgeuse is Orion's eastern shoulder, opposite blue-white Rigel. Turn the focus a little past sharp and the point blooms into a small disk whose orange-red becomes obvious, then swing to Rigel and back to feel how different two temperatures can look.",
+      "answer": "The color says cool, some 2,200 degrees below the Sun's surface, and the reading has held steady. During the Great Dimming of 2020 its temperature barely changed, so the fade was dust, not cooling, and the color stayed a faithful thermometer.",
+      "story": "In 1920 Albert Michelson and Francis Pease made Betelgeuse the first star after the Sun to have its width measured, using mirrors spread along a beam across the Mount Wilson telescope. A measured width and the star's total light together say how much each square meter of its surface gives out, and that fixes the temperature with no help from the color. So Betelgeuse became one of the stars against which the color thermometer itself is checked."
+    },
+    "STAR-Antares": {
+      "step": 1,
+      "rank": 3660,
+      "beat": "Cool end: ember red",
+      "question": "How cool must Antares be to glow this shade of orange-red?",
+      "why": "The thermometer starts with the reddest bright star in Scorpius, a supergiant whose hot blue-white siblings lie scattered around it, ready to fill in the rest of the scale.",
+      "look": "Antares is the red heart of Scorpius. Put it near the edge of the field and defocus slightly: its orange deepens toward red, while the soft gray ball of M4, about two and a half Moon-widths to the west, looks colorless by comparison.",
+      "answer": "Antares needs less than two-thirds of the Sun's surface temperature to glow like this, because a surface that cool sends out far more red than blue. That it still shines so brightly means it must be huge, about 680 times the Sun's width, but the color itself reports only the heat.",
+      "story": "Antares is near enough and large enough that its disk can be measured directly. In 2013 astronomers linked the telescopes of the Very Large Telescope to measure its width in the sky. They added up all the light it sends us, and from the two worked out how much each square meter of its surface must give out. That fixes the temperature without trusting the color at all, and the answer lands where the orange-red says it should."
+    },
+    "HR8775": {
+      "step": 1,
+      "rank": 3668,
+      "beat": "Cool end: ember red",
+      "question": "Why is one corner of the Great Square orange-red while the others are white?",
+      "why": "The Great Square is a ready-made color chart, and Scheat, its one warm corner, gives the scale its cool end.",
+      "look": "Scheat is the north-west corner of the Great Square of Pegasus. In binoculars it is clearly orange-red; swing to Markab, the corner directly south, and back, and the difference in tint jumps out.",
+      "answer": "Scheat's surface is only about 3,700 K, and a glow that cool is dominated by red light, while Markab and Alpheratz burn at more than 10,000 K. You are seeing a gap of thousands of degrees as a simple change of color.",
+      "story": "Astronomers turn that impression into a number, the color index, by measuring a star's brightness through a blue filter and again through a yellow one and taking the difference. For Scheat the blue reading comes out well over a magnitude fainter than the yellow, while for Markab the two nearly agree, and tables built from stars of known temperature convert each difference into kelvins."
+    },
+    "HR8636": {
+      "step": 1,
+      "rank": 3508,
+      "beat": "Cool end: ember red",
+      "question": "How much cooler is the Crane's red star than its blue-white neighbor?",
+      "why": "In Grus the whole thermometer fits in two quick glances, and the reading starts here, with the Crane's ember-colored star.",
+      "look": "Put Tiaki and Alnair in turn at the center of your binoculars. Tiaki is a deep orange-red, Alnair a clean blue-white, and a slight defocus makes both colors richer.",
+      "answer": "Alnair runs at about 13,200 K, nearly four times Tiaki's temperature, and your eye turns that difference into the contrast between ember and ice.",
+      "story": "Every glowing body has a color at which its light peaks, and the peak slides toward shorter waves as the temperature climbs. Tiaki's peak lies in the infrared, beyond the reach of the eye, so the visible part of its glow is the rising red slope; Alnair's peak lies in the ultraviolet, so you see the falling blue slope of its glow instead. Ember and ice are the two sides of the same curve."
+    },
+    "HR4763": {
+      "step": 1,
+      "rank": 3689,
+      "beat": "Cool end: orange-red",
+      "question": "Why is the top of the Southern Cross orange while its other stars are blue-white?",
+      "why": "The Southern Cross holds one warm color among its blue-white stars, and that warm star is where the scale begins.",
+      "look": "Center the top star of the Cross and compare its warm orange-red with blue-white Acrux at the foot. Defocus slightly and the color jumps out; the faint white star just north-east is a background star, not a partner.",
+      "answer": "Gacrux's surface is only about 3,700 K, under two-thirds of the Sun's, so its glow leans red; Acrux and Mimosa run above 20,000 K, which is why one small cross spans nearly the whole scale. The color told you which star was the odd one out before any spectrum did.",
+      "story": "The temperature of a red giant like Gacrux can be measured almost directly. Linked telescopes, which see detail far finer than any single one, measure the width of its tiny disk. Adding up all the light it sends us across every color then says how much each square meter of that disk gives out, which only one temperature can produce. That reading agrees with the color, which is why astronomers trust color for the countless stars too small to measure."
+    },
+    "HR337": {
+      "step": 1,
+      "rank": 3829,
+      "beat": "Cool end: ruddy orange",
+      "question": "How cool is the ruddy star in the middle of Andromeda's chain?",
+      "why": "Andromeda's chain of stars runs from ruddy to golden to blue-white, and the reading begins at its ruddy middle.",
+      "look": "Mirach is the middle bright star of Andromeda's chain, a ruddy orange point in binoculars. Sweep along the chain to Alpheratz and back and the difference in warmth is plain.",
+      "answer": "Mirach's surface is about 3,800 K, cooler than the Sun by some 2,000 degrees, which tips its light toward red. Almach, at the end of the chain, looks golden rather than ruddy, the sign of a surface a few hundred degrees hotter.",
+      "story": "Mirach's spectrum is crossed by faint bands of titanium oxide, a molecule that falls apart in any hotter atmosphere, so finding it is a temperature reading of its own. The letters astronomers use to rank stars, running O, B, A, F, G, K, M from hot to cool, were sorted out largely from clues like this, and Mirach sits at the start of the last and coolest class."
+    },
+    "HR6056": {
+      "step": 1,
+      "rank": 3783,
+      "beat": "Cool end: ember red",
+      "question": "Why does Yed Prior look redder than its partner, Yed Posterior?",
+      "why": "Two stars sharing one binocular field make the gentlest possible start to a color lesson, and the redder of the pair opens the scale.",
+      "look": "Yed Prior and Yed Posterior sit about one and a half degrees apart in Ophiuchus, an easy pair in one field. δ is distinctly orange-red and ε yellower, and a slight defocus sharpens the contrast.",
+      "answer": "Yed Prior's surface is only about 3,800 K, so its light leans red, while its yellower partner is a warmer giant. Their distances differ, but distance dims a star without changing its tint, so the colors still read as two honest temperatures.",
+      "story": "A star's tint survives any distance, but dust is another matter: fine grains scatter blue light more than red, as the air does at sunset, so a star seen through a lot of dust looks redder than it really is. Yed Prior and its partner are near enough that little dust lies in front of either, so the contrast between them belongs to the stars and not to the space in between."
+    },
+    "HR1607": {
+      "step": 1,
+      "rank": 2390,
+      "beat": "Cool end: carbon red",
+      "question": "How can a star be red enough to be called crimson?",
+      "why": "To calibrate a thermometer you want its coolest mark, and few stars run cooler than this carbon star, which shows its crimson for only part of its long cycle.",
+      "look": "Drop south from Rigel into Lepus and look about 3½° west-north-west of μ Leporis. Near its maximum it glows a startling deep red among white stars, best judged with short glances; near its minimum it fades beyond binoculars, so treat it as a bonus when it shows.",
+      "answer": "Hind's Crimson Star runs at less than half the Sun's surface temperature, and in air that cool carbon forms molecules and soot that soak up blue light, so its glow is filtered as well as cool. Every star you meet after it will look whiter, because every one of them is hotter.",
+      "story": "When John Russell Hind came upon it in 1845 he compared it to a drop of blood on a black field. A surface this cool sends most of its energy out as infrared, which no eye can see, so the light that reaches you is only the short red tail of a glow that mostly happens out of sight. The color also changes with the star's long cycle and is deepest near its dim point, when the surface is at its coolest."
+    },
+    "HR1648": {
+      "step": 1,
+      "rank": 2680,
+      "beat": "Cool end: carbon red",
+      "question": "Why does W Orionis glow redder than Betelgeuse, its bright neighbor in Orion?",
+      "why": "Orion's thermometer can start even lower than Betelgeuse, with a faint carbon star whose red only binoculars reveal.",
+      "look": "Look about 7° south-west of Bellatrix, Orion's western shoulder. Among the white field stars it stands out as a warm orange-red point, and a slight defocus boosts the color.",
+      "answer": "W Orionis is nearly a thousand degrees cooler than Betelgeuse and smoky with carbon besides, so its light has lost almost all its blue before it leaves the star. It sets a low mark that every other star tonight will beat.",
+      "story": "In most stars there is more oxygen than carbon, and the two lock together into carbon monoxide, leaving no spare carbon to color the light. In W Orionis repeated dredging from the helium-burning depths has tipped that count the other way, and the leftover carbon builds molecules and grains that act like a sooty filter. Temperature sets the starting color, and the soot finishes the job."
+    },
+    "HR3541": {
+      "step": 1,
+      "rank": 2625,
+      "beat": "Cool end: carbon red",
+      "question": "How cool is the red star hiding near the Beehive?",
+      "why": "Near the Beehive hides a star you would pass over if not for its color, and that color makes it the bottom mark of the scale.",
+      "look": "From the Beehive, the misty patch in Cancer between Regulus and the Gemini twins, move about four and a half degrees south-east. X Cancri stands out by its warm red-orange, which seems to deepen the longer you look.",
+      "answer": "X Cancri runs at less than half the Sun's surface temperature, about as cool as any star binoculars can show. Regulus, about 18° to the south-east, runs more than four times hotter, which is nearly the whole span of the scale in two stars.",
+      "story": "Faint red stars play a trick on the eye: the longer you stare, the brighter and redder they seem, because the eye's response to dim red light keeps building while it watches. Variable-star observers learned long ago to judge such stars with quick glances, and X Cancri, with its deep tint, is a good place to catch the effect at work. The color itself is the honest part, the reading of a surface far too cool to glow white."
+    },
+    "HR2405": {
+      "step": 1,
+      "rank": 2830,
+      "beat": "Cool end: carbon red",
+      "question": "Why does one faint star in Auriga glow orange-red among white neighbors?",
+      "why": "Auriga's brilliant stars make a fine scale, but its cool end is a faint carbon star that shows its warmth only in binoculars.",
+      "look": "Look in eastern Auriga, between Capella and the Gemini twins: among white stars, one glows orange-red. Judge its color with short glances rather than a stare, since faint red stars play tricks on a tired eye.",
+      "answer": "UU Aurigae runs at less than half the Sun's surface temperature, so it starts out red, and its carbon-laden air deepens the red further. Capella, a sweep to the west, is nearly twice as hot and glows yellow.",
+      "story": "In the 1860s Angelo Secchi, sorting stars by the patterns in their spectra, set aside a small group whose light was cut by broad dark bands, and those bands turned out to be carbon molecules. Molecules like these hold together only in a cool atmosphere, so the bands are a second thermometer, and in UU Aurigae they agree with the color that this is among the coolest surfaces a binocular star can show."
+    },
+    "HR9004": {
+      "step": 1,
+      "rank": 3125,
+      "beat": "Cool end: carbon red",
+      "question": "Why is TX Piscium so much redder than an ordinary red giant?",
+      "why": "Some red stars owe part of their color to their own smoky air, and TX Piscium, near the Great Square, opens the scale with a reddened glow.",
+      "look": "Find the Circlet, the faint ring of stars south of the Great Square of Pegasus; TX Piscium is the ruddy star just east of it, obvious at once among white field stars. Look away and back, because red stars seem to brighten the longer you stare.",
+      "answer": "TX Piscium is cool enough to glow red on its own, at a little over half the Sun's temperature, and spare carbon in its atmosphere forms soot that soaks up blue and violet as well. Temperature sets the starting color, and the soot pushes it further toward crimson.",
+      "story": "TX Piscium is bright enough to show its color easily, which makes it a good test of how much of a star's tint belongs to its surface and how much to the filter of its own air. Spectra separate the two: the overall shape of the glow gives the temperature, while the dark bands of carbon molecules cut into it show how much light the soot has stolen. Both are needed to explain how red it looks."
+    },
+    "STAR-LaSuperba": {
+      "step": 1,
+      "rank": 2720,
+      "beat": "Cool end: carbon red",
+      "question": "Why did an astronomer name this faint red star the superb one?",
+      "why": "The scale opens with one of the reddest stars in the sky, a color strong enough to show in binoculars though the eye alone barely notices the star.",
+      "look": "From Cor Caroli, below the Big Dipper's handle, head about a third of the way toward Megrez. La Superba is obvious in binoculars as a glowing red-orange ember, and it seems to redden further the longer you hold it.",
+      "answer": "La Superba runs at less than half the Sun's surface temperature, with carbon soot blocking most of the blue that is left, so Angelo Secchi, sorting stars by their spectra, saw an extraordinary red and named it for that. Cor Caroli, blue-white nearby, runs more than four times hotter.",
+      "story": "Ordinary color charts make a carbon star look cooler than it is, because the soot in its air removes blue light that the surface really does send out. Astronomers get around this by measuring the star's tiny disk with linked telescopes and adding up all its light, which yields the temperature without trusting the color. For La Superba the two routes differ, and the difference measures what the carbon has taken."
+    },
+    "STAR-Aldebaran": {
+      "step": 2,
+      "rank": 3927,
+      "beat": "Orange: cooler than the Sun",
+      "question": "How much cooler than the Sun is the orange eye of Taurus?",
+      "why": "The first step up from the deep reds is orange, and Aldebaran shows it against the pale cluster stars of the Hyades, which make its tint easy to judge.",
+      "look": "Aldebaran is the orange eye of Taurus at one tip of the V of the Hyades. Frame the whole V: its warm orange stands apart from the white and pale-yellow cluster stars, and a slight defocus makes the difference plain.",
+      "answer": "Its surface is about 3,900 K, roughly 1,900 degrees cooler than the Sun's, which tips its glow toward orange. θ² Tauri, white in the same field, runs nearly twice as hot.",
+      "story": "Long before anyone could measure a star's temperature, astronomers sorted spectra by their patterns of dark lines, and the order they settled on turned out to be a temperature scale. Cecilia Payne showed why in 1925: nearly every star is made of much the same elements, and what changes from class to class is how hot the gas is, which decides which atoms can absorb which colors. Aldebaran sits well down that scale, where the lines of metals crowd its light."
+    },
+    "HR1577": {
+      "step": 2,
+      "rank": 4160,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why does one corner of the Auriga pentagon glow orange?",
+      "why": "Auriga's pentagon holds several marks of the scale at once, and its orange corner is the warm one to start from.",
+      "look": "Look at the pentagon of Auriga, with Capella at its top: its south-western corner is ι Aurigae, distinctly orange beside yellowish Capella and white Menkalinan. Defocus slightly and the three colors line up like marks on a scale.",
+      "answer": "ι Aurigae's surface runs roughly 800 degrees cooler than Capella's, and that modest gap is enough to turn yellow into orange. Menkalinan, at about 9,000 K, is the next mark up after Capella.",
+      "story": "A century ago at Harvard, Annie Jump Cannon sorted hundreds of thousands of stars by the dark lines in their spectra, and only later did it become clear that her sequence of letters is a temperature scale. ι Aurigae falls in the class just warmer than the reddest giants, where lines of metals such as iron and calcium grow strong, and that verdict matches the orange your eye reports."
+    },
+    "HR8308": {
+      "step": 2,
+      "rank": 4240,
+      "beat": "Orange: cooler than the Sun",
+      "question": "How hot is the orange star at the nose of Pegasus?",
+      "why": "Between the ruddy and the white corners of Pegasus sits an orange supergiant, the next mark up from the coolest stars.",
+      "look": "Enif marks the nose of the flying horse, west of the Great Square. In binoculars it is a clear orange; compare it with Scheat, the Square's ruddier north-west corner, and with Markab at the corner below.",
+      "answer": "Enif's surface is about 4,200 K, a few hundred degrees warmer than Scheat and still well below the Sun's 5,800 K. That modest gap is why Enif reads orange where Scheat reads orange-red.",
+      "story": "Enif is a supergiant and Scheat a giant, yet the eye sorts them by heat alone, because a star's tint depends on the temperature of its surface and not on how much surface there is. Astronomers tell the two kinds apart in the spectrum instead, where the thin, low-pressure air of a supergiant draws its dark lines unusually sharp."
+    },
+    "HR6705": {
+      "step": 2,
+      "rank": 3970,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why does Eltanin look orange beside yellow Rastaban in the dragon's head?",
+      "why": "In the dragon's head an orange star and a yellower one sit four degrees apart, so the next steps of the scale arrive in a single sweep.",
+      "look": "From Vega, look about 14° north-west for the four-star head of Draco. Eltanin is the brightest of the four, and in binoculars it is clearly orange while Rastaban, about 4° away, looks yellower.",
+      "answer": "Eltanin's surface is about 4,000 K and Rastaban's about 5,200 K, so the difference you see is more than a thousand degrees. The cooler star glows orange and the warmer one yellow, the order the eye finds everywhere on the scale.",
+      "story": "Eltanin passes almost straight overhead at London, which made it the star James Bradley watched night after night in the 1720s, and its light has been examined closely ever since. Its spectrum says what its color says: strong lines of metals, the first faint bands of the molecules that fill the coolest stars, the signature of a surface roughly a third cooler than the Sun's."
+    },
+    "HR7525": {
+      "step": 2,
+      "rank": 4180,
+      "beat": "Orange: cooler than the Sun",
+      "question": "How can Altair and its orange neighbor Tarazed look so different in one field?",
+      "why": "Aquila packs two marks of the thermometer into one binocular field, and the warmer of the two comes first.",
+      "look": "Put Altair and Tarazed in one field, about 2° apart: crisp white against warm orange. A slight defocus turns them into two small disks and the colors become unmistakable.",
+      "answer": "Tarazed's surface is about 4,200 K and Altair's about 7,600 K, nearly twice as hot, and your eye reads that gap as orange against white. They only look like a pair, since Tarazed lies more than 20 times farther away, but color ignores distance.",
+      "story": "Color ignores distance for a simple reason: as light spreads out across space, every wavelength thins by the same factor, so the proportions of red, green and blue that leave a star are the proportions that reach you. Brightness falls with the square of the distance, but the mixture, which is what the eye reads as color, survives the journey intact."
+    },
+    "HR5563": {
+      "step": 2,
+      "rank": 4100,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why is one guardian of the pole orange and the other white?",
+      "why": "Near the pole the two guardian stars wear different colors, and the orange one adds the next mark to the scale.",
+      "look": "Between Polaris and the Big Dipper's handle shine the two guardians of the pole. In binoculars Kochab is clearly orange and Pherkad, a few degrees away, white; a touch of defocus makes the colors easier to judge.",
+      "answer": "Kochab is cool enough to glow orange, some 1,700 degrees below the Sun, while Pherkad's white means a much hotter surface. Side by side, the two guardians read as two different marks on the same thermometer.",
+      "story": "Seen from a planet around Kochab, daylight would look distinctly warm, because the star's glow peaks in the near infrared and its visible light is weighted toward red. Our Sun's glow peaks in the middle of the visible range, and eyes that evolved under it read that balanced light as white, so the orange you see in Kochab is a measure of how far its surface falls short of the Sun's."
+    },
+    "HR6461": {
+      "step": 2,
+      "rank": 4131,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why is β Arae orange when α Arae, six degrees away, is blue-white?",
+      "why": "Low in the southern Milky Way two stars of the Altar make a matched pair of opposites, and the orange one belongs here, one step up from the deep reds.",
+      "look": "Look below the tail of Scorpius, toward the southern horizon. β Arae is a distinctly orange point and α Arae, about six degrees north, is blue-white; the bright globular NGC 6397 lies about three degrees north-east.",
+      "answer": "β Arae's surface is about 4,100 K and α Arae's nearly 22,000 K, more than five times hotter. The orange and the blue-white are those two temperatures, seen side by side.",
+      "story": "Along this stretch of the southern Milky Way, starlight passes through plenty of dust, which steals blue light and could in principle fake an orange tint. Astronomers check for this by comparing a star's color with the temperature its spectral lines give; for β Arae the two largely agree, so its orange is mostly its own."
+    },
+    "HR6217": {
+      "step": 2,
+      "rank": 4269,
+      "beat": "Orange: cooler than the Sun",
+      "question": "How hot is the orange star at the corner of the Southern Triangle?",
+      "why": "The Southern Triangle's brightest corner is also its warmest, the orange mark on a small three-star scale.",
+      "look": "Atria is a vivid orange point at one corner of Triangulum Australe. Defocus slightly to enhance the color, then swing to β, the creamy-white corner, and compare.",
+      "answer": "Atria is nearly 3,000 degrees cooler than β Trianguli Australis, which runs at about 7,200 K, and that is the whole gap between orange and white.",
+      "story": "The brightest corner of the Southern Triangle is its coolest, which shows that brightness and heat are separate questions: a cool star can outshine a hot one simply by having far more surface. Atria gives out thousands of Suns' worth of light from a skin cooler than the Sun's, so it has to be enormous. Its orange tint together with its great output told astronomers it was a giant long before anyone measured its disk."
+    },
+    "STAR-Alphard": {
+      "step": 2,
+      "rank": 4190,
+      "beat": "Orange: cooler than the Sun",
+      "question": "What does the rich orange of Hydra's lonely star say about its heat?",
+      "why": "In a region almost empty of bright stars, Alphard's orange has nothing to compete with, which makes it an easy step to read.",
+      "look": "Look about 20 degrees south-west of Regulus for the only bright star in a wide, empty region. In binoculars Alphard is a rich orange; swing to Regulus and back to feel the contrast.",
+      "answer": "Regulus runs at about 11,500 K, nearly three times Alphard's temperature. An orange tint means a surface cooler than the Sun's, however bright the star looks.",
+      "story": "Astronomers can read Alphard's temperature from its spectrum as well as its color, and the two must agree for the thermometer to be trusted. In a cool star like this the lines of neutral metals are strong and the hydrogen lines weak, the reverse of a white star. The balance between them changes so steadily with heat that it serves as a second scale beside the color."
+    },
+    "HR8502": {
+      "step": 2,
+      "rank": 4224,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why is Alpha Tucanae orange, and how hot does that make it?",
+      "why": "In the quiet far south near the Small Magellanic Cloud, an orange giant stands alone and gives the scale its next mark.",
+      "look": "Alpha Tucanae is a soft orange point standing alone in Tucana. Defocus slightly, then sweep about 13° north to blue-white Alnair in Grus and back, and the warm tint holds.",
+      "answer": "Alpha Tucanae's surface runs some 1,600 degrees cooler than the Sun's, the skin of a giant that cooled as it swelled, so its glow tilts toward orange. Alnair, to the north, is about three times hotter.",
+      "story": "A lone star's color is hard to judge, because the eye has nothing to compare it with, and that is why observers sweep from Alpha Tucanae to a hotter neighbor and back. The eye is a poor absolute thermometer but an excellent comparator: set two tints side by side and it ranks them at once, even when it could not have named either one alone."
+    },
+    "HR6859": {
+      "step": 2,
+      "rank": 4196,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why does one star of the Teapot's spout glow orange?",
+      "why": "The Teapot of Sagittarius doubles as a thermometer, and its orange spout star is the warm mark to begin with.",
+      "look": "Kaus Media is the middle star on the spout side of the Teapot. Defocus slightly to bring out its orange, then drop to blue-white Kaus Australis just below and compare.",
+      "answer": "Its surface is about 4,200 K, while Kaus Australis runs at about 9,500 K, more than twice as hot. The spout's two stars sit far apart on the scale, though only a few degrees apart on the sky.",
+      "story": "The Teapot also shows why astronomers prefer a color they can measure to one they can name. Low in the sky the air itself reddens every star, because a long path through the atmosphere scatters away blue light. The honest comparison is therefore between two stars at the same height, which the spout of the Teapot conveniently provides."
+    },
+    "DS-AlmaakDS": {
+      "step": 2,
+      "rank": 4254,
+      "beat": "Orange: cooler than the Sun",
+      "question": "What temperature lies behind Almach's golden-orange glow?",
+      "why": "Andromeda's chain ends in a golden star, a step warmer in color than the ruddy one at its middle.",
+      "look": "Almach marks the eastern end of Andromeda's chain of bright stars, a golden-orange point in binoculars. Its blue companion is too close to split, so judge the gold against Mirach, the ruddier star in the middle of the chain.",
+      "answer": "Almach's giant runs at about 4,250 K, a few hundred degrees warmer than Mirach, which is enough to turn ruddy into golden. A telescope would show its blue companion at the other end of the scale, but binoculars keep the pair merged and the giant's color wins.",
+      "story": "Why does the giant's color win? Light simply adds, so an unresolved pair reads as the blend of its members weighted by how bright each one is, and here the golden giant gives out far more visible light than its companion. Through a telescope that splits the pair, the companion looks strikingly blue, partly because the eye exaggerates a color contrast when two stars sit side by side."
+    },
+    "HR4630": {
+      "step": 2,
+      "rank": 4320,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why does Corvus, the crow, have one orange star among its whiter ones?",
+      "why": "The little crow of Corvus holds three marks of the thermometer within a couple of binocular fields, and its orange star comes first.",
+      "look": "Corvus is the small four-star kite south-west of Spica. Minkar is the most orange of its stars; compare it with pale yellow Kraz and blue-white Gienah, each about five degrees away.",
+      "answer": "Kraz runs at about 5,100 K and Gienah at about 12,400 K, so in one small kite the colors climb from Minkar's orange through yellow to blue-white.",
+      "story": "Corvus is a fair test bench, because its tints come from stars at quite different distances and the colors still rank them correctly. Distance dims a star without changing its tint, so the order of colors you see is the order of temperatures, whichever crow star happens to lie nearest."
+    },
+    "HR3307": {
+      "step": 2,
+      "rank": 4300,
+      "beat": "Orange: cooler than the Sun",
+      "question": "How can a blend of two stars still read as orange?",
+      "why": "Orange marks a step up from red, but a star's color can be a blend, and Avior, the warm corner of the False Cross, hides a second star in its light.",
+      "look": "Avior is the brightest star of the False Cross and the only one with a clear orange tint. Compare it with white Aspidiske at the other southern corner of the figure, and defocus slightly to make the difference plain.",
+      "answer": "Its light blends a cool orange giant near 4,300 K with a hot blue companion, and because the giant gives out more visible light, the mixture reads orange. A blended thermometer reading reports mostly the brighter partner.",
+      "story": "Each star's share of a blend depends on which colors you look in. In yellow and red light the cool giant gives out far more, but toward the ultraviolet the hot companion takes over, since a surface as cool as the giant's sends out almost nothing at such short wavelengths. Seen by an ultraviolet camera above the air, the same pair would read as a hot star, so which partner a blend reports depends on the light you collect."
+    },
+    "STAR-Arcturus": {
+      "step": 2,
+      "rank": 4286,
+      "beat": "Orange: cooler than the Sun",
+      "question": "What temperature does the orange-gold of Arcturus stand for?",
+      "why": "Orange is the second mark on the scale, and no star shows it more plainly than Arcturus, whose tint is visible even without binoculars.",
+      "look": "Follow the curve of the Big Dipper's handle to Arcturus, the brightest star in Boötes. Its orange-gold is obvious in binoculars; carry the same curve on to blue-white Spica and compare.",
+      "answer": "Arcturus runs some 1,500 degrees cooler than the Sun, which gives its glow that orange-gold cast. Spica, further along the same curve, burns nearly six times hotter.",
+      "story": "Arcturus is poor in iron and the other heavy elements, which makes its air a little more transparent to blue light than a typical giant's. The effect on its tint is small, though, and its orange-gold is overwhelmingly the color of its temperature. Its spectrum has been charted line by line in an atlas so detailed that it serves as the standard against which cool giants everywhere are measured."
+    },
+    "HR2553": {
+      "step": 2,
+      "rank": 4599,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why does Tau Puppis look warmer in color than Canopus nearby?",
+      "why": "Beside the brilliant white of Canopus sits a modest giant with a warmer tint, and that contrast is the next reading.",
+      "look": "In binoculars Tau Puppis is a soft yellow-orange point. Compare it with brilliant white Canopus about 5° to the west-south-west.",
+      "answer": "Tau Puppis runs roughly 3,000 degrees cooler than Canopus, which shines at about 7,700 K, and that difference shows as yellow-orange against white.",
+      "story": "A star's color comes from the shape of its whole glow, not from any single wavelength, and that shape depends on temperature alone. Tau Puppis and Canopus differ in size, age and power, yet the eye ranks them correctly by heat the moment both are in view, because none of those other differences can bend the balance of red to blue."
+    },
+    "HR168": {
+      "step": 2,
+      "rank": 4600,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why is Schedar orange when the other stars of the W look white?",
+      "why": "Cassiopeia's W is mostly hot white and blue-white stars, and its one warm star gives the scale its orange mark.",
+      "look": "Schedar is the bright southern point of Cassiopeia's W. Swing to γ Cassiopeiae at the center of the W and back: orange against blue-white.",
+      "answer": "Schedar's surface is about 4,600 K and γ Cassiopeiae's about 28,000 K, roughly six times hotter. The tint reports heat, not power, and Schedar still outshines the Sun hundreds of times over.",
+      "story": "Schedar's color also tells part of its life story. A giant like this one was once a hotter, whiter star in its long middle years, and swelling spread the same heat over a much larger surface, so the skin cooled until the eye reads it orange. Among the bright stars of the W it is the one that has moved furthest along that road, and its tint marks how far it has gone."
+    },
+    "HR5854": {
+      "step": 2,
+      "rank": 4540,
+      "beat": "Orange: cooler than the Sun",
+      "question": "What does the pale orange of Unukalhai tell you about its surface?",
+      "why": "Orange comes in shades, and the serpent's heart shows a pale one, close to the point where orange gives way to yellow.",
+      "look": "Unukalhai is the brightest star of Serpens, the serpent's heart. Center it and defocus slightly to bring out its pale orange; the globular cluster M5 lies about eight degrees south-west.",
+      "answer": "Its surface is about 4,500 K, cooler than the Sun but warmer than the deep orange giants, which is why the tint is pale. A few hundred degrees more and it would read yellow.",
+      "story": "Where exactly does orange turn into yellow? There is no sharp line, because the eye blends a smooth spread of colors into one impression, and that impression shifts gradually as the peak of the glow slides out of the infrared toward the visible. Astronomers sidestep the argument by giving each star a number, its color index, and naming the color afterward."
+    },
+    "HR6603": {
+      "step": 2,
+      "rank": 4570,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why does Cebalrai look orange while Rasalhague, nearby, looks white?",
+      "why": "Ophiuchus offers an orange giant with a white star a short sweep north, so the next step up the scale is never far away.",
+      "look": "In binoculars Cebalrai is clearly orange, with the bright open cluster IC 4665 just north-east of it. Swing about eight degrees north to white Rasalhague and back.",
+      "answer": "Cebalrai's surface is about 4,600 K and Rasalhague's about 7,900 K, and that gap of more than 3,000 degrees is the whole difference between orange and white.",
+      "story": "The orange of Cebalrai and the white of Rasalhague are two points on one smooth curve. Plot how much light a glowing body gives at each color and you get a hump whose peak slides to shorter waves as the temperature rises. Cebalrai's hump peaks in the red, Rasalhague's just beyond the violet, and the eye reads only the part of each hump that falls in its narrow window."
+    },
+    "HR4057": {
+      "step": 2,
+      "rank": 4470,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why does Algieba shine golden in the mane of Leo?",
+      "why": "Leo's mane glows golden while its heart glows blue-white, and the golden star is the warmer mark to read first.",
+      "look": "Algieba is the brightest star of Leo's Sickle after Regulus. Binoculars cannot split its two golden giants, so judge the merged point: a warm orange-gold, plainly warmer than Regulus at the Sickle's foot.",
+      "answer": "Together they read orange-gold, the color of surfaces about 1,300 degrees cooler than the Sun's. Regulus at the foot of the Sickle runs about two and a half times hotter and glows blue-white for the opposite reason.",
+      "story": "Algieba's two giants differ slightly in tint, the brighter a shade more orange and the fainter a shade more golden, but only a telescope shows them apart. Binoculars hand you their blended light, which is how most stars reach us, as an unresolved sum. Astronomers untangle such sums with spectra, where each star's lines shift back and forth with its orbit and can be assigned to the right partner."
+    },
+    "HR617": {
+      "step": 2,
+      "rank": 4513,
+      "beat": "Orange: cooler than the Sun",
+      "question": "How much cooler is orange Hamal than white Sheratan beside it?",
+      "why": "A fair color comparison needs two stars at similar distances, and Aries supplies one, starting with its orange leader.",
+      "look": "Hamal leads the short line of Aries, east of the Great Square. In binoculars it is orange; swing to white Sheratan, four degrees south-west, and compare.",
+      "answer": "Hamal's surface is about 4,500 K and Sheratan's about 8,150 K, so roughly 3,600 degrees separate orange from white here. Because the two lie at similar distances, dust cannot be faking the difference.",
+      "story": "There is a simple rule for where a glow is brightest: divide a fixed number by the temperature and you get the wavelength of the peak, so a hotter body peaks at a shorter, bluer wavelength. For Hamal the arithmetic lands in the red, near 640 nanometers, while for the Sun it lands in the blue-green near 500, which is why Hamal's light leans warm. Wilhelm Wien found the rule in 1893, years before anyone could explain the shape of the whole glow."
+    },
+    "HR6241": {
+      "step": 2,
+      "rank": 4544,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why does ε Scorpii look paler orange than Antares?",
+      "why": "A modest step in heat should show as a paler tint, and the first bright star of the Scorpion's tail puts that to the test against Antares.",
+      "look": "Drop about nine degrees south-south-east from Antares to the first bright star of the tail. Put each in the field in turn: ε is paler, more yellow-orange, while Antares is a deeper orange-red.",
+      "answer": "ε Scorpii's surface is about 4,500 K, roughly 900 degrees hotter than Antares, so its glow carries more yellow and green and less red. The stars farther down the tail run hotter still.",
+      "story": "Why should the eye notice so modest a difference in heat? At the cool end of the scale the spread of a glow's colors shifts steeply with temperature, and a little extra heat pours in proportionally much more green and blue light than red. At the hot end a far bigger jump changes the tint less, which makes the cool end the easiest part of the thermometer to read."
+    },
+    "HR99": {
+      "step": 2,
+      "rank": 4464,
+      "beat": "Orange: cooler than the Sun",
+      "question": "What makes Ankaa pale orange when Achernar is blue-white?",
+      "why": "Between blue-white Achernar and white Fomalhaut stands a lone orange giant, the warm mark against which both can be judged.",
+      "look": "Ankaa stands alone between Achernar and Fomalhaut. In binoculars notice its pale orange color, then sweep to blue-white Achernar, about 19 degrees away, and compare.",
+      "answer": "Achernar runs at about 14,800 K, more than three times Ankaa's temperature, so the swing between them crosses a long stretch of the thermometer.",
+      "story": "This far south the sky holds few bright stars, and both Ankaa and Achernar lie well away from the dusty band of the Milky Way, where the space between the stars is clear. Their light therefore reaches you with its colors untouched, and the warm and bluish tints you compare are the two surfaces as they really are."
+    },
+    "HR4301": {
+      "step": 2,
+      "rank": 4700,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why is Dubhe yellow-orange when Merak, the other pointer, is white?",
+      "why": "The Big Dipper is a thermometer hiding in plain sight, and its upper pointer star holds the warm end.",
+      "look": "Dubhe is the upper pointer star of the Big Dipper's bowl, and Merak, the lower one, is five degrees away. In binoculars Dubhe is yellow-orange and Merak white, so sweep between them a few times.",
+      "answer": "Dubhe's surface is about 4,700 K and Merak's about 9,500 K, so the two pointers differ by a factor of two in temperature. At the far end of the handle, blue-white Alkaid is hotter still.",
+      "story": "Dubhe and Merak make a clean demonstration that color has nothing to do with brightness, since the two pointers look much alike in brightness and their tints still disagree. Astronomers put numbers on the difference with the color index, a star's brightness through a blue filter minus its brightness through a yellow one. Dubhe's comes out large, while Merak's sits near zero, the mark of a star much like Vega."
+    },
+    "HR188": {
+      "step": 2,
+      "rank": 4850,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Diphda and τ Ceti share a tint, so do they share a temperature?",
+      "why": "Color reports temperature, and Cetus offers a test of how far that report goes, with two stars of nearly the same tint.",
+      "look": "Diphda is the brightest star of Cetus, alone in a wide, dim region south of Pisces. In binoculars it is yellow-orange; compare it with τ Ceti about fifteen degrees east, which looks a touch paler.",
+      "answer": "They nearly do, for Diphda's surface is about 4,850 K and τ Ceti's about 5,300 K, close enough to look alike. Yet Diphda is a giant many times the Sun's width and τ Ceti a dwarf smaller than the Sun, because color reads temperature and nothing about size.",
+      "story": "The color reports only the layer that sends out the visible light. Above that skin Diphda wears a corona of thin gas heated to millions of degrees, which radiates about two thousand times as much X-ray power as the Sun's corona, though none of it reaches the eye. So the hottest gas around a star can be the gas you cannot see at all, and the tint is the temperature of the surface, not of everything the star holds."
+    },
+    "HR5288": {
+      "step": 2,
+      "rank": 4853,
+      "beat": "Orange: cooler than the Sun",
+      "question": "Why is Menkent pale orange among the blue-white stars of Centaurus?",
+      "why": "Among the blue-white stars of Centaurus one giant glows warm, and it gives the scale its orange mark.",
+      "look": "Menkent is a pale orange point in binoculars, north of the brilliant stars of Centaurus. Compare it with blue-white Hadar or Spica, each about 25 degrees away, and the warmth of its tint is plain.",
+      "answer": "Its surface is about 4,850 K, a few hundred degrees short of yellow and far below Hadar's roughly 25,000 K. On the thermometer it sits at the warm end of orange.",
+      "story": "The orange of a cool star and the blue-white of a hot one leave fingerprints in their spectra too. In Menkent's light the lines of metals such as iron and calcium are strong, because its gas is cool enough for those atoms to keep their outer electrons. In Hadar's light they nearly vanish and lines of helium appear, which only a far hotter gas can excite."
+    },
+    "HR2990": {
+      "step": 2,
+      "rank": 4850,
+      "beat": "Orange: cooler than the Sun",
+      "question": "How can the twins of Gemini wear such different colors?",
+      "why": "Gemini's twins are a lesson in color, and the warmer twin is where this step of the scale begins.",
+      "look": "Put Pollux and Castor in one field, 4½° apart: Pollux is orange, Castor white, and a touch of defocus makes the difference vivid.",
+      "answer": "Castor runs at about 9,550 K, nearly twice Pollux's temperature, so one twin glows orange and the other white. They are twins in name only, a cool giant beside a hot white star.",
+      "story": "Why are orange giants so common among the bright stars? When a star like Pollux runs out of hydrogen in its core, its outer layers swell, and the same energy spread over a much larger surface leaves each square meter cooler, so a star that was once white settles into orange. Pollux very likely shone white in its youth, much as Castor does now, which makes the twins snapshots of a change in color that comes with age."
+    },
+    "HR2773": {
+      "step": 2,
+      "rank": 3895,
+      "beat": "Orange: cooler than the Sun",
+      "question": "What does the deep orange of Pi Puppis say about its surface?",
+      "why": "Puppis spans the thermometer in a single short sweep, and its deep orange star is the warm mark to start from.",
+      "look": "Pi Puppis glows deep yellow-orange, with a much fainter star just beside it, an easy binocular pair. Defocus slightly and its warmth deepens against the paler stars scattered around it.",
+      "answer": "Its surface is near 3,900 K, about two-thirds of the Sun's, so its glow leans to red and the eye calls it deep orange. Every other bright star in this sweep of Puppis runs hotter, and the scale climbs from here.",
+      "story": "Two stars of the same orange can be very different beasts, and the spectrum tells them apart. The pattern of lines sets the temperature, while their sharpness reveals the pressure in the atmosphere, low in a bloated supergiant and higher in a compact star, and by that reading Pi Puppis is a supergiant. Its glow therefore comes from a surface vastly larger than the Sun's, a cool skin spread wide enough to outshine thousands of Suns."
+    },
+    "HR4932": {
+      "step": 3,
+      "rank": 5040,
+      "beat": "Middle: the Sun's yellow",
+      "question": "How close to the Sun's temperature is Vindemiatrix's pale yellow?",
+      "why": "Halfway up the scale the colors approach the Sun's own, and Virgo's pale yellow giant is the place to see it.",
+      "look": "Vindemiatrix sits in Virgo's northern arm, about 20 degrees west-south-west of Arcturus. In binoculars it is pale yellow; swing to Arcturus and back to see how much warmer orange looks.",
+      "answer": "Vindemiatrix runs some 750 degrees short of the Sun and as much again hotter than Arcturus, which is why it reads yellow where Arcturus reads orange. Spica, blue-white to the south, sits far higher up.",
+      "story": "Between Arcturus and Vindemiatrix the difference in heat is modest, yet the eye sees it at once when the two are compared. Their spectra say the same thing in another language: the cooler star's lines of neutral metals run stronger and the warmer star's weaker, in just the proportion that such a step in heat should produce."
+    },
+    "HR6148": {
+      "step": 3,
+      "rank": 5080,
+      "beat": "Middle: the Sun's yellow",
+      "question": "Why does Kornephoros look yellow beside white Rasalhague?",
+      "why": "Yellow is the Sun's part of the scale, and Kornephoros shows it cleanly, between the orange giants and the white stars around it.",
+      "look": "Kornephoros is a clean yellow point about 10° south of the Keystone of Hercules. Compare its tint with white Rasalhague farther to the south-east, and the yellow becomes obvious.",
+      "answer": "Kornephoros' surface is about 5,100 K, a little cooler than the Sun, while Rasalhague's is about 7,850 K. That gap of nearly 2,800 degrees is the step from yellow to white.",
+      "story": "The kelvin numbers on these cards are anchored, in the end, to the Sun, whose temperature we know better than any other star's. Measure how much sunlight falls on each square meter of Earth, scale it back to the Sun's surface using its size and distance, and only one temperature gives that much light. Stars like Kornephoros are then placed on the same scale by comparing their light with sunlight."
+    },
+    "HR6132": {
+      "step": 3,
+      "rank": 5030,
+      "beat": "Middle: the Sun's yellow",
+      "question": "What does the clean yellow of Eta Draconis mean for its temperature?",
+      "why": "The dragon's body holds a clean yellow giant, the mark where the scale reaches the Sun's own color.",
+      "look": "η Draconis is a clean yellow point in the bend of the dragon's body, between the Big Dipper and the dragon's head. Compare its tint with orange Eltanin in the head, about 16 degrees away, and the difference is one step on the scale.",
+      "answer": "Its surface is about 5,000 K, close to the Sun's 5,800 K and roughly a thousand degrees hotter than Eltanin, which is why it reads yellow instead of orange.",
+      "story": "Why are there no green stars, if the Sun's glow peaks near green? A glowing body never emits a single color; its light is a broad spread, and when the peak sits in the middle of the spectrum the eye mixes everything into white or pale yellow. η Draconis, a little cooler than the Sun, peaks just on the red side of green, enough to tint it yellow."
+    },
+    "HR4786": {
+      "step": 3,
+      "rank": 5130,
+      "beat": "Middle: the Sun's yellow",
+      "question": "Does a star with the Sun's pale yellow have the Sun's temperature?",
+      "why": "In the little crow the middle mark is a pale yellow star, the color of our own Sun.",
+      "look": "Find Corvus, the small kite of stars south-west of Spica. In binoculars Kraz is pale yellow, about the Sun's own color; compare it with orange Minkar and blue-white Gienah across the crow.",
+      "answer": "It comes close, for some 700 degrees short of the Sun's surface is near enough for the colors to match. Size is another matter, since Kraz is about 16 times the Sun's width, and color never reports that.",
+      "story": "Kraz shows roughly the color the Sun would have as a point of light at night, a shade warmer. Daylight elsewhere is set the same way: a planet around a cooler star would bask in faintly golden light and one around a hotter star in a whiter light. The eyes of anyone living there would adapt, though, and call their own sunlight plain white."
+    },
+    "HR8650": {
+      "step": 3,
+      "rank": 5028,
+      "beat": "Middle: the Sun's yellow",
+      "question": "Why does Matar look yellow when Scheat, five degrees away, looks orange?",
+      "why": "A notch above ruddy Scheat, a yellow giant in the horse's foreleg holds the Sun's part of the scale.",
+      "look": "Matar lies about five degrees north-west of Scheat, in the foreleg of Pegasus, and binoculars show a yellowish point. Swing to orange Scheat and back to compare.",
+      "answer": "Matar's surface is about 5,000 K and Scheat's about 3,700 K, a difference of some 1,300 degrees that turns orange-red into yellow. A hidden hotter companion adds a little to Matar's light, but the giant sets the color.",
+      "story": "For yellow giants like Matar there is a finer ruler than color. Some dark lines in the spectrum deepen as the gas cools while others barely change, so the ratio of their depths tracks the temperature and can separate stars that differ by a few tens of degrees. The eye could never approach that: it tells Matar's yellow from Scheat's orange at a glance, but it could not rank two stars that close."
+    },
+    "HR8232": {
+      "step": 3,
+      "rank": 5473,
+      "beat": "Middle: the Sun's yellow",
+      "question": "Is the yellow of Sadalsuud really the Sun's color, at the Sun's temperature?",
+      "why": "Aquarius holds a supergiant with the Sun's own tint, the midpoint of the scale where yellow begins.",
+      "look": "Sadalsuud is the brightest star of Aquarius, in a quiet stretch of sky east of Capricornus, and binoculars show a pale yellow point. Sadalmelik, a similar yellow star, lies about ten degrees north-east.",
+      "answer": "Its surface is about 5,500 K, only some 300 degrees below the Sun's, so the tint is genuinely solar. The difference is size, for it is a supergiant about 48 times the Sun's width, and color never tells you that.",
+      "story": "Yellow supergiants are uncommon, because a heavy star tends to pass through this range of temperatures quickly, on its way from hot and blue to cool and red or back again. Catching two of them in Aquarius is a little like finding two travelers in the middle of the same bridge, and their color says where on the crossing each one stands."
+    },
+    "HR1829": {
+      "step": 3,
+      "rank": 5230,
+      "beat": "Middle: the Sun's yellow",
+      "question": "Why does Nihal look yellower than Arneb, its neighbor in the Hare?",
+      "why": "The Hare holds a yellow star and a white one in the same field, and the yellow one comes first.",
+      "look": "Put Nihal and Arneb, the two brightest stars of Lepus below Orion, in the same field, about 3° apart. Arneb looks slightly brighter and whiter, Nihal yellowish.",
+      "answer": "Nihal's surface is about 5,200 K and Arneb's about 7,300 K, so a 2,000-degree difference shows as yellow beside white. That Arneb also looks brighter has nothing to do with color, for it is a far more distant and far more powerful supergiant.",
+      "story": "If Nihal is yellow, what color is the Sun? Seen from space the Sun looks white, because its glow peaks in the middle of the visible range and the eye blends that balanced spread into white. From the ground it looks yellowish because the air scatters away some of its blue. A star a little cooler than the Sun, like Nihal, tips the balance just far enough toward red for the eye to call it yellow at night."
+    },
+    "STAR-Capella": {
+      "step": 3,
+      "rank": 4970,
+      "beat": "Middle: the Sun's yellow",
+      "question": "Why does Capella look yellow, halfway between Rigel's ice and Aldebaran's orange?",
+      "why": "The middle of the scale is the Sun's yellow, and Capella shows it brightly enough that its tint is easy to read.",
+      "look": "Capella is the brilliant star leading the pentagon of Auriga. Sweep to ι Aurigae, the orange star at the pentagon's south-western corner, and back: Capella's creamy, slightly golden tint sits a clear step above that orange, and a slight defocus makes the gold easier to see.",
+      "answer": "Capella is two giants whose surfaces measure about 5,000 and 5,700 K, just below the Sun's 5,800 K, so their blended light is the Sun's own yellow, slightly warmed. Stars clearly whiter than this are hotter than our Sun.",
+      "story": "Capella's two giants have been separated by linked telescopes and measured one at a time, so its blended color can be checked against its parts. The cooler giant leans gold, the warmer one sits nearer the Sun's own tint, and their sum is the creamy yellow you see, a rare case where a star's color can be taken apart and put back together again."
+    },
+    "HR509": {
+      "step": 3,
+      "rank": 5328,
+      "beat": "Middle: the Sun's yellow",
+      "question": "Does a Sun-like star nearby look the Sun's color in binoculars?",
+      "why": "To see the Sun's color at night you need a nearby star much like the Sun, and τ Ceti is one.",
+      "look": "τ Ceti lies about fifteen degrees east of Diphda, the Whale's brightest star. In binoculars it is a steady pale-yellow point; swing back to Diphda, which looks more orange, to set the two marks on the scale.",
+      "answer": "τ Ceti's surface is about 5,300 K, a few hundred degrees below the Sun's, so its pale yellow is very nearly the color of sunlight. Seen from a planet around τ Ceti, our Sun would be a slightly whiter star of the same kind.",
+      "story": "τ Ceti is poorer in iron than the Sun, and that matters for its color in a small way, because metals crowd the blue end of a star's spectrum with dark lines. A star with fewer of them lets a little more blue escape and looks a shade whiter than its temperature alone would make it. Astronomers correct for this when they turn colors into temperatures, one reason the thermometer works as well as it does."
+    },
+    "HR5459": {
+      "step": 3,
+      "rank": 5824,
+      "beat": "Middle: the Sun's yellow",
+      "question": "What color is a star with almost exactly the Sun's temperature?",
+      "why": "Every thermometer needs a calibration mark, and the brightest star of Centaurus has a member that is nearly the Sun's twin.",
+      "look": "Find the two Pointers next to the Southern Cross; Alpha Centauri is the one farther from the Cross. Its two Sun-like stars merge into one brilliant point, so compare its warm tint with blue-white Hadar, the other Pointer.",
+      "answer": "Alpha Centauri A runs at about 5,800 K, the Sun's own temperature, and its light looks a warm yellow-white, with its cooler orange partner adding a touch more gold. This is the Sun's color, seen from the outside.",
+      "story": "Alpha Centauri A is so like the Sun that astronomers use it as a laboratory for our own star: its spectrum is almost a copy of sunlight, line for line. Its gentle oscillations, picked up as tiny rhythmic shifts in those lines, weigh it at about a tenth more than the Sun, so the tint you see is carried by a star of very nearly the Sun's build."
+    },
+    "HR2693": {
+      "step": 3,
+      "rank": 6220,
+      "beat": "Middle: the Sun's yellow",
+      "question": "How hot is the creamy-yellow star in Canis Major's triangle?",
+      "why": "Where yellow shades into white, a supergiant in Canis Major sits right on the boundary.",
+      "look": "In Canis Major's triangle south-east of Sirius, Wezen is the creamy-yellow star. Compare it with blue-white Adhara, about 3° away, for a temperature ladder in one sweep.",
+      "answer": "Its surface is about 6,200 K, a little hotter than the Sun, which is why its yellow is pale and creamy. Adhara beside it burns at about 22,000 K, and the gap shows plainly as cream against blue-white.",
+      "story": "For a star as luminous as Wezen, astronomers do not rely on color alone, because its light crosses well over a thousand light-years of space and picks up a little dust on the way. They read the temperature from the ratios of particular dark lines in its spectrum, which dust cannot change, and the result confirms that the creamy tint is very nearly the star's own."
+    },
+    "HR7796": {
+      "step": 3,
+      "rank": 6000,
+      "beat": "Middle: the Sun's yellow",
+      "question": "What color is a star just a little hotter than the Sun?",
+      "why": "At the center of the Northern Cross, amid the Milky Way's crowd of fainter stars, a supergiant shows a tint close to the Sun's.",
+      "look": "Sadr is the star at the center of the Northern Cross. In binoculars it shows a faint yellowish tint against the white Milky Way field; compare it with white Deneb, about 6° to the north-east, and the difference is gentle but real.",
+      "answer": "Sadr's surface is about 6,000 K, just a shade hotter than the Sun's, and at that temperature the eye sees a pale, creamy yellow. Deneb runs some 2,500 degrees hotter and looks white.",
+      "story": "Sadr sits in one of the dustiest stretches of the northern Milky Way, and its light crosses enough of that dust to shift its color slightly toward red. Astronomers measure the shift by comparing the color with the temperature read from its spectral lines; without the dust Sadr would look a touch whiter still, a shade closer to its true place just above the Sun."
+    },
+    "HR6212": {
+      "step": 3,
+      "rank": 5760,
+      "beat": "Middle: the Sun's yellow",
+      "question": "Does a star at the Sun's temperature look yellow or white?",
+      "why": "Hercules holds a nearby star almost exactly as hot as the Sun, the best place in its part of the sky to see what that temperature looks like.",
+      "look": "ζ and η Herculis frame the west side of the Keystone, with the great Hercules globular cluster between them. ζ Her is a simple yellowish point; defocus slightly and compare it with white Vega, about 25° to the east.",
+      "answer": "At about 5,760 K, within a few dozen degrees of the Sun, it looks a soft yellowish white. That is how our Sun would look to someone on a planet circling another star.",
+      "story": "ζ Herculis is a double whose two members circle each other every few decades, and following that orbit gives their masses directly. The brighter one is heavier than the Sun and further along in life, already somewhat swollen, yet its surface happens to sit at almost exactly the Sun's temperature, and temperature is all its color can report."
+    },
+    "HR98": {
+      "step": 3,
+      "rank": 5819,
+      "beat": "Middle: the Sun's yellow",
+      "question": "Is Beta Hydri's soft yellow the same color as our Sun?",
+      "why": "Near the south celestial pole shines a Sun-like star whose color you can treat as the Sun's own at night.",
+      "look": "Beta Hydri sits near the south celestial pole, roughly between the Small Magellanic Cloud and the pole. Binoculars show a soft yellow star, the tint the Sun would show at night, with the Small Cloud's misty glow about 5° away.",
+      "answer": "Its surface is about 5,800 K, matching the Sun's to within a few dozen degrees, so this soft yellow is the Sun's own color seen at night. Anything whiter is hotter than our star, anything more orange cooler.",
+      "story": "Beta Hydri is older than the Sun and has begun to swell, yet its surface still sits at the Sun's temperature, because a star in the first stage of growing barely cools. That makes it a preview of the Sun some five billion years from now: the same color, a somewhat larger disk, and the same daylight on whatever worlds it has."
+    },
+    "DS-DeltaCep": {
+      "step": 3,
+      "rank": 5820,
+      "beat": "Middle: the Sun's yellow",
+      "question": "How close to the Sun's own temperature is δ Cephei's yellow?",
+      "why": "The yellow mark in Cepheus is an unusual one, because its temperature does not stay put.",
+      "look": "δ Cephei marks the south-east corner of the house-shaped figure of Cepheus, a yellowish point with a fainter blue-white companion close beside it. Compare its tint with the Garnet Star, a deep orange-red, about 6° to the west.",
+      "answer": "Its surface averages close to the Sun's, swinging between about 5,400 and 6,500 K every 5.37 days, a shift too small for the eye, so the yellow you see is very nearly the Sun's own color.",
+      "story": "A light meter fitted with blue and yellow filters catches what the eye misses: through each cycle δ Cephei's color index swings by a few tenths of a magnitude, reddest when the star is dimmest. Color and brightness move together because both are the surface heating and cooling, and that link helped show that a Cepheid's pulse is a real breathing of the star, not a companion passing in front."
+    },
+    "HR424": {
+      "step": 3,
+      "rank": 6000,
+      "beat": "Middle: the Sun's yellow",
+      "question": "What temperature does the North Star's pale yellow stand for?",
+      "why": "The North Star is also a mark on the thermometer, a supergiant whose tint sits at the Sun's end of the scale.",
+      "look": "Follow the two end stars of the Big Dipper's bowl up to Polaris. Binoculars show it on a little loop of fainter stars, the Engagement Ring; its pale yellow is subtle, so compare it with orange Kochab, about 16 degrees away.",
+      "answer": "Polaris runs at about 6,000 K, a couple of hundred degrees hotter than the Sun, which makes its light a creamy yellow-white. Kochab, at about 4,100 K, shows what nearly 2,000 degrees less looks like.",
+      "story": "Polaris pulses, swelling and shrinking slightly every few days, yet its tint never visibly changes, because its temperature swings by only a few tens of degrees, far below anything the eye can detect. Astronomers follow that small swing through the changing strengths of lines in its spectrum, a thermometer far finer than color."
+    },
+    "HR5235": {
+      "step": 3,
+      "rank": 5970,
+      "beat": "Middle: the Sun's yellow",
+      "question": "Why does Muphrid look pale yellow beside orange Arcturus?",
+      "why": "Five degrees from orange Arcturus a paler star waits, the next mark up and a star just beginning to swell.",
+      "look": "Sweep from Arcturus in Boötes about five degrees west to Muphrid. A wide field holds both: orange-gold beside pale yellow-white.",
+      "answer": "Muphrid's surface is about 6,000 K and Arcturus' about 4,300 K, so the step you see is some 1,700 degrees. As Muphrid ages and swells, its surface will cool and its color will slide toward Arcturus' orange.",
+      "story": "Muphrid and Arcturus lie only a few light-years apart, so the light of both crosses the same stretch of nearly empty space, and no dust can favor one tint over the other. That makes the pair a clean bench test: the step from orange-gold to pale yellow is the stars' own, as honest a reading as the sky offers."
+    },
+    "HR6536": {
+      "step": 3,
+      "rank": 5220,
+      "beat": "Middle: the Sun's yellow",
+      "question": "Why does Rastaban look yellower than Eltanin in the dragon's head?",
+      "why": "Four degrees from orange Eltanin, the dragon's head holds a yellower star, the next mark up.",
+      "look": "Sweep from Eltanin to Rastaban, about 4° apart in the head of Draco: orange beside yellow. Defocus a little to make the colors easier to compare.",
+      "answer": "Rastaban's surface is about 5,200 K, over a thousand degrees hotter than Eltanin's, though still a little cooler than the Sun's. It is a giant about forty times the Sun's width, and color reports only the heat.",
+      "story": "The step between the dragon's two eyes is easiest to see with a slight defocus. A sharply focused star is so small that its light falls on only a few of the eye's color-sensing cells and the tint barely registers. Spread it into a small disk and many more of them share the light, so the color has a chance to show."
+    },
+    "HR8414": {
+      "step": 3,
+      "rank": 5232,
+      "beat": "Middle: the Sun's yellow",
+      "question": "How hot is the yellow star beside the Water Jar of Aquarius?",
+      "why": "Beside the Water Jar of Aquarius shines a yellow supergiant, in the Sun's part of the scale.",
+      "look": "Sadalmelik lies in Aquarius about ten degrees north-east of Sadalsuud, and binoculars show a pale yellow point beside the small Y-shaped Water Jar. Compare it with orange Enif, about 11° to the north-west.",
+      "answer": "Sadalmelik's surface is about 5,200 K, roughly 600 degrees cooler than the Sun, so its yellow is a touch warmer than sunlight. Enif, about a thousand degrees cooler again, has crossed into orange.",
+      "story": "Sadalmelik carries the same spectral letter and number as the Sun, G2, yet its surface runs hundreds of degrees cooler. The reason is pressure: in a supergiant's thin, tenuous air, atoms shed electrons more easily, so a cooler gas produces the same pattern of dark lines as the Sun's denser, hotter gas. Color carries no such bias, which is why astronomers read temperature from color and lines together, each one checking the other."
+    },
+    "HR1084": {
+      "step": 3,
+      "rank": 5080,
+      "beat": "Middle: yellow, leaning orange",
+      "question": "Does a nearby star smaller than the Sun look warmer in color?",
+      "why": "A small, close neighbor of the Sun shows the yellow part of the scale in its own gentle way.",
+      "look": "From Zaurak, the brightest star of the river west of Rigel, move about 7° west-north-west, past δ Eridani, to the next star of similar brightness; its gentle yellow-orange tint sets it apart. Compare it with white Cursa, near Rigel, to see the next step.",
+      "answer": "Its surface is about 5,100 K, some 700 degrees cooler than the Sun's, so it glows a gentle yellow-orange. Being smaller than the Sun changes its brightness, not its color.",
+      "story": "Why is a star smaller than the Sun also cooler? A lighter star squeezes its core less, burns its fuel more gently and gives out less energy, and that smaller flow of heat leaves its surface cooler and its tint warmer. Among stars in their long, steady middle years, color is therefore a rough guide to weight as well as heat, from hot, heavy white stars down to cool, light orange ones."
+    },
+    "HR1605": {
+      "step": 4,
+      "rank": 7285,
+      "beat": "White: hotter than the Sun",
+      "question": "What temperature does ε Aurigae's plain white stand for?",
+      "why": "Above Capella's yellow the scale turns white, and the brightest of the Kids shows the change.",
+      "look": "From Capella, drop a few degrees south to the thin triangle of the Kids; ε Aurigae is the brightest of the three. It is a steady white point, and when you swing back to Capella its yellow looks warmer by comparison.",
+      "answer": "Its surface runs at about 7,300 K, some 1,500 degrees hotter than the Sun's, and at that heat the glow's balance has moved far enough toward blue that the eye calls it white. Capella, at about 5,000 K, still holds on to its yellow.",
+      "story": "When ε Aurigae's dark companion passed in front of it from 2009 to 2011, the star's light fell to less than half, yet its color barely changed. The eclipsing body is a vast disk of dust coarse enough to block every color almost equally, unlike the fine dust between the stars. That gray dimming is one more proof that a star's brightness and its color are separate stories."
+    },
+    "HR1017": {
+      "step": 4,
+      "rank": 6350,
+      "beat": "White: hotter than the Sun",
+      "question": "Why does Mirfak look creamy-white when its siblings look blue-white?",
+      "why": "In Perseus a creamy star sits among hotter blue-white siblings, at the place where yellow fades into white.",
+      "look": "Aim at Mirfak, between Capella and Cassiopeia's W, and the field fills with blue-white stars strung in curving chains. Mirfak is a shade yellower than the rest, a creamy white that is easiest to judge with a slight defocus.",
+      "answer": "Mirfak's surface is about 6,350 K, just above the Sun's, while its siblings are much hotter, so its white carries a faint cream tint and theirs a bluish edge. Born the heaviest, it has already swollen and cooled while they have not.",
+      "story": "Siblings share a birthday and a distance, so the cluster around Mirfak is a fair test of the thermometer, with every member's light crossing the same space to reach you. Mirfak's cream against their blue-white is therefore a true difference in surface heat, and spectra confirm it, with Mirfak showing the strong metal lines of a cooler gas and its siblings the helium lines of hotter ones."
+    },
+    "STAR-Procyon": {
+      "step": 4,
+      "rank": 6590,
+      "beat": "White: hotter than the Sun",
+      "question": "Why does Procyon look creamy beside icy-white Sirius?",
+      "why": "Past the Sun the scale turns white, and Procyon shows its first, creamy stage beside the icier white of Sirius.",
+      "look": "Procyon is the eastern corner of the Winter Triangle, with Sirius and Betelgeuse. Compare it with Sirius to the south and it looks a touch warmer, creamy rather than icy white; then sweep 4° north-west to Gomeisa, bluer still.",
+      "answer": "Procyon's surface is about 6,600 K and Sirius' about 9,850 K, so the creamy tint is a surface more than 3,000 degrees cooler. Both are hotter than the Sun, which is why neither looks yellow.",
+      "story": "Procyon looks plainly white on its own and creamy only beside Sirius, because the eye judges a tint mostly by comparison. That is why observers swing between stars: the eye is a poor absolute thermometer but an excellent comparator, and side by side it ranks two whites correctly even when the difference is only a few thousand degrees."
+    },
+    "HR6553": {
+      "step": 4,
+      "rank": 6243,
+      "beat": "White: hotter than the Sun",
+      "question": "How hot must Sargas be to look yellow-white amid the blue tail?",
+      "why": "Among the hot blue-white stars of the Scorpion's tail one star looks creamy, the white mark that sits just below them.",
+      "look": "At the lowest point of the tail's curl, Sargas shines yellow-white. Compare it with blue-white Shaula six degrees north: the difference is subtle but real.",
+      "answer": "Sargas runs at about 6,200 K, a few hundred degrees hotter than the Sun, while Shaula burns at about 19,000 K. The two look nearly alike in brightness, so the gentle difference in tint is all temperature.",
+      "story": "In Scorpius the Milky Way is thick with dust, and stars behind it look a little warmer than they are, so astronomers check every color against the spectrum. Sargas passes that test with only a small correction: its yellow-white is mostly its own, the tint of a surface somewhat hotter than the Sun's."
+    },
+    "HR7264": {
+      "step": 4,
+      "rank": 6617,
+      "beat": "White: hotter than the Sun",
+      "question": "Why does Albaldah look creamy-white beside blue-white Nunki?",
+      "why": "Above the Teapot's handle a bright giant with a creamy tint sits beside blue-white Nunki, the white step before the hot end.",
+      "look": "Albaldah sits about six degrees north-east of Nunki, above the Teapot's handle. It is a yellow-white point beside blue-white Nunki; defocus slightly and the creaminess shows.",
+      "answer": "Albaldah's surface is about 6,600 K and Nunki's about 18,900 K, nearly three times hotter. Past the Sun's temperature the colors change slowly, so a gap that large shows only as cream against blue-white.",
+      "story": "Albaldah's light reaches us through some of the dust of the Sagittarius Milky Way, which warms its tint slightly. Astronomers measure that warming by comparing the color with the temperature its spectral lines give, and the correction is small enough that the cream you see belongs to the star."
+    },
+    "HR21": {
+      "step": 4,
+      "rank": 6915,
+      "beat": "White: hotter than the Sun",
+      "question": "What temperature lies behind Caph's white-yellow glow?",
+      "why": "Cassiopeia's western star shows white with a trace of yellow, a mark between the W's orange and blue-white stars.",
+      "look": "Caph is the western end of the W of Cassiopeia, a clean white-yellow point. Compare it with orange Schedar, about 5° away, and with blue-white γ Cas at the center of the W.",
+      "answer": "Caph's surface runs at about 6,900 K, more than a thousand degrees hotter than the Sun, so its light has lost nearly all its yellow. On the W's own scale it sits between Schedar at about 4,600 K and γ Cassiopeiae at about 28,000 K.",
+      "story": "Across the W, Caph also shows how a star's spectrum shifts with heat. Compared with orange Schedar, its metal lines have faded and its hydrogen lines strengthened, while in γ Cassiopeiae lines of helium appear. Three stars of one constellation thus run through the sequence astronomers use to rank temperatures."
+    },
+    "HR5897": {
+      "step": 4,
+      "rank": 7237,
+      "beat": "White: hotter than the Sun",
+      "question": "How hot is the creamy-white corner of the Southern Triangle?",
+      "why": "The Southern Triangle's creamy corner sits next to its orange one, so this step of the scale comes with its own comparison.",
+      "look": "Swing between Beta and Atria in Triangulum Australe. Atria looks a little brighter and orange, Beta creamy white.",
+      "answer": "Beta Trianguli Australis runs at about 7,200 K, roughly 3,000 degrees hotter than Atria and 1,400 hotter than the Sun. That is why Beta looks white and Atria orange, though Atria is the more powerful star.",
+      "story": "β Trianguli Australis is in its steady middle years, and stars at that stage follow a simple rule: the hotter are also the heavier, so a white tint marks a star somewhat more massive than the Sun. Atria breaks the rule only because it has left that stage and swollen, which is how a giant can be cool and bright at once."
+    },
+    "HR8322": {
+      "step": 4,
+      "rank": 7309,
+      "beat": "White: hotter than the Sun",
+      "question": "What does the white of the Sea Goat's tail say about its temperature?",
+      "why": "At the Sea Goat's tail a nearby star shows the white of a surface hotter than the Sun's.",
+      "look": "Deneb Algedi marks the tail of Capricornus, a white point in binoculars. Compare it with pale yellow Sadalsuud, about 11° to the north, and the step up the scale shows.",
+      "answer": "Deneb Algedi's surface is about 7,300 K, some 1,800 degrees hotter than the yellow supergiant Sadalsuud, which is why it looks white where Sadalsuud looks yellow. Its shallow eclipses dim it slightly from time to time, but the white you see is the hotter star's.",
+      "story": "A surface at Deneb Algedi's temperature sends the peak of its glow to the violet edge of the visible range, so the light you see comes from the downhill side of that peak, slightly richer in blue than in red. That small tilt is what the eye reads as white with no warmth left in it, the first step of the scale above the Sun."
+    },
+    "HR591": {
+      "step": 4,
+      "rank": 7133,
+      "beat": "White: hotter than the Sun",
+      "question": "How much hotter than the Sun is the creamy star of Hydrus?",
+      "why": "Hydrus holds a Sun-like star and a hotter, creamier one, and this is the creamier, the white step just below the hot end.",
+      "look": "Put Achernar and Alpha Hydri in the same sweep, about 5° apart. Achernar looks icy blue-white, Alpha Hydri slightly warmer and creamier.",
+      "answer": "Alpha Hydri runs some 1,300 degrees hotter than the Sun and its Sun-like neighbor Beta Hydri, enough to drain the yellow and leave only a hint of cream. Achernar, 5° away, runs roughly twice as hot and looks icy.",
+      "story": "Alpha Hydri's creamy white belongs to a surface about a quarter hotter than the Sun's, and that modest step changes daylight more than its tint suggests. A planet around it would receive noticeably more ultraviolet, because a glow's output at short wavelengths climbs steeply with temperature. The eye sees just the last of the cream draining away, while a sunburn would tell the difference fast."
+    },
+    "HR7557": {
+      "step": 4,
+      "rank": 7600,
+      "beat": "White: hotter than the Sun",
+      "question": "How hot is Altair, the white star of the Eagle?",
+      "why": "Altair's white is the mark above the Sun on the scale, and orange Tarazed two degrees away makes it easy to read.",
+      "look": "Binoculars fit Altair into one field with its two attendants, orange Tarazed about 2° to one side and fainter Alshain on the other, a short straight line that marks the eagle. Tarazed's warm tint is easy to see, and beside it Altair stays crisp white.",
+      "answer": "Altair averages about 7,600 K, though its fast spin leaves the poles near 8,450 K and the equator near 6,900 K, so one star spans part of the white range by itself. All of it is well above the Sun's 5,800 K, which is why it looks white.",
+      "story": "Altair is close and bright enough that its spectrum has been measured in exquisite detail. The strength of its hydrogen lines sits a little below their peak, the mark of a surface somewhat cooler than the hottest white stars. Its spin, which leaves its poles hotter than its waist, also smears every line, a reminder that one star can hold a small range of temperatures."
+    },
+    "HR8162": {
+      "step": 4,
+      "rank": 7469,
+      "beat": "White: hotter than the Sun",
+      "question": "What does Alderamin's clean white say about its temperature?",
+      "why": "Cepheus holds both the deep red of the Garnet Star and a clean white star five degrees away, the next mark up.",
+      "look": "Alderamin is the bright corner of Cepheus nearest Cygnus, a clean white point in binoculars. Sweep about 5° south-east to the Garnet Star and back, and the contrast spans most of the scale.",
+      "answer": "Alderamin's surface is about 7,500 K, hotter than the Sun by some 1,700 degrees and twice as hot as the Garnet Star. Its fast spin leaves the equator cooler than the poles, but from here the blend reads plain white.",
+      "story": "Alderamin and the Garnet Star show how wide the eye's thermometer really is: one tint is white, the other deep red, and between them lie all the orange and yellow stars of the night. The color index measures a star's brightness through a blue filter minus its brightness through a yellow one. On that scale the Garnet Star sits near the red extreme of everything binoculars can show, and Alderamin close to the neutral middle."
+    },
+    "HR1865": {
+      "step": 4,
+      "rank": 7300,
+      "beat": "White: hotter than the Sun",
+      "question": "How hot is the white supergiant of Lepus?",
+      "why": "In the Hare a white supergiant stands one notch above the yellow star beside it.",
+      "look": "Find Lepus, the Hare, below Rigel and Saiph. Arneb is its brightest star, white beside yellowish Nihal about 3° away, and Rigel above shows the next color up.",
+      "answer": "Arneb's surface is about 7,300 K, roughly 2,000 degrees hotter than Nihal and 1,500 hotter than the Sun. Its great brightness comes from size and power, but its whiteness comes from heat alone.",
+      "story": "Arneb's light crosses more than two thousand light-years, yet its white arrives nearly intact, because it lies well below the dusty plane of the Milky Way, where the space between the stars is clean. Astronomers check this by comparing its color with the temperature its spectrum gives, and for Arneb the two agree within a small margin."
+    },
+    "HR3699": {
+      "step": 4,
+      "rank": 7098,
+      "beat": "White: hotter than the Sun",
+      "question": "Why is Aspidiske white while Avior, across the False Cross, is orange?",
+      "why": "The False Cross has a warm corner and a white one, and this is the white.",
+      "look": "Aspidiske marks one corner of the False Cross. Compare its white with Avior's orange, about 7° away at the other southern corner of the figure.",
+      "answer": "Aspidiske's surface is about 7,100 K and Avior's cool giant about 4,300 K, so the False Cross holds a span of some 2,800 degrees between two corners. Your eye sees it as white against orange.",
+      "story": "Aspidiske is a supergiant, and supergiants are harder to place by eye alone, because their thin, extended atmospheres draw sharp spectral lines unlike those of ordinary white stars. Astronomers read its temperature from the balance of hydrogen and metal lines, and the result sits comfortably above the Sun's, as the eye's verdict of white suggests."
+    },
+    "DS-AlpLib": {
+      "step": 4,
+      "rank": 8128,
+      "beat": "White: hotter than the Sun",
+      "question": "What temperature does the white of Libra's brightest star stand for?",
+      "why": "Libra's brightest star is white, with a creamier companion that binoculars split easily.",
+      "look": "Find Libra between Spica and Antares. Center Zubenelgenubi and look just north-west for its fainter companion, easy even at 7×: the bright star is white, the companion a touch creamier.",
+      "answer": "The bright star's surface is about 8,100 K, some 2,300 degrees hotter than the Sun, and its companion's creamier tint hints at a slightly cooler surface. Two stars that travel together still each carry their own temperature.",
+      "story": "A wide pair that travels together is a gift for the color thermometer, because both stars sit at the same distance behind the same dust, so any difference in tint is theirs alone. Here the brighter star is also the hotter, the usual rule for two stars in their steady middle years: the heavier one burns hotter and shines brighter at once."
+    },
+    "HR2326": {
+      "step": 4,
+      "rank": 7660,
+      "beat": "White: hotter than the Sun",
+      "question": "Why does Canopus shine white rather than yellow like the Sun?",
+      "why": "Past the Sun the scale turns white, and the brilliant star south of Sirius shows it best when it stands high.",
+      "look": "Canopus is the brilliant star well south of Sirius. Low in the sky our air splits its light into flickering colors, while higher up it shows a steady white.",
+      "answer": "Its surface is about 7,700 K, some 1,900 degrees hotter than the Sun's, and at that heat the glow's balance has shifted far enough toward blue that the eye sees white. The flashes of red and green near the horizon belong to our atmosphere, not to the star.",
+      "story": "Astronomers measure colors against a reference: by convention a star like Vega has a color index of zero, so cooler stars come out positive and hotter ones negative. Canopus lands just on the positive side, the mark of a white star a little cooler than Vega, which is exactly the faint warmth it shows beside icier Sirius."
+    },
+    "HR6556": {
+      "step": 4,
+      "rank": 7850,
+      "beat": "White: hotter than the Sun",
+      "question": "How much hotter is white Rasalhague than orange-red Rasalgethi beside it?",
+      "why": "Five degrees apart in Ophiuchus sit a white star and an orange-red one, and the white one is the reading here.",
+      "look": "Swing between Rasalhague and Rasalgethi: white against orange-red, obvious even to the naked eye once you compare them, and deeper in binoculars.",
+      "answer": "Rasalgethi runs at about 3,300 K, less than half Rasalhague's temperature, a gap your eye reads instantly as white against orange-red.",
+      "story": "Rasalhague spins fast enough to flatten itself, and a squashed star is hotter at its poles than at its stretched waist, by more than a thousand degrees in this case. Its color is therefore an average over a surface of several temperatures, still white everywhere, but varied enough for the finest instruments to map."
+    },
+    "HR1666": {
+      "step": 4,
+      "rank": 8380,
+      "beat": "White: hotter than the Sun",
+      "question": "How hot is Cursa, the white star beside Orion's foot?",
+      "why": "Beside Orion's foot a nearby white star sits just below blue-white Rigel on the scale.",
+      "look": "Find Rigel and look about 3° north-west for a fainter white star: Cursa. Compare the two in one field; Cursa's white is a little softer, Rigel's a little bluer.",
+      "answer": "Cursa's surface is about 8,400 K and Rigel's about 12,100 K, yet that gap of 3,700 degrees makes only a slight difference in tint. Past white, the colors change slowly even when the temperatures change a lot.",
+      "story": "Cursa's spectrum is dominated by the dark lines of hydrogen, which reach their greatest strength in white stars of about this kind. Hydrogen absorbs those colors only when its electron sits one step up from the bottom, which takes a gas hot enough to lift it there but not so hot that it tears the electron away. The strength of the lines is therefore itself a thermometer, peaking among the white stars."
+    },
+    "HR403": {
+      "step": 4,
+      "rank": 7790,
+      "beat": "White: hotter than the Sun",
+      "question": "How hot is Ruchbah, the white star in Cassiopeia's W?",
+      "why": "In Cassiopeia's W a white star sits between the orange of Schedar and the blue-white of γ Cassiopeiae.",
+      "look": "Ruchbah is the fourth star of the W, counting from Caph. It looks white, much like γ Cas next door; defocus both and γ shows a slightly bluer edge.",
+      "answer": "Ruchbah runs at about 7,800 K, some 2,000 degrees hotter than the Sun, against roughly 28,000 K for γ Cassiopeiae. Though γ is more than three times hotter, the two whites differ only slightly, because the eye's color scale flattens at the hot end.",
+      "story": "Why does the eye flatten the hot end? Color vision works by comparing how strongly three kinds of cone cells respond. Once a star's glow peaks beyond violet, the visible part keeps nearly the same balance among the three, even as the star's total output soars into the ultraviolet. Ruchbah and γ Cassiopeiae differ enormously in heat but only slightly in that balance."
+    },
+    "HR553": {
+      "step": 4,
+      "rank": 8150,
+      "beat": "White: hotter than the Sun",
+      "question": "Why do two stars at nearly the same distance show such different colors?",
+      "why": "Aries holds a white star at nearly the same distance as orange Hamal, which makes their color difference a clean test.",
+      "look": "Sheratan sits in the short line of Aries, a white point in binoculars. Swing to Hamal, about four degrees north-east, and compare: white against orange.",
+      "answer": "Sheratan's surface is about 8,150 K, nearly twice Hamal's 4,500 K, and with distance and dust ruled out, that gap is the whole reason for the colors. You are seeing two temperatures side by side.",
+      "story": "Sheratan is really two stars, far too close for any eyepiece to split, but the Mark III interferometer on Mount Wilson resolved them and followed their eccentric orbit of about 107 days, which weighs both. The white star comes out at about twice the Sun's mass and its partner at almost exactly one Sun, with a surface very like the Sun's own. One point of light thus holds a measured case of the rule that among stars in their prime the heavier is the hotter."
+    },
+    "HR4357": {
+      "step": 4,
+      "rank": 8222,
+      "beat": "White: hotter than the Sun",
+      "question": "What does Zosma's white say about the heat of its surface?",
+      "why": "On the lion's back a white star sits between golden Algieba and blue-white Regulus, the next mark up.",
+      "look": "Zosma and its neighbor Chertan form the lion's back in Leo, with Denebola at the tail. In binoculars Zosma is white; compare it with golden Algieba in the mane.",
+      "answer": "Zosma runs some 2,400 degrees hotter than the Sun and nearly twice as hot as Algieba, so the gold of the mane gives way to white on the back. Regulus, hotter again, adds a blue edge.",
+      "story": "A surface as hot as Zosma's sends the peak of its glow into the ultraviolet, beyond violet, so even the visible light you see is tilted slightly toward blue. The Sun's peak sits in the middle of the visible range, which the eye reads as neutral, and between the two peaks lies the whole step from the gold of the lion's mane to the white of its back."
+    },
+    "STAR-Fomalhaut": {
+      "step": 4,
+      "rank": 8590,
+      "beat": "White: hotter than the Sun",
+      "question": "What temperature does Fomalhaut's lonely white glow stand for?",
+      "why": "Alone in its part of the sky, Fomalhaut has no rival for attention, so its white is easy to judge on its own.",
+      "look": "Follow the western side of the Great Square of Pegasus, from Scheat through Markab, and keep going about 45 degrees south. Fomalhaut is the only bright star in that part of the sky, a clean white in binoculars.",
+      "answer": "Its surface is about 8,600 K, some 2,800 degrees hotter than the Sun's, so its glow is balanced enough to look white. Orange Ankaa, about 22° to the south-east, has a surface about half as hot.",
+      "story": "Fomalhaut's spectrum is dominated by strong lines of hydrogen, and their strength is a thermometer of its own. Hydrogen can absorb those colors only when its electron has been lifted one step up, which needs a hot gas but not too hot a one, so the lines are strongest in white stars and fade toward both ends of the scale."
+    },
+    "HR1713": {
+      "step": 5,
+      "rank": 12100,
+      "beat": "Hot end: blue-white",
+      "question": "How much hotter than Betelgeuse is the blue-white foot of Orion?",
+      "why": "The hot end of Orion's thermometer sits diagonally across the figure from Betelgeuse, so the whole scale fits inside one constellation.",
+      "look": "Rigel is Orion's foot, the brilliant blue-white star diagonally across from Betelgeuse. Hold it in the field and its icy color is unmistakable, especially just after a look at the orange shoulder.",
+      "answer": "Rigel's surface is about 12,100 K, more than three times Betelgeuse's and twice the Sun's. At that heat much of its glow pours out as ultraviolet, and the visible part we catch is tilted toward blue.",
+      "story": "Rigel's spectrum shows faint lines of helium, an element so reluctant to absorb light that only a very hot gas can make it do so. Those lines alone place Rigel above the white stars, a temperature reading that does not depend on its color at all, and they grow stronger in the hotter stars of Orion's Belt."
+    },
+    "HR1790": {
+      "step": 5,
+      "rank": 21920,
+      "beat": "Hot end: blue-white",
+      "question": "Why is Orion's western shoulder blue-white while the eastern one is orange?",
+      "why": "Orion's western shoulder mirrors Betelgeuse across the hunter, but not on the thermometer.",
+      "look": "Put Bellatrix in the field, then swing about 7° across to Betelgeuse: blue-white against orange. Betelgeuse is usually the brighter, but brightness does not set color, so the difference you read is temperature.",
+      "answer": "Bellatrix's surface is about 22,000 K, roughly six times Betelgeuse's 3,600 K, and that gap is the whole difference between blue-white and orange. The two shoulders are neighbors in the figure and almost opposite ends of the thermometer.",
+      "story": "A star as hot as Bellatrix sends most of its energy out as ultraviolet light, which no eye can see and our atmosphere blocks. Telescopes flown above the air were needed to measure that hidden output, and only once it was counted did the true power of such stars, and their temperatures, fall into place."
+    },
+    "HR1903": {
+      "step": 5,
+      "rank": 25000,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is the middle star of Orion's Belt?",
+      "why": "The middle of Orion's Belt is a blue supergiant, and it shows how hot the hot end can get.",
+      "look": "Center the middle Belt star and let the other two sit near the field edges. All three are blue-white, and the curving string of fainter stars around them shares the same steely tint.",
+      "answer": "Alnilam runs at more than four times the Sun's temperature, yet it looks hardly bluer than Rigel at half that heat, because at the hot end of the scale the visible color barely changes.",
+      "story": "Alnilam's temperature comes from the balance of lines in its spectrum, because the hotter a gas, the more of each kind of atom loses electrons. The ratio of lines from atoms in different states works like a set of thermometer marks far beyond the reach of color. Meghnad Saha worked out the rule behind this in 1920, and it is how astronomers first turned spectral classes into temperatures."
+    },
+    "HR2004": {
+      "step": 5,
+      "rank": 26500,
+      "beat": "Hot end: blue-white",
+      "question": "Why does Saiph look no bluer than Rigel, though it is twice as hot?",
+      "why": "The hot end of the scale hides a surprise, and Orion's second foot shows where the eye's thermometer starts to run out of range.",
+      "look": "Compare Saiph with Rigel at Orion's opposite foot. Both are blue-white, Rigel brighter, and nothing in the tint tells you which is hotter.",
+      "answer": "Saiph's surface is about 26,500 K, more than twice Rigel's, yet both send the eye the same blue-white tail of their glow. Past this point the eye's thermometer saturates: it can say hot, but no longer how hot.",
+      "story": "A star as hot as Saiph pours out most of its energy as ultraviolet light, invisible to the eye and stopped by our atmosphere, so its full power could only be counted once telescopes rose above the air. What reaches your eye is the faint blue-tilted edge of that output, the same edge any very hot star shows."
+    },
+    "HR1879": {
+      "step": 5,
+      "rank": 35200,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is the star at the center of Orion's head?",
+      "why": "At Orion's head, inside a young cluster, shines a star of the hottest class, a test for any thermometer.",
+      "look": "Point at Orion's head, above and between Betelgeuse and Bellatrix. Binoculars turn the faint naked-eye smudge into a compact triangle of blue-white stars with a dozen fainter ones around it.",
+      "answer": "Meissa's surface is about 35,000 K, roughly six times the Sun's temperature and ten times Betelgeuse's, yet its color is the same steely blue-white as stars a third as hot. At this end of the scale a spectrum, not the eye, reads the temperature.",
+      "story": "Meissa belongs to the hottest class of stars, recognized by lines of helium that has lost one of its two electrons, a state only extreme heat can keep up. The strength of those lines, not the color, is how astronomers know it runs hotter than even the blue-white supergiants of Orion's Belt below it."
+    },
+    "HR1791": {
+      "step": 5,
+      "rank": 13620,
+      "beat": "Hot end: blue-white",
+      "question": "Why does Elnath look blue-white across the pentagon from orange ι Aurigae?",
+      "why": "The Auriga pentagon closes at a blue-white star, the hot end of a small scale that also holds orange, yellow and white.",
+      "look": "Elnath completes the Auriga pentagon and also marks the tip of the Bull's northern horn. Compare its blue-white with orange ι Aurigae, about 8° across the pentagon.",
+      "answer": "Elnath's surface is about 13,600 K, more than three times ι Aurigae's, so its light is tilted toward blue. Around one small pentagon you can read four steps of the scale.",
+      "story": "Beyond white, the eye's thermometer flattens. A star this hot peaks in the ultraviolet, and the visible part of its glow is the gently sloping tail of that peak, which looks much the same blue-white whether the star is twice the Sun's temperature or five times. That is why Elnath and ι Aurigae differ so plainly, while Elnath and far hotter stars look nearly alike."
+    },
+    "HR1165": {
+      "step": 5,
+      "rank": 13490,
+      "beat": "Hot end: blue-white",
+      "question": "Why do all the bright Pleiades share the same blue-white color?",
+      "why": "The Pleiades are a family of hot young stars, and their brightest member shows the hot end of the scale.",
+      "look": "Center the Pleiades and find Alcyone, the brightest point near the middle. Every bright member shares its blue-white color; compare the whole group with orange Aldebaran, about 14° to the south-east.",
+      "answer": "Alcyone's surface is about 13,500 K, more than three times Aldebaran's, and its bright sisters are hot young stars too, all born together about 125 million years ago. A shared color here means a shared range of temperature, set by a shared youth.",
+      "story": "In long-exposure photographs the Pleiades sit in a blue haze, which is dust reflecting their light. Dust scatters blue light more readily than red, so the haze looks bluer than the stars themselves, by the same physics that makes the daytime sky blue. It is the reverse of the reddening a star suffers when seen straight through dust."
+    },
+    "STAR-Sirius": {
+      "step": 4,
+      "rank": 9850,
+      "beat": "White: hotter than the Sun",
+      "question": "What temperature makes Sirius blaze such a pure, icy-looking white?",
+      "why": "The brightest star of the night sky sits at the top of the white range, where white begins to take on a bluish edge.",
+      "look": "Orion's Belt, followed down and to the left, points straight at Sirius. Low in the sky it flickers red, green and blue, but that is our air; park it near the edge of the field and its steady color is a crisp, slightly bluish white.",
+      "answer": "Sirius burns at about 9,850 K, some 4,000 degrees hotter than the Sun, enough to tip its glow toward blue without making it truly blue. That faintly icy white is what a surface near 10,000 K looks like.",
+      "story": "The faint companion that circles Sirius is hotter still, a white dwarf whose surface runs more than twice as hot as Sirius itself. Yet it is lost in the glare, because a surface the size of Earth sheds little light however hot it is. Could you see it on its own, its tint would be bluer than its brilliant partner's, a vivid reminder that color reports heat and brightness reports something else entirely."
+    },
+    "HR2618": {
+      "step": 5,
+      "rank": 22200,
+      "beat": "Hot end: blue-white",
+      "question": "Why does Adhara look bluer than Sirius, though fainter?",
+      "why": "In the triangle south-east of Sirius a fainter star waits, a test of whether brightness or color is the better guide to heat.",
+      "look": "Find the triangle of bright stars south-east of Sirius; Adhara is the westernmost and brightest of them. Compare its blue-white with Sirius' whiter glare and with creamy Wezen beside it.",
+      "answer": "Adhara's surface is about 22,000 K, more than twice Sirius', so its glow leans further toward blue. It looks fainter only because of distance, and distance never changes a color.",
+      "story": "Adhara is the brightest source in the sky of extreme ultraviolet light, the hard, short-wave radiation that hot stars pour out and that the hydrogen between the stars normally swallows. Toward Adhara a tunnel of thin gas lets it through, and satellites above the air found it outshining every other star at those wavelengths, a direct glimpse of the hidden glow its blue-white tint only hints at."
+    },
+    "HR2294": {
+      "step": 5,
+      "rank": 25320,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is Mirzam, the blue-white star that rises before Sirius?",
+      "why": "Five degrees from Sirius rises a fainter star with a bluer cast, the hot end of the scale in Canis Major.",
+      "look": "Look about 5° west of Sirius for a blue-white star: Mirzam. Compare the two and Sirius looks dazzling, Mirzam modest, with a slightly bluer tint.",
+      "answer": "Mirzam's surface is about 25,300 K, two and a half times as hot as Sirius, which tips its tint slightly toward blue. Its modest brightness is a matter of distance, which dims a star without touching its tint.",
+      "story": "Most of Mirzam's energy leaves as ultraviolet, invisible to the eye and blocked by our air, so its full output was only counted once telescopes flew above the atmosphere. That hidden light is why a star with a modest blue-white tint can be tens of thousands of times more powerful than the Sun."
+    },
+    "HR2891": {
+      "step": 4,
+      "rank": 9551,
+      "beat": "White: hotter than the Sun",
+      "question": "What temperature gives Castor its clean white, beside orange Pollux?",
+      "why": "Gemini's white twin, four and a half degrees from its orange brother, sits near the top of the white range.",
+      "look": "Compare Castor's white with Pollux's orange, 4½° away. At 10× Castor looks single, because its two bright stars sit only 5 arcseconds apart, and their light merges into one white point.",
+      "answer": "Castor's surface runs at about 9,550 K, nearly twice Pollux's temperature, so the twins sit far apart on the scale. Castor's six stars blend into that single reading, which its bright white pairs dominate.",
+      "story": "Castor's two bright stars sit close to the temperature at which hydrogen's dark lines are strongest. Those lines need hydrogen atoms whose electron has been lifted one step up but not torn away, and that balance is best struck in white stars like these. In cooler stars too few atoms are lifted, and in hotter ones too many are stripped bare."
+    },
+    "HR2088": {
+      "step": 4,
+      "rank": 8950,
+      "beat": "White: hotter than the Sun",
+      "question": "Why does Menkalinan look whiter than Capella at the top of the pentagon?",
+      "why": "Menkalinan is the white mark of Auriga's scale, one step below blue-white Elnath.",
+      "look": "Find the Auriga pentagon, with Capella at its top; Menkalinan is the white star at its eastern corner, about 8° from Capella. Swing between them: cream-gold against white.",
+      "answer": "Menkalinan's two stars have surfaces near 9,000 K, nearly twice Capella's, and at that heat the glow loses its gold. Its eclipses dim it a little but are far too slight for the eye.",
+      "story": "Twin stars make good thermometers. When two stars of the same temperature eclipse each other, the dips come out equally deep, because the light lost depends on how brightly each square meter of the hidden surface shines. Menkalinan's dips match closely. That confirms that both stars share one temperature, so the white you see is that temperature with no blend to untangle."
+    },
+    "HR2845": {
+      "step": 5,
+      "rank": 11770,
+      "beat": "Hot end: blue-white",
+      "question": "Why does Gomeisa look bluer than Procyon right beside it?",
+      "why": "Four degrees from creamy Procyon sits a star with a bluer tint, the hot end of the scale in Canis Minor.",
+      "look": "Put Procyon and Gomeisa, in the little constellation Canis Minor, in one sweep and compare colors: Procyon is creamy white, Gomeisa bluer.",
+      "answer": "Gomeisa's surface is about 11,800 K and Procyon's about 6,600 K, so the hotter star's glow leans toward blue. Procyon only looks brighter because it is about fourteen times closer.",
+      "story": "Beyond white, the eye's thermometer flattens: a star hotter than this peaks in the ultraviolet, and the part of its glow the eye can see is a gently sloping tail that changes little as the temperature climbs. Gomeisa sits just past that bend, hot enough to look bluer than Procyon, and far hotter stars would look to you almost exactly like it."
+    },
+    "HR3982": {
+      "step": 5,
+      "rank": 11535,
+      "beat": "Hot end: blue-white",
+      "question": "What temperature does the blue-white heart of Leo stand for?",
+      "why": "Leo's heart glows blue-white where its mane glows golden, and the heart is the hot end.",
+      "look": "Regulus is the bright dot at the bottom of the backward question mark of Leo's head, crisp and blue-white in binoculars. Swing up the Sickle to golden Algieba and back.",
+      "answer": "Regulus runs at about 11,500 K, roughly twice the Sun's temperature and two and a half times Algieba's, so Leo's brightest star looks steely where its mane looks warm. Its fast spin leaves the equator cooler than the poles, a small spread inside one reading.",
+      "story": "On the astronomers' color index Regulus comes out slightly negative, meaning it is a little brighter in blue light than in yellow, the reverse of every cooler star in Leo. That small minus sign is all the eye's blue-white amounts to, and it shows how compressed the hot end really is: Regulus and stars several times hotter differ in color index by only a few tenths."
+    },
+    "HR5056": {
+      "step": 5,
+      "rank": 25300,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is Spica, the blue-white star at the end of the arc from Arcturus?",
+      "why": "The arc that starts at orange Arcturus ends at a lone blue-white star, the hot end of the scale in Virgo.",
+      "look": "From Arcturus, continue the Dipper-handle curve about as far again to a lone, brilliant blue-white star. Compare its icy color with Arcturus' orange.",
+      "answer": "Spica's main star runs at about 25,300 K, nearly six times Arcturus' temperature, and most of what it gives off is ultraviolet your eyes cannot see. The blue-white that does reach you is just the long-wavelength edge of its glow.",
+      "story": "Spica's two stars orbit too closely to separate, but each leaves its own lines in the spectrum, shifting back and forth with the orbit, so astronomers can read two temperatures from one point of light. Both are hot, the brighter more so, and their blend is the icy blue-white you see."
+    },
+    "HR4662": {
+      "step": 5,
+      "rank": 12360,
+      "beat": "Hot end: blue-white",
+      "question": "Why does Gienah look blue-white when its crow-mates are orange and yellow?",
+      "why": "The little crow's thermometer finishes with a crisp blue-white star.",
+      "look": "Find Corvus, the small kite of stars south-west of Spica. In binoculars Gienah is crisply blue-white; swing to orange Minkar or pale yellow Kraz to compare.",
+      "answer": "Gienah runs at roughly twice the Sun's temperature and nearly three times Minkar's, so its glow tips toward blue. Within one small kite of stars you have read three marks of the scale.",
+      "story": "Among stars still burning hydrogen in their cores, surface heat follows weight, and Gienah's blue-white goes with a star of about four Suns. Such a star shines some three hundred times as brightly as the Sun and spends its fuel to match, so Gienah is only about 160 million years old, born while dinosaurs walked the Earth. Read this way, a tint is a rough scale and a clock as well as a thermometer."
+    },
+    "HR5685": {
+      "step": 5,
+      "rank": 12300,
+      "beat": "Hot end: blue-white",
+      "question": "Why do some observers swear Zubeneschamali looks green?",
+      "why": "Libra's second star is famous for a color the thermometer says no star can have.",
+      "look": "Center Zubeneschamali and defocus slightly so it becomes a small disk. Compare it with white Zubenelgenubi nine degrees south-west and decide for yourself: green tinge, pale blue, or plain white?",
+      "answer": "Its surface is about 12,300 K, which places it among the blue-white stars and nowhere near a green. The green some observers report comes from contrast with nearby colors and from the way our eyes handle dim light, not from the star.",
+      "story": "Color scientists can plot every tint the human eye can perceive on a single chart, and the colors of glowing bodies at every temperature trace one curved track across it. The track runs from deep red through orange, yellow and white to a pale sky blue, and it never enters the green part of the chart at all. Put Zubeneschamali's temperature on that track and it lands among the pale blue-whites, the tint shown on its swatch."
+    },
+    "DS-AlpCVn": {
+      "step": 5,
+      "rank": 12000,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is Cor Caroli, the blue-white star below the Dipper's handle?",
+      "why": "A short sweep from La Superba, one of the reddest stars in the sky, shines a crisp blue-white star that closes the scale.",
+      "look": "Cor Caroli is the brightest star below the Big Dipper's handle, a crisp blue-white in binoculars. About 7° to the north, toward Megrez, La Superba glows red-orange for contrast.",
+      "answer": "Cor Caroli's surface is about 12,000 K, roughly twice the Sun's temperature and more than four times La Superba's, which is why the two look like ice and ember in neighboring fields.",
+      "story": "Why does a star this hot look only blue-white and not deep blue? Its glow peaks far into the ultraviolet, and the narrow window the eye can see catches only the long tail of that glow, which slopes gently toward blue whatever the exact temperature. So the eye tells Cor Caroli from La Superba at a glance, but it would struggle to tell it from a star twice as hot."
+    },
+    "HR5793": {
+      "step": 4,
+      "rank": 9680,
+      "beat": "White: hotter than the Sun",
+      "question": "What temperature does the white jewel of the Northern Crown stand for?",
+      "why": "The one bright jewel of the Northern Crown is a white mark on the scale, a sweep east of orange Arcturus.",
+      "look": "Alphecca is the one bright star in the arc of Corona Borealis, and binoculars fit the whole crown into one or two fields. It is a clean white, perhaps with a faint bluish edge; compare it with orange Arcturus, about 20° to the west.",
+      "answer": "Alphecca's surface runs at about 9,700 K, more than twice Arcturus' temperature, so its light leans to blue where Arcturus leans to orange. A smaller Sun-like companion hides in the glare, but the hot star sets the color.",
+      "story": "Alphecca sits almost exactly where Vega does on the astronomers' color scale, whose zero point was chosen so that stars of this kind come out neutral. Warmer stars such as Arcturus get positive numbers and hotter blue-white ones negative, so the scale's zero falls right at the jewel you are looking at."
+    },
+    "HR5191": {
+      "step": 5,
+      "rank": 17870,
+      "beat": "Hot end: blue-white",
+      "question": "Why is the end of the Big Dipper's handle blue-white while Dubhe glows orange?",
+      "why": "The Big Dipper's handle ends at its hottest star, the opposite end of the figure from yellow-orange Dubhe.",
+      "look": "Alkaid ends the Big Dipper's handle, crisply blue-white against yellow-orange Dubhe at the far end of the bowl. Sweep from one to the other through the white stars between.",
+      "answer": "Dubhe, at about 4,700 K, is nearly four times cooler, so the Dipper runs from orange to blue-white across one familiar shape. Most of the white stars between them sit near 9,500 K, a middle mark on the same scale.",
+      "story": "A hotter surface pays off steeply in light: the glow from each square meter climbs with the fourth power of the temperature, so doubling the heat multiplies it sixteen times. Each patch of Alkaid's surface therefore outshines an equal patch of the Sun nearly a hundredfold, and although the star is only a few times the Sun's width, it pours out hundreds of Suns' worth of light. Its tint is a measure of its power too, once you know its size."
+    },
+    "STAR-Vega": {
+      "step": 4,
+      "rank": 9500,
+      "beat": "White: hotter than the Sun",
+      "question": "Why does Vega look faintly blue, and how hot does that make it?",
+      "why": "Vega is the white mark of Lyra, the brightest star in its part of the sky, where its bluish white stands out against warmer neighbors.",
+      "look": "Vega is the jewel of Lyra. In binoculars it is a hard white spark with a faint blue cast; compare it with orange-red δ² Lyrae, about 4° away, to see most of the scale in one small constellation.",
+      "answer": "Vega's surface is a little over one and a half times as hot as the Sun's, enough to tip the glow just past white toward blue. That faint blue cast is where white starts to shade into the hot end.",
+      "story": "Vega is the star astronomers built their brightness and color scales around. By long convention its magnitude is close to zero, and its color index, the difference between its brightness in blue and yellow light, is set to zero. Every other star's color is measured against it, so when you judge Vega's faint blue you are looking at the scale's own zero mark."
+    },
+    "HR7528": {
+      "step": 4,
+      "rank": 10150,
+      "beat": "White: hotter than the Sun",
+      "question": "How hot is the white star at the tip of the Northern Cross?",
+      "why": "The arm of the Northern Cross ends at a white star with a bluish edge, the top of the white range in Cygnus.",
+      "look": "Al Fawaris is the bright star at the end of the western arm of the Northern Cross, white with a faint bluish edge. Compare it with yellowish Sadr, about 8° away at the center of the cross.",
+      "answer": "Al Fawaris runs at about 10,150 K, while Sadr, at the center of the cross, is some 4,000 degrees cooler and holds a cream tint, so one arm of the cross spans the step from yellow to white.",
+      "story": "Stars near Al Fawaris's temperature sit at the upper edge of the white stars for a physical reason. Around this heat the gas is hot enough for hydrogen's dark lines to be at their strongest, while the lines of helium, which need more heat still, have barely begun to show. Hotter stars bring helium in, and with it the bluish edge of the next step."
+    },
+    "HR7235": {
+      "step": 4,
+      "rank": 9200,
+      "beat": "White: hotter than the Sun",
+      "question": "How hot is the white star at the Eagle's tail?",
+      "why": "At the eagle's tail a star a step above white Altair tops the white range in Aquila.",
+      "look": "Deneb el Okab is a clean white point about 12° west-north-west of Altair, at the eagle's tail. Compare it with orange Tarazed for a quick color lesson.",
+      "answer": "Deneb el Okab's surface is about 9,200 K, some 1,600 degrees hotter than Altair, which leaves its white a shade bluer. Tarazed, at about 4,200 K, shows the warm end of the same constellation.",
+      "story": "Astronomers measure colors against a reference: by convention a star like Vega has a color index of zero, cooler stars come out positive and hotter ones negative. Deneb el Okab sits almost exactly on that zero, the mark of a star near the top of the white range, while orange Tarazed in the same constellation lands far up the positive side."
+    },
+    "HR8238": {
+      "step": 5,
+      "rank": 26920,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is Alfirk, the blue-white star of Cepheus?",
+      "why": "Cepheus holds one of the reddest stars in the sky, and also a blue-white one to close the scale.",
+      "look": "β Cephei lies in Cepheus between Alderamin and Errai, and binoculars show a blue-white point. Sweep about 12° south to the Garnet Star and back for the full span of the scale.",
+      "answer": "Alfirk's surface is about 27,000 K, more than seven times the Garnet Star's temperature, yet it looks only blue-white, not deep blue. At such heat most of its glow is ultraviolet, and the eye sees only the edge of it.",
+      "story": "Alfirk's spectrum shows strong lines of helium, which only a very hot gas can excite, and that is the reading astronomers trust at the hot end, where the eye can say hot but no longer how hot. Most of the star's energy leaves as ultraviolet, so what reaches your eye is a small, blue-tilted fraction of its true output."
+    },
+    "HR7121": {
+      "step": 5,
+      "rank": 18890,
+      "beat": "Hot end: blue-white",
+      "question": "What temperature gives Nunki its blue-white tint in the Teapot's handle?",
+      "why": "The Teapot's handle holds the hot end of the scale in Sagittarius.",
+      "look": "Nunki is the upper star of the Teapot's handle, blue-white in binoculars. Compare it with creamier Albaldah, about 6° to the north-east, and with orange Kaus Media on the spout side.",
+      "answer": "Nunki's surface is about 18,900 K, more than three times the Sun's temperature, so its light leans to blue. Albaldah, creamy white just to the north-east, is nearly three times cooler.",
+      "story": "In 2022 two of the great mirrors of the H.E.S.S. observatory in Namibia, built to catch faint flashes from gamma rays striking the air, spent moonlit nights unfit for that work measuring the width of Nunki's tiny disk. A disk's width together with all the light the star sends, ultraviolet included, fixes how much each square meter gives out, and so the temperature, without trusting the color. Hot stars are small and their disks minute, so each such measurement anchors the top of the scale."
+    },
+    "HR6879": {
+      "step": 4,
+      "rank": 9520,
+      "beat": "White: hotter than the Sun",
+      "question": "Why does the Teapot's base look white below orange Kaus Media?",
+      "why": "The bottom of the Teapot sits just below its orange spout star and much higher on the scale.",
+      "look": "Kaus Australis marks the bottom of the Teapot, about 5° below Kaus Media. It is a crisp white point beside that orange one; put both in the field and defocus slightly.",
+      "answer": "Its surface is about 9,500 K, more than twice Kaus Media's, so its glow tilts toward blue while its neighbor's tilts toward red.",
+      "story": "Kaus Australis sits close to the temperature at which hydrogen's dark lines are strongest. Hydrogen absorbs those colors only when its electron has been lifted one step up from the bottom, which a gas this hot does often. Cooler gas lifts too few electrons and hotter gas tears them away, so the strength of the lines rises and falls along the scale like a second thermometer."
+    },
+    "HR6165": {
+      "step": 5,
+      "rank": 31500,
+      "beat": "Hot end: blue-white",
+      "question": "How can Antares' sibling be eight times hotter than Antares?",
+      "why": "Antares has a sibling two degrees away, born in the same family yet sitting at the opposite end of the thermometer.",
+      "look": "Put Antares at one edge of a wide field and sweep about two degrees south-east, toward the tail of Scorpius. Swing back and forth, deep orange against crisp blue-white, and defocus both slightly to judge the colors as small disks.",
+      "answer": "τ's surface is about 31,500 K, against about 3,700 K for Antares, a factor of more than eight from the same birth cloud. Antares was born heavier, aged faster and cooled as it swelled, while τ is still a hot young star.",
+      "story": "τ Scorpii is one of the standard stars astronomers use to define the hot end of the spectral sequence: other stars are classified by matching their lines to its lines. Its spectrum is rich in helium and has almost none of the metal lines that fill Antares' light, so one binocular sweep spans the two extremes the sky's thermometer is built on."
+    },
+    "HR6527": {
+      "step": 5,
+      "rank": 19000,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is the blue-white stinger of the Scorpion?",
+      "why": "The Scorpion's stinger, at the tip of the curling tail, is the hot end of the scale in Scorpius.",
+      "look": "Follow the tail of Scorpius to its hook: the bright stinger is Shaula, with fainter Lesath just beside it, both blue-white. Compare them with yellow-white Sargas, six degrees away at the bottom of the curl.",
+      "answer": "Shaula's surface is about 19,000 K, three times Sargas' temperature, which is why the stinger looks steely where the curl looks creamy. Shaula is really at least three stars, but its brightest hot member sets the color.",
+      "story": "Shaula's temperature is read from the strengths of its helium lines, which grow steadily as a gas heats past the white range and so keep working as a thermometer where color has stopped changing. By that reading its brightest member is several times hotter than the Sun, a figure the eye could never extract from its blue-white tint."
+    },
+    "HR15": {
+      "step": 5,
+      "rank": 12938,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is Alpheratz, the blue-white corner of the Great Square?",
+      "why": "Along the northern side of the Great Square the colors run from ruddy Scheat to a crisp blue-white corner.",
+      "look": "Alpheratz is the north-east corner of the Great Square, a crisp blue-white point in binoculars. Scheat, at the north-west corner, gives a fine orange contrast.",
+      "answer": "Alpheratz's surface is about 12,900 K, three and a half times Scheat's temperature, so along one side of the Square you cross from orange-red to blue-white.",
+      "story": "Astronomers read the temperature of stars like Alpheratz from a sharp step in their ultraviolet light, where hydrogen begins to absorb strongly. The size of that step changes steadily with heat, so it works as a thermometer far beyond the point where color stops helping, and for Alpheratz it confirms a surface a good deal hotter than any white star."
+    },
+    "HR8781": {
+      "step": 4,
+      "rank": 10500,
+      "beat": "White: hotter than the Sun",
+      "question": "How much hotter is Markab than Scheat, the corner directly north?",
+      "why": "The Square's south-west corner sits directly below ruddy Scheat on the sky and far above it on the thermometer.",
+      "look": "Markab is the Great Square's south-west corner. Compare it with Scheat directly north: crisp white against orange-red.",
+      "answer": "Markab's surface is about 10,500 K, at the high end of the published values, and Scheat's about 3,700 K, well under half that. Markab is also the nearer star, so distance and dust play no part in the contrast.",
+      "story": "Markab's disk is too small for any single telescope to show, but the CHARA Array on Mount Wilson has measured it, combining six telescopes to see detail like one instrument some three hundred meters across. Add up all the light the star sends, ultraviolet included, and that width says how much each square meter must give out, which pins the temperature without any help from the color. The result lands squarely among the white stars, a check on the thermometer by a route that never looks at color."
+    },
+    "STAR-Algol": {
+      "step": 5,
+      "rank": 12550,
+      "beat": "Hot end: blue-white",
+      "question": "What temperature does Algol's blue-white stand for, eclipses aside?",
+      "why": "The famous winking star of Perseus is also the hot end of its scale, its dimmings caused by a cooler companion.",
+      "look": "Algol sits in Perseus, about halfway between Cassiopeia's W and the Pleiades. At full light it matches golden Almach, about 12° to the west, in brightness, which makes the two a fine color comparison: gold against blue-white.",
+      "answer": "Its bright star's surface is about 12,550 K, roughly three times Almach's, and that sets the blue-white. The partner that eclipses it every 2.87 days is a cool orange subgiant, a second temperature hidden in the same point.",
+      "story": "Algol's eclipses double as a thermometer. When the dim companion covers part of the hot star, the light falls by more than half, but when the hot star covers the companion half a cycle later, the dip is tiny. Each dip measures how brightly the hidden surface was shining per square meter, so the ratio of the two dips says how much hotter one star is than the other."
+    },
+    "HR264": {
+      "step": 5,
+      "rank": 27990,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is the blue-white star at the center of Cassiopeia's W?",
+      "why": "The middle star of Cassiopeia's W is the hottest of the five, with orange Schedar right beside it.",
+      "look": "γ Cas is the middle star of the W, a clean blue-white point in binoculars. Swing to orange Schedar, the next bright star west, and back.",
+      "answer": "γ Cassiopeiae's surface is about 28,000 K, roughly six times Schedar's temperature, yet the difference in tint is only blue-white against orange. The disk of gas it sheds changes its brightness over the decades, while the star beneath stays much the same.",
+      "story": "γ Cassiopeiae is a reminder that brightness can change while color stays put. Over the past century it has brightened and faded by more than a magnitude as its disk of gas grew and dissolved. Yet observers have always seen the same blue-white, and the temperature of the star beneath, read from its helium lines, has hardly moved."
+    },
+    "HR472": {
+      "step": 5,
+      "rank": 14840,
+      "beat": "Hot end: blue-white",
+      "question": "What temperature lies behind Achernar's icy blue-white?",
+      "why": "At the end of the long river of Eridanus a lone brilliant star closes the scale.",
+      "look": "Look for the lone brilliant blue-white star at the end of the long, faint river of Eridanus. Binoculars show a sharp point; compare its icy color with creamy Alpha Hydri about 5° away.",
+      "answer": "Achernar's surface is about 14,800 K, roughly two and a half times the Sun's temperature, so its glow tips firmly toward blue, the hot end of the scale in this part of the sky.",
+      "story": "Achernar spins so fast that it is flattened, and a flattened star is hotter at its poles than at its stretched-out waist, by many thousands of degrees in its case. The blue-white you see is an average over that patchwork, weighted by how the star happens to be tilted toward us."
+    },
+    "HR8425": {
+      "step": 5,
+      "rank": 13201,
+      "beat": "Hot end: blue-white",
+      "question": "What temperature makes Alnair shine such a clean blue-white?",
+      "why": "The Crane's brightest star sits a few degrees from orange-red Tiaki and at the opposite end of the scale.",
+      "look": "Center Alnair, then Tiaki, about 6° away in Grus: one is blue-white, the other orange-red. Defocusing both slightly makes the colors richer.",
+      "answer": "Alnair's surface is about 13,200 K, more than twice the Sun's temperature, which tilts its glow toward blue. Tiaki still gives out more light, being a giant, a reminder that color reads heat, not power.",
+      "story": "Alnair's spectrum shows the first faint lines of helium, which no cooler star can produce, because helium holds its electrons so tightly that only a very hot gas can make it absorb light. Those lines place Alnair firmly above the white stars, a reading that agrees with the bluish tint you see."
+    },
+    "HR4730": {
+      "step": 5,
+      "rank": 21000,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is Acrux, the blue-white foot of the Southern Cross?",
+      "why": "The foot of the Southern Cross is the hot end of a figure whose top star glows orange.",
+      "look": "Acrux is the bright star at the bottom of the Cross, blue-white in binoculars with a much fainter star beside it. Swing about 6° up to orange Gacrux at the top and back.",
+      "answer": "Acrux's surface is about 21,000 K, nearly six times Gacrux's temperature, so the Cross runs from orange-red at the top to blue-white at the foot. Both bright stars hidden inside Acrux are hot, so their blend keeps the same steely tint.",
+      "story": "Photographs of the Southern Cross show Gacrux as a gold jewel among blue ones, and camera sensors respond to color much as the eye does, so the contrast is no illusion of human vision. Measured through filters, Acrux is brighter in blue light than in yellow while Gacrux is far brighter in yellow, and that change of sign spans the scale from cool to hot within one small figure."
+    },
+    "HR4853": {
+      "step": 5,
+      "rank": 26915,
+      "beat": "Hot end: blue-white",
+      "question": "Why do Mimosa and the Jewel Box's brightest stars share one icy color?",
+      "why": "On the eastern arm of the Cross, with the Jewel Box a degree away, a blue-white star shares its color with a whole cluster.",
+      "look": "Mimosa is the bright blue-white star on the eastern arm of the Cross. Put it at the edge of your view and look about 1° south-east for the Jewel Box, whose brightest stars share its icy color.",
+      "answer": "Mimosa's surface is about 27,000 K, and the Jewel Box's brightest members are hot young stars of the same kind, so the same heat paints them the same icy tint, near and far alike.",
+      "story": "Mimosa and the brightest stars of the cluster beside it are hot for the same reason: they are heavy, and a heavy star burns its fuel so fiercely that its surface runs tens of thousands of degrees. Such stars cannot last long, so a family full of them, and of their icy color, must be young."
+    },
+    "HR5267": {
+      "step": 5,
+      "rank": 25000,
+      "beat": "Hot end: blue-white",
+      "question": "Why does Hadar look blue-white beside yellowish Alpha Centauri?",
+      "why": "The two Pointers make a calibration pair, and Hadar, beside Sun-like Alpha Centauri, sits at the hot end.",
+      "look": "Swing between the two Pointers, about 4° apart: Hadar is blue-white, Alpha Centauri warmer and yellower. In binoculars Hadar stays a single point, its three stars far too close to split.",
+      "answer": "Hadar's surface is about 25,000 K, more than four times Alpha Centauri's Sun-like 5,800 K, and the two Pointers show that gap as plainly as any two stars in the sky.",
+      "story": "Hadar's spectrum is rich in lines of helium, an element that only a very hot gas can make absorb light, while Alpha Centauri's is crowded with the metal lines of a Sun-like star. The two Pointers differ in their fingerprints as plainly as in their tints, and at Hadar's end of the scale it is the helium lines, not the color, that supply the number."
+    },
+    "HR7790": {
+      "step": 5,
+      "rank": 17560,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is the Peacock, the lone blue-white star of Pavo?",
+      "why": "In a sparse part of the far southern sky, the lone bright star of Pavo gives the scale its hot end.",
+      "look": "The Peacock is the bright blue-white star of Pavo, alone in a sparse field. Defocus slightly and its bluish tint holds steady against the few faint field stars around it.",
+      "answer": "The Peacock's surface is about 17,600 K, three times the Sun's temperature, so its glow tilts firmly toward blue. A hidden companion orbits it, but the hot primary sets the color.",
+      "story": "Beyond white, the eye's thermometer flattens: a star this hot peaks in the ultraviolet, and the visible tail of its glow slopes gently toward blue whatever the exact temperature. The Peacock's cold tint says hot, but only its spectrum can say how hot, and it is the spectrum, not the eye, that supplies the number on this card."
+    },
+    "HR6510": {
+      "step": 5,
+      "rank": 21814,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is the blue-white star of the Altar?",
+      "why": "Six degrees north of orange β Arae, the Altar's blue-white star closes the scale.",
+      "look": "Find α Ara below the tail of Scorpius, about six degrees north of orange β Arae. Side by side they make a fine contrast, blue-white against orange.",
+      "answer": "α Arae's surface runs at about 21,800 K, more than five times β Arae's temperature and nearly four times the Sun's. The disk of gas around its equator makes its brightness drift, but the heat of the star itself sets the color.",
+      "story": "α Arae's spinning disk of gas adds light of its own, mostly the red glow of hydrogen, so in principle it warms the star's color a touch. In practice the star beneath is so much brighter that the blend still reads blue-white, and its helium lines, untouched by the disk, give the temperature."
+    },
+    "HR4199": {
+      "step": 5,
+      "rank": 31346,
+      "beat": "Hot end: blue-white",
+      "question": "How hot is the brightest star of the Southern Pleiades?",
+      "why": "The Southern Pleiades are led by a hot blue-white star at the top of the scale in Carina.",
+      "look": "Theta Carinae is the brightest of a loose group of blue-white stars visible even to the naked eye. In binoculars the group spans about a degree, a compact spray in the middle of the field, all sharing its bluish tint.",
+      "answer": "Its surface runs at about 31,000 K, more than five times the Sun's temperature. Even so its color is the same blue-white as stars a third as hot, because the eye cannot read heat this extreme.",
+      "story": "A star this hot pours most of its light out as ultraviolet, and its spectrum shows lines of helium strong enough to place it among the hottest stars of Carina. The eye, which sees only the visible tail of that glow, calls it simply blue-white, so the full measure of its heat comes from the spectrum and from satellites above the air."
+    },
+    "HR3165": {
+      "step": 5,
+      "rank": 40000,
+      "beat": "Hot end: blue-white",
+      "question": "Why doesn't Naos, at the top of the scale, look deep blue?",
+      "why": "Naos sits at the very top of the scale in Puppis, one of the hottest stars the naked eye can see, and it tests how far the eye's thermometer can reach.",
+      "look": "In binoculars Naos is a sharp, steely blue-white point among many fainter Milky Way stars. Swing about 10° west to deep yellow-orange Pi Puppis and you have both ends of the scale in neighboring fields.",
+      "answer": "Its surface is about 40,000 K, nearly seven times the Sun's, so almost all of its output comes out as ultraviolet and the visible part we catch is only a gently sloping tail. That tail looks blue-white for any star hot enough, which is why the eye's thermometer tops out here.",
+      "story": "Heat this extreme turns light into a push. Naos's ultraviolet glare is caught by atoms in its own outer layers and shoves them outward, driving a wind that streams off at more than two thousand kilometers a second. That wind carries off mass many millions of times faster than the Sun's gentle breeze and will strip away a sizable part of the star, so here a temperature also foretells a star giving itself back to space."
+    },
+    "DS-Albireo": {
+      "step": 6,
+      "rank": 4380,
+      "beat": "Two temperatures, one view",
+      "question": "Can you read two temperatures at once in Albireo's gold and blue?",
+      "why": "Albireo puts two marks of the thermometer into a single binocular view, a final test of everything your eyes have learned tonight.",
+      "look": "Albireo marks the head of the swan, at the foot of the Northern Cross. Brace your binoculars and at 10× it splits into a golden-orange star with a blue-white spark beside it, 34″ away; if the split is hard, let the image drift and watch the blue point trail behind.",
+      "answer": "Your eye has just done what the spectra do, ranking the two by heat at a glance, and the gold one is cooler by some 8,600 degrees. Seen together under the same sky and through the same air, the difference can only be temperature.",
+      "story": "Spectra read each of Albireo's stars separately and confirm what the eye sees: lines of metals and the first faint molecular bands in the gold giant's light, hydrogen and helium in the blue star's. That blue star spins so fast it has flung a disk of gas around its waist. Two temperatures leave two different kinds of fingerprint, and the eye catches the same difference as gold against blue."
+    },
+    "DS-ThetaTau": {
+      "step": 6,
+      "rank": 7645,
+      "beat": "Two temperatures, one view",
+      "question": "Why does one star of the θ Tauri pair look white and the other yellow-orange?",
+      "why": "θ Tauri is a naked-eye pair that holds two temperatures in one glance, and its stars are siblings, which makes the comparison especially fair.",
+      "look": "Inside the Hyades V, about 2° from Aldebaran, look for an obvious wide pair that binoculars split at a glance. θ² is white and θ¹ yellow-orange, and a slight defocus makes the contrast stronger.",
+      "answer": "θ² has a surface near 7,600 K, hotter than the Sun, while θ¹'s yellow-orange marks a surface cooler than the Sun's, so one small pair straddles our own star's place on the scale.",
+      "story": "Two stars in one binocular field are the fairest color test there is, because their light passes through the same air at the same height, so the atmosphere reddens both equally. The eye also sharpens a contrast when two tints sit side by side, a trick of perception that makes θ¹ look a little more golden beside its white sibling than it would alone."
+    },
+    "HR5763": {
+      "step": 6,
+      "rank": 3900,
+      "beat": "Two temperatures, one view",
+      "question": "How can two matched stars in Boötes show such different colors?",
+      "why": "The ν Boötis pair sets two colors side by side in one field, and because the two look equally bright, color is the only thing left to compare.",
+      "look": "Start at Nekkar, the star at the top of the kite of Boötes, and sweep east. Binoculars show orange ν¹ and white ν² side by side, nearly equal in brightness.",
+      "answer": "ν¹ is an orange giant with a surface near 3,900 K, while ν² is a white star thousands of degrees hotter, so the pair spans much of the scale in a single field. The eye ranks them in a moment, the warm one cool and the pale one hot.",
+      "story": "Each of the ν Boötis stars has had its temperature read from its spectrum, independently of its color, and both readings agree with what your eye reports: a cool giant beside a much hotter star. The orange one is also the larger and the farther of the two, a giant whose light travels more than twice as far to arrive looking just as bright as its neighbor."
+    },
+    "HR7735": {
+      "step": 6,
+      "rank": 4030,
+      "beat": "Two temperatures, one view",
+      "question": "What temperatures hide in the orange and white stars of 31 Cygni?",
+      "why": "31 Cygni sets two colors side by side with gaps wide enough for any binoculars, an easier cousin of Albireo's famous contrast.",
+      "look": "Binoculars show orange 31 Cygni with white 30 Cygni about 5½′ away and a fainter star closer in. The gaps are wide, so the colors come easily even at 7×.",
+      "answer": "The orange supergiant's surface is near 4,000 K, while white 30 Cygni beside it is a far hotter star, so one easy field shows two clear marks on the scale, with no bracing and no patience needed.",
+      "story": "Side by side, a warm tint and a cool one push each other apart, so the orange looks more orange and the white a little bluer than either would on its own. Astronomers avoid that bias with filters, but for a binocular observer it is a gift, because it makes the difference in temperature leap out of the field."
+    },
+    "HR6262": {
+      "step": 6,
+      "rank": 17200,
+      "beat": "Two temperatures, one view",
+      "question": "Which star of the ζ Scorpii pair is the hot one?",
+      "why": "The ζ Scorpii pair puts two tints into one view, and the fainter, paler star turns out to be a test of the thermometer itself.",
+      "look": "Where the tail of Scorpius bends south, two stars sit a few arcminutes apart, an easy naked-eye pair: orange ζ² and fainter, paler ζ¹. From mid-northern sites the scene hugs the horizon and needs a clear southern view.",
+      "answer": "Pale ζ¹ is the hot one, a hypergiant near 17,000 K, but its light crosses so much dust that it arrives yellowed, the tint of a star near 6,500 K; orange ζ² is a nearby giant. Here the eye's thermometer is fooled, and only a spectrum shows the heat.",
+      "story": "A star's color can be tilted by what lies between it and you, because dust scatters blue light more than red, so astronomers never trust a color alone across a long, dusty path. They compare it with the temperature the spectrum gives from its pattern of lines, and the gap between the two, called the color excess, measures how much dust the light has crossed. Toward the tail of Scorpius, deep in the Milky Way, that gap can be large."
+    },
+    "HR7139": {
+      "step": 6,
+      "rank": 3480,
+      "beat": "Two temperatures, one view",
+      "question": "Can you read two temperatures at once in the δ Lyrae pair?",
+      "why": "δ Lyrae holds an orange-red giant and a blue-white star in one field, two ends of the thermometer side by side.",
+      "look": "About 3½° north of Sheliak, in Lyra, δ² Lyrae glows orange-red, with fainter blue-white δ¹ about a third of a Moon-width to the west. Defocus slightly and the colors deepen.",
+      "answer": "δ² runs a touch cooler than Betelgeuse, while blue-white δ¹ belongs with Vega at the hot end, so one field holds nearly the whole scale. Your eye reads it in under a second; it took spectra to put numbers on it.",
+      "story": "Swap your eye for a camera with a blue filter and the pair trades places: δ¹, the fainter star to the eye, becomes the brighter of the two, because so little of cool δ²'s glow falls at the blue end. Through a yellow filter δ² is about three times the brighter; through a blue one δ¹ is about one and a half times the brighter. That swing between filters is the color index astronomers turn into a temperature."
+    }
+  }
+}

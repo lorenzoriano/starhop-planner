@@ -2,6 +2,7 @@ import { afterAll, describe, expect, it, vi } from "vitest";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { angularDistance, eqToHorizontal, formatRouteNodeName, loadStars, planRoutes, type ObservingParams } from "../astronomy";
+import { GUIDED_MAX_HOP_FOV } from "../route-planner";
 
 vi.stubGlobal("fetch", async (input: string | URL) => {
   const path = String(input).replace(/^\.\//, "");
@@ -40,12 +41,17 @@ describe("full-catalog forced-anchor and required-waypoint routing", () => {
     expect(automatic!.startAnchor.id).toBe("HR269");
     expect(automatic!.hops.length).toBeLessThanOrEqual(4);
     expect(formatRouteNodeName(automatic!.startAnchor)).toMatch(/μ Andromedae/);
-    expect(result.warning).toMatch(/Balanced route from μ Andromedae/);
+    // Guided itself connects μ And now (μ And → ν And → M31, one move stretched past 0.7 field across the gap), so no
+    // Balanced fallback (which was a single 1.04-field move with no overlap) is needed.
+    expect(result.warning).toBeUndefined();
+    for (const hop of automatic!.hops.slice(1)) expect(hop.distanceDeg).toBeLessThanOrEqual(base.fovWidth * GUIDED_MAX_HOP_FOV + 1e-6);
     expect(automatic!.hops.every(hop => hop.patternLabels.every(item => /^[A-D]$/.test(item.label) && hop.instruction.includes(`${item.label} `)))).toBe(true);
   }, 30_000);
   it("keeps η Herculis as the short automatic start for M13", async () => {
     const result = await planRoutes({ ...base, targetId: "M13", observingMode: "binocular" });
-    const automatic = result.routes.find(route => !route.isExpertRoute);
+    // The field guide's Keystone route (Keystone → η Her → M13) now resolves and is the same two fields, so it leads
+    // as the classic route and the identical computed route is not listed twice.
+    const automatic = result.routes[0];
     expect(automatic).toBeDefined();
     expect(automatic!.startAnchor.id).toBe("HR6220");
     expect(automatic!.hops.length).toBeLessThanOrEqual(3);

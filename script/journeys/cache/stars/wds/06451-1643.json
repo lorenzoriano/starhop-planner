@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=B/wds/wds&WDS=06451-1643&-out=WDS,Disc,Comp,Obs2,pa2,sep2,mag1,mag2,SpType,pmRA1,pmDE1,pmRA2,pmDE2,Notes",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\nWDS\tDisc\tComp\tObs2\tpa2\tsep2\tmag1\tmag2\tSpType\tpmRA1\tpmDE1\tpmRA2\tpmDE2\tNotes\n \t \t \tyr\tdeg\tarcsec\tmag\tmag\t \tmas/yr\tmas/yr\tmas/yr\tmas/yr\t\n----------\t-------\t-----\t----\t---\t------\t------\t-----\t----------\t----\t----\t----\t----\t----\n06451-1643\tAGC   1\tAB   \t2024\t 59\t 11.10\t-1.470\t 8.44\tA1Vm+DA2  \t -55\t-122\t -55\t-122\tNO P\n06451-1643\tLEC   1\tAC   \t1999\t 30\t 64.50\t-1.470\t12.60\tA1Vm      \t -55\t-122\t    \t    \tN  P\n06451-1643\tAGC   1\tAD   \t1915\t183\t 31.60\t-1.470\t14.00\tA1Vm      \t -55\t-122\t    \t    \tN  P\n06451-1643\tHL    3\tAE   \t2011\t 47\t188.30\t-1.470\t14.50\tA1Vm      \t -55\t-122\t    \t    \tNL P\n06451-1643\tBU 1411\tAF   \t2011\t 61\t125.70\t-1.470\t13.80\tA1Vm      \t -55\t-122\t    \t    \tNL P\n06451-1643\tAGC   1\tBa,Bb\t1975\t144\t  1.50\t 8.440\t12.60\tDA2       \t -55\t-122\t    \t    \tNU\n\n"
+}

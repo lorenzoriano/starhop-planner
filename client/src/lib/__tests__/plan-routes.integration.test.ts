@@ -41,9 +41,12 @@ describe("full catalog route planning", () => {
       r.hops.map((h) => `${h.center.ra},${h.center.dec}`).join(";"),
     );
     expect(new Set(signatures).size).toBe(calculated.length);
-    const reference = result.routes.find((r) => r.isExpertRoute)!;
-    expect(reference.hops.length).toBeGreaterThan(5);
-    for(const route of result.routes)for(const hop of route.hops.slice(1))expect(hop.distanceDeg).toBeLessThanOrEqual(7*.7+1e-6);
+    // The classic route works tonight, so it leads (owner's rule); its naked-eye jumps (Alpheratz → δ And 6.9°,
+    // δ And → Mirach 7.9°) stay single moves, every computed move keeps Guided's 30% overlap.
+    const reference = result.routes[0];
+    expect(reference.isExpertRoute).toBe(true);
+    expect(reference.hops.length).toBe(5);
+    for(const route of calculated)for(const hop of route.hops.slice(1))expect(hop.distanceDeg).toBeLessThanOrEqual(7*.7+1e-6);
     expect(reference.hops[1].distanceDeg).toBeGreaterThan(1);
     expect(reference.hops[1].center.ra).not.toBe(reference.hops[0].center.ra);
     expect(

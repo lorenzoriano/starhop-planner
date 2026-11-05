@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=326.046484%2B9.875009&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD206778                    \tEPS PEG                     \t  8.40000\t       \t        \t          \t...................\tHD206778\n 0.00\tHD206778                    \teps Peg                     \t  7.30000\t 7.5000\t  0.4000\tK         \t1996AJ....111.1705D\tHD206778\n 0.00\tHD206778                    \tHR8308                      \t  7.50000\t       \t  0.3000\t2.2mu     \t1998AJ....116..981D\tHD206778\n 0.00\tHD206778                    \tHR8308                      \t  7.58000\t       \t  0.0300\t740nm     \t2001AJ....122.2707N\tHD206778\n 0.00\tHD206778                    \tHR8308                      \t  6.96700\t 7.4590\t  0.2510\t800nm     \t2003AJ....126.2502M\tHD206778\n\n"
+}

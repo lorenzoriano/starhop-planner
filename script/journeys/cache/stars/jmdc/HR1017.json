@@ -1,0 +1,9 @@
+{
+"request": {
+"url": "https://vizier.idia.ac.za/viz-bin/asu-tsv?-source=II/345/jmdc&-c=51.080709%2B49.861179&-c.rs=10&-out=ID1,ID2,UDdiam,LDdiam,e_LDdiam,Band,BibCode,SimbadName&-out.add=_r&-sort=_r",
+"data": null
+},
+"host": "vizier.idia.ac.za",
+"retrieved": "2026-11-01",
+"body": "\n_r\tID1\tID2\tUDdiam\tLDdiam\te_LDdiam\tBand\tBibCode\tSimbadName\narcsec\t \t \tmas\tmas\tmas\t \t \t\n-----\t----------------------------\t----------------------------\t---------\t-------\t--------\t----------\t-------------------\t----------------------------\n 0.00\tHD20902                     \tALF PER                     \t  2.80000\t 2.9000\t  0.4000\t550nm     \t1981A&A...103...28B\tHD20902\n 0.00\tHD20902                     \tALF PER                     \t  5.00000\t 5.3000\t  0.5000\t706nm     \t1988ApJ...327..905S\tHD20902\n 0.00\tHD20902                     \tHR1017                      \t  2.97000\t 3.1000\t  0.0100\t740nm     \t1999AJ....118.3032N\tHD20902\n 0.00\tHD20902                     \tHR1017                      \t  3.05500\t 3.1880\t  0.0350\t800nm     \t2003AJ....126.2502M\tHD20902\n 0.00\tHD20902                     \t                            \t  3.13500\t 1.0170\t  0.0290\tH,K       \t2009MNRAS.394.1925V\tHD20902\n\n"
+}

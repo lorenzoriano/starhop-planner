@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "kbVersion": "kb-v1+4997fefb58",
+  "source": "artifact db ab3/ (https://claude.ai/artifact/V3eaJ1nHVoc6hweMvuRzfX)",
+  "answers": [
+    {
+      "pairId": "ab3-01",
+      "left": {
+        "key": "ajF8NWRlOHxBMy1ob3ctZmFyfHxTVEFSLUNhcGVsbGEsTWVsMjAsU3RvY2syLE5HQzQ1NyxNMzF8MDEyMzR8aHVzNm98MzcuOHwtMTIyLjR8Ni41fDUwfDEwfDB8MTl8MzB8MzB8OHwxfDQwLjV8NDIuNzg",
+        "templateId": "A3-how-far",
+        "title": "Measuring the Depth of Cassiopeia"
+      },
+      "right": {
+        "key": "ajF8NWRlOHxBNy1yZWNvcmQtYnJlYWtlcnN8fEFTVC1IeWFkZXMsSFIxNzkwLERTLTE1TW9uLFNUQVItQmV0ZWxnZXVzZSxNMzV8MDEyMzR8aHVzNm98MzcuOHwtMTIyLjR8Ni41fDUwfDEwfDB8MTl8MzB8MzB8OHwxfDg0LjQxfDIxLjE0",
+        "templateId": "A7-record-breakers",
+        "title": "Orion, One Record at a Time"
+      },
+      "choice": "left",
+      "note": "I don't really see the story behind \"right,\" while \"left\" is actually a really, really good one.",
+      "answeredAt": "2026-11-03T23:52:07.261Z"
+    },
+    {
+      "pairId": "ab3-02",
+      "left": {
+        "key": "ajF8NWRlOHxBOS1zZWVpbmctZG91YmxlfHxIUjcwNTYsSFI3MTM5LERTLUFsYmlyZW8sSFI3MTA2LERTLURvdWJsZURibHwwMTIzNHxpMjFkNnwzOC44fC0xMDQuNXw2LjV8NTB8MTB8MHwyMS41fDMwfDMwfDh8MXwzMDMuNDF8NDYuNzQ",
+        "templateId": "A9-seeing-double",
+        "title": "Finding Lyra's True Partners"
+      },
+      "right": {
+        "key": "ajF8NWRlOHxBMS1jcmFkbGUtdG8tZ3JhdmV8fElDMTM5NixNMzksU1RBUi1EZW5lYixIUjc3NjMsTTI3fDAyMzQ1fGkyMWQ2fDM4Ljh8LTEwNC41fDYuNXw1MHwxMHwwfDIxLjV8MzB8MzB8OHwxfDMxNC4xfDMxLjcy",
+        "templateId": "A1-cradle-to-grave",
+        "title": "Cygnus' Cradles and Graves"
+      },
+      "choice": "right",
+      "note": "maybe I missed it, but is ζ Lyrae a double or they just look close?  What about the others? At the end, I'm not sure I have the answer to the question: Are these legit double stars or just two stars that look close? It's not clear from the text.  Sheliak it's interesting, but if a telescope cannot split them, then neither can a binocular, right? It's cool to have that, but it's not really a binocular target.  Right story is absolutely amazing.",
+      "answeredAt": "2026-11-03T23:57:44.839Z"
+    },
+    {
+      "pairId": "ab3-03",
+      "left": {
+        "key": "ajF8NWRlOHxBNS1mYW1pbGllc3x8TWVsMTUsTkdDODY5LE1lbDIwLE5HQzE1ODIsSFIxNzEyfDAwMTIzfGkzdXg2fDM4Ljh8LTEwNC41fDYuNXw1MHwxMHwwfDIxLjV8MzB8MzB8OHwxfDYzLjg1fDUxLjIz",
+        "templateId": "A5-families",
+        "title": "The Star Families of Perseus"
+      },
+      "right": {
+        "key": "ajF8NWRlOHxBNi1jb250cmFzdHN8fEhSODIzOCxTVEFSLU11Q2VwLEhSOTA0NSxOR0M4NjksSFIxMDE3fDAxMjMzfGkzdXg2fDM4Ljh8LTEwNC41fDYuNXw1MHwxMHwwfDIxLjV8MzB8MzB8OHwxfDIzLjN8NjAuNw",
+        "templateId": "A6-contrasts",
+        "title": "How Perseus Fools the Eye"
+      },
+      "choice": "left",
+      "note": "Okay, left is slightly better. They are both really interesting. I just like the story behind left.",
+      "answeredAt": "2026-11-03T23:59:35.090Z"
+    }
+  ]
+}
