@@ -448,6 +448,8 @@
  .session-timebar>div:first-child>span{font-size:0!important}
  .session-timebar .context-edit{font-size:12px!important}
  .session-time-actions{display:none!important}
+ .session-timebar>div:first-child{display:flex!important;align-items:center;justify-content:space-between;gap:8px}
+ .session-timebar .timebar-now{display:inline-flex!important;font-size:12px!important;min-height:var(--touch-target,40px);padding:0 12px;border:1px solid currentColor;border-radius:999px}
  .saving-context{gap:3px;padding:3px 8px;font-size:12px}
  .saving-context .context-edit{font-size:12px}
  .hop-page-heading h1{font-size:24px!important}
@@ -608,3 +610,6 @@
 .observatory-shell .lunar-chart-legend{font-size:max(15px,.9375rem)!important}
 .weather-chart text{font-size:var(--chart-label-size)!important}
 .observatory-shell .night-altitude-chart :is(.night-altitude-heading,.night-chart-readout,.night-moon-scale),.observatory-shell .season-altitude-key span,.observatory-shell .season-density-key span{font-size:var(--chart-label-size)!important}
+
+/* the phone-only "Now" chip in the time bar; wider screens use "Use current time" */
+.timebar-now{display:none}

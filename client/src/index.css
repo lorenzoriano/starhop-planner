@@ -2456,6 +2456,8 @@ button:disabled { opacity: .45; cursor: default; }
 .context-brightness select { width:100%; padding:10px; background:#10232e; border:1px solid #385968; border-radius:6px; color:#e2e5de; color-scheme:dark; }
 .context-brightness-suggest { margin-top:6px; border:1px solid #385968; padding:7px 10px; border-radius:5px; color:#c1d7ce; font-size:12px; text-align:left; }
 .context-apply { width:100%; padding:11px 16px; border-radius:6px; background:#a3c8bf; color:#10232e; font-weight:600; margin-top:10px; }
+.context-current-location { display:flex; align-items:center; justify-content:center; gap:8px; margin:0 0 4px; background:transparent; color:inherit; border:1px solid #a3c8bf; }
+.context-current-location:disabled { opacity:.7; }
 .context-presets { display:flex; flex-wrap:wrap; gap:10px; font-size:13px; }
 .context-presets button { border:1px solid #385968; padding:7px 10px; border-radius:5px; }
 .night-altitude-heading .night-moon-key,.context-moon-key,.night-moon-explanation,.night-moon-illumination { color:#a4abb6; }

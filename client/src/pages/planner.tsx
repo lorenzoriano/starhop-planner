@@ -803,10 +803,7 @@ export default function PlannerPage() {
     setLocating(true);
     navigator.geolocation.getCurrentPosition(
       (p) => {
-        update({
-          lat: Math.round(p.coords.latitude * 10000) / 10000,
-          lon: Math.round(p.coords.longitude * 10000) / 10000,
-        });
+        requestSiteChange(Math.round(p.coords.latitude * 10000) / 10000, Math.round(p.coords.longitude * 10000) / 10000, "Current location");
         setLocating(false);
       },
       () => {
@@ -1203,7 +1200,12 @@ export default function PlannerPage() {
               <MapPin size={15} />
               <h2>Where are you watching?</h2>
             </div>
-            <p className="location-name">{locationLabel}</p><ContextLocationButton>Site & sky brightness</ContextLocationButton>
+            <p className="location-name">{locationLabel}</p>
+            <button type="button" className="context-apply context-current-location" onClick={locate} disabled={locating}>
+              {locating ? <Loader2 size={15} className="animate-spin" aria-hidden="true" /> : <Crosshair size={15} aria-hidden="true" />}
+              {locating ? "Finding your location…" : "Use my current location"}
+            </button>
+            <ContextLocationButton>Site & sky brightness</ContextLocationButton>
             <SavedLocations context="Sky" locations={savedLocations} lat={lat} lon={lon} onChange={setSavedLocations} onSelect={site=>requestSiteChange(site.lat,site.lon,site.name)}/>
             <CoordinatePairInput onUse={(a,b)=>requestSiteChange(a,b)}/>
             <div className="grid grid-cols-2 gap-2 mt-3">
@@ -1222,18 +1224,6 @@ export default function PlannerPage() {
                 onChange={(v) => update({ lon: v })}
               />
             </div>
-            <button
-              className="text-action mt-3"
-              onClick={locate}
-              disabled={locating}
-            >
-              {locating ? (
-                <Loader2 size={13} className="animate-spin" />
-              ) : (
-                <Crosshair size={13} />
-              )}
-              Use my location
-            </button>
           </section>
           <section className="setup-section"><AppTextSizeControl/>
             <div className="section-label">
@@ -1491,7 +1481,7 @@ export default function PlannerPage() {
             </div>
           )}
           {page !== "night" && <section className={`session-timebar ${settings.timeMode === "planned" ? "planned" : ""}`} aria-label="Observing time" data-testid="session-timebar">
-            <div><Clock size={14} /><span><strong>{settings.timeMode === "live" ? "Live sky" : "Viewing planned sky"}</strong> · <ContextDateButton>{dateLabel} · {observingTime}</ContextDateButton><small>{timezone.replaceAll("_", " ")} (UTC{formatInTimeZone(date,timezone,"xxx")}) · <ContextLocationButton>{locationLabel}</ContextLocationButton></small></span></div>
+            <div><Clock size={14} /><span><strong>{settings.timeMode === "live" ? "Live sky" : "Viewing planned sky"}</strong> · <ContextDateButton>{dateLabel} · {observingTime}</ContextDateButton><small>{timezone.replaceAll("_", " ")} (UTC{formatInTimeZone(date,timezone,"xxx")}) · <ContextLocationButton>{locationLabel}</ContextLocationButton></small></span>{settings.timeMode==="planned"&&<button type="button" className="text-action timebar-now" onClick={useNow} aria-label="Set time to now">Now</button>}</div>
             <div className="session-time-actions"><button className="text-action" title={`Saving to: ${saveDestination}`} onClick={()=>setPage("night")}><CalendarDays size={13}/>{activeSession ? `Planner · ${night.length} ${night.length===1?"object":"objects"}` : "Open planner"}</button><button className="text-action" onClick={useNow}>{settings.timeMode === "live" ? "Refresh now" : "Use current time"}</button></div>
           </section>}
           {/* Tonight and Star hop: the time bar's Planner link names the night (title) and the add buttons say it: no third context bar. */}
