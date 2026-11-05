@@ -10,7 +10,7 @@ StarHop Planner — an astronomy observation planning tool that computes star-ho
 
 Remote: `origin` → https://github.com/lorenzoriano/starhop-planner (default branch `main`).
 - Pushing to `main` deploys the app to GitHub Pages (https://lorenzoriano.github.io/starhop-planner/) via `.github/workflows/deploy.yml`, which runs `npm run check`, `npm run lint` (0 errors required), `npm test` and `npm run build`. Run the same locally before pushing.
-- Push only when the owner asks. Feature work lands on `main` as a squash merge.
+- Always push to `main` after committing, once check, lint and tests pass locally (standing owner instruction). Feature work lands on `main` as a squash merge.
 
 ## Commands
 
