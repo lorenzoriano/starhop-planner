@@ -106,7 +106,7 @@ export function limitShort(l:Limitation,r:BinocularResult):string {
   const {optics,sky,alt,target}=r.inputs;
   switch(l.factor){
     case 'moon':return `Moon ${Math.round((sky.moon?.illumination??0)*100)}% lit, ${Math.round(r.skyBreakdown.moonSeparation??0)}° away`;
-    case 'light-pollution':return `Light pollution (${skyPresetFor(sky.zenithSqm).label.toLowerCase()} sky)`;
+    case 'light-pollution':return `Light pollution (${skyPresetFor(sky.zenithSqm).short} sky)`;
     case 'haze':return 'Hazy air dims it tonight';
     case 'altitude':return alt<=0?'Below the horizon':alt<30?`Low in the sky (${Math.round(alt)}°)`:`Only ${Math.round(alt)}° up — better when higher`;
     case 'twilight':return (sky.sunAlt??-90)>-.833?'Daylight':'Twilight still brightens the sky';

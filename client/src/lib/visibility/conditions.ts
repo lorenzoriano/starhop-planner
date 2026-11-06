@@ -12,6 +12,8 @@ export interface SkyPreset {
   id: SkyPresetId;
   /** "Suburb" */
   label: string;
+  /** Short lowercase form for "your … sky" ("bright-suburb"). */
+  short: string;
   /** The Milky Way / star cue the observer can check by eye. */
   cue: string;
   /** Moonless zenith sky brightness, mag/arcsec² (spec §5.1 Bortle/SQM table). */
@@ -22,12 +24,12 @@ export interface SkyPreset {
 
 /** Darkest last. Values sit inside the spec's Bortle/SQM ranges (§5.1) and the "Where are you?" table (§10). */
 export const SKY_PRESETS: readonly SkyPreset[] = [
-  { id: 'city', label: 'City centre', cue: 'Only the brightest stars; no Milky Way', sqm: 17.5, bortle: '8–9' },
-  { id: 'bright-suburb', label: 'Bright suburb or town', cue: 'Main constellation stars only; no Milky Way', sqm: 18.5, bortle: '7' },
-  { id: 'suburb', label: 'Suburb', cue: 'Plenty of stars, but the Milky Way is invisible', sqm: 19.5, bortle: '5–6' },
-  { id: 'rural-edge', label: 'Edge of town or village', cue: 'Milky Way faint overhead', sqm: 20.5, bortle: '4–5' },
-  { id: 'countryside', label: 'Dark countryside', cue: 'Milky Way obvious, with dark lanes and structure', sqm: 21.3, bortle: '3' },
-  { id: 'remote', label: 'Remote dark site', cue: 'Milky Way detailed down to the horizon; sky crowded with stars', sqm: 21.8, bortle: '1–2' },
+  { id: 'city', label: 'City centre', short: 'city-centre', cue: 'Only the brightest stars; no Milky Way', sqm: 17.5, bortle: '8–9' },
+  { id: 'bright-suburb', label: 'Bright suburb or town', short: 'bright-suburb', cue: 'Main constellation stars only; no Milky Way', sqm: 18.5, bortle: '7' },
+  { id: 'suburb', label: 'Suburb', short: 'suburban', cue: 'Plenty of stars, but the Milky Way is invisible', sqm: 19.5, bortle: '5–6' },
+  { id: 'rural-edge', label: 'Edge of town or village', short: 'edge-of-town', cue: 'Milky Way faint overhead', sqm: 20.5, bortle: '4–5' },
+  { id: 'countryside', label: 'Dark countryside', short: 'dark-countryside', cue: 'Milky Way obvious, with dark lanes and structure', sqm: 21.3, bortle: '3' },
+  { id: 'remote', label: 'Remote dark site', short: 'remote dark-site', cue: 'Milky Way detailed down to the horizon; sky crowded with stars', sqm: 21.8, bortle: '1–2' },
 ];
 
 /** The preset closest to a stored sky value (any value 17–22 stays allowed; the UI marks inexact matches). */
@@ -113,13 +115,18 @@ const K_PER_TAU = 1.086 * (550 / 510) ** 1.3;
 
 /** V-band extinction (mag/airmass) for a named haze level at this elevation (spec §4.2). Sea level: 0.20 … 0.58. */
 export function extinctionForTransparency(t: Transparency, elevationM = 0): number {
-  return kRayleigh(elevationM) + kAerosolNormal(elevationM) * TRANSPARENCY_OPTIONS[t - 1].aerosolScale + K_OZONE;
+  return extinctionForAerosol(TRANSPARENCY_OPTIONS[t - 1].aerosolScale, elevationM);
+}
+/** V-band extinction for Green's aerosol scale s_aer (1 = average night) at this elevation (spec §4.2). */
+export function extinctionForAerosol(aerosolScale: number, elevationM = 0): number {
+  return kRayleigh(elevationM) + kAerosolNormal(elevationM) * aerosolScale + K_OZONE;
 }
 
 export interface ForecastHaze {
   /** Extinction coefficient, mag/airmass. */
   k: number;
-  /** Aerosol optical depth at 550 nm used (measured or inferred). */
+  /** Aerosol optical depth at 550 nm used (measured or inferred), read as a sea-level-equivalent haze index:
+   *  s_aer = tau / TAU_NORMAL sets k at the site's elevation (see TAU_NORMAL). */
   tau: number;
   /** What the estimate rests on. */
   basis: 'aod' | 'visibility' | 'humidity';
@@ -128,35 +135,40 @@ export interface ForecastHaze {
 /** Above this the forecast visibility is usually capped (~24 km), so it says "no haze seen", not "crisp" (spec §4.2). */
 const VIS_UNINFORMATIVE_M = 20000, VIS_INFORMATIVE_M = 12000;
 const AEROSOL_HEIGHT_KM = 1.3;
+/**
+ * Optical depth of an average night at sea level, matching Green's aerosol term (0.12 mag at s_aer = 1): τ ≈ 0.10.
+ * Forecast haze is read relative to this, s_aer = τ / TAU_NORMAL, and then scaled with elevation by Green's
+ * formula. CAMS AOD (and the visibility/humidity proxies) describe a coarse grid cell whose surface is often near
+ * sea level for island or mountain sites, so applying the column τ in full at a high site would rate Mauna Kea
+ * hazier than an average night there. As a relative index, the label, k and the sky-glow haze factor
+ * (k / k_average) agree, and at equal haze a higher site always does better.
+ */
+export const TAU_NORMAL = 0.12 / K_PER_TAU;
 
 /**
- * Extinction from one forecast hour (spec §4.2):
+ * Extinction from one forecast hour (spec §4.2), via a sea-level-equivalent optical depth τ:
  * 1. CAMS aerosol optical depth (Open-Meteo air-quality `aerosol_optical_depth`), preferred; it already includes humidity.
  * 2. Else horizontal visibility (Koschmieder) – only trusted below ~20 km, since the product is capped; at long
- *    visibility it falls back to an average night for the elevation;
+ *    visibility it falls back to an average night;
  * 3. … with relative humidity (> 50 %) swelling that average-night aerosol.
- * Returns null when the hour has none of these.
+ * k = extinctionForAerosol(τ / TAU_NORMAL, elevation). Returns null when the hour has none of these.
  */
 export function extinctionFromForecast(hour: { aod?: number | null; visibilityM?: number | null; humidity?: number | null }, elevationM = 0): ForecastHaze | null {
-  const base = kRayleigh(elevationM) + K_OZONE;
-  if (hour.aod != null && Number.isFinite(hour.aod) && hour.aod >= 0) {
-    const tau = Math.min(hour.aod, 3);
-    return { k: base + K_PER_TAU * tau, tau, basis: 'aod' };
-  }
+  const result = (tau: number, basis: ForecastHaze['basis']): ForecastHaze => ({ k: extinctionForAerosol(tau / TAU_NORMAL, elevationM), tau, basis });
+  if (hour.aod != null && Number.isFinite(hour.aod) && hour.aod >= 0) return result(Math.min(hour.aod, 3), 'aod');
   const hasVis = hour.visibilityM != null && Number.isFinite(hour.visibilityM) && hour.visibilityM > 0;
   const hasRh = hour.humidity != null && Number.isFinite(hour.humidity);
   if (!hasVis && !hasRh) return null;
-  // Average-night aerosol at this elevation, swollen by humidity (hygroscopic growth, capped at RH 95 %).
+  // Average-night aerosol, swollen by humidity (hygroscopic growth, capped at RH 95 %).
   const rh = hasRh ? clamp(hour.humidity! / 100, 0, 0.95) : 0;
   const growth = rh > 0.5 ? ((1 - rh) / 0.5) ** -0.5 : 1;
-  const tauNormal = (kAerosolNormal(elevationM) / K_PER_TAU) * growth;
-  if (!hasVis) return { k: base + K_PER_TAU * tauNormal, tau: tauNormal, basis: 'humidity' };
+  const tauNormal = TAU_NORMAL * growth;
+  if (!hasVis) return result(tauNormal, 'humidity');
   const vKm = hour.visibilityM! / 1000;
   const tauVis = Math.max(3.912 / vKm - 0.0116, 0) * AEROSOL_HEIGHT_KM;
   // Long visibility only says "no obvious haze": blend towards the average night (never above what visibility allows).
   const w = clamp((hour.visibilityM! - VIS_INFORMATIVE_M) / (VIS_UNINFORMATIVE_M - VIS_INFORMATIVE_M), 0, 1);
-  const tau = Math.min((1 - w) * tauVis + w * Math.min(tauVis, tauNormal), 3);
-  return { k: base + K_PER_TAU * tau, tau, basis: 'visibility' };
+  return result(Math.min((1 - w) * tauVis + w * Math.min(tauVis, tauNormal), 3), 'visibility');
 }
 
 /** Haze level to show for an optical depth ("Forecast: Hazy"). Typical τ550: 0.05 very clear, 0.1–0.15 normal, 0.3 hazy, > 0.5 smoke (spec §4.2). */

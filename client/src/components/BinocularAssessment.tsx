@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import { Binoculars } from 'lucide-react';
 import * as Astro from 'astronomy-engine';
 import { formatInTimeZone } from 'date-fns-tz';
@@ -63,10 +63,10 @@ export function VisibilityChip({result,tonight=true}:{result:BinocularResult;ton
   </span>;
 }
 /** Card block: chip, what you will see, and at most one "held back by" line. */
-export function VisibilitySummary({result}:{result:BinocularResult}) {
+export function VisibilitySummary({result,reward}:{result:BinocularResult;reward?:ReactNode}) {
   const held=heldBack(result);
   return <div className="vis-summary">
-    <VisibilityChip result={result}/>
+    {reward?<div className="vis-dims"><span className="vis-dim"><span className="reward-dim-label">How rewarding</span>{reward}</span><span className="vis-dim"><span className="reward-dim-label">Tonight</span><VisibilityChip result={result}/></span></div>:<VisibilityChip result={result}/>}
     <p className="vis-appearance">{result.visibility.appearance}</p>
     {held&&<p className="vis-held"><span>Held back by</span> {limitShort(held,result)}</p>}
   </div>;

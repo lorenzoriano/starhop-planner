@@ -4,7 +4,8 @@ import {
   type UnifiedTarget,
   type ObservingMode,
 } from "./astronomy";
-import { binocularAssessment, type BinocularProfile, type FitRating } from "./binocular-assessment";
+import { binocularAssessment, opticsOf, type BinocularProfile, type FitRating } from "./binocular-assessment";
+import { rewardScore, tonightValue } from "./visibility/reward";
 import type { Observer, SkyInputs } from "./visibility/types";
 import { moonIllumination, moonState, type MoonState } from "./moon";
 import {
@@ -264,6 +265,8 @@ export interface RankTonightOptions {
   observer?: Observer;
 }
 /** Tonight's Best penalties on top of rankTargets' score (score points; rankTargets' altitude term is 0.65/°). */
+/** Binocular mode: score points per point of "Best tonight" value (reward 0..10 × visibility weight) around 5. */
+export const TONIGHT_REWARD_WEIGHT = 3;
 export const TONIGHT_PENALTY = {
   /** Per binocular rating 0..3 (excellent … telescope more rewarding). */
   rating: [0, 5, 20, 45] as const,
@@ -276,8 +279,10 @@ export const TONIGHT_PENALTY = {
 /**
  * Tonight's Best on the shared sky model: rankTargets' score (altitude, brightness, curated guides, binocular-
  * friendly) minus the Moon (glow × the Planner's per-category weight, and TONIGHT_PENALTY.moonFails when
- * moonVerdict fails), the twilight rule and, in binocular mode, the binocularAssessment rating. The journey engine
- * applies the same moonVerdict and rating model, so Tonight's top objects and tonight's journeys agree.
+ * moonVerdict fails), the twilight rule and, in binocular mode, the binocularAssessment rating plus
+ * TONIGHT_REWARD_WEIGHT × (Best-tonight value − 5): how rewarding the object is (lib/visibility/reward.ts) scaled by how
+ * well it is seen tonight, so showpieces outrank plain bright stars. The journey engine applies the same moonVerdict
+ * and rating model, so Tonight's top objects and tonight's journeys agree.
  */
 export function rankTonight(
   targets: UnifiedTarget[],
@@ -295,14 +300,17 @@ export function rankTonight(
       const { target, alt } = v;
       const verdict = moonVerdict({ alt, ra: target.ra, dec: target.dec, category: moonCategoryOfCategory(target.category) }, moon, opts.skyBrightness);
       const dark = darkEnough(moon.sunAlt, { stellar: isStellarCategory(target.category), mag: target.mag }, rule);
-      const rating = mode === "binocular" && opts.profile && alt > 0
-        ? binocularAssessment(target, opts.profile, opts.sky ? { alt, sky: opts.sky, observer: opts.observer } : { alt, moon, skyBrightness: opts.skyBrightness, observer: opts.observer }).rating
+      const assessment = mode === "binocular" && opts.profile && alt > 0
+        ? binocularAssessment(target, opts.profile, opts.sky ? { alt, sky: opts.sky, observer: opts.observer } : { alt, moon, skyBrightness: opts.skyBrightness, observer: opts.observer })
         : null;
+      const rating = assessment ? assessment.rating : null;
+      const reward = assessment && opts.profile ? tonightValue(rewardScore(target, opticsOf(opts.profile)).reward, assessment.visibility) : null;
       const score = v.score
         - verdict.glow * plannerMoonWeight(target.category, target.mag)
         - (verdict.ok ? 0 : TONIGHT_PENALTY.moonFails)
         - (dark ? 0 : TONIGHT_PENALTY.twilight)
-        - (rating === null ? 0 : TONIGHT_PENALTY.rating[rating]);
+        - (rating === null ? 0 : TONIGHT_PENALTY.rating[rating])
+        + (reward === null ? 0 : TONIGHT_REWARD_WEIGHT * (reward - 5));
       return { ...v, score, rating, moon: verdict, darkEnough: dark, feasible: alt >= minAlt && dark && verdict.ok };
     })
     .sort((a, b) => b.score - a.score || a.target.id.localeCompare(b.target.id));

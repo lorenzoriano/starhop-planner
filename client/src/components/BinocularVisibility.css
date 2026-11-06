@@ -50,3 +50,21 @@
 @media(max-width:480px) {
   .vis-table > div { grid-template-columns:minmax(0,1fr); gap:2px; }
 }
+
+/* How rewarding (lib/visibility/reward.ts): the object itself, independent of tonight. Word + five dots; the dots only
+   repeat the word (red light keeps the text). Kept visually distinct from the 4-bar "Tonight" meter. */
+.vis-dims { display:flex; flex-wrap:wrap; align-items:center; gap:6px 14px; }
+.vis-dim { display:inline-flex; align-items:center; gap:6px; min-width:0; }
+.reward-dim-label { color:#8da8b1; font-size:11px; letter-spacing:.04em; text-transform:uppercase; white-space:nowrap; }
+.reward-chip { display:inline-flex; align-items:center; gap:7px; padding:3px 10px 3px 8px; border:1px solid #5a5236; border-radius:999px; background:#1f1c12; color:#ead9ae; font-size:12px; line-height:1.4; white-space:nowrap; }
+.reward-chip strong { font-weight:600; }
+.reward-dots { display:inline-grid; grid-template-columns:repeat(5,7px); gap:2px; }
+.reward-dots i { display:block; width:7px; height:7px; border-radius:50%; background:#3a3626; }
+.reward-dots i.on { background:#e0c27e; }
+.reward-dots-0, .reward-dots-1 { border-color:#3c4a50; background:#131c21; color:#b4c2c6; }
+.reward-dots-0 .reward-dots i.on, .reward-dots-1 .reward-dots i.on { background:#9aabb0; }
+.reward-why { display:grid; gap:6px; margin:4px 0 14px; padding:10px 12px; border:1px solid #3b3a2c; border-radius:10px; background:#17170f; }
+.reward-why-head { display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; }
+.reward-why-head small { color:#8da8b1; font-size:12px; }
+.reward-why p { margin:0; color:#e2e5de; font-size:13.5px; line-height:1.5; }
+.reward-why p strong { color:#ead9ae; font-weight:600; }

@@ -5,7 +5,9 @@ import {TargetNightSuggestions} from "./TargetNightSuggestions";
 import { ContextDateButton, ContextLocationButton, ObservingContextScope } from "./ObservingContext";
 import { PhotoFieldPreview } from "./PhotoFieldPreview";
 import { BinocularAssessment, VisibilitySummary } from "./BinocularAssessment";
-import { binocularAssessment, skyInputsFrom, type BinocularProfile, type BinocularResult } from "@/lib/binocular-assessment";
+import { binocularAssessment, opticsOf, skyInputsFrom, type BinocularProfile, type BinocularResult } from "@/lib/binocular-assessment";
+import { rewardScore, tonightValue, type RewardResult } from "@/lib/visibility/reward";
+import { RewardChip, RewardWhy } from "./RewardBadge";
 import type { Observer, SkyInputs } from "@/lib/visibility/types";
 import type { ReactNode } from "react";
 import { objectSummaryText } from "@/lib/object-info";
@@ -160,6 +162,9 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
   // One visibility estimate per pick at its shown time (never recomputed inside sort comparators).
   const assessments=useMemo(()=>new Map<string,BinocularResult>(positioned.map(p=>[p.targetId,binocularAssessment(p.target,profile,{alt:p.alt,sky:skyFor(windows.get(p.targetId)?.bestAt??at),observer})])),[positioned,profile,skyFor,windows,at,observer]);
   const assessmentOf=(p:BinocularPick)=>assessments.get(p.targetId)!;
+  // How rewarding each object is (condition-independent, lib/visibility/reward.ts), with a modest optics adjustment.
+  const rewards=useMemo(()=>{const optics=opticsOf(profile);return new Map<string,RewardResult>(collection.map(p=>[p.targetId,rewardScore(p.target,optics)]));},[collection,profile]);
+  const rewardOf=(p:BinocularPick)=>rewards.get(p.targetId)!;
   const positionTime=(p:BinocularPick)=>`${formatInTimeZone(timeFor(p),timezone,"HH:mm")}${formatInTimeZone(timeFor(p),timezone,"yyyy-MM-dd")!==observingDay?" +1d":""}`;
   const conditions = useMemo(() => skyConditions(lat, lon, at), [lat, lon, at]);
   const sampleConditions=useMemo(()=>skyConditions(lat,lon,sampleAt),[lat,lon,sampleAt]);
@@ -178,7 +183,10 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
     if(sort==="time")return timeFor(a).getTime()-timeFor(b).getTime();
     const left=assessmentOf(a),right=assessmentOf(b);
     if(sort==="moon")return left.glow-right.glow||right.visibility.score-left.visibility.score;
-    if(sort==="best")return right.visibility.score-left.visibility.score||b.alt-a.alt;
+    // Best tonight: how rewarding × how well it is seen tonight (tie-break: visibility score).
+    if(sort==="best")return tonightValue(rewardOf(b).reward,right.visibility)-tonightValue(rewardOf(a).reward,left.visibility)||b.alt-a.alt;
+    if(sort==="reward")return rewardOf(b).reward-rewardOf(a).reward||right.visibility.score-left.visibility.score;
+    if(sort==="easiest")return right.visibility.score-left.visibility.score||b.alt-a.alt;
     return b.alt-a.alt;
   });
   const searchStatus=catalogSearchDiagnostics(query,searchTargets,picks.map(p=>p.target),target=>{
@@ -301,7 +309,7 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
           <select aria-label="Binocular observing difficulty" value={level} onChange={(e) => { setLevel(e.target.value); if (e.target.value === "large") setIncludeLargeTargets(true); setVisibleCount(12); }}><option value="all">All observing levels</option>{Object.entries(LEVEL_LABELS).map(([key, name]) => <option key={key} value={key}>{name}</option>)}</select>
           <span className="binocular-profile-summary">Showing targets for your {profile.aperture} mm binoculars</span><button className={`filter-toggle ${showLargeTargets ? "active" : ""}`} aria-pressed={showLargeTargets} onClick={() => { setIncludeLargeTargets(!showLargeTargets); setVisibleCount(12); }}><Binoculars size={14} /> {showLargeTargets?"Hide 80 mm targets":"Include 80 mm targets"}</button>
           <button className={`filter-toggle ${seasonalOnly ? "active" : ""}`} aria-pressed={seasonalOnly} onClick={() => setSeasonalOnly(!seasonalOnly)}><Clock size={14} /> Monthly picks</button>
-          <label>Sort<select aria-label="Sort binocular targets" value={sort} onChange={event=>setSort(event.target.value)}><option value="best">Best tonight</option><option value="time">Best time</option><option value="moon">Moon-friendly</option><option value="altitude">Highest altitude</option></select></label>
+          <label>Sort<select aria-label="Sort binocular targets" value={sort} onChange={event=>setSort(event.target.value)}><option value="best">Best tonight</option><option value="reward">Most rewarding</option><option value="easiest">Easiest to see tonight</option><option value="time">Best time</option><option value="moon">Moon-friendly</option><option value="altitude">Highest altitude</option></select></label>
           <div role="group" aria-label="Binocular target layout"><button aria-pressed={view==="cards"} onClick={()=>setView("cards")}>Cards</button><button aria-pressed={view==="list"} onClick={()=>setView("list")}>List</button></div>
         </div>
 
@@ -320,7 +328,7 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
         </div>
 
         </details>
-        <div className="binocular-visibility-bar"><button type="button" aria-pressed={hideNotVisible} onClick={()=>{setHideNotVisible(!hideNotVisible);setVisibleCount(12);}}>{hideNotVisible?<EyeOff size={14}/>:<Eye size={14}/>} Hide not visible tonight</button>{hideNotVisible&&hiddenCount>0&&<span>{hiddenCount} hidden for these conditions</span>}<span>Sorted: {sort==="best"?"best tonight":sort==="time"?"best time":sort==="moon"?"Moon-friendly":"highest altitude"}</span></div>
+        <div className="binocular-visibility-bar"><button type="button" aria-pressed={hideNotVisible} onClick={()=>{setHideNotVisible(!hideNotVisible);setVisibleCount(12);}}>{hideNotVisible?<EyeOff size={14}/>:<Eye size={14}/>} Hide not visible tonight</button>{hideNotVisible&&hiddenCount>0&&<span>{hiddenCount} hidden for these conditions</span>}<span>Sorted: {sort==="best"?"best tonight (how rewarding × how well seen)":sort==="reward"?"most rewarding":sort==="easiest"?"easiest to see tonight":sort==="time"?"best time":sort==="moon"?"Moon-friendly":"highest altitude"}</span></div>
         {loading ? <div className="panel empty-state"><Binoculars size={28} /><p>Opening the binocular field guide…</p></div> : !picks.length ? (
           <div className="panel empty-state"><Star size={28} /><h3>A different window may open the sky.</h3><p>{query?searchStatus.message:hiddenCount>0?`${hiddenCount} ${hiddenCount===1?"target is":"targets are"} up but not visible in these conditions${conditions.isDark?"":` — the Sun is ${Math.round(conditions.sunAlt)}° ${conditions.sunAlt>0?"up":"below the horizon, still twilight"}`}. Try a later time, “During the night”, or show them anyway.`:"No targets match these filters at this site. Try a lower altitude, another time window or a different date. Monthly picks can also narrow the results."}</p>{!query&&hiddenCount>0&&<Button variant="outline" onClick={()=>setHideNotVisible(false)}>Show not-visible targets</Button>}{query&&searchStatus.kind==="filtered"&&<Button variant="outline" onClick={revealSearchMatch}>Show {searchStatus.matches[0].target.name}</Button>}<Button variant="outline" onClick={reset}>Browse all binocular targets</Button></div>
         ) : (
@@ -328,7 +336,7 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
             {picks.slice(0, visibleCount).map((p) => <article className={`binocular-target-card level-${p.level}`} key={p.targetId} style={view==="list"?{display:"grid",gridTemplateColumns:"minmax(0,1fr) auto",alignItems:"center"}:undefined}>
               <button className="binocular-target-main" onClick={() => openTarget(p.targetId)} aria-label={`Explore binocular target ${displayName(p.target)}`} data-testid={`binocular-target-${p.targetId}`}>
                 {view==="cards"&&<div className="binocular-target-field"><BinocularPhoto id={p.targetId} name={displayName(p.target)} /><span className="binocular-family-label">{FAMILY_LABELS[p.family]}</span><span className="binocular-photo-label" title={opticalPhotoCaption(p.targetId)}>{primaryOpticalImage(p.targetId)?photoCaption(primaryOpticalImage(p.targetId)!):opticalPhotoCaption(p.targetId)}</span></div>}
-                <div className="binocular-target-body"><span className="eyebrow">{[targetDesignation(p.target).replace(/^(NGC|IC|Mel|Cr|Tr|Stock)(?=\d)/,"$1 "),getConstellationName(p.target.con)].filter(Boolean).join(" · ")}</span><h3>{objectName(p.target).name}</h3><VisibilitySummary result={assessmentOf(p)}/><div className="binocular-card-position"><span className={p.alt < 15 ? "low" : ""}>{p.neverRises ? "Never rises here" : p.alt < 0 ? `Below horizon at ${positionTime(p)}` : `${Math.round(p.alt)}° ${compassLabel(p.az)} at ${positionTime(p)}`}</span><span>{p.variable ? "Variable star" : `mag ${p.target.mag.toFixed(1)}`}{angularSizeLabel(p.target.size)?` · ${angularSizeLabel(p.target.size)} across`:""}</span></div>{view==="cards"&&eventTimes(p)}</div>
+                <div className="binocular-target-body"><span className="eyebrow">{[targetDesignation(p.target).replace(/^(NGC|IC|Mel|Cr|Tr|Stock)(?=\d)/,"$1 "),getConstellationName(p.target.con)].filter(Boolean).join(" · ")}</span><h3>{objectName(p.target).name}</h3><VisibilitySummary result={assessmentOf(p)} reward={<RewardChip reward={rewardOf(p)} kind={assessmentOf(p).inputs.target.kind}/>}/><div className="binocular-card-position"><span className={p.alt < 15 ? "low" : ""}>{p.neverRises ? "Never rises here" : p.alt < 0 ? `Below horizon at ${positionTime(p)}` : `${Math.round(p.alt)}° ${compassLabel(p.az)} at ${positionTime(p)}`}</span><span>{p.variable ? "Variable star" : `mag ${p.target.mag.toFixed(1)}`}{angularSizeLabel(p.target.size)?` · ${angularSizeLabel(p.target.size)} across`:""}</span></div>{view==="cards"&&eventTimes(p)}</div>
               </button>
               {view==="cards"&&<div className="binocular-card-chart"><CompactNightCurve target={p.target} lat={lat} lon={lon} night={visibilityMode==="range"?window:nightWindow} range={visibilityMode==="range"}/><details><summary>Expand altitude & Moon graph</summary><NightAltitudeChart target={p.target} lat={lat} lon={lon} night={visibilityMode==="range"?window:nightWindow} timezone={timezone} selectedAt={visibilityMode==="range"?timeFor(p):undefined} skyBrightness={skyBrightness} moonAt={nightMoon}/></details></div>}
               <div className="target-card-object-actions"><ObjectActionRow variant="compact" objectId={p.targetId} name={displayName(p.target)} actions={verbs} at={timeFor(p)} omit={CARD_ACTION_OMIT} saved={savedAt(p.targetId,timeFor(p))} onToggleSave={() => onSave(p.targetId,timeFor(p))} onHop={() => onPlan(p.targetId,timeFor(p))} hopDisabled={p.alt<5?"Below the 5° altitude limit at this time":undefined}/></div>
@@ -354,6 +362,7 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
             <DialogHeader><span className="eyebrow">{[FAMILY_LABELS[detail.family],targetDesignation(detail.target).replace(/^(NGC|IC|Mel|Cr|Tr|Stock)(?=\d)/,"$1 ")].filter(Boolean).join(" · ")}</span><DialogTitle>{objectName(detail.target).name}</DialogTitle><DialogDescription>{getConstellationName(detail.target.con)} · {LEVEL_LABELS[detail.level]} · Suggested equipment: {detail.equipment}</DialogDescription></DialogHeader>
             <div className="binocular-detail-sticky-actions"><ObjectActionRow className="binocular-quick-actions" variant="full" objectId={detail.targetId} name={displayName(detail.target)} actions={verbs} at={detailAt} omit={actions?[]:["catalog","images"]} saved={savedAt(detail.targetId,detailAt)} onToggleSave={()=>onSave(detail.targetId,detailAt)} onHop={()=>onPlan(detail.targetId,detailAt)} hopDisabled={detail.alt<5?"Below the 5° altitude limit at this time":undefined} onBefore={()=>setOpened(null)}/></div>
             <p className="binocular-detail-impression">{objectSummaryText(detail.targetId,{target:detail.target})||detail.impression}</p>
+            <RewardWhy reward={rewardOf(detail)} kind={assessmentOf(detail).inputs.target.kind}/>
             <BinocularAssessment target={detail.target} profile={profile} alt={detail.alt} moon={nightMoon(detailAt)} skyBrightness={skyBrightness} result={assessmentOf(detail)} at={detailAt} lat={lat} lon={lon} timezone={timezone} onEditSetup={onEditSetup}/>
             {actions&&<div onClickCapture={event=>{if((event.target as HTMLElement).closest("button"))setOpened(null);}}><Suspense fallback={null}><ObjectJourneyLinks key={detail.targetId} objectId={detail.targetId} actions={actions} sky={journeySky}/></Suspense></div>}
             <details className="binocular-detail-more"><summary>Finder, observing notes & sources</summary>

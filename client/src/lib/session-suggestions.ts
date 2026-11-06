@@ -1,4 +1,5 @@
-import { binocularAssessment, type BinocularProfile } from './binocular-assessment';
+import { binocularAssessment, opticsOf, type BinocularProfile } from './binocular-assessment';
+import { rewardScore } from './visibility/reward';
 import type { Observer, SkyInputs } from './visibility/types';
 import { eqToHorizontal, type UnifiedTarget } from './astronomy';
 import { moonState } from './moon';
@@ -7,22 +8,25 @@ import type { ObservingSession } from './session-planner';
 export type SessionSuggestion = {
   target:UnifiedTarget; at:Date; alt:number; fit:number; curated:number; dark:boolean;
   visualScale:number; brightnessMargin:number; glow:number;
+  /** How rewarding the object is in these binoculars (lib/visibility/reward.ts, 0..10, condition-independent). */
+  reward:number;
 };
 
 /** Full conditions for the session site, when the caller has them (the Planner's useVisibilityConditions). */
 export interface SuggestionConditions { skyAt?:(at:Date)=>SkyInputs; observer?:Observer }
 /**
  * Rank the visual reward for normal binoculars. Everything comfortably visible tonight (Excellent, Good or Fair:
- * fit ≤ 1) counts as one tier, ordered by the curated level and how much of the field it fills; altitude breaks
- * otherwise equal picks. Without `conditions.skyAt` the sky is `skyBrightness` with the sampled Moon.
+ * fit ≤ 1) counts as one tier, ordered by how rewarding the object is (lib/visibility/reward.ts; the tier already
+ * stands for "seen well enough tonight"), then the curated level and how much of the field it fills; altitude breaks otherwise equal picks. Without `conditions.skyAt` the sky is `skyBrightness` with the sampled Moon.
  */
 export function sessionBinocularSuggestions(session:ObservingSession, targets:UnifiedTarget[], profile:BinocularProfile, skyBrightness=19.0, moonAt=(at:Date)=>moonState(session.lat,session.lon,at), conditions:SuggestionConditions={}):SessionSuggestion[] {
   const start=+new Date(session.startAt),end=start+session.durationMinutes*60_000;
   const samples:Array<{at:Date;moon:ReturnType<typeof moonState>}>=[];
   for(let ms=start;ms<=end;ms+=15*60_000){const at=new Date(ms);samples.push({at,moon:moonAt(at)});}
   const tier=(s:SessionSuggestion)=>Math.max(1,s.fit);
-  const compare=(a:SessionSuggestion,b:SessionSuggestion)=>tier(a)-tier(b)||Number(b.dark)-Number(a.dark)||a.curated-b.curated||b.visualScale-a.visualScale||b.brightnessMargin-a.brightnessMargin||a.glow-b.glow||b.alt-a.alt||a.target.name.localeCompare(b.target.name);
+  const compare=(a:SessionSuggestion,b:SessionSuggestion)=>tier(a)-tier(b)||Number(b.dark)-Number(a.dark)||b.reward-a.reward||a.curated-b.curated||b.visualScale-a.visualScale||b.brightnessMargin-a.brightnessMargin||a.glow-b.glow||b.alt-a.alt||a.target.name.localeCompare(b.target.name);
   const picks:SessionSuggestion[]=[];
+  const optics=opticsOf(profile);
   for(const target of targets){
     if(target.id.startsWith('star:')||target.mag>9||session.items.some(item=>item.id===target.id))continue;
     let best:SessionSuggestion|undefined;
@@ -42,7 +46,7 @@ export function sessionBinocularSuggestions(session:ObservingSession, targets:Un
       // Clusters need surrounding field to show their boundary; bright stellar
       // patterns can use the full field because the pattern supplies its guides.
       const visualScale=dimensions?framing*Math.min(1,dimensions.major*profile.magnification/360)/Math.max(1,dimensions.major/(profile.fov*60)):0;
-      const pick:SessionSuggestion={target,at,alt,fit:assessment.rating,curated,dark:moon.sunAlt<=-18,visualScale,brightnessMargin:assessment.pointLimit-target.mag,glow:assessment.glow};
+      const pick:SessionSuggestion={target,at,alt,fit:assessment.rating,curated,dark:moon.sunAlt<=-18,visualScale,brightnessMargin:assessment.pointLimit-target.mag,glow:assessment.glow,reward:rewardScore(target,optics).reward};
       if(!best||compare(pick,best)<0)best=pick;
     }
     if(best)picks.push(best);

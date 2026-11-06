@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   SKY_PRESETS, skyPresetFor, isPresetSqm, sqmFromNelm, nelmFromSqm, sqmFromQuiz,
-  TRANSPARENCY_OPTIONS, extinctionForTransparency, extinctionFromForecast, transparencyFromForecast, transparencyForTau,
+  TRANSPARENCY_OPTIONS, TAU_NORMAL, extinctionForTransparency, extinctionFromForecast, transparencyFromForecast, transparencyForTau,
   observerFor, resolveSkyInputs,
 } from '../visibility/conditions';
 
@@ -80,6 +80,53 @@ describe('haze and extinction', () => {
     expect(transparencyFromForecast({ visibilityM: 24000, humidity: 95 })!.level).toBe(4);
     expect(extinctionFromForecast({}, 0)).toBeNull();
     expect(extinctionFromForecast({ aod: null, visibilityM: null, humidity: null }, 0)).toBeNull();
+  });
+});
+
+describe('forecast haze is a relative index, scaled by elevation', () => {
+  const MAUNA_KEA = 4169, DENVER = 1600;
+  it('pins the reference optical depth to Green\'s average night (k_aer 0.12 at sea level)', () => {
+    expect(TAU_NORMAL).toBeCloseTo(0.1, 2);
+    expect(extinctionFromForecast({ aod: TAU_NORMAL }, 0)!.k).toBeCloseTo(extinctionForTransparency(3, 0), 6);
+    expect(extinctionFromForecast({ aod: TAU_NORMAL }, MAUNA_KEA)!.k).toBeCloseTo(extinctionForTransparency(3, MAUNA_KEA), 6);
+  });
+  it('at equal haze a higher site always has less extinction, and the label does not depend on elevation', () => {
+    for (const aod of [0.02, 0.07, 0.1, 0.2, 0.48, 1.2]) {
+      const [sea, denver, mk] = [0, DENVER, MAUNA_KEA].map((h) => extinctionFromForecast({ aod }, h)!.k);
+      expect(denver).toBeLessThan(sea);
+      expect(mk).toBeLessThan(denver);
+      expect(transparencyFromForecast({ aod }, MAUNA_KEA)!.level).toBe(transparencyFromForecast({ aod }, 0)!.level);
+    }
+  });
+  it('keeps k on the same side of the elevation\'s average night as the label (Clear below, Hazy above)', () => {
+    for (const h of [0, DENVER, MAUNA_KEA]) {
+      const normal = extinctionForTransparency(3, h);
+      expect(extinctionFromForecast({ aod: 0.07 }, h)!.k).toBeLessThan(normal);
+      expect(extinctionFromForecast({ aod: 0.3 }, h)!.k).toBeGreaterThan(normal);
+    }
+    // Mauna Kea, CAMS AOD 0.07 ("Clear"): below its own average night (≈ 0.110), not 0.186 as with the full column τ.
+    const mk = extinctionFromForecast({ aod: 0.07 }, MAUNA_KEA)!;
+    expect(transparencyFromForecast({ aod: 0.07 }, MAUNA_KEA)!.label).toBe('Clear');
+    expect(mk.k).toBeLessThan(extinctionForTransparency(3, MAUNA_KEA));
+    expect(mk.k).toBeGreaterThan(extinctionForTransparency(1, MAUNA_KEA));
+    // Denver-like (1.6 km, AOD 0.1 ≈ an average night): a little better than sea level.
+    const denver = extinctionFromForecast({ aod: 0.1 }, DENVER)!.k, sea = extinctionFromForecast({ aod: 0.1 }, 0)!.k;
+    expect(denver).toBeLessThan(sea - 0.05);
+    expect(denver).toBeGreaterThan(sea - 0.15);
+    // Delhi smoke (AOD 0.48, 217 m) stays Smoky and far worse than either.
+    const delhi = extinctionFromForecast({ aod: 0.48 }, 217)!.k;
+    expect(transparencyFromForecast({ aod: 0.48 }, 217)!.label).toBe('Smoky / very hazy');
+    expect(delhi).toBeGreaterThan(0.6);
+    expect(delhi).toBeGreaterThan(2 * sea);
+  });
+  it('scales the visibility and humidity fallbacks the same way', () => {
+    expect(extinctionFromForecast({ humidity: 40 }, MAUNA_KEA)!.k).toBeCloseTo(extinctionForTransparency(3, MAUNA_KEA), 6);
+    expect(extinctionFromForecast({ visibilityM: 24140, humidity: 40 }, MAUNA_KEA)!.k).toBeCloseTo(extinctionForTransparency(3, MAUNA_KEA), 6);
+    for (const hour of [{ humidity: 95 }, { visibilityM: 8000 }, { visibilityM: 15000, humidity: 80 }]) {
+      const sea = extinctionFromForecast(hour, 0)!, high = extinctionFromForecast(hour, MAUNA_KEA)!;
+      expect(high.tau).toBeCloseTo(sea.tau, 9);
+      expect(high.k).toBeLessThan(sea.k);
+    }
   });
 });
 

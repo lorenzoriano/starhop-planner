@@ -169,7 +169,11 @@ describe("rankTonight (Tonight's Best on the shared model)", () => {
     expect(m42.moon.moonUp).toBe(true);
     expect(m42.moon.glow).toBe(moonGlow(moon, m42.alt, m42.moon.separation, 21));
     const betel = tonight.find((t) => t.target.id === "STAR-Betelgeuse")!;
-    expect(tonight.indexOf(betel)).toBeLessThan(tonight.indexOf(m42));
+    const m31 = tonight.find((t) => t.target.id === "M31")!, m45 = tonight.find((t) => t.target.id === "M45")!;
+    // Moonlight drops the faint glow (M31, Difficult) below a bright star; M42's bright core stays Good, so its
+    // reward (lib/visibility/reward.ts) keeps it above Betelgeuse but below the moon-proof Pleiades.
+    expect(tonight.indexOf(betel)).toBeLessThan(tonight.indexOf(m31));
+    expect(tonight.indexOf(m45)).toBeLessThan(tonight.indexOf(m42));
     expect(tonight.every((t) => t.rating !== null || t.alt <= 0)).toBe(true);
     for (let i = 1; i < tonight.length; i++) expect(tonight[i - 1].score).toBeGreaterThanOrEqual(tonight[i].score);
   });

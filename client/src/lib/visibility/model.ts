@@ -22,6 +22,7 @@ import {
   type VisibilityLevel,
   type VisibilityTarget,
 } from './types';
+import { skyPresetFor } from './conditions';
 
 // ───────────────────────────── constants ─────────────────────────────
 
@@ -482,8 +483,6 @@ const fmt1 = (x: number) => x.toFixed(1);
 const times = (dMag: number) => { const f = 10 ** (0.4 * Math.abs(dMag)); return `about ${f < 3 ? f.toFixed(1) : Math.round(f)}×`; };
 /** Share of the light lost to `dMag` of dimming, as a rounded percentage. */
 const lostPct = (dMag: number) => Math.round((1 - 10 ** (-0.4 * Math.max(0, dMag))) * 100);
-/** Plain name for a zenith sky brightness (mirrors the SKY_PRESETS cues in ./conditions.ts). */
-const skyName = (sqm: number) => sqm < 18 ? 'city' : sqm < 19 ? 'bright town' : sqm < 20 ? 'suburban' : sqm < 21 ? 'edge-of-town' : 'country';
 /** Angular size in words: "1.5°" or "40′". */
 const sizeWords = (arcmin: number) => arcmin >= 60 ? `${fmt1(arcmin / 60)}°` : `${Math.round(arcmin)}′`;
 const MIN_GAIN = 0.1;
@@ -502,7 +501,7 @@ function conditionLimits(t: VisibilityTarget, optics: Optics, sky: SkyInputs, al
   }
   if (sky.zenithSqm < IDEAL.darkSiteSqm) {
     const e = evaluate(t, optics, { ...sky, zenithSqm: IDEAL.darkSiteSqm }, alt, obs);
-    push('light-pollution', e, `Light pollution: your ${skyName(sky.zenithSqm)} sky is ${times(IDEAL.darkSiteSqm - sky.zenithSqm)} brighter than a dark site.`);
+    push('light-pollution', e, `Light pollution: your ${skyPresetFor(sky.zenithSqm).short} sky is ${times(IDEAL.darkSiteSqm - sky.zenithSqm)} brighter than a dark site.`);
   }
   const crispK = extinctionCoefficient(sky.elevationM, IDEAL.crispAerosol);
   if (sky.extinctionK > crispK) {
@@ -511,7 +510,7 @@ function conditionLimits(t: VisibilityTarget, optics: Optics, sky: SkyInputs, al
   }
   if (alt < IDEAL.alt) {
     const e = evaluate(t, optics, sky, IDEAL.alt, obs);
-    push('altitude', e, `${alt < 30 ? 'Low in the sky' : 'Not at its highest'} (${Math.round(alt)}° up): it shines through more air, which takes about ${lostPct(now.kX)}% of its light. It looks better when higher.`);
+    push('altitude', e, `${alt < 30 ? 'Low in the sky' : 'Not at its highest'} (${Math.round(alt)}° up): it shines through more air than overhead, which takes about ${lostPct(sky.extinctionK * (airmass(alt) - 1))}% more of its light. It looks better when higher.`);
   }
   if (sky.sunAlt !== undefined && sky.sunAlt > IDEAL.sunAlt) {
     const e = evaluate(t, optics, { ...sky, sunAlt: undefined }, alt, obs);

@@ -13,6 +13,7 @@ import {
   steadinessPenalty,
   stellarLimit,
 } from '../visibility/model';
+import { extinctionFromForecast } from '../visibility/conditions';
 import { toVisibilityTarget } from '../visibility/targets';
 import type { Observer, Optics, SkyInputs, Support, VisibilityTarget } from '../visibility/types';
 import { parseDec, parseRA } from './test-helpers';
@@ -248,6 +249,40 @@ describe('conditions move the margin the right way', () => {
     expect(scores[0].score).toBeLessThan(scores[1].score);
     expect(scores[1].score).toBeLessThan(scores[2].score);
     for (const s of scores) expect(s.score).toBeGreaterThanOrEqual(0), expect(s.score).toBeLessThanOrEqual(100);
+  });
+});
+
+describe('forecast haze at high and low sites', () => {
+  // M45 at 37°, same 19.0 sky setting; CAMS AOD read as a relative haze index (see extinctionFromForecast).
+  const site = (elevationM: number, aod: number): SkyInputs =>
+    ({ zenithSqm: 19, elevationM, extinctionK: extinctionFromForecast({ aod }, elevationM)!.k, extinctionSource: 'forecast', moon: null });
+  const ALT37 = 37;
+  it('Mauna Kea beats San Francisco at equal haze; Delhi smoke is much worse', () => {
+    const sf = est(M45, site(14, 0.07), binos(), ALT37), mk = est(M45, site(4169, 0.07), binos(), ALT37);
+    const delhi = est(M45, site(217, 0.48), binos(), ALT37);
+    expect(mk.limitingMag).toBeGreaterThan(sf.limitingMag + 0.1);
+    expect(mk.margin).toBeGreaterThan(sf.margin);
+    expect(delhi.limitingMag).toBeLessThan(sf.limitingMag - 1);
+    // A clear night never brightens the light-polluted sky above the user's setting (glow factor k/k_avg < 1).
+    for (const h of [14, 1600, 4169]) expect(skyBrightnessAt(site(h, 0.07), 90)).toBeGreaterThan(19);
+    expect(skyBrightnessAt(site(217, 0.48), 90)).toBeLessThan(19);
+  });
+  it('the altitude line quotes only the extra loss from being low; the haze line only the haze part', () => {
+    const s = site(217, 0.48), e = est(M45, s, binos(), ALT37);
+    const pct = (factor: string) => Number(e.limits.find((l) => l.factor === factor)!.text.match(/about (\d+)%/)![1]);
+    const X = airmass(ALT37), k = s.extinctionK, crisp = extinctionCoefficient(217, 0.3);
+    const lost = (d: number) => Math.round((1 - 10 ** (-0.4 * d)) * 100);
+    expect(pct('altitude')).toBe(lost(k * (X - 1)));
+    expect(pct('haze')).toBe(lost((k - crisp) * X));
+    expect(pct('altitude')).toBeLessThan(lost(k * X));
+    expect(e.limits.find((l) => l.factor === 'altitude')!.text).toMatch(/more air than overhead/);
+  });
+  it('names the light pollution after the selected sky preset', () => {
+    const lp = (sqm: number) => est(M45, sky(sqm), binos(), ALT37).limits.find((l) => l.factor === 'light-pollution')?.text;
+    expect(lp(18.5)).toMatch(/your bright-suburb sky is about 21× brighter than a dark site/);
+    expect(lp(19)).toMatch(/your bright-suburb sky/);
+    expect(lp(19.5)).toMatch(/your suburban sky/);
+    expect(lp(17.5)).toMatch(/your city-centre sky/);
   });
 });
 
