@@ -4,6 +4,7 @@ import {
   type LittleDipperAnswer, type MilkyWayAnswer, type TransparencyMode,
 } from '@/lib/visibility/conditions';
 import type { Transparency } from '@/lib/visibility/types';
+import { LocalHorizonPanel } from './LocalHorizonPanel';
 
 /** Compact "How dark is your sky?" select (setup drawer, Moon tab). Any stored value stays selectable. */
 export function SkyDarknessSelect({ value, onChange, label = 'How dark is your sky?', className }: { value: number; onChange: (sqm: number) => void; label?: string; className?: string }) {
@@ -16,13 +17,16 @@ export function SkyDarknessSelect({ value, onChange, label = 'How dark is your s
 
 /**
  * Site dialog block: sky darkness presets with the Milky Way cue, a two-question helper, tonight's haze and the
- * site elevation. `brightness` is the dialog's draft (saved per site on apply); haze and elevation apply at once.
+ * site elevation, then the local horizon of `horizonSite`. `brightness` is the dialog's draft (saved per site on apply);
+ * haze, elevation and the horizon switch apply at once.
  */
-export function SkyConditionsEditor({ brightness, onBrightness, note, haze, forecastHaze, onHaze, elevation }: {
+export function SkyConditionsEditor({ brightness, onBrightness, note, haze, forecastHaze, onHaze, elevation, horizonSite }: {
   brightness: number; onBrightness: (sqm: number) => void; note?: string;
   haze: TransparencyMode; forecastHaze: { label: string } | null; onHaze: (mode: TransparencyMode) => void;
   /** Omit when the dialog shows another site (its elevation comes from that site's forecast once applied). */
   elevation?: { metres: number; source: 'manual' | 'forecast' | 'unknown'; forecastMetres: number | null; onChange: (metres: number | null) => void };
+  /** The app's current site, for its terrain horizon; omit (like `elevation`) when the dialog shows another site. */
+  horizonSite?: { lat: number; lon: number };
 }) {
   const [milkyWay, setMilkyWay] = useState<MilkyWayAnswer | null>(null), [dipper, setDipper] = useState<LittleDipperAnswer | null>(null);
   const [editing, setEditing] = useState(false), [draft, setDraft] = useState('');
@@ -69,5 +73,6 @@ export function SkyConditionsEditor({ brightness, onBrightness, note, haze, fore
             <button type="button" onClick={() => { setDraft(String(Math.round(elevation.metres))); setEditing(true); }}>Edit</button>
             {elevation.source === 'manual' && <button type="button" onClick={() => elevation.onChange(null)}>{elevation.forecastMetres != null ? `Use forecast (${Math.round(elevation.forecastMetres).toLocaleString()} m)` : 'Use forecast'}</button>}</>}
     </div>}
+    {horizonSite && <LocalHorizonPanel lat={horizonSite.lat} lon={horizonSite.lon} elevation={elevation} />}
   </section>;
 }

@@ -22,12 +22,15 @@ import { type SavedLocation } from "@/lib/saved-locations";
 import { displayName, type ObjectActions, type ObjectSkyContext } from "@/lib/object-links";
 import type { BinocularProfile } from "@/lib/binocular-assessment";
 import { ObjectActionRow } from "./ObjectActionRow";
+import { useLocalHorizon } from "@/hooks/use-local-horizon";
+import { compactHorizon, horizonLookup } from "@/lib/horizon/profile";
 import { ObjectJourneyLinks } from "./journeys/lazy-entry";
 import {
   CLOCK_COLORS,
   CLOCK_LIMIT,
   clockTargetEvents,
   clockMoonEvents,
+  clockBehindSkyline,
   clockBounds,
   clockCurve,
   clockHour,
@@ -101,6 +104,10 @@ export function AstronomicalClock({
     () => (profile ? { at: date, lat, lon, timezone, live, skyBrightness, profile } : undefined),
     [profile, date, lat, lon, timezone, live, skyBrightness],
   );
+  // The site's skyline (shared computation): dims hidden path stretches and feeds the seasonal worker.
+  const { horizon } = useLocalHorizon(lat, lon);
+  const skyline = useMemo(() => compactHorizon(horizon), [horizon]);
+  const skylineAt = useMemo(() => horizonLookup(skyline), [skyline]);
   const dialRef = useRef<SVGSVGElement>(null);
   const [dialTextScale, setDialTextScale] = useState(1);
   const [locked, setLocked] = useState(false);
@@ -168,7 +175,7 @@ export function AstronomicalClock({
     moon = moonAt(at),
     hour = clockHour(at, timezone);
   const observations = chosen.map((target) =>
-    observationAt(target, lat, lon, at, skyBrightness, moonAt),
+    observationAt(target, lat, lon, at, skyBrightness, moonAt, skyline),
   );
   const events = useMemo(
     () => chosen.map((t) => clockTargetEvents(t, lat, lon, night, timezone)),
@@ -251,8 +258,9 @@ export function AstronomicalClock({
       minAlt,
       minSeparation,
       skyBrightness,
+      horizon: skyline,
     }),
-    [chosen, lat, lon, timezone, from, to, minAlt, minSeparation, skyBrightness],
+    [chosen, lat, lon, timezone, from, to, minAlt, minSeparation, skyBrightness, skyline],
   );
   useEffect(() => {
     setSeason(null);
@@ -708,23 +716,45 @@ export function AstronomicalClock({
               strokeWidth="1.7"
               strokeDasharray="10 3 2 3"
             />
-            {chosen.map((t, i) => (
-              <path
-                key={t.id}
-                d={clockCurve(samples, (s) => s.alt[i])}
-                fill="none"
-                stroke={CLOCK_COLORS[i]}
-                strokeWidth={highlight === t.id ? 4 : 2.8}
-                opacity={highlight && highlight !== t.id ? 0.3 : 1}
-                tabIndex={0}
-                role="img"
-                aria-label={`${displayName(t)} altitude path`}
-                onPointerEnter={() => setHighlight(t.id)}
-                onPointerLeave={() => setHighlight(null)}
-                onFocus={() => setHighlight(t.id)}
-                onBlur={() => setHighlight(null)}
-              />
-            ))}
+            {chosen.map((t, i) => {
+              const hidden =
+                !!skylineAt &&
+                samples.some((s) => clockBehindSkyline(s, i, skylineAt));
+              // Behind the skyline the whole path is faint; the clear stretches are redrawn at full strength.
+              const opacity = highlight && highlight !== t.id ? 0.3 : 1;
+              return (
+                <g key={t.id}>
+                  <path
+                    d={clockCurve(samples, (s) => s.alt[i])}
+                    fill="none"
+                    stroke={CLOCK_COLORS[i]}
+                    strokeWidth={highlight === t.id ? 4 : 2.8}
+                    opacity={hidden ? opacity * 0.3 : opacity}
+                    tabIndex={0}
+                    role="img"
+                    aria-label={`${displayName(t)} altitude path${hidden ? "; faint where your skyline hides it" : ""}`}
+                    onPointerEnter={() => setHighlight(t.id)}
+                    onPointerLeave={() => setHighlight(null)}
+                    onFocus={() => setHighlight(t.id)}
+                    onBlur={() => setHighlight(null)}
+                  />
+                  {hidden && (
+                    <path
+                      d={clockCurve(
+                        samples,
+                        (s) => s.alt[i],
+                        (s) => !clockBehindSkyline(s, i, skylineAt),
+                      )}
+                      fill="none"
+                      stroke={CLOCK_COLORS[i]}
+                      strokeWidth={highlight === t.id ? 4 : 2.8}
+                      opacity={opacity}
+                      pointerEvents="none"
+                    />
+                  )}
+                </g>
+              );
+            })}
             {highlightedEvents &&
               (["rise", "transit", "set"] as const).map((key) => {
                 const event = highlightedEvents[key];
@@ -802,8 +832,11 @@ export function AstronomicalClock({
           <p className="astro-note">
             Radius shows altitude, not sky direction. Inside the horizon ring =
             below the horizon. Tap an object chip or the Moon to mark rise,
-            transit and set. Twilight boundaries use Sun 0°, −6°, −12° and −18°;
-            flat horizon, no terrain. Outer seasonal bands show the share of
+            transit and set. Twilight boundaries use Sun 0°, −6°, −12° and −18°
+            {skylineAt
+              ? ". Object paths turn faint where your skyline (the hills around this site) hides them, and the seasonal bands count only time clear of it."
+              : "; flat horizon, no terrain."}{" "}
+            Outer seasonal bands show the share of
             sampled dates when each object meets its altitude, darkness and Moon
             distance limits at that local half hour.
           </p>
@@ -919,6 +952,7 @@ export function AstronomicalClock({
         </section>
       </div>
       <ComparisonCharts
+        horizon={skyline}
         samples={samples}
         targets={chosen}
         at={at}
@@ -1048,7 +1082,7 @@ export function AstronomicalClock({
                 </div>
                 <p className="astro-note">
                   Every date, sampled each half hour. Requires Sun ≤ −18°,
-                  object ≥ {minAlt}°, and Moon ≥ {minSeparation}° away when
+                  object ≥ {minAlt}°{skylineAt ? " and clear of your skyline" : ""}, and Moon ≥ {minSeparation}° away when
                   above the horizon. A Moon below −1° passes the distance limit.
                   These are the strict limits; Moon-weighted contrast uses continuous sky glow instead of a distance cutoff. This is not a weather or visibility
                   guarantee. Moon phase is shown for each night.
@@ -1058,7 +1092,7 @@ export function AstronomicalClock({
                   each local half hour. Brighter daily tiles mean more
                   qualifying hours.
                 </p>
-                <SeasonChart timezone={timezone}
+                <SeasonChart timezone={timezone} horizon={skyline}
                   season={season}
                   targets={chosen}
                   night={night}

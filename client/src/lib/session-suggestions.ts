@@ -4,6 +4,7 @@ import type { Observer, SkyInputs } from './visibility/types';
 import { eqToHorizontal, type UnifiedTarget } from './astronomy';
 import { moonState } from './moon';
 import type { ObservingSession } from './session-planner';
+import { horizonLookup, type HorizonInput } from './horizon/profile';
 
 export type SessionSuggestion = {
   target:UnifiedTarget; at:Date; alt:number; fit:number; curated:number; dark:boolean;
@@ -13,7 +14,11 @@ export type SessionSuggestion = {
 };
 
 /** Full conditions for the session site, when the caller has them (the Planner's useVisibilityConditions). */
-export interface SuggestionConditions { skyAt?:(at:Date)=>SkyInputs; observer?:Observer }
+export interface SuggestionConditions {
+  skyAt?:(at:Date)=>SkyInputs; observer?:Observer;
+  /** The session site's local skyline (lib/horizon): a pick must also clear it. Absent: flat horizon. */
+  horizon?:HorizonInput;
+}
 /**
  * Rank the visual reward for normal binoculars. Everything comfortably visible tonight (Excellent, Good or Fair:
  * fit ≤ 1) counts as one tier, ordered by how rewarding the object is (lib/visibility/reward.ts; the tier already
@@ -27,12 +32,14 @@ export function sessionBinocularSuggestions(session:ObservingSession, targets:Un
   const compare=(a:SessionSuggestion,b:SessionSuggestion)=>tier(a)-tier(b)||Number(b.dark)-Number(a.dark)||b.reward-a.reward||a.curated-b.curated||b.visualScale-a.visualScale||b.brightnessMargin-a.brightnessMargin||a.glow-b.glow||b.alt-a.alt||a.target.name.localeCompare(b.target.name);
   const picks:SessionSuggestion[]=[];
   const optics=opticsOf(profile);
+  const skyline=horizonLookup(conditions.horizon);
   for(const target of targets){
     if(target.id.startsWith('star:')||target.mag>9||session.items.some(item=>item.id===target.id))continue;
     let best:SessionSuggestion|undefined;
     for(const {at,moon} of samples){
-      const alt=eqToHorizontal(target.ra,target.dec,session.lat,session.lon,at).alt;
-      if(alt<15)continue;
+      const {alt,az}=eqToHorizontal(target.ra,target.dec,session.lat,session.lon,at);
+      // The 15° comfort limit and the local skyline combine.
+      if(alt<15||skyline&&alt<skyline(az))continue;
       // The fit model describes optics separately from daylight. Never suggest a
       // deep-sky target in daylight just because its optical score looks good.
       const brightStellar=/star|asterism/i.test(target.category)&&target.mag<=5;

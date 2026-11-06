@@ -5,8 +5,11 @@ import { observationProfile, suggestedObservation, createMoonSampler, observatio
 import { moonIllumination, moonIlluminationLabel, type MoonState } from "@/lib/moon";
 import { type VisibilityWindow } from "@/lib/target-visibility";
 import {
+  eqToHorizontal,
   type UnifiedTarget,
 } from "@/lib/astronomy";
+import { useLocalHorizon } from "@/hooks/use-local-horizon";
+import { clearIntervals, horizonLookup } from "@/lib/horizon/profile";
 import {
   altitudeSamples,
   compassLabel,
@@ -25,10 +28,20 @@ export function AltitudeChart({
   date: Date;
   timezone: string;
 }) {
+  const { horizon } = useLocalHorizon(lat, lon);
   const samples = useMemo(
     () => altitudeSamples(target, lat, lon, date),
     [target, lat, lon, date],
   );
+  // With a local horizon, a sample behind the skyline is not "high & dark".
+  const clear = useMemo(() => {
+    const lookup = horizonLookup(horizon);
+    return samples.map((s) => {
+      if (!lookup) return true;
+      const pos = eqToHorizontal(target.ra, target.dec, lat, lon, s.date);
+      return pos.alt >= lookup(pos.az);
+    });
+  }, [samples, horizon, target.ra, target.dec, lat, lon]);
   const {ref:altitudeRef,width:altitudeWidth}=useSvgWidth(330);
   const altitudeLeft=32,altitudeRight=altitudeWidth-22;
   const sampleX=(i:number)=>altitudeLeft+i/32*(altitudeRight-altitudeLeft);
@@ -37,7 +50,7 @@ export function AltitudeChart({
     .map((s, i) => `${i === 0 ? "M" : "L"}${sampleX(i)},${y(s.alt)}`)
     .join(" ");
   const best = samples
-    .filter((s) => s.dark && s.alt >= 30)
+    .filter((s, i) => s.dark && s.alt >= 30 && clear[i])
     .sort((a, b) => b.alt - a.alt)[0];
   return (
     <div className="altitude-chart">
@@ -113,15 +126,28 @@ export interface NightChartProps {
   target:UnifiedTarget;lat:number;lon:number;night:VisibilityWindow;timezone:string;
   selectedAt?:Date;scheduledAt?:Date;showContext?:boolean;span?:"night"|"day";skyBrightness?:number;moonAt?:(date:Date)=>MoonState;range?:{start:Date;end:Date};
 }
-/** Shared night chart: target altitude, angular Moon distance and modeled glow. */
+/** Shared night chart: target altitude, angular Moon distance and modeled glow. With a known local horizon it also
+ *  draws the skyline along the target's path (a band from the bottom) and dims the curve where the target is behind it. */
 export function NightAltitudeChart({target,lat,lon,night,timezone,skyBrightness=21.6,moonAt,range,showContext=false,span="night",selectedAt,scheduledAt}:NightChartProps) {
   const clipId=`night-altitude-${useId().replaceAll(":","")}`;
+  const {horizon}=useLocalHorizon(lat,lon);
   const localMoon=useMemo(()=>createMoonSampler(lat,lon),[lat,lon,night]);
-  const segments=useMemo(()=>observationProfile(target,lat,lon,night,skyBrightness,moonAt??localMoon),[target.ra,target.dec,lat,lon,night,skyBrightness,moonAt,localMoon]);
+  const segments=useMemo(()=>observationProfile(target,lat,lon,night,skyBrightness,moonAt??localMoon,horizon),[target.ra,target.dec,lat,lon,night,skyBrightness,moonAt,localMoon,horizon]);
   const profileKey=`${target.id}:${target.ra}:${target.dec}:${lat}:${lon}:${night.ok?+night.start:"invalid"}:${skyBrightness}`;
   const [cursor,setCursor]=useState<{key:string;date:Date}|null>(null);
   const cursorDate=cursor?.key===profileKey?cursor.date:null;
-  const inspected=useMemo(()=>cursorDate?observationAt(target,lat,lon,cursorDate,skyBrightness,moonAt??localMoon):null,[cursorDate,target.ra,target.dec,lat,lon,skyBrightness,moonAt,localMoon]);
+  const inspected=useMemo(()=>cursorDate?observationAt(target,lat,lon,cursorDate,skyBrightness,moonAt??localMoon,horizon):null,[cursorDate,target.ra,target.dec,lat,lon,skyBrightness,moonAt,localMoon,horizon]);
+  // Skyline along the target's path, every 5 minutes, and the spans where the target clears it (bisection-refined).
+  const skylineTrack=useMemo(()=>{
+    const lookup=horizonLookup(horizon);
+    if(!lookup||!night.ok)return null;
+    const position=(t:number)=>eqToHorizontal(target.ra,target.dec,lat,lon,new Date(t));
+    return night.segments.map(segment=>{
+      const count=Math.max(1,Math.ceil((+segment.end-+segment.start)/(5*60000)));
+      const samples=Array.from({length:count+1},(_,i)=>{const t=+segment.start+(+segment.end-+segment.start)*i/count;return {t,...position(t)};});
+      return {points:samples.map(sample=>({date:new Date(sample.t),skyline:lookup(sample.az)})),clear:clearIntervals(samples,horizon,{position}).map(span=>({start:new Date(span.start),end:new Date(span.end)}))};
+    });
+  },[horizon,night,target.ra,target.dec,lat,lon]);
   const plotRef=useRef<SVGSVGElement>(null);
   const [plotWidth,setPlotWidth]=useState(330);
   useLayoutEffect(()=>{
@@ -150,8 +176,9 @@ export function NightAltitudeChart({target,lat,lon,night,timezone,skyBrightness=
   const time=(date:Date)=>`${formatInTimeZone(date,timezone,"HH:mm")}${isNextDay(date)?" +1d":""}`;
   const startLabel=+start===+night.start?"Start":"Dusk",endLabel=+end===+night.end?"End":"Dawn";
   const samples=segments.flatMap(segment=>segment.samples),below=samples.every(sample=>sample.alt<0);
+  const hidden=!!skylineTrack&&!below&&skylineTrack.every(track=>!track.clear.length);
   const moonDownAllNight=samples.every(sample=>sample.moon.alt<=-sample.moon.diameter/2);
-  const best=scheduledAt?observationAt(target,lat,lon,scheduledAt,skyBrightness,moonAt??localMoon):suggestedObservation(samples.filter(s=>s.moon.sunAlt<=-18),target,range);
+  const best=scheduledAt?observationAt(target,lat,lon,scheduledAt,skyBrightness,moonAt??localMoon,horizon):suggestedObservation(samples.filter(s=>s.moon.sunAlt<=-18),target,range);
   const middle=new Date((+start+ +end)/2),phaseSample=samples.reduce((a,b)=>Math.abs(+a.date-+middle)<Math.abs(+b.date-+middle)?a:b);
   // The selected time when it falls in this night (so the number matches the rest of the app), else mid-darkness.
   const selectedSample=selectedAt&&selectedAt>=start&&selectedAt<=end?samples.reduce((a,b)=>Math.abs(+a.date-+selectedAt)<Math.abs(+b.date-+selectedAt)?a:b):null;
@@ -162,10 +189,10 @@ export function NightAltitudeChart({target,lat,lon,night,timezone,skyBrightness=
     if(!matrix)return;
     const point=svg.createSVGPoint();point.x=event.clientX;point.y=event.clientY;
     selectFraction((point.matrixTransform(matrix.inverse()).x-left)/plotSpan);};
-  const describe=(sample:typeof samples[number])=>`${time(sample.date)} · ${Math.abs(Math.round(sample.alt))}° ${sample.alt<0?"below horizon":"high"}${sample.moon.alt<=-sample.moon.diameter/2?" · Moon below horizon":` · ${Math.round(sample.separation)}° from Moon · Moon ${Math.round(sample.moon.alt)}° high`}`;
-  const readout=inspected?describe(inspected):best?`${scheduledAt?"Scheduled":"Suggested"}: ${describe(best)}`:range?"No usable dark slot in this session.":"No dark window above 15° for this target.";
+  const describe=(sample:typeof samples[number])=>`${time(sample.date)} · ${Math.abs(Math.round(sample.alt))}° ${sample.alt<0?"below horizon":"high"}${sample.blocked&&sample.alt>=0?" · behind the hills":""}${sample.moon.alt<=-sample.moon.diameter/2?" · Moon below horizon":` · ${Math.round(sample.separation)}° from Moon · Moon ${Math.round(sample.moon.alt)}° high`}`;
+  const readout=inspected?describe(inspected):best?`${scheduledAt?"Scheduled":"Suggested"}: ${describe(best)}`:range?"No usable dark slot in this session.":skylineTrack?"No dark window above 15° and clear of your skyline for this target.":"No dark window above 15° for this target.";
   return <div className="night-altitude-chart">
-    <div className="night-altitude-heading"><span className="night-altitude-key">Altitude °</span>{!moonDownAllNight&&<span className="night-moon-key" title={moonDownAllNight?"Moon below horizon throughout this graph; angular distance has no moonlight penalty":"Angular distance from the Moon"}>Moon distance °</span>}{showContext&&<><span className="context-moon-key">Moon altitude °</span><span className="context-sun-key">Sun altitude °</span></>}</div>
+    <div className="night-altitude-heading"><span className="night-altitude-key">Altitude °</span>{!moonDownAllNight&&<span className="night-moon-key" title={moonDownAllNight?"Moon below horizon throughout this graph; angular distance has no moonlight penalty":"Angular distance from the Moon"}>Moon distance °</span>}{showContext&&<><span className="context-moon-key">Moon altitude °</span><span className="context-sun-key">Sun altitude °</span></>}{skylineTrack&&<span className="night-skyline-key" style={{color:"#b9c4a4"}} title="Height of your local skyline (hills and mountains) in the direction of the target"><i aria-hidden="true" style={{display:"inline-block",width:12,height:8,background:"#55624a",marginRight:5,verticalAlign:"middle"}}/>Your skyline</span>}</div>
     <svg ref={plotRef} viewBox={`0 0 ${plotWidth} 190`} preserveAspectRatio="xMidYMid meet" style={{height:190}} role="slider" tabIndex={0} aria-valuemin={0} aria-valuemax={Math.round((+end-+start)/60000)} aria-valuenow={Math.round((+(cursorDate??best?.date??start)-+start)/60000)} aria-valuetext={inspected?readout:undefined} aria-describedby={`${clipId}-help`}
       onPointerMove={selectPointer}
       onPointerDown={event=>{event.currentTarget.focus({preventScroll:true});event.currentTarget.setPointerCapture(event.pointerId);selectPointer(event);}}
@@ -174,18 +201,22 @@ export function NightAltitudeChart({target,lat,lon,night,timezone,skyBrightness=
       onFocus={()=>{if(!cursorDate)selectFraction((+(best?.date??middle)-+start)/(+end-+start));}}
       onBlur={()=>setCursor(null)}
       onKeyDown={event=>{if(!["ArrowLeft","ArrowRight","Home","End","Escape"].includes(event.key))return;event.preventDefault();event.stopPropagation();if(event.key==="Escape"){setCursor(null);event.currentTarget.blur();return;}selectFraction(event.key==="Home"?0:event.key==="End"?1:((Math.floor(+(cursorDate??best?.date??middle)/60000)*60000-+start)+(event.key==="ArrowLeft"?-1:1)*(event.shiftKey?15:1)*60000)/(+end-+start));}}
-      aria-label={`Altitude and angular distance from the Moon for ${target.name} during ${span==="day"?"the selected local day":"astronomical darkness"}, ${formatInTimeZone(night.start,timezone,"MMM d, yyyy")}, from ${startLabel.toLowerCase()} ${time(start)} to ${endLabel.toLowerCase()} ${time(end)}. Solid mint: altitude, left axis ${showContext?"−90–90":"0–90"} degrees. ${showContext?"Gray: Moon altitude. Peach: Sun altitude. ":""}${moonDownAllNight?"Moon is below the horizon throughout; angular separation is omitted.":"Dashed gray: Moon separation, right axis 0–180 degrees."} More gray shading means stronger estimated moonlight. Times in ${timezone}.`}>
+      aria-label={`Altitude and angular distance from the Moon for ${target.name} during ${span==="day"?"the selected local day":"astronomical darkness"}, ${formatInTimeZone(night.start,timezone,"MMM d, yyyy")}, from ${startLabel.toLowerCase()} ${time(start)} to ${endLabel.toLowerCase()} ${time(end)}. Solid mint: altitude, left axis ${showContext?"−90–90":"0–90"} degrees. ${skylineTrack?"Olive band: your local skyline in the target's direction; the faded part of the curve is behind it. ":""}${showContext?"Gray: Moon altitude. Peach: Sun altitude. ":""}${moonDownAllNight?"Moon is below the horizon throughout; angular separation is omitted.":"Dashed gray: Moon separation, right axis 0–180 degrees."} More gray shading means stronger estimated moonlight. Times in ${timezone}.`}>
       <defs><clipPath id={clipId}><rect x={left} y={top} width={plotSpan} height={plotHeight}/></clipPath></defs>
       <g clipPath={`url(#${clipId})`}>{segments.map(segment=>segment.samples.slice(0,-1).map((sample,i)=>{const next=segment.samples[i+1];return <rect key={+sample.date} x={x(sample.date)} y={top} width={x(next.date)-x(sample.date)+.2} height={plotHeight} className="night-moon-shading" fill="#aaaaaa" opacity={sample.moon.sunAlt>-18||sample.moon.alt<=-sample.moon.diameter/2?0:.36*Math.sqrt(Math.min(1,Math.max(0,sample.moonlight)/4))}/>;}))}</g>
       {span==='day'&&<g clipPath={`url(#${clipId})`}>{segments.flatMap(segment=>segment.samples.slice(0,-1).map((sample,i)=>sample.moon.sunAlt<=-18?<rect key={+sample.date} x={x(sample.date)} y={top} width={x(segment.samples[i+1].date)-x(sample.date)+.2} height={plotHeight} fill="#adc7c5" opacity=".09"/>:null))}</g>}
       {(showContext?[-90,-60,-30,0,30,60,90]:[0,30,60,90]).map(alt=><g key={alt}><line x1={left} x2={right} y1={y(alt)} y2={y(alt)} stroke={alt===0?"#56716f":"#29434e"} strokeDasharray={alt===0?undefined:"3 4"}/><text x={left-8} textAnchor="end" y={y(alt)+4} fontSize="12" fill="#96afb6">{alt}°</text></g>)}
+      {skylineTrack&&<><defs><clipPath id={`${clipId}-clear`}>{skylineTrack.flatMap(track=>track.clear).map(span=><rect key={+span.start} x={x(span.start)} y={top} width={Math.max(0,x(span.end)-x(span.start))} height={plotHeight}/>)}</clipPath></defs>
+        <g className="night-skyline-band" clipPath={`url(#${clipId})`} pointerEvents="none">{skylineTrack.map((track,i)=>{const line=track.points.map(point=>`${x(point.date).toFixed(2)},${y(Math.max(minimumAltitude,Math.min(90,point.skyline))).toFixed(2)}`);return <g key={i}><path d={`M${x(track.points[0].date).toFixed(2)},${bottom} L${line.join(" L")} L${x(track.points.at(-1)!.date).toFixed(2)},${bottom} Z`} fill="#55624a" opacity=".55"/><path d={`M${line.join(" L")}`} fill="none" stroke="#9aa886" strokeWidth="1.2"/></g>;})}</g></>}
       {!moonDownAllNight&&[0,60,120,180].map(distance=><text key={distance} x={right+8} y={sy(distance)+4} fontSize="12" fill="#a1a8b6">{distance}°</text>)}
       <g clipPath={`url(#${clipId})`}>{segments.map((segment,i)=>{const path=segment.samples.map((sample,j)=>`${j?"L":"M"}${x(sample.date).toFixed(2)},${y(sample.alt).toFixed(2)}`).join(" ");const moonPath=segment.samples.map((sample,j)=>`${j?"L":"M"}${x(sample.date).toFixed(2)},${sy(sample.separation).toFixed(2)}`).join(" ");return <g key={i}>{showContext&&<><path className="context-moon-altitude" d={segment.samples.map((sample,j)=>`${j?'L':'M'}${x(sample.date).toFixed(2)},${y(sample.moon.alt).toFixed(2)}`).join(' ')} fill="none" stroke="#929cab" strokeWidth="1" opacity=".8"/><path className="context-sun-altitude" d={segment.samples.map((sample,j)=>`${j?'L':'M'}${x(sample.date).toFixed(2)},${y(sample.moon.sunAlt).toFixed(2)}`).join(' ')} fill="none" stroke="#dc9d84" strokeWidth="1.2"/></>}
-      <path className="target-altitude-line" d={path} stroke="#a2d5c5" strokeWidth="2" fill="none"/>{!moonDownAllNight&&<path className="moon-separation-line" d={moonPath} stroke="var(--chart-silver, #aeb4be)" strokeWidth="1.8" strokeDasharray="4 5" fill="none"/>}</g>;})}</g>
+      {skylineTrack&&<path className="target-altitude-blocked" d={path} stroke="#a2d5c5" strokeOpacity=".35" strokeWidth="2" strokeDasharray="2 4" fill="none"/>}
+      <path className="target-altitude-line" d={path} stroke="#a2d5c5" strokeWidth="2" fill="none" clipPath={skylineTrack?`url(#${clipId}-clear)`:undefined}/>{!moonDownAllNight&&<path className="moon-separation-line" d={moonPath} stroke="var(--chart-silver, #aeb4be)" strokeWidth="1.8" strokeDasharray="4 5" fill="none"/>}</g>;})}</g>
       {selectedAt&&selectedAt>=start&&selectedAt<=end&&<g className="night-selected-time" pointerEvents="none"><line x1={x(selectedAt)} x2={x(selectedAt)} y1={top} y2={bottom} stroke="#d3ddd5" strokeWidth="1.2" strokeDasharray="2 5"/><title>Selected observing time {time(selectedAt)}</title></g>}
       {best&&<g className="night-suggested-time" pointerEvents="none"><line x1={x(best.date)} x2={x(best.date)} y1={top} y2={bottom} stroke="#d8bc80" strokeWidth="1.5" strokeDasharray="5 4"/><circle cx={x(best.date)} cy={y(best.alt)} r="4.5" fill="#d8bc80" stroke="#0c1c27" strokeWidth="1.5"/><title>{scheduledAt?"Scheduled":"Suggested"} time {time(best.date)} at {Math.round(best.alt)} degrees altitude</title></g>}
       {inspected&&<g className="night-chart-cursor" pointerEvents="none"><line x1={x(inspected.date)} x2={x(inspected.date)} y1={top} y2={bottom} stroke="#e1ede5" strokeWidth="1.4" strokeDasharray="3 5"/><g clipPath={`url(#${clipId})`}>{inspected.alt>=minimumAltitude&&<circle cx={x(inspected.date)} cy={y(inspected.alt)} r="4" fill="#a2d5c5" stroke="#0c1c27" strokeWidth="1.3"/>}{!moonDownAllNight&&<circle cx={x(inspected.date)} cy={sy(inspected.separation)} r="4" fill="var(--chart-silver, #aeb4be)" stroke="#0c1c27" strokeWidth="1.3"/>}</g></g>}
       {below&&<text x={(left+right)/2} y="90" textAnchor="middle" fill="#c3d0c4" fontSize="12">Below horizon all {span==='day'?'day':'night'}</text>}
+      {hidden&&<text x={(left+right)/2} y="90" textAnchor="middle" fill="#c3d0c4" fontSize="12">Behind the hills all {span==='day'?'day':'night'}</text>}
     </svg>
     <div className="night-chart-time-axis" style={{paddingLeft:left,paddingRight:plotWidth-right}}>
       <div><span>{startLabel}</span><time dateTime={start.toISOString()}>{time(start)}</time></div>

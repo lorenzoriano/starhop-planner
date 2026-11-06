@@ -32,7 +32,7 @@ import { angularDistance as angular, eqToHorizontal, getConstellationName } from
 import { moonState } from '../moon';
 import {
   FALLBACK_MIN_ALT, GLOW_LIMIT, MIN_STOPS, PATH_OVER_RADIUS, MAX_HOP_DEG, SUN_LIMIT_DSO, SUN_LIMIT_STAR, buildNightContext, buildNightGrid,
-  fastAltAz, moonCategory, moonDuring, moonMinSeparation, moonIsUp, moonVerdict, nextMoonEvent, normalizeRequest, ofDateConverter, sunCrossings, sunLimitFor,
+  clearAltitude, fastAltAz, moonCategory, moonDuring, moonMinSeparation, moonIsUp, moonVerdict, nextMoonEvent, normalizeRequest, ofDateConverter, sunCrossings, sunLimitFor,
   type EngineSettings, type NightGrid,
 } from './conditions';
 import { buildCandidateTable, lensArcAt, lensOf, prepareKb, slotAccepts, templateNightBlock, type CandidateTable, type PreparedKb } from './candidates';
@@ -41,6 +41,7 @@ import { decodeJourneyKey, encodeJourneyKey, kbHashOf, type JourneyKeyData } fro
 import { narrateAndApply, type JourneyNarration } from './narrate';
 import { reorderAndValidate } from './order';
 import { altAzPhrase, buildPatches, pathGeometry, type Patch } from './region';
+import { COMPASS8, compassWord } from '../horizon/profile';
 import { createModelScorer } from './score';
 import { moonlitFit, planHeuristic, searchJourneys, selectTemplates, themeMatches, type SearchCandidate } from './search';
 import { buildSeedKey, gumbel, localNightDate, quantize, rngFor, slotStartMs } from './seed';
@@ -142,7 +143,7 @@ function tableFor(prep: PreparedKb, s: EngineSettings, depth: number): Candidate
   const gridKey = [s.slotMs, s.lat, s.lon, s.sky, s.minutesPerStop, s.length].join('|');
   const grid = remember(gridMemo, gridKey, () => buildNightGrid(s));
   const key = [prep.kb.version, gridKey, s.minAlt, s.fovDeg, s.aperture, s.magnification, s.stabilized, s.includeChallenge,
-    s.openDirections ? Array.from(s.openDirections).sort().join(',') : '*', depth].join('|');
+    s.openDirections ? Array.from(s.openDirections).sort().join(',') : '*', s.horizonKey, depth].join('|');
   let t = remember(tableMemo, key, () => buildCandidateTable(prep, s, grid, depth));
   // A new KB object with the same version string must not reuse rows.
   if (t.prep !== prep) { t = buildCandidateTable(prep, s, grid, depth); tableMemo.set(key, t); }
@@ -162,7 +163,7 @@ function timeLabel(ms: number, s: EngineSettings): string {
   return s.timezone ? formatInTimeZone(new Date(ms), s.timezone, 'HH:mm') : `${new Date(ms).toISOString().slice(11, 16)} UTC`;
 }
 
-/** Times (around the request) when every stop of the journey passes the sky rules (alt, darkness, Moon). */
+/** Times (around the request) when every stop of the journey passes the sky rules (alt and skyline, darkness, Moon). */
 function bestWindow(table: CandidateTable, objs: number[], s: EngineSettings): { start: string; end: string } | undefined {
   const step = 15 * 60_000, m = s.minutesPerStop * 60_000, n = objs.length;
   const conv = ofDateConverter(s.slotMs);
@@ -173,7 +174,7 @@ function bestWindow(table: CandidateTable, objs: number[], s: EngineSettings): {
     const o = table.prep.objects[idx];
     const h = fastAltAz(pos[i].ra, pos[i].dec, s.lat, s.lon, siderealDeg(t));
     const mo = moonAt(Math.round(t / step) * step);
-    if (h.alt < s.minAlt || mo.sunAlt > sunLimitFor(o)) return false;
+    if (h.alt < clearAltitude(s, h.az) || mo.sunAlt > sunLimitFor(o)) return false;
     // The shared Moon verdict (lib/sky-feasibility.ts): separation floor and glow limit, nothing with the Moon down.
     return !moonIsUp(mo) || moonVerdict({ alt: h.alt, separation: angular(o.ra, o.dec, mo.ra, mo.dec), category: moonCategory(o) }, mo, s.sky).ok;
   }));
@@ -216,7 +217,10 @@ function regionNameOf(objs: readonly { con: string; interest: number }[]): strin
   return con ? getConstellationName(con) : 'the sky';
 }
 
-/** Naked-eye anchors (mag ≤ 3, above 15°) at the start of stop interval i; memoised per candidate table rows. */
+/**
+ * Naked-eye anchors (mag ≤ 3, above 15° and clear of the local skyline) at the start of stop interval i; memoised per
+ * candidate table rows (whose cache key carries the skyline).
+ */
 const anchorMemo = new WeakMap<CandidateTable['tracks'], AnchorCandidate[][]>();
 function anchorPoolOf(table: CandidateTable, i: number): AnchorCandidate[] {
   let byStop = anchorMemo.get(table.tracks);
@@ -225,9 +229,10 @@ function anchorPoolOf(table: CandidateTable, i: number): AnchorCandidate[] {
   if (!pool) {
     const k0 = table.grid.intervals[i].samples[0];
     pool = [];
+    const sky = table.s.skyline;
     table.prep.objects.forEach((o, k) => {
-      const alt = table.tracks[k].alt[k0];
-      if (o.mag !== null && o.mag <= 3 && alt > 15) pool!.push({ id: o.id, name: o.names.display, ra: o.ra, dec: o.dec, mag: o.mag, alt, az: table.tracks[k].az[k0], con: o.con });
+      const alt = table.tracks[k].alt[k0], az = table.tracks[k].az[k0];
+      if (o.mag !== null && o.mag <= 3 && alt > 15 && (!sky || alt >= sky(az))) pool!.push({ id: o.id, name: o.names.display, ra: o.ra, dec: o.dec, mag: o.mag, alt, az, con: o.con });
     });
     byStop[i] = pool;
   }
@@ -380,6 +385,7 @@ function runOnce(prep: PreparedKb, s: EngineSettings, lengthRange: [number, numb
     minAlt: s.minAlt,
     altAz: (ra, dec) => { const p = conv.raDec(ra, dec); return fastAltAz(p.ra, p.dec, s.lat, s.lon, g.gastDeg[mid]); },
     moon: { up: g.moonUp[mid], ra: moonMid.ra, dec: moonMid.dec, illumination: moonMid.illumination },
+    skyline: s.skyline,
   });
   lap('patches');
   // Night gates (dark sky, Moon limits) read the brightest Moon while it is up during the requested journey.
@@ -632,6 +638,25 @@ export function selectWithShuffle<T extends Built>(pool: T[], limit: number, shu
 
 // ───────────────────────────── diagnostics ─────────────────────────────
 
+/**
+ * "Hills to the south-west hide part of tonight's sky from here.": the compass directions (one or two, most first) where
+ * objects that never became feasible were behind the skyline at the start of the journey.
+ */
+function terrainLine(table: CandidateTable): string {
+  const count = new Map<string, number>();
+  table.feasibleMask.forEach((mask, i) => {
+    const row = table.stops[i][0];
+    if (mask || !row.reasons.includes('terrain')) return;
+    const word = compassWord(row.azStart);
+    count.set(word, (count.get(word) ?? 0) + 1);
+  });
+  // The leading direction, and a second one only when it holds at least half as many.
+  const top = Array.from(count.entries()).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 2)
+    .filter(([, n], i, all) => i === 0 || n * 2 >= all[0][1]).map(([word]) => word);
+  const where = top.length ? ` to the ${top.join(' and ')}` : '';
+  return `Hills${where} hide part of tonight's sky from here.`;
+}
+
 /** Fewer feasible objects than this makes altitude a limiting factor (diagnostics). */
 const LOW_FEASIBLE = 25;
 
@@ -653,6 +678,8 @@ function diagnose(runs: RunResult[], s: EngineSettings, night: NightContext, cou
   if (night.moon.up && night.moon.illumination > 0.4 && ((reasons['moon-separation'] ?? 0) + (reasons['moon-glow'] ?? 0)) > 0) factors.push('moon');
   // Most of the sky is always below 30°, so altitude only limits when few objects are left to work with.
   if (feasible < LOW_FEASIBLE && (reasons.altitude ?? 0) > eligible / 2) factors.push('altitude');
+  // The local skyline limits when it hides objects that would otherwise stand high enough, and few are left (or none fit).
+  if ((reasons.terrain ?? 0) > 0 && (feasible < LOW_FEASIBLE || !count)) factors.push('terrain');
   if (feasible >= 3 && !count) factors.push('region');
   if (eligible < 3) factors.push('kb');
   const parts: string[] = [];
@@ -668,7 +695,8 @@ function diagnose(runs: RunResult[], s: EngineSettings, night: NightContext, cou
     parts.push(`The Moon is ${moonPct}% lit and up. Its glow washes out faint nebulae and galaxies, so every stop is kept at least ${Math.round(moonMinSeparation(night.moon.illumination))}° from it${set ? `; it sets at ${timeLabel(+set, s)}` : ''}.`);
   }
   if (!count && !s.theme && factors.includes('altitude')) parts.push(`Few objects are higher than ${s.minAlt}° right now.`);
-  if (s.openDirections && (reasons.direction ?? 0) > 0) parts.push(`Only part of the sky is open from here (${Array.from(s.openDirections).sort().join(', ')}).`);
+  if (factors.includes('terrain')) parts.push(terrainLine(table));
+  if (s.openDirections && (reasons.direction ?? 0) > 0) parts.push(`Only part of the sky is open from here (${COMPASS8.filter((d) => s.openDirections!.has(d)).join(', ')}).`);
   if (factors.includes('kb')) parts.push('The knowledge base has too few curated objects for this sky yet.');
   if (!count && s.theme) {
     // A forced theme that cannot run says why first (the generic reasons above may not concern it at all).
@@ -999,6 +1027,7 @@ export interface RebuildResult {
 
 const PROBLEM_TEXT: Partial<Record<RejectReason, (name: string, s: EngineSettings) => string>> = {
   altitude: (n, s) => `${n} is lower than ${s.minAlt}° during its stop.`,
+  terrain: (n) => `${n} is behind the hills from here during its stop.`,
   twilight: (n) => `The sky is not dark enough for ${n} at its stop time.`,
   'moon-separation': (n) => `${n} is too close to the Moon.`,
   'moon-glow': (n) => `Moonlight washes out ${n}.`,
@@ -1017,14 +1046,14 @@ function problemText(v: Violation, plan: Plan, prep: PreparedKb, s: EngineSettin
 }
 
 const FACTOR_OF: Partial<Record<RejectReason, LimitingFactor>> = {
-  altitude: 'altitude', twilight: 'twilight', 'moon-separation': 'moon', 'moon-glow': 'moon',
+  altitude: 'altitude', terrain: 'terrain', twilight: 'twilight', 'moon-separation': 'moon', 'moon-glow': 'moon',
   region: 'region', geometry: 'region', 'not-eligible': 'kb', story: 'kb',
 };
 
 /**
  * Rebuild the journey a key names (#/journeys/:key) and re-validate it with the single validator. Deterministic:
  * the same key and KB give the same journey and texts. Settings not carried by the key (time zone, open
- * directions, seen objects, level) come from `req`.
+ * directions, seen objects, level, the local skyline at the request's own site) come from `req`.
  */
 export function rebuildJourney(kb: KnowledgeBase, key: string, req: JourneyRequest, opts: RebuildOptions = {}): RebuildResult {
   const d = decodeJourneyKey(key);
@@ -1044,8 +1073,12 @@ export function rebuildJourney(kb: KnowledgeBase, key: string, req: JourneyReque
   const reqMs = Date.parse(req.instant);
   const instant = opts.instant ?? (Number.isFinite(reqMs) && slotStartMs(reqMs) === slotStart ? req.instant : new Date(slotStart).toISOString());
   const site = opts.site === 'request' ? { lat: req.lat, lon: req.lon } : { lat: d.lat, lon: d.lon };
+  // Keys carry no skyline (journey-key.ts): the rebuild uses this device's skyline (req.horizon), which describes the
+  // request's site, so it applies only when the rebuild site is that site (within the key's 0.1° rounding); elsewhere flat.
+  const atRequestSite = Math.abs(site.lat - req.lat) <= 0.051 && Math.abs(((site.lon - req.lon + 540) % 360) - 180) <= 0.051;
   const r: JourneyRequest = {
     ...req, ...site, instant,
+    ...(req.horizon && !atRequestSite ? { horizon: null } : {}),
     instrument: { fovDeg: d.fovDeg, aperture: d.aperture, magnification: d.magnification, stabilized: d.stabilized },
     skyBrightness: d.skyBrightness, minAlt: d.minAlt, regionRadius: d.regionRadius, minutesPerStop: d.minutesPerStop,
     includeChallenge: d.includeChallenge, length: d.stopIds.length, shuffle: 0,

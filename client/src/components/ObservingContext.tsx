@@ -104,7 +104,8 @@ export function ObservingContextProvider({ children, date, timezone, lat, lon, l
           <SkyConditionsEditor brightness={brightness} onBrightness={value => { setBrightness(value); setBrightnessEdited(true); }}
             note={brightnessEdited ? 'Saved for these coordinates when you apply the location.' : siteBrightness !== undefined ? 'Saved for these coordinates.' : 'Not set for this site yet; pick the closest description.'}
             haze={conditions?.transparencyMode ?? 'auto'} forecastHaze={sameSite ? visibility.forecastHaze(date) : null} onHaze={mode => conditions?.onChange({ transparencyMode: mode })}
-            elevation={conditions && sameSite ? { metres: visibility.elevationM, source: visibility.elevationSource, forecastMetres: visibility.forecastElevationM, onChange: metres => conditions.onChange({ siteElevation: metres }) } : undefined} />
+            elevation={conditions && sameSite ? { metres: visibility.elevationM, source: visibility.elevationSource, forecastMetres: visibility.forecastElevationM, onChange: metres => conditions.onChange({ siteElevation: metres }) } : undefined}
+            horizonSite={sameSite ? { lat, lon } : undefined} />
           {error && <p role="alert">{error}</p>}<button type="submit" className="context-apply">Use this location</button></form>
       </DialogContent>
     </Dialog>

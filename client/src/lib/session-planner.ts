@@ -6,6 +6,7 @@ import { nightListSchema, stripStaleJourneyTags, type NightItem } from "./sessio
 import { starSearchAliases } from "./stellar-search";
 import { eqToHorizontal, angularDistance, type UnifiedTarget, type Star } from "./astronomy";
 import { moonState, lunarFeatures, lunarFrame, projectLunarFeature } from "./moon";
+import { compassWord, geometricFromApparent, horizonLookup, type HorizonInput } from "./horizon/profile";
 import { MIN_ALT, darkEnough, isStellarCategory, moonCategoryOfCategory, moonVerdict, plannerMoonWeight } from "./sky-feasibility";
 
 /** The Planner schedules by the shared sky model's "possible" rule (lib/sky-feasibility.ts): 15° up, bright stars from civil dusk. */
@@ -52,7 +53,9 @@ export function makeSession(name:string,start:Date,lat:number,lon:number,items:N
   return { id:crypto.randomUUID(),name,startAt:start.toISOString(),lat,lon,locationName,durationMinutes:180,minutesPerTarget:15,items,archived:false,createdAt:new Date().toISOString() };
 }
 
-type Candidate = { id:string;name:string;date:Date;alt:number;az:number;separation:number|null;moonlight:number;lunar:boolean;usable:boolean;score:number;minimum:number;darkEnough:boolean };
+type Candidate = { id:string;name:string;date:Date;alt:number;az:number;separation:number|null;moonlight:number;lunar:boolean;usable:boolean;score:number;minimum:number;darkEnough:boolean;
+  /** Above the minimum altitude but behind the local skyline (false when no horizon is known). */
+  blocked:boolean };
 export type SequenceStep = { id:string; name:string; date:Date|null; alt:number; az:number; separation:number|null; moonlight:number; reason:string; lunar:boolean;
   /** Slot length in minutes when it differs from the session's minutes per target (journey stops keep the journey's pace). */
   minutes?:number;
@@ -116,7 +119,46 @@ export function sessionTimelineItems(items:NightItem[],steps:SequenceStep[]):Nig
   const scheduled=steps.filter(step=>step.date).slice().sort((a,b)=>+a.date!-+b.date!).map(step=>items.find(item=>item.id===step.id)).filter((item):item is NightItem=>!!item);
   return [...scheduled,...items.filter(item=>!scheduled.some(placed=>placed.id===item.id))];
 }
-export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[],skyBrightness=21.6):SequenceStep[] {
+/** Position of a session item: `alt` as the Planner compares it with its minimum (lunar items use the Moon's apparent
+ *  altitude, as suggestSequence does) and `geometric` for comparisons with the skyline. */
+function itemPosition(session:Pick<ObservingSession,"lat"|"lon">,target:Pick<UnifiedTarget,"ra"|"dec">|undefined) {
+  return (ms:number)=>{
+    if(target){const p=eqToHorizontal(target.ra,target.dec,session.lat,session.lon,new Date(ms));return {...p,geometric:p.alt};}
+    const moon=moonState(session.lat,session.lon,new Date(ms));
+    return {alt:moon.alt,az:moon.az,geometric:geometricFromApparent(moon.alt)};
+  };
+}
+/**
+ * Plain-words reason when the local skyline is what hides an item between `from` and `to`: it is above its minimum
+ * altitude (15°, Moon 5°) but behind the hills. "Behind the hills to the west until 23:10" names when it clears
+ * (minute accuracy, possibly after `to`); "Stays behind the hills to the west tonight" when it drops below the minimum
+ * first. Null when no horizon is known or the skyline never hides it in that span.
+ */
+export function skylineHoldReason(session:Pick<ObservingSession,"lat"|"lon">,id:string,target:Pick<UnifiedTarget,"ra"|"dec">|undefined,horizon:HorizonInput,from:Date,to:Date):string|null {
+  const skyline=horizonLookup(horizon);
+  if(!skyline||(!target&&!id.startsWith("moon:")))return null;
+  const position=itemPosition(session,target),minimum=minimumFor(id.startsWith("moon:"));
+  const step=5*60_000;
+  let blockedAt:number|null=null,az=0;
+  for(let ms=+from;ms<=+to;ms+=step){const p=position(ms);if(p.alt>=minimum&&p.geometric<skyline(p.az)){blockedAt=ms;az=p.az;break;}}
+  if(blockedAt===null)return null;
+  const where=`the hills to the ${compassWord(az)}`;
+  const clear=(ms:number)=>{const p=position(ms);return p.alt>=minimum&&p.geometric>=skyline(p.az);};
+  for(let ms=blockedAt+step;ms<=blockedAt+16*3600_000;ms+=step){
+    if(clear(ms)){
+      let lo=ms-step,hi=ms;
+      while(hi-lo>30_000){const mid=(lo+hi)/2;if(clear(mid))hi=mid;else lo=mid;}
+      return `Behind ${where} until ${formatInTimeZone(new Date(Math.ceil(hi/60_000)*60_000),sessionTimezone(session),"HH:mm")}`;
+    }
+    if(position(ms).alt<minimum)break;
+  }
+  return `Stays behind ${where} tonight`;
+}
+/**
+ * Best order and times for a night's targets. `horizon` is the session site's local horizon: a target is then usable
+ * only when it is also clear of the skyline (alt ≥ max(minimum, skyline at its azimuth)); omitted keeps the flat rule.
+ */
+export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[],skyBrightness=21.6,horizon?:HorizonInput):SequenceStep[] {
   const start=new Date(session.startAt),end=new Date(start.getTime()+session.durationMinutes*60_000);
   // Journey stops added with their times stay at those times, in story order, as one block per journey.
   const locked=journeySlots(session),lockedIds=new Set(locked.map(slot=>slot.id));
@@ -126,6 +168,7 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
   const frameCache=new Map<number,ReturnType<typeof lunarFrame>>();
   const targetCache=new Map<string,Candidate>();
   const targetMap=new Map(targets.map(t=>[t.id,t]));
+  const skyline=horizonLookup(horizon);
   const atTarget=(id:string,at:Date):Candidate|null => {
     const key=`${id}:${at.getTime()}`; if(targetCache.has(key))return targetCache.get(key)!;
     let moon=moonCache.get(at.getTime()); if(!moon){moon=moonState(session.lat,session.lon,at);moonCache.set(at.getTime(),moon);}
@@ -139,26 +182,31 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
     const separation=target?angularDistance(target.ra,target.dec,moon.ra,moon.dec):null;
     // Site-sky K–S brightening from the shared Moon verdict (the Planner weighs it rather than rejecting).
     const brightening=target?moonVerdict({alt:pos.alt,separation:separation!,category:moonCategoryOfCategory(target.category)},moon,skyBrightness).brightening:0;
-    const usable=pos.alt>=minimum&&dark;
+    // The skyline compares geometric altitudes; the Moon's altitude from moonState is apparent.
+    const blocked=!!skyline&&pos.alt>=minimum&&(lunar?geometricFromApparent(pos.alt):pos.alt)<skyline(pos.az);
+    const usable=pos.alt>=minimum&&dark&&!blocked;
     const score=pos.alt-brightening*(target?plannerMoonWeight(target.category,target.mag):6);
-    const point={id,name:feature?.name??target!.displayName,date:at,alt:pos.alt,az:pos.az,separation:separation,moonlight:brightening,lunar,usable,score,minimum,darkEnough:dark};
+    const point={id,name:feature?.name??target!.displayName,date:at,alt:pos.alt,az:pos.az,separation:separation,moonlight:brightening,lunar,usable,score,minimum,darkEnough:dark,blocked};
     targetCache.set(key,point); return point;
   };
   const duration=session.minutesPerTarget*60_000,quantum=5*60_000;
   // Compute real descending altitude crossings beyond the session, rather than
   // mistaking the session cutoff for a setting deadline.
-  const closes=new Map<string,number>();
+  // With a local horizon the window also closes when the target goes behind the skyline.
+  const closes=new Map<string,number>(),closesBehind=new Map<string,number>();
   for(const id of remaining){
-    const target=targetMap.get(id);
-    const altitude=(ms:number)=>target?eqToHorizontal(target.ra,target.dec,session.lat,session.lon,new Date(ms)).alt:moonState(session.lat,session.lon,new Date(ms)).alt;
-    const minimum=minimumFor(id.startsWith('moon:'));
-    let previous=altitude(+start),closing=Infinity;
+    const target=targetMap.get(id),lunar=id.startsWith('moon:');
+    const position=itemPosition(session,target);
+    const minimum=minimumFor(lunar);
+    const up=(ms:number)=>{const p=position(ms);return p.alt>=minimum&&(!skyline||p.geometric>=skyline(p.az));};
+    let previous=up(+start),closing=Infinity;
     for(let ms=+start+15*60_000;ms<=+start+26*3600_000;ms+=15*60_000){
-      const next=altitude(ms);
-      if(previous>=minimum&&next<minimum){let lo=ms-15*60_000,hi=ms;for(let n=0;n<12;n++){const mid=(lo+hi)/2;if(altitude(mid)>=minimum)lo=mid;else hi=mid;}closing=hi;break;}
+      const next=up(ms);
+      if(previous&&!next){let lo=ms-15*60_000,hi=ms;for(let n=0;n<12;n++){const mid=(lo+hi)/2;if(up(mid))lo=mid;else hi=mid;}closing=hi;break;}
       previous=next;
     }
     closes.set(id,closing);
+    if(skyline&&Number.isFinite(closing)){const p=position(closing);if(p.alt>=minimum)closesBehind.set(id,p.az);}
   }
   const ids=remaining.slice().sort((a,b)=>closes.get(a)!-closes.get(b)!||a.localeCompare(b));
   // Free targets fit around the journey blocks.
@@ -215,7 +263,11 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
     const rising=!!later&&later.alt>candidate.alt+.2;
     const nearEnd=+end-(+candidate.date+duration)<30*60_000;
     const realClosing=closes.get(candidate.id)!-(+candidate.date+duration)<45*60_000;
-    const reason=rising&&nearEnd?'Rising target · later for altitude; session ends soon':rising&&+candidate.date>+start+30*60_000?'Later in the session to catch this rising target higher':!rising&&realClosing?'Observe before its usable window closes':candidate.moonlight>=1?'Moonlit sky: prioritize bright detail':candidate.lunar?'Moon is up and safely separated from the Sun':'Well placed at this time';
+    const target=targetMap.get(candidate.id);
+    // Waited for the target to climb out from behind the hills.
+    const heldBySkyline=skyline&&+candidate.date>+start&&atTarget(candidate.id,start)?.blocked?skylineHoldReason(session,candidate.id,target,horizon,start,candidate.date):null;
+    const behindAz=closesBehind.get(candidate.id);
+    const reason=heldBySkyline?heldBySkyline:!rising&&realClosing&&behindAz!==undefined?`Observe before it goes behind the hills to the ${compassWord(behindAz)}`:rising&&nearEnd?'Rising target · later for altitude; session ends soon':rising&&+candidate.date>+start+30*60_000?'Later in the session to catch this rising target higher':!rising&&realClosing?'Observe before its usable window closes':candidate.moonlight>=1?'Moonlit sky: prioritize bright detail':candidate.lunar?'Moon is up and safely separated from the Sun':'Well placed at this time';
     steps.push({...candidate,reason});remaining.splice(remaining.indexOf(candidate.id),1);
   }
   for(const slot of locked){
@@ -224,7 +276,7 @@ export function suggestSequence(session:ObservingSession,targets:UnifiedTarget[]
     steps.push({id:p.id,name:p.name,date:slot.inSession?slot.plannedAt:null,alt:p.alt,az:p.az,separation:p.separation,moonlight:p.moonlight,lunar:p.lunar,minutes:slot.minutes,journey,
       reason:slot.inSession?"At the journey’s time":"The journey visits it outside this session"});
   }
-  for(const id of remaining){const p=atTarget(id,start);steps.push({id,name:p?.name??id,date:null,alt:p?.alt??-90,az:p?.az??0,separation:p?.separation??null,moonlight:p?.moonlight??0,lunar:id.startsWith("moon:"),reason:!p?"Catalog entry unavailable":steps.length*session.minutesPerTarget>=session.durationMinutes?"Not enough time: lengthen this session":`No usable slot: needs ${p.minimum}° altitude and ${p.lunar?"distance from the Sun":"a darker sky"}`});}
+  for(const id of remaining){const p=atTarget(id,start);steps.push({id,name:p?.name??id,date:null,alt:p?.alt??-90,az:p?.az??0,separation:p?.separation??null,moonlight:p?.moonlight??0,lunar:id.startsWith("moon:"),reason:!p?"Catalog entry unavailable":steps.length*session.minutesPerTarget>=session.durationMinutes?"Not enough time: lengthen this session":(skyline?skylineHoldReason(session,id,targetMap.get(id),horizon,start,end):null)??`No usable slot: needs ${p.minimum}° altitude and ${p.lunar?"distance from the Sun":"a darker sky"}`});}
   // Scheduled steps in time order (journey blocks interleave with free targets), then the ones that do not fit.
   const scheduledSteps=steps.filter(step=>step.date).sort((a,b)=>+a.date!-+b.date!||(a.journey?.stop??0)-(b.journey?.stop??0));
   return [...scheduledSteps,...steps.filter(step=>!step.date)];

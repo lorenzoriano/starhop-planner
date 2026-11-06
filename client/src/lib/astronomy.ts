@@ -8,6 +8,7 @@ import * as Astro from 'astronomy-engine';
 import { planRoute as planVariableReachRoute, directionAngle, isNakedEyePoint, maxReach, GUIDED_MAX_HOP_FOV, GUIDED_OVERLAP_HOP_FOV, type DifficultyLevel } from './route-planner';
 import { landmarkScore, buildConstellationSegmentCounts } from './landmark-score';
 import { selectStrategy, getStrategy, type CostContext, type CostStrategyId } from './cost-strategies';
+import { horizonLookup, refractionDeg, type CompactHorizon } from './horizon/profile';
 
 // ─── Types ───────────────────────────────────────────────────
 
@@ -166,6 +167,17 @@ export interface ObservingParams {
    */
   extraTargets?: { id: string; name: string; ra: number; dec: number; mag: number }[];
   waypointIds?: string[];
+  /**
+   * The site's local skyline (compactHorizon of useLocalHorizon), structured-cloneable for the route worker. Sky nodes
+   * hidden behind it are treated like nodes below the horizon, and automatic start stars must clear it as well as 15°.
+   * Absent or null: the flat horizon, exactly as before.
+   */
+  horizon?: CompactHorizon | null;
+}
+
+/** Lowest usable GEOMETRIC altitude at an azimuth: `minimum` combined with the local skyline, never replacing it. */
+function routeMinAlt(lookup: ((azDeg: number) => number) | null, az: number, minimum: number): number {
+  return lookup ? Math.max(minimum, lookup(az)) : minimum;
 }
 
 // ─── Parsing Utilities ────────────────────────────────────────
@@ -677,12 +689,14 @@ function buildSkyNodes(
   const nodes: SkyNode[] = [];
   const { lat, lon, date, limitingMag } = params;
   const addedIds = new Set<string>();
+  // Built once per graph; behind-the-skyline nodes are dropped exactly like nodes below 5°.
+  const skyline = horizonLookup(params.horizon);
 
   // Add bright stars
   for (const star of stars) {
     if (star.mag > limitingMag) continue;
     const { alt, az } = eqToHorizontal(star.ra, star.dec, lat, lon, date);
-    if (alt < 5) continue; // below horizon
+    if (alt < routeMinAlt(skyline, az, 5)) continue; // below the horizon or behind the local skyline
     addedIds.add(star.id);
     nodes.push({
       id: star.id,
@@ -700,12 +714,13 @@ function buildSkyNodes(
 
   // Add planets
   const planets = getPlanetPositions(lat, lon, date);
-  nodes.push(...planets);
+  // Planet altitudes are apparent (refraction included); the skyline threshold is geometric.
+  nodes.push(...(skyline ? planets.filter(p => p.alt - refractionDeg(p.alt) >= skyline(p.az)) : planets));
 
   // Add Messier objects
   for (const m of messier) {
     const { alt, az } = eqToHorizontal(m.ra, m.dec, lat, lon, date);
-    if (alt < 5) continue;
+    if (alt < routeMinAlt(skyline, az, 5)) continue;
     addedIds.add(m.id);
     nodes.push({
       id: m.id,
@@ -726,7 +741,7 @@ function buildSkyNodes(
     for (const t of binocularTargets) {
       if (addedIds.has(t.id)) continue;
       const { alt, az } = eqToHorizontal(t.ra, t.dec, lat, lon, date);
-      if (alt < 5) continue;
+      if (alt < routeMinAlt(skyline, az, 5)) continue;
       addedIds.add(t.id);
       // Extract Bayer designation from altId if it starts with a Greek letter
       const altFirst = t.altId ? t.altId.split(/\s+/)[0] : undefined;
@@ -1422,7 +1437,8 @@ const CLASSIC_START_STAR_IDS: Record<string, string[]> = {
 function findAnchors(nodes: SkyNode[], targetNode: SkyNode, count: number, params: ObservingParams): SkyNode[] {
   if (params.startNodeId) return nodes.filter(node => node.id === params.startNodeId && node.id !== targetNode.id && node.alt >= 5).slice(0, 1);
   if (params.startStarId) return nodes.filter(node => node.id === params.startStarId && node.type === 'star' && node.mag <= (params.startIsWaypoint?params.limitingMag:4.5) && node.alt >= 5);
-  const candidates=nodes.filter(n=>n.id!==targetNode.id&&n.type==='star'&&n.mag<=4.5&&n.alt>=15&&(!!n.name||!!n.bayer||!!n.flamsteed));
+  const skyline=horizonLookup(params.horizon);
+  const candidates=nodes.filter(n=>n.id!==targetNode.id&&n.type==='star'&&n.mag<=4.5&&n.alt>=routeMinAlt(skyline,n.az,15)&&(!!n.name||!!n.bayer||!!n.flamsteed));
   candidates.sort((a,b)=>angularDistance(a.ra,a.dec,targetNode.ra,targetNode.dec)-angularDistance(b.ra,b.dec,targetNode.ra,targetNode.dec)||a.mag-b.mag);
   const byId = new Map(candidates.map(candidate => [candidate.id, candidate]));
   const preferred = (CLASSIC_START_STAR_IDS[targetNode.id] ?? []).flatMap(id => {
@@ -1923,16 +1939,19 @@ async function planRoutesInternal(params: ObservingParams): Promise<{
   nodes: SkyNode[];
   targetNode: SkyNode | null;
   belowHorizon: boolean;
+  /** The target is above 5° but hidden behind the local skyline (belowHorizon is then true as well). */
+  behindTerrain?: boolean;
   anchorUnavailable?: boolean;
 }> {
   const [stars, messier, binoTargets] = await Promise.all([
     loadStars(), loadMessier(), loadBinocularTargets()
   ]);
   const allNodes = buildSkyNodes(stars, messier, params, binoTargets);
+  const skyline = horizonLookup(params.horizon);
   for (const extra of params.extraTargets ?? []) {
     if (allNodes.some(n => n.id === extra.id)) continue;
     const { alt, az } = eqToHorizontal(extra.ra, extra.dec, params.lat, params.lon, params.date);
-    if (alt >= 5) allNodes.push({ id: extra.id, ra: extra.ra, dec: extra.dec, alt, az, mag: extra.mag, name: extra.name, type: 'binocular' });
+    if (alt >= routeMinAlt(skyline, az, 5)) allNodes.push({ id: extra.id, ra: extra.ra, dec: extra.dec, alt, az, mag: extra.mag, name: extra.name, type: 'binocular' });
   }
 
   // Find target
@@ -1943,8 +1962,13 @@ async function planRoutesInternal(params: ObservingParams): Promise<{
     const bObj = binoTargets.find(t => t.id === params.targetId);
     const anyObj = mObj || bObj || params.extraTargets?.find(t => t.id === params.targetId) || stars.find(s => s.id === params.targetId);
     if (anyObj) {
-      const { alt } = eqToHorizontal(anyObj.ra, anyObj.dec, params.lat, params.lon, params.date);
-      return { routes: [], nodes: allNodes, targetNode: null, belowHorizon: alt < 5 };
+      const { alt, az } = eqToHorizontal(anyObj.ra, anyObj.dec, params.lat, params.lon, params.date);
+      const behindTerrain = alt >= 5 && alt < routeMinAlt(skyline, az, 5);
+      return { routes: [], nodes: allNodes, targetNode: null, belowHorizon: alt < 5 || behindTerrain, ...(behindTerrain ? { behindTerrain } : {}) };
+    }
+    // A planet above the flat horizon that buildSkyNodes dropped is behind the local skyline.
+    if (skyline && params.targetId.startsWith('planet-') && getPlanetPositions(params.lat, params.lon, params.date).some(p => p.id === params.targetId)) {
+      return { routes: [], nodes: allNodes, targetNode: null, belowHorizon: true, behindTerrain: true };
     }
     return { routes: [], nodes: allNodes, targetNode: null, belowHorizon: false };
   }

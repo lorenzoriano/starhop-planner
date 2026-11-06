@@ -72,8 +72,19 @@ export const VISIBILITY_LABELS = ['Excellent', 'Good', 'Fair', 'Difficult', 'Not
 export type LimitFactor =
   // tonight's conditions (fixable by waiting, travelling or a steadier mount)
   | 'moon' | 'light-pollution' | 'haze' | 'altitude' | 'twilight' | 'steadiness'
+  // the local skyline (hills) hides it right now (lib/horizon); fixable by waiting
+  | 'terrain'
   // the object itself vs these binoculars
   | 'faint' | 'low-surface-brightness' | 'too-small' | 'too-close' | 'unequal-pair' | 'unresolved-stars' | 'larger-than-field';
+
+/**
+ * The local skyline in the target's direction (lib/horizon/profile.ts horizonThresholdAt): `alt` is the GEOMETRIC
+ * altitude a target must reach to clear it at azimuth `az` (degrees from north through east, for the wording).
+ */
+export interface SkylineAt {
+  alt: number;
+  az?: number;
+}
 
 export interface Limitation {
   factor: LimitFactor;

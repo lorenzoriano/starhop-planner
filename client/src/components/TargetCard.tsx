@@ -72,9 +72,10 @@ export function TargetCard({
           <h3>{objectName(target).name}</h3>
           <p>{getConstellationName(target.con)}</p><span className="target-fit">{fit}</span>
           {summary && <p className="target-summary">{summary}</p>}
-          <div className={`target-alt ${alt < MIN_ALT.possible ? "low" : ""}`}>
+          <div className={`target-alt ${alt < MIN_ALT.possible || object.obstructed ? "low" : ""}`}>
             <span className="status-dot" />
             {Math.round(alt)}° {compassLabel(az)}
+            {object.obstructed && alt > 0 && <span>· behind the hills</span>}
             <span>· mag {target.mag.toFixed(1)}</span>
           </div>
         </div>

@@ -3,6 +3,7 @@ import * as Astro from "astronomy-engine";
 import { formatInTimeZone, fromZonedTime } from "date-fns-tz";
 import { eqToHorizontal } from "./astronomy";
 import { resolveLocalMoment } from "./session";
+import { clearIntervals, compactHorizon, horizonLookup, type CompactHorizon, type HorizonInput } from "./horizon/profile";
 
 const siderealDay=86164090.5,rad=Math.PI/180;
 const wrap=(angle:number)=>((angle+180)%360+360)%360-180;
@@ -72,6 +73,77 @@ export function nightAltitudeSamples(ra:number,dec:number,lat:number,lon:number,
     const count=Math.max(1,Math.ceil((+segment.end-+segment.start)/(15*60000)));
     const times=new Set(Array.from({length:count+1},(_,i)=>+segment.start+(+segment.end-+segment.start)*i/count));
     for(const angle of [0,180])for(const at of hourAngleEvents(ra,lon,angle,segment.start,segment.end,dec))times.add(+at);
-    return {...segment,samples:Array.from(times).sort((a,b)=>a-b).map(ms=>({date:new Date(ms),alt:eqToHorizontal(ra,dec,lat,lon,new Date(ms)).alt}))};
+    return {...segment,samples:Array.from(times).sort((a,b)=>a-b).map(ms=>{const pos=eqToHorizontal(ra,dec,lat,lon,new Date(ms));return {date:new Date(ms),alt:pos.alt,az:pos.az};})};
   });
+}
+
+// ───────────────────────────── local skyline ─────────────────────────────
+
+const raisedCache=new WeakMap<object,Map<number,CompactHorizon>>();
+/**
+ * The local skyline combined with a minimum altitude: each azimuth needs max(minimum, skyline). Null when no horizon is
+ * known (callers then keep their flat `alt >= minimum` rule). Cached per horizon object and minimum.
+ */
+export function skylineWithMinimum(horizon:HorizonInput,minimum:number):CompactHorizon|null {
+  if(!horizon||!horizonLookup(horizon))return null;
+  let byMinimum=raisedCache.get(horizon);
+  if(!byMinimum){byMinimum=new Map();raisedCache.set(horizon,byMinimum);}
+  let raised=byMinimum.get(minimum);
+  if(!raised){const compact=compactHorizon(horizon)!;raised={kind:"geometric",stepDeg:compact.stepDeg,alt:compact.alt.map(a=>Math.max(minimum,a))};byMinimum.set(minimum,raised);}
+  return raised;
+}
+
+export interface SkylineEvents {
+  /** Spans clear of the local skyline (and above `minimum`), clipped to the searched interval. */
+  intervals:{start:Date;end:Date}[];
+  /** Times it climbs clear of the skyline / goes behind it, inside the interval (minute accuracy). */
+  clears:Date[];
+  hides:Date[];
+  clear:Date|null;
+  hide:Date|null;
+  alwaysClear:boolean;
+  neverClear:boolean;
+}
+/** Bisection tolerance for skyline crossings (1 s, as upcoming-nights): every view rounds the same instant to the
+ *  same HH:mm, whatever its sampling grid. */
+const SKYLINE_TOLERANCE_MS=1000;
+/**
+ * "Clears your skyline" / "goes behind your skyline" times of a fixed target between `start` and `end`, from the
+ * local horizon. Null when no horizon is known (show the plain geometric rise/set). Samples every `stepMinutes` and
+ * refines each crossing by bisection on the exact position (about 1 s).
+ */
+export function targetSkylineEvents(ra:number,dec:number,lat:number,lon:number,start:Date,end:Date,horizon:HorizonInput,{minimum=0,stepMinutes=5}:{minimum?:number;stepMinutes?:number}={}):SkylineEvents|null {
+  const skyline=minimum>0?skylineWithMinimum(horizon,minimum):horizon&&horizonLookup(horizon)?horizon:null;
+  if(!skyline||!(+end>+start))return null;
+  const position=(t:number)=>eqToHorizontal(ra,dec,lat,lon,new Date(t));
+  const count=Math.max(1,Math.ceil((+end-+start)/(stepMinutes*60_000)));
+  const samples=Array.from({length:count+1},(_,i)=>{const t=+start+(+end-+start)*i/count;return {t,...position(t)};});
+  const intervals=clearIntervals(samples,skyline,{position,tolerance:SKYLINE_TOLERANCE_MS}).map(i=>({start:new Date(i.start),end:new Date(i.end)}));
+  const clears=intervals.filter(i=>+i.start>+start).map(i=>i.start),hides=intervals.filter(i=>+i.end<+end).map(i=>i.end);
+  return {intervals,clears,hides,clear:clears[0]??null,hide:hides[0]??null,
+    alwaysClear:intervals.length===1&&!clears.length&&!hides.length,neverClear:!intervals.length};
+}
+
+/**
+ * End of the dark window `at` falls in (or of the next one, from daylight): astronomical dawn, when the Sun climbs
+ * back to −18°. Without such a dawn within a day: 24 h on in a polar night, 12 h on when it never gets dark.
+ */
+export function darkWindowEnd(lat:number,lon:number,at:Date):Date {
+  const observer=new Astro.Observer(lat,lon,0);
+  const dawn=Astro.SearchAltitude(Astro.Body.Sun,observer,1,at,1,-18)?.date;
+  if(dawn)return dawn;
+  const eq=Astro.Equator(Astro.Body.Sun,at,observer,true,true);
+  return new Date(+at+(Astro.Horizon(at,observer,eq.ra,eq.dec).altitude<-18?24:12)*3600_000);
+}
+/**
+ * When a target that is behind the local skyline at `at` next climbs clear of it within the current dark window
+ * (`until`, by default astronomical dawn: darkWindowEnd). 'after-dawn' when it stays hidden until then; `at` itself
+ * when it is already clear; null without a known skyline. Same sampling and bisection as targetSkylineEvents, so the
+ * time agrees with the other views.
+ */
+export function nextSkylineClear(ra:number,dec:number,lat:number,lon:number,at:Date,horizon:HorizonInput,until:Date=darkWindowEnd(lat,lon,at)):Date|'after-dawn'|null {
+  const events=targetSkylineEvents(ra,dec,lat,lon,at,until,horizon);
+  if(!events)return null;
+  if(events.intervals.length&&+events.intervals[0].start===+at)return at;
+  return events.clear??'after-dawn';
 }

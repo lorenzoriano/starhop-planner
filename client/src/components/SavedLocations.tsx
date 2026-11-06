@@ -1,6 +1,21 @@
-import { useId, useState } from "react";
+import { useId, useMemo, useState, useSyncExternalStore } from "react";
 import { Bookmark, X } from "lucide-react";
 import { matchingLocation, saveObservingLocation, type SavedLocation } from "@/lib/saved-locations";
+import { useLocalHorizonPreference } from "@/hooks/use-local-horizon";
+import { storedHorizonKindsNear, storedHorizonSites } from "@/lib/horizon/store";
+import { subscribeTerrainJobs, terrainStoreVersion } from "@/lib/horizon/terrain-jobs";
+
+/** Ids of the saved locations with a terrain horizon stored nearby (works offline there). */
+function useLocationsWithHorizon(locations:SavedLocation[]):Set<string> {
+  const storeVersion=useSyncExternalStore(subscribeTerrainJobs,terrainStoreVersion,terrainStoreVersion),[enabled]=useLocalHorizonPreference();
+  return useMemo(()=>{
+    if(!enabled||!locations.length)return new Set<string>();
+    const sites=storedHorizonSites();
+    return new Set(locations.filter(site=>storedHorizonKindsNear(sites,site.lat,site.lon).includes("terrain")).map(site=>site.id));
+    // storeVersion: re-read storage when a horizon was saved.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[locations,storeVersion,enabled]);
+}
 
 interface Props {
   locations:SavedLocation[]; lat:number; lon:number; name?:string; context:"Sky"|"Session";
@@ -8,7 +23,7 @@ interface Props {
 }
 export function SavedLocations({locations,lat,lon,name,context,onChange,onSelect}:Props) {
   const [editing,setEditing]=useState(false),[label,setLabel]=useState(""),[message,setMessage]=useState("");
-  const fieldId=useId(),current=matchingLocation(locations,lat,lon);
+  const fieldId=useId(),current=matchingLocation(locations,lat,lon),withHorizon=useLocationsWithHorizon(locations);
   const save=()=>{
     const result=saveObservingLocation(locations,label,lat,lon);
     if(!result.ok){setMessage(result.error);return;}
@@ -17,7 +32,7 @@ export function SavedLocations({locations,lat,lon,name,context,onChange,onSelect
   return <div className="saved-locations" aria-label={`${context} saved locations`}>
     <div className="saved-location-picker">
       {locations.length>0&&<select aria-label={`${context} saved location`} value={current?.id??""} onChange={event=>{const site=locations.find(site=>site.id===event.target.value);if(site){onSelect(site);setEditing(false);setMessage("");}}}>
-        <option value="" disabled>Choose a saved location</option>{locations.map(site=><option key={site.id} value={site.id}>{site.name}</option>)}
+        <option value="" disabled>Choose a saved location</option>{locations.map(site=><option key={site.id} value={site.id}>{withHorizon.has(site.id)?`${site.name} · horizon saved`:site.name}</option>)}
       </select>}
       <button type="button" className="text-action" onClick={()=>{setLabel(current?.name??name??"");setMessage("");setEditing(!editing);}} aria-expanded={editing}><Bookmark size={13}/>{current?"Manage location":"Save location"}</button>
     </div>

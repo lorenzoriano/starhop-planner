@@ -3,10 +3,13 @@ import { Binoculars } from 'lucide-react';
 import * as Astro from 'astronomy-engine';
 import { formatInTimeZone } from 'date-fns-tz';
 import {
-  binocularAssessment, heldBack, improvements, isConditionFactor, levelWord, limitShort, profileName, supportOf as profileSupport,
+  appearanceLine, binocularAssessment, heldBack, improvements, isBehindSkyline, isConditionFactor, levelWord, limitShort, profileName, supportOf as profileSupport,
   KITE_SOURCE, LIMIT_NAMES, type BinocularProfile, type BinocularResult, type ImprovementKind,
 } from '@/lib/binocular-assessment';
-import type { UnifiedTarget } from '@/lib/astronomy';
+import { eqToHorizontal, type UnifiedTarget } from '@/lib/astronomy';
+import { horizonLookup } from '@/lib/horizon/profile';
+import { nextSkylineClear } from '@/lib/target-visibility';
+import { useLocalHorizon } from '@/hooks/use-local-horizon';
 import type { MoonState } from '@/lib/moon';
 import type { Settings } from '@/lib/session';
 import { AGE_BRACKETS, TRANSPARENCY_OPTIONS, nelmFromSqm, skyPresetFor, type ResolvedSkyInputs } from '@/lib/visibility/conditions';
@@ -62,12 +65,13 @@ export function VisibilityChip({result,tonight=true}:{result:BinocularResult;ton
     <strong>{word}</strong>
   </span>;
 }
-/** Card block: chip, what you will see, and at most one "held back by" line. */
-export function VisibilitySummary({result,reward}:{result:BinocularResult;reward?:ReactNode}) {
+/** Card block: chip, what you will see, and at most one "held back by" line. Behind the hills the appearance is the
+ *  one sentence about them; `clears` adds when it clears them ("22:40", or null: not before dawn). */
+export function VisibilitySummary({result,reward,clears}:{result:BinocularResult;reward?:ReactNode;clears?:string|null}) {
   const held=heldBack(result);
   return <div className="vis-summary">
     {reward?<div className="vis-dims"><span className="vis-dim"><span className="reward-dim-label">How rewarding</span>{reward}</span><span className="vis-dim"><span className="reward-dim-label">Tonight</span><VisibilityChip result={result}/></span></div>:<VisibilityChip result={result}/>}
-    <p className="vis-appearance">{result.visibility.appearance}</p>
+    <p className="vis-appearance">{appearanceLine(result,clears)}</p>
     {held&&<p className="vis-held"><span>Held back by</span> {limitShort(held,result)}</p>}
   </div>;
 }
@@ -92,7 +96,7 @@ function moonsetAfter(lat:number,lon:number,at:Date):Date|null {
   try {return Astro.SearchRiseSet(Astro.Body.Moon,new Astro.Observer(lat,lon,0),-1,at,1)?.date??null;} catch {return null;}
 }
 const HELP_TEXT:Record<ImprovementKind,string>={moon:'With the Moon down',darkness:'In full darkness',support:'On a tripod',higher:'When higher',
-  'darker-site':'From a dark countryside site',clearer:'On a crisp, clear night'};
+  'darker-site':'From a dark countryside site',clearer:'On a crisp, clear night',skyline:'Wait until it clears your skyline'};
 
 interface AssessmentProps {
   target:UnifiedTarget;profile:BinocularProfile;alt:number;
@@ -100,20 +104,49 @@ interface AssessmentProps {
   moon:MoonState;skyBrightness:number;
   /** Full conditions at this moment (useVisibilityConditions().at(date)). */
   sky?:SkyInputs;observer?:Observer;
+  /** Conditions at any instant (useVisibilityConditions().at): rates "Wait until it clears your skyline at 22:40"
+   *  with that moment's Moon, twilight and haze. Without it that hint carries no rating. */
+  skyAt?:(date:Date)=>SkyInputs;
   /** Instant, site and zone: moonset time and the target's highest altitude in "What would help". */
   at?:Date;lat?:number;lon?:number;timezone?:string;
   onEditSetup?:()=>void;compact?:boolean;
   /** Precomputed assessment (the Binoculars tab memoises one per target). */
   result?:BinocularResult;
+  /** Local skyline in the target's direction (GEOMETRIC threshold) and the target's azimuth, for callers without
+   *  `at`/`lat`/`lon`. With those, the site's stored horizon is used automatically (useLocalHorizon). */
+  horizonAlt?:number;horizonAz?:number;
 }
 /** "How it will look tonight": level and appearance, the numbers behind it, what holds it back and what would help. */
-export function BinocularAssessment({target,profile,alt,moon,skyBrightness,sky,observer,at,lat,lon,timezone,onEditSetup,compact=false,result:given}:AssessmentProps) {
-  const result=useMemo(()=>given??binocularAssessment(target,profile,sky?{alt,sky,observer}:{alt,moon,skyBrightness,observer}),[given,target,profile,alt,sky,observer,moon,skyBrightness]);
+export function BinocularAssessment({target,profile,alt,moon,skyBrightness,sky,observer,skyAt,at,lat,lon,timezone,onEditSetup,compact=false,result:given,horizonAlt,horizonAz}:AssessmentProps) {
+  const {horizon}=useLocalHorizon(lat??Number.NaN,lon??Number.NaN);
+  const time=at?+at:undefined;
+  // The skyline in the target's direction at `at` (nothing new without a stored horizon).
+  const skyline=useMemo(()=>{
+    if(horizonAlt!==undefined)return {horizonAlt,...(horizonAz!==undefined?{horizonAz}:{})};
+    const lookup=horizonLookup(horizon);
+    if(!lookup||time===undefined||lat===undefined||lon===undefined)return {};
+    const {az}=eqToHorizontal(target.ra,target.dec,lat,lon,new Date(time));
+    return {horizonAlt:lookup(az),horizonAz:az};
+  },[horizonAlt,horizonAz,horizon,time,lat,lon,target.ra,target.dec]);
+  const result=useMemo(()=>given??binocularAssessment(target,profile,sky?{alt,sky,observer,...skyline}:{alt,moon,skyBrightness,observer,...skyline}),[given,target,profile,alt,sky,observer,moon,skyBrightness,skyline]);
   const v=result.visibility,{optics,sky:used,target:vt}=result.inputs;
   const culminationAlt=lat!==undefined?90-Math.abs(lat-target.dec):undefined;
-  const helps=useMemo(()=>improvements(result,{culminationAlt}),[result,culminationAlt]);
+  const blocked=isBehindSkyline(result);
+  // Behind the hills: when it next clears them before astronomical dawn (needs the site, the instant and the horizon).
+  // undefined: unknown; 'after-dawn': it stays hidden all of tonight's dark hours.
+  const clears=useMemo(()=>{
+    if(!blocked||!horizon||time===undefined||lat===undefined||lon===undefined)return undefined;
+    const t=nextSkylineClear(target.ra,target.dec,lat,lon,new Date(time),horizon);
+    return t===null?undefined:t==='after-dawn'?t:{at:t,alt:eqToHorizontal(target.ra,target.dec,lat,lon,t).alt};
+  },[blocked,horizon,time,lat,lon,target.ra,target.dec]);
+  const clearSky=useMemo(()=>clears&&clears!=='after-dawn'&&skyAt?skyAt(clears.at):undefined,[clears,skyAt]);
+  const helps=useMemo(()=>clears==='after-dawn'?[]:improvements(result,{culminationAlt,...(clears?{clearAlt:clears.alt,...(clearSky?{clearSky}:{})}:{})}),[result,culminationAlt,clears,clearSky]);
+  const clearsAt=clears&&clears!=='after-dawn'&&timezone?formatInTimeZone(clears.at,timezone,'HH:mm'):undefined;
   const moonset=helps.some(h=>h.kind==='moon')&&at&&lat!==undefined&&lon!==undefined?moonsetAfter(lat,lon,at):null;
-  const helpLabel=(kind:ImprovementKind)=>kind==='moon'&&moonset&&timezone?`${HELP_TEXT.moon} (it sets ${formatInTimeZone(moonset,timezone,'HH:mm')})`:kind==='higher'&&culminationAlt!==undefined?`${HELP_TEXT.higher} (up to ${Math.round(culminationAlt)}°)`:HELP_TEXT[kind];
+  const helpLabel=(kind:ImprovementKind)=>kind==='moon'&&moonset&&timezone?`${HELP_TEXT.moon} (it sets ${formatInTimeZone(moonset,timezone,'HH:mm')})`:kind==='higher'&&culminationAlt!==undefined?`${HELP_TEXT.higher} (up to ${Math.round(culminationAlt)}°)`
+    :kind==='skyline'&&clearsAt?`Wait until it clears your skyline at ${clearsAt}`:HELP_TEXT[kind];
+  // The rating at the moment it clears needs that moment's conditions; without them the hint stays unrated.
+  const unrated=(kind:ImprovementKind)=>kind==='skyline'&&!!clears&&clears!=='after-dawn'&&!clearSky;
   const b=result.skyBreakdown,maxGain=Math.max(.01,...v.limits.map(l=>l.gain));
   const ratio=(dMag:number)=>{const f=10**(.4*Math.abs(dMag));return f<3?f.toFixed(1):String(Math.round(f));};
   const altText=`${Math.round(Math.max(alt,0))}° up`;
@@ -147,13 +180,14 @@ export function BinocularAssessment({target,profile,alt,moon,skyBrightness,sky,o
       {l.gain>0&&<span className="vis-gain" aria-hidden="true"><i style={{width:`${Math.max(6,l.gain/maxGain*100)}%`}}/></span>}
       <p>{withoutLead(l.text,LIMIT_NAMES[l.factor])}</p>
     </li>)}</ul>:<p className="vis-none">Nothing much — conditions suit it tonight.</p>}
-    {helps.length>0&&<><h4>What would help</h4><ul className="vis-helps">{helps.map(h=><li key={h.kind}>{helpLabel(h.kind)}: <strong>{LEVEL_SENTENCE[h.estimate.level]}</strong></li>)}</ul></>}
+    {helps.length>0&&<><h4>What would help</h4><ul className="vis-helps">{helps.map(h=><li key={h.kind}>{unrated(h.kind)?helpLabel(h.kind):h.kind==='skyline'&&clearsAt&&h.estimate.level===4?`It clears your skyline at ${clearsAt}, but is still too faint to see then`:<>{helpLabel(h.kind)}: <strong>{LEVEL_SENTENCE[h.estimate.level]}</strong></>}</li>)}</ul></>}
+    {clears==='after-dawn'&&<p className="vis-none">It stays behind the hills until after dawn.</p>}
     <p className="vis-conditions">{conditionsSummary(used,profile)}{onEditSetup&&<> · <button type="button" className="text-action" onClick={onEditSetup}>Edit</button></>}</p>
     <p className="vis-method">An estimate of how your eyes, these binoculars, the air and tonight’s sky work together — not a promise. Eyesight, nearby lights and clouds vary.</p>
   </>;
   return <section className={`binocular-assessment vis-report fit-${result.rating} ${compact?'compact':''}`} aria-label={`How ${target.name} will look tonight`}>
     <h3 className="vis-title"><Binoculars size={15}/> How it will look tonight</h3>
-    <div className="vis-headline"><VisibilityChip result={result}/><p className="vis-appearance">{alt<=0?'Below the horizon at this time.':`${v.appearance}.`}</p></div>
+    <div className="vis-headline"><VisibilityChip result={result}/><p className="vis-appearance">{alt<=0?'Below the horizon at this time.':`${appearanceLine(result,clearsAt)}.`}</p></div>
     {compact?<details><summary>Why, and what would help</summary>{report}</details>:report}
   </section>;
 }

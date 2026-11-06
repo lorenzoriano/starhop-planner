@@ -19,8 +19,11 @@ import { journeyKeyResolver } from "@/lib/journeys/journey-key";
 import { NOOP_ACTIONS, objectName, resolveObject, sameObject, toKbId, type ChainResult, type HopSource, type LegReport, type ObjectActions, type ObjectCatalog, type ResolvedObject } from "@/lib/object-links";
 import type { Compass8, Journey, JourneyRequest, JourneyResult, KbObject, KnowledgeBase } from "@/lib/journeys/types";
 import { plannerObservedIds, sharedSkyInputs, withSkyInputs } from "@/lib/journeys/request-inputs";
+import { compactHorizon, horizonFingerprint } from "@/lib/horizon/profile";
+import type { LocalHorizon } from "@/lib/horizon/types";
+import { useLocalHorizon } from "@/hooks/use-local-horizon";
 import { getJourneyEngineSource } from "./journey-engine";
-import { controlsFromPrefs, indexObjects, JOURNEY_FOCUS_KEY, journeyFitsKb, journeyRequestFor, slotInstant, type LengthChoice, type ObjectIndex } from "./journey-view";
+import { controlsFromPrefs, indexObjects, JOURNEY_FOCUS_KEY, journeyFitsKb, journeyRequestFor, journeyRequestKey, openSkyToStore, slotInstant, type LengthChoice, type ObjectIndex } from "./journey-view";
 import { moonKeepOut } from "./conditions-explainer";
 import { journeysOpenAt } from "./use-tonight-journeys";
 import { JourneyDiscovery } from "./JourneyDiscovery";
@@ -97,6 +100,8 @@ export interface JourneysShared {
   hopLeg: (journeyKey: string, stop: number) => LegReport | null;
   /** Open a journey in field mode (resuming when it is already active). */
   startJourney: (journey: Journey) => void;
+  /** The site's local horizon (useLocalHorizon); null/absent = unknown, a flat horizon is assumed. */
+  horizon?: LocalHorizon | null;
 }
 
 export interface DiscoveryControls {
@@ -199,12 +204,17 @@ export default function JourneysPage(page: JourneysPageProps) {
     return () => { cancelled = true; };
   }, [kb, engine]);
 
-  // ── discovery controls (remembered on the device; open sky per site) ──
-  const prefs = store.prefs ?? {};
+  // ── the site's local horizon: stops must clear the hills; it also seeds the open directions below ──
+  const { horizon } = useLocalHorizon(lat, lon);
+  const skyline = useMemo(() => compactHorizon(horizon), [horizon]);
+  const skylineKey = horizonFingerprint(skyline);
+
+  // ── discovery controls (remembered on the device; open sky per site, seeded from the terrain until chosen) ──
   const site = siteKey(lat, lon);
   const [shuffle, setShuffle] = useState(0);
   const [showMore, setShowMore] = useState(false);
-  const controls: DiscoveryControls = { ...controlsFromPrefs(prefs, site), shuffle, showMore };
+  const baseControls = useMemo(() => controlsFromPrefs(store.prefs, site, horizon), [store.prefs, site, horizon]);
+  const controls: DiscoveryControls = { ...baseControls, shuffle, showMore };
   const setControls = useCallback((patch: Partial<DiscoveryControls>) => {
     if (patch.shuffle !== undefined) setShuffle(patch.shuffle);
     if (patch.showMore !== undefined) setShowMore(patch.showMore);
@@ -214,10 +224,15 @@ export default function JourneysPage(page: JourneysPageProps) {
     updateStore((s) => {
       const current: JourneyPrefs = s.prefs ?? {};
       const openSky = { ...(current.openSky ?? {}) };
-      if (openDirections) { if (openDirections.length >= 8 || !openDirections.length) delete openSky[site]; else openSky[site] = openDirections; }
+      // A manual choice is remembered for the site (even "all open" when the terrain default closes some); the default
+      // itself, or an empty choice, is forgotten so the terrain seed applies again.
+      if (openDirections) {
+        const keep = openSkyToStore(openDirections, horizon, rest.minAlt ?? current.minAlt ?? baseControls.minAlt);
+        if (keep) openSky[site] = keep; else delete openSky[site];
+      }
       return { ...s, prefs: { ...current, ...rest, openSky } };
     });
-  }, [updateStore, site]);
+  }, [updateStore, site, horizon, baseControls.minAlt]);
 
   // ── engine request: keyed on the 15-minute slot so live mode does not reshuffle ──
   // "Find a journey with this" (r5 UX #4): the request pins the focus object (mustInclude) and, before dark, plans for
@@ -236,12 +251,12 @@ export default function JourneysPage(page: JourneysPageProps) {
   const request = useMemo<JourneyRequest>(() => withSkyInputs(journeyRequestFor({
     date: focusAt ?? date, lat, lon, timezone, profile, skyBrightness,
     controls: { theme: controls.theme, length: controls.length, minAlt: controls.minAlt, includeChallenge: controls.includeChallenge, openDirections: controls.openDirections },
-    shuffle: controls.shuffle, limit: controls.showMore || focusId ? 6 : 3, seen,
+    shuffle: controls.shuffle, limit: controls.showMore || focusId ? 6 : 3, seen, horizon: skyline,
   }), { observedIds: observedKey ? observedKey.split("\n") : [], boostIds: inputs.boostIds, ...(focusId ? { mustInclude: [focusId] } : {}) }),
-  // `date` matters only through its 15-minute slot (journeyRequestFor rounds it), so key on the slot.
+  // `date` matters only through its 15-minute slot (journeyRequestFor rounds it), so key on the slot; the skyline by its fingerprint.
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  [slot, lat, lon, timezone, profile.fov, profile.aperture, profile.magnification, profile.stabilized, skyBrightness, controls.theme, controls.length, controls.minAlt, controls.includeChallenge, controls.openDirections, controls.shuffle, controls.showMore, seen, focusId, observedKey, inputs.key]);
-  const requestKey = JSON.stringify(request);
+  [slot, lat, lon, timezone, profile.fov, profile.aperture, profile.magnification, profile.stabilized, skyBrightness, controls.theme, controls.length, controls.minAlt, controls.includeChallenge, controls.openDirections, controls.shuffle, controls.showMore, seen, focusId, observedKey, inputs.key, skylineKey]);
+  const requestKey = journeyRequestKey(request);
   const [result, setResult] = useState<{ key: string; value: JourneyResult } | null>(null);
   const [engineError, setEngineError] = useState<string | null>(null);
   const [retry, setRetry] = useState(0);
@@ -336,7 +351,7 @@ export default function JourneysPage(page: JourneysPageProps) {
   }
   if (!kb) return <JourneysLoading slow={slowKb}/>;
 
-  const shared: JourneysShared = { page, kb, objects, skyNodes, stopNodes, moonRing, minAlt: controls.minAlt, go, store, updateStore, feedback, updateFeedback, actions, catalog, resolve, hopLeg, startJourney };
+  const shared: JourneysShared = { page, kb, objects, skyNodes, stopNodes, moonRing, minAlt: controls.minAlt, go, store, updateStore, feedback, updateFeedback, actions, catalog, resolve, hopLeg, startJourney, horizon };
   const warning = storageWarning && <p className="journey-note" role="status">This device is not saving journey progress. Keep this page open to finish the journey.</p>;
 
   if (route.view === "discover") {

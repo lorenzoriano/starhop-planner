@@ -152,15 +152,28 @@ export function moonVerdict(target: MoonVerdictTarget, moon: MoonState, sky: num
 
 // ───────────────────────────── one call for "observable now?" ─────────────────────────────
 
-export interface FeasibilityInput extends TwilightSubject { alt: number; category: MoonCategory; ra: number; dec: number }
-export interface Feasibility { altitudeOk: boolean; darkEnough: boolean; moon: MoonVerdict; ok: boolean }
+export interface FeasibilityInput extends TwilightSubject {
+  alt: number; category: MoonCategory; ra: number; dec: number;
+  /** Local skyline in the target's direction: the GEOMETRIC altitude it must reach to clear it
+   *  (lib/horizon/profile.ts horizonThresholdAt). Absent: flat horizon. */
+  horizonAlt?: number;
+}
+export interface Feasibility {
+  /** The rule's minimum altitude holds (a comfort limit, independent of the skyline). */
+  altitudeOk: boolean;
+  /** Behind the local skyline (always false without one). */
+  obstructed: boolean;
+  darkEnough: boolean; moon: MoonVerdict; ok: boolean;
+}
 
-/** Altitude, twilight and Moon under one rule. The engine checks the same three over whole stop intervals. */
+/** Altitude, skyline, twilight and Moon under one rule: the minimum altitude and the skyline combine
+ *  (alt ≥ max(minimum, skyline)). Twilight and moonlight stay flat. The engine checks the same over whole stop intervals. */
 export function skyFeasibility(o: FeasibilityInput, moon: MoonState, sky: number, rule: VisibilityRule): Feasibility {
   const altitudeOk = o.alt >= minAltitude(rule);
+  const obstructed = o.horizonAlt !== undefined && Number.isFinite(o.horizonAlt) && o.alt < o.horizonAlt;
   const dark = darkEnough(moon.sunAlt, o, rule);
   const verdict = moonVerdict(o, moon, sky);
-  return { altitudeOk, darkEnough: dark, moon: verdict, ok: altitudeOk && dark && verdict.ok };
+  return { altitudeOk, obstructed, darkEnough: dark, moon: verdict, ok: altitudeOk && !obstructed && dark && verdict.ok };
 }
 
 // ───────────────────────────── Planner moon weighting ─────────────────────────────

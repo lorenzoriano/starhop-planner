@@ -4,6 +4,7 @@ import type { UnifiedTarget } from "./astronomy";
 import { lunarFeatures } from "./moon";
 import type { NightItem } from "./session";
 import { stepMinutes, suggestSequence, type ObservingSession } from "./session-planner";
+import { activeStoredHorizon } from "./horizon/prefs";
 
 export const SKYSAFARI_FORMAT_HELP = "https://support.simulationcurriculum.com/hc/en-us/articles/231539467-SkySafari-for-Android-Frequently-Asked-Questions";
 export const SKYSAFARI_ANDROID_HELP = "https://support.simulationcurriculum.com/hc/en-us/community/posts/28478507276567-How-To-Copy-Skylist-Files-To-Observing-List-Using-SkySafari-7-On-Android-Answer-Read-On";
@@ -75,7 +76,7 @@ export function buildSkySafariExport(context: ExportContext) {
   const zone = tzLookup(lat,lon), title = session?.name ?? "StarHop observing list";
   const stamp = (date:Date) => formatInTimeZone(date,zone,"yyyy-MM-dd HH:mm XXX");
   const site = `${session?.locationName ? session.locationName+" · " : ""}${lat.toFixed(4)}°, ${lon.toFixed(4)}°`;
-  const sequence = session ? suggestSequence(session,targets,context.skyBrightness) : [];
+  const sequence = session ? suggestSequence(session,targets,context.skyBrightness,activeStoredHorizon(session.lat,session.lon)) : [];
   const scheduled = sequence.filter(step => step.date);
   const ordered = scope === "plan" ? scheduled.flatMap(step => items.filter(item => item.id === step.id)) : items;
   const targetById = new Map(targets.map(target => [target.id,target]));

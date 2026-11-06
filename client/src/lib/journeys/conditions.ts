@@ -13,6 +13,7 @@ import * as Astro from 'astronomy-engine';
 import { angularDistance, type UnifiedTarget } from '../astronomy';
 import { binocularAssessment, type BinocularProfile } from '../binocular-assessment';
 import { equatorialOfDate } from '../fixed-equatorial';
+import { horizonFingerprint, horizonLookup, type CompactHorizon } from '../horizon/profile';
 import { moonState, type MoonState } from '../moon';
 import { GLOW_LIMIT, GLOW_REFERENCE_SKY, MIN_ALT, moonGlow, moonIsUp, moonMinSeparation, moonVerdict, twilightLimit, type MoonCategory } from '../sky-feasibility';
 import { SLOT_MS, slotStartMs } from './seed';
@@ -116,6 +117,14 @@ export interface EngineSettings {
   timezone: string | null;
   maxHop: number;
   maxPath: number;
+  /** The site's skyline (JourneyRequest.horizon, geometric-equivalent thresholds), or null for a flat horizon. */
+  horizon: CompactHorizon | null;
+  /** horizonFingerprint(horizon) ('flat' without one): the skyline's part of the candidate-table cache key. */
+  horizonKey: string;
+  /** Skyline threshold lookup (azimuth → geometric altitude to clear it), built once per request; null = flat. */
+  skyline: ((azDeg: number) => number) | null;
+  /** Highest skyline threshold (−90 when flat). When it is ≤ minAlt the skyline can never bind: the analytic paths stay. */
+  skylineMax: number;
 }
 
 const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x));
@@ -134,6 +143,8 @@ export function normalizeRequest(req: JourneyRequest): EngineSettings {
   const radius = clamp(req.regionRadius ?? DEFAULT_RADIUS, 20, 40);
   const level = req.level ?? 'curious';
   const dirs = req.openDirections && req.openDirections.length > 0 && req.openDirections.length < 8 ? new Set(req.openDirections) : null;
+  const skyline = horizonLookup(req.horizon ?? null);
+  const horizon = skyline ? req.horizon! : null;
   return {
     instantMs,
     slotMs: slotStartMs(instantMs),
@@ -160,7 +171,16 @@ export function normalizeRequest(req: JourneyRequest): EngineSettings {
     timezone: req.timezone ?? null,
     maxHop: Math.min(MAX_HOP_DEG, 0.75 * radius),
     maxPath: PATH_OVER_RADIUS * radius,
+    horizon,
+    horizonKey: horizonFingerprint(horizon),
+    skyline,
+    skylineMax: horizon ? Math.max(...horizon.alt) : -90,
   };
+}
+
+/** Altitude a target must reach at azimuth `az` under settings `s`: max(minAlt, skyline(az)). */
+export function clearAltitude(s: Pick<EngineSettings, 'minAlt' | 'skyline' | 'skylineMax'>, az: number): number {
+  return s.skyline && s.skylineMax > s.minAlt ? Math.max(s.minAlt, s.skyline(az)) : s.minAlt;
 }
 
 // ───────────────────────────── the time grid ─────────────────────────────
@@ -262,12 +282,42 @@ export function minutesAboveAlt(decDate: number, lat: number, haDeg: number, min
   return Math.min(720, Math.max(0, (h0 - haDeg) / SIDEREAL_DEG_PER_MIN));
 }
 
+/** Sampling step of `minutesClear` against a skyline (minutes). */
+export const SKYLINE_STEP_MIN = 5;
+
+/**
+ * Minutes the object stays at or above minAlt AND clear of the local skyline from the given sidereal time (capped at
+ * 720; 0 when it is low or hidden now). Without a skyline that can bind (none, or never higher than minAlt) this is
+ * exactly the analytic `minutesAboveAlt`. Otherwise the track is sampled every SKYLINE_STEP_MIN minutes up to the
+ * analytic answer (the skyline can only shorten it) and the first crossing is interpolated linearly.
+ */
+export function minutesClear(raDate: number, decDate: number, s: Pick<EngineSettings, 'lat' | 'lon' | 'minAlt' | 'skyline' | 'skylineMax'>, gastDeg: number): number {
+  const analytic = minutesAboveAlt(decDate, s.lat, hourAngle(raDate, s.lon, gastDeg), s.minAlt);
+  if (analytic <= 0 || !s.skyline || s.skylineMax <= s.minAlt) return analytic;
+  const clearance = (min: number) => {
+    const h = fastAltAz(raDate, decDate, s.lat, s.lon, gastDeg + min * SIDEREAL_DEG_PER_MIN);
+    return h.alt - clearAltitude(s, h.az);
+  };
+  let prevT = 0, prev = clearance(0);
+  if (prev < 0) return 0;
+  // The last step ends exactly at the analytic answer, where the object meets minAlt (a skyline above it is crossed first).
+  for (let t = Math.min(SKYLINE_STEP_MIN, analytic); ; t = Math.min(t + SKYLINE_STEP_MIN, analytic)) {
+    const c = clearance(t);
+    if (c < 0) return prevT + ((t - prevT) * prev) / (prev - c);
+    if (t >= analytic) return analytic;
+    prevT = t;
+    prev = c;
+  }
+}
+
 /** Per-object sky track over the grid. */
 export interface ObjectTrack {
   raDate: number;
   decDate: number;
   alt: Float64Array;
   az: Float64Array;
+  /** Skyline threshold at the object's azimuth per sample; absent when no skyline can bind (flat, or never above minAlt). */
+  skyline?: Float64Array;
   /** Moon separation per sample (180 when the Moon is down). */
   moonSep: Float64Array;
   /** K–S brightening (mag) per sample (0 when the Moon is down). */
@@ -278,9 +328,13 @@ export function trackObject(o: KbObject, s: EngineSettings, grid: NightGrid, dat
   const { ra: raDate, dec: decDate } = dateOf.raDec(o.ra, o.dec);
   const n = grid.times.length;
   const alt = new Float64Array(n), az = new Float64Array(n), moonSep = new Float64Array(n), glow = new Float64Array(n);
+  // The skyline is only sampled when it can bind (somewhere higher than the altitude floor); otherwise it changes nothing.
+  const sky = s.skyline && s.skylineMax > s.minAlt ? s.skyline : null;
+  const skyline = sky ? new Float64Array(n) : undefined;
   for (let k = 0; k < n; k++) {
     const h = fastAltAz(raDate, decDate, s.lat, s.lon, grid.gastDeg[k]);
     alt[k] = h.alt; az[k] = h.az;
+    if (skyline) skyline[k] = sky!(h.az);
     if (grid.moonUp[k]) {
       const m = grid.moon[k];
       const sep = angularDistance(o.ra, o.dec, m.ra, m.dec);
@@ -291,7 +345,7 @@ export function trackObject(o: KbObject, s: EngineSettings, grid: NightGrid, dat
       glow[k] = 0;
     }
   }
-  return { raDate, decDate, alt, az, moonSep, glow };
+  return { raDate, decDate, alt, az, moonSep, glow, ...(skyline ? { skyline } : {}) };
 }
 
 /** Of-date conversion with one rotation date for all objects (the fixed-equatorial cache holds one date). */
@@ -375,6 +429,9 @@ export function makeRater(s: EngineSettings) {
     } else {
       let t = targets.get(o.id);
       if (!t) { t = toBinocularTarget(o); targets.set(o.id, t); }
+      // No skyline here (AssessmentContext.horizonAlt): the rater only runs for stops that clear max(minAlt, skyline)
+      // at every sample (evaluateStop), so the skyline could not change the rating; `altKey` is floored, so passing it
+      // could even misreport a just-clear stop as hidden, and the cache key would have to carry it.
       const r = binocularAssessment(t, profile, { alt: altKey, moon, skyBrightness: s.sky }).rating;
       // A curator's grade for this sky class (doc 03 §3.3) wins over the model when the Moon is down and the object
       // stands at least CURATED_GRADE_MIN_ALT high: observer grades capture concentrated cores the catalogue extent

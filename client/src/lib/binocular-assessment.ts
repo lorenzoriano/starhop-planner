@@ -2,9 +2,9 @@ import type { UnifiedTarget } from './astronomy';
 import { BINOCULAR_ENTRIES } from './binocular-guide';
 import type { MoonState } from './moon';
 import { extinctionForTransparency, skyPresetFor } from './visibility/conditions';
-import { DEFAULT_OBSERVER, estimateVisibility, extinctionCoefficient, skyBrightnessBreakdown, type SkyBreakdown } from './visibility/model';
+import { DEFAULT_OBSERVER, behindSkyline, estimateVisibility, extinctionCoefficient, skyBrightnessBreakdown, skylineDirection, type SkyBreakdown } from './visibility/model';
 import { angularDimensions, toVisibilityTarget } from './visibility/targets';
-import type { LimitFactor, Limitation, Observer, Optics, SkyInputs, Support, VisibilityEstimate, VisibilityLevel, VisibilityTarget } from './visibility/types';
+import type { LimitFactor, Limitation, Observer, Optics, SkyInputs, SkylineAt, Support, VisibilityEstimate, VisibilityLevel, VisibilityTarget } from './visibility/types';
 
 export { angularDimensions };
 
@@ -26,6 +26,11 @@ export interface AssessmentContext {
   /** Legacy inputs: Moon (and Sun altitude) at the time, and the moonless zenith sky (default 21.6). */
   moon?:MoonState;
   skyBrightness?:number;
+  /** Local skyline in the target's direction: the GEOMETRIC altitude it must reach to clear it (lib/horizon/profile.ts
+   *  horizonThresholdAt). Absent: flat horizon. */
+  horizonAlt?:number;
+  /** Target azimuth, degrees, for "behind the hills to the southwest". */
+  horizonAz?:number;
 }
 export interface BinocularResult {
   /** 0 excellent … 3 telescope more rewarding / not visible (from visibility.level: 0→0, 1–2→1, 3→2, 4→3). */
@@ -46,7 +51,9 @@ export interface BinocularResult {
   entry:typeof BINOCULAR_ENTRIES[number]|undefined;
   visibility:VisibilityEstimate;
   /** What the estimate used, for explanations and counterfactuals. */
-  inputs:{target:VisibilityTarget;optics:Optics;sky:SkyInputs;observer:Observer;alt:number};
+  inputs:{target:VisibilityTarget;optics:Optics;sky:SkyInputs;observer:Observer;alt:number;
+    /** The local skyline used (only when one is known). */
+    skyline?:SkylineAt};
   skyBreakdown:SkyBreakdown;
 }
 const entries=new Map(BINOCULAR_ENTRIES.map(e=>[e.targetId,e]));
@@ -78,13 +85,16 @@ export const LIMIT_NAMES:Record<LimitFactor,string>={
   moon:'Moonlight','light-pollution':'Light pollution',haze:'Haze',altitude:'Height in the sky',twilight:'Twilight',steadiness:'Shaky view',
   faint:'Too faint for these binoculars','low-surface-brightness':'Light spread thin','too-small':'Very small','too-close':'Stars close together',
   'unequal-pair':'One star much fainter','unresolved-stars':'Stars too faint to pick out','larger-than-field':'Bigger than your view',
+  terrain:'Hills in the way',
 };
-const CONDITION_FACTORS:ReadonlySet<LimitFactor>=new Set<LimitFactor>(['moon','light-pollution','haze','altitude','twilight','steadiness']);
+const CONDITION_FACTORS:ReadonlySet<LimitFactor>=new Set<LimitFactor>(['moon','light-pollution','haze','altitude','twilight','steadiness','terrain']);
 export const isConditionFactor=(f:LimitFactor)=>CONDITION_FACTORS.has(f);
 const CONDITION_LABELS:Partial<Record<LimitFactor,string>>={
   moon:'Better under a darker Moon',altitude:'Better when higher in the sky','light-pollution':'Dark skies strongly recommended',
-  twilight:'Better after dark',haze:'Better on a clearer night',steadiness:'Better on a tripod',
+  twilight:'Better after dark',haze:'Better on a clearer night',steadiness:'Better on a tripod',terrain:'Behind the hills',
 };
+/** The target is above the flat horizon but behind the local skyline (a 'terrain' limitation). */
+export const isBehindSkyline=(r:BinocularResult)=>r.visibility.limits.some(l=>l.factor==='terrain');
 /** Card threshold: a limitation is worth one "held back by" line from this gain (margin units). */
 export const HELD_BACK_GAIN=.2;
 
@@ -95,6 +105,7 @@ export const HELD_BACK_GAIN=.2;
 export function levelWord(r:BinocularResult):string {
   const v=r.visibility,t=r.inputs.target;
   if(v.level<4)return v.label;
+  if(isBehindSkyline(r))return 'Behind the hills';
   if(t.kind==='double'&&r.inputs.alt>0&&.4*(v.limitingMag-Math.min(t.mag,t.mag2??t.mag))>-.15)return `Won’t split at ${r.inputs.optics.magnification}×`;
   return 'Not visible tonight';
 }
@@ -118,48 +129,71 @@ export function limitShort(l:Limitation,r:BinocularResult):string {
     case 'unequal-pair':return `Fainter star lost in the glare at ${optics.magnification}×`;
     case 'unresolved-stars':return 'Its stars are too faint to pick out';
     case 'larger-than-field':return 'Bigger than your view';
+    case 'terrain':return `Behind the hills${skylineDirection(r.inputs.skyline?.az)}`;
   }
 }
-/** The one limitation worth a card line, or null when nothing holds it back much (never for an Excellent view). */
+/** The one limitation worth a card line, or null when nothing holds it back much (never for an Excellent view, nor
+ *  behind the hills: the appearance line already says so, see appearanceLine). */
 export function heldBack(r:BinocularResult):Limitation|null {
   const top=r.visibility.limits[0];
-  return r.visibility.level>=1&&top&&top.gain>=HELD_BACK_GAIN?top:null;
+  return r.visibility.level>=1&&top&&top.gain>=HELD_BACK_GAIN&&top.factor!=='terrain'?top:null;
+}
+/**
+ * The appearance sentence for cards and headlines. Behind the hills it is the one sentence about them, with when the
+ * target clears them if the caller knows (`clears`: "22:40", or null when it stays hidden until after dawn):
+ * "Hidden behind the hills to the east until 22:40".
+ */
+export function appearanceLine(r:BinocularResult,clears?:string|null):string {
+  const a=r.visibility.appearance;
+  if(!isBehindSkyline(r)||clears===undefined)return a;
+  return `${a} until ${clears===null?'after dawn':clears}`;
 }
 
 export function binocularAssessment(target:UnifiedTarget,p:BinocularProfile,context:AssessmentContext={}):BinocularResult {
   const entry=entries.get(target.id),dims=angularDimensions(target.size);
   const alt=context.alt??60,sky=context.sky??skyInputsFrom(context.skyBrightness??21.6,context.moon);
   const observer=context.observer??DEFAULT_OBSERVER,optics=opticsOf(p),vt=visibilityTargetOf(target);
-  const visibility=estimateVisibility(vt,optics,sky,alt,observer);
+  const skyline:SkylineAt|undefined=context.horizonAlt!==undefined&&Number.isFinite(context.horizonAlt)?{alt:context.horizonAlt,...(context.horizonAz!==undefined?{az:context.horizonAz}:{})}:undefined;
+  const visibility=estimateVisibility(vt,optics,sky,alt,observer,skyline);
+  const blocked=behindSkyline(alt,skyline);
   const breakdown=skyBrightnessBreakdown(sky,Math.max(alt,0),vt);
   const rating=ratingOfLevel(visibility.level);
   const extended=vt.kind!=='star'&&vt.kind!=='double'&&vt.majorArcmin!==undefined&&!Number.isNaN(target.mag)&&target.mag<90;
   const sb=extended?averageSurfaceBrightness(target.mag,vt.majorArcmin!,vt.minorArcmin??vt.majorArcmin!):null;
   const contrast=sb===null?null:Math.pow(10,.4*(visibility.skyAtTarget-sb));
   const top=visibility.limits[0];
-  const label=alt<=0?'Below the horizon'
+  const label=alt<=0?'Below the horizon':blocked?'Behind the hills'
     :rating>=2&&top&&top.gain>=HELD_BACK_GAIN&&CONDITION_LABELS[top.factor]?CONDITION_LABELS[top.factor]!
     :FIT_LABELS[rating];
   const reasons=visibility.limits.length?visibility.limits.map(l=>l.text):[`${visibility.appearance}. Nothing in tonight’s conditions holds it back much.`];
   const sunAlt=sky.sunAlt;
-  const availability=alt<=0?'Below the horizon':sunAlt!==undefined&&sunAlt>=0?'Daylight — plan after dark':sunAlt!==undefined&&sunAlt>-18?'Twilight — faint detail is harder':alt<15?'Very low in the sky':'Above the horizon in darkness';
+  const availability=alt<=0?'Below the horizon':blocked?`Behind the hills${skylineDirection(skyline?.az)}`:sunAlt!==undefined&&sunAlt>=0?'Daylight — plan after dark':sunAlt!==undefined&&sunAlt>-18?'Twilight — faint detail is harder':alt<15?'Very low in the sky':'Above the horizon in darkness';
   const view=entry?.impression??target.binoTip??visibility.appearance;
   return {
     rating,label,reasons,view,availability,exitPupil:p.aperture/p.magnification,pointLimit:visibility.limitingMag,
     surfaceBrightness:sb,contrast,glow:breakdown.moonDelta,dimensions:dims,entry,visibility,
-    inputs:{target:vt,optics,sky,observer,alt},skyBreakdown:breakdown,
+    inputs:{target:vt,optics,sky,observer,alt,...(skyline?{skyline}:{})},skyBreakdown:breakdown,
   };
 }
 
-export type ImprovementKind='moon'|'support'|'higher'|'darker-site'|'clearer'|'darkness';
+export type ImprovementKind='moon'|'support'|'higher'|'darker-site'|'clearer'|'darkness'|'skyline';
 export interface Improvement {kind:ImprovementKind;estimate:VisibilityEstimate;}
 /**
  * "What would help": the same estimate with one input improved — the Moon down, a tripod, the target at its highest
  * (`culminationAlt`), a dark-countryside sky, a crisp night, full darkness. Only changes that raise the level are kept.
+ * Behind the local skyline the only help is waiting until it clears ('skyline'). When the caller knows it clears in
+ * tonight's dark window (`clearAlt`: its altitude then; `clearSky`: the conditions then, else the current ones) the
+ * hint is always given, rated at that moment; otherwise only when the target would look better clear of the skyline
+ * at its current altitude.
  */
-export function improvements(r:BinocularResult,opts:{culminationAlt?:number}={}):Improvement[] {
+export function improvements(r:BinocularResult,opts:{culminationAlt?:number;clearAlt?:number;clearSky?:SkyInputs}={}):Improvement[] {
   const {target,optics,sky,observer,alt}=r.inputs,now=r.visibility.level;
   if(alt<=0)return [];
+  if(isBehindSkyline(r)){
+    const known=opts.clearAlt!==undefined&&opts.clearAlt>0;
+    const estimate=estimateVisibility(target,optics,known?opts.clearSky??sky:sky,known?opts.clearAlt!:alt,observer);
+    return known||estimate.level<now?[{kind:'skyline',estimate}]:[];
+  }
   const out:Improvement[]=[];
   const tryOne=(kind:ImprovementKind,o:Optics,s:SkyInputs,a:number)=>{
     const estimate=estimateVisibility(target,o,s,a,observer);

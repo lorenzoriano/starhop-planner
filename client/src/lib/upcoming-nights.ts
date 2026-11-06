@@ -3,7 +3,8 @@ import { formatInTimeZone } from "date-fns-tz";
 import { eqToHorizontal, type UnifiedTarget } from "./astronomy";
 import { clockBounds, clockNightDate, shiftClockDate } from "./astronomical-clock";
 import { moonState } from "./moon";
-import { targetWindow, visibilityWindow } from "./target-visibility";
+import { skylineWithMinimum, targetWindow, visibilityWindow } from "./target-visibility";
+import { clearIntervals, horizonLookup, type HorizonInput } from "./horizon/profile";
 
 export const GOOD_TARGET_ALTITUDE = 30;
 const SAMPLE_STEP = 15 * 60_000;
@@ -51,6 +52,9 @@ export interface UpcomingNightsOptions {
   days?: number;
   targets?: UnifiedTarget[];
   selected?: UnifiedTarget | null;
+  /** The site's local horizon: target time then needs alt ≥ max(limit, skyline at the target's azimuth). Omitted or
+   *  null keeps the flat-horizon results exactly. */
+  horizon?: HorizonInput;
 }
 
 function moonFreeSegments(
@@ -80,23 +84,34 @@ function moonFreeSegments(
   return result;
 }
 
-function targetHours(target: UnifiedTarget, lat: number, lon: number, segments: { start: Date; end: Date }[]) {
+function targetHours(target: UnifiedTarget, lat: number, lon: number, segments: { start: Date; end: Date }[], horizon?: HorizonInput) {
+  const skyline = horizonLookup(horizon);
+  // Good time: high enough and, when a local horizon is known, clear of it (alt ≥ max(30°, skyline)).
+  const good = (pos: { alt: number; az: number }) => pos.alt >= GOOD_TARGET_ALTITUDE && (!skyline || pos.alt >= skyline(pos.az));
   let goodMs = 0;
+  let bestSampled: { at: Date; alt: number } | null = null;
   for (const segment of segments) {
     for (let at = +segment.start; at < +segment.end; at += SAMPLE_STEP) {
       const end = Math.min(at + SAMPLE_STEP, +segment.end);
       const midpoint = new Date((at + end) / 2);
-      if (eqToHorizontal(target.ra, target.dec, lat, lon, midpoint).alt >= GOOD_TARGET_ALTITUDE) goodMs += end - at;
+      const pos = eqToHorizontal(target.ra, target.dec, lat, lon, midpoint);
+      if (good(pos)) {
+        goodMs += end - at;
+        if (!bestSampled || pos.alt > bestSampled.alt) bestSampled = { at: midpoint, alt: pos.alt };
+      }
     }
   }
   const window = segments.length
     ? targetWindow(target.ra, target.dec, lat, lon, { ok: true, start: segments[0].start, end: segments.at(-1)!.end, segments })
     : null;
-  return { id: target.id, name: target.name, goodAltitudeHours: goodMs / 3_600_000, bestAt: window && window.max >= GOOD_TARGET_ALTITUDE ? window.bestAt : null };
+  let bestAt = window && window.max >= GOOD_TARGET_ALTITUDE ? window.bestAt : null;
+  // Behind the skyline at its highest: the highest sampled time that is clear instead.
+  if (skyline && bestAt && !good(eqToHorizontal(target.ra, target.dec, lat, lon, bestAt))) bestAt = bestSampled?.at ?? null;
+  return { id: target.id, name: target.name, goodAltitudeHours: goodMs / 3_600_000, bestAt };
 }
 
 export function upcomingNights(options: UpcomingNightsOptions): UpcomingNight[] {
-  const { lat, lon, timezone, date, selected } = options;
+  const { lat, lon, timezone, date, selected, horizon } = options;
   const days = Math.max(1, Math.min(30, Math.floor(options.days ?? 7)));
   const targets = options.targets ?? [];
   const firstDate = clockNightDate(date, timezone);
@@ -112,9 +127,9 @@ export function upcomingNights(options: UpcomingNightsOptions): UpcomingNight[] 
       : new Date((+bounds.start + +bounds.end) / 2);
     const moon = moonState(lat, lon, phaseAt);
     const phase = Astro.MoonPhase(phaseAt);
-    const targetResults = targets.map((target) => targetHours(target, lat, lon, moonFree));
+    const targetResults = targets.map((target) => targetHours(target, lat, lon, moonFree, horizon));
     const feasibleTargetCount = targetResults.filter((target) => target.goodAltitudeHours >= 1).length;
-    const selectedTarget = selected ? targetHours(selected, lat, lon, moonFree) : null;
+    const selectedTarget = selected ? targetHours(selected, lat, lon, moonFree, horizon) : null;
     const chooseAt = selectedTarget?.bestAt
       ?? (moonFree.length ? new Date((+moonFree[0].start + +moonFree[0].end) / 2)
         : dark.length ? new Date((+dark[0].start + +dark[0].end) / 2) : bounds.start);
@@ -155,9 +170,11 @@ export interface MoonFreeTargetWindow {
   targetAltitude: number;
 }
 
-/** Search complete observing nights and intersect moon-free darkness with a real altitude threshold. */
+/** Search complete observing nights and intersect moon-free darkness with a real altitude threshold. With a local
+ *  horizon the target must also clear the skyline (alt ≥ max(minAltitude, skyline)); hills can split one dark window
+ *  into several. */
 export function moonFreeTargetWindows({
-  lat, lon, timezone, date, target, days = 30, minAltitude = 15, minDurationMinutes = 30,
+  lat, lon, timezone, date, target, days = 30, minAltitude = 15, minDurationMinutes = 30, horizon,
 }: UpcomingNightsOptions & { target: UnifiedTarget; minAltitude?: 15 | 30; minDurationMinutes?: number }): MoonFreeTargetWindow[] {
   const nights = upcomingNights({ lat, lon, timezone, date, days: Math.min(30, Math.max(1, days)) });
   const result: MoonFreeTargetWindow[] = [];
@@ -171,15 +188,28 @@ export function moonFreeTargetWindows({
     }
     return new Date((lo + hi) / 2);
   };
+  const skyline = skylineWithMinimum(horizon, minAltitude);
+  const position = (t: number) => eqToHorizontal(target.ra, target.dec, lat, lon, new Date(t));
   for (const night of nights) {
     for (const dark of night.moonFreeWindows) {
       const window = { ok: true as const, start: dark.start, end: dark.end, segments: [dark] };
       const peak = targetWindow(target.ra, target.dec, lat, lon, window);
       if (peak.max < minAltitude) continue;
-      const above: { start: Date; end: Date }[] = [{
-        start: altitudeAt(dark.start) >= minAltitude ? dark.start : crossing(dark.start, peak.bestAt, false),
-        end: altitudeAt(dark.end) >= minAltitude ? dark.end : crossing(peak.bestAt, dark.end, true),
-      }];
+      let above: { start: Date; end: Date }[];
+      if (skyline) {
+        // Every disjoint span above max(minAltitude, skyline), refined to about a second.
+        const count = Math.max(1, Math.ceil((+dark.end - +dark.start) / (5 * 60_000)));
+        const samples = Array.from({ length: count + 1 }, (_, i) => {
+          const t = +dark.start + (+dark.end - +dark.start) * i / count;
+          return { t, ...position(t) };
+        });
+        above = clearIntervals(samples, skyline, { position, tolerance: 1000 }).map((span) => ({ start: new Date(span.start), end: new Date(span.end) }));
+      } else {
+        above = [{
+          start: altitudeAt(dark.start) >= minAltitude ? dark.start : crossing(dark.start, peak.bestAt, false),
+          end: altitudeAt(dark.end) >= minAltitude ? dark.end : crossing(peak.bestAt, dark.end, true),
+        }];
+      }
       for (const window of above) if (+window.end - +window.start >= minDurationMinutes * 60_000) result.push({
           date: night.date, ...window, moonPhase: night.moonPhase,
           moonIllumination: night.moonIllumination, moonLabel: night.moonLabel,

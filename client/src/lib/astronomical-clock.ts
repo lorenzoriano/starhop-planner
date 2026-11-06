@@ -6,6 +6,7 @@ import {
   eqToHorizontal,
   type UnifiedTarget,
 } from "./astronomy";
+import { horizonLookup, type CompactHorizon } from "./horizon/profile";
 import { moonState, scatteredMoonlight } from "./moon";
 import { resolveLocalMoment } from "./session";
 import { nextLocalDate, targetIntervalEvents } from "./target-visibility";
@@ -83,6 +84,8 @@ export type ClockSample = {
   moon: number;
   lit: number;
   alt: number[];
+  /** Azimuth of each target, degrees from north through east (for the local skyline). */
+  az: number[];
   separation: number[];
 };
 export function clockSamples(
@@ -125,32 +128,52 @@ export function clockSamples(
     .map((ms) => {
       const at = new Date(ms),
         moon = moonState(lat, lon, at);
+      const horizontal = targets.map((t) => eqToHorizontal(t.ra, t.dec, lat, lon, at));
       return {
         ms,
         hour: clockHour(at, zone),
         sun: moon.sunAlt,
         moon: moon.alt,
         lit: moon.illumination,
-        alt: targets.map((t) => eqToHorizontal(t.ra, t.dec, lat, lon, at).alt),
+        alt: horizontal.map((h) => h.alt),
+        az: horizontal.map((h) => h.az),
         separation: targets.map((t) =>
           angularDistance(t.ra, t.dec, moon.ra, moon.dec),
         ),
       };
     });
 }
-/** Avoid connecting across a DST wall-clock jump on the polar dial. */
+/**
+ * Avoid connecting across a DST wall-clock jump on the polar dial. With `include`, only the segments whose both ends
+ * are included are drawn (e.g. the stretches of a path clear of the local skyline).
+ */
 export function clockCurve(
   samples: ClockSample[],
   alt: (s: ClockSample) => number,
+  include?: (s: ClockSample) => boolean,
 ) {
-  return samples
-    .map((s, i) => {
-      const p = clockPoint(s.hour, alt(s));
-      const previous = samples[i - 1];
-      const delta = previous ? (s.hour - previous.hour + 24) % 24 : 0;
-      return `${!i || delta > 0.4 ? "M" : "L"}${p.x.toFixed(2)},${p.y.toFixed(2)}`;
-    })
-    .join(" ");
+  const parts: string[] = [];
+  samples.forEach((s, i) => {
+    const previous = samples[i - 1];
+    if (include && !include(s)) return;
+    const p = clockPoint(s.hour, alt(s));
+    const delta = previous ? (s.hour - previous.hour + 24) % 24 : 0;
+    const joined = !!i && delta <= 0.4 && (!include || include(previous));
+    parts.push(`${joined ? "L" : "M"}${p.x.toFixed(2)},${p.y.toFixed(2)}`);
+  });
+  return parts.join(" ");
+}
+/**
+ * True where target `index` is above the flat horizon but hidden behind the local skyline: the polar dial dims these
+ * stretches. `skyline` is a horizonLookup (null when no horizon is known: never hidden). Below 0° the dial already
+ * shows the target inside the horizon ring, so nothing more is dimmed there.
+ */
+export function clockBehindSkyline(
+  s: ClockSample,
+  index: number,
+  skyline: ((azDeg: number) => number) | null,
+) {
+  return !!skyline && s.alt[index] >= 0 && s.alt[index] < skyline(s.az[index]);
 }
 export type SeasonRequest = {
   targets: ClockTarget[];
@@ -162,6 +185,8 @@ export type SeasonRequest = {
   minAlt: number;
   minSeparation: number;
   skyBrightness?: number;
+  /** The site's local skyline (compactHorizon), structured-cloneable for the worker; absent or null = flat horizon. */
+  horizon?: CompactHorizon | null;
 };
 export type SeasonDay = { day: string; hours: number[]; available: number[]; contrast: number[]; moonFree:number[]; lit: number };
 export type ClockSeason = {
@@ -187,6 +212,10 @@ export function seasonDates(from: string, to: string) {
   for (let day = from; day <= to; day = nextLocalDate(day)) dates.push(day);
   return dates;
 }
+/**
+ * Dark, high enough and far enough from a risen Moon. `skylineAlt` is the local skyline's geometric threshold at the
+ * target's azimuth (horizonThresholdAt); it combines with minAlt (alt ≥ max of both), never replacing it.
+ */
 export function seasonEligible(
   alt: number,
   sun: number,
@@ -194,10 +223,11 @@ export function seasonEligible(
   separation: number,
   minAlt: number,
   minSeparation: number,
+  skylineAlt?: number | null,
 ) {
   return (
     sun <= -18 &&
-    alt >= minAlt &&
+    alt >= Math.max(minAlt, skylineAlt ?? -Infinity) &&
     (moonAlt <= -1 || separation >= minSeparation)
   );
 }
@@ -207,7 +237,9 @@ export function clockSeason(
   progress?: (done: number, total: number) => void,
 ): ClockSeason {
   const { targets, lat, lon, zone, minAlt, minSeparation } = request,
-    dates = seasonDates(request.from, request.to);
+    dates = seasonDates(request.from, request.to),
+    // Built once for the whole run (366 dates × 48 half hours × targets).
+    skyline = horizonLookup(request.horizon);
   const bins = targets.map(() => Array(48).fill(0)),
     totals = Array(48).fill(0),
     days: SeasonDay[] = [],
@@ -237,9 +269,10 @@ export function clockSeason(
       track.hour.push(hour);
       track.dark.push(moon.sunAlt <= -18);
       targets.forEach((t, i) => {
-        const alt = eqToHorizontal(t.ra, t.dec, lat, lon, at).alt;
+        const { alt, az } = eqToHorizontal(t.ra, t.dec, lat, lon, at);
         const separation = angularDistance(t.ra, t.dec, moon.ra, moon.dec);
-        if (moon.sunAlt <= -18 && alt >= minAlt) {
+        const skylineAlt = skyline ? skyline(az) : null;
+        if (moon.sunAlt <= -18 && alt >= Math.max(minAlt, skylineAlt ?? -Infinity)) {
           available[i] += .5;
           if(moon.alt<=-1)moonFree[i]+=.5;
           const glow = scatteredMoonlight(moon, alt, separation, request.skyBrightness ?? 21.6).brightening;
@@ -250,9 +283,10 @@ export function clockSeason(
           alt,
           moon.sunAlt,
           moon.alt,
-          angularDistance(t.ra, t.dec, moon.ra, moon.dec),
+          separation,
           minAlt,
           minSeparation,
+          skylineAlt,
         );
         track.alt[i].push(alt);
         track.qualified[i].push(qualified);

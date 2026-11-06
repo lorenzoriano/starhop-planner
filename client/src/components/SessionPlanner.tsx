@@ -21,7 +21,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { CatalogCombobox } from "./CatalogCombobox";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { KITE_14X50, type BinocularProfile } from "@/lib/binocular-assessment";
-import { makeSession, planningShortcut, eveningOn, sessionTimezone, suggestSequence, sessionTimelineItems, sessionFreeGaps, stepMinutes, journeyBlockFit, type ObservingSession, type SequenceStep } from "@/lib/session-planner";
+import { useLocalHorizon } from "@/hooks/use-local-horizon";
+import { geometricFromApparent, horizonFingerprint, horizonLookup, type HorizonInput } from "@/lib/horizon/profile";
+import { makeSession, planningShortcut, eveningOn, sessionTimezone, skylineHoldReason, suggestSequence, sessionTimelineItems, sessionFreeGaps, stepMinutes, journeyBlockFit, type ObservingSession, type SequenceStep } from "@/lib/session-planner";
 import { sessionDraft, resolveSessionDraft, reuseNightItems, duplicateNightItems, observingNightDate, sameObservingNight, derivedNightName, isDerivedNightName, sessionDraftAt, type SessionDraft } from "@/lib/session-draft";
 import { eqToHorizontal, type UnifiedTarget } from "@/lib/astronomy";
 import { lunarFeatures, lunarFrame, projectLunarFeature, moonState } from "@/lib/moon";
@@ -63,19 +65,37 @@ export function journeyOutsideReason(plannedAt:Date,zone:string,stop?:number):st
 /** Night items a chained hop can route to (lunar features cannot be hopped to). */
 export const hoppableNightItems=(items:readonly Pick<NightItem,"id">[])=>items.filter(item=>!item.id.startsWith("moon:"));
 
-export function detailedUnavailableReason(step:SequenceStep, session:ObservingSession, target:UnifiedTarget|undefined, zone:string) {
+/** Why an item has no slot, in plain words. `horizon` is the session site's local horizon: an item above its minimum
+ *  altitude but behind the hills then says so ("Behind the hills to the west until 23:10."). */
+export function detailedUnavailableReason(step:SequenceStep, session:ObservingSession, target:UnifiedTarget|undefined, zone:string, horizon?:HorizonInput) {
   const start=new Date(session.startAt),end=new Date(+start+session.durationMinutes*60_000),lunar=step.id.startsWith("moon:"),minimum=lunar?5:15;
-  const altAt=(at:Date)=>lunar?moonState(session.lat,session.lon,at).alt:target?eqToHorizontal(target.ra,target.dec,session.lat,session.lon,at).alt:-90;
+  const skyline=horizonLookup(horizon);
+  const positionAt=(at:Date)=>{
+    if(lunar){const moon=moonState(session.lat,session.lon,at);return {alt:moon.alt,az:moon.az,geometric:geometricFromApparent(moon.alt)};}
+    const p=target?eqToHorizontal(target.ra,target.dec,session.lat,session.lon,at):{alt:-90,az:0};
+    return {...p,geometric:p.alt};
+  };
+  const altAt=(at:Date)=>positionAt(at).alt;
+  // Above the minimum and, when a local horizon is known, clear of it.
+  const upAt=(at:Date)=>{const p=positionAt(at);return p.alt>=minimum&&(!skyline||p.geometric>=skyline(p.az));};
   const localTime=(at:Date)=>formatInTimeZone(at,zone,"HH:mm");
   const during:number[]=[];
   for(let ms=+start;ms<=+end;ms+=10*60_000)during.push(altAt(new Date(ms)));
   if(Math.max(...during)<minimum) {
     const later:Date[]=[];let peak=Math.max(...during);
-    for(let ms=+end+10*60_000;ms<=+end+24*60*60_000;ms+=10*60_000){const at=new Date(ms),alt=altAt(at);peak=Math.max(peak,alt);if(alt>=minimum)later.push(at);}
-    if(!later.length)return `Never rises above ${minimum}° from this latitude (peaks at ${Math.round(peak)}°).`;
+    for(let ms=+end+10*60_000;ms<=+end+24*60*60_000;ms+=10*60_000){const at=new Date(ms),alt=altAt(at);peak=Math.max(peak,alt);if(alt>=minimum&&(!skyline||upAt(at)))later.push(at);}
+    if(!later.length){
+      const held=skyline&&peak>=minimum?skylineHoldReason(session,step.id,target,horizon,end,new Date(+end+24*60*60_000)):null;
+      return held?`${held}.`:`Never rises above ${minimum}° from this latitude (peaks at ${Math.round(peak)}°).`;
+    }
     if(target&&!/star|asterism/i.test(target.category)&&moonState(session.lat,session.lon,later[0]).sunAlt>-18)
       return `Not above ${minimum}° in darkness during this session. The next rise is in daylight; choose another observing night.`;
+    if(skyline)return `${lunar?"The Moon rises above 5°":"Rises above "+minimum+"°"} and clears your skyline at ${localTime(later[0])}, after this session ends at ${localTime(end)}.`;
     return `${lunar?"Moon rises":"Rises above "+minimum+"°"} at ${localTime(later[0])}, after this session ends at ${localTime(end)}.`;
+  }
+  if(skyline&&!during.some((_,i)=>upAt(new Date(+start+i*10*60_000)))) {
+    const held=skylineHoldReason(session,step.id,target,horizon,start,end);
+    if(held)return `${held}.`;
   }
   if(lunar&&moonState(session.lat,session.lon,start).alt<0) {
     const rise=during.findIndex((_,i)=>during[i]>=minimum);
@@ -88,9 +108,9 @@ export function detailedUnavailableReason(step:SequenceStep, session:ObservingSe
   return "Not enough time in this session for another target. Extend the session or move it to another night.";
 }
 
-function SessionTimeline({ session, items, steps, targets, zone, darkSegments, moonAt }: {
+function SessionTimeline({ session, items, steps, targets, zone, darkSegments, moonAt, horizon }: {
   session:ObservingSession; items:NightItem[]; steps:SequenceStep[]; targets:UnifiedTarget[]; zone:string;
-  darkSegments:{start:Date;end:Date}[]; moonAt:(at:Date)=>ReturnType<typeof moonState>;
+  darkSegments:{start:Date;end:Date}[]; moonAt:(at:Date)=>ReturnType<typeof moonState>; horizon?:HorizonInput;
 }) {
   const {ref:timelineRef,width}=useSvgWidth(900);
   const rangeStart=Math.min(+new Date(session.startAt),darkSegments[0]?+darkSegments[0].start:+new Date(session.startAt));
@@ -104,18 +124,32 @@ function SessionTimeline({ session, items, steps, targets, zone, darkSegments, m
   for(let ms=Math.ceil(start/tickStep)*tickStep;ms<=end;ms+=tickStep)ticks.push(ms);
   const x=(ms:number)=>left+(ms-start)/(end-start||1)*(right-left),y=(alt:number)=>bottom-Math.max(0,Math.min(90,alt))/90*(bottom-top);
   const samples=Array.from({length:Math.max(2,Math.ceil((end-start)/(15*60_000))+1)},(_,i)=>new Date(start+(end-start)*i/(Math.max(2,Math.ceil((end-start)/(15*60_000))))));
+  const skyline=horizonLookup(horizon);
+  // Clear spans as the main path; with a local horizon, spans behind the skyline go to a separate faded path.
   const pathFor=(item:NightItem)=>{
-    let path="",connected=false;
-    for(const at of samples){const feature=lunarFeatures.find(f=>`moon:${f.id}`===item.id),target=targetsById.get(item.id);const alt=feature?moonAt(at).alt:target?eqToHorizontal(target.ra,target.dec,session.lat,session.lon,at).alt:-1;
-      if(alt<0){connected=false;continue;}path+=`${connected?"L":"M"}${x(+at).toFixed(1)},${y(alt).toFixed(1)} `;connected=true;}
-    return path;
+    let path="",hidden="",connected=false,hiddenConnected=false;
+    for(const at of samples){const feature=lunarFeatures.find(f=>`moon:${f.id}`===item.id),target=targetsById.get(item.id);
+      const pos=feature?(()=>{const moon=moonAt(at);return {alt:moon.alt,az:moon.az,geometric:geometricFromApparent(moon.alt)};})():target?(()=>{const p=eqToHorizontal(target.ra,target.dec,session.lat,session.lon,at);return {...p,geometric:p.alt};})():{alt:-1,az:0,geometric:-1};
+      const alt=pos.alt;
+      if(alt<0){connected=false;hiddenConnected=false;continue;}
+      const point=`${x(+at).toFixed(1)},${y(alt).toFixed(1)}`;
+      if(skyline&&pos.geometric<skyline(pos.az)){
+        // Keep the faded path joined to the clear one at each crossing.
+        hidden+=`${hiddenConnected?"L":"M"}${point} `;hiddenConnected=true;
+        if(connected){path+=`L${point} `;connected=false;}
+        continue;
+      }
+      if(hiddenConnected)hidden+=`L${point} `;
+      hiddenConnected=false;
+      path+=`${connected?"L":"M"}${point} `;connected=true;}
+    return {path,hidden};
   };
   return <section className="planner-night-timeline" aria-label="Whole observing night timeline">
-    <h2>Whole-night overview</h2><p>Altitude across the dark hours. Shaded bands mark astronomical darkness and Moon-up time; blocks show scheduled target slots.</p>
+    <h2>Whole-night overview</h2><p>Altitude across the dark hours. Shaded bands mark astronomical darkness and Moon-up time; blocks show scheduled target slots.{skyline?" Faded dashes: behind your skyline.":""}</p>
     <div style={{overflowX:"auto"}}><svg ref={timelineRef} viewBox={`0 0 ${width} 280`} preserveAspectRatio="xMidYMid meet" role="img" aria-label={`Altitude timeline for ${items.length} targets from ${formatInTimeZone(start,zone,"MMM d HH:mm")} to ${formatInTimeZone(end,zone,"MMM d HH:mm")}`} style={{height:280,width:"100%"}}>
       {samples.slice(0,-1).map((at,i)=>{const next=samples[i+1],state=moonAt(new Date((+at+ +next)/2));return <g key={+at}><rect x={x(+at)} y={top} width={Math.max(1,x(+next)-x(+at))} height={bottom-top} fill={state.sunAlt<=-18?"#9fc7a8":"#506273"} opacity={state.sunAlt<=-18?.15:.045}/>{state.alt>0&&<rect x={x(+at)} y={top} width={Math.max(1,x(+next)-x(+at))} height={bottom-top} fill="#b1b7c4" opacity=".14"/>}</g>;})}
       {[0,30,60,90].map(alt=><g key={alt}><line x1={left} x2={right} y1={y(alt)} y2={y(alt)} stroke="#78909a" strokeOpacity=".3" strokeDasharray={alt===0?undefined:"3 5"}/><text x={left-8} y={y(alt)+4} fill="#9bb0b7" fontSize="12" textAnchor="end">{alt}°</text></g>)}
-      {orderedItems.map((item,index)=><path key={item.id} d={pathFor(item)} fill="none" stroke={["#53e352","#ff59ce","#ff792f","#459bff","#ff4b67","#00c9b7","#ac77ff","#ead328"][index%8]} strokeWidth="2"/>)}
+      {orderedItems.map((item,index)=>{const {path,hidden}=pathFor(item),color=["#53e352","#ff59ce","#ff792f","#459bff","#ff4b67","#00c9b7","#ac77ff","#ead328"][index%8];return <g key={item.id}><path d={path} fill="none" stroke={color} strokeWidth="2"/>{hidden&&<path className="planner-timeline-behind-skyline" d={hidden} fill="none" stroke={color} strokeWidth="1.5" strokeOpacity=".35" strokeDasharray="2 4"><title>Behind the hills</title></path>}</g>;})}
       {scheduledSteps.map((step,index)=>{const x1=x(+step.date!),x2=x(+step.date!+stepMinutes(step,session)*60_000),slotWidth=Math.max(2,x2-x1);return <g key={step.id}><rect x={x1} y="205" width={slotWidth} height="26" rx="2" fill="#c4d8be" opacity=".8"/>{slotWidth>=22&&<text x={(x1+x2)/2} y="224" fill="#12232c" fontSize="12" fontWeight="700" textAnchor="middle">{index+1}</text>}</g>;})}
       {ticks.map(ms=>{const at=new Date(ms);return <text key={ms} x={x(+at)} y="266" fill="#9bb0b7" fontSize="12" textAnchor="middle">{formatInTimeZone(at,zone,"HH:mm")}</text>;})}
     </svg></div>
@@ -147,10 +181,13 @@ export function SessionPlanner({skyAt,observer,savedLocations,onLocationsChange,
   const resolved=useMemo(()=>resolveSessionDraft(draft,isNew?undefined:active),[draft,isNew,active?.startAt]);
   const visibleItems=useMemo(()=>isNew?(copy?reuseNightItems(items,!active):[]):items,[isNew,copy,items,active?.id]);
   const preview=useMemo<ObservingSession|undefined>(()=>resolved.ok?{...(active??{id:"draft",createdAt:date.toISOString(),archived:false}),...resolved.value,items:visibleItems}:undefined,[active,resolved,visibleItems]);
+  // The session site's local horizon (shared computation with every other view of the same site).
+  const {horizon}=useLocalHorizon(preview?.lat??lat,preview?.lon??lon);
+  const horizonKey=horizonFingerprint(horizon);
   // Notes don't change scheduling. Avoid repeating the astronomical search on
   // every keystroke in an expanded field-note editor.
-  const scheduleKey=preview?JSON.stringify([preview.startAt,preview.lat,preview.lon,preview.durationMinutes,preview.minutesPerTarget,preview.items.map(i=>[i.id,i.observedAt,i.journeyKey,i.journeyStop,i.plannedAt])]):"";
-  const sequence=useMemo(()=>preview?suggestSequence(preview,targets,skyBrightness):[],[scheduleKey,targets,skyBrightness]);
+  const scheduleKey=preview?JSON.stringify([preview.startAt,preview.lat,preview.lon,preview.durationMinutes,preview.minutesPerTarget,preview.items.map(i=>[i.id,i.observedAt,i.journeyKey,i.journeyStop,i.plannedAt]),horizonKey]):"";
+  const sequence=useMemo(()=>preview?suggestSequence(preview,targets,skyBrightness,horizon):[],[scheduleKey,targets,skyBrightness]);
   const zone=preview?sessionTimezone(preview):timezone;
   const formZone=resolved.ok?sessionTimezone(resolved.value):zone;
   const calendarDate=Number.isFinite(Date.parse(`${draft.date}T12:00:00`))?draft.date:formatInTimeZone(date,timezone,"yyyy-MM-dd");
@@ -168,7 +205,7 @@ export function SessionPlanner({skyAt,observer,savedLocations,onLocationsChange,
   const dirty=!isNew&&active&&JSON.stringify(draft)!==JSON.stringify(sessionDraft(active));
   const selectNight=(id:string)=>{const selected=sessions.find(session=>session.id===id);if(!selected)return;onSelect(id);setDraft(sessionDraft(selected));setMonth(new Date(`${formatInTimeZone(new Date(selected.startAt),sessionTimezone(selected),"yyyy-MM-dd")}T12:00:00`));setIsNew(false);setQuery("");setError("");setStatus("");if(siteDetails.current)siteDetails.current.open=false;};
   const sameSite=!!preview&&Math.abs(preview.lat-lat)<.01&&Math.abs(preview.lon-lon)<.01;
-  const suggestions=useMemo(()=>preview&&visibleItems.length===0?sessionBinocularSuggestions(preview,targets,profile,skyBrightness,forecastMoon,{skyAt:sameSite?skyAt:undefined,observer}):[],[targets,preview?.startAt,preview?.durationMinutes,preview?.lat,preview?.lon,visibleItems,skyBrightness,profile,forecastMoon,sameSite,skyAt,observer]);
+  const suggestions=useMemo(()=>preview&&visibleItems.length===0?sessionBinocularSuggestions(preview,targets,profile,skyBrightness,forecastMoon,{skyAt:sameSite?skyAt:undefined,observer,horizon}):[],[targets,preview?.startAt,preview?.durationMinutes,preview?.lat,preview?.lon,visibleItems,skyBrightness,profile,forecastMoon,sameSite,skyAt,observer,horizon]);
   const [allSuggestions,setAllSuggestions]=useState(false);
   const [journeyOpen,setJourneyOpen]=useState(false);
   const targetIds=useMemo(()=>targets.map(target=>target.id),[targets]);
@@ -220,7 +257,7 @@ export function SessionPlanner({skyAt,observer,savedLocations,onLocationsChange,
     onUpdate({...archiveUndo,archived:false});selectNight(archiveUndo.id);setArchiveUndo(null);
     if(archiveTimer.current)clearTimeout(archiveTimer.current);
   };
-  const unavailableReasons=useMemo(()=>new Map(unavailable.map(step=>[step.id,step.journey?journeyOutsideReason(step.journey.plannedAt,zone,step.journey.stop):preview?detailedUnavailableReason(step,preview,targetMap.get(step.id),zone):step.reason])),[unavailable,preview?.startAt,preview?.durationMinutes,preview?.lat,preview?.lon,targetMap,zone]);
+  const unavailableReasons=useMemo(()=>new Map(unavailable.map(step=>[step.id,step.journey?journeyOutsideReason(step.journey.plannedAt,zone,step.journey.stop):preview?detailedUnavailableReason(step,preview,targetMap.get(step.id),zone,horizon):step.reason])),[unavailable,preview?.startAt,preview?.durationMinutes,preview?.lat,preview?.lon,targetMap,zone,horizon]);
   const actionForUnavailable=(id:string):{kind:"extend"|"move";at:Date}|{kind:"journey";at:Date;fit:NonNullable<ReturnType<typeof journeyBlockFit>>}|null=>{
     if(!preview)return null;
     // A journey stop stays at the journey's time: change the session to hold the journey's whole block (every stop),
@@ -237,9 +274,12 @@ export function SessionPlanner({skyAt,observer,savedLocations,onLocationsChange,
     const start=new Date(preview.startAt),currentEnd=new Date(+start+preview.durationMinutes*60_000),maxEnd=new Date(+start+720*60_000);
     const feature=lunarFeatures.find(item=>`moon:${item.id}`===id),brightStar=target&&/star|asterism/i.test(target.category)&&target.mag<=5;
     const altitudeAt=(at:Date)=>lunar?moonState(preview.lat,preview.lon,at).alt:target?eqToHorizontal(target.ra,target.dec,preview.lat,preview.lon,at).alt:-90;
+    const skyline=horizonLookup(horizon);
     const suitable=(at:Date)=>{
       const moon=moonState(preview.lat,preview.lon,at),alt=altitudeAt(at);
       if(alt<minimum||(lunar&&moon.sunSeparation<20)||(target&&moon.sunAlt>(brightStar?-6:-18)))return false;
+      // Clear of the local skyline (geometric comparison; the Moon's altitude is apparent).
+      if(skyline){const pos=lunar?{alt:geometricFromApparent(moon.alt),az:moon.az}:eqToHorizontal(target!.ra,target!.dec,preview.lat,preview.lon,at);if(pos.alt<skyline(pos.az))return false;}
       if(feature){const projected=projectLunarFeature(feature,lunarFrame(preview.lat,preview.lon,at));if(!projected.visible||!projected.lit)return false;}
       return true;
     };
@@ -346,7 +386,7 @@ export function SessionPlanner({skyAt,observer,savedLocations,onLocationsChange,
       {objectActions&&journeySky&&<details className="panel planner-journey-entry" open={journeyOpen} onToggle={event=>setJourneyOpen(event.currentTarget.open)}><summary><Waypoints size={14}/> Add a journey to this night</summary>{journeyOpen&&<Suspense fallback={<p className="planner-inline-hint">Finding tonight’s journeys…</p>}><TonightJourneyList sky={journeySky} actions={objectActions} mode="night" plannableIds={targetIds}/></Suspense>}</details>}
       <div className="planner-sequence-heading"><h2>Your viewing order</h2><span>{scheduled.length} scheduled · {completed.length} observed{preview?` · ${preview.minutesPerTarget} min each`:""}</span>{objectActions&&<button type="button" className="text-action planner-hop-plan" disabled={isNew||!active||!hoppableNightItems(visibleItems).length} title={isNew||!active?"Create this night first":!hoppableNightItems(visibleItems).length?"Add a star or deep-sky target first":"Plan one chained star hop through this night’s viewing order"} onClick={()=>{if(active)objectActions.hopChain({kind:"night",sessionId:active.id});}}><Navigation size={13}/> {LINK_LABELS.hopPlan}</button>}</div>
       {!visibleItems.length&&<p className="planner-empty-copy">Add a target above. StarHop will suggest an order that gives setting objects a chance before they get too low.</p>}
-      {preview&&visibleItems.length>0&&<SessionTimeline session={preview} items={visibleItems} steps={sequence} targets={targets} zone={zone} darkSegments={forecastNight.ok?forecastNight.segments:[]} moonAt={forecastMoon}/>}
+      {preview&&visibleItems.length>0&&<SessionTimeline session={preview} items={visibleItems} steps={sequence} targets={targets} zone={zone} darkSegments={forecastNight.ok?forecastNight.segments:[]} moonAt={forecastMoon} horizon={horizon}/>}
       {preview&&sessionFreeGaps(preview,sequence).length>0&&<div className="planner-free-gaps" aria-label="Free time in this session">{sessionFreeGaps(preview,sequence).map(gap=><p key={gap.start.toISOString()}>Free {formatInTimeZone(gap.start,zone,'HH:mm')}–{formatInTimeZone(gap.end,zone,'HH:mm')} · no target scheduled</p>)}</div>}
       <ol className="planner-sequence">{scheduled.map((step,index)=>{const item=visibleItems.find(item=>item.id===step.id);return item?row(item,index,step):null;})}</ol>
       {unavailable.length>0&&<details className="planner-unavailable" open><summary>Doesn’t fit this session · {unavailable.length}</summary><ol className="planner-sequence">{unavailable.map((step,index)=>{const item=visibleItems.find(item=>item.id===step.id);return item?row(item,index,{...step,reason:unavailableReasons.get(step.id)??step.reason}):null;})}</ol></details>}

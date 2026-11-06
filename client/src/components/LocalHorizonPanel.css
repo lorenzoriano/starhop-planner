@@ -1,0 +1,17 @@
+/* Local horizon block in the site dialog (LocalHorizonPanel.tsx); sits inside .sky-conditions next to the elevation row. */
+.local-horizon { display:grid; gap:6px; }
+.local-horizon-head { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:4px 12px; }
+.local-horizon-head h3 { margin:0; font-size:14px; font-weight:600; color:#d3dedc; }
+.local-horizon-toggle { display:inline-flex; align-items:center; gap:8px; min-height:34px; color:#c1d7ce; font-size:13px; cursor:pointer; }
+.local-horizon-toggle input { width:16px; height:16px; accent-color:#a3c8bf; }
+.local-horizon-progress { width:100%; height:6px; accent-color:#a3c8bf; }
+.local-horizon-chart { display:block; width:100%; height:auto; max-height:120px; }
+.local-horizon-ground { fill:#58796f; fill-opacity:.55; stroke:#a3c8bf; stroke-width:1.2; stroke-linejoin:round; }
+.local-horizon-grid { stroke:#294450; stroke-width:.8; }
+.local-horizon-axis { stroke:#5f7f8a; stroke-width:1; }
+.local-horizon-tick, .local-horizon-scale { fill:#8da8b1; font-size:10px; }
+.local-horizon-actions { display:flex; flex-wrap:wrap; gap:6px 14px; }
+.local-horizon-actions:empty { display:none; }
+.local-horizon-actions button { color:#b3d1c7; font-size:12px; text-align:left; text-decoration:underline; text-underline-offset:3px; }
+.local-horizon-credits { margin:0; color:#7d969f; font-size:11px; line-height:1.45; }
+.local-horizon-credits a { color:#9cbcb3; text-decoration:underline; text-underline-offset:2px; }

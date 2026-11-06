@@ -9,11 +9,12 @@ import { moonMinSeparation } from "@/lib/sky-feasibility";
 import { moonDay } from "@/lib/moon";
 import { nextLocalDate, visibilityWindow } from "@/lib/target-visibility";
 import type { Compass8, JourneyResult } from "@/lib/journeys/types";
-import { COMPASS_WORDS } from "./journey-view";
+import { COMPASS8 as COMPASS8_ORDER, COMPASS_WORDS } from "./journey-view";
+import { compass8Word } from "@/lib/horizon/profile";
 
 export type ConditionActionId = "moon-friendly" | "after-moonset" | "moon-tab" | "twilight-journey" | "jump-dark" | "plan-tonight" | "lower-alt" | "open-sky" | "later" | "tomorrow" | "surprise";
 export interface ConditionAction { id: ConditionActionId; label: string; at?: Date }
-export type ConditionCode = "day" | "twilight" | "moon" | "altitude" | "region" | "kb";
+export type ConditionCode = "day" | "twilight" | "moon" | "altitude" | "terrain" | "region" | "kb";
 export interface ConditionNote { code: ConditionCode; title: string; body: string; actions: ConditionAction[] }
 
 export interface NightEvents { astroDusk: Date | null; astroDawn: Date | null; moonset: Date | null; moonrise: Date | null; sunRising: boolean }
@@ -64,6 +65,8 @@ export interface ConditionsInput {
   events: NightEvents;
   minAlt: number;
   openDirections: Compass8[];
+  /** The open directions are the terrain default (hills, journey-view terrainDirections), not the user's own choice. */
+  openSkyFromTerrain?: boolean;
   theme: string | null;
   result: Pick<JourneyResult, "journeys" | "diagnostics"> | null;
 }
@@ -93,7 +96,7 @@ export function isDarkAt(at: Date, input: Pick<ConditionsInput, "sunAlt" | "even
 }
 
 export function conditionNotes(input: ConditionsInput): ConditionNote[] {
-  const { date, timezone: tz, sunAlt, moon, events, minAlt, openDirections, result } = input;
+  const { date, timezone: tz, sunAlt, moon, events, minAlt, openDirections, openSkyFromTerrain, result } = input;
   const notes: ConditionNote[] = [];
   const factors = new Set(result?.diagnostics.limitingFactors ?? []);
   const count = result?.journeys.length ?? null;
@@ -129,6 +132,13 @@ export function conditionNotes(input: ConditionsInput): ConditionNote[] {
       actions: [{ id: "moon-friendly", label: "Show moonlight-proof journeys" }, ...(set ? [{ id: "after-moonset" as const, label: `After moonset (${t(set, tz)})`, at: plus(set, 10) }] : []), { id: "moon-tab", label: "Explore the Moon itself" }] });
   }
 
+  // The local skyline (hills) hides objects that would otherwise stand high enough.
+  if (!daylight && factors.has("terrain")) {
+    notes.push({ code: "terrain", title: "Hills hide part of your sky",
+      body: "From this spot the hills rise above some of tonight's objects, so journeys keep to the sky that clears them.",
+      actions: [...tryLater, { id: "tomorrow", label: "Tomorrow 21:00", at: tomorrowEvening(date, tz) }] });
+  }
+
   // When daylight is the blocker, the altitude limit is not the reason and its note would only add noise.
   if (!daylight && (factors.has("altitude") || (count === 0 && sunAlt < -18 && !notes.length))) {
     notes.push({ code: "altitude", title: `Objects must be ${minAlt}° up or more`,
@@ -137,10 +147,16 @@ export function conditionNotes(input: ConditionsInput): ConditionNote[] {
   }
 
   if (openDirections.length < 8 && (factors.has("region") || count === 0 || (count !== null && count < 3))) {
-    const words = openDirections.map((d) => COMPASS_WORDS[d]);
-    const list = words.length > 1 ? `${words.slice(0, -1).join(", ")} and ${words.at(-1)}` : words[0] ?? "no direction";
-    notes.push({ code: "region", title: "Part of your sky is blocked",
-      body: `You marked only the ${list} as open, so ${count === null ? "fewer" : count === 0 ? "no" : `only ${count}`} journey${count === 1 ? "" : "s"} fit${count === 1 ? "s" : ""}.`,
+    // The user's own choice keeps the journeys' wording; the hills sentence uses the app's skyline wording ("northwest").
+    const listOf = (dirs: readonly Compass8[], word: (d: Compass8) => string = (d) => COMPASS_WORDS[d]) => {
+      const words = dirs.map(word);
+      return words.length > 1 ? `${words.slice(0, -1).join(", ")} and ${words.at(-1)}` : words[0] ?? "no direction";
+    };
+    const fit = `${count === null ? "fewer" : count === 0 ? "no" : `only ${count}`} journey${count === 1 ? "" : "s"} fit${count === 1 ? "s" : ""}`;
+    notes.push({ code: "region", title: openSkyFromTerrain ? "Hills block part of your sky" : "Part of your sky is blocked",
+      body: openSkyFromTerrain
+        ? `Hills block the ${listOf(COMPASS8_ORDER.filter((d) => !openDirections.includes(d)), compass8Word)} from here, so ${fit}.`
+        : `You marked only the ${listOf(openDirections)} as open, so ${fit}.`,
       actions: [{ id: "open-sky", label: "Open all directions" }, ...(minAlt > 20 ? [{ id: "lower-alt" as const, label: "Lower the limit to 20°" }] : tryLater.length ? tryLater : [{ id: "tomorrow" as const, label: "Tomorrow 21:00", at: tomorrowEvening(date, tz) }])] });
   }
 

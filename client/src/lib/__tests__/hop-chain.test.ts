@@ -22,6 +22,7 @@ function fakePlanner() {
   const planLeg = async (p: ObservingParams): Promise<Result> => {
     calls.push(p);
     if (p.targetId === "LOW") return { routes: [], nodes: SKY, targetNode: null, belowHorizon: true };
+    if (p.targetId === "HILL") return { routes: [], nodes: SKY, targetNode: null, belowHorizon: true, behindTerrain: true };
     const target = SKY.find((n) => n.id === p.targetId) ?? null;
     if (!target) return { routes: [], nodes: SKY, targetNode: null, belowHorizon: false };
     if (target.id === "FAIL") return { routes: [], nodes: SKY, targetNode: target, belowHorizon: false };
@@ -136,6 +137,16 @@ describe("planChain", () => {
     expect(chain.stopHopIndex).toEqual([2, -1, -1, -1, 4]);
     expect(chain.coverage).toBeCloseTo(2 / 5, 5);
     expect(legStartHops(chain)).toEqual([0, -1, -1, -1, 3]);
+  });
+
+  it("says a stop hidden by the local skyline is behind it, not below the horizon", async () => {
+    const { planLeg } = fakePlanner();
+    const chain = await planChain(base, [stop("A", 0), stop("HILL", 1), stop("LOW", 2)], { planLeg });
+    expect(chain.legs.map((l) => l.status)).toEqual(["ok", "below-horizon", "below-horizon"]);
+    expect(chain.legs[1].note).toBe("Hidden behind the hills at this time");
+    expect(legDifficulty(chain.legs[1])).toEqual({ label: "Behind the hills", level: "unroutable" });
+    expect(chain.legs[2].note).toBe("Below the horizon at this time");
+    expect(legDifficulty(chain.legs[2])).toEqual({ label: "Below the horizon", level: "unroutable" });
   });
 
   it("plans the next stop as a first leg when nothing has been reached yet", async () => {

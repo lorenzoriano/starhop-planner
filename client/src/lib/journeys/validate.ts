@@ -2,8 +2,9 @@
  * Sky Journeys: THE hard-constraint validator (spec decision 4, doc 05 §5.2).
  *
  * Hard constraints are plain code and live only here:
- * - `evaluateStop` decides whether one object can be stop i (altitude for the whole window, darkness, Moon
- *   distance and moonlight, binocular rating, angular extent, open-sky direction, journey eligibility). The
+ * - `evaluateStop` decides whether one object can be stop i (altitude for the whole window, clear of the local
+ *   skyline when one is known, darkness, Moon distance and moonlight, binocular rating, angular extent, open-sky
+ *   direction, journey eligibility). The
  *   candidate table is built from it, so search pruning and validation share one definition.
  * - `journeyViolations` checks a whole plan: per-stop feasibility at its position, at most one challenge stop
  *   (never stop 1 or 2, never the payoff except on a lens theme's final or end beat), duplicates / same-view stops
@@ -44,9 +45,12 @@ export function evaluateStop(o: KbObject, tr: ObjectTrack, grid: NightGrid, i: n
   const iv = grid.intervals[i];
   const ks = iv.samples;
   let minAlt = Infinity, maxGlow = 0, maxSun = -90, minSep: number | null = null, glowK = -1;
-  let moonTooClose = false, dirBad = false;
+  let moonTooClose = false, dirBad = false, behind = false;
+  const sky = tr.skyline;
   for (const k of ks) {
     minAlt = Math.min(minAlt, tr.alt[k]);
+    // Behind the skyline while above the altitude floor: the hills, not the height, hide it (alt ≥ max(minAlt, skyline)).
+    if (sky && tr.alt[k] < sky[k] && tr.alt[k] >= s.minAlt) behind = true;
     maxSun = Math.max(maxSun, grid.sunAlt[k]);
     if (grid.moonUp[k]) {
       const sep = tr.moonSep[k];
@@ -59,11 +63,17 @@ export function evaluateStop(o: KbObject, tr: ObjectTrack, grid: NightGrid, i: n
   // A lower culmination inside the interval is the true minimum (hour angle wraps through ±180°).
   const ha0 = hourAngle(tr.raDate, s.lon, grid.gastDeg[ks[0]]);
   const ha1 = hourAngle(tr.raDate, s.lon, grid.gastDeg[ks[ks.length - 1]]);
-  if (ha0 > 90 && ha1 < -90) minAlt = Math.min(minAlt, lowerCulminationAlt(tr.decDate, s.lat));
+  if (ha0 > 90 && ha1 < -90) {
+    const low = lowerCulminationAlt(tr.decDate, s.lat);
+    minAlt = Math.min(minAlt, low);
+    // Lower culmination happens due north (south of the equator: due south).
+    if (sky && s.skyline && low >= s.minAlt && low < s.skyline(s.lat >= 0 ? 0 : 180)) behind = true;
+  }
 
   const reasons: RejectReason[] = [];
   if (!eligible) reasons.push('not-eligible');
   if (minAlt < s.minAlt) reasons.push('altitude');
+  if (behind) reasons.push('terrain');
   if (maxSun > sunLimitFor(o)) reasons.push('twilight');
   if (moonTooClose) reasons.push('moon-separation');
   if (maxGlow > glowLimitFor(o)) reasons.push('moon-glow');

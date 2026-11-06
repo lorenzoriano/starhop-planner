@@ -346,7 +346,9 @@ export const LINK_LABELS = {
   findJourney: "Find a journey with this",
   startHere: "Start here", backToJourney: "Back to journey", nextStop: "Next stop",
   /** Additive (r5 fix 1), Star hop: replan the shown route; find a dark window for the destination; the bring-your-own-chart page; the chain's end. */
-  replan: "Replan route", moonFreeNight: "Find a Moon-free night", ownChart: "Use your own chart", journeyComplete: "Journey complete",
+  replan: "Replan route", moonFreeNight: "Find a Moon-free night",
+  /** The same search when the destination is behind the hills: the nearest dark, Moon-free time it is clear of the skyline. */
+  clearTime: "Find a time when it’s clear", ownChart: "Use your own chart", journeyComplete: "Journey complete",
   /** Only when one of tonight's real journeys includes the object. */
   inJourney: (title: string, stop: number) => `In journey: ${title} · stop ${stop}`,
 } as const;

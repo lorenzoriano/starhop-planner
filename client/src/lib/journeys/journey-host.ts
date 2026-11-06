@@ -15,6 +15,7 @@
  * and a second in-memory copy on the main thread, but saves the main thread a second download parse and the
  * zod + referential validation, which are several times slower than a clone.
  */
+import { horizonFingerprint } from '../horizon/profile';
 import { generate } from './assemble';
 import { loadJourneyData, type LoadedJourneyData } from './journey-client';
 import type { JourneyRequest, JourneyResult, KnowledgeBase } from './types';
@@ -34,7 +35,9 @@ const ID_SET_FIELDS = ['seenObjectIds', 'observedIds', 'boostIds', 'mustInclude'
 
 /**
  * Result-cache key of a request: every field (so boostIds, mustInclude and observedIds are part of it), with the id
- * sets sorted and deduplicated and empty sets dropped (an empty set is exactly the absent field for the engine).
+ * sets sorted and deduplicated and empty sets dropped (an empty set is exactly the absent field for the engine). The
+ * skyline (`horizon`, hundreds of numbers) is replaced by its short fingerprint; no skyline is the absent field, so a
+ * request without one keeps exactly its old key.
  */
 export function journeyRequestCacheKey(req: JourneyRequest): string {
   const copy: Record<string, unknown> = { ...req };
@@ -43,6 +46,9 @@ export function journeyRequestCacheKey(req: JourneyRequest): string {
     if (!ids?.length) delete copy[f];
     else copy[f] = Array.from(new Set(ids)).sort();
   }
+  const fingerprint = horizonFingerprint(req.horizon ?? null);
+  if (fingerprint === 'flat') delete copy.horizon;
+  else copy.horizon = fingerprint;
   return JSON.stringify(copy);
 }
 

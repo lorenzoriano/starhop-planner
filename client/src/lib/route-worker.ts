@@ -1,6 +1,7 @@
 import { planRoutes, type ObservingParams } from './astronomy';
 import { planChain } from './hop-chain';
 import type { ChainStop } from './object-links';
+import { horizonFingerprint } from './horizon/profile';
 
 /** Messages: a single route plan (no `type`, the original protocol), a chained plan, or an abort for a chain. */
 export type RouteWorkerRequest =
@@ -20,7 +21,8 @@ function patchFetch(base: string) {
 const MEMO_LIMIT = 96;
 const memo = new Map<string, ReturnType<typeof planRoutes>>();
 function memoPlan(params: ObservingParams): ReturnType<typeof planRoutes> {
-  const key = JSON.stringify(params);
+  // The skyline (ObservingParams.horizon, ~360 numbers) enters the key as its short fingerprint.
+  const key = JSON.stringify({ ...params, horizon: params.horizon ? horizonFingerprint(params.horizon) : undefined });
   const hit = memo.get(key);
   if (hit) return hit;
   const value = planRoutes(params);

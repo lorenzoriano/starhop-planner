@@ -80,4 +80,9 @@ describe('diagnostics', () => {
     expect(res.diagnostics.reasonsRejected.direction ?? 0).toBeGreaterThan(0);
     expect(res.diagnostics.message).toMatch(/Only part of the sky is open/);
   });
+
+  it('lists the open directions in compass order, not alphabetically', () => {
+    const res = generate(FIXTURE_KB, request('2027-01-09T05:00:00Z', { openDirections: ['W', 'S', 'NE', 'N', 'E'] }));
+    expect(res.diagnostics.message).toContain('Only part of the sky is open from here (N, NE, E, S, W).');
+  });
 });

@@ -21,7 +21,7 @@ import { StopActions } from "./StopActions";
 import { JourneyMapDialog } from "./JourneyRouteMap";
 import { trapTab } from "./use-overlay-dismiss";
 import { plainClass } from "./plain-language-adapter";
-import { compassOf, COMPASS_WORDS, fieldAnchor, getThereFor, journeySpine, chapterOf, legSummary, overlayStop, showLowerBinoculars as showLower, spineBeatOf, stopAltitudeState, stopBeatLabel, stopRoleLine, transitionFor } from "./journey-view";
+import { altitudeHelpText, compassOf, COMPASS_WORDS, fieldAnchor, getThereFor, journeySpine, chapterOf, legSummary, overlayStop, showLowerBinoculars as showLower, spineBeatOf, stopAltitudeState, stopBeatLabel, stopRoleLine, transitionFor } from "./journey-view";
 
 type WakeLockSentinelLike = { release: () => Promise<void> };
 type WakeLockNavigator = Navigator & { wakeLock?: { request: (type: "screen") => Promise<WakeLockSentinelLike> } };
@@ -174,8 +174,8 @@ export function JourneyFieldMode({ shared, journey, stopNumber, onFeedback }: { 
   };
   useEffect(() => { const h = (e: KeyboardEvent) => keyHandler.current(e); window.addEventListener("keydown", h); return () => window.removeEventListener("keydown", h); }, []);
 
-  // ── live altitude checks (doc 06 §6.7) ──
-  const altStates = useMemo(() => journey.stops.map((s) => { const o = objects.get(s.objectId); return o ? stopAltitudeState(o, page.lat, page.lon, page.date, shared.minAlt, page.timezone) : null; }), [journey, objects, page.lat, page.lon, page.date, shared.minAlt, page.timezone]);
+  // ── live altitude checks (doc 06 §6.7), against the local skyline when it is known ──
+  const altStates = useMemo(() => journey.stops.map((s) => { const o = objects.get(s.objectId); return o ? stopAltitudeState(o, page.lat, page.lon, page.date, shared.minAlt, page.timezone, shared.horizon) : null; }), [journey, objects, page.lat, page.lon, page.date, shared.minAlt, page.timezone, shared.horizon]);
   const lowSoon = altStates.findIndex((a, i) => i > index && !progress?.outcomes[i] && a?.kind === "getting-low");
 
   // ── chart overlay for the leg ──
@@ -265,7 +265,7 @@ export function JourneyFieldMode({ shared, journey, stopNumber, onFeedback }: { 
           {showLower(guide, index) && <p className="journey-lower"><strong>Lower your binoculars first.</strong> Find the spot with your eyes, then raise them.</p>}
           <p className="journey-guidance">{guide.text}</p>
           {/* Labelled with the target, so it never reads as a second, contradicting number for the anchor star. */}
-          {alt && <p className="journey-where">{title} now: {Math.round(alt.alt)}° up, toward the {COMPASS_WORDS[compassOf(stop.azAtStart)]}</p>}
+          {alt && <p className="journey-where">{title} now: {Math.round(alt.alt)}° up, toward the {COMPASS_WORDS[compassOf(alt.az)]}</p>}
           {hopTarget && <button type="button" className="journey-button journey-hop-button" onClick={planHop} data-testid="journey-hop-from-previous"><Navigation size={15} aria-hidden="true"/>{LINK_LABELS.hop}{guide.startName && <small>from {guide.startName}</small>}</button>}
         </div> : <>
           <StopCard object={object} stop={stop} journey={journey} kb={kb} mode="field" fovDeg={fov} transition={transition} trailObjectIds={trail} altitudeDeg={alt?.alt}
@@ -308,7 +308,7 @@ export function JourneyFieldMode({ shared, journey, stopNumber, onFeedback }: { 
         <ul className="journey-diagnostics">
           {object.obsDifficulty >= 3 && <li>It's faint: look slightly to one side of where it should be (averted vision).</li>}
           <li>Rest your elbows on something and hold still for 10 seconds.</li>
-          {alt && <li>{alt.alt < shared.minAlt + 5 ? `It's only ${Math.round(alt.alt)}° high — low objects dim in thick air; trees and haze may hide it.` : `It's ${Math.round(alt.alt)}° high — height is not the problem.`}</li>}
+          {alt && <li>{altitudeHelpText(alt, shared.minAlt)}</li>}
           <li>{!moonCheck.moonUp ? "Moon glow: none, the Moon is down." : moonCheck.tooClose || moonCheck.tooBright ? `Moon glow: the ${moonIllumination(page.date).percent}% Moon is ${Math.round(moonCheck.separation)}° away and brightens the sky here (${moonCheck.level.toLowerCase()}).` : `Moon glow: the Moon is ${Math.round(moonCheck.separation)}° away; ${moonCheck.level.toLowerCase()}.`}</li>
           <li>{page.sunAlt > -18 ? (page.sunAlt > -12 ? "Twilight: the sky is still bright; faint objects may not show yet." : "Late twilight: faint glows improve over the next half hour.") : "The sky is fully dark."}</li>
         </ul>

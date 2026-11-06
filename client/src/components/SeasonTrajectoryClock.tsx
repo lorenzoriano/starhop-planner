@@ -13,7 +13,9 @@ import {
   type ClockSample,
   type ClockSeason,
 } from "@/lib/astronomical-clock";
-import { targetDayEvents } from "@/lib/target-visibility";
+import { targetDayEvents, targetSkylineEvents } from "@/lib/target-visibility";
+import { useLocalHorizon } from "@/hooks/use-local-horizon";
+import { horizonThresholdAt } from "@/lib/horizon/profile";
 import {
   ALTITUDE_BANDS,
   TIME_BANDS,
@@ -89,6 +91,7 @@ export function SeasonTrajectoryClock({
   onTime,
 }: Props) {
   const {ref:monthDialRef,width:dialWidth}=useSvgWidth(640);
+  const { horizon } = useLocalHorizon(lat, lon);
   const [monthPoint, setMonthPoint] = useState<{day:string;sample:number}|null>(null);
   const [showOutline, setShowOutline] = useState(false);
   const [focusDay, setFocusDay] = useState<string | null>(null),
@@ -131,6 +134,11 @@ export function SeasonTrajectoryClock({
         timezone,
       ),
     [target, lat, lon, night, timezone],
+  );
+  // Same local day against the local skyline (null when no horizon is known).
+  const skylineEvents = useMemo(
+    () => targetSkylineEvents(target.ra, target.dec, lat, lon, events.start, events.end, horizon),
+    [target, lat, lon, events, horizon],
   );
   const minMax = useMemo(() => {
     const values = season.trajectories.flatMap((t) => t.alt[index]);
@@ -206,6 +214,7 @@ export function SeasonTrajectoryClock({
         s.separation[index],
         minAlt,
         minSeparation,
+        horizonThresholdAt(horizon, s.az[index]),
       ));
   const chosenPath = samples
     .map((s, i) => {
@@ -217,7 +226,7 @@ export function SeasonTrajectoryClock({
     })
     .join(" ");
   const monthTrack = representatives.find(t=>t.day===monthPoint?.day), monthSample=monthTrack&&monthPoint?Math.min(monthPoint.sample,monthTrack.hour.length-1):0, monthAt=monthTrack?trajectoryMoment(monthTrack,monthSample,timezone):null;
-  const monthValue=monthAt?observationAt(target,lat,lon,monthAt,21.6):null;
+  const monthValue=monthAt?observationAt(target,lat,lon,monthAt,21.6,undefined,horizon):null;
   const monthPointer=(event:React.MouseEvent<SVGSVGElement>)=>{
     const rect=event.currentTarget.getBoundingClientRect(), x=(event.clientX-rect.left)/rect.width*640,y=(event.clientY-rect.top)/rect.height*640;
     const nearest=nearestMonthlyTrajectoryPoint(representatives,index,scope,x,y,focused?.day);
@@ -245,7 +254,7 @@ export function SeasonTrajectoryClock({
       aria-valuemax={mode==="months"?(monthTrack?.hour.length??48)-1:TIME_BANDS * ALTITUDE_BANDS - 1}
       aria-valuenow={mode==="months"?monthPoint?.sample??0:cell ? cell.time * 36 + cell.alt : 42 * 36 + 24}
       aria-valuetext={
-        mode==="months" ? monthAt&&monthValue?`${formatInTimeZone(monthAt,timezone,"MMM d HH:mm")}: ${Math.abs(monthValue.alt).toFixed(1)} degrees ${monthValue.alt>=0?"above the horizon":"below the horizon"}, ${monthValue.separation.toFixed(1)} degrees from Moon`:"Inspect a path by pointer or touch, or use arrow keys to choose a month and time." : cell
+        mode==="months" ? monthAt&&monthValue?`${formatInTimeZone(monthAt,timezone,"MMM d HH:mm")}: ${Math.abs(monthValue.alt).toFixed(1)} degrees ${monthValue.alt>=0?"above the horizon":"below the horizon"}${monthValue.blocked&&monthValue.alt>=0?" but behind the hills":""}, ${monthValue.separation.toFixed(1)} degrees from Moon`:"Inspect a path by pointer or touch, or use arrow keys to choose a month and time." : cell
           ? `${timeLabel(cell.time)}, ${cell.alt * 5 - 90} to ${cell.alt * 5 - 85} degrees, ${(density[cell.time][cell.alt] * 100).toFixed(1)} percent frequency`
           : "Choose an altitude and time to inspect recurrence."
       }
@@ -411,6 +420,11 @@ export function SeasonTrajectoryClock({
                 ring.
               </span>
             ) : null}
+            {skylineEvents && !events.neverUp && (skylineEvents.neverClear ? (
+              <span>Stays behind the hills all day on this date.</span>
+            ) : skylineEvents.alwaysClear ? (
+              <span>Clear of your skyline all day on this date.</span>
+            ) : null)}
           </p>
         </div>
         <label>
@@ -436,7 +450,7 @@ export function SeasonTrajectoryClock({
           <div className="season-trajectory-dial">{dial("months")}</div>
           <div className="season-trajectory-reading">
             <h4>Follow the months</h4>
-            <div className="season-month-readout" aria-live="polite">{monthValue&&monthAt&&monthTrack?<><ContextDateButton value={monthAt} timezone={timezone} onChange={onTime}>{formatInTimeZone(monthAt,timezone,'MMM d, yyyy · HH:mm')}</ContextDateButton><p>{Math.abs(monthValue.alt).toFixed(1)}° {monthValue.alt>=0?'high':'below horizon'} · {monthValue.moon.sunAlt<=-18?'Astronomical darkness':'Twilight / daylight'} · {trajectoryIncluded(monthTrack,monthSample,index,scope)?'Included by current time filter':'Outside current time filter'} · {monthValue.separation.toFixed(1)}° from Moon · Moon {Math.round(monthValue.moon.illumination*100)}% lit</p></>:<p>Inspect a monthly path by pointer or touch to see its exact sampled time, altitude and visibility.</p>}</div>
+            <div className="season-month-readout" aria-live="polite">{monthValue&&monthAt&&monthTrack?<><ContextDateButton value={monthAt} timezone={timezone} onChange={onTime}>{formatInTimeZone(monthAt,timezone,'MMM d, yyyy · HH:mm')}</ContextDateButton><p>{Math.abs(monthValue.alt).toFixed(1)}° {monthValue.alt>=0?'high':'below horizon'}{monthValue.blocked&&monthValue.alt>=0?' · behind the hills':''} · {monthValue.moon.sunAlt<=-18?'Astronomical darkness':'Twilight / daylight'} · {trajectoryIncluded(monthTrack,monthSample,index,scope)?'Included by current time filter':'Outside current time filter'} · {monthValue.separation.toFixed(1)}° from Moon · Moon {Math.round(monthValue.moon.illumination*100)}% lit</p></>:<p>Inspect a monthly path by pointer or touch to see its exact sampled time, altitude and visibility.</p>}</div>
             <p>
               One representative night near the 15th of each month. Select a
               label to isolate that path. Hover a path to inspect an actual position; tap to open that moment.

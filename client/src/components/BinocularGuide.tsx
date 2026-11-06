@@ -30,7 +30,9 @@ import { photoCaption } from "./TargetPhoto";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog";
 import { eqToHorizontal, getConstellationName, type SkyNode, type ConstellationLine, type DenseStar, type MilkyWayFeature, type Star as CatalogStar, type UnifiedTarget } from "@/lib/astronomy";
 import { SkyChart } from "./SkyChart";
-import { nightAltitudeSamples, targetDayEvents, targetWindow, visibilityWindow, type VisibilityMode } from "@/lib/target-visibility";
+import { darkWindowEnd, nextSkylineClear, nightAltitudeSamples, targetDayEvents, targetWindow, visibilityWindow, type VisibilityMode, type VisibilityWindow } from "@/lib/target-visibility";
+import { useLocalHorizon } from "@/hooks/use-local-horizon";
+import { horizonLookup } from "@/lib/horizon/profile";
 import { BinocularObservations } from "./BinocularObservations";
 import { compassLabel, skyConditions } from "@/lib/observing";
 import { angularSizeLabel, targetDesignation } from "@/lib/catalog-presentation";
@@ -41,12 +43,40 @@ import "./catalog-presentation.css";
 import "./BinocularGuide.css";
 import { displayName, objectName, LINK_LABELS, NOOP_ACTIONS, type ObjectActions, type ObjectSkyContext } from "@/lib/object-links";
 
-function CompactNightCurve({target,lat,lon,night,range=false}:{target:UnifiedTarget;lat:number;lon:number;night:ReturnType<typeof visibilityWindow>;range?:boolean}) {
+/** `skyline` (the site's horizonLookup, null when unknown): stretches behind the hills are drawn faint and dashed, as
+ *  in the expanded chart. */
+function CompactNightCurve({target,lat,lon,night,range=false,skyline=null}:{target:UnifiedTarget;lat:number;lon:number;night:ReturnType<typeof visibilityWindow>;range?:boolean;skyline?:((az:number)=>number)|null}) {
   const samples=useMemo(()=>nightAltitudeSamples(target.ra,target.dec,lat,lon,night).flatMap(segment=>segment.samples),[target.ra,target.dec,lat,lon,night]);
   if(samples.length<2)return <p className="binocular-method-note">No dark window for a night curve.</p>;
   const first=+samples[0].date,last=+samples[samples.length-1].date;
-  const points=samples.map((sample,index)=>`${index?"L":"M"}${12+(+sample.date-first)/(last-first)*276},${48-Math.max(0,Math.min(90,sample.alt))/90*40}`).join(" ");
-  return <svg className="binocular-compact-curve" style={{width:"100%",height:56}} viewBox="0 0 300 56" role="img" aria-label={`Compact altitude curve for ${target.name} during ${range?"the selected time range":"astronomical darkness"}`}><line x1="12" x2="288" y1="48" y2="48" stroke="#38535a"/><path d={points} fill="none" stroke="#a2d5c5" strokeWidth="2"/><text x="12" y="55" fill="#91a9b0" fontSize="8">{range?"Start":"Dusk"}</text><text x="288" y="55" textAnchor="end" fill="#91a9b0" fontSize="8">{range?"End":"Dawn"}</text></svg>;
+  const xy=(sample:typeof samples[number])=>`${12+(+sample.date-first)/(last-first)*276},${48-Math.max(0,Math.min(90,sample.alt))/90*40}`;
+  const points=samples.map((sample,index)=>`${index?"L":"M"}${xy(sample)}`).join(" ");
+  // A step is solid only when the target clears the skyline at both ends.
+  const clear=skyline?samples.map(sample=>sample.alt>=skyline(sample.az)):null;
+  const hidden=!!clear&&clear.some(c=>!c);
+  const clearPath=hidden?samples.slice(1).map((sample,i)=>clear![i]&&clear![i+1]?`M${xy(samples[i])} L${xy(sample)}`:"").join(" "):points;
+  return <svg className="binocular-compact-curve" style={{width:"100%",height:56}} viewBox="0 0 300 56" role="img" aria-label={`Compact altitude curve for ${target.name} during ${range?"the selected time range":"astronomical darkness"}${hidden?"; dashed where your skyline hides it":""}`}><line x1="12" x2="288" y1="48" y2="48" stroke="#38535a"/>{hidden&&<path d={points} fill="none" stroke="#a2d5c5" strokeOpacity=".35" strokeWidth="2" strokeDasharray="2 4"/>}{clearPath.trim()&&<path d={clearPath} fill="none" stroke="#a2d5c5" strokeWidth="2"/>}<text x="12" y="55" fill="#91a9b0" fontSize="8">{range?"Start":"Dusk"}</text><text x="288" y="55" textAnchor="end" fill="#91a9b0" fontSize="8">{range?"End":"Dawn"}</text></svg>;
+}
+
+type TargetWindow=ReturnType<typeof targetWindow>;
+/**
+ * targetWindow against the local skyline: the highest and lowest CLEAR altitude (−90 while behind the hills) over the
+ * window, from 15-minute samples plus the flat window's best moment, and the time of the highest clear altitude.
+ * Never clear: max −90 and the flat best time (cards then say "Behind the hills").
+ */
+export function skylineTargetWindow(ra:number,dec:number,lat:number,lon:number,window:Extract<VisibilityWindow,{ok:true}>,skyline:(az:number)=>number,flat:TargetWindow=targetWindow(ra,dec,lat,lon,window)):TargetWindow {
+  let max=-90,min=Infinity,bestAt=flat.bestAt;
+  for(const segment of window.segments){
+    const span=+segment.end-+segment.start,count=Math.max(1,Math.ceil(span/(15*60_000)));
+    const times=new Set(Array.from({length:count+1},(_,i)=>+segment.start+span*i/count));
+    if(+flat.bestAt>=+segment.start&&+flat.bestAt<=+segment.end)times.add(+flat.bestAt);
+    for(const t of Array.from(times)){
+      const {alt,az}=eqToHorizontal(ra,dec,lat,lon,new Date(t)),clear=alt>=skyline(az)?alt:-90;
+      if(clear>max){max=clear;bestAt=new Date(t);}
+      min=Math.min(min,clear);
+    }
+  }
+  return {max,min:Number.isFinite(min)?min:-90,bestAt};
 }
 
 interface Props {
@@ -155,13 +185,38 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
   }, [targets,lat,lon,year,month,timezone,sampleMode,monthEveningSamples]);
   const at=window.ok?window.start:observingDate;
   const sampleAt=useMemo(()=>binocularSample(year,month,lat,lon,timezone,sampleMode),[year,month,lat,lon,timezone,sampleMode]);
-  const windows=useMemo(()=>new Map(collection.map(p=>[p.targetId,window.ok?targetWindow(p.target.ra,p.target.dec,lat,lon,window):null])),[collection,window,lat,lon]);
-  const positioned=useMemo(()=>collection.map(p=>({...p,...eqToHorizontal(p.target.ra,p.target.dec,lat,lon,windows.get(p.targetId)?.bestAt??at)})),[collection,windows,lat,lon,at]);
+  // The site's local skyline (null without one: the flat horizon, as before). The altitude filter and best times use
+  // the highest CLEAR altitude where one is known.
+  const {horizon}=useLocalHorizon(lat,lon);
+  const skyline=useMemo(()=>horizonLookup(horizon),[horizon]);
+  const windows=useMemo(()=>new Map(collection.map(p=>{
+    if(!window.ok)return [p.targetId,null];
+    const flat=targetWindow(p.target.ra,p.target.dec,lat,lon,window);
+    return [p.targetId,skyline?skylineTargetWindow(p.target.ra,p.target.dec,lat,lon,window,skyline,flat):flat];
+  })),[collection,window,lat,lon,skyline]);
+  const positioned=useMemo(()=>collection.map(p=>{
+    const pos=eqToHorizontal(p.target.ra,p.target.dec,lat,lon,windows.get(p.targetId)?.bestAt??at),horizonAlt=skyline?skyline(pos.az):undefined;
+    return {...p,...pos,...(horizonAlt===undefined?{}:{horizonAlt,obstructed:pos.alt<horizonAlt})};
+  }),[collection,windows,lat,lon,at,skyline]);
   const timeFor=(p:BinocularPick)=>windows.get(p.targetId)?.bestAt??at;
   const skyFor=useMemo(()=>skyAt??((date:Date)=>skyInputsFrom(skyBrightness,nightMoon(date))),[skyAt,skyBrightness,nightMoon]);
   // One visibility estimate per pick at its shown time (never recomputed inside sort comparators).
-  const assessments=useMemo(()=>new Map<string,BinocularResult>(positioned.map(p=>[p.targetId,binocularAssessment(p.target,profile,{alt:p.alt,sky:skyFor(windows.get(p.targetId)?.bestAt??at),observer})])),[positioned,profile,skyFor,windows,at,observer]);
+  const assessments=useMemo(()=>new Map<string,BinocularResult>(positioned.map(p=>[p.targetId,binocularAssessment(p.target,profile,{alt:p.alt,sky:skyFor(windows.get(p.targetId)?.bestAt??at),observer,...(p.horizonAlt===undefined?{}:{horizonAlt:p.horizonAlt,horizonAz:p.az})})])),[positioned,profile,skyFor,windows,at,observer]);
   const assessmentOf=(p:BinocularPick)=>assessments.get(p.targetId)!;
+  // Behind the hills at its shown time: when it clears them before astronomical dawn ("22:40"; null: not before dawn),
+  // for the card's one sentence about the hills.
+  const skylineClears=useMemo(()=>{
+    const out=new Map<string,string|null>(),dawns=new Map<number,Date>();
+    if(!horizon)return out;
+    for(const p of positioned){
+      if(!p.obstructed||p.alt<=0)continue;
+      const from=windows.get(p.targetId)?.bestAt??at;
+      if(!dawns.has(+from))dawns.set(+from,darkWindowEnd(lat,lon,from));
+      const t=nextSkylineClear(p.target.ra,p.target.dec,lat,lon,from,horizon,dawns.get(+from));
+      if(t!==null)out.set(p.targetId,t==='after-dawn'?null:formatInTimeZone(t,timezone,"HH:mm"));
+    }
+    return out;
+  },[positioned,windows,at,horizon,lat,lon,timezone]);
   // How rewarding each object is (condition-independent, lib/visibility/reward.ts), with a modest optics adjustment.
   const rewards=useMemo(()=>{const optics=opticsOf(profile);return new Map<string,RewardResult>(collection.map(p=>[p.targetId,rewardScore(p.target,optics)]));},[collection,profile]);
   const rewardOf=(p:BinocularPick)=>rewards.get(p.targetId)!;
@@ -197,7 +252,7 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
     if(level!=="all"&&pick.level!==level)reasons.push(`Level: ${LEVEL_LABELS[level as keyof typeof LEVEL_LABELS]}`);
     if(seasonalOnly&&!pick.bestMonths.includes(month))reasons.push("Monthly picks");
     if(hideNotVisible&&notVisible(pick))reasons.push("Hide not visible tonight");
-    if((throughout&&visibilityMode==="range"?(windows.get(pick.targetId)?.min??-Infinity):(windows.get(pick.targetId)?.max??-Infinity))<altitude){const rounded=Number(pick.alt.toFixed(1)),atTime=pick.alt<altitude&&rounded>=altitude?`<${altitude}°`:`${pick.alt.toFixed(1)}°`;reasons.push(`Minimum altitude ${altitude}° (${atTime} at the selected time)`);}
+    if((throughout&&visibilityMode==="range"?(windows.get(pick.targetId)?.min??-Infinity):(windows.get(pick.targetId)?.max??-Infinity))<altitude){const rounded=Number(pick.alt.toFixed(1)),atTime=pick.obstructed&&pick.alt>0?"behind the hills":pick.alt<altitude&&rounded>=altitude?`<${altitude}°`:`${pick.alt.toFixed(1)}°`;reasons.push(`Minimum altitude ${altitude}° (${atTime} at the selected time)`);}
     if(!window.ok)reasons.push(`Date/time: ${window.error}`);
     return reasons.length?`Hidden by ${reasons.map(reason=>`“${reason}”`).join(" and ")}.`:undefined;
   });
@@ -324,7 +379,7 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
           </div>
           <div className="binocular-visibility-context"><div className="context-actions"><ContextDateButton value={at} timezone={timezone} onChange={value=>applyMoment(value,true)}/><ContextLocationButton/></div><p>{window.ok?visibilityMode==="time"?`${formatInTimeZone(at,timezone,"MMM d, yyyy · HH:mm")} · ${timezone.replaceAll("_"," ")}`:visibilityMode==="night"?`Astronomical night of ${formatInTimeZone(at,timezone,"MMM d, yyyy")} · Sun below −18° · ${window.segments.length?window.segments.map(s=>`${formatInTimeZone(s.start,timezone,"MMM d, yyyy HH:mm")}–${formatInTimeZone(s.end,timezone,"MMM d, yyyy HH:mm")}`).join("; "):"No astronomical darkness at this site"}`:`${formatInTimeZone(at,timezone,"MMM d, yyyy")} · ${rangeStart}–${until}${until<=rangeStart?" (+1 day)":""} · ${timezone.replaceAll("_"," ")}`:window.error}</p><button className="text-action" onClick={()=>{setBrowsingMonthLens(false);setChosenDate(currentDay);setChosenTime(currentTime);setYear(currentYear);setMonth(Number(currentDay.slice(5,7)));setVisibilityMode("time");setSeasonalOnly(false);}}>Use observing time</button></div>
           {!validAltitude&&<p role="alert">Choose an altitude from 0° to 90°.</p>}
-          <details className="binocular-timing-notes"><summary>Times & visibility explained</summary><p className="binocular-method-note">Rise, upper transit and set are for {formatInTimeZone(browsingMoment,timezone,"MMM d, yyyy")}, local time at {place}. Transit is the highest crossing. Flat horizon, no refraction or terrain; clear the altitude limit to browse all fields. Night graphs overlay altitude (solid mint, left axis) and Moon separation (dashed gray, right axis; 180° is opposite the Moon). Gray shading estimates extra sky glow using lunar phase, height and distance from the target; it disappears when the Moon is down. Suggested times balance altitude against modeled moonlight, with stronger penalties for diffuse objects. They are guidance, not visibility guarantees; haze, local lighting and low altitudes affect the estimate. {visibilityMode==="time"?"Altitude alone does not guarantee a dark sky.":visibilityMode==="range"?"Cards show each target’s highest altitude in the range; a range ending before it starts continues into the next day. Altitude alone does not guarantee darkness.":"Cards show the highest altitude between astronomical dusk and dawn; moonlight, clouds and obstructions can still affect visibility."}</p></details>
+          <details className="binocular-timing-notes"><summary>Times & visibility explained</summary><p className="binocular-method-note">Rise, upper transit and set are for {formatInTimeZone(browsingMoment,timezone,"MMM d, yyyy")}, local time at {place}. Transit is the highest crossing. {skyline?"Rise, transit and set use a flat horizon; the altitude limit and suggested times use your skyline (the hills around this site), checked every 15 minutes. Clear the altitude limit to browse all fields.":"Flat horizon, no refraction or terrain; clear the altitude limit to browse all fields."} Night graphs overlay altitude (solid mint, left axis) and Moon separation (dashed gray, right axis; 180° is opposite the Moon). Gray shading estimates extra sky glow using lunar phase, height and distance from the target; it disappears when the Moon is down. Suggested times balance altitude against modeled moonlight, with stronger penalties for diffuse objects. They are guidance, not visibility guarantees; haze, local lighting and low altitudes affect the estimate. {visibilityMode==="time"?"Altitude alone does not guarantee a dark sky.":visibilityMode==="range"?"Cards show each target’s highest altitude in the range; a range ending before it starts continues into the next day. Altitude alone does not guarantee darkness.":"Cards show the highest altitude between astronomical dusk and dawn; moonlight, clouds and obstructions can still affect visibility."}</p></details>
         </div>
 
         </details>
@@ -336,10 +391,10 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
             {picks.slice(0, visibleCount).map((p) => <article className={`binocular-target-card level-${p.level}`} key={p.targetId} style={view==="list"?{display:"grid",gridTemplateColumns:"minmax(0,1fr) auto",alignItems:"center"}:undefined}>
               <button className="binocular-target-main" onClick={() => openTarget(p.targetId)} aria-label={`Explore binocular target ${displayName(p.target)}`} data-testid={`binocular-target-${p.targetId}`}>
                 {view==="cards"&&<div className="binocular-target-field"><BinocularPhoto id={p.targetId} name={displayName(p.target)} /><span className="binocular-family-label">{FAMILY_LABELS[p.family]}</span><span className="binocular-photo-label" title={opticalPhotoCaption(p.targetId)}>{primaryOpticalImage(p.targetId)?photoCaption(primaryOpticalImage(p.targetId)!):opticalPhotoCaption(p.targetId)}</span></div>}
-                <div className="binocular-target-body"><span className="eyebrow">{[targetDesignation(p.target).replace(/^(NGC|IC|Mel|Cr|Tr|Stock)(?=\d)/,"$1 "),getConstellationName(p.target.con)].filter(Boolean).join(" · ")}</span><h3>{objectName(p.target).name}</h3><VisibilitySummary result={assessmentOf(p)} reward={<RewardChip reward={rewardOf(p)} kind={assessmentOf(p).inputs.target.kind}/>}/><div className="binocular-card-position"><span className={p.alt < 15 ? "low" : ""}>{p.neverRises ? "Never rises here" : p.alt < 0 ? `Below horizon at ${positionTime(p)}` : `${Math.round(p.alt)}° ${compassLabel(p.az)} at ${positionTime(p)}`}</span><span>{p.variable ? "Variable star" : `mag ${p.target.mag.toFixed(1)}`}{angularSizeLabel(p.target.size)?` · ${angularSizeLabel(p.target.size)} across`:""}</span></div>{view==="cards"&&eventTimes(p)}</div>
+                <div className="binocular-target-body"><span className="eyebrow">{[targetDesignation(p.target).replace(/^(NGC|IC|Mel|Cr|Tr|Stock)(?=\d)/,"$1 "),getConstellationName(p.target.con)].filter(Boolean).join(" · ")}</span><h3>{objectName(p.target).name}</h3><VisibilitySummary result={assessmentOf(p)} clears={skylineClears.get(p.targetId)} reward={<RewardChip reward={rewardOf(p)} kind={assessmentOf(p).inputs.target.kind}/>}/><div className="binocular-card-position"><span className={p.alt < 15 || p.obstructed ? "low" : ""}>{p.neverRises ? "Never rises here" : p.alt < 0 ? `Below horizon at ${positionTime(p)}` : `${Math.round(p.alt)}° ${compassLabel(p.az)} at ${positionTime(p)}`}</span><span>{p.variable ? "Variable star" : `mag ${p.target.mag.toFixed(1)}`}{angularSizeLabel(p.target.size)?` · ${angularSizeLabel(p.target.size)} across`:""}</span></div>{view==="cards"&&eventTimes(p)}</div>
               </button>
-              {view==="cards"&&<div className="binocular-card-chart"><CompactNightCurve target={p.target} lat={lat} lon={lon} night={visibilityMode==="range"?window:nightWindow} range={visibilityMode==="range"}/><details><summary>Expand altitude & Moon graph</summary><NightAltitudeChart target={p.target} lat={lat} lon={lon} night={visibilityMode==="range"?window:nightWindow} timezone={timezone} selectedAt={visibilityMode==="range"?timeFor(p):undefined} skyBrightness={skyBrightness} moonAt={nightMoon}/></details></div>}
-              <div className="target-card-object-actions"><ObjectActionRow variant="compact" objectId={p.targetId} name={displayName(p.target)} actions={verbs} at={timeFor(p)} omit={CARD_ACTION_OMIT} saved={savedAt(p.targetId,timeFor(p))} onToggleSave={() => onSave(p.targetId,timeFor(p))} onHop={() => onPlan(p.targetId,timeFor(p))} hopDisabled={p.alt<5?"Below the 5° altitude limit at this time":undefined}/></div>
+              {view==="cards"&&<div className="binocular-card-chart"><CompactNightCurve target={p.target} lat={lat} lon={lon} night={visibilityMode==="range"?window:nightWindow} range={visibilityMode==="range"} skyline={skyline}/><details><summary>Expand altitude & Moon graph</summary><NightAltitudeChart target={p.target} lat={lat} lon={lon} night={visibilityMode==="range"?window:nightWindow} timezone={timezone} selectedAt={visibilityMode==="range"?timeFor(p):undefined} skyBrightness={skyBrightness} moonAt={nightMoon}/></details></div>}
+              <div className="target-card-object-actions"><ObjectActionRow variant="compact" objectId={p.targetId} name={displayName(p.target)} actions={verbs} at={timeFor(p)} omit={CARD_ACTION_OMIT} saved={savedAt(p.targetId,timeFor(p))} onToggleSave={() => onSave(p.targetId,timeFor(p))} onHop={() => onPlan(p.targetId,timeFor(p))} hopDisabled={p.alt<5?"Below the 5° altitude limit at this time":p.obstructed?"Behind the hills at this time":undefined}/></div>
             </article>)}
           </div>
         )}
@@ -360,10 +415,10 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
         <DialogContent className="binocular-detail">
           {detail && <>
             <DialogHeader><span className="eyebrow">{[FAMILY_LABELS[detail.family],targetDesignation(detail.target).replace(/^(NGC|IC|Mel|Cr|Tr|Stock)(?=\d)/,"$1 ")].filter(Boolean).join(" · ")}</span><DialogTitle>{objectName(detail.target).name}</DialogTitle><DialogDescription>{getConstellationName(detail.target.con)} · {LEVEL_LABELS[detail.level]} · Suggested equipment: {detail.equipment}</DialogDescription></DialogHeader>
-            <div className="binocular-detail-sticky-actions"><ObjectActionRow className="binocular-quick-actions" variant="full" objectId={detail.targetId} name={displayName(detail.target)} actions={verbs} at={detailAt} omit={actions?[]:["catalog","images"]} saved={savedAt(detail.targetId,detailAt)} onToggleSave={()=>onSave(detail.targetId,detailAt)} onHop={()=>onPlan(detail.targetId,detailAt)} hopDisabled={detail.alt<5?"Below the 5° altitude limit at this time":undefined} onBefore={()=>setOpened(null)}/></div>
+            <div className="binocular-detail-sticky-actions"><ObjectActionRow className="binocular-quick-actions" variant="full" objectId={detail.targetId} name={displayName(detail.target)} actions={verbs} at={detailAt} omit={actions?[]:["catalog","images"]} saved={savedAt(detail.targetId,detailAt)} onToggleSave={()=>onSave(detail.targetId,detailAt)} onHop={()=>onPlan(detail.targetId,detailAt)} hopDisabled={detail.alt<5?"Below the 5° altitude limit at this time":detail.obstructed?"Behind the hills at this time":undefined} onBefore={()=>setOpened(null)}/></div>
             <p className="binocular-detail-impression">{objectSummaryText(detail.targetId,{target:detail.target})||detail.impression}</p>
             <RewardWhy reward={rewardOf(detail)} kind={assessmentOf(detail).inputs.target.kind}/>
-            <BinocularAssessment target={detail.target} profile={profile} alt={detail.alt} moon={nightMoon(detailAt)} skyBrightness={skyBrightness} result={assessmentOf(detail)} at={detailAt} lat={lat} lon={lon} timezone={timezone} onEditSetup={onEditSetup}/>
+            <BinocularAssessment target={detail.target} profile={profile} alt={detail.alt} moon={nightMoon(detailAt)} skyBrightness={skyBrightness} result={assessmentOf(detail)} skyAt={skyFor} at={detailAt} lat={lat} lon={lon} timezone={timezone} onEditSetup={onEditSetup}/>
             {actions&&<div onClickCapture={event=>{if((event.target as HTMLElement).closest("button"))setOpened(null);}}><Suspense fallback={null}><ObjectJourneyLinks key={detail.targetId} objectId={detail.targetId} actions={actions} sky={journeySky}/></Suspense></div>}
             <details className="binocular-detail-more"><summary>Finder, observing notes & sources</summary>
             <div className="binocular-finder-heading"><span className="eyebrow">YOUR FINDER FIELD</span><span>{angularSizeLabel(detail.target.size)?`${angularSizeLabel(detail.target.size)} across · `:""}mag {detail.target.mag.toFixed(1)} · north up before rotation</span></div><div className="binocular-detail-chart"><SkyChart onSelect={onInspect} key={detail.targetId} nodes={fieldTarget ? [...fieldNodes, fieldTarget] : fieldNodes} constellations={constellations} denseStars={denseStars} milkyWay={milkyWay} route={null} targetNode={fieldTarget} animStep={0} fovWidth={fovWidth} fovHeight={fovHeight} fovShape={fovShape} limitingMag={finderDepth} maxCatalogMagnitude={10.5} targetDiameter={catalogDiameter(detail.target.size)} lat={lat} lon={lon} date={detailAt} onFovChange={onFovChange} onLimitingMagChange={setFinderDepth} setupSummary={`${profile.magnification}×${profile.aperture} mm · ${fovWidth.toFixed(1)}° field · stars to mag ${finderDepth.toFixed(1)}`} onEditSetup={onEditSetup} isBinocular /></div>

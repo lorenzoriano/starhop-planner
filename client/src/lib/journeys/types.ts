@@ -13,6 +13,7 @@
  *   new BSC stars `HR<n>` (unpadded, same as the routing SkyNode id); non-BSC stars `HD<n>` or `NAME-<Name>`;
  *   context nodes `ctx:<Name>`.
  */
+import type { CompactHorizon } from '../horizon/profile';
 
 // ───────────────────────────── facts & sources ─────────────────────────────
 
@@ -729,6 +730,13 @@ export interface JourneyRequest {
   mustInclude?: string[];
   /** IANA time zone, used only to render local times in diagnostics messages (engine math is UTC). */
   timezone?: string;
+  /**
+   * The site's local skyline (lib/horizon/profile.ts compactHorizon: geometric-equivalent threshold per azimuth bin),
+   * or null/absent for a flat horizon (exactly the engine without it). A stop must clear max(minAlt, skyline(az)) for its
+   * whole visit; behind the skyline is its own reject reason ('terrain'). Not part of a journey key: a key rebuilt on
+   * another device uses that device's skyline for its own site (assemble.rebuildJourney).
+   */
+  horizon?: CompactHorizon | null;
 }
 
 export type Darkness = 'day' | 'civil' | 'nautical' | 'astronomical' | 'night';
@@ -752,8 +760,9 @@ export interface NightContext {
   samples: string[];
 }
 
+/** 'altitude': lower than minAlt (low in the sky); 'terrain': above minAlt but behind the local skyline (hills). */
 export type RejectReason =
-  | 'altitude' | 'twilight' | 'moon-separation' | 'moon-glow' | 'binocular-rating'
+  | 'altitude' | 'terrain' | 'twilight' | 'moon-separation' | 'moon-glow' | 'binocular-rating'
   | 'extent' | 'direction' | 'region' | 'not-eligible' | 'story' | 'geometry';
 
 /** S1 row: one KB object's feasibility tonight. */
@@ -768,7 +777,7 @@ export interface Candidate {
   moonGlowMag: number;
   /** binocularAssessment rating (0..3). */
   rating: 0 | 1 | 2 | 3;
-  /** Minutes the object stays above minAlt after `instant`. */
+  /** Minutes the object stays above minAlt (and clear of the local skyline, when one is known) after `instant`. */
   minutesAboveMinAlt: number;
   rejectReasons: RejectReason[];
 }
@@ -997,7 +1006,8 @@ export interface JourneyConditions {
   closestMoonDeg?: number | null;
 }
 
-export type LimitingFactor = 'moon' | 'twilight' | 'altitude' | 'region' | 'kb';
+/** 'terrain': the local skyline (hills) hides a good part of tonight's candidates. */
+export type LimitingFactor = 'moon' | 'twilight' | 'altitude' | 'terrain' | 'region' | 'kb';
 
 export interface JourneyResult {
   journeys: Journey[];

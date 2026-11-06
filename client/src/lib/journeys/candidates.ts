@@ -9,7 +9,7 @@
  * - Candidate table: per object × stop index feasibility, evaluated by validate.ts (the single validator).
  */
 import {
-  BACKTRACK_MIN_STRENGTH, MAX_STOPS, MIN_EDGE_STRENGTH, fadingFloor, SAME_POINT_DEG, SAME_VIEW_DEG, STAR_COLOR_MAG, buildNightGrid, makeRater, minutesAboveAlt, hourAngle,
+  BACKTRACK_MIN_STRENGTH, MAX_STOPS, MIN_EDGE_STRENGTH, fadingFloor, SAME_POINT_DEG, SAME_VIEW_DEG, STAR_COLOR_MAG, buildNightGrid, makeRater, minutesClear,
   majorArcmin, ofDateConverter, trackObject, type EngineSettings, type NightGrid, type ObjectTrack,
 } from './conditions';
 import { evaluateStop, type StopEval } from './validate';
@@ -1028,7 +1028,7 @@ export function buildCandidateTable(prep: PreparedKb, s: EngineSettings, grid?: 
       moonSepDeg: moonUp0 ? tr.moonSep[0] : null,
       moonGlowMag: tr.glow[0],
       rating: (first.rating < 0 ? 3 : first.rating) as 0 | 1 | 2 | 3,
-      minutesAboveMinAlt: minutesAboveAlt(tr.decDate, s.lat, hourAngle(tr.raDate, s.lon, g.gastDeg[0]), s.minAlt),
+      minutesAboveMinAlt: minutesClear(tr.raDate, tr.decDate, s, g.gastDeg[0]),
       rejectReasons: mask !== 0 ? [] : (row[0].reasons as RejectReason[]),
     });
   });

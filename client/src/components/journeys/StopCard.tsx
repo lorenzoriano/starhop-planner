@@ -8,6 +8,8 @@ import { moonState } from '@/lib/moon';
 import { kbToUnifiedTarget, objectName, type LegReport } from '@/lib/object-links';
 import { clockNightDate } from '@/lib/astronomical-clock';
 import { visibilityWindow } from '@/lib/target-visibility';
+import { horizonThresholdAt } from '@/lib/horizon/profile';
+import { useLocalHorizon } from '@/hooks/use-local-horizon';
 import { SURVEY_CREDITS, binocularMedia, primaryOpticalImage } from '@/lib/binocular-media';
 import type { FactKey, Journey, JourneyStop, KbImage, KbObject, KnowledgeBase, StarObject } from '@/lib/journeys/types';
 import {
@@ -71,13 +73,17 @@ export interface StopCardSky { targets: readonly UnifiedTarget[]; lat: number; l
 /** The shared Tonight widgets for a stop (inside "More"): the same numbers as Tonight, Moon and Binoculars. */
 function SharedSkyWidgets({ target, sky }: { target: UnifiedTarget; sky: StopCardSky }) {
   const { lat, lon, timezone, at, skyBrightness, profile } = sky;
-  const alt = useMemo(() => eqToHorizontal(target.ra, target.dec, lat, lon, at).alt, [target.ra, target.dec, lat, lon, at]);
+  const pos = useMemo(() => eqToHorizontal(target.ra, target.dec, lat, lon, at), [target.ra, target.dec, lat, lon, at]);
+  const alt = pos.alt;
+  // The site's skyline in the stop's direction, so the assessment says "Behind the hills" when it is (else unchanged).
+  const { horizon } = useLocalHorizon(lat, lon);
+  const horizonAlt = horizonThresholdAt(horizon, pos.az) ?? undefined;
   const moon = useMemo(() => moonState(lat, lon, at), [lat, lon, at]);
   const night = useMemo(() => visibilityWindow(clockNightDate(at, timezone), '12:00', '00:00', 'night', timezone, lat, lon), [at, timezone, lat, lon]);
   return <>
     <section className="jstop-more-section jstop-shared" data-testid="journey-stop-assessment" aria-label="In your binoculars tonight">
       <h4>In your binoculars at {formatInTimeZone(at, timezone, 'HH:mm')}</h4>
-      <BinocularAssessment target={target} profile={profile} alt={alt} moon={moon} skyBrightness={skyBrightness} compact />
+      <BinocularAssessment target={target} profile={profile} alt={alt} moon={moon} skyBrightness={skyBrightness} compact {...(horizonAlt !== undefined ? { horizonAlt, horizonAz: pos.az } : {})} />
     </section>
     <section className="jstop-more-section jstop-shared" data-testid="journey-stop-moonlight" aria-label="Moon effect">
       <h4>Moon effect</h4>

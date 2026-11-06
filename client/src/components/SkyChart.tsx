@@ -4,7 +4,9 @@ import { angularEllipse, angularField, unprojectChartPoint } from '@/lib/optical
 import { OpticalProfiles } from "./OpticalProfiles";
 import { Maximize2, Minimize2 } from "lucide-react";
 import { CatalogSkySymbol } from './CatalogSkySymbol';
-import { isDeepSky, altitudeRingFraction, skyObjectKind } from '@/lib/planetarium';
+import { isDeepSky, altitudeRingFraction, skyObjectKind, skylineSilhouettePath, skylineRidgePath, skylinePeakDeg } from '@/lib/planetarium';
+import { useLocalHorizon } from '@/hooks/use-local-horizon';
+import { horizonLookup } from '@/lib/horizon/profile';
 import { stellarColor,stellarRadius } from '@/lib/stellar-appearance';
 import { useFinderStars } from '@/hooks/use-finder-stars';
 import { orientChartPoint } from '@/lib/observing';
@@ -285,6 +287,18 @@ export function SkyChart({
   const scaleBarDegrees = [0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10].filter((angle) => angle * scale * zoom <= 90).at(-1) ?? 0.05;
   const cx = chartWidth / 2;
   const cy = CHART_SIZE / 2;
+  // The site's local skyline (shared computation with the rest of the app), drawn on the overhead chart only.
+  const { horizon: localHorizon } = useLocalHorizon(overview ? lat : NaN, overview ? lon : NaN);
+  // Nothing is drawn when the skyline never rises above 0° (an open, flat site renders exactly like no horizon).
+  const skyline = useMemo(() => {
+    const threshold = overview ? horizonLookup(localHorizon) : null;
+    const peak = threshold ? skylinePeakDeg(threshold) : -90;
+    if (!threshold || peak <= 0) return null;
+    const orient = (p: { x: number; y: number }) => orientChartPoint(p, mirrored, rotation), radius = CHART_SIZE / 2 - CHART_PAD;
+    return { silhouette: skylineSilhouettePath(threshold, orient, cx, cy, radius), ridge: skylineRidgePath(threshold, orient, cx, cy, radius), peak };
+  }, [overview, localHorizon, mirrored, rotation, cx, cy]);
+  // Stars, objects and figure lines behind the hills are dimmed through this mask (labels and overlays stay crisp).
+  const skylineDim = skyline ? `url(#${chartId}-skyline-dim)` : undefined;
   const fovRadius = 2 * Math.tan(fovWidth * Math.PI / 720) * 180 / Math.PI * scale;
 
   // The planetarium stops at a useful optical field instead of a 200× empty catalog crop.
@@ -1228,6 +1242,10 @@ export function SkyChart({
       >
         <defs>
           <clipPath id={`${chartId}-sky-horizon-clip`}><circle cx={cx} cy={cy} r={CHART_SIZE / 2 - CHART_PAD} /></clipPath>
+          {skyline && <mask id={`${chartId}-skyline-dim`} maskUnits="userSpaceOnUse" x={0} y={0} width={chartWidth} height={CHART_SIZE}>
+            <rect width={chartWidth} height={CHART_SIZE} fill="white"/>
+            <path d={skyline.silhouette} fillRule="evenodd" fill="black" fillOpacity=".68"/>
+          </mask>}
           <radialGradient id={`${chartId}-sky-gradient`}>
             <stop offset="0%" stopColor="#0d1020" />
             <stop offset="100%" stopColor="#070910" />
@@ -1278,6 +1296,9 @@ export function SkyChart({
           ))}
         </g>
 
+        {/* Local skyline: the sky behind the hills is shaded here; the stars over it are dimmed by the skyline-dim mask and
+            the ridge is outlined above them, under the labels. */}
+        {skyline && <path data-local-skyline="true" d={skyline.silhouette} fillRule="evenodd" fill="#010204" fillOpacity=".62" stroke="none" pointerEvents="none"/>}
         {overview&&[30,60].map(alt=><g key={alt} pointerEvents="none"><circle cx={cx} cy={cy} r={260*altitudeRingFraction(alt)} fill="none" stroke="#56736e" strokeWidth=".7" vectorEffect="non-scaling-stroke" strokeDasharray="3 6" opacity=".55"/><text x={cx+4*screenUnit} y={cy+260*altitudeRingFraction(alt)-4*screenUnit} fontSize={12*screenUnit} fill="#9bb7ae">{alt}° altitude</text></g>)}
         {!starsOnly && !overview && [5, 10, 20].filter((r) => r < viewRadius).map((r) => (
           <circle
@@ -1292,6 +1313,7 @@ export function SkyChart({
           />
         ))}
 
+        <g mask={skylineDim}>
         {!starsOnly && showConstellations && constellationPaths.map((path, index) => (
           <path
             key={`${path.id}-${index}`}
@@ -1304,6 +1326,7 @@ export function SkyChart({
             strokeLinecap="round"
           />
         ))}
+        </g>
 
         {/* Constellation name labels */}
         {!starsOnly && labelSize > 0 && showConstellations && placedConstellationLabels.map((label) => (
@@ -1336,8 +1359,10 @@ export function SkyChart({
         })}
 
         {/* Dense background star field from Hipparcos catalog */}
+        <g mask={skylineDim}>
         <BatchedStarLayer points={backgroundPoints} />
         <BatchedStarLayer points={catalogPoints} />
+        </g>
 
         {!starsOnly && routePath && <path d={routePath} stroke="#ad8f58" vectorEffect="non-scaling-stroke" strokeWidth="1.2" fill="none" opacity="0.26" strokeDasharray="5 4" />}
         {!starsOnly && routeProgressPath && <path d={routeProgressPath} stroke="#e4ba72" vectorEffect="non-scaling-stroke" strokeWidth="1.8" fill="none" opacity="0.88" />}
@@ -1473,6 +1498,7 @@ export function SkyChart({
         {angularExtents.map(outline=><path key={`extent-${outline.id}`} data-angular-extent={outline.id} data-target-extent={outline.isTarget?true:undefined} data-major-degrees={outline.extent.major} data-minor-degrees={outline.extent.minor} data-position-angle={outline.extent.positionAngle??'unknown'} d={outline.d} fill={outline.oriented?'#7cbaa60a':'none'} stroke={outline.isTarget?'#ddbd80':'#85b9ab'} strokeWidth={outline.isTarget?1.5:1} strokeDasharray={outline.oriented?'4 3':'1 4'} vectorEffect="non-scaling-stroke" opacity={outline.isTarget?.9:.6} pointerEvents="none"><title>{outline.id}: {outline.extent.major.toFixed(2)}° × {outline.extent.minor.toFixed(2)}° · {outline.oriented?`PA ${outline.extent.positionAngle}°`:'diameter envelope; orientation not catalogued'} · {outline.extent.source}</title></path>)}
         {!starsOnly && finderRings.map(ring => <path key={ring.id} data-reticle-diameter={ring.diameter} data-finder-crosshair={activeFinderReticle === 'crosshair' ? true : undefined} d={ring.d} fill="none" stroke="#adc7b6" strokeWidth="1.2" vectorEffect="non-scaling-stroke" opacity=".85" pointerEvents="none"/>)}
 
+        {skyline && <path data-local-skyline-ridge="true" d={skyline.ridge} fill="none" stroke="#a9c4b8" strokeOpacity=".9" strokeWidth="1.6" strokeLinejoin="round" vectorEffect="non-scaling-stroke" pointerEvents="none"/>}
         {visibleLabels.map((label) => {
           const text = chartLabel(label.star);
           if (!text) return null;
@@ -1505,6 +1531,7 @@ export function SkyChart({
           );
         })}
 
+        <g mask={skylineDim}>
         <BatchedStarLayer points={foregroundCatalogPoints}/>
         {plottedStars.filter(item => !isBatchedStar(item)&&(!starsOnly || item.isTarget || item.star.type === 'star' || item.star.type === 'planet')).slice().sort((a,b) => Number(a.isTarget)-Number(b.isTarget) || Number(a.star.type!=='star')-Number(b.star.type!=='star') || b.star.mag-a.star.mag).map(({ star, point, radius, isAnchor, isTarget, isPatternAnchor, isGuide }) => (
           <g
@@ -1549,6 +1576,7 @@ export function SkyChart({
             </>}
           </g>
         ))}
+        </g>
 
         {/* Sky Journeys stops (owner feedback r2): a hairline ring AROUND the object, never a disc over it; the number and
             name sit beside the ring. Current = double ring, seen = ✓ before the number, skipped = dashed ring. */}
@@ -1639,7 +1667,7 @@ export function SkyChart({
 
       </svg>
 
-      {overview&&<div className="planetarium-guide"><label><input type="checkbox" checked={labelSize>0} onChange={e=>updateDisplay({labelSize:e.target.checked?16:0})}/>Names</label><label><input type="checkbox" checked={showObjects} onChange={e=>setShowObjects(e.target.checked)}/>Catalog objects · {nodes.filter(n=>n.type==='messier'||n.type==='binocular').length} above horizon</label>{zoom===1&&<span>Inside circle = above horizon · edge 0° · center 90°</span>}<div className="planetarium-symbol-key">{[{category:"Open Cluster",name:"Open cluster"},{category:"Globular Cluster",name:"Globular cluster"},{category:"Galaxy",name:"Galaxy"},{category:"Emission Nebula",name:"Nebula"},{category:"Asterism",name:"Star pattern"}].map(kind=><span key={kind.name}><svg width="22" height="22" viewBox="-11 -11 22 22" aria-hidden="true"><CatalogSkySymbol category={kind.category}/></svg>{kind.name}</span>)}<span><svg width="22" height="22" viewBox="-11 -11 22 22" aria-hidden="true"><SolarSkySymbol name="Moon" phase={90}/></svg>Moon · current phase</span><span><svg width="22" height="22" viewBox="-11 -11 22 22" aria-hidden="true"><SolarSkySymbol name="Saturn"/></svg>Planet · tap to identify</span><span className="selected-symbol-key">Gold = selected object · Cyan = highlighted figure</span></div>{showConstellations&&figureChoices.length>0&&<div className="planetarium-figure-picker" style={{flexBasis:'100%',minWidth:0,width:'100%'}}><span>Choose a name to highlight its figure</span><div role="group" aria-label="Highlight a constellation" style={{display:'flex',gap:6,overflowX:'auto',maxWidth:'100%',padding:'6px 0'}}>{figureChoices.map(c=><button key={c.id} type="button" aria-label={c.name} aria-pressed={highlightedFigure===c.id} title={`Highlight ${c.name} on the map`} onClick={()=>{setHighlightedFigure(current=>current===c.id?null:c.id);svgRef.current?.scrollIntoView({behavior:'smooth',block:'center'});}} style={{flex:'0 0 auto',whiteSpace:'nowrap',border:'1px solid #3c5b64',borderRadius:20,padding:'7px 12px',minHeight:44,background:highlightedFigure===c.id?'#193540':'transparent',color:highlightedFigure===c.id?'#48dcf0':'#add0bc'}}>{c.name} · {c.id.toUpperCase()}</button>)}</div></div>}</div>}
+      {overview&&<div className="planetarium-guide"><label><input type="checkbox" checked={labelSize>0} onChange={e=>updateDisplay({labelSize:e.target.checked?16:0})}/>Names</label><label><input type="checkbox" checked={showObjects} onChange={e=>setShowObjects(e.target.checked)}/>Catalog objects · {nodes.filter(n=>n.type==='messier'||n.type==='binocular').length} above horizon</label>{zoom===1&&<span>Inside circle = above horizon · edge 0° · center 90°{skyline&&skyline.peak>1?' · shaded = hidden by your skyline':''}</span>}<div className="planetarium-symbol-key">{[{category:"Open Cluster",name:"Open cluster"},{category:"Globular Cluster",name:"Globular cluster"},{category:"Galaxy",name:"Galaxy"},{category:"Emission Nebula",name:"Nebula"},{category:"Asterism",name:"Star pattern"}].map(kind=><span key={kind.name}><svg width="22" height="22" viewBox="-11 -11 22 22" aria-hidden="true"><CatalogSkySymbol category={kind.category}/></svg>{kind.name}</span>)}<span><svg width="22" height="22" viewBox="-11 -11 22 22" aria-hidden="true"><SolarSkySymbol name="Moon" phase={90}/></svg>Moon · current phase</span><span><svg width="22" height="22" viewBox="-11 -11 22 22" aria-hidden="true"><SolarSkySymbol name="Saturn"/></svg>Planet · tap to identify</span><span className="selected-symbol-key">Gold = selected object · Cyan = highlighted figure</span></div>{showConstellations&&figureChoices.length>0&&<div className="planetarium-figure-picker" style={{flexBasis:'100%',minWidth:0,width:'100%'}}><span>Choose a name to highlight its figure</span><div role="group" aria-label="Highlight a constellation" style={{display:'flex',gap:6,overflowX:'auto',maxWidth:'100%',padding:'6px 0'}}>{figureChoices.map(c=><button key={c.id} type="button" aria-label={c.name} aria-pressed={highlightedFigure===c.id} title={`Highlight ${c.name} on the map`} onClick={()=>{setHighlightedFigure(current=>current===c.id?null:c.id);svgRef.current?.scrollIntoView({behavior:'smooth',block:'center'});}} style={{flex:'0 0 auto',whiteSpace:'nowrap',border:'1px solid #3c5b64',borderRadius:20,padding:'7px 12px',minHeight:44,background:highlightedFigure===c.id?'#193540':'transparent',color:highlightedFigure===c.id?'#48dcf0':'#add0bc'}}>{c.name} · {c.id.toUpperCase()}</button>)}</div></div>}</div>}
       {starsOnly&&<div className="stars-only-indicator" role="status">Stars only · destination marker retained</div>}
       {fieldNavigation}
 

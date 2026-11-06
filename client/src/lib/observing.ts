@@ -7,6 +7,7 @@ import {
 import { binocularAssessment, opticsOf, type BinocularProfile, type FitRating } from "./binocular-assessment";
 import { rewardScore, tonightValue } from "./visibility/reward";
 import type { Observer, SkyInputs } from "./visibility/types";
+import { horizonLookup, type HorizonInput } from "./horizon/profile";
 import { moonIllumination, moonState, type MoonState } from "./moon";
 import {
   MIN_ALT, TWILIGHT, darkEnough, isStellarCategory, minAltitude, moonCategoryOfCategory, moonVerdict, plannerMoonWeight,
@@ -194,6 +195,10 @@ export interface VisibleTarget {
   alt: number;
   az: number;
   score: number;
+  /** Behind the local skyline (set only when a horizon is known): treated like below the horizon. */
+  obstructed?: boolean;
+  /** GEOMETRIC altitude needed to clear the skyline in its direction (set only when a horizon is known). */
+  horizonAlt?: number;
 }
 const EASY_TARGETS = new Set([
   "M2",
@@ -217,16 +222,22 @@ const EASY_TARGETS = new Set([
   "DS-MizarAlcor",
   "AST-KemblesCascade",
 ]);
+/** `horizon`: the site's local skyline (lib/horizon); obstructed targets take the below-15° penalty. Absent or null:
+ *  the flat horizon, exactly as before. */
 export function rankTargets(
   targets: UnifiedTarget[],
   lat: number,
   lon: number,
   date: Date,
   mode: ObservingMode,
+  horizon?: HorizonInput,
 ): VisibleTarget[] {
+  const threshold = horizonLookup(horizon);
   return targets
-    .map((target) => {
+    .map((target): VisibleTarget => {
       const { alt, az } = eqToHorizontal(target.ra, target.dec, lat, lon, date);
+      const horizonAlt = threshold ? threshold(az) : undefined;
+      const obstructed = horizonAlt !== undefined && alt < horizonAlt;
       const friendly =
         guideFor(target).binocular || EASY_TARGETS.has(target.id);
       const score =
@@ -234,20 +245,21 @@ export function rankTargets(
         Math.max(0, 9 - target.mag) * 2 +
         (OBJECT_GUIDES[target.id] ? 45 : EASY_TARGETS.has(target.id) ? 30 : 0) +
         (mode === "binocular" && friendly ? 15 : 0) -
-        (alt < MIN_ALT.possible ? 60 : 0);
-      return { target, alt, az, score };
+        (alt < MIN_ALT.possible || obstructed ? 60 : 0);
+      return threshold ? { target, alt, az, score, obstructed, horizonAlt } : { target, alt, az, score };
     })
     .sort((a, b) => b.score - a.score);
 }
 
 export interface TonightTarget extends VisibleTarget {
-  /** binocularAssessment rating at this altitude, Moon and sky (binocular mode only; null otherwise or below the horizon). */
+  /** binocularAssessment rating at this altitude, Moon and sky (binocular mode only; null otherwise, below the horizon
+   *  or behind the local skyline). */
   rating: FitRating | null;
   /** The shared Moon verdict (lib/sky-feasibility.ts moonVerdict), the same one the journey engine applies. */
   moon: MoonVerdict;
   /** Twilight rule of `rule` passed (bright stars from civil dusk under "possible"). */
   darkEnough: boolean;
-  /** Altitude, twilight and Moon all pass under `rule`. */
+  /** Altitude (and the local skyline, when known), twilight and Moon all pass under `rule`. */
   feasible: boolean;
 }
 export interface RankTonightOptions {
@@ -263,6 +275,9 @@ export interface RankTonightOptions {
    *  visibility model. Without it the model uses `skyBrightness`, `moon` and an average night's haze at sea level. */
   sky?: SkyInputs;
   observer?: Observer;
+  /** The site's local skyline (useLocalHorizon().horizon, or a CompactHorizon). Obstructed targets are not feasible,
+   *  get the below-horizon penalty and no binocular rating (as below the horizon). Absent: flat horizon. */
+  horizon?: HorizonInput;
 }
 /** Tonight's Best penalties on top of rankTargets' score (score points; rankTargets' altitude term is 0.65/°). */
 /** Binocular mode: score points per point of "Best tonight" value (reward 0..10 × visibility weight) around 5. */
@@ -295,12 +310,13 @@ export function rankTonight(
   const rule = opts.rule ?? "possible";
   const moon = opts.moon ?? moonState(lat, lon, date);
   const minAlt = minAltitude(rule);
-  return rankTargets(targets, lat, lon, date, mode)
+  return rankTargets(targets, lat, lon, date, mode, opts.horizon)
     .map((v): TonightTarget => {
       const { target, alt } = v;
       const verdict = moonVerdict({ alt, ra: target.ra, dec: target.dec, category: moonCategoryOfCategory(target.category) }, moon, opts.skyBrightness);
       const dark = darkEnough(moon.sunAlt, { stellar: isStellarCategory(target.category), mag: target.mag }, rule);
-      const assessment = mode === "binocular" && opts.profile && alt > 0
+      // Behind the local skyline counts as below the horizon: no rating, the rankTargets penalty only.
+      const assessment = mode === "binocular" && opts.profile && alt > 0 && !v.obstructed
         ? binocularAssessment(target, opts.profile, opts.sky ? { alt, sky: opts.sky, observer: opts.observer } : { alt, moon, skyBrightness: opts.skyBrightness, observer: opts.observer })
         : null;
       const rating = assessment ? assessment.rating : null;
@@ -311,7 +327,7 @@ export function rankTonight(
         - (dark ? 0 : TONIGHT_PENALTY.twilight)
         - (rating === null ? 0 : TONIGHT_PENALTY.rating[rating])
         + (reward === null ? 0 : TONIGHT_REWARD_WEIGHT * (reward - 5));
-      return { ...v, score, rating, moon: verdict, darkEnough: dark, feasible: alt >= minAlt && dark && verdict.ok };
+      return { ...v, score, rating, moon: verdict, darkEnough: dark, feasible: alt >= minAlt && !v.obstructed && dark && verdict.ok };
     })
     .sort((a, b) => b.score - a.score || a.target.id.localeCompare(b.target.id));
 }

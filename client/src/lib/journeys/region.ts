@@ -214,6 +214,8 @@ export interface PatchOptions {
   /** Alt/az of an equatorial position at the middle of the journey horizon. */
   altAz: (ra: number, dec: number) => { alt: number; az: number };
   moon: { up: boolean; ra: number; dec: number; illumination: number };
+  /** Local skyline threshold (azimuth → geometric altitude to clear it); null/absent = flat. Grid centres keep 10° clear of it. */
+  skyline?: ((azDeg: number) => number) | null;
   maxPatches?: number;
   suppressDeg?: number;
   gridPoints?: number;
@@ -236,7 +238,8 @@ export function buildPatches(objects: readonly PatchInputObject[], opts: PatchOp
 
   const centres: RaDec[] = feasibleIdx.map((i) => ({ ra: objects[i].ra, dec: objects[i].dec }));
   for (const p of fibonacciSphere(opts.gridPoints ?? 400)) {
-    if (opts.altAz(p.ra, p.dec).alt >= minAlt + 10) centres.push(p);
+    const h = opts.altAz(p.ra, p.dec);
+    if (h.alt >= minAlt + 10 && (!opts.skyline || h.alt >= opts.skyline(h.az) + 10)) centres.push(p);
   }
   const moonVec = unitVec(opts.moon.ra, opts.moon.dec);
 

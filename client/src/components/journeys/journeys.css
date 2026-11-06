@@ -68,6 +68,7 @@
 .journey-more-options[open] { border:1px solid var(--j-line); border-radius:12px; padding:0 12px 12px; background:#0b1820; }
 .journey-compass { display:flex; flex-wrap:wrap; gap:6px; border:0; padding:0; margin:4px 0 12px; }
 .journey-compass legend { font-size:13px; color:var(--j-muted); margin-bottom:6px; }
+.journey-compass-hint { font-size:13px; color:var(--j-muted); margin:-6px 0 12px; }
 .journey-compass label { position:relative; display:inline-flex; align-items:center; justify-content:center; min-width:48px; min-height:44px; border-radius:10px; border:1px dashed #3b5662; color:#8ea3a8; font-size:13px; cursor:pointer; }
 .journey-compass label.on { border:2px solid var(--j-mint); color:#e2efe9; font-weight:650; }
 /* the whole 48×44 label is the hit area (the shell sizes bare checkboxes to 16 px) */

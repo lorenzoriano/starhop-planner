@@ -61,6 +61,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalState } from "@/hooks/use-local-state";
 import { useVisibilityConditions } from "@/hooks/use-visibility-conditions";
+import { useLocalHorizon } from "@/hooks/use-local-horizon";
+import { compactHorizon, compassWord, horizonFingerprint, horizonLookup } from "@/lib/horizon/profile";
 import { observerFor } from "@/lib/visibility/conditions";
 import { useOffline } from "@/lib/offline";
 import {
@@ -209,6 +211,15 @@ const EMPTY_CATALOGS: Catalogs = {
   milkyWay: [],
 };
 
+/**
+ * Route result and saved hop-progress key of a plan ("live" replaces the date while the clock runs). The local skyline
+ * enters by its short fingerprint (a raw profile is hundreds of numbers; hop-progress keys are capped at 4000 chars),
+ * and a plan without one keeps exactly its old key.
+ */
+function routeParamsKey(p: ObservingParams, live: boolean): string {
+  return JSON.stringify({ ...p, date: live ? "live" : p.date, horizon: p.horizon ? horizonFingerprint(p.horizon) : undefined });
+}
+
 export default function PlannerPage() {
   const { toast } = useToast();
   const [settings, setSettings, settingsError] = useLocalState<Settings>(
@@ -334,11 +345,17 @@ export default function PlannerPage() {
         : resolvePlannedMoment(settings.date, settings.time, timezone, settings.plannedAt),
     [settings.date, settings.time, settings.timeMode, settings.plannedAt, timezone, clockNow],
   );
+  // The site's local skyline, once for the page (null without one: everything stays on the flat horizon). Child tabs
+  // that know the site (Binoculars, Catalog, the sky chart) ask the same shared hook themselves.
+  const { horizon } = useLocalHorizon(lat, lon);
+  const routeHorizon = useMemo(() => compactHorizon(horizon), [horizon]);
+  const skylineAt = useMemo(() => horizonLookup(horizon), [horizon]);
   const params: ObservingParams = useMemo(
     () => ({
       lat,
       lon,
       date,
+      horizon: routeHorizon,
       fovWidth: fov,
       fovHeight: shape === "circle" ? fov : fovHeight,
       fovShape: shape,
@@ -365,13 +382,11 @@ export default function PlannerPage() {
       algorithm,
       settings.startStarId,
       settings.waypointIds,
+      routeHorizon,
     ],
   );
-  const paramsKey = JSON.stringify({
-    ...params,
-    // Keep an in-progress route visible as the live clock advances.
-    date: settings.timeMode === "live" ? "live" : params.date,
-  });
+  // Keep an in-progress route visible as the live clock advances.
+  const paramsKey = routeParamsKey(params, settings.timeMode === "live");
   const keyRef = useRef(paramsKey);
   keyRef.current = paramsKey;
   const result = routeResult?.key === paramsKey ? routeResult.result : null;
@@ -399,6 +414,8 @@ export default function PlannerPage() {
   }, [chainStopNow, selected, hopStar, catalogs]);
   const eyepieceHz = eyepieceTarget ? eqToHorizontal(eyepieceTarget.ra, eyepieceTarget.dec, lat, lon, date) : null;
   const eyepieceAlt = eyepieceHz?.alt ?? 0;
+  /** The Star hop destination is above the flat horizon but behind the local skyline. */
+  const eyepieceBehindHills = !!eyepieceHz && !!skylineAt && eyepieceHz.alt > 0 && eyepieceHz.alt < skylineAt(eyepieceHz.az);
   const eyepieceSaveId = eyepieceTarget ? toSessionId(eyepieceTarget.id) : targetId;
   /**
    * The journey stop Star hop is at: the current stop of a whole-journey chain, or a single hop opened from a journey
@@ -427,8 +444,8 @@ export default function PlannerPage() {
   const observer = useMemo(()=>observerFor(settings.observerAge),[settings.observerAge]);
   // Tonight's Best on the shared sky model (altitude, Moon verdict, twilight, binocular rating); journeys borrow its top 8.
   const ranked = useMemo(
-    () => rankTonight(catalogs.targets, lat, lon, date, mode, { skyBrightness: settings.skyBrightness, profile: binocularProfile, moon: currentMoon, sky: skyNow, observer }),
-    [catalogs.targets, lat, lon, date, mode, settings.skyBrightness, binocularProfile, currentMoon, skyNow, observer],
+    () => rankTonight(catalogs.targets, lat, lon, date, mode, { skyBrightness: settings.skyBrightness, profile: binocularProfile, moon: currentMoon, sky: skyNow, observer, horizon }),
+    [catalogs.targets, lat, lon, date, mode, settings.skyBrightness, binocularProfile, currentMoon, skyNow, observer, horizon],
   );
   const tonightTopIds = useMemo(()=>ranked.slice(0,8).map(t=>t.target.id),[ranked]);
   const plannerObserved = useMemo(()=>plannerObservedIds(plannerStore.sessions),[plannerStore.sessions]);
@@ -445,10 +462,10 @@ export default function PlannerPage() {
     if (!selected) return [];
     const nearby = catalogs.stars.filter(star => star.mag <= Math.min(4.5,limitingMag) && !!(star.name || star.bayer || star.flamsteed))
       .map(star => ({ star, ...eqToHorizontal(star.ra,star.dec,lat,lon,date), distance:angularDistance(star.ra,star.dec,selected.ra,selected.dec) }))
-      .filter(star => star.alt >= MIN_ALT.possible).sort((a,b) => a.distance-b.distance || a.star.mag-b.star.mag).slice(0,80);
+      .filter(star => star.alt >= MIN_ALT.possible && (!skylineAt || star.alt >= skylineAt(star.az))).sort((a,b) => a.distance-b.distance || a.star.mag-b.star.mag).slice(0,80);
     if (selectedStart && !nearby.some(option => option.star.id === selectedStart.id)) nearby.unshift({ star:selectedStart, ...eqToHorizontal(selectedStart.ra,selectedStart.dec,lat,lon,date), distance:angularDistance(selectedStart.ra,selectedStart.dec,selected.ra,selected.dec) });
     return nearby.filter(option=>!nearby.some(other=>other.star.id!==option.star.id&&other.star.mag<option.star.mag&&angularDistance(option.star.ra,option.star.dec,other.star.ra,other.star.dec)<.05));
-  }, [selected, catalogs.stars, selectedStart, limitingMag, lat, lon, date]);
+  }, [selected, catalogs.stars, selectedStart, limitingMag, lat, lon, date, skylineAt]);
   const conditions = useMemo(
     () => skyConditions(lat, lon, date),
     [lat, lon, date],
@@ -470,7 +487,7 @@ export default function PlannerPage() {
     () =>
       ranked.filter(
         (o) =>
-          (!visibleOnly || o.alt >= MIN_ALT.possible) &&
+          (!visibleOnly || (o.alt >= MIN_ALT.possible && !o.obstructed)) &&
           (!friendlyOnly || guideFor(o.target).binocular) &&
           (category === "all" || o.target.categoryShort === category) &&
           (!queryMatches||queryMatches.has(o.target.id)),
@@ -484,11 +501,11 @@ export default function PlannerPage() {
       const score = catalogSearchScore(target, query, getConstellationName(target.con));
       if (!Number.isFinite(score) || (queryMatches&&!queryMatches.has(target.id)) || (friendlyOnly && star.mag > 6.5)) return [];
       const pos = eqToHorizontal(star.ra, star.dec, lat, lon, date);
-      if (visibleOnly && pos.alt < MIN_ALT.possible) return [];
+      if (visibleOnly && (pos.alt < MIN_ALT.possible || (skylineAt && pos.alt < skylineAt(pos.az)))) return [];
       if (filtered.some(object => /star/i.test(object.target.category) && angularDistance(star.ra, star.dec, object.target.ra, object.target.dec) < .02)) return [];
       return [{ star, name:target.name, ...pos, score }];
     }).sort((a,b) => a.score-b.score || a.star.mag-b.star.mag || b.alt-a.alt);
-  }, [starSearchTargets, query, category, friendlyOnly, visibleOnly, lat, lon, date, filtered,queryMatches]);
+  }, [starSearchTargets, query, category, friendlyOnly, visibleOnly, lat, lon, date, filtered,queryMatches,skylineAt]);
   const previewNodes = useMemo<SkyNode[]>(
     () =>
       catalogs.stars
@@ -833,7 +850,7 @@ export default function PlannerPage() {
     if(keep){if(keep!==location)navigateHash(keep);}else setPage("hop",targetId);
     setComputing(true);
     setPlaying(false);
-    const key = JSON.stringify({ ...computeParams, date: settings.timeMode === "live" ? "live" : computeParams.date });
+    const key = routeParamsKey(computeParams, settings.timeMode === "live");
     await new Promise((resolve) => setTimeout(resolve, 40));
     try {
       const computed = directFirst(await planRoutesInWorker(computeParams), computeParams.fovWidth);
@@ -887,7 +904,7 @@ export default function PlannerPage() {
       fovShape: "circle",
       limitingMag: starLimit,
     };
-    const key = JSON.stringify({ ...plannedParams, date: keepLive ? "live" : plannedParams.date });
+    const key = routeParamsKey(plannedParams, keepLive);
     if(!keepLive&&settings.timeMode==="live")toast({title:`Viewing the planned sky at ${formatInTimeZone(plannedParams.date,timezone,"MMM d · HH:mm")}`,description:"The hop is planned for that time, not the live sky. Choose “Use current time” in the time bar to return to the live sky."});
     update({ targetId: id, startStarId,waypointIds:[], ...(keepLive?{}:{date: localDate, time: localTime, timeMode: "planned" as const, plannedAt:plannedParams.date.toISOString()}), mode: "binocular", instrumentSelected: true, fov: field, fovHeight: field, shape: "circle", limitingMag: starLimit });
     if(opts.location)navigateHash(opts.location);else setPage("hop",id);
@@ -975,7 +992,7 @@ export default function PlannerPage() {
     const key = paramsKey;
     await new Promise((resolve) => setTimeout(resolve, 40));
     try {
-      const options={selected,lat,lon,timezone,date};
+      const options={selected,lat,lon,timezone,date,horizon};
       const at=nearestMoonFreeTargetTime({...options,target:selected,minAltitude:MIN_ALT.possible});
       const window=at?{date:at,alt:eqToHorizontal(selected.ra,selected.dec,lat,lon,at).alt}:null;
       if (keyRef.current !== key) return;
@@ -994,7 +1011,7 @@ export default function PlannerPage() {
         toast({
           title: "No suitable window found",
           description:
-            `No Moon-free dark window above 15° for at least 30 minutes in the next 30 nights. ${90-Math.abs(lat-selected.dec)<15?"This object never reaches 15° at this latitude.":"Try a later season or use the clock to inspect nights with moonlight."}`,
+            `No Moon-free dark window above 15°${skylineAt?" and clear of your skyline":""} for at least 30 minutes in the next 30 nights. ${90-Math.abs(lat-selected.dec)<15?"This object never reaches 15° at this latitude.":"Try a later season or use the clock to inspect nights with moonlight."}`,
         });
     } catch {
       toast({
@@ -1557,7 +1574,7 @@ export default function PlannerPage() {
                       <TargetNightSuggestions target={selected} lat={lat} lon={lon} timezone={timezone} date={date} onDate={at=>previewMoment(at,lat,lon,false)}/><SelectedTargetPlanning target={selected} lat={lat} lon={lon} date={date} timezone={timezone} skyBrightness={settings.skyBrightness}/>
                       <details className="selected-target-story"><summary>About this object & photograph</summary><p className="object-story">{objectSummaryText(selected.id,{target:selected})||guideFor(selected).story}</p><TargetPhotoCredit target={selected}/></details>
                       {!conditions.isDark&&<button className="text-action" onClick={()=>previewMoment(planningShortcut("tonight",lat,lon).date,lat,lon)}>Preview tonight after dark</button>}
-                      <BinocularAssessment target={selected} profile={binocularProfile} alt={selection.alt} moon={currentMoon} skyBrightness={settings.skyBrightness} sky={skyNow} observer={observer} at={date} lat={lat} lon={lon} timezone={timezone} onEditSetup={()=>setSetupOpen(true)} compact/>
+                      <BinocularAssessment target={selected} profile={binocularProfile} alt={selection.alt} moon={currentMoon} skyBrightness={settings.skyBrightness} sky={skyNow} skyAt={skyAt} observer={observer} at={date} lat={lat} lon={lon} timezone={timezone} onEditSetup={()=>setSetupOpen(true)} compact/>
                       <details className="selected-moon-more"><summary>Moonlight at {formatInTimeZone(date,timezone,"MMM d · HH:mm")}</summary><MoonlightCard target={selected} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => checkAgainstMoon(selected.id)} /></details>
                       <div className="featured-actions">
                         <Button
@@ -1641,7 +1658,7 @@ export default function PlannerPage() {
                     aria-pressed={visibleOnly}
                   >
                     <Eye size={14} />
-                    Above 15°
+                    {skylineAt ? "Above 15° and clear" : "Above 15°"}
                   </button>
                   <button
                     className={`filter-toggle ${friendlyOnly ? "active" : ""}`}
@@ -1665,7 +1682,7 @@ export default function PlannerPage() {
                     <TargetCard
                       key={o.target.id}
                       object={o}
-                      fit={visibilityLabel(binocularAssessment(o.target,binocularProfile,{alt:o.alt,sky:skyNow,observer}))}
+                      fit={visibilityLabel(binocularAssessment(o.target,binocularProfile,{alt:o.alt,sky:skyNow,observer,...(o.horizonAlt===undefined?{}:{horizonAlt:o.horizonAlt,horizonAz:o.az})}))}
                       saved={savedIds.has(o.target.id)}
                       selected={targetId === o.target.id}
                       onSelect={() => {
@@ -1686,7 +1703,7 @@ export default function PlannerPage() {
                   <div className="panel empty-state">
                     <Search size={28} />
                     <h3>{query.trim()?"Search results outside this view":"No objects in this view"}</h3>
-                    <p>{catalogSearchDiagnostics(query,planningTargets,[...filtered.map(o=>o.target),...starHits.map(o=>starPlanningTarget(o.star))],target=>{const alt=eqToHorizontal(target.ra,target.dec,lat,lon,date).alt;return visibleOnly&&alt<15?`${target.name} is ${Math.abs(alt).toFixed(1)}° ${alt<0?'below the horizon':'high'}, below the Above 15° limit.`:category!=='all'?`Hidden by the ${category} object-type filter.`:friendlyOnly?'Hidden by Binocular picks.':undefined;}).message||'Try another time or broaden your filters.'}</p>
+                    <p>{catalogSearchDiagnostics(query,planningTargets,[...filtered.map(o=>o.target),...starHits.map(o=>starPlanningTarget(o.star))],target=>{const {alt,az}=eqToHorizontal(target.ra,target.dec,lat,lon,date);return visibleOnly&&alt>=15&&skylineAt&&alt<skylineAt(az)?`${target.name} is behind the hills to the ${compassWord(az)}, hidden by the Above 15° and clear filter.`:visibleOnly&&alt<15?`${target.name} is ${Math.abs(alt).toFixed(1)}° ${alt<0?'below the horizon':'high'}, below the Above 15° limit.`:category!=='all'?`Hidden by the ${category} object-type filter.`:friendlyOnly?'Hidden by Binocular picks.':undefined;}).message||'Try another time or broaden your filters.'}</p>
                     <Button
                       variant="outline"
                       onClick={() => {
@@ -1770,8 +1787,8 @@ export default function PlannerPage() {
                     {/* The object Star hop is at (the chain's current stop, not its last), as the Catalog's own-chart link does. */}
                     <button type="button" className="object-action" onClick={()=>openOwnChart(eyepieceTarget.id,update)} data-testid="hop-own-chart"><ImageIcon size={14} aria-hidden="true"/>{LINK_LABELS.ownChart}</button>
                     {/* Only when the sky gets in the way: the destination is low, or a bright Moon is up. */}
-                    {!chainActive && (eyepieceAlt < MIN_ALT.possible || (conditions.moonAlt > 0 && conditions.illumination >= 50)) && <button type="button" className="object-action" title="Find a Moon-free navigation window of at least 30 minutes above 15°; 30° or higher is preferred for detail." onClick={bestTime} disabled={findingTime || computing || !selected} data-testid="hop-moon-free-night">
-                      {findingTime ? <Loader2 size={14} className="animate-spin" aria-hidden="true"/> : <Clock size={14} aria-hidden="true"/>}{LINK_LABELS.moonFreeNight}
+                    {!chainActive && (eyepieceAlt < MIN_ALT.possible || eyepieceBehindHills || (conditions.moonAlt > 0 && conditions.illumination >= 50)) && <button type="button" className="object-action" title={eyepieceBehindHills?"Find the nearest dark, Moon-free window of at least 30 minutes when it is above 15° and clear of your skyline.":"Find a Moon-free navigation window of at least 30 minutes above 15°; 30° or higher is preferred for detail."} onClick={bestTime} disabled={findingTime || computing || !selected} data-testid="hop-moon-free-night">
+                      {findingTime ? <Loader2 size={14} className="animate-spin" aria-hidden="true"/> : <Clock size={14} aria-hidden="true"/>}{eyepieceBehindHills?LINK_LABELS.clearTime:LINK_LABELS.moonFreeNight}
                     </button>}
                   </ObjectActionRow>
                 </div>
@@ -1785,14 +1802,16 @@ export default function PlannerPage() {
                 </div>
               </section>}
 
-              {eyepieceTarget && eyepieceAlt < MIN_ALT.possible && (
+              {eyepieceTarget && (eyepieceAlt < MIN_ALT.possible || eyepieceBehindHills) && (
                 <div className="notice warning">
                   <AlertTriangle size={16} />
                   <span>
                     {eyepieceAlt < 0
                       ? "This object is below the horizon."
+                      : eyepieceBehindHills && eyepieceHz
+                      ? `This object is behind the hills to the ${compassWord(eyepieceHz.az)}.`
                       : "This object is very low in the sky."}{" "}
-                    {chainActive ? "Choose a different time in the time bar." : `Use “${LINK_LABELS.moonFreeNight}” or choose a different time.`}
+                    {chainActive ? "Choose a different time in the time bar." : `Use “${eyepieceBehindHills?LINK_LABELS.clearTime:LINK_LABELS.moonFreeNight}” or choose a different time.`}
                   </span>
                 </div>
               )}
@@ -1803,6 +1822,8 @@ export default function PlannerPage() {
                   <span>
                     {result.anchorUnavailable
                       ? "Your starting star is too low or outside the guide-star limit. Choose another reference or use Automatic."
+                      : result.behindTerrain
+                      ? "The target is hidden behind the hills at this time."
                       : result.belowHorizon
                       ? "The target is too low for a route at this time."
                       : "No usable route found. Try a wider navigation field or a fainter guide star limit."}
@@ -2037,7 +2058,7 @@ export default function PlannerPage() {
                         <h2>At the eyepiece{chainStopNow ? `: ${displayName(eyepieceTarget)}` : ""}</h2>
                       </div>
                       <p>{objectSummary(eyepieceTarget.id,{target:eyepieceTarget})?.lookFor ?? guideFor(eyepieceTarget).lookFor}</p>
-                      <BinocularAssessment target={eyepieceTarget} profile={binocularProfile} alt={eyepieceAlt} moon={currentMoon} skyBrightness={settings.skyBrightness} sky={skyNow} observer={observer} at={date} lat={lat} lon={lon} timezone={timezone} onEditSetup={()=>setSetupOpen(true)} compact/>
+                      <BinocularAssessment target={eyepieceTarget} profile={binocularProfile} alt={eyepieceAlt} moon={currentMoon} skyBrightness={settings.skyBrightness} sky={skyNow} skyAt={skyAt} observer={observer} at={date} lat={lat} lon={lon} timezone={timezone} onEditSetup={()=>setSetupOpen(true)} compact/>
                       <details className="selected-moon-more"><summary>Moonlight at {formatInTimeZone(date,timezone,"MMM d · HH:mm")}</summary><MoonlightCard target={eyepieceTarget} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => checkAgainstMoon(eyepieceTarget.id)} /></details>
                       <AltitudeChart
                         target={eyepieceTarget}

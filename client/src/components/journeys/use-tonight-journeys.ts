@@ -14,9 +14,12 @@ import { moveTo, readFeedbackStore, readJourneyStore, rememberJourney, seenObjec
 import type { Journey, JourneyEngineClient, JourneyRequest, JourneyResult, KnowledgeBase } from "@/lib/journeys/types";
 import { ENGINE_OVERRIDE_KEY, getJourneyEngineSource, type JourneyEngineMode } from "./journey-engine";
 import { activeLensObjectKeys } from "./journey-membership";
-import { controlsFromPrefs, journeyRequestFor, slotInstant } from "./journey-view";
+import { controlsFromPrefs, journeyRequestFor, journeyRequestKey, slotInstant } from "./journey-view";
 import { nightEvents, type NightEvents } from "./conditions-explainer";
 import { sharedSkyInputs, withSkyInputs, type SharedSkyInputs } from "@/lib/journeys/request-inputs";
+import { compactHorizon, horizonFingerprint } from "@/lib/horizon/profile";
+import type { LocalHorizon } from "@/lib/horizon/types";
+import { useLocalHorizon } from "@/hooks/use-local-horizon";
 
 /** Journeys per request: the teaser's (and Discovery's first page) count, so all of them share one cache entry. */
 export const TONIGHT_JOURNEY_LIMIT = 3;
@@ -28,13 +31,16 @@ export type TonightSky = Pick<ObjectSkyContext, "at" | "lat" | "lon" | "timezone
   profile: { fov: number; aperture: number; magnification: number; stabilized?: boolean };
 };
 
-/** The engine request for tonight at this sky, with the device's Discovery preferences (theme overridable). */
-export function tonightJourneyRequest(sky: TonightSky, store: Pick<JourneyStore, "prefs"> = readJourneyStore(), seen: string[] = seenObjectIds(readFeedbackStore()), theme?: string | null, inputs: Pick<SharedSkyInputs, "observedIds" | "boostIds"> = sharedSkyInputs()): JourneyRequest {
-  const controls = controlsFromPrefs(store.prefs, siteKey(sky.lat, sky.lon));
+/**
+ * The engine request for tonight at this sky, with the device's Discovery preferences (theme overridable) and the
+ * site's local horizon (seeds the open directions and travels as the request's skyline, exactly as in Discovery).
+ */
+export function tonightJourneyRequest(sky: TonightSky, store: Pick<JourneyStore, "prefs"> = readJourneyStore(), seen: string[] = seenObjectIds(readFeedbackStore()), theme?: string | null, inputs: Pick<SharedSkyInputs, "observedIds" | "boostIds"> = sharedSkyInputs(), horizon: LocalHorizon | null = null): JourneyRequest {
+  const controls = controlsFromPrefs(store.prefs, siteKey(sky.lat, sky.lon), horizon);
   // Same linked inputs as Discovery (JourneysPage): Planner observed ids and Tonight's Best top ids.
   return withSkyInputs(journeyRequestFor({
     date: slotInstant(sky.at), lat: sky.lat, lon: sky.lon, timezone: sky.timezone, profile: sky.profile, skyBrightness: sky.skyBrightness,
-    controls: theme === undefined ? controls : { ...controls, theme }, shuffle: 0, limit: TONIGHT_JOURNEY_LIMIT, seen,
+    controls: theme === undefined ? controls : { ...controls, theme }, shuffle: 0, limit: TONIGHT_JOURNEY_LIMIT, seen, horizon: compactHorizon(horizon),
   }), inputs);
 }
 
@@ -53,7 +59,7 @@ const settled = new Map<string, JourneyResult | null>();
  * not cached, so the next caller tries again.
  */
 export function loadTonightJourneys(request: JourneyRequest, engine: TonightEngine = getJourneyEngineSource(), allowDemo: boolean = demoAllowed()): Promise<JourneyResult | null> {
-  const key = JSON.stringify(request);
+  const key = journeyRequestKey(request);
   const cached = inflight.get(key);
   if (cached) return cached;
   let failed = false;
@@ -157,11 +163,14 @@ export interface TonightJourneys {
  */
 export function useTonightJourneys(sky: TonightSky | null | undefined, opts: { enabled?: boolean; theme?: string | null } = {}): TonightJourneys {
   const enabled = opts.enabled ?? true, slot = sky ? slotInstant(sky.at).getTime() : 0, p = sky?.profile, inputs = sharedSkyInputs();
-  const request = useMemo(() => (sky ? tonightJourneyRequest({ ...sky, at: new Date(slot) }, readJourneyStore(), seenObjectIds(readFeedbackStore()), opts.theme, inputs) : null),
-    // The request depends only on these fields (the slot, not the exact instant; the shared inputs by their key).
+  // The site's local horizon (one shared computation per site, lib/horizon/terrain-jobs), as Discovery uses it.
+  const { horizon } = useLocalHorizon(sky ? sky.lat : NaN, sky ? sky.lon : NaN);
+  const skylineKey = useMemo(() => horizonFingerprint(horizon), [horizon]);
+  const request = useMemo(() => (sky ? tonightJourneyRequest({ ...sky, at: new Date(slot) }, readJourneyStore(), seenObjectIds(readFeedbackStore()), opts.theme, inputs, horizon) : null),
+    // The request depends only on these fields (the slot, not the exact instant; the shared inputs and the skyline by their keys).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [!!sky, slot, sky?.lat, sky?.lon, sky?.timezone, sky?.skyBrightness, p?.fov, p?.aperture, p?.magnification, p?.stabilized, opts.theme, inputs.key]);
-  const requestKey = request ? JSON.stringify(request) : "";
+    [!!sky, slot, sky?.lat, sky?.lon, sky?.timezone, sky?.skyBrightness, p?.fov, p?.aperture, p?.magnification, p?.stabilized, opts.theme, inputs.key, skylineKey]);
+  const requestKey = request ? journeyRequestKey(request) : "";
   const [state, setState] = useState<{ key: string; result: JourneyResult | null } | null>(null);
   useEffect(() => {
     if (!request || !enabled) return;

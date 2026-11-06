@@ -8,7 +8,7 @@
  * The core functions take an engine-agnostic `FeatureInput` (plain numbers per stop), which tests and tools
  * can build by hand. `featureInputFromScoring` adapts the engine's scoring hook (assemble.ts `ScoringInput`).
  */
-import { hourAngle, minutesAboveAlt } from './conditions';
+import { minutesClear } from './conditions';
 import { meanPosition, pathGeometry, type RaDec } from './region';
 import { fnv1a53 } from './seed';
 import type { ScoringInput } from './assemble';
@@ -556,8 +556,9 @@ export function featureInputFromScoring(x: ScoringInput): FeatureInput {
       moonSep: ev.minMoonSep,
       rating: Math.max(0, ev.rating),
       sunAlt: ev.maxSunAlt,
-      minutesLeft: minutesAboveAlt(tr.decDate, s.lat, hourAngle(tr.raDate, s.lon, grid.gastDeg[endK]), s.minAlt),
-      minutesToSet: minutesAboveAlt(tr.decDate, s.lat, hourAngle(tr.raDate, s.lon, grid.gastDeg[start0]), s.minAlt),
+      // Analytic without a binding skyline; sampled against it when the hills rise above minAlt (conditions.minutesClear).
+      minutesLeft: minutesClear(tr.raDate, tr.decDate, s, grid.gastDeg[endK]),
+      minutesToSet: minutesClear(tr.raDate, tr.decDate, s, grid.gastDeg[start0]),
       link: js?.link ? { type: js.link.type, strength: js.link.strength, curated: js.link.curated } : null,
       arc: js?.arc ?? plan.template.t.slots[ps.slot]?.arc,
     };

@@ -4,6 +4,8 @@
 import { formatInTimeZone } from "date-fns-tz";
 import { angularDistance, directionBetween, eqToHorizontal } from "@/lib/astronomy";
 import { MIN_ALT } from "@/lib/sky-feasibility";
+import { blockedDirections8, clearanceDeg, compass8Word, compassWord, horizonFingerprint, type CompactHorizon, type HorizonInput } from "@/lib/horizon/profile";
+import type { LocalHorizon } from "@/lib/horizon/types";
 import { estimateHops, hopCountLabel, legDifficulty } from "@/lib/hop-chain";
 import { nameInSentence } from "@/lib/journeys/plain-language";
 import type { LegReport } from "@/lib/object-links";
@@ -56,11 +58,51 @@ export const JOURNEY_FOCUS_KEY = "starhop-journey-focus";
 
 // ───────────────────────────── engine request ─────────────────────────────
 
+/**
+ * Open-sky defaults from the site's terrain: the compass directions where the hills rise above the lowest stop altitude
+ * (`minAlt`) over most of the 45° sector (lib/horizon/profile blockedDirections8) start unticked. `open` is undefined
+ * when nothing is blocked, when everything is (the per-azimuth skyline check in the engine then does all the work), or
+ * when no terrain is known. The engine also checks every stop against the exact skyline, so this only mirrors it.
+ */
+export function terrainDirections(horizon: LocalHorizon | null | undefined, minAlt: number): { blocked: Compass8[]; open: Compass8[] | undefined } {
+  const blocked = horizon ? blockedDirections8(horizon, minAlt) : [];
+  if (!blocked.length || blocked.length >= 8) return { blocked: blocked.length >= 8 ? [] : blocked, open: undefined };
+  return { blocked, open: COMPASS8.filter((d) => !blocked.includes(d)) };
+}
+/** "Hills block the northwest from here." (null when nothing is blocked). Skyline sentences use the app's compass
+ *  words (lib/horizon/profile), not the journeys' hyphenated COMPASS_WORDS. */
+export function terrainHint(blocked: readonly Compass8[]): string | null {
+  if (!blocked.length) return null;
+  const words = COMPASS8.filter((d) => blocked.includes(d)).map(compass8Word);
+  const list = words.length > 1 ? `${words.slice(0, -1).join(", ")} and ${words.at(-1)}` : words[0];
+  return `Hills block the ${list} from here.`;
+}
+
 /** Discovery controls remembered on the device (JourneyStore.prefs) with their defaults applied. */
 export interface RequestControls { theme: string | null; length: LengthChoice; minAlt: number; includeChallenge: boolean; openDirections: Compass8[] }
-export function controlsFromPrefs(prefs: { theme?: string | null; length?: LengthChoice; minAlt?: number; includeChallenge?: boolean; openSky?: Record<string, Compass8[]> } | undefined, site: string): RequestControls {
+/**
+ * `horizon` (the site's local horizon) seeds the open directions when the user has not chosen them for this site
+ * (terrainDirections); a manual choice in `openSky[site]` always wins.
+ */
+export function controlsFromPrefs(prefs: { theme?: string | null; length?: LengthChoice; minAlt?: number; includeChallenge?: boolean; openSky?: Record<string, Compass8[]> } | undefined, site: string, horizon?: LocalHorizon | null): RequestControls {
   const p = prefs ?? {};
-  return { theme: p.theme ?? null, length: p.length ?? "medium", minAlt: p.minAlt ?? MIN_ALT.comfortable, includeChallenge: p.includeChallenge ?? true, openDirections: p.openSky?.[site] ?? COMPASS8 };
+  const minAlt = p.minAlt ?? MIN_ALT.comfortable;
+  const manual = p.openSky?.[site];
+  return { theme: p.theme ?? null, length: p.length ?? "medium", minAlt, includeChallenge: p.includeChallenge ?? true, openDirections: manual ?? terrainDirections(horizon, minAlt).open ?? COMPASS8 };
+}
+/** The open directions to remember for a site: undefined (forget, use the default) when the choice is the default or empty. */
+export function openSkyToStore(choice: readonly Compass8[], horizon: LocalHorizon | null | undefined, minAlt: number): Compass8[] | undefined {
+  const def = terrainDirections(horizon, minAlt).open ?? COMPASS8;
+  if (!choice.length || (choice.length === def.length && def.every((d) => choice.includes(d)))) return undefined;
+  return COMPASS8.filter((d) => choice.includes(d));
+}
+
+/**
+ * Stable string key of a request (React deps, the shared tonight cache): the skyline's hundreds of numbers are replaced
+ * by their fingerprint. A request without a skyline keeps exactly its old key (JSON.stringify).
+ */
+export function journeyRequestKey(req: JourneyRequest): string {
+  return JSON.stringify(req.horizon ? { ...req, horizon: horizonFingerprint(req.horizon) } : req);
 }
 
 /**
@@ -71,6 +113,8 @@ export function journeyRequestFor(a: {
   date: Date; lat: number; lon: number; timezone: string;
   profile: { fov: number; aperture: number; magnification: number; stabilized?: boolean };
   skyBrightness: number; controls: RequestControls; shuffle: number; limit: number; seen: string[];
+  /** The site's skyline (compactHorizon of useLocalHorizon); null/absent = flat, and the request is unchanged. */
+  horizon?: CompactHorizon | null;
 }): JourneyRequest {
   const c = a.controls;
   return {
@@ -85,6 +129,7 @@ export function journeyRequestFor(a: {
     shuffle: a.shuffle,
     limit: a.limit,
     seenObjectIds: a.seen,
+    ...(a.horizon ? { horizon: a.horizon } : {}),
   };
 }
 
@@ -491,15 +536,43 @@ export function showLowerBinoculars(guide: Pick<GetThereView, "mode" | "text">, 
   return guide.mode === "naked-eye-hop" && index > 0 && !/\bby eye\b|lower (?:your|the) binoculars/i.test(guide.text);
 }
 
-export type StopAltitudeState = { kind: "ok" | "getting-low" | "missed"; alt: number; text: string | null };
-/** Live check (doc 06 §6.7): flag a stop that falls below the minimum altitude now or within 10 minutes. */
-export function stopAltitudeState(object: Pick<KbObject, "ra" | "dec">, lat: number, lon: number, now: Date, minAlt: number, timezone: string): StopAltitudeState {
-  const alt = eqToHorizontal(object.ra, object.dec, lat, lon, now).alt;
-  if (alt < minAlt) return { kind: "missed", alt, text: `Missed — now ${Math.round(alt)}° high, below ${minAlt}°` };
+export type StopAltitudeState = {
+  kind: "ok" | "getting-low" | "missed"; alt: number; text: string | null;
+  /** Azimuth now, degrees. */
+  az: number;
+  /** Degrees above the local skyline now (negative: behind it); null when no skyline is known. */
+  clearance: number | null;
+  /** Why a stop is (or soon is) out of reach: low in the sky, or behind the hills. Absent when ok. */
+  reason?: "low" | "terrain";
+};
+/** Above the flat horizon but behind the skyline: the hills hide it (below the horizon it is simply set). */
+const behindHills = (alt: number, clearance: number | null) => clearance !== null && clearance < 0 && alt >= 0;
+/**
+ * Live check (doc 06 §6.7): flag a stop that falls below the minimum altitude, or behind the local skyline when
+ * `horizon` is known, now or within 10 minutes. Without a horizon the result is exactly the flat-horizon check.
+ */
+export function stopAltitudeState(object: Pick<KbObject, "ra" | "dec">, lat: number, lon: number, now: Date, minAlt: number, timezone: string, horizon?: HorizonInput): StopAltitudeState {
+  const { alt, az } = eqToHorizontal(object.ra, object.dec, lat, lon, now);
+  const clearance = clearanceDeg(horizon, alt, az);
+  const base = { alt, az, clearance };
+  if (behindHills(alt, clearance)) return { kind: "missed", ...base, reason: "terrain", text: `Missed — now behind the hills to the ${compassWord(az)}` };
+  if (alt < minAlt) return { kind: "missed", ...base, reason: "low", text: `Missed — now ${Math.round(alt)}° high, below ${minAlt}°` };
   const soon = new Date(now.getTime() + 10 * 60_000);
-  const later = eqToHorizontal(object.ra, object.dec, lat, lon, soon).alt;
-  if (later < minAlt) return { kind: "getting-low", alt, text: `Getting low — drops below ${minAlt}° by ${localTime(soon, timezone)}` };
-  return { kind: "ok", alt, text: null };
+  const later = eqToHorizontal(object.ra, object.dec, lat, lon, soon);
+  if (behindHills(later.alt, clearanceDeg(horizon, later.alt, later.az))) return { kind: "getting-low", ...base, reason: "terrain", text: `Going behind the hills to the ${compassWord(later.az)} by ${localTime(soon, timezone)}` };
+  if (later.alt < minAlt) return { kind: "getting-low", ...base, reason: "low", text: `Getting low — drops below ${minAlt}° by ${localTime(soon, timezone)}` };
+  return { kind: "ok", ...base, text: null };
+}
+
+/** The "Can't find it?" altitude line: the flat-horizon wording, or precise against the skyline when it is known. */
+export function altitudeHelpText(a: Pick<StopAltitudeState, "alt" | "az" | "clearance">, minAlt: number): string {
+  const h = Math.round(a.alt), dir = compassWord(a.az);
+  if (a.clearance === null) return a.alt < minAlt + 5 ? `It's only ${h}° high — low objects dim in thick air; trees and haze may hide it.` : `It's ${h}° high — height is not the problem.`;
+  if (behindHills(a.alt, a.clearance)) return `It's ${h}° high but behind the hills to the ${dir}, so it can't be seen from this spot right now.`;
+  const c = Math.round(a.clearance);
+  if (a.clearance < 5) return `It's ${h}° high and ${c < 1 ? "only just" : `only ${c}°`} above your skyline to the ${dir}; trees, roofs or haze near the skyline may hide it.`;
+  if (a.alt < minAlt + 5) return `It's only ${h}° high — low objects dim in thick air. It clears your skyline to the ${dir} by ${c}°.`;
+  return `It's ${h}° high and ${c}° above your skyline — height is not the problem.`;
 }
 
 /** Light-travel recap line for the done screen: the farthest seen stop. */

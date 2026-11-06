@@ -9,7 +9,7 @@ import type { JourneyResult } from "@/lib/journeys/types";
 import type { DiscoveryControls, JourneysShared } from "./JourneysPage";
 import { JourneyCard } from "./JourneyCard";
 import { conditionNotes, emptyState, nightEvents, type ConditionAction, type ConditionNote } from "./conditions-explainer";
-import { COMPASS8, COMPASS_WORDS, LENGTHS, localTime, themeOptions, type LengthChoice } from "./journey-view";
+import { COMPASS8, COMPASS_WORDS, LENGTHS, localTime, terrainDirections, terrainHint, themeOptions, type LengthChoice } from "./journey-view";
 
 interface Props {
   shared: JourneysShared;
@@ -31,8 +31,11 @@ export function JourneyDiscovery({ shared, controls, setControls, result, stale,
   const { page, kb, objects, store } = shared;
   const { date, timezone, lat, lon, moon, sunAlt } = page;
   const events = useMemo(() => nightEvents(lat, lon, date, timezone), [lat, lon, date, timezone]);
-  const notes = useMemo(() => conditionNotes({ date, timezone, sunAlt, moon, events, minAlt: controls.minAlt, openDirections: controls.openDirections, theme: controls.theme, result }),
-    [date, timezone, sunAlt, moon, events, controls.minAlt, controls.openDirections, controls.theme, result]);
+  // Hills from the site's terrain: the hint by the direction boxes, and whether the open directions are still that default.
+  const terrain = useMemo(() => terrainDirections(shared.horizon, controls.minAlt), [shared.horizon, controls.minAlt]);
+  const openSkyFromTerrain = !!terrain.open && terrain.open.length === controls.openDirections.length && terrain.open.every((d) => controls.openDirections.includes(d));
+  const notes = useMemo(() => conditionNotes({ date, timezone, sunAlt, moon, events, minAlt: controls.minAlt, openDirections: controls.openDirections, openSkyFromTerrain, theme: controls.theme, result }),
+    [date, timezone, sunAlt, moon, events, controls.minAlt, controls.openDirections, openSkyFromTerrain, controls.theme, result]);
   const themes = useMemo(() => themeOptions(kb.templates), [kb.templates]);
   const journeys = result?.journeys ?? [];
   const active = store.active && !store.active.completedAt ? store.active : null;
@@ -123,6 +126,7 @@ export function JourneyDiscovery({ shared, controls, setControls, result, stale,
           <legend>I can see toward</legend>
           {COMPASS8.map((d) => <label key={d} className={controls.openDirections.includes(d) ? "on" : ""}><input type="checkbox" checked={controls.openDirections.includes(d)} onChange={() => toggleDirection(d)} aria-label={`Open sky to the ${COMPASS_WORDS[d]}`}/>{d}</label>)}
         </fieldset>
+        {terrain.blocked.length > 0 && <p className="journey-compass-hint" data-testid="journeys-terrain-hint">{terrainHint(terrain.blocked)}</p>}
         <div className="journey-control-row">
           <label className="journey-select">Lowest stop<select value={controls.minAlt} onChange={(e) => setControls({ minAlt: Number(e.target.value) })} aria-label="Minimum altitude">{[20, 25, 30, 35, 40].map((a) => <option key={a} value={a}>{a}° above the horizon{a === MIN_ALT.comfortable ? " (default)" : ""}</option>)}</select></label>
           <label className="journey-check"><input type="checkbox" checked={controls.includeChallenge} onChange={(e) => setControls({ includeChallenge: e.target.checked })}/>Allow one challenge object</label>

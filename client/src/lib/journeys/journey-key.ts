@@ -71,7 +71,12 @@ function fromBase64Url(key: string): string | null {
   }
 }
 
-/** Compact URL-safe key (see module doc). Ids must not contain "|" or ","; the KB schema ids never do. */
+/**
+ * Compact URL-safe key (see module doc). Ids must not contain "|" or ","; the KB schema ids never do.
+ * The local skyline (JourneyRequest.horizon) is deliberately NOT part of a key: it is per device and per site, and
+ * would make links long. A key rebuilt elsewhere (assemble.rebuildJourney) is checked against the skyline of the device
+ * that opens it, for that device's own site; at another site the rebuild assumes a flat horizon.
+ */
 export function encodeJourneyKey(d: Omit<JourneyKeyData, 'format'>): string {
   if (d.stopIds.some((id) => /[|,]/.test(id)) || /[|@]/.test(d.templateId)) throw new Error('journey key: id contains a separator');
   if (d.slots.some((j) => !Number.isInteger(j) || j < 0 || j > 35) || d.slots.length !== d.stopIds.length) throw new Error('journey key: bad slots');

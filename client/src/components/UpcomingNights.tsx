@@ -7,6 +7,8 @@ import { upcomingNightDateLabel, upcomingNights, type UpcomingNight } from "@/li
 import { clockNightDate } from "@/lib/astronomical-clock";
 import { illuminationPercent } from "@/lib/moon";
 import { displayName } from "@/lib/object-links";
+import { useLocalHorizon } from "@/hooks/use-local-horizon";
+import { horizonFingerprint } from "@/lib/horizon/profile";
 import "./ObservingCalendar.css";
 
 const glyphs = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"];
@@ -26,6 +28,9 @@ export interface UpcomingNightsProps {
 
 export function UpcomingNights({ lat, lon, timezone, date, onDate, targets = [], selected = null }: UpcomingNightsProps) {
   const weather=useWeather(lat,lon);
+  // Target time counts only when the target also clears the site's local skyline.
+  const {horizon}=useLocalHorizon(lat,lon);
+  const horizonKey=horizonFingerprint(horizon),clearLabel=horizonKey==="flat"?"":" and clear";
   const selectedDate = clockNightDate(date, timezone);
   const chosenTile=useRef<string|null>(null);
   const anchor=useRef({date,key:selectedDate,site:`${lat}:${lon}:${timezone}`});
@@ -34,7 +39,7 @@ export function UpcomingNights({ lat, lon, timezone, date, onDate, targets = [],
   const nightKey=anchor.current.key;
   const anchorDate=anchor.current.date;
   const targetKey=targets.map(target=>`${target.id}:${target.ra}:${target.dec}`).join("|");
-  const allNights=useMemo(()=>upcomingNights({lat,lon,timezone,date:anchorDate,days:30,targets,selected}),[lat,lon,timezone,nightKey,targetKey,selected?.id,selected?.ra,selected?.dec]);
+  const allNights=useMemo(()=>upcomingNights({lat,lon,timezone,date:anchorDate,days:30,targets,selected,horizon}),[lat,lon,timezone,nightKey,targetKey,selected?.id,selected?.ra,selected?.dec,horizonKey]);
   const nights=allNights.slice(0,7);
   const reports=useMemo(()=>new Map(allNights.map(night=>[night.date,nightWeather(night,weather.forecast,weather)])),[allNights,weather.forecast,weather.now,weather.online,weather.loading,weather.error]);
   const eligible=allNights.filter(night=>night.moonFreeDarkHours>0&&(!selected||(night.selectedTarget?.goodAltitudeHours??0)>0));
@@ -47,14 +52,14 @@ export function UpcomingNights({ lat, lon, timezone, date, onDate, targets = [],
     <div className="upcoming-nights-heading"><div><strong>Next nights</strong><span>Compare moon-free dark time, target altitude and available forecast</span></div><small>Next 7 nights</small></div>
     <div className="upcoming-nights-strip">
       {nights.map((night) => {
-        const targetCount = targets.length ? `${night.feasibleTargetCount} of ${targets.length} ${targets.length===1?"target":"targets"} well placed` : null;
+        const targetCount = targets.length ? `${night.feasibleTargetCount} of ${targets.length} ${targets.length===1?"target":"targets"} well placed${clearLabel?" and clear":""}` : null;
         const selectedResult = night.selectedTarget;
         return <button type="button" key={night.date} className={`upcoming-night${night.date === selectedDate ? " is-selected" : ""}`} aria-label={`${upcomingNightDateLabel(night, timezone)}. Open at ${clock(night.chooseAt, timezone)}, during darkness`} aria-pressed={night.date === selectedDate} onClick={() => choose(night)}>
           <strong>{upcomingNightDateLabel(night, timezone)}</strong>
           <span className="upcoming-night-moon"><span className="moon-phase-glyph" aria-hidden="true">{glyph(night.moonPhase)}</span> {night.moonLabel} · {illuminationPercent(night.moonIllumination)}% at {clock(night.moonAt, timezone)}</span>
           <span>{duration(night.moonFreeDarkHours)} moon-free dark</span>
           <span>{targetCount ?? ""}</span>
-          {selectedResult && <small>{duration(selectedResult.goodAltitudeHours)} target time ≥30°{selectedResult.bestAt ? ` · best ${clock(selectedResult.bestAt, timezone)}` : ""}</small>}
+          {selectedResult && <small>{duration(selectedResult.goodAltitudeHours)} target time ≥30°{clearLabel}{selectedResult.bestAt ? ` · best ${clock(selectedResult.bestAt, timezone)}` : ""}</small>}
           <small>{weatherLabel(night)}</small>
         </button>;
       })}
@@ -64,7 +69,7 @@ export function UpcomingNights({ lat, lon, timezone, date, onDate, targets = [],
       {best.length ? <div className="upcoming-best-list">{best.map((night, index) => <button type="button" key={night.date} onClick={() => choose(night)}>
         <span>{index + 1}. {upcomingNightDateLabel(night, timezone)}</span>
         <span><span className="moon-phase-glyph" aria-hidden="true">{glyph(night.moonPhase)}</span> {illuminationPercent(night.moonIllumination)}% Moon at {clock(night.moonAt, timezone)} · {duration(night.moonFreeDarkHours)} moon-free</span>
-        {night.selectedTarget && <span>{duration(night.selectedTarget.goodAltitudeHours)} target above 30°{night.selectedTarget.bestAt ? ` · best ${clock(night.selectedTarget.bestAt, timezone)}` : ""}</span>}
+        {night.selectedTarget && <span>{duration(night.selectedTarget.goodAltitudeHours)} target above 30°{clearLabel}{night.selectedTarget.bestAt ? ` · best ${clock(night.selectedTarget.bestAt, timezone)}` : ""}</span>}
         <small>{weatherLabel(night)}</small>
       </button>)}</div> : <span className="upcoming-best-empty">No target-friendly moon-free night found in the next 30 nights.</span>}
       <small>{hasWeather?'Ranked by Moon-free darkness and target altitude, adjusted for available cloud, wind and precipitation forecasts. Unknown weather is neutral; it is not a forecast of clear skies.':'Ranked by Moon-free darkness and target altitude. Weather is unavailable for these choices; the reason is shown on each night.'} Weather score is a planning estimate from cloud, wind and precipitation, not a visibility probability.</small>

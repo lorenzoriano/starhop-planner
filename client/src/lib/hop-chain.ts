@@ -69,6 +69,8 @@ const FAILURE_NOTES: Partial<Record<LegStatus, string>> = {
   unresolved: "Not in the star-hop catalogs",
   "no-route": "No hop route found with this field and star limit",
 };
+/** A below-horizon leg whose stop is above 5° but hidden by the site's own skyline (ObservingParams.horizon). */
+const BEHIND_SKYLINE_NOTE = "Hidden behind the hills at this time";
 
 /** Plan `stops` in order as one chained hop route. `base` supplies site, time, field and difficulty; its targetId/startStarId/waypointIds are ignored. */
 export async function planChain(base: ObservingParams, stops: ChainStop[], opts: PlanChainOptions = {}): Promise<ChainResult> {
@@ -91,7 +93,7 @@ export async function planChain(base: ObservingParams, stops: ChainStop[], opts:
     const known = at.byId.get(stop.id) ?? null;
     const distance = from && known ? angularDistance(from.node.ra, from.node.dec, known.ra, known.dec) : null;
     const report: LegReport = { leg: i + 1, from: from?.node.id ?? null, to: stop.id, status: "no-route", hops: 0, distanceDeg: distance, maxHopFov: null, minPatternScore: null, routeScore: null, usedExpertRoute: false, ms: 0, ...(stop.getThere ? { journeyGetThere: stop.getThere } : {}) };
-    const fail = (r: PlanResult) => { report.status = failureStatus(r); report.note = FAILURE_NOTES[report.status]; };
+    const fail = (r: PlanResult) => { report.status = failureStatus(r); report.note = r.behindTerrain ? BEHIND_SKYLINE_NOTE : FAILURE_NOTES[report.status]; };
     const reached = (node: SkyNode) => {
       const k = hops.length - 1;
       hops[k] = { ...hops[k], instruction: `${hops[k].instruction} Stop ${n} reached: ${stop.label}.` };
@@ -284,7 +286,7 @@ export function legDifficulty(leg: LegReport): { label: string; level: LegDiffic
       const hard = legIsHard(leg);
       return { label: hard ? `${hops} · hard` : hops, level: hard ? "hard" : leg.hops >= 3 ? "moderate" : "easy" };
     }
-    case "below-horizon": return { label: "Below the horizon", level: "unroutable" };
+    case "below-horizon": return { label: leg.note === BEHIND_SKYLINE_NOTE ? "Behind the hills" : "Below the horizon", level: "unroutable" };
     case "unresolved": return { label: "Not in the star-hop catalogs", level: "unroutable" };
     case "anchor-unavailable": return { label: "No start star", level: "unroutable" };
     default: return { label: "No hop route", level: "unroutable" };

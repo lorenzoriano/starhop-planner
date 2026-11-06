@@ -11,6 +11,7 @@ import {
   type ClockSample,
   type ClockSeason,
 } from "@/lib/astronomical-clock";
+import { horizonLookup, type HorizonInput } from "@/lib/horizon/profile";
 const rounded = (n: number) => `${Math.round(n)}°`;
 
 export function ComparisonCharts({
@@ -24,19 +25,24 @@ export function ComparisonCharts({
   locked,
   onUnlock,
   onAdjustTime,
+  horizon,
 }: {
   samples: ClockSample[];
   targets: UnifiedTarget[];
   at: Date;
   timezone: string;
-  values: { alt: number; separation: number }[];
+  /** `blocked`: behind the local skyline (observationAt with a horizon). */
+  values: { alt: number; separation: number; blocked?: boolean }[];
   onCursor: (ms: number | null) => void;
   onTime: (at: Date) => void;
   locked: boolean;
   onUnlock: () => void;
   onAdjustTime: (at: Date) => void;
+  /** The site's local horizon: altitude paths fade where a target is behind the skyline. */
+  horizon?: HorizonInput;
 }) {
   const {ref:plotRef,width}=useSvgWidth(752);
+  const skyline = horizonLookup(horizon);
   const left=44,right=width-16,plotWidth=right-left;
   const [span, setSpan] = useState<"night" | "day">("night");
   const [highlight, setHighlight] = useState<string | null>(null);
@@ -199,10 +205,28 @@ export function ComparisonCharts({
                       />
                     </>
                   )}
+                  {kind === 0 && skyline && targets.map((t, i) => (
+                    <path
+                      key={`${t.id}-behind`}
+                      className="target-behind-skyline"
+                      d={path((s) => s.alt[i])}
+                      fill="none"
+                      stroke={CLOCK_COLORS[i]}
+                      strokeWidth="2"
+                      strokeDasharray="2 4"
+                      opacity={highlight && highlight !== t.id ? ".12" : ".4"}
+                      pointerEvents="none"
+                    />
+                  ))}
                   {targets.map((t, i) => (
                     <path
                       key={t.id}
-                      d={path((s) => (kind === 0 ? s.alt[i] : s.separation[i]))}
+                      // With a local horizon the solid path shows only where the target clears the skyline.
+                      d={kind === 0 && skyline ? visible.reduce((d, s, j) => {
+                        const clear = s.alt[i] >= skyline(s.az[i]), previous = visible[j - 1];
+                        const joined = !!previous && previous.alt[i] >= skyline(previous.az[i]);
+                        return clear || joined ? `${d}${joined ? "L" : "M"}${x(s.ms)},${y(Math.max(-30, s.alt[i]))}` : d;
+                      }, "") : path((s) => (kind === 0 ? s.alt[i] : s.separation[i]))}
                       fill="none"
                       stroke={CLOCK_COLORS[i]}
                       strokeWidth={highlight === t.id ? "4" : "2.8"}
@@ -240,7 +264,7 @@ export function ComparisonCharts({
           <button key={t.id} type="button" style={{ color: CLOCK_COLORS[i] }}
             onPointerEnter={() => setHighlight(t.id)} onPointerLeave={() => setHighlight(null)}
             onFocus={() => setHighlight(t.id)} onBlur={() => setHighlight(null)}>
-            {t.name} · {values[i].alt<0?`${rounded(Math.abs(values[i].alt))} below horizon`:`${rounded(values[i].alt)} high`} ·{" "}
+            {t.name} · {values[i].alt<0?`${rounded(Math.abs(values[i].alt))} below horizon`:`${rounded(values[i].alt)} high${values[i].blocked?" · behind the hills":""}`} ·{" "}
             {rounded(values[i].separation)} from Moon
           </button>
         ))}
@@ -280,13 +304,17 @@ export function SeasonChart({
   night,
   onNight,
   timezone,
+  horizon,
 }: {
   season: ClockSeason;
   targets: UnifiedTarget[];
   night: string;
   onNight: (day: string) => void;
   timezone: string;
+  /** The site's local horizon, when the season was computed with it (wording only). */
+  horizon?: HorizonInput;
 }) {
+  const clearOf = horizonLookup(horizon) ? " and clear of your skyline" : "";
   const {ref:yearRef,width}=useSvgWidth(752);
   const left=44,right=width-16,plotWidth=right-left;
   const [metric, setMetric] = useState<"moonFree" | "available" | "contrast" | "hours">("moonFree");
@@ -318,7 +346,7 @@ export function SeasonChart({
   return (
     <div className="astro-year-chart">
       <div className="astro-chart-heading"><h3>{metric === "moonFree" ? "Moon-free dark hours" : metric === 'contrast' ? 'Diffuse-contrast index' : metric === 'available' ? 'Dark hours above your altitude limit' : 'Hours meeting strict limits'}</h3><select aria-label="Seasonal hours metric" value={metric} onChange={e=>setMetric(e.target.value as typeof metric)}><option value="moonFree">Moon-free dark hours</option><optgroup label="Advanced metrics"><option value="available">Altitude and darkness only</option><option value="hours">Strict Moon-distance cutoff</option><option value="contrast">Diffuse-contrast index</option></optgroup></select></div>
-      <p className="astro-note">{metric === "moonFree" ? "Estimated time in astronomical darkness when the Moon is below the horizon and the target is above your altitude limit. Integrated from half-hour samples; Moon-up time is excluded." : metric === 'contrast' ? 'For faint extended detail: 1 h under a sky twice as bright contributes 0.5 contrast-hours. Uses lunar phase, height and separation continuously. This index is not actual observing time.' : metric === 'available' ? 'Geometric time in astronomical darkness above the chosen altitude. Moonlight does not reduce this total.' : 'Colored solid lines show half-hour samples passing the hard Moon-distance cutoff. Gray dashed lines show altitude-and-darkness hours without that cutoff.'}</p>
+      <p className="astro-note">{metric === "moonFree" ? `Estimated time in astronomical darkness when the Moon is below the horizon and the target is above your altitude limit${clearOf}. Integrated from half-hour samples; Moon-up time is excluded.` : metric === 'contrast' ? 'For faint extended detail: 1 h under a sky twice as bright contributes 0.5 contrast-hours. Uses lunar phase, height and separation continuously. This index is not actual observing time.' : metric === 'available' ? `Geometric time in astronomical darkness above the chosen altitude${clearOf}. Moonlight does not reduce this total.` : 'Colored solid lines show half-hour samples passing the hard Moon-distance cutoff. Gray dashed lines show altitude-and-darkness hours without that cutoff.'}</p>
       <svg
         ref={yearRef}
         viewBox={`0 0 ${width} 215`}

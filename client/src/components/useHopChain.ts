@@ -12,6 +12,7 @@ import type { Journey, KbObject } from "@/lib/journeys/types";
 import { hopPath, navigateHash, parseHopLocation } from "@/lib/navigation";
 import { displayName, resolveObject, sameObject, type ChainResult, type ChainStop, type HopSource, type LegReport, type ObjectCatalog } from "@/lib/object-links";
 import { starPlanningTarget, suggestSequence, type ObservingSession } from "@/lib/session-planner";
+import { activeStoredHorizon } from "@/lib/horizon/prefs";
 import { planChainInWorker } from "@/lib/route-client";
 import { stopAtStep } from "@/lib/hop-chain";
 import type { JourneyOverlay } from "./SkyChart";
@@ -142,7 +143,7 @@ export async function resolveChainSource(src: HopSource, catalog: ObjectCatalog,
     const session = sessions.find((s) => s.id === src.sessionId);
     if (!session) throw new Error("That night is no longer in the Planner.");
     const targets = [...catalog.targets, ...catalog.stars.map(starPlanningTarget)];
-    const order = suggestSequence(session, targets).map((step) => step.id).filter((id) => !id.startsWith("moon:"));
+    const order = suggestSequence(session, targets, undefined, activeStoredHorizon(session.lat, session.lon)).map((step) => step.id).filter((id) => !id.startsWith("moon:"));
     const stops = order.map((id, i) => ({ ...chainStopFor(id, catalog), stop: i + 1 }));
     return { title: "Tonight's plan", noun: "target", stops, total: stops.length };
   }

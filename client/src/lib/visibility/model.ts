@@ -16,6 +16,7 @@ import {
   type Observer,
   type Optics,
   type SkyInputs,
+  type SkylineAt,
   type Support,
   type VisibilityEstimate,
   type VisibilityKind,
@@ -23,6 +24,7 @@ import {
   type VisibilityTarget,
 } from './types';
 import { skyPresetFor } from './conditions';
+import { apparentFromGeometric, compassWord } from '../horizon/profile';
 
 // ───────────────────────────── constants ─────────────────────────────
 
@@ -593,11 +595,42 @@ export function visibilityScore(margin: number, kind: VisibilityKind): number {
   return Math.round(kind === 'star' ? Math.min(s, SINGLE_STAR_SCORE_CAP) : s);
 }
 
+// ───────────────────────────── local skyline ─────────────────────────────
+
+/** " to the southwest" for an azimuth (nearest of eight compass points); empty without one. */
+export function skylineDirection(az?: number): string {
+  if (az === undefined || !Number.isFinite(az)) return '';
+  return ` to the ${compassWord(az)}`;
+}
+/** Skyline height in words: "6°", "1.4°" (one decimal below 2°). */
+export const skylineHeight = (alt: number) => `${alt < 2 ? Math.max(0.1, Math.round(alt * 10) / 10) : Math.round(alt)}°`;
+const skylineOf = (s: number | SkylineAt | undefined): SkylineAt | null =>
+  s === undefined ? null : typeof s === 'number' ? (Number.isFinite(s) ? { alt: s } : null) : Number.isFinite(s.alt) ? s : null;
+/**
+ * True when a target above the flat horizon (alt > 0) is still below the local skyline in its direction.
+ * Below the flat horizon stays "Below the horizon"; with no skyline known this is always false.
+ */
+export function behindSkyline(alt: number, skyline?: number | SkylineAt): boolean {
+  const s = skylineOf(skyline);
+  return !!s && alt > 0 && alt < s.alt;
+}
+/** "Behind the hills to the southwest — the skyline there is 6° high." The threshold is geometric; the height shown
+ *  is where the skyline is seen. */
+export function terrainText(skyline: number | SkylineAt): string {
+  const s = skylineOf(skyline) ?? { alt: 0 };
+  return `Behind the hills${skylineDirection(s.az)} — the skyline there is ${skylineHeight(apparentFromGeometric(s.alt))} high.`;
+}
+
 /**
  * Visibility of `target` through `optics` under `sky`, with the target at altitude `alt` (degrees).
  * Score: see visibilityScore.
+ *
+ * `horizonAlt`: the local skyline in the target's direction (lib/horizon/profile.ts horizonThresholdAt, a GEOMETRIC
+ * threshold), optionally with its azimuth for the wording. A target above the flat horizon but below it is
+ * "Not visible" with a 'terrain' limitation; airmass, extinction and sky brightness still use the true altitude.
+ * Absent: the flat horizon, exactly as before.
  */
-export function estimateVisibility(target: VisibilityTarget, optics: Optics, sky: SkyInputs, alt: number, observer: Observer = DEFAULT_OBSERVER): VisibilityEstimate {
+export function estimateVisibility(target: VisibilityTarget, optics: Optics, sky: SkyInputs, alt: number, observer: Observer = DEFAULT_OBSERVER, horizonAlt?: number | SkylineAt): VisibilityEstimate {
   const kind: VisibilityKind = target.kind;
   if (alt <= 0) {
     const h = evaluate(target, optics, sky, 0, observer);
@@ -605,6 +638,15 @@ export function estimateVisibility(target: VisibilityTarget, optics: Optics, sky
       level: 4, label: VISIBILITY_LABELS[4], margin: -2, score: 0, kind, appearance: 'Below the horizon',
       limitingMag: h.lm, skyAtTarget: h.mu, extinctionMag: h.kX,
       limits: [{ factor: 'altitude', gain: 2, text: 'Below the horizon at this time.' }],
+    };
+  }
+  if (behindSkyline(alt, horizonAlt)) {
+    const h = evaluate(target, optics, sky, alt, observer);
+    const s = skylineOf(horizonAlt)!;
+    return {
+      level: 4, label: VISIBILITY_LABELS[4], margin: -2, score: 0, kind, appearance: `Hidden behind the hills${skylineDirection(s.az)}`,
+      limitingMag: h.lm, skyAtTarget: h.mu, extinctionMag: h.kX,
+      limits: [{ factor: 'terrain', gain: 2, text: terrainText(s) }],
     };
   }
   const now = evaluate(target, optics, sky, alt, observer);

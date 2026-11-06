@@ -605,9 +605,10 @@ export const JourneyRequestSchema = z.object({
   minutesPerStop: z.number().positive().optional(),
   seenObjectIds: z.array(z.string()).optional(),
   timezone: z.string().optional(),
+  horizon: z.object({ kind: z.literal('geometric'), stepDeg: z.number().positive(), alt: z.array(z.number()) }).nullable().optional(),
 });
 
-const rejectReason = z.enum(['altitude', 'twilight', 'moon-separation', 'moon-glow', 'binocular-rating',
+const rejectReason = z.enum(['altitude', 'terrain', 'twilight', 'moon-separation', 'moon-glow', 'binocular-rating',
   'extent', 'direction', 'region', 'not-eligible', 'story', 'geometry']);
 
 export const JourneyStopSchema = z.object({
@@ -637,7 +638,7 @@ export const JourneyStopSchema = z.object({
   lens: ThemeLensSchema.optional(),
 });
 
-const limitingFactor = z.enum(['moon', 'twilight', 'altitude', 'region', 'kb']);
+const limitingFactor = z.enum(['moon', 'twilight', 'altitude', 'terrain', 'region', 'kb']);
 const darkness = z.enum(['day', 'civil', 'nautical', 'astronomical', 'night']);
 const nullableIso = z.string().nullable();
 
@@ -697,7 +698,7 @@ export const JourneyResultSchema = z.object({
   modelVersion: z.string().optional(),
   diagnostics: z.object({
     reasonsRejected: z.record(rejectReason, z.number()),
-    limitingFactors: z.array(z.enum(['moon', 'twilight', 'altitude', 'region', 'kb'])),
+    limitingFactors: z.array(z.enum(['moon', 'twilight', 'altitude', 'terrain', 'region', 'kb'])),
     message: z.string(),
     relaxed: z.array(z.string()).optional(),
     candidates: z.number().optional(),
