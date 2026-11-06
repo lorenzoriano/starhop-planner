@@ -3,6 +3,7 @@ import { CalendarDays, LocateFixed, MapPin } from 'lucide-react';
 import { formatInTimeZone } from 'date-fns-tz';
 import tzLookup from 'tz-lookup';
 import { resolveLocalMoment } from '@/lib/session';
+import { locateDevice } from '@/lib/geolocation';
 import type { SavedLocation } from '@/lib/saved-locations';
 import { SavedLocations } from './SavedLocations';
 import { CoordinatePairInput } from './CoordinatePairInput';
@@ -23,7 +24,7 @@ export function ObservingContextProvider({ children, date, timezone, lat, lon, l
 }) {
   const [timeEdit, setTimeEdit] = useState<TimeOptions | null>(null), [siteEdit, setSiteEdit] = useState<SiteOptions | null>(null);
   const [day, setDay] = useState(''), [clock, setClock] = useState(''), [month, setMonth] = useState(new Date());
-  const [latitude, setLatitude] = useState(''), [longitude, setLongitude] = useState(''), [name, setName] = useState(''), [error, setError] = useState(''), [locating, setLocating] = useState(false);
+  const [latitude, setLatitude] = useState(''), [longitude, setLongitude] = useState(''), [name, setName] = useState(''), [error, setError] = useState(''), [locating, setLocating] = useState(false), [locateError, setLocateError] = useState('');
   const [brightness, setBrightness] = useState(skyBrightness ?? suggestedSiteSkyBrightness(lat, lon)), [brightnessEdited, setBrightnessEdited] = useState(false);
   const zone = timeEdit?.timezone ?? timezone;
   useEffect(() => { setTimeEdit(null); setSiteEdit(null); }, [navigationKey]);
@@ -41,7 +42,7 @@ export function ObservingContextProvider({ children, date, timezone, lat, lon, l
   const openSite = (options: SiteOptions) => {
     const a = options.lat ?? lat, b = options.lon ?? lon;
     setLatitude(String(a)); setLongitude(String(b)); setName(options.name ?? locationName); setError('');
-    setBrightness(getSiteSkyBrightness(a, b) ?? skyBrightness ?? suggestedSiteSkyBrightness(a, b)); setBrightnessEdited(false); setSiteEdit(options);
+    setBrightness(getSiteSkyBrightness(a, b) ?? skyBrightness ?? suggestedSiteSkyBrightness(a, b)); setBrightnessEdited(false); setLocateError(''); setSiteEdit(options);
   };
   const applyTime = () => {
     const original = timeEdit?.value ?? date;
@@ -67,18 +68,13 @@ export function ObservingContextProvider({ children, date, timezone, lat, lon, l
     setBrightness(getSiteSkyBrightness(site.lat, site.lon) ?? skyBrightness ?? suggestedSiteSkyBrightness(site.lat, site.lon)); setBrightnessEdited(false);
   };
   /** Asks for location permission, then applies the device's position as the observing site. */
-  const useCurrentLocation = () => {
-    if (!navigator.geolocation) { setError('This browser cannot share your location. Enter latitude and longitude instead.'); return; }
-    setLocating(true); setError('');
-    navigator.geolocation.getCurrentPosition(
-      p => {
-        setLocating(false);
-        const here = { lat: Math.round(p.coords.latitude * 10000) / 10000, lon: Math.round(p.coords.longitude * 10000) / 10000, name: 'Current location' };
-        selectSite(here); applySite(here);
-      },
-      e => { setLocating(false); setError(e.code === e.PERMISSION_DENIED ? 'Location permission was denied. Allow it in the browser settings, or enter latitude and longitude.' : 'Could not get your location. Try again, or enter latitude and longitude.'); },
-      { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 },
-    );
+  const useCurrentLocation = async () => {
+    setLocating(true); setLocateError('');
+    const result = await locateDevice();
+    setLocating(false);
+    if (!result.ok) { setLocateError(result.message); return; }
+    const here = { ...result.position, name: 'Current location' };
+    selectSite(here); applySite(here);
   };
   const siteLat = Number(latitude), siteLon = Number(longitude);
   const siteBrightness = Number.isFinite(siteLat) && Number.isFinite(siteLon) ? getSiteSkyBrightness(siteLat, siteLon) : undefined;
@@ -95,6 +91,7 @@ export function ObservingContextProvider({ children, date, timezone, lat, lon, l
       <DialogContent className="context-dialog"><DialogHeader><DialogTitle>Choose observing location</DialogTitle><DialogDescription>Charts and forecasts use this site. Saved locations also work offline.</DialogDescription></DialogHeader>
         <SavedLocations context="Sky" locations={locations} lat={latitude.trim()?Number(latitude):NaN} lon={longitude.trim()?Number(longitude):NaN} name={name} onChange={onLocations} onSelect={selectSite} />
         <button type="button" className="context-apply context-current-location" onClick={useCurrentLocation} disabled={locating}><LocateFixed size={15} aria-hidden="true"/>{locating ? 'Finding your location…' : 'Use my current location'}</button>
+        {locateError && <p role="alert" className="context-locate-error">{locateError}</p>}
         <div className="context-presets">{[{name:'San Francisco',lat:37.77,lon:-122.42},{name:'London',lat:51.5,lon:-.12},{name:'Sydney',lat:-33.87,lon:151.21}].map(site => <button key={site.name} onClick={() => selectSite(site)}>{site.name}</button>)}</div>
         <form onSubmit={e => { e.preventDefault(); applySite(); }}><CoordinatePairInput onParsed={(a,b)=>{setLatitude(String(a));setLongitude(String(b));setName('');setBrightness(getSiteSkyBrightness(a,b) ?? skyBrightness ?? suggestedSiteSkyBrightness(a,b));setBrightnessEdited(false);setError('');}}/><div className="context-fields"><label>Latitude<input aria-label="Choose latitude" type="number" min={-90} max={90} step="any" required value={latitude} onChange={e => { setLatitude(e.target.value); setName(''); }} /></label><label>Longitude<input aria-label="Choose longitude" type="number" min={-180} max={180} step="any" required value={longitude} onChange={e => { setLongitude(e.target.value); setName(''); }} /></label></div><p className="astro-note">{name && `${name} · `}{siteZone.replaceAll('_',' ')}</p>
           <label className="context-brightness">Moonless zenith sky assumption

@@ -11,6 +11,7 @@ import { UpcomingNights } from "@/components/UpcomingNights";
 import { OfflineControls } from "@/components/OfflineControls";
 import { NightVisionFilter } from "@/components/NightVisionFilter";
 import { planRoutesInWorker } from "@/lib/route-client";
+import { locateDevice } from "@/lib/geolocation";
 import { ObservingContextProvider, ContextDateButton, ContextLocationButton } from "@/components/ObservingContext";
 import {
   useState,
@@ -791,31 +792,12 @@ export default function PlannerPage() {
       plannedAt:undefined,
     });
   }
-  function locate() {
-    if (!navigator.geolocation) {
-      toast({
-        title: "Location unavailable",
-        description: "Enter your coordinates in the observing setup.",
-        variant: "destructive",
-      });
-      return;
-    }
+  async function locate() {
     setLocating(true);
-    navigator.geolocation.getCurrentPosition(
-      (p) => {
-        requestSiteChange(Math.round(p.coords.latitude * 10000) / 10000, Math.round(p.coords.longitude * 10000) / 10000, "Current location");
-        setLocating(false);
-      },
-      () => {
-        setLocating(false);
-        toast({
-          title: "Could not get your location",
-          description: "You can enter latitude and longitude manually.",
-          variant: "destructive",
-        });
-      },
-      { timeout: 10000, maximumAge: 300000 },
-    );
+    const result = await locateDevice();
+    setLocating(false);
+    if (result.ok) requestSiteChange(result.position.lat, result.position.lon, "Current location");
+    else toast({ title: "Could not get your location", description: result.message, variant: "destructive" });
   }
   function selectInstrument(selectedMode: Settings["mode"]) {
     const patch = { mode: selectedMode, instrumentSelected: true, fov: selectedMode === "binocular" ? settings.binocularFov : 5, fovHeight: selectedMode === "binocular" ? settings.binocularFov : 5, shape: "circle" as const, limitingMag: settings.limitingMag };
