@@ -540,34 +540,6 @@
      "closestMoonDeg": 43.6
     },
     {
-     "key": "ajF8YmY4MXxBNS1mYW1pbGllc3x8TkdDODY5LE1lbDIwLE0zNHwwMTJ8aHY3dm98MzcuOHwtMTIyLjR8Ni41fDUwfDEwfDB8MTl8MzB8MzB8OHwxfDQwLjEyfDY2LjU2",
-     "templateId": "A5-families",
-     "score": 1.141321,
-     "title": "Perseus, a Family Album",
-     "stops": [
-      [
-       "NGC869",
-       "hook",
-       42.1
-      ],
-      [
-       "Mel20",
-       "build",
-       49.3
-      ],
-      [
-       "M34",
-       "payoff",
-       40
-      ]
-     ],
-     "bestWindow": {
-      "start": "2027-01-22T03:00:00.000Z",
-      "end": "2027-01-22T08:09:00.000Z"
-     },
-     "closestMoonDeg": 61.2
-    },
-    {
      "key": "ajF8YmY4MXxBMTItbW9vbmxpdHx8U1RBUi1BbGRlYmFyYW4sRFMtVGhldGFUYXUsTTQ1fDAxMnxodjd2b3wzNy44fC0xMjIuNHw2LjV8NTB8MTB8MHwxOXwzMHwzMHw4fDF8NzUuNTF8NDEuODc",
      "templateId": "A12-moonlit",
      "score": 2.506318,
@@ -594,6 +566,39 @@
       "end": "2027-01-22T07:39:00.000Z"
      },
      "closestMoonDeg": 49.5
+    },
+    {
+     "key": "ajF8YmY4MXxBMi10aGVybW9tZXRlcnx8SFIxNTc3LFNUQVItQ2FwZWxsYSxIUjEwMTcsU1RBUi1BbGdvbHwxMjM0fGh2N3ZvfDM3Ljh8LTEyMi40fDYuNXw1MHwxMHwwfDE5fDMwfDMwfDh8MXw3NS41MXw0MS44Nw",
+     "templateId": "A2-thermometer",
+     "score": 0.678275,
+     "title": "Perseus' Hidden Thermometer",
+     "stops": [
+      [
+       "HR1577",
+       "hook",
+       65.8
+      ],
+      [
+       "STAR-Capella",
+       "build",
+       68.9
+      ],
+      [
+       "HR1017",
+       "build",
+       48.6
+      ],
+      [
+       "STAR-Algol",
+       "payoff",
+       42.6
+      ]
+     ],
+     "bestWindow": {
+      "start": "2027-01-22T03:00:00.000Z",
+      "end": "2027-01-22T08:32:00.000Z"
+     },
+     "closestMoonDeg": 41.7
     }
    ],
    "diagnostics": {
@@ -604,8 +609,8 @@
     "relaxed": [
      "length 3–6 stops"
     ],
-    "candidates": 63,
-    "validated": 19
+    "candidates": 52,
+    "validated": 17
    },
    "conditions": {
     "instant": "2027-01-22T07:00:00.000Z",

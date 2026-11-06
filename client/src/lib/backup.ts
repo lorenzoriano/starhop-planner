@@ -50,7 +50,21 @@ export function createBackup(data: BackupData, now = new Date(), { compact = fal
     exportedAt: now.toISOString(),
     data,
   });
-  return compact ? JSON.stringify(parsed) : JSON.stringify(parsed, null, 2);
+  return compact ? JSON.stringify(parsed, compactSettings(parsed.data.settings)) : JSON.stringify(parsed, null, 2);
+}
+/**
+ * Links stay short (QR codes): leave out settings that import back to the same value from their schema defaults
+ * (haze "auto", age "30-49", no manual elevation, a support that binocularStabilized already implies).
+ */
+function compactSettings(settings: Settings) {
+  const derivable = settings.binocularSupport === (settings.binocularStabilized ? "stabilized" : "handheld");
+  const omit = new Set<string>([
+    ...(settings.transparencyMode === "auto" ? ["transparencyMode"] : []),
+    ...(settings.observerAge === "30-49" ? ["observerAge"] : []),
+    ...(settings.siteElevation === null ? ["siteElevation"] : []),
+    ...(derivable ? ["binocularSupport"] : []),
+  ]);
+  return function (this: unknown, key: string, value: unknown) { return this === settings && omit.has(key) ? undefined : value; };
 }
 
 export function parseBackupText(text: string): BackupPreview {

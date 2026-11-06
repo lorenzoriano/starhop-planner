@@ -5,6 +5,7 @@ import {
   type ObservingMode,
 } from "./astronomy";
 import { binocularAssessment, type BinocularProfile, type FitRating } from "./binocular-assessment";
+import type { Observer, SkyInputs } from "./visibility/types";
 import { moonIllumination, moonState, type MoonState } from "./moon";
 import {
   MIN_ALT, TWILIGHT, darkEnough, isStellarCategory, minAltitude, moonCategoryOfCategory, moonVerdict, plannerMoonWeight,
@@ -257,6 +258,10 @@ export interface RankTonightOptions {
   moon?: MoonState;
   /** Default "possible" (Tonight lists everything that can be seen; "comfortable" = journey standard). */
   rule?: VisibilityRule;
+  /** Full conditions at `date` (useVisibilityConditions().at(date)): haze, elevation, Moon and Sun for the binocular
+   *  visibility model. Without it the model uses `skyBrightness`, `moon` and an average night's haze at sea level. */
+  sky?: SkyInputs;
+  observer?: Observer;
 }
 /** Tonight's Best penalties on top of rankTargets' score (score points; rankTargets' altitude term is 0.65/°). */
 export const TONIGHT_PENALTY = {
@@ -291,7 +296,7 @@ export function rankTonight(
       const verdict = moonVerdict({ alt, ra: target.ra, dec: target.dec, category: moonCategoryOfCategory(target.category) }, moon, opts.skyBrightness);
       const dark = darkEnough(moon.sunAlt, { stellar: isStellarCategory(target.category), mag: target.mag }, rule);
       const rating = mode === "binocular" && opts.profile && alt > 0
-        ? binocularAssessment(target, opts.profile, { alt, moon, skyBrightness: opts.skyBrightness }).rating
+        ? binocularAssessment(target, opts.profile, opts.sky ? { alt, sky: opts.sky, observer: opts.observer } : { alt, moon, skyBrightness: opts.skyBrightness, observer: opts.observer }).rating
         : null;
       const score = v.score
         - verdict.glow * plannerMoonWeight(target.category, target.mag)

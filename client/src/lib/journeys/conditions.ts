@@ -353,9 +353,11 @@ export function viewGradeRating(o: KbObject, s: EngineSettings): 0 | 1 | 2 | 3 |
 export const CURATED_GRADE_MIN_ALT = 30;
 
 /**
- * Conservative binocular rating for one stop interval: `binocularAssessment` at the interval's lowest altitude
- * (rounded down) with the Moon state of its brightest-glow sample, combined with the curated view grade (the
- * grade alone for a curated object on a moonless night, from CURATED_GRADE_MIN_ALT up).
+ * Conservative binocular rating for one stop interval: `binocularAssessment` (the physical visibility model,
+ * lib/visibility/model.ts) at the interval's lowest altitude (rounded down) with the Moon and Sun of its
+ * brightest-glow sample, combined with the curated view grade (the grade alone for a curated object on a moonless
+ * night, from CURATED_GRADE_MIN_ALT up). The request carries no haze or elevation, so the model assumes an average
+ * night at sea level; `stabilized` selects image-stabilized vs hand-held steadiness.
  */
 export function makeRater(s: EngineSettings) {
   const profile = binocularProfileOf(s);
@@ -374,10 +376,10 @@ export function makeRater(s: EngineSettings) {
       let t = targets.get(o.id);
       if (!t) { t = toBinocularTarget(o); targets.set(o.id, t); }
       const r = binocularAssessment(t, profile, { alt: altKey, moon, skyBrightness: s.sky }).rating;
-      // A curator's grade for this sky class (doc 03 §3.3) wins over the mean-surface-brightness model when the Moon
-      // is down and the object stands at least CURATED_GRADE_MIN_ALT high: the model spreads a bright core over the
-      // whole extent and rated the Orion, Lagoon and Carina nebulae invisible from a suburban sky (round 3: A1 could
-      // never open at its nursery). With the Moon up, or low down, the more cautious of the two still holds.
+      // A curator's grade for this sky class (doc 03 §3.3) wins over the model when the Moon is down and the object
+      // stands at least CURATED_GRADE_MIN_ALT high: observer grades capture concentrated cores the catalogue extent
+      // hides (round 3: a whole-extent average rated the Orion, Lagoon and Carina nebulae invisible from a suburban
+      // sky, so A1 could never open at its nursery). With the Moon up, or low down, the more cautious of the two holds.
       const trusted = grade !== null && o.view?.basis === 'curator' && moonKey < 0 && altKey >= CURATED_GRADE_MIN_ALT;
       rating = Math.max(trusted ? grade : Math.max(r, grade ?? 0), fadingFloor(o)) as 0 | 1 | 2 | 3;
     }

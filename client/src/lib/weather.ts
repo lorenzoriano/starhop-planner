@@ -13,7 +13,9 @@ export const weatherHourSchema=z.object({
   wind:z.number().nonnegative().nullable(),gust:z.number().nonnegative().nullable(),visibility:z.number().nonnegative().nullable(),
 });
 export type WeatherHour=z.infer<typeof weatherHourSchema>;
-export const weatherForecastSchema=z.object({version:z.literal(1),key:z.string(),lat:z.number().min(-90).max(90),lon:z.number().min(-180).max(180),fetchedAt:z.number().finite(),hours:z.array(weatherHourSchema).min(1).max(400)});
+export const weatherForecastSchema=z.object({version:z.literal(1),key:z.string(),lat:z.number().min(-90).max(90),lon:z.number().min(-180).max(180),fetchedAt:z.number().finite(),hours:z.array(weatherHourSchema).min(1).max(400),
+  /** Site elevation (m) the provider used (Open-Meteo 90 m DEM). Optional: forecasts cached before it was kept have none. */
+  elevation:z.number().finite().min(-500).max(9000).nullable().optional()});
 export type WeatherForecast=z.infer<typeof weatherForecastSchema>;
 export function weatherLocation(lat:number,lon:number) {
   if(!Number.isFinite(lat)||!Number.isFinite(lon)||Math.abs(lat)>90||Math.abs(lon)>180)throw Error('Choose valid coordinates for a forecast.');
@@ -27,7 +29,7 @@ export function weatherUrl(lat:number,lon:number) {
 }
 /** Absolute UTC timestamps avoid browser/time-zone and DST ambiguities. Null never means clear. */
 export function parseWeather(raw:unknown,lat:number,lon:number,now=Date.now()):WeatherForecast {
-  const data=z.object({hourly:z.object({time:z.array(z.number().finite()).min(1).max(400)}).passthrough(),hourly_units:z.record(z.string())}).parse(raw);
+  const data=z.object({hourly:z.object({time:z.array(z.number().finite()).min(1).max(400)}).passthrough(),hourly_units:z.record(z.string()),elevation:z.unknown()}).parse(raw);
   const units:Record<keyof typeof WEATHER_VARIABLES,string>={cloud:'%',low:'%',mid:'%',high:'%',temp:'°C',dew:'°C',humidity:'%',rainChance:'%',rain:'mm',wind:'km/h',gust:'km/h',visibility:'m'};
   const series=Object.entries(WEATHER_VARIABLES).map(([key,name])=>{
     if(data.hourly_units[name]!==units[key as keyof typeof units])throw Error('Unsupported weather units.');
@@ -46,7 +48,8 @@ export function parseWeather(raw:unknown,lat:number,lon:number,now=Date.now()):W
     })),
   }));
   if(hours.some((h,i)=>i>0&&h.time-hours[i-1].time!==WEATHER_HOUR))throw Error('Irregular weather timeline.');
-  return weatherForecastSchema.parse({version:1,...site,fetchedAt:now,hours});
+  const elevation=typeof data.elevation==='number'&&Number.isFinite(data.elevation)&&data.elevation>=-500&&data.elevation<=9000?data.elevation:null;
+  return weatherForecastSchema.parse({version:1,...site,fetchedAt:now,hours,elevation});
 }
 export function forecastAge(forecast:WeatherForecast,now=Date.now()) {
   if(now>=forecast.hours.at(-1)!.time+WEATHER_HOUR)return 'expired';

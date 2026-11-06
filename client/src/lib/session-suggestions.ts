@@ -1,4 +1,5 @@
 import { binocularAssessment, type BinocularProfile } from './binocular-assessment';
+import type { Observer, SkyInputs } from './visibility/types';
 import { eqToHorizontal, type UnifiedTarget } from './astronomy';
 import { moonState } from './moon';
 import type { ObservingSession } from './session-planner';
@@ -8,12 +9,19 @@ export type SessionSuggestion = {
   visualScale:number; brightnessMargin:number; glow:number;
 };
 
-/** Rank the visual reward for normal binoculars; altitude breaks otherwise equal fits. */
-export function sessionBinocularSuggestions(session:ObservingSession, targets:UnifiedTarget[], profile:BinocularProfile, skyBrightness=19.0, moonAt=(at:Date)=>moonState(session.lat,session.lon,at)):SessionSuggestion[] {
+/** Full conditions for the session site, when the caller has them (the Planner's useVisibilityConditions). */
+export interface SuggestionConditions { skyAt?:(at:Date)=>SkyInputs; observer?:Observer }
+/**
+ * Rank the visual reward for normal binoculars. Everything comfortably visible tonight (Excellent, Good or Fair:
+ * fit ≤ 1) counts as one tier, ordered by the curated level and how much of the field it fills; altitude breaks
+ * otherwise equal picks. Without `conditions.skyAt` the sky is `skyBrightness` with the sampled Moon.
+ */
+export function sessionBinocularSuggestions(session:ObservingSession, targets:UnifiedTarget[], profile:BinocularProfile, skyBrightness=19.0, moonAt=(at:Date)=>moonState(session.lat,session.lon,at), conditions:SuggestionConditions={}):SessionSuggestion[] {
   const start=+new Date(session.startAt),end=start+session.durationMinutes*60_000;
   const samples:Array<{at:Date;moon:ReturnType<typeof moonState>}>=[];
   for(let ms=start;ms<=end;ms+=15*60_000){const at=new Date(ms);samples.push({at,moon:moonAt(at)});}
-  const compare=(a:SessionSuggestion,b:SessionSuggestion)=>a.fit-b.fit||Number(b.dark)-Number(a.dark)||a.curated-b.curated||b.visualScale-a.visualScale||b.brightnessMargin-a.brightnessMargin||a.glow-b.glow||b.alt-a.alt||a.target.name.localeCompare(b.target.name);
+  const tier=(s:SessionSuggestion)=>Math.max(1,s.fit);
+  const compare=(a:SessionSuggestion,b:SessionSuggestion)=>tier(a)-tier(b)||Number(b.dark)-Number(a.dark)||a.curated-b.curated||b.visualScale-a.visualScale||b.brightnessMargin-a.brightnessMargin||a.glow-b.glow||b.alt-a.alt||a.target.name.localeCompare(b.target.name);
   const picks:SessionSuggestion[]=[];
   for(const target of targets){
     if(target.id.startsWith('star:')||target.mag>9||session.items.some(item=>item.id===target.id))continue;
@@ -25,7 +33,7 @@ export function sessionBinocularSuggestions(session:ObservingSession, targets:Un
       // deep-sky target in daylight just because its optical score looks good.
       const brightStellar=/star|asterism/i.test(target.category)&&target.mag<=5;
       if(moon.sunAlt>(brightStellar?-6:-18))continue;
-      const assessment=binocularAssessment(target,profile,{alt,moon,skyBrightness});
+      const assessment=binocularAssessment(target,profile,conditions.skyAt?{alt,sky:conditions.skyAt(at),observer:conditions.observer}:{alt,moon,skyBrightness,observer:conditions.observer});
       const level=assessment.entry?.level,curated=level==='easy'?0:level==='dark'||level==='steady'?1:level==='challenge'?2:3;
       const dimensions=assessment.dimensions;
       // Patterns large enough to inspect at this power, within one field, are

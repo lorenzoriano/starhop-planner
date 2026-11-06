@@ -11,6 +11,7 @@ import { angularSizeLabel, meanSurfaceBrightnessLabel, targetDesignation } from 
 import { catalogMatches } from '@/lib/catalog-filter';
 import { visibilityWindow, type VisibilityMode } from '@/lib/target-visibility';
 import { createMoonSampler } from '@/lib/observing-profile';
+import type { Observer, SkyInputs } from '@/lib/visibility/types';
 import { TargetPhoto, TargetPhotoCredit } from './TargetPhoto';
 import { BinocularImages } from './BinocularImages';
 import { MoonlightCard } from './MoonObservatory';
@@ -39,7 +40,7 @@ export function openOwnChart(id:string,update:(patch:Partial<Settings>)=>void) {
   navigateHash('/image');
 }
 
-export function CatalogExplorer({targets,settings,update,date,timezone,locationName,saveDestination,savedIds,onSave,onSky,onMoon,onCompare,onEditSetup,actions}:{onEditSetup:()=>void;targets:UnifiedTarget[];settings:Settings;update:(patch:Partial<Settings>)=>void;date:Date;timezone:string;locationName:string;saveDestination:string;savedIds:Set<string>;onSave:(id:string,at:Date)=>void;onSky:(id:string,at:Date)=>void;onMoon:(id:string,at:Date)=>void;onCompare:(id:string,at:Date)=>void;/** Shared cross-tab object verbs (lib/object-links). */actions?:ObjectActions}) {
+export function CatalogExplorer({targets,settings,update,date,timezone,locationName,saveDestination,savedIds,onSave,onSky,onMoon,onCompare,onEditSetup,actions,skyAt,observer}:{onEditSetup:()=>void;/** Tonight's conditions at the site (useVisibilityConditions().at); defaults to the sky setting + Moon. */skyAt?:(date:Date)=>SkyInputs;observer?:Observer;targets:UnifiedTarget[];settings:Settings;update:(patch:Partial<Settings>)=>void;date:Date;timezone:string;locationName:string;saveDestination:string;savedIds:Set<string>;onSave:(id:string,at:Date)=>void;onSky:(id:string,at:Date)=>void;onMoon:(id:string,at:Date)=>void;onCompare:(id:string,at:Date)=>void;/** Shared cross-tab object verbs (lib/object-links). */actions?:ObjectActions}) {
   const [showVisibility,setShowVisibility]=useState(()=>globalThis.innerWidth>700);
   useEffect(()=>{const media=globalThis.matchMedia('(min-width:701px)');const resize=()=>setShowVisibility(media.matches);media.addEventListener('change',resize);return()=>media.removeEventListener('change',resize);},[]);
   const [query,setQuery]=useState(''),[type,setType]=useState('all'),[mode,setMode]=useState<VisibilityMode>('time');
@@ -65,10 +66,10 @@ export function CatalogExplorer({targets,settings,update,date,timezone,locationN
     if(!valid)return [];
     const moonAt=createMoonSampler(settings.lat,settings.lon);
     return targets.filter(t=>(type==='all'||t.category===type||type==='galaxies'&&/galaxy/i.test(t.category)||type==='nebulae'&&/nebula|remnant/i.test(t.category)||type==='clusters'&&/cluster/i.test(t.category))&&(!queryIds||queryIds.has(t.id))).flatMap(target=>{
-      const row=catalogMatches(target,settings.lat,settings.lon,window,{minAltitude:Number(altitude),minMoonDistance:Number(separation),transitHours:transit==='any'?null:Number(transit),maxRating:Number(fit)},profile,settings.skyBrightness,moonAt);
+      const row=catalogMatches(target,settings.lat,settings.lon,window,{minAltitude:Number(altitude),minMoonDistance:Number(separation),transitHours:transit==='any'?null:Number(transit),maxRating:Number(fit)},profile,settings.skyBrightness,moonAt,{skyAt,observer});
       return row?[row]:[];
     }).sort((a,b)=>catalogSearchScore(a.target,query)-catalogSearchScore(b.target,query)||(sort==='name'?a.target.name.localeCompare(b.target.name):sort==='altitude'?b.alt-a.alt:sort==='moon'?a.assessment.rating-b.assessment.rating||b.separation-a.separation:sort==='time'?a.at.getTime()-b.at.getTime():a.assessment.rating-b.assessment.rating||b.score-a.score));
-  },[targets,type,query,queryIds,window,altitude,separation,transit,fit,profile,settings.lat,settings.lon,settings.skyBrightness,sort,valid]);
+  },[targets,type,query,queryIds,window,altitude,separation,transit,fit,profile,settings.lat,settings.lon,settings.skyBrightness,sort,valid,skyAt,observer]);
   const searchStatus=catalogSearchDiagnostics(query,targets,rows.map(row=>row.target));
   const focusRow=focused?rows.find(row=>row.target.id===focused.id):undefined;
   const chosenMoment=resolveLocalMoment(day,time,timezone)??date;
@@ -108,7 +109,7 @@ export function CatalogExplorer({targets,settings,update,date,timezone,locationN
         <p className="object-location">{getConstellationName(focused.con)} · mag {focused.mag.toFixed(1)}{angularSizeLabel(focused.size)?` · ${angularSizeLabel(focused.size)} across`:''}</p>
         <p className="catalog-match-time">{formatInTimeZone(focusAt,timezone,'MMM d, yyyy · HH:mm')} local · {Math.round(focusState.alt)}° high{focusRow?` · ${Math.round(focusRow.separation)}° from Moon`:''}</p>
         {!focusRow&&<p className="catalog-focus-hidden" role="status">Hidden by the current filters. <button type="button" className="text-action" onClick={reset}>Show the whole catalog</button></p>}
-        <BinocularAssessment target={focused} profile={profile} alt={focusState.alt} moon={focusState.moon} skyBrightness={settings.skyBrightness}/>
+        <BinocularAssessment target={focused} profile={profile} alt={focusState.alt} moon={focusState.moon} skyBrightness={settings.skyBrightness} sky={skyAt?.(focusAt)} observer={observer} at={focusAt} lat={settings.lat} lon={settings.lon} timezone={timezone} onEditSetup={onEditSetup} compact/>
         <ObjectActionRow variant="full" objectId={focused.id} name={displayName(focused)} actions={verbs} at={focusAt} omit={["catalog"]} saved={savedIds.has(focused.id)} onToggleSave={()=>onSave(focused.id,focusAt)}>
           {actions&&<Suspense fallback={null}><ObjectJourneyLinks objectId={focused.id} actions={actions} sky={sky}/></Suspense>}
         </ObjectActionRow>

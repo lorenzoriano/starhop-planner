@@ -1,6 +1,7 @@
 import {UpcomingNights} from "./UpcomingNights";
 import {useSvgWidth} from "@/hooks/use-svg-width";
 import {sessionBinocularSuggestions} from "@/lib/session-suggestions";
+import type {Observer,SkyInputs} from "@/lib/visibility/types";
 import {CoordinatePairInput} from "./CoordinatePairInput";
 import "./SessionPlanner.css";
 import { ObservingContextScope } from "./ObservingContext";
@@ -35,6 +36,8 @@ interface Props {
   sessions:ObservingSession[]; active:ObservingSession|undefined; targets:UnifiedTarget[];
   date:Date; lat:number; lon:number; timezone:string; items:NightItem[]; skyBrightness:number; live:boolean;
   profile?:BinocularProfile; selectedTarget?:UnifiedTarget;
+  /** Tonight's conditions at the Planner's site (useVisibilityConditions().at); used for suggestions at that site only. */
+  skyAt?:(date:Date)=>SkyInputs; observer?:Observer;
   actions:ReactNode;
   /** Shared cross-tab object verbs (lib/object-links); named objectActions because `actions` is the export slot. */
   objectActions?:ObjectActions;
@@ -119,7 +122,7 @@ function SessionTimeline({ session, items, steps, targets, zone, darkSegments, m
     <div className="planner-timeline-legend"><span className="planner-legend-dark">Astronomical darkness</span><span className="planner-legend-moon">Moon above horizon</span><span className="planner-legend-slot">Scheduled slot</span>{orderedItems.map((item,index)=><span className="planner-legend-target" key={item.id}><i style={{background:["#53e352","#ff59ce","#ff792f","#459bff","#ff4b67","#00c9b7","#ac77ff","#ead328"][index%8]}}/>{index+1}. {(targetsById.has(item.id)?displayName(targetsById.get(item.id)!):undefined)??lunarFeatures.find(feature=>`moon:${feature.id}`===item.id)?.name??item.id}</span>)}</div>
   </section>;
 }
-export function SessionPlanner({savedLocations,onLocationsChange,sessions,active,targets,date,lat,lon,timezone,items,skyBrightness,profile=KITE_14X50,selectedTarget,live,actions,objectActions,onCompare,onCreate,onUpdate,onSelect,onPreview,onVisit,onAdd,onObserved,onNotes}:Props) {
+export function SessionPlanner({skyAt,observer,savedLocations,onLocationsChange,sessions,active,targets,date,lat,lon,timezone,items,skyBrightness,profile=KITE_14X50,selectedTarget,live,actions,objectActions,onCompare,onCreate,onUpdate,onSelect,onPreview,onVisit,onAdd,onObserved,onNotes}:Props) {
   const defaultNight = () => {
     const at=live?planningShortcut("tonight",lat,lon).date:date;
     return makeSession(derivedNightName(observingNightDate(at,timezone),timezone),at,lat,lon,[],matchingLocation(savedLocations,lat,lon)?.name??"");
@@ -164,7 +167,8 @@ export function SessionPlanner({savedLocations,onLocationsChange,sessions,active
   const savedIds=new Set(visibleItems.map(item=>item.id));
   const dirty=!isNew&&active&&JSON.stringify(draft)!==JSON.stringify(sessionDraft(active));
   const selectNight=(id:string)=>{const selected=sessions.find(session=>session.id===id);if(!selected)return;onSelect(id);setDraft(sessionDraft(selected));setMonth(new Date(`${formatInTimeZone(new Date(selected.startAt),sessionTimezone(selected),"yyyy-MM-dd")}T12:00:00`));setIsNew(false);setQuery("");setError("");setStatus("");if(siteDetails.current)siteDetails.current.open=false;};
-  const suggestions=useMemo(()=>preview&&visibleItems.length===0?sessionBinocularSuggestions(preview,targets,profile,skyBrightness,forecastMoon):[],[targets,preview?.startAt,preview?.durationMinutes,preview?.lat,preview?.lon,visibleItems,skyBrightness,profile,forecastMoon]);
+  const sameSite=!!preview&&Math.abs(preview.lat-lat)<.01&&Math.abs(preview.lon-lon)<.01;
+  const suggestions=useMemo(()=>preview&&visibleItems.length===0?sessionBinocularSuggestions(preview,targets,profile,skyBrightness,forecastMoon,{skyAt:sameSite?skyAt:undefined,observer}):[],[targets,preview?.startAt,preview?.durationMinutes,preview?.lat,preview?.lon,visibleItems,skyBrightness,profile,forecastMoon,sameSite,skyAt,observer]);
   const [allSuggestions,setAllSuggestions]=useState(false);
   const [journeyOpen,setJourneyOpen]=useState(false);
   const targetIds=useMemo(()=>targets.map(target=>target.id),[targets]);

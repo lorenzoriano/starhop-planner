@@ -1,0 +1,1053 @@
+{
+ "description": "Representative V mag of the ~3rd-5th brightest member stars (brightestStarMag) and brightest member (brightest1) per cluster, for binocular resolvability.",
+ "sources": {
+  "harris2010": "Harris W.E. 1996 (2010 ed.), Catalog of Parameters for Milky Way Globular Clusters; brightestStarMag = V_HB - 3.0 (V_HB - 2.4 for [Fe/H] > -0.9)",
+  "hunt2023": "Hunt & Reffert 2023, A&A 673, A114 (Gaia DR3 members, inrt & Prob>=0.5); G->V via Riello+2021 BP-RP polynomial; brightestStarMag = mean V of 3rd-5th brightest members, brightest1 = brightest member (Gaia-saturated bright stars added by hand where noted)",
+  "cantat2020": "Cantat-Gaudin et al. 2020, A&A 640, A1 (Gaia DR2 members), same method as hunt2023",
+  "lynga1987": "Lynga 1987 Open Cluster Data 5th ed. (VizieR VII/92A), maxBr.50 brightest-star column; memberCount = Members.320 column",
+  "manual-members": "Known V magnitudes of named bright members (SIMBAD/Hipparcos), where Gaia member lists omit saturated stars",
+  "pattern-stars": "Approximate V of the 3rd-5th brightest stars of an asterism pattern",
+  "estimate": "Rough estimate from general literature descriptions",
+  "skycat-audit": "Audit 2026-11-06: Gaia (Hunt & Reffert 2023) member lists drop bright saturated/supergiant members; brightest-member magnitudes replaced with Sky Catalogue 2000.0 / WEBDA / SIMBAD known bright members (approximate, ±0.3 mag)."
+ },
+ "clusters": {
+  "M2": {
+   "brightestStarMag": 13.1,
+   "vHB": 16.05,
+   "source": "harris2010"
+  },
+  "M3": {
+   "brightestStarMag": 12.6,
+   "vHB": 15.64,
+   "source": "harris2010"
+  },
+  "M4": {
+   "brightestStarMag": 10.5,
+   "vHB": 13.45,
+   "source": "harris2010"
+  },
+  "M5": {
+   "brightestStarMag": 12.1,
+   "vHB": 15.07,
+   "source": "harris2010"
+  },
+  "M6": {
+   "brightestStarMag": 7.4,
+   "brightest1": 6.2,
+   "source": "skycat-audit",
+   "note": "BM Sco 6.2, several 6.9-7.5 B stars (was 8.0 from hunt2023)",
+   "memberCount": 80
+  },
+  "M7": {
+   "brightestStarMag": 6.4,
+   "brightest1": 5.9,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "M9": {
+   "brightestStarMag": 13.2,
+   "vHB": 16.2,
+   "source": "harris2010"
+  },
+  "M10": {
+   "brightestStarMag": 11.7,
+   "vHB": 14.65,
+   "source": "harris2010"
+  },
+  "M11": {
+   "brightestStarMag": 11.1,
+   "brightest1": 8.5,
+   "source": "hunt2023"
+  },
+  "M12": {
+   "brightestStarMag": 11.6,
+   "vHB": 14.6,
+   "source": "harris2010"
+  },
+  "M13": {
+   "brightestStarMag": 11.9,
+   "vHB": 14.9,
+   "source": "harris2010"
+  },
+  "M14": {
+   "brightestStarMag": 14.3,
+   "vHB": 17.3,
+   "source": "harris2010"
+  },
+  "M15": {
+   "brightestStarMag": 12.8,
+   "vHB": 15.83,
+   "source": "harris2010"
+  },
+  "M16": {
+   "brightestStarMag": 9.5,
+   "brightest1": 8.7,
+   "source": "hunt2023"
+  },
+  "M18": {
+   "brightestStarMag": 10.0,
+   "brightest1": 8.1,
+   "source": "hunt2023",
+   "memberCount": 20
+  },
+  "M19": {
+   "brightestStarMag": 13.4,
+   "vHB": 16.44,
+   "source": "harris2010"
+  },
+  "M21": {
+   "brightestStarMag": 9.6,
+   "brightest1": 8.3,
+   "source": "hunt2023",
+   "memberCount": 70
+  },
+  "M22": {
+   "brightestStarMag": 11.2,
+   "vHB": 14.15,
+   "source": "harris2010"
+  },
+  "M23": {
+   "brightestStarMag": 9.5,
+   "brightest1": 9.2,
+   "source": "hunt2023",
+   "memberCount": 150
+  },
+  "M25": {
+   "brightestStarMag": 8.5,
+   "brightest1": 6.9,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "M26": {
+   "brightestStarMag": 11.0,
+   "brightest1": 9.2,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "M28": {
+   "brightestStarMag": 12.6,
+   "vHB": 15.55,
+   "source": "harris2010"
+  },
+  "M29": {
+   "brightestStarMag": 9.3,
+   "brightest1": 8.6,
+   "source": "skycat-audit",
+   "memberCount": 50,
+   "note": "compact group of ~6 stars 8.6-9.5 (was 11.1 from hunt2023)"
+  },
+  "M30": {
+   "brightestStarMag": 12.1,
+   "vHB": 15.1,
+   "source": "harris2010"
+  },
+  "M34": {
+   "brightestStarMag": 8.7,
+   "brightest1": 8.3,
+   "source": "hunt2023",
+   "memberCount": 60
+  },
+  "M35": {
+   "brightestStarMag": 8.6,
+   "brightest1": 7.5,
+   "source": "hunt2023",
+   "memberCount": 200
+  },
+  "M36": {
+   "brightestStarMag": 9.2,
+   "brightest1": 8.9,
+   "source": "hunt2023",
+   "memberCount": 60
+  },
+  "M37": {
+   "brightestStarMag": 10.3,
+   "brightest1": 9.2,
+   "source": "skycat-audit",
+   "memberCount": 150,
+   "note": "brightest giant 9.2, many 10-11 (was 10.6 from hunt2023)"
+  },
+  "M38": {
+   "brightestStarMag": 9.9,
+   "brightest1": 9.5,
+   "source": "hunt2023",
+   "memberCount": 100
+  },
+  "M39": {
+   "brightestStarMag": 7.7,
+   "brightest1": 6.8,
+   "source": "cantat2020",
+   "note": "Cantat-Gaudin 2020 members G 6.8, 7.3, 7.5, 7.7, 8.0",
+   "memberCount": 30
+  },
+  "M41": {
+   "brightestStarMag": 8.0,
+   "brightest1": 6.9,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "M44": {
+   "brightestStarMag": 6.6,
+   "brightest1": 6.3,
+   "source": "hunt2023",
+   "memberCount": 50
+  },
+  "M45": {
+   "brightestStarMag": 3.9,
+   "brightest1": 2.9,
+   "source": "manual-members",
+   "note": "Pleiades: Alcyone 2.87, Atlas 3.62, Electra 3.70, Maia 3.87, Merope 4.18 (Gaia saturates the brightest; known V used)",
+   "memberCount": 100
+  },
+  "M46": {
+   "brightestStarMag": 10.3,
+   "brightest1": 8.7,
+   "source": "hunt2023",
+   "memberCount": 100
+  },
+  "M47": {
+   "brightestStarMag": 7.2,
+   "brightest1": 6.5,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "M48": {
+   "brightestStarMag": 9.2,
+   "brightest1": 8.7,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "M50": {
+   "brightestStarMag": 9.6,
+   "brightest1": 7.8,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "M52": {
+   "brightestStarMag": 9.6,
+   "brightest1": 7.8,
+   "source": "skycat-audit",
+   "memberCount": 100,
+   "note": "brightest 7.8; a few 8.5-9.5 members (was 10.7 from hunt2023)"
+  },
+  "M53": {
+   "brightestStarMag": 13.8,
+   "vHB": 16.81,
+   "source": "harris2010"
+  },
+  "M54": {
+   "brightestStarMag": 15.2,
+   "vHB": 18.16,
+   "source": "harris2010"
+  },
+  "M55": {
+   "brightestStarMag": 11.4,
+   "vHB": 14.4,
+   "source": "harris2010"
+  },
+  "M56": {
+   "brightestStarMag": 13.2,
+   "vHB": 16.18,
+   "source": "harris2010"
+  },
+  "M62": {
+   "brightestStarMag": 13.3,
+   "vHB": 16.25,
+   "source": "harris2010"
+  },
+  "M67": {
+   "brightestStarMag": 9.7,
+   "brightest1": 8.8,
+   "source": "hunt2023",
+   "memberCount": 200
+  },
+  "M68": {
+   "brightestStarMag": 12.7,
+   "vHB": 15.68,
+   "source": "harris2010"
+  },
+  "M69": {
+   "brightestStarMag": 13.6,
+   "vHB": 15.98,
+   "source": "harris2010",
+   "note": "metal-rich ([Fe/H]=-0.64); used V_HB-2.4 (RGB tip fainter in V)"
+  },
+  "M70": {
+   "brightestStarMag": 12.6,
+   "vHB": 15.55,
+   "source": "harris2010"
+  },
+  "M71": {
+   "brightestStarMag": 12.1,
+   "vHB": 14.48,
+   "source": "harris2010",
+   "note": "metal-rich ([Fe/H]=-0.78); used V_HB-2.4 (RGB tip fainter in V)"
+  },
+  "M72": {
+   "brightestStarMag": 13.9,
+   "vHB": 16.9,
+   "source": "harris2010"
+  },
+  "M73": {
+   "brightestStarMag": 11.5,
+   "brightest1": 10.5,
+   "source": "pattern-stars",
+   "note": "4-star asterism, stars V~10.5-12"
+  },
+  "M75": {
+   "brightestStarMag": 14.7,
+   "vHB": 17.7,
+   "source": "harris2010"
+  },
+  "M79": {
+   "brightestStarMag": 13.2,
+   "vHB": 16.15,
+   "source": "harris2010"
+  },
+  "M80": {
+   "brightestStarMag": 13.1,
+   "vHB": 16.1,
+   "source": "harris2010"
+  },
+  "M92": {
+   "brightestStarMag": 12.1,
+   "vHB": 15.1,
+   "source": "harris2010"
+  },
+  "M93": {
+   "brightestStarMag": 9.8,
+   "brightest1": 8.2,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "M103": {
+   "brightestStarMag": 10.0,
+   "brightest1": 7.2,
+   "source": "hunt2023",
+   "memberCount": 25
+  },
+  "M107": {
+   "brightestStarMag": 12.7,
+   "vHB": 15.7,
+   "source": "harris2010"
+  },
+  "AST-Coathanger": {
+   "brightestStarMag": 6.3,
+   "brightest1": 5.2,
+   "source": "pattern-stars",
+   "note": "4 Vul 5.2, 5 Vul 5.6, 7 Vul 6.3, others 6.3-7"
+  },
+  "AST-KemblesCascade": {
+   "brightestStarMag": 7.5,
+   "brightest1": 5.0,
+   "source": "pattern-stars",
+   "note": "HD 23475 ~5.0 at end, chain of ~20 stars 7-9"
+  },
+  "AST-KemblesKite": {
+   "brightestStarMag": 7.5,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "AST-JobsCoffin": {
+   "brightestStarMag": 4.3,
+   "brightest1": 3.6,
+   "source": "pattern-stars",
+   "note": "beta Del 3.6, alpha 3.8, gamma 4.3, delta 4.4"
+  },
+  "AST-EngagementRing": {
+   "brightestStarMag": 8.3,
+   "brightest1": 2.0,
+   "source": "pattern-stars",
+   "note": "Polaris 2.0 with ring of ~7-9 mag stars"
+  },
+  "AST-LittleCassiopeia": {
+   "brightestStarMag": 5.7,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "AST-NorthernFly": {
+   "brightestStarMag": 4.9,
+   "brightest1": 3.6,
+   "source": "pattern-stars",
+   "note": "41 Ari 3.6, 39 Ari 4.5, 35 Ari 4.6, 33 Ari 5.3"
+  },
+  "AST-SinOrion": {
+   "brightestStarMag": 6.5,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "AST-HomePlate": {
+   "brightestStarMag": 6.5,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "AST-LambdaLambda": {
+   "brightestStarMag": 5.4,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "AST-DavisDog": {
+   "brightestStarMag": 6.5,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "AST-SmileyFace": {
+   "brightestStarMag": 7.0,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "AST-QuestionMark": {
+   "brightestStarMag": 7.0,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "AST-HermansCross": {
+   "brightestStarMag": 6.1,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "AST-Hyades": {
+   "brightestStarMag": 3.8,
+   "brightest1": 3.4,
+   "source": "hunt2023",
+   "note": "theta2 Tau 3.4, eps 3.5, gamma 3.65, delta1 3.8, theta1 3.8 (Aldebaran is foreground)"
+  },
+  "AST-FlyingMinnow": {
+   "brightestStarMag": 7.0,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "AST-GolfPutter": {
+   "brightestStarMag": 7.7,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "NGC2169": {
+   "brightestStarMag": 8.5,
+   "brightest1": 7.3,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "AST-Pakan3": {
+   "brightestStarMag": 7.5,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "AST-Lucky7": {
+   "brightestStarMag": 7.5,
+   "source": "pattern-stars",
+   "note": "rough: catalogue total mag + 2.0 (pattern stars not individually verified)"
+  },
+  "NGC869": {
+   "brightestStarMag": 7.2,
+   "brightest1": 6.6,
+   "source": "skycat-audit",
+   "memberCount": 200,
+   "note": "h Per: many B/A supergiants 6.5-8 dropped by Gaia membership (saturation/astrometry) (was 9.0 from hunt2023)"
+  },
+  "NGC884": {
+   "brightestStarMag": 7.5,
+   "brightest1": 6.4,
+   "source": "skycat-audit",
+   "memberCount": 150,
+   "note": "χ Per: bright supergiants (6.1-8, incl. RS Per) missing from Gaia list (was 9.0 from hunt2023)"
+  },
+  "NGC457": {
+   "brightestStarMag": 8.7,
+   "brightest1": 5.0,
+   "source": "skycat-audit",
+   "note": "φ Cas 5.0, HD 7902 7.0, then 8.6+ (was 9.2 from hunt2023)",
+   "memberCount": 80
+  },
+  "NGC752": {
+   "brightestStarMag": 9.0,
+   "brightest1": 8.9,
+   "source": "hunt2023",
+   "memberCount": 60
+  },
+  "NGC7789": {
+   "brightestStarMag": 11.0,
+   "brightest1": 10.7,
+   "source": "hunt2023",
+   "memberCount": 300
+  },
+  "NGC2244": {
+   "brightestStarMag": 8.2,
+   "brightest1": 7.3,
+   "source": "hunt2023",
+   "memberCount": 100
+  },
+  "NGC2264": {
+   "brightestStarMag": 7.7,
+   "brightest1": 4.7,
+   "source": "skycat-audit",
+   "note": "S Mon 4.7 and several 7-8 mag members (was 8.5 from manual-members)",
+   "memberCount": 40
+  },
+  "NGC6231": {
+   "brightestStarMag": 6.2,
+   "brightest1": 5.7,
+   "source": "skycat-audit",
+   "note": "many O/B stars 5.7-6.5 (HD 152248 etc.) (was 6.7 from hunt2023)"
+  },
+  "NGC6530": {
+   "brightestStarMag": 7.5,
+   "brightest1": 5.9,
+   "source": "skycat-audit",
+   "note": "9 Sgr 5.9 and 7-8 mag O/B members (was 8.6 from hunt2023)"
+  },
+  "NGC6633": {
+   "brightestStarMag": 8.3,
+   "brightest1": 7.3,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "IC4665": {
+   "brightestStarMag": 7.8,
+   "brightest1": 7.1,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "NGC6709": {
+   "brightestStarMag": 9.6,
+   "brightest1": 9.0,
+   "source": "hunt2023",
+   "memberCount": 40
+  },
+  "NGC7243": {
+   "brightestStarMag": 9.0,
+   "brightest1": 8.5,
+   "source": "hunt2023",
+   "memberCount": 40
+  },
+  "NGC663": {
+   "brightestStarMag": 9.0,
+   "brightest1": 8.5,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "NGC6885": {
+   "brightestStarMag": 8.2,
+   "brightest1": 5.9,
+   "source": "estimate",
+   "note": "20 Vul 5.9 + 6-9 mag stars; not in Gaia member catalogues; rough",
+   "memberCount": 30
+  },
+  "NGC1502": {
+   "brightestStarMag": 9.5,
+   "brightest1": 6.9,
+   "source": "hunt2023",
+   "memberCount": 45
+  },
+  "NGC1662": {
+   "brightestStarMag": 9.3,
+   "brightest1": 8.4,
+   "source": "hunt2023",
+   "memberCount": 35
+  },
+  "NGC2232": {
+   "brightestStarMag": 7.8,
+   "brightest1": 5.1,
+   "source": "skycat-audit",
+   "note": "10 Mon 5.1 plus 7-8 mag B stars (was 8.3 from hunt2023)",
+   "memberCount": 20
+  },
+  "NGC2281": {
+   "brightestStarMag": 8.9,
+   "brightest1": 7.3,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "NGC6940": {
+   "brightestStarMag": 10.3,
+   "brightest1": 9.1,
+   "source": "hunt2023",
+   "memberCount": 60
+  },
+  "NGC2301": {
+   "brightestStarMag": 9.0,
+   "brightest1": 8.0,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "NGC5139": {
+   "brightestStarMag": 11.5,
+   "vHB": 14.51,
+   "source": "harris2010"
+  },
+  "NGC104": {
+   "brightestStarMag": 11.7,
+   "vHB": 14.06,
+   "source": "harris2010",
+   "note": "metal-rich ([Fe/H]=-0.72); used V_HB-2.4 (RGB tip fainter in V)"
+  },
+  "NGC4755": {
+   "brightestStarMag": 6.9,
+   "brightest1": 5.9,
+   "source": "skycat-audit",
+   "note": "κ Cru 5.9 and several 6-7.5 mag supergiants (was 7.4 from hunt2023)"
+  },
+  "NGC3532": {
+   "brightestStarMag": 7.5,
+   "brightest1": 6.1,
+   "source": "hunt2023",
+   "memberCount": 150
+  },
+  "IC2391": {
+   "brightestStarMag": 5.7,
+   "brightest1": 3.6,
+   "source": "manual-members",
+   "note": "o Vel 3.6 added to Gaia member list (4.9, 5.2, 5.6, 6.5)",
+   "memberCount": 30
+  },
+  "NGC2477": {
+   "brightestStarMag": 10.9,
+   "brightest1": 9.8,
+   "source": "hunt2023",
+   "memberCount": 160
+  },
+  "NGC6397": {
+   "brightestStarMag": 9.9,
+   "vHB": 12.87,
+   "source": "harris2010"
+  },
+  "NGC6752": {
+   "brightestStarMag": 10.7,
+   "vHB": 13.7,
+   "source": "harris2010"
+  },
+  "NGC2362": {
+   "brightestStarMag": 7.8,
+   "brightest1": 4.4,
+   "source": "skycat-audit",
+   "memberCount": 60,
+   "note": "τ CMa (4.4) plus several 7.5-8 mag B stars (was 9.2 from hunt2023)"
+  },
+  "NGC2516": {
+   "brightestStarMag": 6.9,
+   "brightest1": 5.8,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "IC2602": {
+   "brightestStarMag": 5.0,
+   "brightest1": 2.8,
+   "source": "manual-members",
+   "note": "theta Car 2.8, p Car 3.3, then 4.8-5.3 members (Gaia list + bright stars)",
+   "memberCount": 60
+  },
+  "NGC6802": {
+   "brightestStarMag": 14.4,
+   "brightest1": 13.1,
+   "source": "hunt2023",
+   "memberCount": 50
+  },
+  "NGC1528": {
+   "brightestStarMag": 10.2,
+   "brightest1": 9.9,
+   "source": "hunt2023",
+   "memberCount": 40
+  },
+  "NGC1907": {
+   "brightestStarMag": 12.0,
+   "brightest1": 11.3,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "NGC6819": {
+   "brightestStarMag": 11.5,
+   "brightest1": 11.2,
+   "source": "hunt2023"
+  },
+  "NGC2360": {
+   "brightestStarMag": 11.0,
+   "brightest1": 10.3,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "NGC6871": {
+   "brightestStarMag": 7.7,
+   "brightest1": 6.8,
+   "source": "hunt2023",
+   "memberCount": 15
+  },
+  "NGC6910": {
+   "brightestStarMag": 9.5,
+   "brightest1": 7.0,
+   "source": "skycat-audit",
+   "memberCount": 50,
+   "note": "four bright members 7-10 (was 11.1 from hunt2023)"
+  },
+  "NGC2158": {
+   "brightestStarMag": 13.2,
+   "brightest1": 12.6,
+   "source": "hunt2023"
+  },
+  "NGC1981": {
+   "brightestStarMag": 7.3,
+   "brightest1": 6.2,
+   "source": "estimate",
+   "note": "sparse group of ~a dozen 6-10 mag stars; rough",
+   "memberCount": 20
+  },
+  "AST-OrionBelt": {
+   "brightestStarMag": 3.5,
+   "brightest1": 1.7,
+   "source": "pattern-stars",
+   "note": "eps 1.7, zeta 1.8, delta 2.2, sigma 3.8, then Cr 70 members 4.5-5"
+  },
+  "Mel20": {
+   "brightestStarMag": 4.7,
+   "brightest1": 1.8,
+   "source": "manual-members",
+   "note": "alpha Per 1.8, delta 3.0, psi 4.3, 34 Per 4.7, 29 Per 5.2",
+   "memberCount": 50
+  },
+  "Mel111": {
+   "brightestStarMag": 5.1,
+   "brightest1": 4.8,
+   "source": "manual-members",
+   "note": "12/14/16/13/17 Com ~4.8-5.3; gamma Com excluded (non-member)",
+   "memberCount": 80
+  },
+  "IC4756": {
+   "brightestStarMag": 9.0,
+   "brightest1": 8.0,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "NGC129": {
+   "brightestStarMag": 10.5,
+   "brightest1": 8.6,
+   "source": "skycat-audit",
+   "memberCount": 35,
+   "note": "DL Cas 8.6-9.3, then ~10-11 (was 11.5 from hunt2023)"
+  },
+  "Cr463": {
+   "brightestStarMag": 8.8,
+   "brightest1": 8.2,
+   "source": "hunt2023",
+   "memberCount": 40
+  },
+  "Stock2": {
+   "brightestStarMag": 8.2,
+   "brightest1": 7.4,
+   "source": "hunt2023"
+  },
+  "Mark6": {
+   "brightestStarMag": 9.6,
+   "brightest1": 8.8,
+   "source": "lynga1987",
+   "note": "Lynga brightest 8.8; ~6 stars 9-10 mag; rough",
+   "memberCount": 6
+  },
+  "Mel15": {
+   "brightestStarMag": 9.8,
+   "brightest1": 8.1,
+   "source": "hunt2023"
+  },
+  "Tr2": {
+   "brightestStarMag": 8.6,
+   "brightest1": 7.4,
+   "source": "hunt2023",
+   "memberCount": 20
+  },
+  "Tr3": {
+   "brightestStarMag": 9.4,
+   "brightest1": 8.8,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "Stock23": {
+   "brightestStarMag": 9.0,
+   "brightest1": 7.5,
+   "source": "hunt2023"
+  },
+  "NGC1342": {
+   "brightestStarMag": 9.8,
+   "brightest1": 8.9,
+   "source": "hunt2023",
+   "memberCount": 40
+  },
+  "NGC1582": {
+   "brightestStarMag": 10.2,
+   "brightest1": 8.7,
+   "source": "hunt2023",
+   "memberCount": 20
+  },
+  "NGC1647": {
+   "brightestStarMag": 8.8,
+   "brightest1": 7.5,
+   "source": "hunt2023",
+   "memberCount": 200
+  },
+  "NGC1746": {
+   "brightestStarMag": 8.6,
+   "source": "lynga1987",
+   "note": "Lynga brightest ~8 (+0.6); doubtful cluster/asterism; rough",
+   "memberCount": 20
+  },
+  "NGC1807": {
+   "brightestStarMag": 9.0,
+   "source": "lynga1987",
+   "note": "Lynga brightest ~9; rough",
+   "memberCount": 20
+  },
+  "NGC1817": {
+   "brightestStarMag": 11.6,
+   "brightest1": 10.9,
+   "source": "hunt2023",
+   "memberCount": 60
+  },
+  "NGC1893": {
+   "brightestStarMag": 10.8,
+   "brightest1": 10.1,
+   "source": "hunt2023",
+   "memberCount": 60
+  },
+  "NGC2251": {
+   "brightestStarMag": 10.8,
+   "brightest1": 10.4,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "NGC2343": {
+   "brightestStarMag": 10.6,
+   "brightest1": 8.5,
+   "source": "hunt2023",
+   "memberCount": 20
+  },
+  "NGC2527": {
+   "brightestStarMag": 9.5,
+   "brightest1": 9.4,
+   "source": "hunt2023",
+   "memberCount": 40
+  },
+  "NGC2539": {
+   "brightestStarMag": 10.7,
+   "brightest1": 10.5,
+   "source": "hunt2023",
+   "memberCount": 50
+  },
+  "NGC2571": {
+   "brightestStarMag": 11.1,
+   "brightest1": 10.4,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "NGC6520": {
+   "brightestStarMag": 10.0,
+   "brightest1": 8.9,
+   "source": "hunt2023",
+   "memberCount": 60
+  },
+  "NGC6716": {
+   "brightestStarMag": 8.8,
+   "brightest1": 5.0,
+   "source": "hunt2023",
+   "memberCount": 20
+  },
+  "NGC6823": {
+   "brightestStarMag": 11.5,
+   "brightest1": 10.7,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "NGC6934": {
+   "brightestStarMag": 13.9,
+   "vHB": 16.86,
+   "source": "harris2010"
+  },
+  "NGC7063": {
+   "brightestStarMag": 10.2,
+   "brightest1": 8.9,
+   "source": "hunt2023",
+   "memberCount": 12
+  },
+  "NGC7160": {
+   "brightestStarMag": 8.2,
+   "brightest1": 6.7,
+   "source": "skycat-audit",
+   "memberCount": 12,
+   "note": "small group of 6.7-8.5 mag stars (was 9.6 from hunt2023)"
+  },
+  "NGC7209": {
+   "brightestStarMag": 10.2,
+   "brightest1": 9.5,
+   "source": "hunt2023",
+   "memberCount": 25
+  },
+  "NGC7235": {
+   "brightestStarMag": 11.3,
+   "brightest1": 8.8,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "NGC362": {
+   "brightestStarMag": 12.4,
+   "vHB": 15.44,
+   "source": "harris2010"
+  },
+  "NGC1851": {
+   "brightestStarMag": 13.1,
+   "vHB": 16.09,
+   "source": "harris2010"
+  },
+  "NGC2451": {
+   "brightestStarMag": 5.6,
+   "brightest1": 3.6,
+   "source": "cantat2020",
+   "note": "NGC 2451A members (Gaia) plus c Pup 3.6; NGC 2451B is a separate background cluster",
+   "memberCount": 40
+  },
+  "NGC2547": {
+   "brightestStarMag": 8.1,
+   "brightest1": 7.3,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "NGC2546": {
+   "brightestStarMag": 8.8,
+   "brightest1": 8.4,
+   "source": "hunt2023",
+   "memberCount": 40
+  },
+  "IC2395": {
+   "brightestStarMag": 8.8,
+   "brightest1": 8.3,
+   "source": "hunt2023",
+   "memberCount": 40
+  },
+  "NGC2808": {
+   "brightestStarMag": 13.2,
+   "vHB": 16.22,
+   "source": "harris2010"
+  },
+  "NGC2910": {
+   "brightestStarMag": 11.0,
+   "brightest1": 9.7,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "NGC3114": {
+   "brightestStarMag": 7.7,
+   "brightest1": 6.2,
+   "source": "hunt2023"
+  },
+  "NGC3201": {
+   "brightestStarMag": 11.8,
+   "vHB": 14.76,
+   "source": "harris2010"
+  },
+  "NGC3228": {
+   "brightestStarMag": 9.8,
+   "brightest1": 8.2,
+   "source": "hunt2023",
+   "memberCount": 15
+  },
+  "NGC3293": {
+   "brightestStarMag": 7.6,
+   "brightest1": 6.5,
+   "source": "skycat-audit",
+   "note": "Gem Cluster: several 6.5-8 B stars (was 8.3 from hunt2023)"
+  },
+  "NGC3766": {
+   "brightestStarMag": 7.9,
+   "brightest1": 7.1,
+   "source": "hunt2023",
+   "memberCount": 100
+  },
+  "NGC4463": {
+   "brightestStarMag": 10.1,
+   "brightest1": 8.3,
+   "source": "hunt2023",
+   "memberCount": 30
+  },
+  "NGC4609": {
+   "brightestStarMag": 10.5,
+   "brightest1": 9.6,
+   "source": "hunt2023",
+   "memberCount": 40
+  },
+  "NGC5316": {
+   "brightestStarMag": 9.9,
+   "brightest1": 9.4,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "NGC5460": {
+   "brightestStarMag": 9.2,
+   "brightest1": 8.0,
+   "source": "hunt2023",
+   "memberCount": 40
+  },
+  "NGC5617": {
+   "brightestStarMag": 11.1,
+   "brightest1": 10.3,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "NGC5662": {
+   "brightestStarMag": 8.1,
+   "brightest1": 7.0,
+   "source": "hunt2023",
+   "memberCount": 70
+  },
+  "NGC5822": {
+   "brightestStarMag": 9.8,
+   "brightest1": 9.5,
+   "source": "hunt2023",
+   "memberCount": 150
+  },
+  "NGC6025": {
+   "brightestStarMag": 9.0,
+   "brightest1": 8.1,
+   "source": "hunt2023",
+   "memberCount": 60
+  },
+  "NGC6067": {
+   "brightestStarMag": 9.0,
+   "brightest1": 8.5,
+   "source": "hunt2023",
+   "memberCount": 100
+  },
+  "NGC6087": {
+   "brightestStarMag": 8.5,
+   "brightest1": 6.5,
+   "source": "hunt2023",
+   "memberCount": 40
+  },
+  "NGC6124": {
+   "brightestStarMag": 8.8,
+   "brightest1": 8.1,
+   "source": "hunt2023",
+   "memberCount": 100
+  },
+  "NGC6134": {
+   "brightestStarMag": 11.6,
+   "brightest1": 11.1,
+   "source": "hunt2023"
+  },
+  "NGC6167": {
+   "brightestStarMag": 10.4,
+   "brightest1": 9.5,
+   "source": "hunt2023"
+  },
+  "NGC6208": {
+   "brightestStarMag": 11.4,
+   "brightest1": 11.0,
+   "source": "hunt2023",
+   "memberCount": 60
+  },
+  "IC4651": {
+   "brightestStarMag": 10.3,
+   "brightest1": 8.9,
+   "source": "hunt2023",
+   "memberCount": 80
+  },
+  "NGC6541": {
+   "brightestStarMag": 12.4,
+   "vHB": 15.35,
+   "source": "harris2010"
+  }
+ }
+}

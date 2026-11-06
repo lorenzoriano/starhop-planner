@@ -125,7 +125,7 @@ export function readShareHash(hash: string): SharePayload {
 /** The settings that describe the instrument (binoculars/telescope profile), sent with a plan. */
 export const INSTRUMENT_KEYS = [
   "mode", "instrumentSelected", "fov", "fovHeight", "shape", "limitingMag", "binocularMagnification", "binocularFov",
-  "binocularAperture", "binocularStabilized", "binocularTransmission", "binocularProfileVersion",
+  "binocularAperture", "binocularStabilized", "binocularSupport", "binocularTransmission", "binocularProfileVersion",
 ] as const satisfies readonly (keyof Settings)[];
 const instrumentOf = (s: Settings) => Object.fromEntries(INSTRUMENT_KEYS.map((key) => [key, s[key]])) as Pick<Settings, (typeof INSTRUMENT_KEYS)[number]>;
 export const sameInstrument = (a: Settings, b: Settings) => INSTRUMENT_KEYS.every((key) => a[key] === b[key]);

@@ -60,6 +60,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalState } from "@/hooks/use-local-state";
+import { useVisibilityConditions } from "@/hooks/use-visibility-conditions";
+import { observerFor } from "@/lib/visibility/conditions";
 import { useOffline } from "@/lib/offline";
 import {
   defaultSettings,
@@ -171,7 +173,7 @@ import { MIN_ALT } from "@/lib/sky-feasibility";
 import { objectSummary, objectSummaryText } from "@/lib/object-info";
 import { chainCheckpoint, hopCountLabel, pickRoute, routeHops, routeOptionLabels, stopAtStep } from "@/lib/hop-chain";
 import { plannerObservedIds, setSharedSkyInputs } from "@/lib/journeys/request-inputs";
-import { binocularAssessment } from "@/lib/binocular-assessment";
+import { binocularAssessment, visibilityLabel } from "@/lib/binocular-assessment";
 import { TargetPhoto, TargetPhotoCredit } from "@/components/TargetPhoto";
 import { emptyPlanner, plannerJourneyKeys, plannerStoreSchema, makeSession, planningShortcut, sessionTimezone, starPlanningTarget, stripStalePlannerJourneyTags, type PlannerStore, type ObservingSession } from "@/lib/session-planner";
 import { lunarFeatures } from "@/lib/moon";
@@ -415,12 +417,18 @@ export default function PlannerPage() {
     return () => { live = false; };
   }, [hopStopRef?.key, hopStopRef?.stop]); // eslint-disable-line react-hooks/exhaustive-deps
   const hopStopAt = hopStopRef && hopStopTime?.key === hopStopRef.key && hopStopTime.stop === hopStopRef.stop ? hopStopTime.at : undefined;
-  const binocularProfile = useMemo(()=>profileFromSettings(settings),[settings.binocularMagnification,settings.binocularAperture,settings.binocularFov,settings.binocularStabilized,settings.binocularTransmission]);
+  const binocularProfile = useMemo(()=>profileFromSettings(settings),[settings.binocularMagnification,settings.binocularAperture,settings.binocularFov,settings.binocularStabilized,settings.binocularSupport,settings.binocularTransmission]);
   const currentMoon = useMemo(()=>moonState(lat,lon,date),[lat,lon,date]);
+  // Tonight's conditions for the binocular visibility model, resolved once for every tab: sky darkness, haze
+  // (forecast or the user's choice), elevation, Moon and Sun at any instant; the observer from the age bracket.
+  const visibilityConditions = useVisibilityConditions(lat, lon, timezone, { skyBrightness: settings.skyBrightness, transparencyMode: settings.transparencyMode, siteElevation: settings.siteElevation });
+  const skyAt = visibilityConditions.at;
+  const skyNow = useMemo(()=>skyAt(date),[skyAt,date]);
+  const observer = useMemo(()=>observerFor(settings.observerAge),[settings.observerAge]);
   // Tonight's Best on the shared sky model (altitude, Moon verdict, twilight, binocular rating); journeys borrow its top 8.
   const ranked = useMemo(
-    () => rankTonight(catalogs.targets, lat, lon, date, mode, { skyBrightness: settings.skyBrightness, profile: binocularProfile, moon: currentMoon }),
-    [catalogs.targets, lat, lon, date, mode, settings.skyBrightness, binocularProfile, currentMoon],
+    () => rankTonight(catalogs.targets, lat, lon, date, mode, { skyBrightness: settings.skyBrightness, profile: binocularProfile, moon: currentMoon, sky: skyNow, observer }),
+    [catalogs.targets, lat, lon, date, mode, settings.skyBrightness, binocularProfile, currentMoon, skyNow, observer],
   );
   const tonightTopIds = useMemo(()=>ranked.slice(0,8).map(t=>t.target.id),[ranked]);
   const plannerObserved = useMemo(()=>plannerObservedIds(plannerStore.sessions),[plannerStore.sessions]);
@@ -1085,7 +1093,7 @@ export default function PlannerPage() {
           : "Offline · not prepared";
 
   return (
-    <ObservingContextProvider navigationKey={location} savedDates={plannerStore.sessions.filter(s=>!s.archived).map(s=>clockNightDate(new Date(s.startAt),sessionTimezone(s)))} skyBrightness={settings.skyBrightness} onSkyBrightness={value=>update({skyBrightness:value})} date={date} timezone={timezone} lat={lat} lon={lon} locationName={locationLabel} locations={savedLocations} onLocations={setSavedLocations} onTime={at=>previewMoment(at,lat,lon,false)} onLocation={(a,b)=>requestSiteChange(a,b)}>
+    <ObservingContextProvider navigationKey={location} savedDates={plannerStore.sessions.filter(s=>!s.archived).map(s=>clockNightDate(new Date(s.startAt),sessionTimezone(s)))} skyBrightness={settings.skyBrightness} onSkyBrightness={value=>update({skyBrightness:value})} conditions={{transparencyMode:settings.transparencyMode,siteElevation:settings.siteElevation,onChange:update}} date={date} timezone={timezone} lat={lat} lon={lon} locationName={locationLabel} locations={savedLocations} onLocations={setSavedLocations} onTime={at=>previewMoment(at,lat,lon,false)} onLocation={(a,b)=>requestSiteChange(a,b)}>
     <NightVisionFilter enabled={settings.redLight}><a href="#main-content" className="skip-link">Skip to observing content</a>
     <div className="observatory-shell">
       <header className="app-header">
@@ -1196,7 +1204,7 @@ export default function PlannerPage() {
               {locating ? <Loader2 size={15} className="animate-spin" aria-hidden="true" /> : <Crosshair size={15} aria-hidden="true" />}
               {locating ? "Finding your location…" : "Use my current location"}
             </button>
-            <ContextLocationButton>Site & sky brightness</ContextLocationButton>
+            <ContextLocationButton>Site & sky darkness</ContextLocationButton>
             <SavedLocations context="Sky" locations={savedLocations} lat={lat} lon={lon} onChange={setSavedLocations} onSelect={site=>requestSiteChange(site.lat,site.lon,site.name)}/>
             <CoordinatePairInput onUse={(a,b)=>requestSiteChange(a,b)}/>
             <div className="grid grid-cols-2 gap-2 mt-3">
@@ -1549,7 +1557,7 @@ export default function PlannerPage() {
                       <TargetNightSuggestions target={selected} lat={lat} lon={lon} timezone={timezone} date={date} onDate={at=>previewMoment(at,lat,lon,false)}/><SelectedTargetPlanning target={selected} lat={lat} lon={lon} date={date} timezone={timezone} skyBrightness={settings.skyBrightness}/>
                       <details className="selected-target-story"><summary>About this object & photograph</summary><p className="object-story">{objectSummaryText(selected.id,{target:selected})||guideFor(selected).story}</p><TargetPhotoCredit target={selected}/></details>
                       {!conditions.isDark&&<button className="text-action" onClick={()=>previewMoment(planningShortcut("tonight",lat,lon).date,lat,lon)}>Preview tonight after dark</button>}
-                      <BinocularAssessment target={selected} profile={binocularProfile} alt={selection.alt} moon={currentMoon} skyBrightness={settings.skyBrightness}/>
+                      <BinocularAssessment target={selected} profile={binocularProfile} alt={selection.alt} moon={currentMoon} skyBrightness={settings.skyBrightness} sky={skyNow} observer={observer} at={date} lat={lat} lon={lon} timezone={timezone} onEditSetup={()=>setSetupOpen(true)} compact/>
                       <details className="selected-moon-more"><summary>Moonlight at {formatInTimeZone(date,timezone,"MMM d · HH:mm")}</summary><MoonlightCard target={selected} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => checkAgainstMoon(selected.id)} /></details>
                       <div className="featured-actions">
                         <Button
@@ -1657,7 +1665,7 @@ export default function PlannerPage() {
                     <TargetCard
                       key={o.target.id}
                       object={o}
-                      fit={binocularAssessment(o.target,binocularProfile,{alt:o.alt,moon:currentMoon,skyBrightness:settings.skyBrightness}).label}
+                      fit={visibilityLabel(binocularAssessment(o.target,binocularProfile,{alt:o.alt,sky:skyNow,observer}))}
                       saved={savedIds.has(o.target.id)}
                       selected={targetId === o.target.id}
                       onSelect={() => {
@@ -2029,7 +2037,7 @@ export default function PlannerPage() {
                         <h2>At the eyepiece{chainStopNow ? `: ${displayName(eyepieceTarget)}` : ""}</h2>
                       </div>
                       <p>{objectSummary(eyepieceTarget.id,{target:eyepieceTarget})?.lookFor ?? guideFor(eyepieceTarget).lookFor}</p>
-                      <BinocularAssessment target={eyepieceTarget} profile={binocularProfile} alt={eyepieceAlt} moon={currentMoon} skyBrightness={settings.skyBrightness}/>
+                      <BinocularAssessment target={eyepieceTarget} profile={binocularProfile} alt={eyepieceAlt} moon={currentMoon} skyBrightness={settings.skyBrightness} sky={skyNow} observer={observer} at={date} lat={lat} lon={lon} timezone={timezone} onEditSetup={()=>setSetupOpen(true)} compact/>
                       <details className="selected-moon-more"><summary>Moonlight at {formatInTimeZone(date,timezone,"MMM d · HH:mm")}</summary><MoonlightCard target={eyepieceTarget} lat={lat} lon={lon} date={date} skyBrightness={settings.skyBrightness} onMoon={() => checkAgainstMoon(eyepieceTarget.id)} /></details>
                       <AltitudeChart
                         target={eyepieceTarget}
@@ -2106,7 +2114,7 @@ export default function PlannerPage() {
           {page === "night" && (
             <>
               <div className="page-heading night-page-heading"><div><p className="eyebrow">YOUR NEXT NIGHT OUT</p><h1>Plan your night<span>.</span></h1><p>Choose a night. Add targets. Follow the stars.</p></div></div>
-              <SessionPlanner selectedTarget={selected} profile={binocularProfile} onCompare={(ids,at,a,b)=>compareObjects(ids,at,a,b)} savedLocations={savedLocations} onLocationsChange={setSavedLocations} sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} live={settings.timeMode === "live"}
+              <SessionPlanner skyAt={skyAt} observer={observer} selectedTarget={selected} profile={binocularProfile} onCompare={(ids,at,a,b)=>compareObjects(ids,at,a,b)} savedLocations={savedLocations} onLocationsChange={setSavedLocations} sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} live={settings.timeMode === "live"}
                 onCreate={createSession} onUpdate={updateSession} onSelect={selectSession} onPreview={(at,a,b,stay)=>previewMoment(at,a,b,!stay)} onVisit={visitScheduledTarget} onAdd={toggleSave} onObserved={markObserved} objectActions={objectActions}
                 onNotes={(id,notes)=>setNight(current=>current.map(item=>item.id===id?{...item,notes}:item))}
                 actions={<><Suspense fallback={null}><SendPlanToPhone session={activeSession} settings={settings} savedLocations={savedLocations}/></Suspense><SkySafariExport items={night} targets={planningTargets} session={activeSession} date={date} lat={lat} lon={lon} skyBrightness={settings.skyBrightness}/><Button variant="outline" onClick={exportNight} disabled={!night.length}><Download size={15}/> Export notes</Button></>}
@@ -2114,12 +2122,12 @@ export default function PlannerPage() {
             </>
           )}
           {page === "binocular" && (
-            <BinocularGuide locationName={locationLabel} isSavedAt={(id,at)=>plannerStore.sessions.some(session=>!session.archived&&Math.abs(session.lat-lat)<.001&&Math.abs(session.lon-lon)<.001&&clockNightDate(new Date(session.startAt),timezone)===clockNightDate(at,timezone)&&session.items.some(item=>item.id===id))} live={settings.timeMode==="live"} onDate={at=>previewMoment(at,lat,lon,false)} onEditSetup={()=>setSetupOpen(true)} onCompare={(id,at)=>compareObjects([id],at)} profile={binocularProfile} profileControls={<BinocularProfileSummary settings={settings} onEditSetup={()=>setSetupOpen(true)}/>} onMoon={checkAgainstMoon} saveDestination={saveDestination} targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(mode === "binocular" ? { binocularFov: width } : {}), ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} onJourneys={at=>{previewMoment(at,lat,lon,false);setPage("journeys");}} actions={objectActions} />
+            <BinocularGuide locationName={locationLabel} isSavedAt={(id,at)=>plannerStore.sessions.some(session=>!session.archived&&Math.abs(session.lat-lat)<.001&&Math.abs(session.lon-lon)<.001&&clockNightDate(new Date(session.startAt),timezone)===clockNightDate(at,timezone)&&session.items.some(item=>item.id===id))} live={settings.timeMode==="live"} onDate={at=>previewMoment(at,lat,lon,false)} onEditSetup={()=>setSetupOpen(true)} onCompare={(id,at)=>compareObjects([id],at)} profile={binocularProfile} profileControls={<BinocularProfileSummary settings={settings} onEditSetup={()=>setSetupOpen(true)}/>} onMoon={checkAgainstMoon} saveDestination={saveDestination} targets={catalogs.targets} stars={catalogs.stars} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} fovWidth={fov} fovHeight={shape === "circle" ? fov : fovHeight} fovShape={shape} limitingMag={limitingMag} onFovChange={(width) => update({ fov: width, ...(mode === "binocular" ? { binocularFov: width } : {}), ...(shape === "circle" ? { fovHeight: width } : {}) })} onLimitingMagChange={(value) => update({ limitingMag: value })} lat={lat} lon={lon} timezone={timezone} observingDate={date} onInspect={selectTarget} skyBrightness={settings.skyBrightness} skyAt={skyAt} observer={observer} savedIds={savedIds} loading={loading} onSave={toggleSave} onPlan={planBinocularHop} onJourneys={at=>{previewMoment(at,lat,lon,false);setPage("journeys");}} actions={objectActions} />
           )}
           {page === "journeys" && <Suspense fallback={<p className="journey-loading" role="status">Loading Sky Journeys…</p>}>
             <JourneysPage location={location} navigate={navigate} lat={lat} lon={lon} date={date} timezone={timezone} live={settings.timeMode==="live"} locationName={locationLabel} skyBrightness={settings.skyBrightness} profile={binocularProfile} stars={catalogs.stars} targets={catalogs.targets} constellations={catalogs.constellations} denseStars={catalogs.dense} milkyWay={catalogs.milkyWay} catalogsLoading={loading} moon={currentMoon} sunAlt={conditions.sunAlt} offlineLabel={offline.state==="ready"?"Offline ready ✓":offline.online?"Online":"Offline"} redLight={settings.redLight} onRedLight={on=>update({redLight:on})} onTime={at=>previewMoment(at,lat,lon,false)} onLive={useNow} onMoonTab={()=>setPage("moon")} onEditSetup={()=>setSetupOpen(true)} actions={objectActions} sessions={plannerStore.sessions} hopChain={hopChain}/>
           </Suspense>}
-          {page === "catalog" && <CatalogExplorer onEditSetup={()=>setSetupOpen(true)} onCompare={(id,at)=>compareObjects([id],at)} targets={catalogs.targets} settings={settings} update={update} date={date} timezone={timezone} locationName={locationLabel} saveDestination={saveDestination} savedIds={savedIds} onSave={toggleSave} onMoon={checkAgainstMoon} onSky={(id,at)=>{selectTarget(id);previewMoment(at,lat,lon);setPage("tonight");window.scrollTo({top:0,behavior:"smooth"});}} actions={objectActions}/>}
+          {page === "catalog" && <CatalogExplorer skyAt={skyAt} observer={observer} onEditSetup={()=>setSetupOpen(true)} onCompare={(id,at)=>compareObjects([id],at)} targets={catalogs.targets} settings={settings} update={update} date={date} timezone={timezone} locationName={locationLabel} saveDestination={saveDestination} savedIds={savedIds} onSave={toggleSave} onMoon={checkAgainstMoon} onSky={(id,at)=>{selectTarget(id);previewMoment(at,lat,lon);setPage("tonight");window.scrollTo({top:0,behavior:"smooth"});}} actions={objectActions}/>}
           {page === "clock" && <><AstronomicalClock targets={planningTargets} ids={compareIds} onIds={setCompareIds} selectedId={targetId} sessionIds={night.map(item=>item.id)} lat={lat} lon={lon} date={date} timezone={timezone} locationName={locationLabel} locations={savedLocations} onLocation={(a,b)=>requestSiteChange(a,b)} onTime={at=>previewMoment(at,lat,lon,false)} onLive={()=>update({timeMode:"live"})} live={settings.timeMode==="live"} skyBrightness={settings.skyBrightness} profile={binocularProfile} actions={objectActions}/>{compareError&&<p role="alert">Your browser could not save the comparison list. Keep this tab open to retain it.</p>}</>}
           {page === "moon" && <MoonObservatory targets={catalogs.targets} onTarget={id=>{setMoonStar(null);selectTarget(id);}} locationName={locationLabel} lat={lat} lon={lon} date={date} timezone={timezone} settings={settings} update={update} target={moonStar??selected} initialFeatureId={lunarSelection} onDate={at => { setPlaying(false); update({ date:formatInTimeZone(at,timezone,"yyyy-MM-dd"), time:formatInTimeZone(at,timezone,"HH:mm"), timeMode:"planned", plannedAt:at.toISOString() }); }} savedIds={savedIds} onSave={toggleSave} actions={objectActions} />}
           {page === "image" && (

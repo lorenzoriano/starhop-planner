@@ -1,13 +1,6 @@
 /** Per-location user assumptions for moonless zenith sky brightness (mag/arcsec²). */
 const STORAGE_KEY = "starhop-site-sky-brightness-v1";
 
-export const SKY_BRIGHTNESS_REFERENCES = [
-  { value: 17.5, label: "Bright urban reference" },
-  { value: 19.0, label: "Urban conservative reference" },
-  { value: 20.5, label: "Rural reference" },
-  { value: 21.6, label: "Dark-sky reference" },
-] as const;
-
 /** Conservative unconfirmed reference until the observer chooses a site assumption. */
 export function suggestedSiteSkyBrightness(lat: number, lon: number) {
   return 19.0;

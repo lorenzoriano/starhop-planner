@@ -9,7 +9,10 @@ import { SavedLocations } from './SavedLocations';
 import { CoordinatePairInput } from './CoordinatePairInput';
 import { ObservingCalendar } from './ObservingCalendar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
-import { getSiteSkyBrightness, saveSiteSkyBrightness, SKY_BRIGHTNESS_REFERENCES, suggestedSiteSkyBrightness } from '@/lib/site-sky-brightness';
+import { getSiteSkyBrightness, saveSiteSkyBrightness, suggestedSiteSkyBrightness } from '@/lib/site-sky-brightness';
+import { useVisibilityConditions } from '@/hooks/use-visibility-conditions';
+import type { TransparencyMode } from '@/lib/visibility/conditions';
+import { SkyConditionsEditor } from './SkyConditions';
 
 type TimeOptions = { value?: Date; timezone?: string; onChange?: (at: Date) => void; title?: string };
 type SiteOptions = { lat?: number; lon?: number; name?: string; onChange?: (lat: number, lon: number, name: string) => void; onSkyBrightness?: (value: number) => void };
@@ -17,11 +20,14 @@ type ContextValue = { date: Date; timezone: string; lat: number; lon: number; lo
 const Context = createContext<ContextValue | null>(null);
 
 /** One dialog service for observing context; local editors can supply a draft callback. */
-export function ObservingContextProvider({ children, date, timezone, lat, lon, locationName, locations, onLocations, onTime, onLocation, skyBrightness, onSkyBrightness, savedDates = [], navigationKey }: {
+/** Haze and elevation settings edited in the site dialog (settings.transparencyMode / settings.siteElevation). */
+export type SkyConditionSettings = { transparencyMode: TransparencyMode; siteElevation: number | null; onChange: (patch: { transparencyMode?: TransparencyMode; siteElevation?: number | null }) => void };
+export function ObservingContextProvider({ children, date, timezone, lat, lon, locationName, locations, onLocations, onTime, onLocation, skyBrightness, onSkyBrightness, conditions, savedDates = [], navigationKey }: {
   children: ReactNode; date: Date; timezone: string; lat: number; lon: number; locationName: string;
   locations: SavedLocation[]; onLocations: (sites: SavedLocation[]) => void; onTime: (at: Date) => void; onLocation: (lat: number, lon: number) => void;
-  skyBrightness?: number; onSkyBrightness?: (value: number) => void; savedDates?: string[]; navigationKey?: string | number;
+  skyBrightness?: number; onSkyBrightness?: (value: number) => void; conditions?: SkyConditionSettings; savedDates?: string[]; navigationKey?: string | number;
 }) {
+  const visibility = useVisibilityConditions(lat, lon, timezone, { skyBrightness: skyBrightness ?? suggestedSiteSkyBrightness(lat, lon), transparencyMode: conditions?.transparencyMode, siteElevation: conditions?.siteElevation });
   const [timeEdit, setTimeEdit] = useState<TimeOptions | null>(null), [siteEdit, setSiteEdit] = useState<SiteOptions | null>(null);
   const [day, setDay] = useState(''), [clock, setClock] = useState(''), [month, setMonth] = useState(new Date());
   const [latitude, setLatitude] = useState(''), [longitude, setLongitude] = useState(''), [name, setName] = useState(''), [error, setError] = useState(''), [locating, setLocating] = useState(false), [locateError, setLocateError] = useState('');
@@ -78,6 +84,7 @@ export function ObservingContextProvider({ children, date, timezone, lat, lon, l
   };
   const siteLat = Number(latitude), siteLon = Number(longitude);
   const siteBrightness = Number.isFinite(siteLat) && Number.isFinite(siteLon) ? getSiteSkyBrightness(siteLat, siteLon) : undefined;
+  const sameSite = Number.isFinite(siteLat) && Number.isFinite(siteLon) && Math.abs(siteLat - lat) < 0.01 && Math.abs(siteLon - lon) < 0.01;
   let siteZone = ''; try { siteZone = tzLookup(Number(latitude), Number(longitude)); } catch {}
   return <Context.Provider value={{ date, timezone, lat, lon, locationName, skyBrightness, onSkyBrightness, time: openTime, site: openSite }}>
     {children}
@@ -94,14 +101,10 @@ export function ObservingContextProvider({ children, date, timezone, lat, lon, l
         {locateError && <p role="alert" className="context-locate-error">{locateError}</p>}
         <div className="context-presets">{[{name:'San Francisco',lat:37.77,lon:-122.42},{name:'London',lat:51.5,lon:-.12},{name:'Sydney',lat:-33.87,lon:151.21}].map(site => <button key={site.name} onClick={() => selectSite(site)}>{site.name}</button>)}</div>
         <form onSubmit={e => { e.preventDefault(); applySite(); }}><CoordinatePairInput onParsed={(a,b)=>{setLatitude(String(a));setLongitude(String(b));setName('');setBrightness(getSiteSkyBrightness(a,b) ?? skyBrightness ?? suggestedSiteSkyBrightness(a,b));setBrightnessEdited(false);setError('');}}/><div className="context-fields"><label>Latitude<input aria-label="Choose latitude" type="number" min={-90} max={90} step="any" required value={latitude} onChange={e => { setLatitude(e.target.value); setName(''); }} /></label><label>Longitude<input aria-label="Choose longitude" type="number" min={-180} max={180} step="any" required value={longitude} onChange={e => { setLongitude(e.target.value); setName(''); }} /></label></div><p className="astro-note">{name && `${name} · `}{siteZone.replaceAll('_',' ')}</p>
-          <label className="context-brightness">Moonless zenith sky assumption
-            <select aria-label="Moonless zenith sky assumption" value={brightness} onChange={e => { setBrightness(Number(e.target.value)); setBrightnessEdited(true); }}>
-              {!SKY_BRIGHTNESS_REFERENCES.some(reference => reference.value === brightness) && <option value={brightness}>Current setting · {brightness.toFixed(1)} mag/arcsec²</option>}
-              {SKY_BRIGHTNESS_REFERENCES.map(reference => <option key={reference.value} value={reference.value}>{reference.label}{siteBrightness === undefined && !brightnessEdited && brightness === reference.value && skyBrightness !== undefined ? ' · current setting, unconfirmed here' : ''} · {reference.value.toFixed(1)} mag/arcsec²</option>)}
-            </select>
-          </label>
-          {Math.abs(siteLat - 37.77) < 0.03 && Math.abs(siteLon + 122.42) < 0.03 && siteBrightness === undefined && <button type="button" className="context-brightness-suggest" onClick={() => { setBrightness(19); setBrightnessEdited(true); }}>Use 19.0 urban-conservative reference for San Francisco</button>}
-          <p className="astro-note">{brightnessEdited ? 'The selected reference will be saved for these coordinates when you apply the location.' : siteBrightness !== undefined ? 'Saved for these coordinates.' : skyBrightness === undefined ? `${brightness.toFixed(1)} mag/arcsec² is an unconfirmed reference assumption; local sky brightness is not measured.` : `No value is saved for this site. The current ${skyBrightness.toFixed(1)} mag/arcsec² setting is kept until you choose a reference here; local sky brightness is not measured.`}</p>
+          <SkyConditionsEditor brightness={brightness} onBrightness={value => { setBrightness(value); setBrightnessEdited(true); }}
+            note={brightnessEdited ? 'Saved for these coordinates when you apply the location.' : siteBrightness !== undefined ? 'Saved for these coordinates.' : 'Not set for this site yet; pick the closest description.'}
+            haze={conditions?.transparencyMode ?? 'auto'} forecastHaze={sameSite ? visibility.forecastHaze(date) : null} onHaze={mode => conditions?.onChange({ transparencyMode: mode })}
+            elevation={conditions && sameSite ? { metres: visibility.elevationM, source: visibility.elevationSource, forecastMetres: visibility.forecastElevationM, onChange: metres => conditions.onChange({ siteElevation: metres }) } : undefined} />
           {error && <p role="alert">{error}</p>}<button type="submit" className="context-apply">Use this location</button></form>
       </DialogContent>
     </Dialog>

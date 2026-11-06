@@ -4,10 +4,10 @@ import {clockNightDate} from "@/lib/astronomical-clock";
 import {TargetNightSuggestions} from "./TargetNightSuggestions";
 import { ContextDateButton, ContextLocationButton, ObservingContextScope } from "./ObservingContext";
 import { PhotoFieldPreview } from "./PhotoFieldPreview";
-import { BinocularAssessment } from "./BinocularAssessment";
-import { binocularAssessment, type BinocularProfile } from "@/lib/binocular-assessment";
+import { BinocularAssessment, VisibilitySummary } from "./BinocularAssessment";
+import { binocularAssessment, skyInputsFrom, type BinocularProfile, type BinocularResult } from "@/lib/binocular-assessment";
+import type { Observer, SkyInputs } from "@/lib/visibility/types";
 import type { ReactNode } from "react";
-import { moonState } from "@/lib/moon";
 import { objectSummaryText } from "@/lib/object-info";
 import { createMoonSampler } from "@/lib/observing-profile";
 import { NightAltitudeChart } from "./ObservingVisuals";
@@ -19,7 +19,7 @@ import { JourneysBanner } from "./journeys/JourneysBanner";
 import { ObjectJourneyLinks } from "./journeys/lazy-entry";
 import { CARD_ACTION_OMIT, ObjectActionRow } from "./ObjectActionRow";
 import { formatInTimeZone } from "date-fns-tz";
-import { ArrowUpRight, Binoculars, BookOpen, Check, Clock, Eye, MapPin, Plus, Star, WifiOff } from "lucide-react";
+import { ArrowUpRight, Binoculars, BookOpen, Check, Clock, Eye, EyeOff, MapPin, Plus, Star, WifiOff } from "lucide-react";
 import { Button } from "./ui/button";
 import { BinocularImages, BinocularPhoto } from "./BinocularImages";
 import { CatalogCombobox } from "./CatalogCombobox";
@@ -31,7 +31,7 @@ import { SkyChart } from "./SkyChart";
 import { nightAltitudeSamples, targetDayEvents, targetWindow, visibilityWindow, type VisibilityMode } from "@/lib/target-visibility";
 import { BinocularObservations } from "./BinocularObservations";
 import { compassLabel, skyConditions } from "@/lib/observing";
-import { angularSizeLabel, meanSurfaceBrightnessLabel, targetDesignation } from "@/lib/catalog-presentation";
+import { angularSizeLabel, targetDesignation } from "@/lib/catalog-presentation";
 import { resolveLocalMoment } from "@/lib/session";
 import * as Astro from "astronomy-engine";
 import { BINOCULAR_BOOKS, BINOCULAR_ENTRIES, FAMILY_LABELS, LEVEL_LABELS, MONTH_NAMES, binocularCollection, binocularSample, type BinocularSampleMode, type BinocularFamily, type BinocularPick } from "@/lib/binocular-guide";
@@ -68,9 +68,13 @@ interface Props {
   onJourneys?: (at: Date) => void;
   /** Shared cross-tab object verbs (lib/object-links). */
   actions?: ObjectActions;
+  /** Tonight's conditions at an instant (useVisibilityConditions().at): sky darkness, haze, elevation, Moon, Sun.
+   *  Without it the visibility model uses `skyBrightness`, the Moon and an average night's haze at sea level. */
+  skyAt?: (date: Date) => SkyInputs;
+  observer?: Observer;
 }
 
-export function BinocularGuide({ locationName, saveDestination, profile, isSavedAt, onInspect, onMoon, onCompare, skyBrightness = 21.6, targets, stars, lat, lon, timezone, observingDate, savedIds, loading, onSave, onPlan, constellations, denseStars, milkyWay, fovWidth, fovHeight, fovShape, limitingMag, onFovChange, onLimitingMagChange, onDate, onEditSetup, live = false, onJourneys, actions }: Props) {
+export function BinocularGuide({ locationName, saveDestination, profile, isSavedAt, onInspect, onMoon, onCompare, skyBrightness = 21.6, targets, stars, lat, lon, timezone, observingDate, savedIds, loading, onSave, onPlan, constellations, denseStars, milkyWay, fovWidth, fovHeight, fovShape, limitingMag, onFovChange, onLimitingMagChange, onDate, onEditSetup, live = false, onJourneys, actions, skyAt, observer }: Props) {
   const filterDetails=useRef<HTMLDetailsElement>(null);
   useEffect(()=>{const query=globalThis.matchMedia("(min-width: 761px)"),apply=()=>{if(filterDetails.current)filterDetails.current.open=query.matches;};apply();query.addEventListener("change",apply);return()=>query.removeEventListener("change",apply);},[]);
   const savedAt=(id:string,date:Date)=>isSavedAt?.(id,date)??savedIds.has(id);
@@ -91,7 +95,8 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
   const [level, setLevel] = useState("all");
   const [includeLargeTargets, setIncludeLargeTargets] = useState<boolean | null>(null);
   const showLargeTargets=includeLargeTargets??profile.aperture>=80;
-  const [sort,setSort]=useState("altitude");
+  const [sort,setSort]=useState("best");
+  const [hideNotVisible,setHideNotVisible]=useState(true);
   const [view,setView]=useState<"cards"|"list">("cards");
   const [query, setQuery] = useState("");
   const [visibilityMode,setVisibilityMode]=useState<VisibilityMode>("time");
@@ -151,6 +156,10 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
   const windows=useMemo(()=>new Map(collection.map(p=>[p.targetId,window.ok?targetWindow(p.target.ra,p.target.dec,lat,lon,window):null])),[collection,window,lat,lon]);
   const positioned=useMemo(()=>collection.map(p=>({...p,...eqToHorizontal(p.target.ra,p.target.dec,lat,lon,windows.get(p.targetId)?.bestAt??at)})),[collection,windows,lat,lon,at]);
   const timeFor=(p:BinocularPick)=>windows.get(p.targetId)?.bestAt??at;
+  const skyFor=useMemo(()=>skyAt??((date:Date)=>skyInputsFrom(skyBrightness,nightMoon(date))),[skyAt,skyBrightness,nightMoon]);
+  // One visibility estimate per pick at its shown time (never recomputed inside sort comparators).
+  const assessments=useMemo(()=>new Map<string,BinocularResult>(positioned.map(p=>[p.targetId,binocularAssessment(p.target,profile,{alt:p.alt,sky:skyFor(windows.get(p.targetId)?.bestAt??at),observer})])),[positioned,profile,skyFor,windows,at,observer]);
+  const assessmentOf=(p:BinocularPick)=>assessments.get(p.targetId)!;
   const positionTime=(p:BinocularPick)=>`${formatInTimeZone(timeFor(p),timezone,"HH:mm")}${formatInTimeZone(timeFor(p),timezone,"yyyy-MM-dd")!==observingDay?" +1d":""}`;
   const conditions = useMemo(() => skyConditions(lat, lon, at), [lat, lon, at]);
   const sampleConditions=useMemo(()=>skyConditions(lat,lon,sampleAt),[lat,lon,sampleAt]);
@@ -160,15 +169,16 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
     && (showLargeTargets || (pick.minAperture ?? 50) <= 50)
     && (level === "all" || pick.level === level)
     && (!query.trim() || searchMatchIds.has(pick.targetId));
-  const picks = positioned.filter(p=>matches(p)&&window.ok&&validAltitude&&(throughout&&visibilityMode==="range"?(windows.get(p.targetId)?.min??-Infinity):(windows.get(p.targetId)?.max??-Infinity))>=altitude&&(!seasonalOnly||p.bestMonths.includes(month))).sort((a,b)=>{
+  const shown = positioned.filter(p=>matches(p)&&window.ok&&validAltitude&&(throughout&&visibilityMode==="range"?(windows.get(p.targetId)?.min??-Infinity):(windows.get(p.targetId)?.max??-Infinity))>=altitude&&(!seasonalOnly||p.bestMonths.includes(month)));
+  const notVisible=(p:BinocularPick)=>assessmentOf(p).visibility.level===4;
+  const hiddenCount=hideNotVisible?shown.filter(notVisible).length:0;
+  const picks = shown.filter(p=>!hideNotVisible||!notVisible(p)).sort((a,b)=>{
     const relevance=catalogSearchScore(a.target,query,getConstellationName(a.target.con))-catalogSearchScore(b.target,query,getConstellationName(b.target.con));
     if(relevance)return relevance;
     if(sort==="time")return timeFor(a).getTime()-timeFor(b).getTime();
-    if(sort==="moon"){
-      const left=binocularAssessment(a.target,profile,{alt:a.alt,moon:nightMoon(timeFor(a)),skyBrightness}),right=binocularAssessment(b.target,profile,{alt:b.alt,moon:nightMoon(timeFor(b)),skyBrightness});
-      return left.rating-right.rating||left.glow-right.glow||(right.contrast??0)-(left.contrast??0);
-    }
-    if(sort==="rating")return binocularAssessment(a.target,profile,{alt:a.alt,moon:nightMoon(timeFor(a)),skyBrightness}).rating-binocularAssessment(b.target,profile,{alt:b.alt,moon:nightMoon(timeFor(b)),skyBrightness}).rating||b.alt-a.alt;
+    const left=assessmentOf(a),right=assessmentOf(b);
+    if(sort==="moon")return left.glow-right.glow||right.visibility.score-left.visibility.score;
+    if(sort==="best")return right.visibility.score-left.visibility.score||b.alt-a.alt;
     return b.alt-a.alt;
   });
   const searchStatus=catalogSearchDiagnostics(query,searchTargets,picks.map(p=>p.target),target=>{
@@ -178,11 +188,12 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
     if(!showLargeTargets&&(pick.minAperture??50)>50)reasons.push("Small binoculars (up to 50 mm)");
     if(level!=="all"&&pick.level!==level)reasons.push(`Level: ${LEVEL_LABELS[level as keyof typeof LEVEL_LABELS]}`);
     if(seasonalOnly&&!pick.bestMonths.includes(month))reasons.push("Monthly picks");
+    if(hideNotVisible&&notVisible(pick))reasons.push("Hide not visible tonight");
     if((throughout&&visibilityMode==="range"?(windows.get(pick.targetId)?.min??-Infinity):(windows.get(pick.targetId)?.max??-Infinity))<altitude){const rounded=Number(pick.alt.toFixed(1)),atTime=pick.alt<altitude&&rounded>=altitude?`<${altitude}°`:`${pick.alt.toFixed(1)}°`;reasons.push(`Minimum altitude ${altitude}° (${atTime} at the selected time)`);}
     if(!window.ok)reasons.push(`Date/time: ${window.error}`);
     return reasons.length?`Hidden by ${reasons.map(reason=>`“${reason}”`).join(" and ")}.`:undefined;
   });
-  const revealSearchMatch=()=>{setFamily("all");setLevel("all");setIncludeLargeTargets(true);setMinAltitude("");setVisibilityMode("time");setSeasonalOnly(false);setVisibleCount(12);};
+  const revealSearchMatch=()=>{setHideNotVisible(false);setFamily("all");setLevel("all");setIncludeLargeTargets(true);setMinAltitude("");setVisibilityMode("time");setSeasonalOnly(false);setVisibleCount(12);};
   const featured = picks.find((p) => p.level === "easy") ?? picks[0];
   const detail = positioned.find((p) => p.targetId === opened);
   const detailAt=detail?timeFor(detail):at;
@@ -215,7 +226,7 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
     const moment=resolveLocalMoment(observingDay,value,timezone);
     if(moment)applyMoment(moment,true);
   };
-  const reset = () => { setFamily("all"); setLevel("all"); setQuery(""); setIncludeLargeTargets(null); setMinAltitude("");setVisibilityMode("time"); setSeasonalOnly(false); setVisibleCount(12); };
+  const reset = () => { setHideNotVisible(false); setFamily("all"); setLevel("all"); setQuery(""); setIncludeLargeTargets(null); setMinAltitude("");setVisibilityMode("time"); setSeasonalOnly(false); setVisibleCount(12); };
   const planNewMoonNight=()=>{
     const phase=newMoonDates[month-1];if(!phase)return;
     const date=formatInTimeZone(phase,timezone,"yyyy-MM-dd");
@@ -290,7 +301,7 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
           <select aria-label="Binocular observing difficulty" value={level} onChange={(e) => { setLevel(e.target.value); if (e.target.value === "large") setIncludeLargeTargets(true); setVisibleCount(12); }}><option value="all">All observing levels</option>{Object.entries(LEVEL_LABELS).map(([key, name]) => <option key={key} value={key}>{name}</option>)}</select>
           <span className="binocular-profile-summary">Showing targets for your {profile.aperture} mm binoculars</span><button className={`filter-toggle ${showLargeTargets ? "active" : ""}`} aria-pressed={showLargeTargets} onClick={() => { setIncludeLargeTargets(!showLargeTargets); setVisibleCount(12); }}><Binoculars size={14} /> {showLargeTargets?"Hide 80 mm targets":"Include 80 mm targets"}</button>
           <button className={`filter-toggle ${seasonalOnly ? "active" : ""}`} aria-pressed={seasonalOnly} onClick={() => setSeasonalOnly(!seasonalOnly)}><Clock size={14} /> Monthly picks</button>
-          <label>Sort<select aria-label="Sort binocular targets" value={sort} onChange={event=>setSort(event.target.value)}><option value="time">Best time</option><option value="moon">Moon-friendly</option><option value="rating">Best rating</option><option value="altitude">Highest altitude</option></select></label>
+          <label>Sort<select aria-label="Sort binocular targets" value={sort} onChange={event=>setSort(event.target.value)}><option value="best">Best tonight</option><option value="time">Best time</option><option value="moon">Moon-friendly</option><option value="altitude">Highest altitude</option></select></label>
           <div role="group" aria-label="Binocular target layout"><button aria-pressed={view==="cards"} onClick={()=>setView("cards")}>Cards</button><button aria-pressed={view==="list"} onClick={()=>setView("list")}>List</button></div>
         </div>
 
@@ -309,17 +320,17 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
         </div>
 
         </details>
+        <div className="binocular-visibility-bar"><button type="button" aria-pressed={hideNotVisible} onClick={()=>{setHideNotVisible(!hideNotVisible);setVisibleCount(12);}}>{hideNotVisible?<EyeOff size={14}/>:<Eye size={14}/>} Hide not visible tonight</button>{hideNotVisible&&hiddenCount>0&&<span>{hiddenCount} hidden for these conditions</span>}<span>Sorted: {sort==="best"?"best tonight":sort==="time"?"best time":sort==="moon"?"Moon-friendly":"highest altitude"}</span></div>
         {loading ? <div className="panel empty-state"><Binoculars size={28} /><p>Opening the binocular field guide…</p></div> : !picks.length ? (
-          <div className="panel empty-state"><Star size={28} /><h3>A different window may open the sky.</h3><p>{query?searchStatus.message:"No targets match these filters at this site. Try a lower altitude, another time window or a different date. Monthly picks can also narrow the results."}</p>{query&&searchStatus.kind==="filtered"&&<Button variant="outline" onClick={revealSearchMatch}>Show {searchStatus.matches[0].target.name}</Button>}<Button variant="outline" onClick={reset}>Browse all binocular targets</Button></div>
+          <div className="panel empty-state"><Star size={28} /><h3>A different window may open the sky.</h3><p>{query?searchStatus.message:hiddenCount>0?`${hiddenCount} ${hiddenCount===1?"target is":"targets are"} up but not visible in these conditions${conditions.isDark?"":` — the Sun is ${Math.round(conditions.sunAlt)}° ${conditions.sunAlt>0?"up":"below the horizon, still twilight"}`}. Try a later time, “During the night”, or show them anyway.`:"No targets match these filters at this site. Try a lower altitude, another time window or a different date. Monthly picks can also narrow the results."}</p>{!query&&hiddenCount>0&&<Button variant="outline" onClick={()=>setHideNotVisible(false)}>Show not-visible targets</Button>}{query&&searchStatus.kind==="filtered"&&<Button variant="outline" onClick={revealSearchMatch}>Show {searchStatus.matches[0].target.name}</Button>}<Button variant="outline" onClick={reset}>Browse all binocular targets</Button></div>
         ) : (
           <div className="binocular-target-grid" style={view==="list"?{display:"grid",gridTemplateColumns:"1fr"}:undefined}>
             {picks.slice(0, visibleCount).map((p) => <article className={`binocular-target-card level-${p.level}`} key={p.targetId} style={view==="list"?{display:"grid",gridTemplateColumns:"minmax(0,1fr) auto",alignItems:"center"}:undefined}>
               <button className="binocular-target-main" onClick={() => openTarget(p.targetId)} aria-label={`Explore binocular target ${displayName(p.target)}`} data-testid={`binocular-target-${p.targetId}`}>
                 {view==="cards"&&<div className="binocular-target-field"><BinocularPhoto id={p.targetId} name={displayName(p.target)} /><span className="binocular-family-label">{FAMILY_LABELS[p.family]}</span><span className="binocular-photo-label" title={opticalPhotoCaption(p.targetId)}>{primaryOpticalImage(p.targetId)?photoCaption(primaryOpticalImage(p.targetId)!):opticalPhotoCaption(p.targetId)}</span></div>}
-                <div className="binocular-target-body"><span className="eyebrow">{[targetDesignation(p.target).replace(/^(NGC|IC|Mel|Cr|Tr|Stock)(?=\d)/,"$1 "),getConstellationName(p.target.con)].filter(Boolean).join(" · ")}</span><h3>{objectName(p.target).name}</h3>{view==="cards"&&<p>{p.impression}</p>}<div className="binocular-card-position"><span className={p.alt < 15 ? "low" : ""}>{p.neverRises ? "Never rises here" : p.alt < 0 ? `Below horizon at ${positionTime(p)}` : `${Math.round(p.alt)}° ${compassLabel(p.az)} at ${positionTime(p)}`}</span><span>{p.variable ? "Variable star" : `mag ${p.target.mag.toFixed(1)}`}{angularSizeLabel(p.target.size)?` · ${angularSizeLabel(p.target.size)} across`:""}</span></div>{view==="cards"&&eventTimes(p)}{meanSurfaceBrightnessLabel(p.target)&&<small>{meanSurfaceBrightnessLabel(p.target)}</small>}</div>
+                <div className="binocular-target-body"><span className="eyebrow">{[targetDesignation(p.target).replace(/^(NGC|IC|Mel|Cr|Tr|Stock)(?=\d)/,"$1 "),getConstellationName(p.target.con)].filter(Boolean).join(" · ")}</span><h3>{objectName(p.target).name}</h3><VisibilitySummary result={assessmentOf(p)}/><div className="binocular-card-position"><span className={p.alt < 15 ? "low" : ""}>{p.neverRises ? "Never rises here" : p.alt < 0 ? `Below horizon at ${positionTime(p)}` : `${Math.round(p.alt)}° ${compassLabel(p.az)} at ${positionTime(p)}`}</span><span>{p.variable ? "Variable star" : `mag ${p.target.mag.toFixed(1)}`}{angularSizeLabel(p.target.size)?` · ${angularSizeLabel(p.target.size)} across`:""}</span></div>{view==="cards"&&eventTimes(p)}</div>
               </button>
               {view==="cards"&&<div className="binocular-card-chart"><CompactNightCurve target={p.target} lat={lat} lon={lon} night={visibilityMode==="range"?window:nightWindow} range={visibilityMode==="range"}/><details><summary>Expand altitude & Moon graph</summary><NightAltitudeChart target={p.target} lat={lat} lon={lon} night={visibilityMode==="range"?window:nightWindow} timezone={timezone} selectedAt={visibilityMode==="range"?timeFor(p):undefined} skyBrightness={skyBrightness} moonAt={nightMoon}/></details></div>}
-              <div className="binocular-target-bottom"><span>{binocularAssessment(p.target,profile,{alt:p.alt,moon:nightMoon(timeFor(p)),skyBrightness}).label}</span></div>
               <div className="target-card-object-actions"><ObjectActionRow variant="compact" objectId={p.targetId} name={displayName(p.target)} actions={verbs} at={timeFor(p)} omit={CARD_ACTION_OMIT} saved={savedAt(p.targetId,timeFor(p))} onToggleSave={() => onSave(p.targetId,timeFor(p))} onHop={() => onPlan(p.targetId,timeFor(p))} hopDisabled={p.alt<5?"Below the 5° altitude limit at this time":undefined}/></div>
             </article>)}
           </div>
@@ -343,13 +354,13 @@ export function BinocularGuide({ locationName, saveDestination, profile, isSaved
             <DialogHeader><span className="eyebrow">{[FAMILY_LABELS[detail.family],targetDesignation(detail.target).replace(/^(NGC|IC|Mel|Cr|Tr|Stock)(?=\d)/,"$1 ")].filter(Boolean).join(" · ")}</span><DialogTitle>{objectName(detail.target).name}</DialogTitle><DialogDescription>{getConstellationName(detail.target.con)} · {LEVEL_LABELS[detail.level]} · Suggested equipment: {detail.equipment}</DialogDescription></DialogHeader>
             <div className="binocular-detail-sticky-actions"><ObjectActionRow className="binocular-quick-actions" variant="full" objectId={detail.targetId} name={displayName(detail.target)} actions={verbs} at={detailAt} omit={actions?[]:["catalog","images"]} saved={savedAt(detail.targetId,detailAt)} onToggleSave={()=>onSave(detail.targetId,detailAt)} onHop={()=>onPlan(detail.targetId,detailAt)} hopDisabled={detail.alt<5?"Below the 5° altitude limit at this time":undefined} onBefore={()=>setOpened(null)}/></div>
             <p className="binocular-detail-impression">{objectSummaryText(detail.targetId,{target:detail.target})||detail.impression}</p>
+            <BinocularAssessment target={detail.target} profile={profile} alt={detail.alt} moon={nightMoon(detailAt)} skyBrightness={skyBrightness} result={assessmentOf(detail)} at={detailAt} lat={lat} lon={lon} timezone={timezone} onEditSetup={onEditSetup}/>
             {actions&&<div onClickCapture={event=>{if((event.target as HTMLElement).closest("button"))setOpened(null);}}><Suspense fallback={null}><ObjectJourneyLinks key={detail.targetId} objectId={detail.targetId} actions={actions} sky={journeySky}/></Suspense></div>}
             <details className="binocular-detail-more"><summary>Finder, observing notes & sources</summary>
             <div className="binocular-finder-heading"><span className="eyebrow">YOUR FINDER FIELD</span><span>{angularSizeLabel(detail.target.size)?`${angularSizeLabel(detail.target.size)} across · `:""}mag {detail.target.mag.toFixed(1)} · north up before rotation</span></div><div className="binocular-detail-chart"><SkyChart onSelect={onInspect} key={detail.targetId} nodes={fieldTarget ? [...fieldNodes, fieldTarget] : fieldNodes} constellations={constellations} denseStars={denseStars} milkyWay={milkyWay} route={null} targetNode={fieldTarget} animStep={0} fovWidth={fovWidth} fovHeight={fovHeight} fovShape={fovShape} limitingMag={finderDepth} maxCatalogMagnitude={10.5} targetDiameter={catalogDiameter(detail.target.size)} lat={lat} lon={lon} date={detailAt} onFovChange={onFovChange} onLimitingMagChange={setFinderDepth} setupSummary={`${profile.magnification}×${profile.aperture} mm · ${fovWidth.toFixed(1)}° field · stars to mag ${finderDepth.toFixed(1)}`} onEditSetup={onEditSetup} isBinocular /></div>
             <details className="binocular-detail-conditions"><summary>Altitude, Moon & observing conditions</summary><ObservingContextScope date={detailAt} timezone={timezone} lat={lat} lon={lon} onTime={value=>applyMoment(value,true)}><NightAltitudeChart target={detail.target} lat={lat} lon={lon} night={detailGraphWindow} timezone={timezone} selectedAt={detailAt} skyBrightness={skyBrightness} moonAt={nightMoon}/></ObservingContextScope>
             {eventTimes(detail)}
             <p className="binocular-method-note">Rise, transit and set on <ContextDateButton value={detailAt} timezone={timezone} onChange={value=>applyMoment(value,true)}>{formatInTimeZone(detailAt,timezone,"MMM d, yyyy")}</ContextDateButton> · {timezone.replaceAll("_"," ")} · geometric horizon.</p>
-            <BinocularAssessment target={detail.target} profile={profile} alt={detail.alt} moon={moonState(lat,lon,detailAt)} skyBrightness={skyBrightness}/>
             {onDate&&<TargetNightSuggestions target={detail.target} lat={lat} lon={lon} timezone={timezone} date={detailAt} onDate={onDate}/>}
             <MoonlightCard target={detail.target} lat={lat} lon={lon} date={detailAt} skyBrightness={skyBrightness} />
             </details>

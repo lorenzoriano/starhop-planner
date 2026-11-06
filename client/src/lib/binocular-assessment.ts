@@ -1,82 +1,176 @@
 import type { UnifiedTarget } from './astronomy';
 import { BINOCULAR_ENTRIES } from './binocular-guide';
 import type { MoonState } from './moon';
-import { angularDistance } from './astronomy';
-import { scatteredMoonlight } from './moon';
+import { extinctionForTransparency, skyPresetFor } from './visibility/conditions';
+import { DEFAULT_OBSERVER, estimateVisibility, extinctionCoefficient, skyBrightnessBreakdown, type SkyBreakdown } from './visibility/model';
+import { angularDimensions, toVisibilityTarget } from './visibility/targets';
+import type { LimitFactor, Limitation, Observer, Optics, SkyInputs, Support, VisibilityEstimate, VisibilityLevel, VisibilityTarget } from './visibility/types';
+
+export { angularDimensions };
 
 export const KITE_SOURCE='https://kiteoptics.com/en/apc-stabilized-14x50-ed-li-ion-k280048';
-export const VISIBILITY_SOURCE='https://academic.oup.com/mnras/article/442/3/2600/1052389';
-export const NELM_SOURCE='https://unihedron.com/projects/darksky/NELM2BCalc.html';
-export interface BinocularProfile {magnification:number;aperture:number;fov:number;stabilized:boolean;transmission:number;}
+export interface BinocularProfile {
+  magnification:number;aperture:number;fov:number;stabilized:boolean;transmission:number;
+  /** How the binoculars are held; derived from `stabilized` when absent (stabilized → 'stabilized', else 'handheld'). */
+  support?:Support;
+}
 export const KITE_14X50:BinocularProfile={magnification:14,aperture:50,fov:3.7,stabilized:true,transmission:.86};
 export const FIT_LABELS=['Excellent binocular target','Worthwhile in binoculars','Challenging in binoculars','Telescope more rewarding'] as const;
 export type FitRating=0|1|2|3;
-export interface BinocularResult {rating:FitRating;label:string;reasons:string[];view:string;availability:string;exitPupil:number;pointLimit:number;surfaceBrightness:number|null;contrast:number|null;glow:number;dimensions:ReturnType<typeof angularDimensions>;entry:typeof BINOCULAR_ENTRIES[number]|undefined;}
-const entries=new Map(BINOCULAR_ENTRIES.map(e=>[e.targetId,e]));
-export function angularDimensions(size?:string) {
-  if(!size)return null;const values=size.match(/\d+(?:\.\d+)?/g)?.map(Number);if(!values?.length||values[0]<=0||(values[1]??values[0])<=0)return null;
-  const unit=/°|deg/i.test(size)?60:/″|arcsec|"/.test(size)?1/60:1;
-  return {major:values[0]*unit,minor:(values[1]??values[0])*unit,circular:values.length===1};
+export interface AssessmentContext {
+  /** Target altitude, degrees (default 60). */
+  alt?:number;
+  /** Full conditions (sky darkness, haze, elevation, Moon, Sun). When present, `moon` and `skyBrightness` are ignored. */
+  sky?:SkyInputs;
+  observer?:Observer;
+  /** Legacy inputs: Moon (and Sun altitude) at the time, and the moonless zenith sky (default 21.6). */
+  moon?:MoonState;
+  skyBrightness?:number;
 }
+export interface BinocularResult {
+  /** 0 excellent … 3 telescope more rewarding / not visible (from visibility.level: 0→0, 1–2→1, 3→2, 4→3). */
+  rating:FitRating;label:string;
+  /** The model's limitations, largest first (or one positive line when nothing holds it back). */
+  reasons:string[];
+  /** Curated impression when the guide has one, else the model's appearance sentence. */
+  view:string;availability:string;exitPupil:number;
+  /** Faintest star tonight (= visibility.limitingMag). */
+  pointLimit:number;
+  /** Mean surface brightness, mag/arcsec², for extended objects with a size. */
+  surfaceBrightness:number|null;
+  /** Object / sky surface brightness ratio, for extended objects with a size. */
+  contrast:number|null;
+  /** Magnitudes the Moon brightens the sky toward the target. */
+  glow:number;
+  dimensions:ReturnType<typeof angularDimensions>;
+  entry:typeof BINOCULAR_ENTRIES[number]|undefined;
+  visibility:VisibilityEstimate;
+  /** What the estimate used, for explanations and counterfactuals. */
+  inputs:{target:VisibilityTarget;optics:Optics;sky:SkyInputs;observer:Observer;alt:number};
+  skyBreakdown:SkyBreakdown;
+}
+const entries=new Map(BINOCULAR_ENTRIES.map(e=>[e.targetId,e]));
 export function averageSurfaceBrightness(mag:number,majorArcmin:number,minorArcmin:number) {
   return mag+2.5*Math.log10(Math.PI/4*majorArcmin*minorArcmin*3600);
 }
-export function nakedEyeLimit(sky:number) {return 7.93-5*Math.log10(Math.pow(10,4.316-sky/5)+1);}
 export function profileName(p:BinocularProfile) {return p.magnification===14&&p.aperture===50&&Math.abs(p.fov-3.7)<.02&&p.stabilized?'KITE APC 14×50 ED':`${p.magnification}×${p.aperture} binoculars`;}
-export function binocularAssessment(target:UnifiedTarget,p:BinocularProfile,context:{alt?:number;moon?:MoonState;skyBrightness?:number}={}):BinocularResult {
-  const entry=entries.get(target.id),dims=angularDimensions(target.size),category=target.category.toLowerCase();
-  const isDouble=category.includes('double'),stellar=category==='star'||isDouble;
-  const diffuse=/galaxy|nebula|remnant/.test(category),globular=category.includes('globular');
-  const alt=context.alt??60,sky=context.skyBrightness??21.6,moon=context.moon;
-  const separation=moon?angularDistance(target.ra,target.dec,moon.ra,moon.dec):180;
-  const dark=!moon||moon.sunAlt<=-18;
-  const glow=moon&&dark&&alt>0?scatteredMoonlight(moon,alt,separation,sky).brightening:0;
-  const effectiveSky=sky-glow,exitPupil=p.aperture/p.magnification,eyePupil=6;
-  const effectiveAperture=Math.min(p.aperture,p.magnification*eyePupil);
-  const extinction=alt>0?.172*(1/Math.sqrt(1-.96*Math.cos(Math.max(0,alt)*Math.PI/180)**2)-1):0;
-  const pointLimit=nakedEyeLimit(effectiveSky)+5*Math.log10(effectiveAperture/eyePupil)+2.5*Math.log10(p.transmission)-extinction;
-  const sb=dims&&diffuse?averageSurfaceBrightness(target.mag,dims.major,dims.minor):null;
-  const contrast=sb===null?null:Math.pow(10,.4*(effectiveSky-sb));
-  let rating:number=target.mag<pointLimit-3?0:target.mag<pointLimit-1.5?1:target.mag<pointLimit?2:3;
-  const reasons:string[]=[];
-  let view=entry?.impression??target.binoTip??(stellar?'A point of starlight; look for color and nearby patterns.':globular?'A small round glow; its individual stars usually need a telescope.':'Look for the overall shape and brightness; expect much less detail than the survey photograph.');
-  if(!stellar){
-    if(entry?.level==='easy')rating=Math.min(rating,1);
-    if(entry?.level==='dark'||entry?.level==='steady')rating=Math.max(rating,1);
-    if(entry?.level==='challenge')rating=Math.max(rating,2);
-    if((entry?.minAperture??0)>p.aperture*1.3){rating=Math.max(rating,3);reasons.push(`The observing guide places this in its ${entry!.minAperture} mm aperture tier; a ${p.aperture} mm view is substantially harder.`);}
-    if(diffuse&&contrast!==null){rating=Math.max(rating,contrast<.08?3:contrast<.25?2:contrast<.7?1:0);reasons.push(`Mean surface brightness ≈${sb!.toFixed(1)} mag/arcsec², compared with an estimated ${effectiveSky.toFixed(1)} mag/arcsec² sky.`);}
-    if(dims){const fieldFraction=dims.major/(p.fov*60);reasons.push(`${dims.major.toFixed(1)}′ across · ${(dims.major*p.magnification/60).toFixed(1)}° apparent at ${p.magnification}× · ${Math.round(fieldFraction*100)}% of your field width.`);if(fieldFraction>1.05){rating=Math.max(rating,1);reasons.push('It extends beyond one field: sweep across it or use lower magnification.');}}
-    else reasons.push('Catalog angular dimensions are missing; the size assessment is uncertain.');
-    if(/planetary/.test(category)&&dims&&dims.major<3){rating=Math.max(rating,3);view='You may detect a tiny star-like spot. The disk or ring shape is a telescope goal; binoculars are mainly useful for locating the field.';}
-    if(globular)reasons.push('Integrated magnitude describes the whole cluster, not the brightness of its individual stars.');
-    if(category.includes('open')||category.includes('asterism'))reasons.push('The pattern and its brighter members matter more than the combined catalog magnitude.');
-    if(category.includes('asterism')&&dims&&dims.major*p.magnification<60&&target.mag>=8){rating=Math.max(rating,2);reasons.push('This is a tiny, faint pattern: its members can be much fainter than the combined magnitude. Do not expect a clear star pattern at this power.');}
+export const supportOf=(p:BinocularProfile):Support=>p.support??(p.stabilized?'stabilized':'handheld');
+export const opticsOf=(p:BinocularProfile):Optics=>({aperture:p.aperture,magnification:p.magnification,fov:p.fov,transmission:p.transmission,support:supportOf(p)});
+/** SkyInputs for callers that only know the zenith sky and the Moon: sea level, a normal (average) night's haze. */
+export function skyInputsFrom(skyBrightness=21.6,moon?:MoonState|null):SkyInputs {
+  return {
+    zenithSqm:skyBrightness,elevationM:0,extinctionK:extinctionForTransparency(3,0),extinctionSource:'default',
+    ...(moon?{sunAlt:moon.sunAlt,moon:{alt:moon.alt,ra:moon.ra,dec:moon.dec,phaseAngle:moon.phaseAngle,illumination:moon.illumination}}:{moon:null}),
+  };
+}
+/** visibility level → the 0..3 fit rating the rest of the app sorts and filters on. */
+export const ratingOfLevel=(level:VisibilityLevel):FitRating=>([0,1,1,2,3] as const)[level];
+
+const visibilityTargets=new WeakMap<UnifiedTarget,VisibilityTarget>();
+function visibilityTargetOf(target:UnifiedTarget) {
+  let t=visibilityTargets.get(target);
+  if(!t){t=toVisibilityTarget(target);visibilityTargets.set(target,t);}
+  return t;
+}
+
+/** Plain names for the limitation factors (text, never colour alone). */
+export const LIMIT_NAMES:Record<LimitFactor,string>={
+  moon:'Moonlight','light-pollution':'Light pollution',haze:'Haze',altitude:'Height in the sky',twilight:'Twilight',steadiness:'Shaky view',
+  faint:'Too faint for these binoculars','low-surface-brightness':'Light spread thin','too-small':'Very small','too-close':'Stars close together',
+  'unequal-pair':'One star much fainter','unresolved-stars':'Stars too faint to pick out','larger-than-field':'Bigger than your view',
+};
+const CONDITION_FACTORS:ReadonlySet<LimitFactor>=new Set<LimitFactor>(['moon','light-pollution','haze','altitude','twilight','steadiness']);
+export const isConditionFactor=(f:LimitFactor)=>CONDITION_FACTORS.has(f);
+const CONDITION_LABELS:Partial<Record<LimitFactor,string>>={
+  moon:'Better under a darker Moon',altitude:'Better when higher in the sky','light-pollution':'Dark skies strongly recommended',
+  twilight:'Better after dark',haze:'Better on a clearer night',steadiness:'Better on a tripod',
+};
+/** Card threshold: a limitation is worth one "held back by" line from this gain (margin units). */
+export const HELD_BACK_GAIN=.2;
+
+/**
+ * The level word for chips: "Good", "Not visible tonight", or "Won't split at 14×" for a double whose primary is easy
+ * but whose pair the model cannot split (its level is about the split, yet the star itself is plainly visible).
+ */
+export function levelWord(r:BinocularResult):string {
+  const v=r.visibility,t=r.inputs.target;
+  if(v.level<4)return v.label;
+  if(t.kind==='double'&&r.inputs.alt>0&&.4*(v.limitingMag-Math.min(t.mag,t.mag2??t.mag))>-.15)return `Won’t split at ${r.inputs.optics.magnification}×`;
+  return 'Not visible tonight';
+}
+/** "Good tonight" / "Not visible tonight": compact badges outside the Binoculars tab. */
+export const visibilityLabel=(r:BinocularResult)=>r.visibility.level<4?`${r.visibility.label} tonight`:levelWord(r);
+
+/** One short phrase for a limitation ("Moon 62% lit, 35° away"), for cards. */
+export function limitShort(l:Limitation,r:BinocularResult):string {
+  const {optics,sky,alt,target}=r.inputs;
+  switch(l.factor){
+    case 'moon':return `Moon ${Math.round((sky.moon?.illumination??0)*100)}% lit, ${Math.round(r.skyBreakdown.moonSeparation??0)}° away`;
+    case 'light-pollution':return `Light pollution (${skyPresetFor(sky.zenithSqm).label.toLowerCase()} sky)`;
+    case 'haze':return 'Hazy air dims it tonight';
+    case 'altitude':return alt<=0?'Below the horizon':alt<30?`Low in the sky (${Math.round(alt)}°)`:`Only ${Math.round(alt)}° up — better when higher`;
+    case 'twilight':return (sky.sunAlt??-90)>-.833?'Daylight':'Twilight still brightens the sky';
+    case 'steadiness':return optics.support==='handheld'?`Hand-shake at ${optics.magnification}×`:'A little shake left';
+    case 'faint':return target.kind==='double'?'The fainter star is hard to see':`Very faint for ${optics.aperture} mm binoculars`;
+    case 'low-surface-brightness':return 'Its light is spread thin — a faint, wide glow';
+    case 'too-small':return `Tiny at ${optics.magnification}× — looks like a star`;
+    case 'too-close':return r.visibility.level<=2?`Tight pair at ${optics.magnification}× — needs a steady view`:`Too close to split at ${optics.magnification}×`;
+    case 'unequal-pair':return `Fainter star lost in the glare at ${optics.magnification}×`;
+    case 'unresolved-stars':return 'Its stars are too faint to pick out';
+    case 'larger-than-field':return 'Bigger than your view';
   }
-  if(isDouble){
-    if(target.sep){const apparent=target.sep*p.magnification,delta=Math.abs((target.mag2??target.mag)-target.mag),threshold=180+90*delta;
-      rating=apparent>threshold*1.8?0:apparent>threshold*1.3?1:apparent>=threshold?2:3;
-      if(!p.stabilized)rating=Math.min(3,rating+1);
-      reasons.push(`${target.sep.toFixed(1)}″ separation becomes ${(apparent/60).toFixed(1)}′ apparent; ${delta.toFixed(1)} mag component difference. ${p.stabilized?'Stabilization helps hold the pair steady.':'Brace or mount the binoculars to try the split.'}`);
-      if(target.mag2!==undefined&&target.mag2>pointLimit-.5){rating=Math.max(rating,2);reasons.push('The fainter component is near or beyond the estimated stellar limit.');}
-      view=rating===3?'Enjoy the primary star and surrounding field; splitting this pair is a telescope task.':rating===2?'Try separating the pair with stabilization engaged and careful focus; the split is not assured.':entry?.impression??'A separated pair of stars; compare their brightness and colors.';
-    }else{rating=Math.max(rating,2);reasons.push('Component separation is missing, so a reliable split recommendation is unavailable.');}
-  }
-  // A whole-disk average badly underestimates centrally concentrated bright
-  // galaxies. This predicts seeing the central glow, not the low-contrast disk.
-  const brightGalaxyCore=category.includes('galaxy')&&dims&&dims.major>=60&&target.mag<=4.5&&pointLimit-target.mag>=3&&effectiveSky>=18.5;
-  if(brightGalaxyCore){rating=0;reasons.push('Its bright central glow is a rewarding binocular target even under a suburban sky. The outer disk is much fainter than the core and needs darker skies.');}
-  if(['M31','M42','M45','NGC869','AST-Coathanger'].includes(target.id)&&sky>=20.5&&glow<.5){rating=0;if(target.id==='M31')reasons.push('The bright central glow is easier than the whole-disk average; its outer disk still needs dark skies.');}
-  if(diffuse&&glow>=1){rating=Math.max(rating,2);reasons.push(`Moonlight adds ≈${glow.toFixed(1)} mag of sky glow here; look again after moonset or under a darker Moon.`);}
-  if(alt>0&&alt<20){rating=Math.max(rating,2);reasons.push('Low altitude adds extinction and haze. Wait for it to climb if possible.');}
-  if(!p.stabilized&&p.magnification>12&&target.mag>6){rating=Math.max(rating,2);reasons.push('At this magnification, hand shake can hide faint stars; use support.');}
-  if(entry?.variable)reasons.push('Brightness varies; the catalog magnitude is not a live measurement.');
-  if(stellar&&!isDouble)reasons.push(`Catalog magnitude ${target.mag.toFixed(1)}; estimated stellar limit ≈${pointLimit.toFixed(1)} under these assumptions.`);
-  if(!reasons.length)reasons.push('A broad visual estimate from catalog magnitude, object class and the observing guide.');
-  const availability=alt<=0?'Below the horizon':moon&&moon.sunAlt>=0?'Daylight — plan after dark':moon&&moon.sunAlt>-18?'Twilight — faint detail is harder':alt<15?'Very low in the sky':'Above the horizon in darkness';
-  // Keep optical limitations distinct from temporary observing conditions.
-  const baseline=moon||alt<20||sky<21.6?binocularAssessment(target,p,{alt:60,skyBrightness:21.6}).rating:rating;
-  const conditionsWorse=rating>baseline&&rating>=2;
-  const label=conditionsWorse&&glow>=1?'Better under a darker Moon':conditionsWorse&&alt>0&&alt<20?'Better when higher in the sky':conditionsWorse&&sky<20.5?'Dark skies strongly recommended':FIT_LABELS[Math.max(0,Math.min(3,rating)) as FitRating];
-  return {rating:Math.max(0,Math.min(3,rating)) as FitRating,label,reasons,view,availability,exitPupil,pointLimit,surfaceBrightness:sb,contrast,glow,dimensions:dims,entry};
+}
+/** The one limitation worth a card line, or null when nothing holds it back much (never for an Excellent view). */
+export function heldBack(r:BinocularResult):Limitation|null {
+  const top=r.visibility.limits[0];
+  return r.visibility.level>=1&&top&&top.gain>=HELD_BACK_GAIN?top:null;
+}
+
+export function binocularAssessment(target:UnifiedTarget,p:BinocularProfile,context:AssessmentContext={}):BinocularResult {
+  const entry=entries.get(target.id),dims=angularDimensions(target.size);
+  const alt=context.alt??60,sky=context.sky??skyInputsFrom(context.skyBrightness??21.6,context.moon);
+  const observer=context.observer??DEFAULT_OBSERVER,optics=opticsOf(p),vt=visibilityTargetOf(target);
+  const visibility=estimateVisibility(vt,optics,sky,alt,observer);
+  const breakdown=skyBrightnessBreakdown(sky,Math.max(alt,0),vt);
+  const rating=ratingOfLevel(visibility.level);
+  const extended=vt.kind!=='star'&&vt.kind!=='double'&&vt.majorArcmin!==undefined&&!Number.isNaN(target.mag)&&target.mag<90;
+  const sb=extended?averageSurfaceBrightness(target.mag,vt.majorArcmin!,vt.minorArcmin??vt.majorArcmin!):null;
+  const contrast=sb===null?null:Math.pow(10,.4*(visibility.skyAtTarget-sb));
+  const top=visibility.limits[0];
+  const label=alt<=0?'Below the horizon'
+    :rating>=2&&top&&top.gain>=HELD_BACK_GAIN&&CONDITION_LABELS[top.factor]?CONDITION_LABELS[top.factor]!
+    :FIT_LABELS[rating];
+  const reasons=visibility.limits.length?visibility.limits.map(l=>l.text):[`${visibility.appearance}. Nothing in tonight’s conditions holds it back much.`];
+  const sunAlt=sky.sunAlt;
+  const availability=alt<=0?'Below the horizon':sunAlt!==undefined&&sunAlt>=0?'Daylight — plan after dark':sunAlt!==undefined&&sunAlt>-18?'Twilight — faint detail is harder':alt<15?'Very low in the sky':'Above the horizon in darkness';
+  const view=entry?.impression??target.binoTip??visibility.appearance;
+  return {
+    rating,label,reasons,view,availability,exitPupil:p.aperture/p.magnification,pointLimit:visibility.limitingMag,
+    surfaceBrightness:sb,contrast,glow:breakdown.moonDelta,dimensions:dims,entry,visibility,
+    inputs:{target:vt,optics,sky,observer,alt},skyBreakdown:breakdown,
+  };
+}
+
+export type ImprovementKind='moon'|'support'|'higher'|'darker-site'|'clearer'|'darkness';
+export interface Improvement {kind:ImprovementKind;estimate:VisibilityEstimate;}
+/**
+ * "What would help": the same estimate with one input improved — the Moon down, a tripod, the target at its highest
+ * (`culminationAlt`), a dark-countryside sky, a crisp night, full darkness. Only changes that raise the level are kept.
+ */
+export function improvements(r:BinocularResult,opts:{culminationAlt?:number}={}):Improvement[] {
+  const {target,optics,sky,observer,alt}=r.inputs,now=r.visibility.level;
+  if(alt<=0)return [];
+  const out:Improvement[]=[];
+  const tryOne=(kind:ImprovementKind,o:Optics,s:SkyInputs,a:number)=>{
+    const estimate=estimateVisibility(target,o,s,a,observer);
+    if(estimate.level<now)out.push({kind,estimate});
+  };
+  if(sky.moon&&r.skyBreakdown.moonDelta>.05)tryOne('moon',optics,{...sky,moon:null},alt);
+  if(sky.sunAlt!==undefined&&sky.sunAlt>-18)tryOne('darkness',optics,{...sky,sunAlt:undefined},alt);
+  if(optics.support!=='tripod')tryOne('support',{...optics,support:'tripod'},sky,alt);
+  if(opts.culminationAlt!==undefined&&opts.culminationAlt>alt+5)tryOne('higher',optics,sky,opts.culminationAlt);
+  if(sky.zenithSqm<21.3)tryOne('darker-site',optics,{...sky,zenithSqm:21.3},alt);
+  const crisp=extinctionCoefficient(sky.elevationM,.3);
+  if(sky.extinctionK>crisp+.01)tryOne('clearer',optics,{...sky,extinctionK:crisp},alt);
+  return out.sort((a,b)=>a.estimate.level-b.estimate.level);
 }

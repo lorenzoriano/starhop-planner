@@ -1,0 +1,52 @@
+/* Binocular visibility tonight (lib/visibility/model.ts): card chip and the detail report.
+   Levels are always named in text; the meter and colour only repeat the word (red light keeps the text). */
+.vis-summary { display:grid; gap:4px; margin:8px 0 6px; }
+.vis-chip { display:inline-flex; align-items:center; gap:8px; justify-self:start; padding:3px 10px 3px 8px; border:1px solid #3d5c5a; border-radius:999px; background:#0f2a2b; color:#cfe6dc; font-size:12px; line-height:1.4; }
+.vis-chip strong { font-weight:600; }
+.vis-meter { display:inline-grid; grid-template-columns:repeat(4,7px); gap:2px; }
+.vis-meter i { display:block; height:9px; border-radius:1px; background:#2b4246; }
+.vis-chip.vis-level-0 .vis-meter i.on, .vis-chip.vis-level-1 .vis-meter i.on { background:#9fd3bd; }
+.vis-chip.vis-level-2 { border-color:#4a5a52; background:#152723; color:#d6e1d4; }
+.vis-chip.vis-level-2 .vis-meter i.on { background:#c3d2a0; }
+.vis-chip.vis-level-3 { border-color:#5e5236; background:#231f14; color:#e4d3a6; }
+.vis-chip.vis-level-3 .vis-meter i.on { background:#d8bc80; }
+.vis-chip.vis-level-4 { border-color:#3c4a50; background:#131c21; color:#a9b8bd; }
+.vis-summary .vis-appearance { margin:0; color:#d3dedc; font-size:13px; line-height:1.45; }
+.vis-held { margin:0; color:#a9bdbf; font-size:12px; line-height:1.45; }
+.vis-held > span { color:#8da8b1; }
+.vis-held > span::after { content:":"; }
+
+/* Hide-not-visible chip row above the collection. */
+.binocular-visibility-bar { display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; margin:0 0 14px; color:#8da8b1; font-size:12px; }
+.binocular-visibility-bar button[aria-pressed] { display:inline-flex; align-items:center; gap:6px; min-height:36px; padding:6px 12px; border:1px solid #385968; border-radius:999px; background:transparent; color:#c1d7ce; font-size:12.5px; }
+.binocular-visibility-bar button[aria-pressed=true] { border-color:#a3c8bf; background:#a3c8bf1f; color:#e2e5de; font-weight:600; }
+
+/* Detail report. */
+.vis-report .vis-title { display:flex; align-items:center; gap:8px; margin:0 0 10px; font-size:14px; font-weight:600; color:#d3dedc; }
+.vis-report .vis-headline { display:grid; gap:6px; }
+.vis-report .vis-headline .vis-appearance { margin:0; color:#e2e5de; font-size:14px; line-height:1.5; }
+.vis-report h4 { margin:16px 0 6px; font-size:12.5px; font-weight:600; letter-spacing:.02em; color:#b3d1c7; }
+.vis-table { display:grid; gap:0; margin:12px 0 0; border-top:1px solid #253c46; }
+.vis-table > div { display:grid; grid-template-columns:minmax(0,11em) minmax(0,1fr); gap:4px 12px; padding:7px 0; border-bottom:1px solid #253c46; }
+.vis-table dt { color:#9cb3bc; font-size:12px; }
+.vis-table dd { margin:0; display:grid; gap:1px; }
+.vis-table dd strong { color:#e2e5de; font-size:13px; font-weight:600; }
+.vis-table dd small { color:#8da8b1; font-size:12px; line-height:1.4; }
+.vis-report ul.vis-limits, .vis-report ul.vis-helps { list-style:none; padding:0; margin:0; display:grid; gap:10px; }
+.vis-report .vis-limits li { display:grid; gap:4px; margin:0; }
+.vis-report .vis-helps li { margin:0; }
+.vis-limit-head { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 8px; }
+.vis-limit-head strong { color:#e2e5de; font-size:13px; font-weight:600; }
+.vis-limit-head small { color:#8da8b1; font-size:12px; }
+.vis-gain { display:block; height:5px; border-radius:3px; background:#1c2f36; overflow:hidden; max-width:240px; }
+.vis-gain i { display:block; height:100%; background:#d8bc80; border-radius:3px; }
+.vis-report .vis-limits p { margin:0; color:#a9bdbf; font-size:12px; line-height:1.5; }
+.vis-none { margin:0; color:#a9bdbf; font-size:12.5px; }
+.vis-helps li { color:#c1d7ce; font-size:12.5px; }
+.vis-helps li strong { color:#e2e5de; }
+.vis-report .vis-conditions { margin:16px 0 4px; color:#9cb3bc; font-size:12px; line-height:1.5; }
+.vis-report .vis-conditions .text-action { display:inline; min-height:0; min-width:0; padding:0; vertical-align:baseline; font-size:12px; text-decoration:underline; text-underline-offset:3px; }
+.vis-report .vis-method { margin:4px 0 0; color:#7f969d; font-size:12px; line-height:1.5; }
+@media(max-width:480px) {
+  .vis-table > div { grid-template-columns:minmax(0,1fr); gap:2px; }
+}

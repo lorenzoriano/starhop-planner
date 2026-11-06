@@ -2464,6 +2464,31 @@ button:disabled { opacity: .45; cursor: default; }
 .context-brightness { display:grid; gap:6px; margin-top:14px; color:#afc2c6; font-size:13px; }
 .context-brightness select { width:100%; padding:10px; background:#10232e; border:1px solid #385968; border-radius:6px; color:#e2e5de; color-scheme:dark; }
 .context-brightness-suggest { margin-top:6px; border:1px solid #385968; padding:7px 10px; border-radius:5px; color:#c1d7ce; font-size:12px; text-align:left; }
+.sky-conditions { display:grid; gap:8px; margin-top:16px; padding-top:14px; border-top:1px solid #294450; color:#afc2c6; font-size:13px; }
+.sky-conditions h3 { margin:0; font-size:14px; font-weight:600; color:#d3dedc; }
+.sky-conditions .sky-note { margin:0; color:#8da8b1; font-size:12px; line-height:1.5; }
+.sky-preset-list { display:grid; gap:4px; }
+.sky-preset-list button { display:grid; gap:0; text-align:left; padding:6px 10px; border:1px solid #2c4652; border-radius:6px; background:transparent; color:#c1d7ce; font-size:13px; line-height:1.3; }
+.sky-preset-list button small { color:#8da8b1; font-size:12px; }
+.sky-preset-list button[aria-checked=true] { border-color:#a3c8bf; background:#a3c8bf1f; color:#e2e5de; }
+.sky-preset-list button[aria-checked=true] small { color:#b3cfc6; }
+.sky-quiz { border:1px solid #2c4652; border-radius:6px; padding:0 10px; }
+.sky-quiz > summary { cursor:pointer; padding:8px 0; color:#b3d1c7; font-size:13px; }
+.sky-quiz[open] { padding-bottom:10px; }
+.sky-quiz p { margin:6px 0 4px; color:#afc2c6; font-size:12px; }
+.choice-chips { display:flex; flex-wrap:wrap; gap:6px; }
+.choice-chips button { padding:6px 10px; min-height:34px; border:1px solid #385968; border-radius:999px; background:transparent; color:#c1d7ce; font-size:12px; line-height:1.2; }
+.choice-chips button[aria-pressed=true] { border-color:#a3c8bf; background:#a3c8bf26; color:#e2e5de; font-weight:600; }
+.choice-segments { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border:1px solid #365360; border-radius:6px; overflow:hidden; }
+.choice-segments button { padding:9px 6px; min-height:40px; background:#0a151e; color:#c1d7ce; font-size:12px; line-height:1.25; border-left:1px solid #365360; }
+.choice-segments button:first-child { border-left:0; }
+.choice-segments button[aria-pressed=true] { background:#a3c8bf26; color:#e2e5de; font-weight:600; box-shadow:inset 0 -2px 0 #a3c8bf; }
+.sky-elevation { display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; }
+.sky-elevation input { width:110px; padding:7px 9px; background:#10232e; border:1px solid #385968; border-radius:6px; color:#e2e5de; color-scheme:dark; }
+.sky-elevation button { color:#b3d1c7; font-size:12px; text-decoration:underline; text-underline-offset:3px; }
+.profile-fields .profile-choice { flex:1 1 100%; display:grid; gap:6px; color:#9cb3bc; font-size:12px; }
+.profile-fields .profile-choice small { color:#8da8b1; font-size:12px; line-height:1.45; }
+.profile-fields .profile-choice.quiet { color:#8da8b1; }
 .context-apply { width:100%; padding:11px 16px; border-radius:6px; background:#a3c8bf; color:#10232e; font-weight:600; margin-top:10px; }
 .context-current-location { display:flex; align-items:center; justify-content:center; gap:8px; margin:0 0 4px; background:transparent; color:inherit; border:1px solid #a3c8bf; }
 .context-current-location:disabled { opacity:.7; }
@@ -2503,3 +2528,4 @@ button:disabled { opacity: .45; cursor: default; }
 .target-photo > .target-photo-caption:hover { opacity:.9; }
 /* Chart notes stay captions: "max(12px,1em)" grew them to the parent's size outside the chart box. */
 .observatory-shell p.night-moon-explanation, .observatory-shell p.night-moon-scale { font-size:12.5px !important; line-height:1.5; }
+label > small.sky-cue { color:#8da8b1; font-size:12px; line-height:1.4; }

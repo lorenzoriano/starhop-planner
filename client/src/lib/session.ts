@@ -33,11 +33,20 @@ export const settingsSchema = z.object({
   binocularFov:z.number().min(.2).max(15).optional(),
   binocularAperture: z.number().min(20).max(150).default(50),
   binocularStabilized:z.boolean().default(true),
+  /** How the binoculars are held. Older data has only binocularStabilized; it is derived from that, and binocularStabilized is kept equal to support !== "handheld". */
+  binocularSupport:z.enum(["handheld","stabilized","tripod"]).optional(),
+  /** Haze tonight: "auto" from the forecast, or 1 Crisp … 5 Smoky (lib/visibility/conditions.ts). */
+  transparencyMode:z.union([z.literal("auto"),z.literal(1),z.literal(2),z.literal(3),z.literal(4),z.literal(5)]).default("auto"),
+  /** Observer age bracket, for the dark-adapted pupil. */
+  observerAge:z.enum(["under-30","30-49","50-plus"]).default("30-49"),
+  /** Manual site elevation in metres; null = from the forecast. */
+  siteElevation:z.number().finite().min(-500).max(9000).nullable().default(null),
   binocularTransmission:z.number().min(.3).max(1).default(.86),
   binocularProfileVersion:z.literal(1).optional(),
   skyBrightness: z.number().min(17).max(22).default(19.0),
-}).transform((settings) => {
-  settings={...settings,targetId:canonicalTargetId(settings.targetId)};
+}).transform((input) => {
+  const binocularSupport=input.binocularSupport??(input.binocularStabilized?"stabilized" as const:"handheld" as const);
+  const settings={...input,targetId:canonicalTargetId(input.targetId),binocularSupport,binocularStabilized:binocularSupport!=="handheld"};
   // The owner explicitly chose the KITE 14×50 as the app's default profile.
   // Migrate the old implicit / 10×50 default once; retain custom instruments.
   if(!settings.binocularProfileVersion&&(!settings.instrumentSelected||settings.mode==="binocular"&&settings.binocularMagnification===10&&settings.binocularAperture===50&&settings.fov===7))return {...settings,mode:"binocular" as const,instrumentSelected:true,binocularMagnification:14,binocularAperture:50,binocularFov:3.7,fov:3.7,fovHeight:3.7,shape:"circle" as const,binocularProfileVersion:1 as const};
@@ -63,9 +72,13 @@ export const defaultSettings: Settings = {
   binocularAperture: 50,
   binocularFov:3.7,
   binocularStabilized:true,
+  binocularSupport:"stabilized",
   binocularTransmission:.86,
   binocularProfileVersion:1,
   skyBrightness: 19.0,
+  transparencyMode:"auto",
+  observerAge:"30-49",
+  siteElevation:null,
 };
 /** The journey fields of a night item (Planner "Journey · stop n" badge and the stop's own planned time). */
 export interface JourneyTag { journeyKey?: string; journeyStop?: number; plannedAt?: string }
