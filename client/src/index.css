@@ -1450,14 +1450,23 @@ button:disabled { opacity: .45; cursor: default; }
 .weather-update button { font-size:12px; flex-shrink:0; }
 .weather-update button:disabled { opacity:.5; cursor:default; }
 .weather-message { font-size:12px; line-height:1.8; color:#d3bd8c; margin:10px 0; }
-.weather-chart-heading { display:flex; flex-wrap:wrap; gap:10px 22px; font-size:12px; color:#a6cbdc; padding-top:10px; }
-.weather-chart-heading i { display:inline-block; width:15px; border-top:2px solid; margin-right:6px; vertical-align:middle; }
-.weather-chart-heading > span:nth-child(2) { color:#d9bb7f; }
-.weather-chart-heading > span:nth-child(2) i { border-top-style:dashed; }
-.weather-chart-heading small { margin-left:auto; color:#87a5ae; font-size:12px; }
+.weather-chart-heading { display:flex; flex-wrap:wrap; gap:6px 20px; font-size:12px; color:#c3d3db; padding-top:10px; }
+.weather-chart-heading > span { display:inline-flex; align-items:center; gap:6px; }
+.weather-chart-heading b { font-weight:600; color:#e6eef2; }
+/* Legend keys draw the same marks as the chart (colours match WeatherChart's palette). */
+.weather-chart-heading i { display:inline-block; flex:none; width:16px; height:10px; }
+.weather-chart-heading .key-sky { width:34px; background:linear-gradient(90deg,#2b5366 0 30%,#0f212a 70%,#02050a 70%); outline:1px solid #8fb3c766; }
+.weather-chart-heading .key-cloud { width:12px; height:12px; background:#dbe8ef; }
+.weather-chart-heading .key-range { width:10px; height:14px; border:solid #7cc4ff; border-width:2px 0; background:linear-gradient(#7cc4ff,#7cc4ff) center/2px 100% no-repeat; }
+.weather-chart-heading .key-rain { width:12px; height:12px; border-top:2px solid #f0a640; background:repeating-linear-gradient(45deg,#f0a640 0 2px,#f0a64047 2px 4px); }
+.weather-chart-heading .key-moon { width:22px; height:8px; border-radius:4px; border:1.5px solid #f4e7b8; background:#f4e7b880; }
+.weather-chart-heading .key-selected { width:12px; height:14px; border:2px solid #fff4cf; }
 .weather-chart { display:block; width:100%; max-width:850px; margin:8px auto 0; touch-action:pan-y; outline-offset:3px; }
 .weather-at { display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; margin:10px 0 18px; }
 .weather-at strong { color:#cedbd3; font-size:12px; font-weight:500; }
+.weather-at > div { display:grid; gap:4px; min-width:0; }
+.weather-readout { color:#c3d3db; font-size:12px; line-height:1.5; }
+.weather-readout b { color:#e6eef2; font-weight:600; }
 .weather-at button { font-size:12px; }
 .weather-metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px 24px; padding:17px 0; border-top:1px solid #29434e; }
 .weather-metrics > div { display:flex; align-items:flex-start; gap:9px; min-width:0; color:#89a5b1; font-size:12px; }
@@ -1470,7 +1479,7 @@ button:disabled { opacity: .45; cursor: default; }
 .weather-window button { margin-left:auto; font-size:12px; }
 .weather-source,.weather-method { font-size:12px; line-height:1.8; color:#829fab; margin:7px 0 0; }
 .weather-source a { text-decoration:underline; text-underline-offset:3px; color:#a3c6b9; }
-@media(max-width:700px) { .weather-panel > summary { padding:12px 13px; gap:10px; } .weather-site { gap:8px; flex:1; } .weather-site strong,.weather-glance strong { font-size:12px; } .weather-site small,.weather-glance small { font-size:12px; } .weather-glance { max-width:48%; } .weather-content { padding:0 13px 14px; } .weather-metrics { grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 12px; } .weather-chart-heading { gap:8px 15px; } .weather-chart-heading small { margin-left:0; width:100%; } .weather-window { flex-wrap:wrap; padding:12px; } .weather-window > svg { display:none; } }
+@media(max-width:700px) { .weather-panel > summary { padding:12px 13px; gap:10px; } .weather-site { gap:8px; flex:1; } .weather-site strong,.weather-glance strong { font-size:12px; } .weather-site small,.weather-glance small { font-size:12px; } .weather-glance { max-width:48%; } .weather-content { padding:0 13px 14px; } .weather-metrics { grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 12px; } .weather-chart-heading { gap:6px 14px; } .weather-window { flex-wrap:wrap; padding:12px; } .weather-window > svg { display:none; } }
 
 .stargazing-controls { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin:12px 0; color:#8caab4; font-size:12px; }
 .stargazing-controls label { display:flex; align-items:center; gap:10px; }
