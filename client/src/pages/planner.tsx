@@ -161,6 +161,9 @@ import { MoonObservatory, MoonlightCard, LunarNightItem } from "@/components/Moo
 import { SavedLocations } from "@/components/SavedLocations";
 import { savedLocationsSchema, matchingLocation, knownLocationName, type SavedLocation } from "@/lib/saved-locations";
 import { SessionPlanner } from "@/components/SessionPlanner";
+import { PlanImportGate, SendPlanToPhone } from "@/components/plan-share-entry";
+import { usePendingImport } from "@/lib/import-arrival";
+import type { BackupData } from "@/lib/backup";
 import { CatalogExplorer, openOwnChart } from "@/components/CatalogExplorer";
 import { BinocularAssessment, BinocularProfileControls, BinocularProfileSummary, profileFromSettings } from "@/components/BinocularAssessment";
 import { moonState } from "@/lib/moon";
@@ -220,6 +223,8 @@ export default function PlannerPage() {
   const [compareIds,setCompareIds,compareError]=useLocalState<string[]>("starhop-clock-objects-v1",settings.targetId?[settings.targetId]:[],z.unknown().transform(comparisonIds));
   const [savedLocations,setSavedLocations,locationsError] = useLocalState<SavedLocation[]>("starhop-saved-locations-v1",[],savedLocationsSchema);
   const activeSession = plannerStore.sessions.find(s=>s.id===plannerStore.activeId&&!s.archived);
+  /** A "Send to phone" link is waiting (lib/import-arrival.ts): the import preview shows over the Planner. */
+  const pendingImport=usePendingImport();
   const [lastObservationUndo,setLastObservationUndo]=useState<{sessionId:string|null;targetId:string;previousItem?:NightItem;loggedAt:string}|null>(null);
   const night=activeSession?.items??legacyNight;
   function setNight(next:NightItem[]|((previous:NightItem[])=>NightItem[])) {
@@ -655,6 +660,10 @@ export default function PlannerPage() {
       if(activeSession)toast({title:`Browsing at ${name}`,description:`${activeSession.name} stays at its saved site. Saves at this site will use a separate night.`});
     }
     setSiteChange(null);
+  }
+  /** Backup restore and "Send to phone" imports (lib/backup.ts, lib/plan-share.ts) replace the stored data with the merged result. */
+  function applyImportedData(next:BackupData) {
+    setSettings(next.settings);setPlannerStore(next.planner);setSavedLocations(next.savedLocations);setLegacyNight(next.unscheduled??[]);
   }
   function createSession(s:ObservingSession) {
     setPlannerStore(current=>({...current,sessions:[...current.sessions,s],activeId:s.id}));
@@ -2100,7 +2109,7 @@ export default function PlannerPage() {
               <SessionPlanner selectedTarget={selected} profile={binocularProfile} onCompare={(ids,at,a,b)=>compareObjects(ids,at,a,b)} savedLocations={savedLocations} onLocationsChange={setSavedLocations} sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} live={settings.timeMode === "live"}
                 onCreate={createSession} onUpdate={updateSession} onSelect={selectSession} onPreview={(at,a,b,stay)=>previewMoment(at,a,b,!stay)} onVisit={visitScheduledTarget} onAdd={toggleSave} onObserved={markObserved} objectActions={objectActions}
                 onNotes={(id,notes)=>setNight(current=>current.map(item=>item.id===id?{...item,notes}:item))}
-                actions={<><SkySafariExport items={night} targets={planningTargets} session={activeSession} date={date} lat={lat} lon={lon} skyBrightness={settings.skyBrightness}/><Button variant="outline" onClick={exportNight} disabled={!night.length}><Download size={15}/> Export notes</Button></>}
+                actions={<><Suspense fallback={null}><SendPlanToPhone session={activeSession} settings={settings} savedLocations={savedLocations}/></Suspense><SkySafariExport items={night} targets={planningTargets} session={activeSession} date={date} lat={lat} lon={lon} skyBrightness={settings.skyBrightness}/><Button variant="outline" onClick={exportNight} disabled={!night.length}><Download size={15}/> Export notes</Button></>}
               />
             </>
           )}
@@ -2130,7 +2139,8 @@ export default function PlannerPage() {
               <div className="image-page"><ImageFallback objectId={settings.targetId||undefined} targets={catalogs.targets} stars={catalogs.stars} back={pageTrail.current.previous&&pageTrail.current.previous!=="image"?{label:`Back to ${PAGE_LABELS[pageTrail.current.previous]}`,onClick:()=>history.back()}:undefined}/></div>
             </>
           )}
-          {page==="night"&&<Suspense fallback={null}><BackupControls data={{settings,planner:plannerStore,savedLocations,unscheduled:legacyNight}} onImport={next=>{setSettings(next.settings);setPlannerStore(next.planner);setSavedLocations(next.savedLocations);setLegacyNight(next.unscheduled??[]);}}/></Suspense>}
+          {page==="night"&&<Suspense fallback={null}><BackupControls data={{settings,planner:plannerStore,savedLocations,unscheduled:legacyNight}} onImport={applyImportedData}/></Suspense>}
+          {pendingImport&&<Suspense fallback={null}><PlanImportGate data={{settings,planner:plannerStore,savedLocations,unscheduled:legacyNight}} onImport={(next,focus)=>{applyImportedData(next);if(focus){previewMoment(new Date(focus.startAt),focus.lat,focus.lon,false);setPage("night");}}}/></Suspense>}
 
           {page==="night"&&<OfflineControls {...offline}/>}
           <footer className="app-footer">

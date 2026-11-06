@@ -42,14 +42,15 @@ export type BackupPreview = {
   counts: { sessions: number; targets: number; observations: number; locations: number; journeys?: number; journeyFeedback?: number };
 };
 
-export function createBackup(data: BackupData, now = new Date()): string {
+/** The backup JSON (one format for files and "Send to phone" links). `compact` drops the indentation (links). */
+export function createBackup(data: BackupData, now = new Date(), { compact = false }: { compact?: boolean } = {}): string {
   const parsed = backupSchema.parse({
     format: "starhop-backup",
     version: BACKUP_VERSION,
     exportedAt: now.toISOString(),
     data,
   });
-  return JSON.stringify(parsed, null, 2);
+  return compact ? JSON.stringify(parsed) : JSON.stringify(parsed, null, 2);
 }
 
 export function parseBackupText(text: string): BackupPreview {

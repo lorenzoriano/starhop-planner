@@ -1,6 +1,8 @@
-import { useRef, useState } from "react";
-import { Download, Upload } from "lucide-react";
+import { Suspense, useRef, useState } from "react";
+import { Download, Share2, Upload } from "lucide-react";
 import { Button } from "./ui/button";
+import { canShareFile, downloadFile, shareFile } from "@/lib/file-transfer";
+import { SendBackupToPhone } from "./plan-share-entry";
 import { applyBackup, createBackup, readBackupFile, readJourneyBackup, writeJourneyBackup, type BackupData, type BackupMode, type BackupPreview } from "@/lib/backup";
 
 type Props = {
@@ -15,18 +17,26 @@ export function BackupControls({ data, onImport }: Props) {
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
 
+  const backupFile = () => {
+    // Sky Journeys progress and feedback live in their own device keys; read them at export time.
+    const journeys = readJourneyBackup();
+    return new File([createBackup(journeys ? { ...data, journeys } : data)], `starhop-backup-${new Date().toISOString().slice(0, 10)}.json`, { type: "application/json" });
+  };
   const download = () => {
     try {
-      // Sky Journeys progress and feedback live in their own device keys; read them at export time.
-      const journeys = readJourneyBackup();
-      const blob = new Blob([createBackup(journeys ? { ...data, journeys } : data)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = `starhop-backup-${new Date().toISOString().slice(0, 10)}.json`;
-      anchor.click();
-      URL.revokeObjectURL(url);
+      // Appended link, revoked later (file-transfer.ts): Android Chrome needs both to save the file.
+      downloadFile(backupFile());
       setStatus("Backup downloaded."); setError("");
+    } catch {
+      setError("Could not create the backup file."); setStatus("");
+    }
+  };
+  const fileShareable = (() => { try { return canShareFile(new File(["{}"], "x.json", { type: "application/json" })); } catch { return false; } })();
+  const share = async () => {
+    try {
+      const outcome = await shareFile(backupFile());
+      if (outcome === "shared") { setStatus("Backup shared."); setError(""); }
+      else if (outcome === "unavailable") { setError("This browser cannot share files. Download the backup instead."); setStatus(""); }
     } catch {
       setError("Could not create the backup file."); setStatus("");
     }
@@ -58,10 +68,13 @@ export function BackupControls({ data, onImport }: Props) {
   return <section className="space-y-3" aria-label="Backup and restore">
     <div className="flex flex-wrap gap-2">
       <Button type="button" variant="outline" onClick={download}><Download size={15}/> Download backup</Button>
+      {fileShareable && <Button type="button" variant="outline" onClick={() => void share()}><Share2 size={15}/> Share backup</Button>}
       <Button type="button" variant="outline" onClick={() => input.current?.click()}><Upload size={15}/> Choose backup file</Button>
-      <input ref={input} className="sr-only" type="file" accept=".json,application/json" aria-label="Choose a Starhop backup file" onChange={event => void selectFile(event.target.files?.[0])}/>
+      <Suspense fallback={null}><SendBackupToPhone data={data}/></Suspense>
+      {/* Android file managers often label .json files text/plain or octet-stream; the contents are validated anyway. */}
+      <input ref={input} className="sr-only" type="file" accept=".json,application/json,text/plain,application/octet-stream" aria-label="Choose a Starhop backup file" onChange={event => void selectFile(event.target.files?.[0])}/>
     </div>
-    <p className="text-sm text-muted-foreground">Move your settings, observing sessions, notes, recorded observations, saved locations and Sky Journeys progress to another device. Backup files can be up to 5 MiB.</p>
+    <p className="text-sm text-muted-foreground">Move your settings, observing sessions, notes, recorded observations, saved locations and Sky Journeys progress to another device. Backup files can be up to 5 MiB. To move one night from a laptop to your phone, use Send to phone in the Planner’s Export & more menu.</p>
     {preview && <div className="rounded-md border p-3 space-y-3" aria-label="Backup import preview">
       <div><strong>Backup preview</strong><p className="text-sm text-muted-foreground">Exported {new Date(preview.exportedAt).toLocaleString()}</p></div>
       <ul className="text-sm">
