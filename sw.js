@@ -52,7 +52,7 @@
   }
 
   // client/service-worker/sw.js
-  var BUILD = "851228558be835b1";
+  var BUILD = "9f62ab8d293bcb8c";
   var PREFIX = `starhop-${encodeURIComponent(new URL(self.registration.scope).pathname)}-`;
   var CACHE = `${PREFIX}${BUILD}`;
   var META_CACHE = `${PREFIX}meta`;
