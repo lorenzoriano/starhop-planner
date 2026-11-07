@@ -1,20 +1,14 @@
 /**
  * Journey stops keep their journey tag and their own planned time wherever they enter a night: "Add to tonight's plan"
  * (appendNightItems), the stored-list dedupe (nightListSchema), backup merge (applyBackup) and "I see" (mergeJourneyTag).
- * Also: the SkySafari plan prints journey slot lengths, and fitting a session to a journey holds its whole block.
+ * Also: journey stops keep their slot length, and fitting a session to a journey holds its whole block.
  */
-import { describe, expect, it, vi, afterAll } from "vitest";
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { describe, expect, it } from "vitest";
 import { appendNightItems, nightHolds } from "../night-ops";
 import { defaultSettings, mergeJourneyTag, nightListSchema, type NightItem } from "../session";
 import { applyBackup, type BackupData } from "../backup";
 import { emptyPlanner, journeyBlockFit, journeySlots, makeSession, type ObservingSession } from "../session-planner";
-import { buildSkySafariExport } from "../skysafari-export";
-import { buildUnifiedTargets, loadBinocularTargets, loadMessier } from "../astronomy";
 
-vi.stubGlobal("fetch", async (input: string) => new Response(readFileSync(resolve(__dirname, "../../../public", input.replace(/^\.\//, "")), "utf8")));
-afterAll(() => vi.unstubAllGlobals());
 
 const KEY = "A3-how-far~perseus";
 const T1 = "2026-11-04T04:30:00.000Z", T2 = "2026-11-04T04:38:00.000Z";
@@ -83,19 +77,12 @@ describe("stored lists and backups use the same rule", () => {
   });
 });
 
-describe("SkySafari plan: journey stops keep their slot length", () => {
-  it("prints each journey stop's own minutes, not the session's minutes per target", async () => {
-    const targets = buildUnifiedTargets(await loadMessier(), await loadBinocularTargets());
+describe("journey stops keep their slot length", () => {
+  it("uses each journey stop's own minutes, not the session's minutes per target", () => {
     const start = new Date("2026-11-04T04:00:00Z");
     const items = appendNightItems([], ["M31", "NGC869"], { at: T1, journeyKey: KEY, journeyStops: [1, 2], plannedAts: [new Date(+start + 30 * 60_000), new Date(+start + 35 * 60_000)] }).items;
     const session = { ...makeSession("Nov 3", start, 37.77, -122.42, items), minutesPerTarget: 15 };
     expect(journeySlots(session).map((slot) => slot.minutes)).toEqual([5, 5]);
-    const exported = buildSkySafariExport({ items, targets, session, date: start, lat: 37.77, lon: -122.42, scope: "plan", skyBrightness: 21 });
-    const sequence = exported.planText.split("SUGGESTED VIEWING SEQUENCE")[1];
-    expect(sequence).toMatch(/M31.*· 5 min ·/);
-    expect(sequence).not.toContain("15 min");
-    expect(exported.skylist).toContain("· 5 min ·");
-    expect(exported.skylist).not.toMatch(/Suggested start:[^\\]*· 15 min/);
   });
 });
 

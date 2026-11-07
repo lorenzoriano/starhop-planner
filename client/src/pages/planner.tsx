@@ -147,7 +147,6 @@ import { SkyChart } from "@/components/SkyChart";
 import { HopFieldNavigation, HopViewDirection } from "@/components/HopFieldNavigation";
 import { EyepieceCalculator } from "@/components/EyepieceCalculator";
 import { NavigationStarResults, type NavigationStarHit } from "@/components/NavigationStarResults";
-import { SkySafariExport } from "@/components/SkySafariExport";
 import { catalogDiameter } from "@/lib/finder-detail";
 import { WeatherPanel } from "@/components/WeatherPanel";
 import { SelectedTargetPlanning } from "@/components/SelectedTargetPlanning";
@@ -2138,7 +2137,7 @@ export default function PlannerPage() {
               <SessionPlanner skyAt={skyAt} observer={observer} selectedTarget={selected} profile={binocularProfile} onCompare={(ids,at,a,b)=>compareObjects(ids,at,a,b)} savedLocations={savedLocations} onLocationsChange={setSavedLocations} sessions={plannerStore.sessions} active={activeSession} targets={planningTargets} date={date} lat={lat} lon={lon} timezone={timezone} items={night} skyBrightness={settings.skyBrightness} live={settings.timeMode === "live"}
                 onCreate={createSession} onUpdate={updateSession} onSelect={selectSession} onPreview={(at,a,b,stay)=>previewMoment(at,a,b,!stay)} onVisit={visitScheduledTarget} onAdd={toggleSave} onObserved={markObserved} objectActions={objectActions}
                 onNotes={(id,notes)=>setNight(current=>current.map(item=>item.id===id?{...item,notes}:item))}
-                actions={<><Suspense fallback={null}><SendPlanToPhone session={activeSession} settings={settings} savedLocations={savedLocations}/></Suspense><SkySafariExport items={night} targets={planningTargets} session={activeSession} date={date} lat={lat} lon={lon} skyBrightness={settings.skyBrightness}/><Button variant="outline" onClick={exportNight} disabled={!night.length}><Download size={15}/> Export notes</Button></>}
+                actions={<><Suspense fallback={null}><SendPlanToPhone session={activeSession} settings={settings} savedLocations={savedLocations}/></Suspense><Button variant="outline" onClick={exportNight} disabled={!night.length}><Download size={15}/> Export notes</Button></>}
               />
             </>
           )}
