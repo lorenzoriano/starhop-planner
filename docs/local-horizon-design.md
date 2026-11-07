@@ -42,7 +42,7 @@ What success looks like:
 | Viewer overlay | Terrain line drawn over the photos, PeakFinder-style. Agreement validates alignment; disagreement where hills form the skyline solves north and FOV. | Works only where distant hills form part of the skyline. Backyards fall back to other methods. |
 | Camera calibration | Automatic: FOV (optionally one radial distortion term) from frame overlaps vs gyro rotation, stored once per device. | The video stream FOV is stable for a given camera and resolution. Stabilisation crop is the main unknown. |
 | Day or night | Compass + magnetic declination as the first guess, then all of: tap the Sun, tap Moon/planet/bright star, automatic terrain match, drag a landmark. Keep the best one with its uncertainty. | Planets and bright stars are visible in the live preview at twilight. |
-| Segmentation | Day/twilight: SegFormer-B0 ADE20K (Transformers.js/ONNX, lazy ~8 MB), guided-filter refinement, soft alpha for foliage, brush fixes. Night: user traces the skyline with a finger on a brightened frame. | WebGPU is available on the owner's phone; WASM fallback is acceptable at 10–60 s. |
+| Segmentation | Day/twilight: SegFormer-B0 ADE20K (ONNX Runtime Web, lazy 4–8 MB, cached for offline use), guided-filter refinement, soft alpha for foliage, brush fixes. Night: user traces the skyline with a finger on a brightened frame. | WebGPU is available on the owner's phone; WASM fallback is acceptable at 10–60 s. |
 | Geometry | No feature stitching. Sensor placement (RelativeOrientationSensor for geometry, AbsoluteOrientationSensor for heading, median offset). Optional overlap refinement. | Gyro drift over a 2-minute sweep is about 1° or less. |
 | Viewer | Browsable 360°, custom WebGL (one full-screen quad sampling the panorama) with a 2D canvas overlay and a 2D fallback; stars and targets; time slider with one rotation per tick. | Decided during phase 3: custom code instead of Photo Sphere Viewer (no three.js dependency, exact control of the star overlay and Line up). |
 | Exports | Stellarium polygonal and NINA `.hrz` text. | The plain "az alt" text list also works for Telescopius, Cartes du Ciel, KStars. |
@@ -282,7 +282,7 @@ two lines should coincide. Agreement is the visible proof; disagreement feeds th
 
 | Situation | Method |
 |---|---|
-| Day, overcast or clear (best), and civil twilight | SegFormer-B0 ADE20K (`Xenova/segformer-b0-finetuned-ade-512-512`, fp16 7.9 MB, int8 4.4 MB) via Transformers.js, WebGPU with WASM fallback. Take P(sky) from the softmax, not the argmax. |
+| Day, overcast or clear (best), and civil twilight | SegFormer-B0 ADE20K (`Xenova/segformer-b0-finetuned-ade-512-512`, fp16 7.9 MB, fp32 15.3 MB, int8 4.4 MB; float32 in and out) run directly with ONNX Runtime Web (`onnxruntime-web/webgpu`, the build with both the WebGPU and WASM execution providers): WebGPU with fp16 (fp32 without `shader-f16`) on a non-fallback adapter, else WASM with int8, and WASM if WebGPU fails at run time. Preprocessing per the model's `preprocessor_config.json` (bilinear 512², rescale 1/255, ImageNet mean/std) in `segformer-math.ts`. The weights and ORT's wasm (from jsDelivr at the installed version; none is copied into dist) are kept in the Cache API (`starhop-models-v1`), so later sweeps work offline. Take P(sky) from the softmax, not the argmax. |
 | Refinement | Weighted guided filter of P(sky) against the full-resolution frame, fused with a brightness/blue-ness prior. Recovers sky between leaves. Output soft alpha. |
 | Model cannot load | Classical brightness/blue-ness threshold plus a per-column sky border. |
 | Night | No automatic segmentation. Frame is brightened (gain, gamma, average of 8–16 still frames). The user traces the skyline with a finger across the strip; the trace snaps to the strongest edge within a few pixels. |
@@ -290,7 +290,7 @@ two lines should coincide. Agreement is the visible proof; disagreement feeds th
 | Sun in frame | Mask a disc around the computed Sun position as "unknown" and fill from neighbouring frames; the guide warns before capture. |
 
 Cells with alpha ≥ 0.5 are clear. Foliage gives intermediate alpha, stored as such. The model and runtime are fetched
-only when the user opens the capture page, never in the service worker install.
+only when the first capture frame is segmented, never in the service worker install.
 
 **Licence note.** SegFormer weights are under the NVIDIA Source Code License (non-commercial, research or evaluation
 use). ADE20K is also research-only. That is fine for a free hobby app but it is not open source. If StarHop ever
@@ -470,7 +470,7 @@ behaviour near the telescope, and model speed (WebGPU vs WASM).
 | `HorizonProfile.source` | Records which source produced each profile so the credits line can name it. |
 | WMM (via `geomagnetism`, Apache-2.0) | NOAA model, public domain. |
 | SegFormer-B0 weights | NVIDIA Source Code License, non-commercial; ADE20K research-only. Note in the licences folder. |
-| Transformers.js / ONNX Runtime Web | Apache-2.0 / MIT. |
+| ONNX Runtime Web | MIT. Its wasm is fetched at run time from jsDelivr, not shipped in dist. |
 | Photo Sphere Viewer, three.js | MIT. |
 
 ## 13. Phases
@@ -520,7 +520,7 @@ Segmentation
 - Shen & Wang 2013 sky border: https://journals.sagepub.com/doi/full/10.5772/56884
 - SAM 2.1 tiny ONNX: https://huggingface.co/onnx-community/sam2.1-hiera-tiny-ONNX
 - OneFormer: https://github.com/SHI-Labs/OneFormer
-- Browser inference measurements: https://arxiv.org/html/2402.05981v2 ; ORT WebGPU: https://onnxruntime.ai/docs/tutorials/web/ep-webgpu.html ; Transformers.js WebGPU: https://huggingface.co/docs/transformers.js/guides/webgpu
+- Browser inference measurements: https://arxiv.org/html/2402.05981v2 ; ORT WebGPU: https://onnxruntime.ai/docs/tutorials/web/ep-webgpu.html
 
 Viewer
 - Photo Sphere Viewer: https://photo-sphere-viewer.js.org/ ; cropped panoramas: https://photo-sphere-viewer.js.org/guide/adapters/equirectangular.html

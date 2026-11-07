@@ -10,6 +10,19 @@ export const SEGFORMER_MODEL = 'Xenova/segformer-b0-finetuned-ade-512-512';
 /** ADE20K-150 label id of "sky" (config.json id2label["2"] = "sky"). */
 export const ADE_SKY_ID = 2;
 export const SEGFORMER_SIZE = 512;
+
+/** Weight variants published with the model: fp16/fp32 for WebGPU, int8 (quantized) for WASM. All take and return float32. */
+export type SegformerDtype = 'fp16' | 'fp32' | 'q8';
+/** File names, and their sizes in bytes (only a progress estimate for when the server sends no Content-Length). */
+export const SEGFORMER_FILES: Record<SegformerDtype, { file: string; bytes: number }> = {
+  fp16: { file: 'model_fp16.onnx', bytes: 7_939_696 },
+  fp32: { file: 'model.onnx', bytes: 15_335_446 },
+  q8: { file: 'model_quantized.onnx', bytes: 4_418_863 },
+};
+
+export function segformerModelUrl(dtype: SegformerDtype): string {
+  return `https://huggingface.co/${SEGFORMER_MODEL}/resolve/main/onnx/${SEGFORMER_FILES[dtype].file}`;
+}
 const MEAN = [0.485, 0.456, 0.406];
 const STD = [0.229, 0.224, 0.225];
 
@@ -70,6 +83,12 @@ export function fuseSkyProbabilities(model: GrayImage, prior: GrayImage, modelWe
     data[i] = Math.round(255 / (1 + Math.exp(-l)));
   }
   return { width, height, data };
+}
+
+/** Logits as float32, whatever the model returned (float16 comes as Uint16Array bits, or Float16Array where supported). */
+export function logitsToFloat32(type: string, data: ArrayLike<number>): ArrayLike<number> {
+  if (type !== 'float16') return data;
+  return data instanceof Uint16Array ? Float32Array.from(data, halfToFloat) : Float32Array.from(data);
 }
 
 /** IEEE half → float (for float16 logits stored as Uint16Array). */

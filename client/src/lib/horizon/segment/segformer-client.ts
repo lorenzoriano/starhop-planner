@@ -53,8 +53,9 @@ function getWorker(): Worker {
 }
 
 /**
- * P(sky) per pixel (0…255) from SegFormer-B0 ADE20K, at the frame's size. Loads Transformers.js and the model on the
- * first call (`onProgress` gets the download fraction 0…1). Rejects when the model cannot load or run.
+ * P(sky) per pixel (0…255) from SegFormer-B0 ADE20K, at the frame's size. Loads ONNX Runtime Web and the model on the
+ * first call (`onProgress` gets the download fraction 0…1; later sessions read them from the Cache API). Rejects when
+ * the model cannot load or run.
  */
 export function segformerSky(img: RgbaImage, onProgress?: (p: number) => void): Promise<GrayImage> {
   return new Promise((resolve, reject) => {
