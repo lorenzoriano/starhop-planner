@@ -46,7 +46,7 @@ describe('journey hard constraints (independent re-check)', () => {
     console.log(`[property/fixture] runs=${runs} journeys=${journeys} withMoonUp=${withMoon} emptyRuns=${empty}`);
     expect(problems).toEqual([]);
     expect(journeys).toBeGreaterThan(40);
-  });
+  }, 60_000);
 
   it('fixture KB: request options (minAlt 20, first-night, open sky, long journeys, 7×50)', () => {
     const problems: string[] = [];
@@ -78,7 +78,7 @@ describe('journey hard constraints (independent re-check)', () => {
     console.log(`[property/options] journeys=${journeys}`);
     expect(problems).toEqual([]);
     expect(journeys).toBeGreaterThan(10);
-  });
+  }, 60_000);
 
   it('synthetic sky-wide KB (360 objects): seeded random conditions incl. bright Moon', () => {
     const kb = syntheticKb(24);

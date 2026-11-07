@@ -10,6 +10,7 @@
  * With no horizon known, comparisons keep the app's flat-horizon rule: geometric altitude ≥ 0 (margins ignored).
  */
 import type { Compass8 } from '../journeys/types';
+import type { HorizonVerdict } from './photo-types';
 import type { HorizonProfile, LocalHorizon } from './types';
 
 const RAD = Math.PI / 180;
@@ -361,4 +362,87 @@ export function horizonSummary(profile: HorizonProfile | null | undefined): stri
     if (a < bins.alt[low]) low = i;
   });
   return `${first}; the lowest gap is ${fmtDeg(bins.alt[low])} to the ${COMPASS_WORDS[compass8Of(low * bins.step)]}.`;
+}
+
+/**
+ * One plain sentence about a photo layer (trees and buildings), e.g.
+ * "Trees and buildings block up to 24° to the southwest; open to the north."
+ */
+export function photoLayerSummary(profile: HorizonProfile): string {
+  const top = highestPoint(profile);
+  if (!top) return 'No photo horizon yet.';
+  if (top.alt < OPEN_DEG) return `Open sky all around in the photo; nothing nearby rises above ${fmtDeg(Math.max(0, top.alt))}.`;
+  const first = `Trees and buildings block up to ${fmtDeg(top.alt)} to the ${COMPASS_WORDS[compass8Of(top.az)]}`;
+  const h: LocalHorizon = { photo: profile };
+  const runs = openRuns(COMPASS8.map((d) => Math.max(...sectorValues(h, d)) < OPEN_DEG));
+  if (!runs.length) return `${first}.`;
+  const words = runs.map((r) => (r.startsWith('the ') ? `to ${r}` : `from ${r}`));
+  return `${first}; open ${words.slice(0, 2).join(' and ')}.`;
+}
+
+// ───────────────────────────── uncertainty-aware verdict (design 4.4) ─────────────────────────────
+
+/** Default one-sigma for a photo layer without an uncertainty (an imported file), degrees. */
+const PHOTO_DEFAULT_SIGMA = 1;
+
+/** Terrain altitude sigma from the skyline distance: 0.2° beyond 5 km, 1° at 1–5 km, 2° nearer (design 4.4). */
+function terrainSigma(distanceKm: number | undefined): number {
+  if (distanceKm === undefined || !Number.isFinite(distanceKm)) return 1;
+  return distanceKm > 5 ? 0.2 : distanceKm >= 1 ? 1 : 2;
+}
+
+interface Winner {
+  /** Apparent skyline altitude at the azimuth. */
+  alt: number;
+  /** σ_eff = sqrt(σ_alt² + (slope·σ_az)²), degrees. */
+  sigma: number;
+}
+
+/** The layer that sets the skyline at `az` (highest apparent altitude) and its effective sigma; null with no layer. */
+function winningLayer(h: LocalHorizon | null | undefined, azDeg: number): Winner | null {
+  let best: { p: HorizonProfile; alt: number } | null = null;
+  for (const p of presentLayers(h)) {
+    const bins = layerBins(p)!;
+    const v = interpolate(bins.alt, bins.step, azDeg);
+    if (Number.isFinite(v) && (!best || v > best.alt)) best = { p, alt: v };
+  }
+  if (!best) return null;
+  const { p } = best, bins = layerBins(p)!, n = bins.alt.length;
+  const x = norm(azDeg) / bins.step, i0 = Math.floor(x) % n, i1 = (i0 + 1) % n;
+  const at = (i: number) => bins.alt[((i % n) + n) % n];
+  // Local slope (deg of altitude per deg of azimuth): the steepest of the segment holding az and its two neighbours,
+  // so an azimuth sitting just beside a trunk or roof corner still sees the edge.
+  const slope = Math.max(Math.abs(at(i1) - at(i0)), Math.abs(at(i0) - at(i0 - 1)), Math.abs(at(i1 + 1) - at(i1))) / bins.step;
+  let sigmaAlt: number, sigmaAz: number;
+  if (p.kind === 'terrain') {
+    const d = p.distanceKm;
+    sigmaAlt = terrainSigma(d ? (x - Math.floor(x) < 0.5 ? d[i0] : d[i1]) : undefined);
+    sigmaAz = 0;
+  } else {
+    sigmaAlt = sigmaAz = p.uncertaintyDeg ?? PHOTO_DEFAULT_SIGMA;
+  }
+  return { alt: best.alt, sigma: Math.sqrt(sigmaAlt ** 2 + (slope * sigmaAz) ** 2) };
+}
+
+/**
+ * Effective one-sigma of the skyline at an azimuth, degrees: the winning layer's altitude sigma widened by the local
+ * slope times its azimuth sigma (terrain azimuths are exact; a photo layer's are as good as its alignment). 0 when no
+ * horizon is known.
+ */
+export function layerSigmaAt(h: LocalHorizon | null | undefined, azDeg: number): number {
+  return winningLayer(h, azDeg)?.sigma ?? 0;
+}
+
+/**
+ * Uncertainty-aware answer for a target at GEOMETRIC altitude `geometricAlt` and azimuth `az` (design 4.4):
+ * clear when it clears the skyline's geometric-equivalent threshold by 2·σ_eff, blocked when it is 2·σ_eff below,
+ * marginal in between. With no horizon known: the flat rule (alt ≥ 0 → clear, else blocked), never marginal.
+ */
+export function horizonVerdict(h: LocalHorizon | null | undefined, geometricAlt: number, az: number): HorizonVerdict {
+  const w = winningLayer(h, az);
+  if (!w) return geometricAlt >= 0 ? 'clear' : 'blocked';
+  const d = geometricAlt - geometricFromApparent(w.alt);
+  if (d >= 2 * w.sigma) return 'clear';
+  if (d <= -2 * w.sigma) return 'blocked';
+  return 'marginal';
 }

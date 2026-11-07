@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { LocalHorizonView, groundHeightOffer, horizonStatusText, profileChartRange } from '../LocalHorizonPanel';
+import { LocalHorizonView, groundHeightOffer, horizonStatusText, profileChartRange, type PhotoHorizonSection } from '../LocalHorizonPanel';
 import { ATTRIBUTION_LINKS } from '@/lib/horizon/terrain';
+import { photoLayerSummary } from '@/lib/horizon/profile';
 import type { HorizonProfile, TerrainStatus } from '@/lib/horizon/types';
 import zermatt from '@/lib/__tests__/horizon-zermatt-village.json';
 
@@ -66,6 +67,58 @@ describe('LocalHorizonView', () => {
     expect(groundHeightOffer(Z, undefined)).toBeNull();
     const html = render({ status: { state: 'ready', profile: Z }, profile: Z, elevation: elevation(0, 'unknown') });
     expect(text(html)).toContain('Use ground height from the terrain map (1,603 m)');
+  });
+});
+
+describe('LocalHorizonView: trees and buildings', () => {
+  const photoProfile: HorizonProfile = {
+    kind: 'photo', stepDeg: 1, lat: Z.lat, lon: Z.lon, computedAt: '2026-11-06T12:00:00Z', source: 'Camera sweep', uncertaintyDeg: 0.8,
+    alt: Array.from({ length: 360 }, (_, az) => (az >= 200 && az <= 250 ? 24 : 2)),
+  };
+  const section = (over: Partial<PhotoHorizonSection> = {}): PhotoHorizonSection => ({
+    profile: null, advice: null, cameraSupported: true, canDownload: true, message: null,
+    onCapture: noop, onLookAround: noop, onRemove: noop, onDownload: noop, onImport: noop, ...over,
+  });
+
+  it('without a photo layer offers the capture, Look around and import; no Remove', () => {
+    const t = text(render({ status: { state: 'ready', profile: Z }, profile: Z, photo: section() }));
+    expect(t).toContain('Trees and buildings');
+    expect(t).toContain('Add trees and buildings');
+    expect(t).toContain('Look around');
+    expect(t).not.toContain('Capture again');
+    expect(t).not.toContain('Remove photo horizon');
+    expect(t).toContain('Import a horizon file');
+    expect(t).toContain('Download for Stellarium');
+    expect(t).toContain('Download for NINA');
+    expect(t).toContain('Download as text');
+    // The terrain part is unchanged.
+    expect(t).toContain('Mountains block up to 33° to the northwest');
+  });
+
+  it('with a photo layer shows its summary, the seasonal advice, Capture again and Remove', () => {
+    const advice = 'Your photo horizon was taken with bare trees; leaves may block more now. Capture again for summer.';
+    const t = text(render({ status: { state: 'ready', profile: Z }, profile: Z, photo: section({ profile: photoProfile, advice }) }));
+    expect(t).toContain(photoLayerSummary(photoProfile).replace(/\s+/g, ' '));
+    expect(t).toContain('24°');
+    expect(t).toContain(advice);
+    expect(t).toContain('Capture again');
+    expect(t).not.toContain('Add trees and buildings');
+    expect(t).toContain('Remove photo horizon');
+    expect(t).toContain('Look around');
+  });
+
+  it('without camera support: a one-line note and no capture button, but Look around and import stay', () => {
+    const t = text(render({ photo: section({ cameraSupported: false, canDownload: false }) }));
+    expect(t).toContain('cannot be captured here');
+    expect(t).not.toContain('Add trees and buildings');
+    expect(t).toContain('Look around');
+    expect(t).toContain('Import a horizon file');
+    expect(t).not.toContain('Download for NINA');
+  });
+
+  it('is hidden when the local horizon is off, and shows import messages', () => {
+    expect(text(render({ enabled: false, photo: section({ profile: photoProfile }) }))).not.toContain('Trees and buildings');
+    expect(text(render({ photo: section({ message: 'Imported. The file now counts as the trees and buildings for this site.' }) }))).toContain('Imported.');
   });
 });
 

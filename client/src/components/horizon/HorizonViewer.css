@@ -1,0 +1,35 @@
+/* "Look around" viewer: full screen in the top layer (native modal dialog). */
+.horizon-viewer { position:fixed; inset:0; width:100vw; height:100vh; height:100dvh; max-width:none; max-height:none; margin:0; padding:0; border:0; overflow:hidden; background:#05090e; color:#d8e4ea; pointer-events:auto; font-size:14px; }
+.horizon-viewer::backdrop { background:#000; }
+.horizon-viewer-stage { position:absolute; inset:0; }
+.horizon-viewer-bg, .horizon-viewer-overlay { position:absolute; inset:0; width:100%; height:100%; display:block; }
+.horizon-viewer-overlay { touch-action:none; cursor:grab; outline:none; }
+.horizon-viewer-overlay:active { cursor:grabbing; }
+.horizon-viewer-overlay:focus-visible { box-shadow:inset 0 0 0 2px #48dcf0; }
+
+.horizon-viewer-top { position:absolute; top:0; left:0; right:0; display:flex; align-items:center; gap:12px; padding:calc(8px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) 8px calc(12px + env(safe-area-inset-left)); pointer-events:none; }
+.horizon-viewer-top > * { pointer-events:auto; }
+.horizon-viewer-looking { padding:4px 8px; border-radius:4px; background:#0b1824cc; color:#bfd2d4; font-size:13px; }
+
+.horizon-viewer button { min-height:44px; min-width:44px; padding:8px 14px; border:1px solid #496458; border-radius:6px; color:#c6dec9; background:#10222ce6; font:inherit; }
+.horizon-viewer button[aria-pressed="true"], .horizon-viewer button.primary { border-color:#79b49b; background:#1d4038; color:#e6f4ea; }
+.horizon-viewer button:disabled { opacity:.55; }
+.horizon-viewer button:focus-visible, .horizon-viewer input:focus-visible { outline:2px solid #48dcf0; outline-offset:2px; }
+
+.horizon-viewer-panel { position:absolute; left:0; right:0; bottom:0; display:flex; flex-direction:column; gap:6px; padding:10px calc(12px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left)); background:linear-gradient(to top, #05090ef2 60%, #05090e00); }
+.horizon-viewer-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.horizon-viewer-time input[type=range] { flex:1 1 140px; min-width:0; min-height:44px; accent-color:#79b49b; }
+.horizon-viewer-clock { min-width:3.2em; font-variant-numeric:tabular-nums; font-size:18px; font-weight:600; color:#e6f4ea; }
+.horizon-viewer-ends { justify-content:space-between; font-size:12px; color:#9bb1b7; margin-top:-6px; padding-left:calc(3.2em * 18 / 12 + 10px); padding-right:58px; }
+.horizon-viewer-note { margin:0; font-size:12.5px; color:#a9bec4; }
+.horizon-viewer-align p { margin:0; }
+.horizon-viewer-shift { flex:1; text-align:center; font-variant-numeric:tabular-nums; }
+
+/* Phone in landscape: one compact strip so the sky keeps most of the height. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .horizon-viewer-panel { flex-direction:row; flex-wrap:wrap; align-items:center; gap:4px 12px; padding-top:6px; }
+  .horizon-viewer-time { flex:1 1 320px; }
+  .horizon-viewer-ends { display:none; }
+  .horizon-viewer-note { flex-basis:100%; }
+  .horizon-viewer-align { display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; flex:1; }
+}

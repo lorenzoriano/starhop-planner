@@ -50,6 +50,13 @@ export const terrainJobsVersion = () => version;
 /** Changes only when a result was stored (re-read storage). */
 export const terrainStoreVersion = () => storeVersion;
 
+/** Tell every useLocalHorizon that stored layers changed outside a terrain job (photo saved, shifted, removed or
+ *  imported): they re-read storage and the whole app recalculates without a reload. */
+export function notifyHorizonStoreChanged(): void {
+  storeVersion++;
+  emit();
+}
+
 export const terrainJob = (key: string): { progress: number } | undefined => jobs.get(key);
 export const terrainFailure = (key: string): TerrainFailure | undefined => failures.get(key);
 

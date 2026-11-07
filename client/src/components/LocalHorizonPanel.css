@@ -15,3 +15,12 @@
 .local-horizon-actions button { color:#b3d1c7; font-size:12px; text-align:left; text-decoration:underline; text-underline-offset:3px; }
 .local-horizon-credits { margin:0; color:#7d969f; font-size:11px; line-height:1.45; }
 .local-horizon-credits a { color:#9cbcb3; text-decoration:underline; text-underline-offset:2px; }
+.local-horizon-photo { display:grid; gap:6px; padding-top:6px; border-top:1px solid #23394366; }
+.local-horizon-photo h4 { margin:0; font-size:13px; font-weight:600; color:#d3dedc; }
+.local-horizon-advice { color:#e6cf9a; }
+.local-horizon-files summary { color:#b3d1c7; font-size:12px; cursor:pointer; min-height:28px; display:flex; align-items:center; }
+.local-horizon-files .local-horizon-actions { padding-top:4px; }
+.local-horizon-import { color:#b3d1c7; font-size:12px; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+.local-horizon-import input { position:absolute; width:1px; height:1px; opacity:0; }
+.local-horizon-overlay { position:fixed; inset:0; z-index:60; background:#05080b; outline:none; }
+.local-horizon-overlay-loading { margin:0; padding:24px; color:#c1d7ce; }

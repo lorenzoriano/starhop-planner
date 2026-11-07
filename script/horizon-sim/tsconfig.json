@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["./**/*.ts"],
+  "compilerOptions": { "noEmit": true, "incremental": false, "target": "es2022", "types": ["node"], "paths": { "@/*": ["../../client/src/*"], "playwright": ["/home/lorenzo/.npm/_npx/705bc6b22212b352/node_modules/playwright"] } }
+}

@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import { IMPORT_SOURCE } from '@/lib/horizon/photo-types';
 import { localHorizonEnabled, setLocalHorizonEnabled, subscribeLocalHorizonPref } from '@/lib/horizon/prefs';
 import { horizonSiteKey } from '@/lib/horizon/store';
 import {
   readSiteHorizon, retainTerrainSite, shouldAutoCompute, startTerrainJob, subscribeTerrainJobs, terrainFailure, terrainJob,
   terrainJobsVersion, terrainStoreVersion,
 } from '@/lib/horizon/terrain-jobs';
-import type { LocalHorizon, TerrainStatus } from '@/lib/horizon/types';
+import type { HorizonProfile, LocalHorizon, TerrainStatus } from '@/lib/horizon/types';
 
 /** Wait for coordinate entry to settle before downloading tiles. */
 const DEBOUNCE_MS = 1500;
@@ -25,6 +26,33 @@ function useOnline() {
 }
 
 const preferenceSnapshot = () => localHorizonEnabled();
+
+/** Site keys whose seasonal photo capture was checked, with the local day of the check. */
+const seasonalChecks = new Map<string, string>();
+
+/**
+ * Switch a site's photo layer to the capture for today's leaf season (photo-store's activateSeasonalPhotoLayer), at most
+ * once per site and day, in the background. Only for a site whose stored (localStorage) photo layer came from a camera
+ * sweep, so IndexedDB is never opened for other sites, and only where IndexedDB exists (not in Node tests).
+ * Returns whether a check was started. `load` is for tests.
+ */
+export function checkSeasonalPhotoLayer(
+  key: string,
+  lat: number,
+  lon: number,
+  photo: HorizonProfile | null | undefined,
+  now: Date = new Date(),
+  load: () => Promise<Pick<typeof import('@/lib/horizon/photo-store'), 'activateSeasonalPhotoLayer'>> = () => import('@/lib/horizon/photo-store'),
+): boolean {
+  if (!key || !photo || photo.source === IMPORT_SOURCE || typeof indexedDB === 'undefined') return false;
+  const day = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+  if (seasonalChecks.get(key) === day) return false;
+  seasonalChecks.set(key, day);
+  void load()
+    .then((store) => store.activateSeasonalPhotoLayer(lat, lon, now))
+    .catch(() => { /* the layer in use stays; tried again tomorrow */ });
+  return true;
+}
 
 /** The global "Use my local horizon" preference (default on) and its setter; every component re-renders on change. */
 export function useLocalHorizonPreference(): [boolean, (enabled: boolean) => void] {
@@ -55,6 +83,14 @@ export function useLocalHorizon(
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const horizon = useMemo(() => (key ? readSiteHorizon(lat, lon) : null), [key, storeVersion]);
   const hasTerrain = !!horizon?.terrain;
+  const photo = horizon?.photo;
+
+  // The capture for this leaf season, if the site has seasonal photo captures.
+  useEffect(() => {
+    checkSeasonalPhotoLayer(key, lat, lon, photo);
+    // lat/lon are captured through `key`.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, photo]);
 
   useEffect(() => {
     if (!key || !enabled) return;

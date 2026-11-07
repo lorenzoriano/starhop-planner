@@ -1,6 +1,7 @@
 # Local horizon: design
 
-Status: design agreed with the owner on 2026-11-06. Phase 1 (terrain horizon and app-wide use) is being built now.
+Status: design agreed with the owner on 2026-11-06. Phase 1 (terrain horizon and app-wide use) is live. Phases 2–4
+(photo capture, viewer, exports) are built and tested in simulation; real-phone checks are listed in section 10.2.
 The shared contract is `client/src/lib/horizon/types.ts`. Where this document and the code disagree, the code wins and
 this document should be updated.
 
@@ -43,7 +44,7 @@ What success looks like:
 | Day or night | Compass + magnetic declination as the first guess, then all of: tap the Sun, tap Moon/planet/bright star, automatic terrain match, drag a landmark. Keep the best one with its uncertainty. | Planets and bright stars are visible in the live preview at twilight. |
 | Segmentation | Day/twilight: SegFormer-B0 ADE20K (Transformers.js/ONNX, lazy ~8 MB), guided-filter refinement, soft alpha for foliage, brush fixes. Night: user traces the skyline with a finger on a brightened frame. | WebGPU is available on the owner's phone; WASM fallback is acceptable at 10–60 s. |
 | Geometry | No feature stitching. Sensor placement (RelativeOrientationSensor for geometry, AbsoluteOrientationSensor for heading, median offset). Optional overlap refinement. | Gyro drift over a 2-minute sweep is about 1° or less. |
-| Viewer | Browsable 360°, Photo Sphere Viewer (lazy) or custom WebGL; stars and targets; time slider with one rotation per tick. | Photo Sphere Viewer is the default; custom WebGL only if bundle size becomes a problem. |
+| Viewer | Browsable 360°, custom WebGL (one full-screen quad sampling the panorama) with a 2D canvas overlay and a 2D fallback; stars and targets; time slider with one rotation per tick. | Decided during phase 3: custom code instead of Photo Sphere Viewer (no three.js dependency, exact control of the star overlay and Line up). |
 | Exports | Stellarium polygonal and NINA `.hrz` text. | The plain "az alt" text list also works for Telescopius, Cartes du Ciel, KStars. |
 | Testing | Unit tests on synthetic elevation data; a simulation harness with Chrome fake camera and DevTools sensor overrides. | Only stabilisation crop, real drift and model speed need the real phone. |
 
@@ -263,7 +264,7 @@ the near field.
 
 All frames share one relative (gyro) frame, so a single good yaw fix aligns the whole sweep. Each method produces a
 `YawFix { offsetDeg, sigmaDeg, source }`. The app keeps the fix with the smallest σ; the others are consistency checks.
-If two fixes disagree by more than 3 combined σ, the app says so plainly ("the compass disagrees with the Sun by 14°;
+If two fixes disagree by more than max(3°, 2 combined σ), the app says so plainly ("the compass disagrees with the Sun by 14°;
 using the Sun") and stores both.
 
 | Method | When | Taps | Expected σ | How |
@@ -431,6 +432,12 @@ alignment can be tested.
 Segmentation quality is not judged on synthetic images (the model was trained on real photos). It is checked on a
 small set of real site photos (owner's, or openly licensed) with hand-made masks, offline.
 
+**Harness results (2026-11-06, `script/horizon-sim/`, Chrome 155):** all eight scenarios pass. Day + Sun: FOV −0.12%,
+yaw 0.06°, skyline MAE 0.12°. Overcast + hills (terrain match): yaw 0.17°, MAE 0.16°. Flat backyard: terrain match
+declines, compass used (σ 5.6°). Night + Moon + trace: yaw < 0.01°, traced MAE 0.22°. Compass 25° + 8° off: disagreement
+shown, Sun used. Gyro drift: 0.19° spread. Barrel lens k1 −0.08: solved −0.082, edge error 0.02°. Stabilisation crop
+(principal-point shift while moving): no damage, because frames are taken only when still.
+
 **What only the real phone can tell us:** the stabilisation crop of the video stream, real gyro drift and compass
 behaviour near the telescope, and model speed (WebGPU vs WASM).
 
@@ -470,10 +477,10 @@ behaviour near the telescope, and model speed (WebGPU vs WASM).
 
 | Phase | Scope | Done when |
 |---|---|---|
-| 1 (in progress) | `types`, `terrain`, `terrain.worker`, `profile`, `store`, hook; integration into Tonight/Best tonight, windows, rise/set, binocular guide, session planner, journeys, sky chart silhouette; attribution line. | Unit tests pass; a mountain site shows a realistic profile; lists change accordingly; works offline after first visit. |
-| 2 | `capture/`, `calibrate/`, `segment/`; capture and review pages; photo layer; simulation harness. | All harness scenarios pass; one real-phone session confirms R1 and model speed. |
-| 3 | `viewer/`: 360° view, star layer, targets, time slider, terrain overlay, drag-to-align. | 60 fps slider on a mid-range phone; stars line up with the terrain line in harness scenes. |
-| 4 | Export/import, seasonal recapture, optional Spark HQ segmentation, optional 360° photo import (GPano). | Files open in Stellarium and NINA. |
+| 1 (live) | `types`, `terrain`, `terrain.worker`, `profile`, `store`, hook; integration into Tonight/Best tonight, windows, rise/set, binocular guide, session planner, journeys, sky chart silhouette; attribution line. | Unit tests pass; a mountain site shows a realistic profile; lists change accordingly; works offline after first visit. |
+| 2 (built; real-phone check pending) | `capture/`, `calibrate/`, `segment/`; capture and review pages; photo layer; simulation harness. | All harness scenarios pass; one real-phone session confirms R1 and model speed. |
+| 3 (built; real-phone check pending) | `viewer/`: 360° view, star layer, targets, time slider, terrain overlay, drag-to-align. | 60 fps slider on a mid-range phone; stars line up with the terrain line in harness scenes. |
+| 4 (exports, import and seasonal layers built; Spark HQ and 360° photo import not started) | Export/import, seasonal recapture, optional Spark HQ segmentation, optional 360° photo import (GPano). | Files open in Stellarium and NINA. |
 
 ## References
 

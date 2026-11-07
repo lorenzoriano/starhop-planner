@@ -1,8 +1,17 @@
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { useLocalHorizon, useLocalHorizonPreference } from '@/hooks/use-local-horizon';
-import { horizonSummary } from '@/lib/horizon/profile';
+import { captureSupported } from '@/lib/horizon/capture/support';
+import { IMPORT_SOURCE } from '@/lib/horizon/photo-types';
+import { horizonSummary, photoLayerSummary } from '@/lib/horizon/profile';
+import { recaptureAdvice } from '@/lib/horizon/season';
 import { ATTRIBUTION, ATTRIBUTION_LINKS } from '@/lib/horizon/terrain';
-import type { HorizonProfile, TerrainStatus } from '@/lib/horizon/types';
+import type { HorizonProfile, LocalHorizon, TerrainStatus } from '@/lib/horizon/types';
 import './LocalHorizonPanel.css';
+
+// Full-screen tools, loaded only when opened.
+const HorizonCapture = lazy(() => import('./horizon/HorizonCapture'));
+const HorizonViewer = lazy(() => import('./horizon/HorizonViewer'));
 
 /** The site dialog's elevation setting (SkyConditionsEditor), for offering the terrain map's ground height. */
 export type HorizonElevation = { metres: number; source: 'manual' | 'forecast' | 'unknown'; onChange: (metres: number | null) => void };
@@ -67,10 +76,63 @@ export function horizonStatusText(enabled: boolean, status: TerrainStatus, profi
   }
 }
 
+export type HorizonDownload = 'stellarium' | 'nina' | 'text';
+
+/** The photo horizon part of the panel: what it shows and what its buttons do. */
+export interface PhotoHorizonSection {
+  /** The site's photo layer (a camera sweep or an imported file), or null. */
+  profile: HorizonProfile | null;
+  /** Seasonal recapture advice for the capture in use, or null. */
+  advice: string | null;
+  /** The browser can use the camera and motion sensors (otherwise only import is offered). */
+  cameraSupported: boolean;
+  /** Something to download exists (terrain or photo). */
+  canDownload: boolean;
+  /** Result of the last import or removal, in plain words. */
+  message?: string | null;
+  onCapture: () => void;
+  onLookAround: () => void;
+  onRemove: () => void;
+  onDownload: (kind: HorizonDownload) => void;
+  onImport: (file: File) => void;
+}
+
+/** Trees and buildings: summary, capture / look around / remove, and a small disclosure for downloads and import. */
+function PhotoSection({ photo }: { photo: PhotoHorizonSection }) {
+  const { profile } = photo;
+  return <div className="local-horizon-photo">
+    <h4>Trees and buildings</h4>
+    <p className="sky-note">{profile ? photoLayerSummary(profile) : 'Not added yet. A short camera sweep adds the trees and roofs around you.'}</p>
+    {profile && photo.advice && <p className="sky-note local-horizon-advice">{photo.advice}</p>}
+    {!profile && !photo.cameraSupported && <p className="sky-note">This browser cannot use the camera and motion sensors, so trees and buildings cannot be captured here.</p>}
+    <div className="local-horizon-actions">
+      {photo.cameraSupported && <button type="button" onClick={photo.onCapture}>{profile ? 'Capture again' : 'Add trees and buildings'}</button>}
+      <button type="button" onClick={photo.onLookAround}>Look around</button>
+      {profile && <button type="button" onClick={photo.onRemove}>Remove photo horizon</button>}
+    </div>
+    <details className="local-horizon-files">
+      <summary>Download or import a horizon file</summary>
+      <div className="local-horizon-actions">
+        {photo.canDownload && <>
+          <button type="button" onClick={() => photo.onDownload('stellarium')}>Download for Stellarium</button>
+          <button type="button" onClick={() => photo.onDownload('nina')}>Download for NINA</button>
+          <button type="button" onClick={() => photo.onDownload('text')}>Download as text</button>
+        </>}
+        <label className="local-horizon-import">Import a horizon file
+          <input type="file" accept=".txt,.hrz,.csv,.hzn,text/plain" onChange={e => { const f = e.target.files?.[0]; if (f) photo.onImport(f); e.target.value = ''; }} />
+        </label>
+      </div>
+    </details>
+    {photo.message && <p className="sky-note" role="status">{photo.message}</p>}
+  </div>;
+}
+
 /** Presentational panel (tests render it directly). */
-export function LocalHorizonView({ enabled, onEnabled, status, profile, onRecompute, elevation }: {
+export function LocalHorizonView({ enabled, onEnabled, status, profile, onRecompute, elevation, photo }: {
   enabled: boolean; onEnabled: (enabled: boolean) => void; status: TerrainStatus; profile: HorizonProfile | null;
   onRecompute: () => void; elevation?: HorizonElevation;
+  /** The photo horizon section; omitted, the panel shows the terrain horizon only. */
+  photo?: PhotoHorizonSection;
 }) {
   const shown = enabled ? profile : null;
   const computing = enabled && status.state === 'computing';
@@ -92,13 +154,98 @@ export function LocalHorizonView({ enabled, onEnabled, status, profile, onRecomp
       {shown && status.state === 'ready' && <button type="button" onClick={onRecompute}>Recompute</button>}
       {ground !== null && elevation && <button type="button" onClick={() => elevation.onChange(ground)}>Use ground height from the terrain map ({ground.toLocaleString()} m)</button>}
     </div>}
+    {enabled && photo && <PhotoSection photo={photo} />}
     {enabled && <p className="local-horizon-credits">{ATTRIBUTION}{ATTRIBUTION_LINKS.map(link => <span key={link.url}> · <a href={link.url} target="_blank" rel="noreferrer">{link.label}</a></span>)}</p>}
   </div>;
 }
 
-/** Site dialog block: the automatic terrain horizon for the app's current site, with the global on/off switch. */
+/** Save text or bytes as a file. */
+function download(name: string, data: string | Uint8Array, type: string) {
+  const blob = new Blob([data as BlobPart], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/**
+ * Full-screen layer for the capture and the viewer. A nested Radix dialog, so it sits above the site dialog, keeps
+ * focus, and is not clipped by the site dialog's transform.
+ */
+function HorizonOverlay({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
+  return <DialogPrimitive.Root open onOpenChange={open => { if (!open) onClose(); }}>
+    <DialogPrimitive.Portal>
+      <DialogPrimitive.Content className="local-horizon-overlay" aria-describedby={undefined}>
+        <DialogPrimitive.Title className="sr-only">{title}</DialogPrimitive.Title>
+        <Suspense fallback={<p className="local-horizon-overlay-loading" role="status">Loading…</p>}>{children}</Suspense>
+      </DialogPrimitive.Content>
+    </DialogPrimitive.Portal>
+  </DialogPrimitive.Root>;
+}
+
+/** Site dialog block: the site's horizon (terrain, and trees and buildings from the camera), with the global switch. */
 export function LocalHorizonPanel({ lat, lon, elevation }: { lat: number; lon: number; elevation?: HorizonElevation }) {
   const [enabled, setEnabled] = useLocalHorizonPreference();
   const { horizon, status, recompute } = useLocalHorizon(lat, lon);
-  return <LocalHorizonView enabled={enabled} onEnabled={setEnabled} status={status} profile={horizon?.terrain ?? null} onRecompute={recompute} elevation={elevation} />;
+  const [overlay, setOverlay] = useState<'capture' | 'viewer' | null>(null);
+  const [advice, setAdvice] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const [cameraSupported] = useState(captureSupported);
+  const photo = horizon?.photo ?? null;
+  const latest = useRef({ lat, lon });
+  latest.current = { lat, lon };
+
+  // Recapture advice for the capture in use (useLocalHorizon has already switched to this season's capture). Only a
+  // camera sweep has a stored capture to read.
+  useEffect(() => {
+    if (!enabled || !photo || photo.source === IMPORT_SOURCE) { setAdvice(null); return; }
+    let live = true;
+    void import('@/lib/horizon/photo-store').then(async store => {
+      const site = await store.readPhotoSite(lat, lon);
+      if (live) setAdvice(site ? recaptureAdvice(site.record, new Date()) : null);
+    }).catch(() => { if (live) setAdvice(null); });
+    return () => { live = false; };
+  }, [lat, lon, enabled, photo]);
+
+  const both: LocalHorizon = { terrain: horizon?.terrain ?? null, photo };
+  const section: PhotoHorizonSection = {
+    profile: photo,
+    advice,
+    cameraSupported,
+    canDownload: !!(both.terrain || both.photo),
+    message,
+    onCapture: () => { setMessage(null); setOverlay('capture'); },
+    onLookAround: () => setOverlay('viewer'),
+    onRemove: () => {
+      if (!window.confirm('Remove the trees and buildings for this site? The terrain horizon stays.')) return;
+      void import('@/lib/horizon/photo-store')
+        .then(store => store.deletePhotoHorizon(lat, lon))
+        .then(() => setMessage('Photo horizon removed.'), (e: unknown) => setMessage(e instanceof Error && e.name === 'PhotoStoreError' ? e.message : 'Could not remove the photo horizon.'));
+    },
+    onDownload: kind => {
+      void import('@/lib/horizon/export').then(ex => {
+        if (kind === 'nina') download('starhop-horizon.hrz', ex.toNinaHrz(both), 'text/plain');
+        else if (kind === 'text') download('starhop-horizon.txt', ex.toAzAltText(both), 'text/plain');
+        else download('starhop-horizon-stellarium.zip', ex.toStellariumZip(both, 'StarHop horizon'), 'application/zip');
+      }, () => setMessage('Could not prepare the file.'));
+    },
+    onImport: file => {
+      void Promise.all([file.text(), import('@/lib/horizon/export'), import('@/lib/horizon/photo-store')]).then(([text, ex, store]) => {
+        const parsed = ex.parseAzAltText(text, latest.current);
+        if ('error' in parsed) { setMessage(parsed.error); return; }
+        setMessage(store.importPhotoProfile(parsed.profile) ? 'Imported. The file now counts as the trees and buildings for this site.' : 'Could not save the imported horizon on this device — storage is full or blocked.');
+      }, () => setMessage('Could not read that file.'));
+    },
+  };
+
+  return <>
+    <LocalHorizonView enabled={enabled} onEnabled={setEnabled} status={status} profile={horizon?.terrain ?? null} onRecompute={recompute} elevation={elevation} photo={section} />
+    {overlay === 'capture' && <HorizonOverlay title="Add trees and buildings" onClose={() => setOverlay(null)}>
+      <HorizonCapture lat={lat} lon={lon} terrain={horizon?.terrain ?? null} onClose={() => setOverlay(null)} />
+    </HorizonOverlay>}
+    {overlay === 'viewer' && <HorizonOverlay title="Look around" onClose={() => setOverlay(null)}>
+      <HorizonViewer lat={lat} lon={lon} onClose={() => setOverlay(null)} />
+    </HorizonOverlay>}
+  </>;
 }
